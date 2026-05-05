@@ -28,6 +28,41 @@ class FeatureFlagFoundationTest extends TestCase
         $this->assertDatabaseHas('feature_flags', ['key' => 'enable_activity_logs']);
     }
 
+    public function test_feature_flags_seeder_adds_v2_flags_with_safe_defaults(): void
+    {
+        $this->seed(FeatureFlagsSeeder::class);
+        $this->seed(FeatureFlagsSeeder::class);
+
+        $expectedFlags = [
+            'enable_cms_menus',
+            'enable_cms_redirects',
+            'enable_seo_tools',
+            'enable_forms',
+            'enable_lead_capture',
+            'enable_wordpress_import',
+            'enable_theme_catalog',
+            'enable_theme_app_recipes',
+            'enable_package_catalog',
+            'enable_plugin_bundles',
+            'enable_commerce_lite',
+            'enable_external_source_registry',
+        ];
+
+        foreach ($expectedFlags as $key) {
+            $this->assertDatabaseHas('feature_flags', [
+                'key' => $key,
+                'default_value' => false,
+                'status' => 'active',
+            ]);
+
+            $this->assertSame(
+                1,
+                FeatureFlag::query()->where('key', $key)->count(),
+                "Feature flag [{$key}] should be seeded idempotently.",
+            );
+        }
+    }
+
     public function test_feature_flag_service_resolves_default_and_override(): void
     {
         $organization = Organization::factory()->create();

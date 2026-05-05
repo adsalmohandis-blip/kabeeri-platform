@@ -20,6 +20,18 @@ class FeatureFlagsSeeder extends Seeder
             'enable_rabet_foundation',
             'enable_onboarding_basic',
             'enable_activity_logs',
+            'enable_cms_menus',
+            'enable_cms_redirects',
+            'enable_seo_tools',
+            'enable_forms',
+            'enable_lead_capture',
+            'enable_wordpress_import',
+            'enable_theme_catalog',
+            'enable_theme_app_recipes',
+            'enable_package_catalog',
+            'enable_plugin_bundles',
+            'enable_commerce_lite',
+            'enable_external_source_registry',
         ];
 
         foreach ($flags as $key) {
