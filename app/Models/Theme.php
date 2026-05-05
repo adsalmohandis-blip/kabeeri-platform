@@ -79,4 +79,9 @@ class Theme extends Model
     {
         return $this->hasMany(ThemeSetting::class);
     }
+
+    public function appRecipes(): HasMany
+    {
+        return $this->hasMany(ThemeAppRecipe::class);
+    }
 }
