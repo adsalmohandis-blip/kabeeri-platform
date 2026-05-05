@@ -111,6 +111,11 @@ class Site extends Model
         return $this->hasMany(Redirect::class);
     }
 
+    public function forms(): HasMany
+    {
+        return $this->hasMany(Form::class);
+    }
+
     public function contentTypes(): HasMany
     {
         return $this->hasMany(ContentType::class);

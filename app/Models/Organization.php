@@ -114,6 +114,11 @@ class Organization extends Model
         return $this->hasMany(Redirect::class);
     }
 
+    public function forms(): HasMany
+    {
+        return $this->hasMany(Form::class);
+    }
+
     public function taxonomies(): HasMany
     {
         return $this->hasMany(Taxonomy::class);
