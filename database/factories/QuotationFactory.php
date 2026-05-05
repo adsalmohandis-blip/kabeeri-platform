@@ -37,6 +37,10 @@ class QuotationFactory extends Factory
             'tax_total' => 0,
             'total' => 0,
             'valid_until' => now()->addDays(14),
+            'issued_at' => null,
+            'accepted_at' => null,
+            'declined_at' => null,
+            'decline_reason' => null,
             'notes' => null,
             'metadata' => ['source' => 'factory'],
         ];

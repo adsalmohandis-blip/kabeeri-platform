@@ -67,6 +67,57 @@ class QuotationService
         return $quotation->refresh();
     }
 
+    public function issue(Quotation $quotation): Quotation
+    {
+        if ($quotation->items()->doesntExist()) {
+            throw ValidationException::withMessages([
+                'items' => 'Quotation must have at least one item before it can be issued.',
+            ]);
+        }
+
+        $quotation->forceFill([
+            'status' => 'issued',
+            'issued_at' => now(),
+        ])->save();
+
+        return $quotation->refresh();
+    }
+
+    public function accept(Quotation $quotation): Quotation
+    {
+        if ($quotation->status !== 'issued') {
+            throw ValidationException::withMessages([
+                'status' => 'Only issued quotations can be accepted.',
+            ]);
+        }
+
+        $quotation->forceFill([
+            'status' => 'accepted',
+            'accepted_at' => now(),
+            'declined_at' => null,
+            'decline_reason' => null,
+        ])->save();
+
+        return $quotation->refresh();
+    }
+
+    public function decline(Quotation $quotation, ?string $reason = null): Quotation
+    {
+        if ($quotation->status !== 'issued') {
+            throw ValidationException::withMessages([
+                'status' => 'Only issued quotations can be declined.',
+            ]);
+        }
+
+        $quotation->forceFill([
+            'status' => 'declined',
+            'declined_at' => now(),
+            'decline_reason' => $reason,
+        ])->save();
+
+        return $quotation->refresh();
+    }
+
     protected function nextQuotationNumber(Organization $organization): string
     {
         $next = Quotation::query()

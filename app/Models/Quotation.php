@@ -27,6 +27,10 @@ use Illuminate\Support\Str;
     'tax_total',
     'total',
     'valid_until',
+    'issued_at',
+    'accepted_at',
+    'declined_at',
+    'decline_reason',
     'notes',
     'metadata',
 ])]
@@ -55,6 +59,9 @@ class Quotation extends Model
             'tax_total' => 'decimal:2',
             'total' => 'decimal:2',
             'valid_until' => 'datetime',
+            'issued_at' => 'datetime',
+            'accepted_at' => 'datetime',
+            'declined_at' => 'datetime',
             'metadata' => 'array',
             'deleted_at' => 'datetime',
         ];
