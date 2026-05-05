@@ -23,11 +23,14 @@ use Illuminate\Support\Str;
     'email',
     'phone',
     'source',
+    'lead_source_id',
     'status',
     'priority',
     'expected_value',
     'currency_code',
     'score',
+    'score_breakdown',
+    'scored_at',
     'assigned_to',
     'qualified_at',
     'converted_at',
@@ -60,6 +63,8 @@ class Lead extends Model
         return [
             'metadata' => 'array',
             'score' => 'integer',
+            'score_breakdown' => 'array',
+            'scored_at' => 'datetime',
             'expected_value' => 'decimal:2',
             'qualified_at' => 'datetime',
             'converted_at' => 'datetime',
@@ -91,6 +96,11 @@ class Lead extends Model
     public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    public function leadSource(): BelongsTo
+    {
+        return $this->belongsTo(LeadSource::class);
     }
 
     public function assignee(): BelongsTo
