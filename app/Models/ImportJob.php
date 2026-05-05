@@ -86,4 +86,9 @@ class ImportJob extends Model
     {
         return $this->hasMany(MigrationMapping::class);
     }
+
+    public function redirectSuggestions(): HasMany
+    {
+        return $this->hasMany(RedirectSuggestion::class);
+    }
 }
