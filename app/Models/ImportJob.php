@@ -81,4 +81,9 @@ class ImportJob extends Model
     {
         return $this->hasMany(ImportRecord::class);
     }
+
+    public function mappings(): HasMany
+    {
+        return $this->hasMany(MigrationMapping::class);
+    }
 }
