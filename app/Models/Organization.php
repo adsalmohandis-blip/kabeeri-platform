@@ -139,6 +139,11 @@ class Organization extends Model
         return $this->hasMany(SalesPipeline::class);
     }
 
+    public function crmActivities(): HasMany
+    {
+        return $this->hasMany(CrmActivity::class);
+    }
+
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);
