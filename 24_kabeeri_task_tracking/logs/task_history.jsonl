@@ -1,2 +1,4 @@
 {"at":"2026-05-05T20:05:02+00:00","version":"V2","task_id":"T00","action":"start","status":"in_progress","prompt_id":"00","commit":null,"tests":null,"notes":""}
 {"at":"2026-05-05T20:05:37+00:00","version":"V2","task_id":"T00","action":"done","status":"codex_done","prompt_id":"00","commit":"pending","tests":"php artisan test","notes":"Read active V1 docs, confirmed V2 hard boundaries, noted docs/kabeeri is empty, and verified baseline tests pass."}
+{"at":"2026-05-05T20:06:16+00:00","version":"V2","task_id":"T01","action":"start","status":"in_progress","prompt_id":"01","commit":null,"tests":null,"notes":""}
+{"at":"2026-05-05T20:07:21+00:00","version":"V2","task_id":"T01","action":"done","status":"codex_done","prompt_id":"01","commit":"pending","tests":"php artisan test; vendor/bin/pint --test; temp sqlite migrate:fresh --seed","notes":"V1 readiness verified; tests, formatter, and isolated fresh migrate seed pass; report added."}
