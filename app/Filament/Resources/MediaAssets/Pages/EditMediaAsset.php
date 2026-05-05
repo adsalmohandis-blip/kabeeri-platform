@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Filament\Resources\MediaAssets\Pages;
+
+use App\Filament\Resources\MediaAssets\MediaAssetResource;
+use Filament\Actions\ViewAction;
+use Filament\Resources\Pages\EditRecord;
+
+class EditMediaAsset extends EditRecord
+{
+    protected static string $resource = MediaAssetResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            ViewAction::make(),
+        ];
+    }
+}
