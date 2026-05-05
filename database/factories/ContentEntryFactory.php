@@ -47,6 +47,13 @@ class ContentEntryFactory extends Factory
                 'title' => Str::limit($title, 60, ''),
                 'description' => fake()->sentence(),
             ],
+            'seo_title' => null,
+            'seo_description' => null,
+            'canonical_url' => null,
+            'og_title' => null,
+            'og_description' => null,
+            'og_image_media_id' => null,
+            'noindex' => false,
             'metadata' => ['source' => 'factory'],
         ];
     }

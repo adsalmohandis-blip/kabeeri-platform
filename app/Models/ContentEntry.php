@@ -25,6 +25,13 @@ use Illuminate\Support\Str;
     'visibility',
     'published_at',
     'seo',
+    'seo_title',
+    'seo_description',
+    'canonical_url',
+    'og_title',
+    'og_description',
+    'og_image_media_id',
+    'noindex',
     'metadata',
 ])]
 class ContentEntry extends Model
@@ -50,6 +57,7 @@ class ContentEntry extends Model
         return [
             'published_at' => 'datetime',
             'seo' => 'array',
+            'noindex' => 'boolean',
             'metadata' => 'array',
             'deleted_at' => 'datetime',
         ];
@@ -73,6 +81,11 @@ class ContentEntry extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_user_id');
+    }
+
+    public function ogImage(): BelongsTo
+    {
+        return $this->belongsTo(MediaAsset::class, 'og_image_media_id');
     }
 
     public function revisions(): HasMany
