@@ -126,6 +126,11 @@ class Site extends Model
         return $this->hasMany(Lead::class);
     }
 
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
     public function importJobs(): HasMany
     {
         return $this->hasMany(ImportJob::class);

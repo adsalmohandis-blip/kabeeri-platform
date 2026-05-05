@@ -100,6 +100,11 @@ class Company extends Model
         return $this->hasMany(BusinessProfile::class);
     }
 
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
     public function verificationRequests(): HasMany
     {
         return $this->hasMany(VerificationRequest::class);
