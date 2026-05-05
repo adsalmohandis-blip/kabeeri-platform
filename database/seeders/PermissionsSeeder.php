@@ -47,6 +47,43 @@ class PermissionsSeeder extends Seeder
             ['name' => 'View Activity Log', 'slug' => 'activity_log.view', 'group' => 'system', 'risk_level' => 'medium'],
             ['name' => 'View Settings', 'slug' => 'settings.view', 'group' => 'system', 'risk_level' => 'medium'],
             ['name' => 'View Feature Flags', 'slug' => 'feature_flags.view', 'group' => 'system', 'risk_level' => 'high'],
+
+            ['name' => 'View CMS Menus', 'slug' => 'menu.view', 'group' => 'cms', 'risk_level' => 'low'],
+            ['name' => 'Manage CMS Menus', 'slug' => 'menu.manage', 'group' => 'cms', 'risk_level' => 'medium'],
+            ['name' => 'View Redirects', 'slug' => 'redirect.view', 'group' => 'cms', 'risk_level' => 'low'],
+            ['name' => 'Manage Redirects', 'slug' => 'redirect.manage', 'group' => 'cms', 'risk_level' => 'medium'],
+            ['name' => 'Manage SEO', 'slug' => 'seo.manage', 'group' => 'cms', 'risk_level' => 'medium'],
+
+            ['name' => 'View Forms', 'slug' => 'form.view', 'group' => 'forms', 'risk_level' => 'low'],
+            ['name' => 'Create Forms', 'slug' => 'form.create', 'group' => 'forms', 'risk_level' => 'medium'],
+            ['name' => 'Edit Forms', 'slug' => 'form.edit', 'group' => 'forms', 'risk_level' => 'medium'],
+            ['name' => 'Delete Forms', 'slug' => 'form.delete', 'group' => 'forms', 'risk_level' => 'high'],
+            ['name' => 'View Form Submissions', 'slug' => 'form.submissions.view', 'group' => 'forms', 'risk_level' => 'medium'],
+            ['name' => 'Export Form Submissions', 'slug' => 'form.submissions.export', 'group' => 'forms', 'risk_level' => 'high'],
+
+            ['name' => 'View Migrations', 'slug' => 'migration.view', 'group' => 'migration', 'risk_level' => 'medium'],
+            ['name' => 'Create Migrations', 'slug' => 'migration.create', 'group' => 'migration', 'risk_level' => 'medium'],
+            ['name' => 'Preview Migrations', 'slug' => 'migration.preview', 'group' => 'migration', 'risk_level' => 'medium'],
+            ['name' => 'Run Migrations', 'slug' => 'migration.run', 'group' => 'migration', 'risk_level' => 'high'],
+            ['name' => 'Rollback Migrations', 'slug' => 'migration.rollback', 'group' => 'migration', 'risk_level' => 'high'],
+
+            ['name' => 'View Theme Catalog', 'slug' => 'theme.catalog.view', 'group' => 'theme', 'risk_level' => 'low'],
+            ['name' => 'Apply Theme', 'slug' => 'theme.apply', 'group' => 'theme', 'risk_level' => 'medium'],
+            ['name' => 'View Theme Recipes', 'slug' => 'theme.recipe.view', 'group' => 'theme', 'risk_level' => 'low'],
+            ['name' => 'Apply Theme Recipes', 'slug' => 'theme.recipe.apply', 'group' => 'theme', 'risk_level' => 'medium'],
+
+            ['name' => 'View Package Catalog', 'slug' => 'package.catalog.view', 'group' => 'package', 'risk_level' => 'low'],
+            ['name' => 'Install Packages', 'slug' => 'package.install', 'group' => 'package', 'risk_level' => 'high'],
+            ['name' => 'Uninstall Packages', 'slug' => 'package.uninstall', 'group' => 'package', 'risk_level' => 'high'],
+
+            ['name' => 'View Products', 'slug' => 'product.view', 'group' => 'commerce_lite', 'risk_level' => 'low'],
+            ['name' => 'Create Products', 'slug' => 'product.create', 'group' => 'commerce_lite', 'risk_level' => 'medium'],
+            ['name' => 'Edit Products', 'slug' => 'product.edit', 'group' => 'commerce_lite', 'risk_level' => 'medium'],
+            ['name' => 'View Orders', 'slug' => 'order.view', 'group' => 'commerce_lite', 'risk_level' => 'medium'],
+            ['name' => 'Manage Coupons', 'slug' => 'coupon.manage', 'group' => 'commerce_lite', 'risk_level' => 'medium'],
+
+            ['name' => 'View External Sources', 'slug' => 'external_source.view', 'group' => 'external_sources', 'risk_level' => 'medium'],
+            ['name' => 'Manage External Sources', 'slug' => 'external_source.manage', 'group' => 'external_sources', 'risk_level' => 'high'],
         ];
 
         foreach ($permissions as $permission) {

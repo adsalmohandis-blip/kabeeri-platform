@@ -19,6 +19,39 @@ class RolesSeeder extends Seeder
             ->pluck('id', 'slug')
             ->all();
 
+        $v2OwnerAdminPermissions = [
+            'menu.view',
+            'menu.manage',
+            'redirect.view',
+            'redirect.manage',
+            'seo.manage',
+            'form.view',
+            'form.create',
+            'form.edit',
+            'form.delete',
+            'form.submissions.view',
+            'form.submissions.export',
+            'migration.view',
+            'migration.create',
+            'migration.preview',
+            'migration.run',
+            'migration.rollback',
+            'theme.catalog.view',
+            'theme.apply',
+            'theme.recipe.view',
+            'theme.recipe.apply',
+            'package.catalog.view',
+            'package.install',
+            'package.uninstall',
+            'product.view',
+            'product.create',
+            'product.edit',
+            'order.view',
+            'coupon.manage',
+            'external_source.view',
+            'external_source.manage',
+        ];
+
         $roleDefinitions = [
             [
                 'name' => 'Platform Super Admin',
@@ -30,7 +63,7 @@ class RolesSeeder extends Seeder
                 'name' => 'Organization Owner',
                 'slug' => 'organization-owner',
                 'scope' => 'organization',
-                'permissions' => [
+                'permissions' => array_merge([
                     'organization.view',
                     'organization.manage',
                     'organization.members.manage',
@@ -59,13 +92,13 @@ class RolesSeeder extends Seeder
                     'activity_log.view',
                     'settings.view',
                     'feature_flags.view',
-                ],
+                ], $v2OwnerAdminPermissions),
             ],
             [
                 'name' => 'Organization Admin',
                 'slug' => 'organization-admin',
                 'scope' => 'organization',
-                'permissions' => [
+                'permissions' => array_merge([
                     'organization.view',
                     'organization.members.manage',
                     'organization.settings.manage',
@@ -92,7 +125,7 @@ class RolesSeeder extends Seeder
                     'verification.submit',
                     'activity_log.view',
                     'settings.view',
-                ],
+                ], $v2OwnerAdminPermissions),
             ],
             [
                 'name' => 'Site Admin',
