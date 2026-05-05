@@ -25,6 +25,8 @@ class ContentTypeResource extends Resource
 
     protected static ?string $navigationLabel = 'Content Types';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Content';
+
     protected static ?string $modelLabel = 'Content Type';
 
     protected static ?string $pluralModelLabel = 'Content Types';

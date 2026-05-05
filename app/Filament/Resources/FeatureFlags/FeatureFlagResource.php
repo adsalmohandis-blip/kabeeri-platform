@@ -22,6 +22,8 @@ class FeatureFlagResource extends Resource
 
     protected static ?string $navigationLabel = 'Feature Flags';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'System';
+
     protected static ?string $modelLabel = 'Feature Flag';
 
     protected static ?string $pluralModelLabel = 'Feature Flags';

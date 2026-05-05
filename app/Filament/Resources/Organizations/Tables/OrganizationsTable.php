@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Organizations\Tables;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class OrganizationsTable
@@ -12,6 +13,9 @@ class OrganizationsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
+            ->emptyStateHeading('No organizations yet')
+            ->emptyStateDescription('Create your first organization to start building apps and content.')
             ->columns([
                 TextColumn::make('name')
                     ->label('Organization')
@@ -44,6 +48,22 @@ class OrganizationsTable
                 TextColumn::make('timezone')
                     ->label('Timezone')
                     ->searchable(),
+            ])
+            ->filters([
+                SelectFilter::make('account_type')
+                    ->label('Account Type')
+                    ->options([
+                        'business' => 'Business',
+                        'personal' => 'Personal',
+                        'agency' => 'Agency',
+                    ]),
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'active' => 'Active',
+                        'inactive' => 'Inactive',
+                        'draft' => 'Draft',
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),

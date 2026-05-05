@@ -3,11 +3,16 @@
 namespace App\Filament\Resources\MediaAssets\Pages;
 
 use App\Filament\Resources\MediaAssets\MediaAssetResource;
+use App\Models\Company;
+use App\Models\Organization;
+use App\Models\Site;
 use App\Models\User;
 use App\Modules\Core\Services\MediaService;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class CreateMediaAsset extends CreateRecord
 {
@@ -39,10 +44,57 @@ class CreateMediaAsset extends CreateRecord
         $fullPath = $storage->path($relativePath);
         $dimensions = @getimagesize($fullPath) ?: [null, null];
 
+        $organizationId = (int) $data['organization_id'];
+        $siteId = $data['site_id'] ?? null;
+        $companyId = $data['company_id'] ?? null;
+
+        $canAccessOrganization = Organization::query()
+            ->where('id', $organizationId)
+            ->where(function (Builder $query) use ($user): void {
+                $query
+                    ->where('owner_user_id', $user->id)
+                    ->orWhereHas('memberships', function (Builder $membershipQuery) use ($user): void {
+                        $membershipQuery
+                            ->where('user_id', $user->id)
+                            ->where('status', 'active');
+                    });
+            })
+            ->exists();
+
+        if (! $canAccessOrganization) {
+            abort(403);
+        }
+
+        if ($siteId !== null) {
+            $siteBelongsToOrganization = Site::query()
+                ->where('id', $siteId)
+                ->where('organization_id', $organizationId)
+                ->exists();
+
+            if (! $siteBelongsToOrganization) {
+                throw ValidationException::withMessages([
+                    'site_id' => 'The selected app does not belong to the selected organization.',
+                ]);
+            }
+        }
+
+        if ($companyId !== null) {
+            $companyBelongsToOrganization = Company::query()
+                ->where('id', $companyId)
+                ->where('organization_id', $organizationId)
+                ->exists();
+
+            if (! $companyBelongsToOrganization) {
+                throw ValidationException::withMessages([
+                    'company_id' => 'The selected company does not belong to the selected organization.',
+                ]);
+            }
+        }
+
         return app(MediaService::class)->createAsset([
-            'organization_id' => $data['organization_id'],
-            'site_id' => $data['site_id'] ?? null,
-            'company_id' => $data['company_id'] ?? null,
+            'organization_id' => $organizationId,
+            'site_id' => $siteId,
+            'company_id' => $companyId,
             'uploaded_by' => $user->id,
             'disk' => $disk,
             'path' => $relativePath,

@@ -25,6 +25,8 @@ class ContentEntryResource extends Resource
 
     protected static ?string $navigationLabel = 'Content Entries';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Content';
+
     protected static ?string $modelLabel = 'Content Entry';
 
     protected static ?string $pluralModelLabel = 'Content Entries';

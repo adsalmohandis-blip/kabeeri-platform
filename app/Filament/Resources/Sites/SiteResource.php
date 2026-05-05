@@ -25,6 +25,8 @@ class SiteResource extends Resource
 
     protected static ?string $navigationLabel = 'Apps';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Apps';
+
     protected static ?string $modelLabel = 'App';
 
     protected static ?string $pluralModelLabel = 'Apps';

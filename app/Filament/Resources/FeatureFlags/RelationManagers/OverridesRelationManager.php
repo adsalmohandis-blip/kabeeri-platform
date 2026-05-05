@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\FeatureFlags\RelationManagers;
 
+use App\Models\Company;
 use App\Models\FeatureFlagOverride;
+use App\Models\Site;
+use App\Models\User;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -15,6 +18,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\ValidationException;
 
 class OverridesRelationManager extends RelationManager
 {
@@ -102,20 +106,101 @@ class OverridesRelationManager extends RelationManager
             ])
             ->headerActions([
                 CreateAction::make()
+                    ->authorize(function (): bool {
+                        $user = auth()->user();
+
+                        return $user instanceof User
+                            && $user->can('create', FeatureFlagOverride::class);
+                    })
                     ->using(function (array $data): FeatureFlagOverride {
+                        $organizationId = (int) $data['organization_id'];
+                        $scopeType = $data['scope_type'] ?? null;
+                        $scopeId = $data['scope_id'] ?? null;
+
+                        $this->assertScopeIsWithinOrganization(
+                            organizationId: $organizationId,
+                            scopeType: is_string($scopeType) ? $scopeType : null,
+                            scopeId: is_numeric($scopeId) ? (int) $scopeId : null,
+                        );
+
                         return FeatureFlagOverride::query()->create([
                             'feature_flag_id' => $this->getOwnerRecord()->id,
-                            'organization_id' => $data['organization_id'],
-                            'scope_type' => $data['scope_type'] ?? null,
-                            'scope_id' => $data['scope_id'] ?? null,
+                            'organization_id' => $organizationId,
+                            'scope_type' => $scopeType,
+                            'scope_id' => $scopeId,
                             'value' => (bool) ($data['value'] ?? false),
                         ]);
                     }),
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()
+                    ->authorize(function (FeatureFlagOverride $record): bool {
+                        $user = auth()->user();
+
+                        return $user instanceof User
+                            && $user->can('update', $record);
+                    })
+                    ->using(function (FeatureFlagOverride $record, array $data): FeatureFlagOverride {
+                        $organizationId = (int) ($data['organization_id'] ?? $record->organization_id);
+                        $scopeType = $data['scope_type'] ?? $record->scope_type;
+                        $scopeId = $data['scope_id'] ?? $record->scope_id;
+
+                        $this->assertScopeIsWithinOrganization(
+                            organizationId: $organizationId,
+                            scopeType: is_string($scopeType) ? $scopeType : null,
+                            scopeId: is_numeric($scopeId) ? (int) $scopeId : null,
+                        );
+
+                        $record->fill([
+                            'organization_id' => $organizationId,
+                            'scope_type' => $scopeType,
+                            'scope_id' => $scopeId,
+                            'value' => (bool) ($data['value'] ?? $record->value),
+                        ])->save();
+
+                        return $record;
+                    }),
+                DeleteAction::make()
+                    ->authorize(function (FeatureFlagOverride $record): bool {
+                        $user = auth()->user();
+
+                        return $user instanceof User
+                            && $user->can('delete', $record);
+                    }),
             ])
             ->toolbarActions([]);
+    }
+
+    protected function assertScopeIsWithinOrganization(int $organizationId, ?string $scopeType, ?int $scopeId): void
+    {
+        if ($scopeId === null || $scopeType === null) {
+            return;
+        }
+
+        if ($scopeType === 'company') {
+            $isCompanyInOrganization = Company::query()
+                ->where('id', $scopeId)
+                ->where('organization_id', $organizationId)
+                ->exists();
+
+            if (! $isCompanyInOrganization) {
+                throw ValidationException::withMessages([
+                    'scope_id' => 'Selected company scope does not belong to the selected organization.',
+                ]);
+            }
+        }
+
+        if ($scopeType === 'site') {
+            $isSiteInOrganization = Site::query()
+                ->where('id', $scopeId)
+                ->where('organization_id', $organizationId)
+                ->exists();
+
+            if (! $isSiteInOrganization) {
+                throw ValidationException::withMessages([
+                    'scope_id' => 'Selected app scope does not belong to the selected organization.',
+                ]);
+            }
+        }
     }
 }

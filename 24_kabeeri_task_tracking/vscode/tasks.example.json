@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "KABEERI: List V1 Tasks",
+      "type": "shell",
+      "command": "php 24_kabeeri_task_tracking/scripts/kbr-task.php list V1",
+      "problemMatcher": []
+    },
+    {
+      "label": "KABEERI: Next V1 Task",
+      "type": "shell",
+      "command": "php 24_kabeeri_task_tracking/scripts/kbr-task.php next V1",
+      "problemMatcher": []
+    },
+    {
+      "label": "KABEERI: V1 Report",
+      "type": "shell",
+      "command": "php 24_kabeeri_task_tracking/scripts/kbr-task.php report V1",
+      "problemMatcher": []
+    }
+  ]
+}

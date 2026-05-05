@@ -28,6 +28,7 @@ class FilamentV1ResourcesSmokeTest extends TestCase
         $this->get('/admin/content-types')->assertOk();
         $this->get('/admin/content-entries')->assertOk();
         $this->get('/admin/taxonomies')->assertOk();
+        $this->get('/admin/activity-logs')->assertOk();
         $this->get('/admin/media-assets')->assertOk();
         $this->get('/admin/feature-flags')->assertOk();
         $this->get('/admin/settings')->assertOk();

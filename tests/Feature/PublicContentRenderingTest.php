@@ -72,4 +72,35 @@ class PublicContentRenderingTest extends TestCase
         $this->get('/app/'.$site->slug.'/'.$entry->slug)
             ->assertNotFound();
     }
+
+    public function test_public_page_uses_rtl_direction_for_arabic_site_language(): void
+    {
+        $organization = Organization::factory()->create();
+        $site = Site::factory()->create([
+            'organization_id' => $organization->id,
+            'slug' => 'arabic-app',
+            'language' => 'ar',
+        ]);
+        $contentType = ContentType::factory()->create([
+            'organization_id' => $organization->id,
+            'site_id' => $site->id,
+            'name' => 'Page',
+            'slug' => 'page',
+        ]);
+
+        $entry = ContentEntry::factory()->create([
+            'organization_id' => $organization->id,
+            'site_id' => $site->id,
+            'content_type_id' => $contentType->id,
+            'title' => 'مرحبا',
+            'slug' => 'marhaba',
+            'status' => 'published',
+            'visibility' => 'public',
+            'published_at' => now(),
+        ]);
+
+        $this->get('/app/'.$site->slug.'/'.$entry->slug)
+            ->assertOk()
+            ->assertSee('dir="rtl"', false);
+    }
 }

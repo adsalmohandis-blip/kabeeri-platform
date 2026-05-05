@@ -25,6 +25,8 @@ class SettingResource extends Resource
 
     protected static ?string $navigationLabel = 'Settings';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'System';
+
     public static function form(Schema $schema): Schema
     {
         return SettingForm::configure($schema);

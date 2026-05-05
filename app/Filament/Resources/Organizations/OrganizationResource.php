@@ -26,6 +26,8 @@ class OrganizationResource extends Resource
 
     protected static ?string $navigationLabel = 'Organizations';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Organizations';
+
     protected static ?string $modelLabel = 'Organization';
 
     protected static ?string $pluralModelLabel = 'Organizations';

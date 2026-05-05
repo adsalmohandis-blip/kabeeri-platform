@@ -9,6 +9,7 @@ use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ContentEntriesTable
@@ -16,6 +17,9 @@ class ContentEntriesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('updated_at', 'desc')
+            ->emptyStateHeading('No content entries yet')
+            ->emptyStateDescription('Create your first page or post to start publishing content.')
             ->columns([
                 TextColumn::make('title')->label('Title')->searchable(),
                 TextColumn::make('site.name')->label('App')->searchable(),
@@ -23,6 +27,32 @@ class ContentEntriesTable
                 TextColumn::make('status')->label('Status')->badge(),
                 TextColumn::make('visibility')->label('Visibility')->badge(),
                 TextColumn::make('published_at')->label('Published At')->dateTime()->placeholder('-'),
+            ])
+            ->filters([
+                SelectFilter::make('site_id')
+                    ->label('App')
+                    ->relationship('site', 'name')
+                    ->searchable()
+                    ->preload(),
+                SelectFilter::make('content_type_id')
+                    ->label('Content Type')
+                    ->relationship('contentType', 'name')
+                    ->searchable()
+                    ->preload(),
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'published' => 'Published',
+                        'archived' => 'Archived',
+                    ]),
+                SelectFilter::make('visibility')
+                    ->label('Visibility')
+                    ->options([
+                        'public' => 'Public',
+                        'private' => 'Private',
+                        'organization_only' => 'Organization Only',
+                    ]),
             ])
             ->recordActions([
                 Action::make('publish')

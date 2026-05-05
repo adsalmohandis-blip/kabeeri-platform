@@ -25,6 +25,8 @@ class MediaAssetResource extends Resource
 
     protected static ?string $navigationLabel = 'Media Library';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Media';
+
     protected static ?string $modelLabel = 'Media Asset';
 
     protected static ?string $pluralModelLabel = 'Media Assets';

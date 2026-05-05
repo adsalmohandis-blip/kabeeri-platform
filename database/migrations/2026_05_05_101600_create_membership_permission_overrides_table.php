@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamp('created_at')->useCurrent();
 
-            $table->index(['membership_type', 'membership_id']);
+            $table->index(['membership_type', 'membership_id'], 'm_perm_overrides_membership_idx');
             $table->index('effect');
         });
     }

@@ -1,122 +1,118 @@
-﻿# KABEERI V1
+# KABEERI V1
 
-KABEERI V1 is the core Laravel foundation for building the first controlled release of the KABEERI platform.
-This stage focuses on a stable project base only and does not include V2+ business features.
+KABEERI V1 is the first stable Laravel + Filament foundation for multi-tenant organizations, apps, CMS content, media, settings, feature flags, activity logs, onboarding, and Rabet draft profile basics.
 
-## V1 Scope Only
+## V1 Scope
 
-This repository is currently in **V1 foundation mode**.
-At this stage we only prepare core project setup and safe development workflow.
+Included in V1:
+- Multi-tenant core: organizations, memberships, companies, apps/sites.
+- CMS core: content types, content entries, revisions, taxonomies.
+- CMS actions/policies: create, update, publish, archive.
+- Public page rendering route: `/app/{site:slug}/{contentEntry:slug}` for published/public pages.
+- Media metadata foundation + media library resource.
+- Feature flags and scoped settings resources with policy restrictions.
+- Activity logs (read-only resource, tenant-scoped).
+- Basic onboarding flow (`CreateFirstWorkspace`).
+- Rabet foundation: business profile + verification request/documents (draft foundation).
+- V1 demo seeding and smoke/security tests.
 
-Not included in this step:
-- V2/V3/V4/V5/V6 features
-- Mall, advanced commerce, ERP Pro, advanced AI, external sync
-- Production integrations
+Intentionally postponed to V2+:
+- Public marketplace, paid packages, developer economy submissions.
+- Commerce/ERP workflows and Mall network logic.
+- Advanced page builder / visual builder.
+- WordPress importer implementation.
+- Enterprise security tracks (SSO, SIEM, MFA, GRC).
 
-## Local Development Setup
+## Quick Start
 
-### Requirements
-- PHP 8.3+
-- Composer 2+
-- SQLite (default) or MySQL-compatible database
+Requirements:
+- PHP `^8.3`
+- Composer `^2`
+- SQLite (default) or MySQL
 
-### Notes for this machine
-If `php` in your terminal points to an older version, use the PHP 8.3 path directly:
+Install and run:
 
 ```powershell
-$php83 = "C:\Users\arshw\AppData\Local\Microsoft\WinGet\Packages\PHP.PHP.8.3_Microsoft.Winget.Source_8wekyb3d8bbwe\php.exe"
-```
-
-### Install dependencies
-```powershell
-$php83 .\composer.phar install
-```
-
-### Environment
-```powershell
+composer install
 Copy-Item .env.example .env -Force
-$php83 artisan key:generate
-```
-
-### Database (default sqlite)
-```powershell
+php artisan key:generate
 if (!(Test-Path .\database\database.sqlite)) { New-Item .\database\database.sqlite -ItemType File | Out-Null }
-$php83 artisan migrate
+php artisan migrate --seed
+php artisan serve
 ```
 
-### Run locally
-```powershell
-$php83 artisan serve
-```
+Open:
+- App: `http://127.0.0.1:8000`
+- Admin: `http://127.0.0.1:8000/admin`
 
-Then open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+If `php` points to an old binary on this machine, use the explicit PHP 8.3 path documented in [docs/V1_LOCAL_SETUP.md](docs/V1_LOCAL_SETUP.md).
 
-## Admin Panel (Filament)
+## Demo Seed
 
-Filament is installed for the V1 admin foundation only (no business resources yet).
+Local demo admin (seeded by `DatabaseSeeder`):
+- Email: `admin@kabeeri.local`
+- Password: `password`
 
-- Admin URL: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
-- Panel provider: `app/Providers/Filament/AdminPanelProvider.php`
+Seeded demo records:
+- Demo organization + owner membership
+- Demo company
+- Demo app/site (`kabeeri-demo-app`)
+- Starter theme attached
+- Content types: `page`, `post`
+- Published pages: `home`, `about`, `services`, `contact`
+- Demo media metadata record
+- Business profile draft
 
-Create an admin user:
+Public demo page URL:
+- `http://127.0.0.1:8000/app/kabeeri-demo-app/home`
 
-```powershell
-$php83 artisan make:filament-user
-```
+## Basic Admin Flow (V1)
 
-If `php` points to a different version, use the explicit PHP 8.3 path.
+1. Login to `/admin` with demo account or create a user.
+2. Go to `Organizations` and create/select an organization.
+3. Go to `Apps` and create an app under that organization.
+4. Go to `Content > Content Types` and ensure `Page` exists.
+5. Go to `Content > Content Entries` and create a draft page.
+6. Open the content entry and click `Publish`.
+7. Open the public URL `/app/{app-slug}/{page-slug}`.
 
-## Module Skeleton
+## Testing & Quality
 
-Module structure and conventions are documented in [MODULES.md](MODULES.md).
-
-## Running Tests
-
-```powershell
-$php83 artisan test
-```
-
-## Quality Commands
-
-Run the formatter:
-
-```powershell
-$php83 .\vendor\bin\pint
-```
-
-Check formatting without changing files:
+Run tests:
 
 ```powershell
-$php83 .\vendor\bin\pint --test
-```
-
-Run the test suite:
-
-```powershell
-$php83 artisan test
-```
-
-## CI-Friendly Command List
-
-Use these commands in CI or a clean validation terminal:
-
-```powershell
-composer install --no-interaction --prefer-dist
-php artisan migrate --force
 php artisan test
+```
+
+Run formatter:
+
+```powershell
+vendor/bin/pint
+```
+
+Check formatting only:
+
+```powershell
 vendor/bin/pint --test
 ```
 
-On this machine (where `php` may point to an older version), use:
+## V1 Feature Summary
 
-```powershell
-$php83 .\composer.phar install --no-interaction --prefer-dist
-$php83 artisan migrate --force
-$php83 artisan test
-$php83 .\vendor\bin\pint --test
-```
+- Core tenancy + scoped policies
+- Filament resources grouped by:
+  - `Core`
+  - `Organizations`
+  - `Apps`
+  - `Content`
+  - `Media`
+  - `Rabet Foundation`
+  - `System`
+- Read-only activity logs with tenant isolation
+- Tenant-aware settings and feature flag override controls
+- V1 smoke + security test coverage
 
-## Project Status
+## More Docs
 
-Prompts implemented: **V1 Prompt 01 (Initial Foundation)** and **V1 Prompt 02 (Basic Quality Tools)**.
-Foundation progress includes Filament admin setup and a module structure skeleton, without domain business features.
+- [MODULES.md](MODULES.md)
+- [docs/V1_LOCAL_SETUP.md](docs/V1_LOCAL_SETUP.md)
+- [docs/V1_DEMO_SEED.md](docs/V1_DEMO_SEED.md)

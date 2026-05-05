@@ -1,32 +1,58 @@
-# KABEERI V1 Module Conventions
+# KABEERI V1 Modules
 
-This project follows a modular skeleton under `app/Modules` to keep V1 clean and extensible.
+This document describes how V1 is organized today and what is intentionally out of scope.
 
-## Current Skeleton
+## Active V1 Domains
 
-- `app/Modules/Core`
-  - `Models`
-  - `Actions`
-  - `Services`
-  - `Policies`
-  - `Events`
-  - `Listeners`
-  - `Jobs`
-  - `Filament`
-  - `Database`
-- `app/Modules/CMS`
-- `app/Modules/Media`
-- `app/Modules/Rabet`
-- `app/Modules/Platform`
+`Core`:
+- Organizations, memberships, companies, apps/sites
+- Roles/permissions and scoped permission checks
+- Settings, feature flags, activity logging
+- Onboarding (`CreateFirstWorkspace`, `OnboardingService`)
 
-## Conventions
+`CMS`:
+- Content types, entries, revisions
+- Taxonomies and terms
+- CMS actions for create/update/publish/archive
+- Public rendering route for published/public pages
 
-- Keep controllers thin; prefer small `Actions` and `Services`.
-- Keep module boundaries explicit; avoid cross-module tight coupling.
-- Add tests with every feature.
-- Do not place V2+ logic in V1 unless explicitly requested.
-- Do not add tenant columns directly to `users`; memberships remain the relationship boundary.
+`Media`:
+- Media asset metadata storage
+- Scoped media access policies
+- Basic media library admin resource
 
-## Scope Note
+`Rabet`:
+- Business profile draft foundation
+- Verification request/document draft foundation
 
-This skeleton is structural only. No domain logic, migrations, or business resources are implemented here.
+## Filament Admin Navigation (V1)
+
+- `Core`
+- `Organizations`
+- `Apps`
+- `Content`
+- `Media`
+- `Rabet Foundation`
+- `System`
+
+## V1 Boundaries
+
+Allowed in V1:
+- Safe multi-tenant foundation
+- Admin operational workflows
+- Basic public page rendering
+- Demo seed data for local validation
+
+Not allowed in V1 (postponed):
+- Marketplace and developer submissions
+- Paid package lifecycle
+- V2+ commerce/ERP features
+- External sync stack
+- Visual website builder
+
+## Tenant Rules (Must Keep)
+
+- Do not add `role`, `organization_id`, `company_id`, or `site_id` columns to `users`.
+- Enforce access through memberships, roles, and scoped policies.
+- Keep activity logs read-only in admin.
+- Prevent cross-organization access by query scope + policy checks.

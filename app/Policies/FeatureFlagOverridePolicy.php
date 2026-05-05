@@ -33,12 +33,29 @@ class FeatureFlagOverridePolicy
             return false;
         }
 
-        return Organization::query()
+        $ownedOrganizationIds = Organization::query()
             ->where('owner_user_id', $user->id)
-            ->orWhereHas('memberships', function ($query) use ($user): void {
+            ->pluck('id')
+            ->all();
+
+        if ($ownedOrganizationIds !== []) {
+            return true;
+        }
+
+        $membershipOrganizationIds = Organization::query()
+            ->whereHas('memberships', function ($query) use ($user): void {
                 $query->where('user_id', $user->id)->where('status', 'active');
             })
-            ->exists();
+            ->pluck('id')
+            ->all();
+
+        foreach ($membershipOrganizationIds as $organizationId) {
+            if ($this->permissionService->hasOrganizationPermission($user, (int) $organizationId, 'organization.settings.manage')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function update(User $user, FeatureFlagOverride $override): bool
