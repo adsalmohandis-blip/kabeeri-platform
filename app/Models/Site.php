@@ -121,6 +121,11 @@ class Site extends Model
         return $this->hasMany(FormSubmission::class);
     }
 
+    public function leads(): HasMany
+    {
+        return $this->hasMany(Lead::class);
+    }
+
     public function contentTypes(): HasMany
     {
         return $this->hasMany(ContentType::class);

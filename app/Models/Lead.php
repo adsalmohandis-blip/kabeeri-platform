@@ -2,37 +2,40 @@
 
 namespace App\Models;
 
-use Database\Factories\FormSubmissionFactory;
+use Database\Factories\LeadFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 #[Fillable([
     'ulid',
     'organization_id',
     'site_id',
-    'form_id',
-    'submitted_by_user_id',
-    'data',
-    'ip_address',
-    'user_agent',
+    'company_id',
+    'form_submission_id',
+    'name',
+    'email',
+    'phone',
+    'source',
     'status',
-    'source_url',
+    'score',
+    'assigned_to',
+    'message',
     'metadata',
 ])]
-class FormSubmission extends Model
+class Lead extends Model
 {
-    /** @use HasFactory<FormSubmissionFactory> */
-    use HasFactory;
+    /** @use HasFactory<LeadFactory> */
+    use HasFactory, SoftDeletes;
 
     protected static function booted(): void
     {
-        static::creating(function (self $submission): void {
-            if (blank($submission->ulid)) {
-                $submission->ulid = (string) Str::ulid();
+        static::creating(function (self $lead): void {
+            if (blank($lead->ulid)) {
+                $lead->ulid = (string) Str::ulid();
             }
         });
     }
@@ -45,8 +48,9 @@ class FormSubmission extends Model
     protected function casts(): array
     {
         return [
-            'data' => 'array',
             'metadata' => 'array',
+            'score' => 'integer',
+            'deleted_at' => 'datetime',
         ];
     }
 
@@ -60,18 +64,18 @@ class FormSubmission extends Model
         return $this->belongsTo(Site::class);
     }
 
-    public function form(): BelongsTo
+    public function company(): BelongsTo
     {
-        return $this->belongsTo(Form::class);
+        return $this->belongsTo(Company::class);
     }
 
-    public function submitter(): BelongsTo
+    public function formSubmission(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'submitted_by_user_id');
+        return $this->belongsTo(FormSubmission::class);
     }
 
-    public function lead(): HasOne
+    public function assignee(): BelongsTo
     {
-        return $this->hasOne(Lead::class);
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

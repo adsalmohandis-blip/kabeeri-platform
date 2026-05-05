@@ -124,6 +124,11 @@ class Organization extends Model
         return $this->hasMany(FormSubmission::class);
     }
 
+    public function leads(): HasMany
+    {
+        return $this->hasMany(Lead::class);
+    }
+
     public function taxonomies(): HasMany
     {
         return $this->hasMany(Taxonomy::class);
