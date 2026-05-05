@@ -101,6 +101,11 @@ class Site extends Model
         return $this->hasMany(ContentEntry::class);
     }
 
+    public function menus(): HasMany
+    {
+        return $this->hasMany(Menu::class);
+    }
+
     public function contentTypes(): HasMany
     {
         return $this->hasMany(ContentType::class);

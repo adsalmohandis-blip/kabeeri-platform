@@ -104,6 +104,11 @@ class Organization extends Model
         return $this->hasMany(ContentEntry::class);
     }
 
+    public function menus(): HasMany
+    {
+        return $this->hasMany(Menu::class);
+    }
+
     public function taxonomies(): HasMany
     {
         return $this->hasMany(Taxonomy::class);
