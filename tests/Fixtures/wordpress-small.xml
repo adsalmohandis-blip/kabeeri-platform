@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+    xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:wp="http://wordpress.org/export/1.2/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>Legacy Site</title>
+        <link>https://legacy.example.test</link>
+        <wp:author>
+            <wp:author_id>1</wp:author_id>
+            <wp:author_login>admin</wp:author_login>
+            <wp:author_email>admin@example.test</wp:author_email>
+            <wp:author_display_name>Admin User</wp:author_display_name>
+        </wp:author>
+        <wp:category>
+            <wp:term_id>10</wp:term_id>
+            <wp:category_nicename>news</wp:category_nicename>
+            <wp:cat_name>News</wp:cat_name>
+        </wp:category>
+        <wp:tag>
+            <wp:term_id>20</wp:term_id>
+            <wp:tag_slug>launch</wp:tag_slug>
+            <wp:tag_name>Launch</wp:tag_name>
+        </wp:tag>
+        <item>
+            <title>Hello World</title>
+            <dc:creator>admin</dc:creator>
+            <category domain="category" nicename="news">News</category>
+            <category domain="post_tag" nicename="launch">Launch</category>
+            <content:encoded><![CDATA[<p>Hello content</p>]]></content:encoded>
+            <excerpt:encoded><![CDATA[Hello excerpt]]></excerpt:encoded>
+            <wp:post_id>100</wp:post_id>
+            <wp:post_date>2024-01-01 10:00:00</wp:post_date>
+            <wp:post_name>hello-world</wp:post_name>
+            <wp:status>publish</wp:status>
+            <wp:post_type>post</wp:post_type>
+            <wp:postmeta>
+                <wp:meta_key>_thumbnail_id</wp:meta_key>
+                <wp:meta_value>300</wp:meta_value>
+            </wp:postmeta>
+        </item>
+        <item>
+            <title>About</title>
+            <dc:creator>admin</dc:creator>
+            <content:encoded><![CDATA[<p>About content</p>]]></content:encoded>
+            <wp:post_id>101</wp:post_id>
+            <wp:post_date>2024-01-02 10:00:00</wp:post_date>
+            <wp:post_name>about</wp:post_name>
+            <wp:status>publish</wp:status>
+            <wp:post_type>page</wp:post_type>
+        </item>
+        <item>
+            <title>Hero Image</title>
+            <wp:post_id>300</wp:post_id>
+            <wp:post_date>2024-01-03 10:00:00</wp:post_date>
+            <wp:post_name>hero-image</wp:post_name>
+            <wp:status>inherit</wp:status>
+            <wp:post_type>attachment</wp:post_type>
+            <wp:attachment_url>https://legacy.example.test/uploads/hero.jpg</wp:attachment_url>
+        </item>
+        <item>
+            <title>Unsupported</title>
+            <wp:post_id>400</wp:post_id>
+            <wp:post_type>portfolio</wp:post_type>
+        </item>
+    </channel>
+</rss>
