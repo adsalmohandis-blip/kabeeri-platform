@@ -2,38 +2,36 @@
 
 namespace App\Models;
 
-use Database\Factories\FormFactory;
+use Database\Factories\FormSubmissionFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 #[Fillable([
     'ulid',
     'organization_id',
     'site_id',
-    'name',
-    'slug',
-    'description',
+    'form_id',
+    'submitted_by_user_id',
+    'data',
+    'ip_address',
+    'user_agent',
     'status',
-    'submit_button_label',
-    'success_message',
-    'settings',
+    'source_url',
     'metadata',
 ])]
-class Form extends Model
+class FormSubmission extends Model
 {
-    /** @use HasFactory<FormFactory> */
-    use HasFactory, SoftDeletes;
+    /** @use HasFactory<FormSubmissionFactory> */
+    use HasFactory;
 
     protected static function booted(): void
     {
-        static::creating(function (self $form): void {
-            if (blank($form->ulid)) {
-                $form->ulid = (string) Str::ulid();
+        static::creating(function (self $submission): void {
+            if (blank($submission->ulid)) {
+                $submission->ulid = (string) Str::ulid();
             }
         });
     }
@@ -46,9 +44,8 @@ class Form extends Model
     protected function casts(): array
     {
         return [
-            'settings' => 'array',
+            'data' => 'array',
             'metadata' => 'array',
-            'deleted_at' => 'datetime',
         ];
     }
 
@@ -62,13 +59,13 @@ class Form extends Model
         return $this->belongsTo(Site::class);
     }
 
-    public function fields(): HasMany
+    public function form(): BelongsTo
     {
-        return $this->hasMany(FormField::class)->orderBy('sort_order');
+        return $this->belongsTo(Form::class);
     }
 
-    public function submissions(): HasMany
+    public function submitter(): BelongsTo
     {
-        return $this->hasMany(FormSubmission::class);
+        return $this->belongsTo(User::class, 'submitted_by_user_id');
     }
 }
