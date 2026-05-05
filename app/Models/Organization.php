@@ -149,6 +149,11 @@ class Organization extends Model
         return $this->hasMany(ServiceRequest::class);
     }
 
+    public function quotations(): HasMany
+    {
+        return $this->hasMany(Quotation::class);
+    }
+
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);
