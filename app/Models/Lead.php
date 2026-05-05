@@ -24,6 +24,8 @@ use Illuminate\Support\Str;
     'phone',
     'source',
     'lead_source_id',
+    'sales_pipeline_id',
+    'sales_pipeline_stage_id',
     'status',
     'priority',
     'expected_value',
@@ -31,6 +33,7 @@ use Illuminate\Support\Str;
     'score',
     'score_breakdown',
     'scored_at',
+    'stage_changed_at',
     'assigned_to',
     'qualified_at',
     'converted_at',
@@ -65,6 +68,7 @@ class Lead extends Model
             'score' => 'integer',
             'score_breakdown' => 'array',
             'scored_at' => 'datetime',
+            'stage_changed_at' => 'datetime',
             'expected_value' => 'decimal:2',
             'qualified_at' => 'datetime',
             'converted_at' => 'datetime',
@@ -101,6 +105,16 @@ class Lead extends Model
     public function leadSource(): BelongsTo
     {
         return $this->belongsTo(LeadSource::class);
+    }
+
+    public function salesPipeline(): BelongsTo
+    {
+        return $this->belongsTo(SalesPipeline::class);
+    }
+
+    public function salesPipelineStage(): BelongsTo
+    {
+        return $this->belongsTo(SalesPipelineStage::class);
     }
 
     public function assignee(): BelongsTo
