@@ -131,6 +131,11 @@ class Site extends Model
         return $this->hasMany(ImportJob::class);
     }
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function contentTypes(): HasMany
     {
         return $this->hasMany(ContentType::class);
