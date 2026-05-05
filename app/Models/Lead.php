@@ -16,13 +16,23 @@ use Illuminate\Support\Str;
     'site_id',
     'company_id',
     'form_submission_id',
+    'contact_id',
+    'title',
+    'company_name',
     'name',
     'email',
     'phone',
     'source',
     'status',
+    'priority',
+    'expected_value',
+    'currency_code',
     'score',
     'assigned_to',
+    'qualified_at',
+    'converted_at',
+    'lost_at',
+    'lost_reason',
     'message',
     'metadata',
 ])]
@@ -50,6 +60,10 @@ class Lead extends Model
         return [
             'metadata' => 'array',
             'score' => 'integer',
+            'expected_value' => 'decimal:2',
+            'qualified_at' => 'datetime',
+            'converted_at' => 'datetime',
+            'lost_at' => 'datetime',
             'deleted_at' => 'datetime',
         ];
     }
@@ -72,6 +86,11 @@ class Lead extends Model
     public function formSubmission(): BelongsTo
     {
         return $this->belongsTo(FormSubmission::class);
+    }
+
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class);
     }
 
     public function assignee(): BelongsTo
