@@ -127,4 +127,9 @@ class Lead extends Model
     {
         return $this->hasMany(CrmActivity::class);
     }
+
+    public function serviceRequests(): HasMany
+    {
+        return $this->hasMany(ServiceRequest::class);
+    }
 }

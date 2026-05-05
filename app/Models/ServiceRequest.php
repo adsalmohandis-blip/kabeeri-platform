@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Database\Factories\ContactFactory;
+use Database\Factories\ServiceRequestFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -16,43 +15,41 @@ use Illuminate\Support\Str;
     'organization_id',
     'company_id',
     'site_id',
-    'first_name',
-    'last_name',
-    'display_name',
-    'email',
-    'phone',
-    'mobile',
-    'job_title',
-    'contact_type',
+    'contact_id',
+    'lead_id',
+    'request_number',
+    'title',
+    'description',
+    'request_type',
     'status',
-    'source',
-    'owner_user_id',
-    'last_contacted_at',
+    'priority',
+    'assigned_to',
+    'due_at',
+    'closed_at',
     'metadata',
 ])]
-class Contact extends Model
+class ServiceRequest extends Model
 {
-    /** @use HasFactory<ContactFactory> */
+    /** @use HasFactory<ServiceRequestFactory> */
     use HasFactory, SoftDeletes;
 
     protected static function booted(): void
     {
-        static::creating(function (self $contact): void {
-            if (blank($contact->ulid)) {
-                $contact->ulid = (string) Str::ulid();
+        static::creating(function (self $request): void {
+            if (blank($request->ulid)) {
+                $request->ulid = (string) Str::ulid();
             }
         });
     }
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
     {
         return [
-            'last_contacted_at' => 'datetime',
+            'due_at' => 'datetime',
+            'closed_at' => 'datetime',
             'metadata' => 'array',
             'deleted_at' => 'datetime',
         ];
@@ -73,18 +70,18 @@ class Contact extends Model
         return $this->belongsTo(Site::class);
     }
 
-    public function owner(): BelongsTo
+    public function contact(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'owner_user_id');
+        return $this->belongsTo(Contact::class);
     }
 
-    public function crmActivities(): HasMany
+    public function lead(): BelongsTo
     {
-        return $this->hasMany(CrmActivity::class);
+        return $this->belongsTo(Lead::class);
     }
 
-    public function serviceRequests(): HasMany
+    public function assignee(): BelongsTo
     {
-        return $this->hasMany(ServiceRequest::class);
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

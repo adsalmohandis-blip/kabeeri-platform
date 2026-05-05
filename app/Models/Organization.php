@@ -144,6 +144,11 @@ class Organization extends Model
         return $this->hasMany(CrmActivity::class);
     }
 
+    public function serviceRequests(): HasMany
+    {
+        return $this->hasMany(ServiceRequest::class);
+    }
+
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);
