@@ -129,6 +129,11 @@ class Organization extends Model
         return $this->hasMany(Lead::class);
     }
 
+    public function importJobs(): HasMany
+    {
+        return $this->hasMany(ImportJob::class);
+    }
+
     public function taxonomies(): HasMany
     {
         return $this->hasMany(Taxonomy::class);
