@@ -3,9 +3,12 @@
 namespace App\Modules\Rabet\Services;
 
 use App\Models\AgencyPartnerProfile;
+use App\Models\MarketplaceCatalogItem;
 use App\Models\Organization;
+use App\Models\Package;
 use App\Models\PartnerCatalogShare;
 use App\Models\PartnerStorefront;
+use App\Models\Theme;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -42,6 +45,8 @@ class PartnerStorefrontService
      */
     public function shareDraft(PartnerStorefront $storefront, Model $catalogable, array $attributes = []): PartnerCatalogShare
     {
+        $this->assertShareableCatalogable($catalogable);
+
         return PartnerCatalogShare::query()->create([
             ...$attributes,
             'organization_id' => $storefront->organization_id,
@@ -52,5 +57,14 @@ class PartnerStorefrontService
             'status' => 'draft',
             'visibility' => 'private',
         ]);
+    }
+
+    private function assertShareableCatalogable(Model $catalogable): void
+    {
+        if (! in_array($catalogable::class, [Package::class, Theme::class, MarketplaceCatalogItem::class], true)) {
+            throw ValidationException::withMessages([
+                'catalogable' => 'Partner storefronts can only share package, theme, or marketplace catalog records.',
+            ]);
+        }
     }
 }
