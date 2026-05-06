@@ -18,11 +18,15 @@ class RootDashboardPageTest extends TestCase
             ->assertOk()
             ->assertSee('KABEERI Command Center')
             ->assertSee('Task Tracker Truth')
+            ->assertSee('Release Candidate')
+            ->assertSee('V15 Public Web Manifest')
+            ->assertSee('Next.js Public Runtime')
             ->assertSee('Database')
             ->assertSee('Modules')
             ->assertSee('Freemium')
             ->assertSee('Entitlements')
             ->assertSee('V9')
+            ->assertSee('V15')
             ->assertSee('FREEMIUM')
             ->assertSee('Free / Community');
     }
