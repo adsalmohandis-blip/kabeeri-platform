@@ -69,6 +69,17 @@ V9-V14 هي مسار UX/UI فوق الباك إند الموجود، وليست 
 - Pricing/subscription architecture.
 - Early access/demo request.
 
+مخرجات التنفيذ داخل المشروع:
+
+- `config/kabeeri_public.php`: مصدر truth للصفحات العامة، الجمهور المستهدف، رحلة onboarding، التسعير، FAQ، وخطة Next.js.
+- `App\Support\Ui\V11PublicExperience`: service يجهز بيانات V11، يفحص release readiness، ويلتقط طلبات الديمو كـ CRM leads.
+- `App\Http\Controllers\Web\PublicMarketingController`: controller لصفحات العرض العام ومسار contact sales.
+- Public routes: `/public`, `/for`, `/for/business-owners`, `/for/enterprise`, `/for/developers-creators`, `/for/marketers-partners`, `/wordpress-alternative`, `/use-cases/service-business`, `/templates`, `/onboarding`, `/onboarding/workspace-setup`, `/pricing`, `/trust`, `/contact-sales`.
+- `resources/views/public/v11-page.blade.php`: واجهة Blade bridge احترافية تفصل الجمهور عن الأدمن وتعرض المسارات حسب الصفحة.
+- `docs/kabeeri/ui/V11_PUBLIC_UX.md`: شرح تجربة الجمهور وحدودها.
+- `docs/kabeeri/ui/V11_RELEASE_CANDIDATE.md`: release gate واختبارات V11.
+- `tests/Feature/V11PublicExperienceTest.php`: اختبارات config/routes/render/contact/release readiness.
+
 ## V12
 
 هدف V12: شرح وتشغيل الثيمات والبلجنز والمطورين.

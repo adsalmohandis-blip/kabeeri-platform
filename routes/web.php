@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\MallServiceController;
 use App\Http\Controllers\Web\MallTalentController;
 use App\Http\Controllers\Web\MallTravelTourismController;
 use App\Http\Controllers\Web\PublicContentEntryController;
+use App\Http\Controllers\Web\PublicMarketingController;
 use App\Http\Controllers\Web\RobotsController;
 use App\Http\Controllers\Web\SitemapController;
 use App\Support\RootDashboardData;
@@ -25,6 +26,22 @@ Route::get('/', function () {
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
+
+Route::get('/public', [PublicMarketingController::class, 'landing'])->name('public.landing');
+Route::get('/for', [PublicMarketingController::class, 'audiences'])->name('public.audiences');
+Route::get('/for/business-owners', [PublicMarketingController::class, 'business'])->name('public.business');
+Route::get('/for/enterprise', [PublicMarketingController::class, 'enterprise'])->name('public.enterprise');
+Route::get('/for/developers-creators', [PublicMarketingController::class, 'developers'])->name('public.developers');
+Route::get('/for/marketers-partners', [PublicMarketingController::class, 'partners'])->name('public.partners');
+Route::get('/wordpress-alternative', [PublicMarketingController::class, 'wordpress'])->name('public.wordpress');
+Route::get('/use-cases/service-business', [PublicMarketingController::class, 'serviceBusiness'])->name('public.service-business');
+Route::get('/templates', [PublicMarketingController::class, 'templates'])->name('public.templates');
+Route::get('/onboarding', [PublicMarketingController::class, 'onboarding'])->name('public.onboarding');
+Route::get('/onboarding/workspace-setup', [PublicMarketingController::class, 'workspaceSetup'])->name('public.workspace-setup');
+Route::get('/pricing', [PublicMarketingController::class, 'pricing'])->name('public.pricing');
+Route::get('/trust', [PublicMarketingController::class, 'trust'])->name('public.trust');
+Route::get('/contact-sales', [PublicMarketingController::class, 'contact'])->name('public.contact');
+Route::post('/contact-sales', [PublicMarketingController::class, 'storeInquiry'])->name('public.contact.store');
 
 Route::prefix('api/mobile')->name('mobile.')->group(function (): void {
     Route::get('/config', [MobilePublicController::class, 'config'])->name('config');
