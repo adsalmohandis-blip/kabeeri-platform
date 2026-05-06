@@ -304,6 +304,11 @@ class Organization extends Model
         return $this->hasMany(BackofficeWorkspace::class);
     }
 
+    public function moderationCases(): HasMany
+    {
+        return $this->hasMany(ModerationCase::class);
+    }
+
     public function mallMirrorBusinesses(): HasMany
     {
         return $this->hasMany(MallMirrorBusiness::class);

@@ -190,4 +190,9 @@ class Site extends Model
     {
         return $this->hasMany(BackofficeWorkspace::class);
     }
+
+    public function moderationCases(): HasMany
+    {
+        return $this->hasMany(ModerationCase::class);
+    }
 }
