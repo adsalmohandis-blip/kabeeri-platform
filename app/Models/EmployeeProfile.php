@@ -81,4 +81,9 @@ class EmployeeProfile extends Model
     {
         return $this->hasMany(EmployeeEvaluation::class);
     }
+
+    public function workNetworkProfiles(): HasMany
+    {
+        return $this->hasMany(WorkNetworkProfile::class);
+    }
 }
