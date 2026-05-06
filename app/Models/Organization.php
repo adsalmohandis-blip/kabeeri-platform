@@ -254,6 +254,11 @@ class Organization extends Model
         return $this->hasMany(ReportSnapshot::class);
     }
 
+    public function dashboardWidgets(): HasMany
+    {
+        return $this->hasMany(DashboardWidget::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
