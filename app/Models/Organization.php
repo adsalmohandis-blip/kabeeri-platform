@@ -194,6 +194,11 @@ class Organization extends Model
         return $this->hasMany(Account::class);
     }
 
+    public function journalEntries(): HasMany
+    {
+        return $this->hasMany(JournalEntry::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
