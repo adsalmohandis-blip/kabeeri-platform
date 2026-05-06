@@ -100,6 +100,11 @@ class Company extends Model
         return $this->hasMany(BusinessProfile::class);
     }
 
+    public function backofficeWorkspaces(): HasMany
+    {
+        return $this->hasMany(BackofficeWorkspace::class);
+    }
+
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);

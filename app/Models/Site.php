@@ -185,4 +185,9 @@ class Site extends Model
     {
         return $this->hasMany(MallSyncSource::class);
     }
+
+    public function backofficeWorkspaces(): HasMany
+    {
+        return $this->hasMany(BackofficeWorkspace::class);
+    }
 }

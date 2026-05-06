@@ -299,6 +299,11 @@ class Organization extends Model
         return $this->hasMany(MallSyncEvent::class);
     }
 
+    public function backofficeWorkspaces(): HasMany
+    {
+        return $this->hasMany(BackofficeWorkspace::class);
+    }
+
     public function mallMirrorBusinesses(): HasMany
     {
         return $this->hasMany(MallMirrorBusiness::class);
