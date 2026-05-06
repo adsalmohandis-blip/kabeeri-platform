@@ -309,6 +309,51 @@
             "tests": null,
             "notes": "",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
+        },
+        {
+            "task_id": "T20",
+            "prompt_id": "20",
+            "title": "Next.js Theme Component Library Foundation",
+            "size": "Unknown",
+            "status": "pending",
+            "started_at": null,
+            "completed_by_codex_at": null,
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": null,
+            "tests": null,
+            "notes": "",
+            "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
+        },
+        {
+            "task_id": "T21",
+            "prompt_id": "21",
+            "title": "Theme Manifest to React Component Runtime Mapping",
+            "size": "Unknown",
+            "status": "pending",
+            "started_at": null,
+            "completed_by_codex_at": null,
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": null,
+            "tests": null,
+            "notes": "",
+            "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
+        },
+        {
+            "task_id": "T22",
+            "prompt_id": "22",
+            "title": "Marketplace Licensing Revenue Share UI Requirements",
+            "size": "Unknown",
+            "status": "pending",
+            "started_at": null,
+            "completed_by_codex_at": null,
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": null,
+            "tests": null,
+            "notes": "",
+            "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         }
     ]
 }

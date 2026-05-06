@@ -294,6 +294,36 @@
             "tests": null,
             "notes": "",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
+        },
+        {
+            "task_id": "T19",
+            "prompt_id": "19",
+            "title": "Next.js Public Runtime Build and Integration QA",
+            "size": "Unknown",
+            "status": "pending",
+            "started_at": null,
+            "completed_by_codex_at": null,
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": null,
+            "tests": null,
+            "notes": "",
+            "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
+        },
+        {
+            "task_id": "T20",
+            "prompt_id": "20",
+            "title": "Frontend Backend Separation Compliance Check",
+            "size": "Unknown",
+            "status": "pending",
+            "started_at": null,
+            "completed_by_codex_at": null,
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": null,
+            "tests": null,
+            "notes": "",
+            "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         }
     ]
 }

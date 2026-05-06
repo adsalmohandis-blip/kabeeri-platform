@@ -8,17 +8,25 @@ Current project stack from local project files:
 
 - Backend and routing: Laravel 13.
 - Internal admin UI: Filament 5 with Livewire-powered resources.
-- Public UI: Blade views under `resources/views`.
-- Frontend assets: Vite 8, Tailwind CSS 4 via `@tailwindcss/vite`.
+- Current public fallback UI: Blade views under `resources/views`.
+- Current Laravel asset pipeline: Vite 8, Tailwind CSS 4 via `@tailwindcss/vite`.
 - Test baseline: PHPUnit via `php artisan test`.
 
-Recommended UI direction:
+Recommended UI direction from KBR v1.6.6 docs:
+
+- Laravel remains API-first modular monolith for domain logic, DB, RBAC, jobs, and APIs.
+- Filament remains the primary internal admin UI.
+- Public web themes should move to Next.js + React + TypeScript + Tailwind.
+- Mobile direction remains Flutter shell consuming Mobile Theme Profiles and API Manifest.
+- Desktop direction remains Electron + React + TypeScript + SQLite.
+
+Execution direction for this repository:
 
 - Use Filament for all internal admin dashboards, CRUD resources, review queues, governance screens, and operational workflows.
-- Use Blade plus Vite/Tailwind for public marketing, onboarding, marketplace, Mall, public content, developer, partner, mobile web, and documentation pages.
+- Use Next.js + React + TypeScript + Tailwind as the primary public web/theme runtime according to KBR v1.6.6 Technology Governance. Use Blade only as current fallback/bridge pages until the Next.js runtime is scaffolded.
 - Keep public pages fast, crawlable, and Arabic/RTL-first.
 - Keep unsafe actions behind explicit admin flows, confirmations, policies, and tests.
-- Do not introduce a separate SPA framework until a documented requirement demands it.
+- Do not build the long-term public theme marketplace as Laravel Blade-only; v1.6.6 explicitly separates Laravel backend/admin from the Next.js public web theme runtime.
 
 ## 2. Primary UI Sections
 
@@ -309,9 +317,9 @@ External UI must answer:
 
 ## 5. Proposed UI Versions
 
-### V9 UI Foundation and Navigation
+### V9 UI Foundation, Navigation, and Frontend Runtime Decision
 
-Goal: define the visual system, shell structure, page inventory, and navigation architecture.
+Goal: define the visual system, shell structure, page inventory, navigation architecture, and the transition plan from Blade fallback pages to the documented Next.js public theme runtime.
 
 ### V10 Internal Admin System Check and Core Admin UX
 
@@ -337,8 +345,31 @@ Goal: make the entire UI pass quality checks before production/staging release.
 
 - Each version must start with rules/boundaries and readiness check tasks.
 - Every implemented page must have a named route or Filament resource/page.
-- Every new public page must be mobile-responsive and RTL-safe.
+- Every new public page must be mobile-responsive and RTL-safe. Long-term public pages should target the Next.js theme runtime; Blade pages are allowed only as fallback/bridge until that runtime exists.
 - Every new admin page must respect policies/tenant boundaries.
 - Every flow must have smoke tests or feature tests where possible.
 - Do not mark a UI task `codex_done` until the route/page renders and tests pass.
 - Keep task tracker truth aligned with actual implementation state.
+
+## 7. KBR v1.6.6 Documentation Alignment
+
+User-provided source path reviewed:
+
+`D:\My Project Ideas\Kabeeri\kabeeri_professional_knowledge_system_v1.6.6_task_tracking_auto\KBR_v1.6.6`
+
+Key source documents used:
+
+- `02_FOUNDATION_ARCHITECTURE/14_UI_UX_Admin_Navigation_AR.docx`
+- `18_TECHNOLOGY_GOVERNANCE/01_Technology_Stack_Governance_Decision_Records_AR.docx`
+- `18_TECHNOLOGY_GOVERNANCE/02_Frontend_Backend_Separation_Architecture_AR.docx`
+- `11_THEME_PLUGIN_MARKETING_ECOSYSTEM/12_Design_System_UI_Components_Library_AR.docx`
+- `11_THEME_PLUGIN_MARKETING_ECOSYSTEM/16_Marketplace_Licensing_Pricing_Revenue_Share_AR.docx`
+- `08_DEVELOPER_ECONOMY/01_Theme_Plugin_Developer_Economy_Architecture_AR.docx`
+
+Important alignment changes:
+
+- The internal admin must be context-first, permission-aware, role-based, and progressively disclosed.
+- The public web/theme runtime should be separated from Laravel and built with Next.js + React + TypeScript + Tailwind.
+- Laravel Blade should not be treated as the primary public theme runtime.
+- The theme/plugin marketplace must support manifests, permissions, review, compatibility checks, licensing metadata, and revenue share rules.
+- UI components must support Arabic-first typography, RTL/LTR, accessibility, semantic HTML, and reusable component primitives such as buttons, inputs, cards, tabs, modals, hero, pricing, FAQ, product cards, service grids, and profile cards.

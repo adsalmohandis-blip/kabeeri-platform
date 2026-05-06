@@ -264,6 +264,51 @@
             "tests": null,
             "notes": "",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
+        },
+        {
+            "task_id": "T17",
+            "prompt_id": "17",
+            "title": "Next.js Public Web Runtime Scaffold Decision and Setup Plan",
+            "size": "Unknown",
+            "status": "pending",
+            "started_at": null,
+            "completed_by_codex_at": null,
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": null,
+            "tests": null,
+            "notes": "",
+            "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
+        },
+        {
+            "task_id": "T18",
+            "prompt_id": "18",
+            "title": "Public API Data Contract Mapping for Marketing and Onboarding Pages",
+            "size": "Unknown",
+            "status": "pending",
+            "started_at": null,
+            "completed_by_codex_at": null,
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": null,
+            "tests": null,
+            "notes": "",
+            "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
+        },
+        {
+            "task_id": "T19",
+            "prompt_id": "19",
+            "title": "Blade Fallback to Next.js Migration Plan",
+            "size": "Unknown",
+            "status": "pending",
+            "started_at": null,
+            "completed_by_codex_at": null,
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": null,
+            "tests": null,
+            "notes": "",
+            "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         }
     ]
 }
