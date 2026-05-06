@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
     'ulid',
     'organization_id',
     'company_id',
+    'department_id',
+    'position_id',
     'user_id',
     'employee_number',
     'full_name',
@@ -62,5 +64,15 @@ class EmployeeProfile extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function position(): BelongsTo
+    {
+        return $this->belongsTo(Position::class);
     }
 }

@@ -23,6 +23,8 @@ class EmployeeProfileFactory extends Factory
         return [
             'organization_id' => Organization::factory(),
             'company_id' => null,
+            'department_id' => null,
+            'position_id' => null,
             'user_id' => null,
             'employee_number' => 'EMP-'.fake()->unique()->numberBetween(1000, 9999),
             'full_name' => fake()->name(),
