@@ -37,8 +37,8 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->unique(['organization_id', 'slug']);
-            $table->index(['organization_id', 'listing_status']);
-            $table->index(['listing_type', 'destination']);
+            $table->index(['organization_id', 'listing_status'], 'travel_tourism_org_status_idx');
+            $table->index(['listing_type', 'destination'], 'travel_tourism_type_destination_idx');
         });
     }
 
