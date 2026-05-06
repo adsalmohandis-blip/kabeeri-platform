@@ -7,6 +7,8 @@
 </head>
 <body>
     <main>
+        @include('mall.partials.navigation')
+
         <h1>Talent</h1>
 
         @forelse ($talent as $profile)

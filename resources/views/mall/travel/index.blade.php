@@ -7,6 +7,8 @@
 </head>
 <body>
     <main>
+        @include('mall.partials.navigation')
+
         <h1>Travel and Tourism</h1>
 
         @forelse ($listings as $listing)

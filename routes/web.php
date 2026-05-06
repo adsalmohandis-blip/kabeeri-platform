@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\MallBusinessDirectoryController;
 use App\Http\Controllers\Web\MallCourseController;
+use App\Http\Controllers\Web\MallHomeController;
 use App\Http\Controllers\Web\MallProductController;
 use App\Http\Controllers\Web\MallServiceController;
 use App\Http\Controllers\Web\MallTalentController;
@@ -18,6 +19,8 @@ Route::get('/', function () {
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
 
+Route::get('/mall', MallHomeController::class)
+    ->name('mall.index');
 Route::get('/mall/businesses', [MallBusinessDirectoryController::class, 'index'])
     ->name('mall.businesses.index');
 Route::get('/mall/businesses/{business:slug}', [MallBusinessDirectoryController::class, 'show'])

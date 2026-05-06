@@ -7,6 +7,8 @@
 </head>
 <body>
     <main>
+        @include('mall.partials.navigation')
+
         <h1>Products</h1>
 
         @forelse ($products as $product)
