@@ -17,6 +17,7 @@ use App\Http\Controllers\Web\PublicContentEntryController;
 use App\Http\Controllers\Web\PublicMarketingController;
 use App\Http\Controllers\Web\RobotsController;
 use App\Http\Controllers\Web\SitemapController;
+use App\Http\Controllers\Web\UiReleaseCandidateController;
 use App\Support\RootDashboardData;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,7 @@ Route::get('/', function () {
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
+Route::get('/ui/release-candidate', UiReleaseCandidateController::class)->name('ui.release-candidate');
 
 Route::get('/public', [PublicMarketingController::class, 'landing'])->name('public.landing');
 Route::get('/for', [PublicMarketingController::class, 'audiences'])->name('public.audiences');

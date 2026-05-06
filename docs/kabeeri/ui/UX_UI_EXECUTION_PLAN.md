@@ -147,6 +147,17 @@ V9-V14 هي مسار UX/UI فوق الباك إند الموجود، وليست 
 - Design system coverage QA.
 - Docs and release report.
 
+مخرجات التنفيذ داخل المشروع:
+
+- `config/kabeeri_ui_quality.php`: مصدر truth لقواعد V14، route groups، accessibility، responsive، navigation، states، security/permission، performance، manual QA، Next.js separation، وquality gates.
+- `App\Support\Ui\V14UiReleaseCandidate`: service يجمع route inventory وcoverage report وrelease readiness فوق V9-V13.
+- `App\Http\Controllers\Web\UiReleaseCandidateController`: controller لتقرير الجاهزية النهائي.
+- Route: `/ui/release-candidate`.
+- `resources/views/ui/v14-release-candidate.blade.php`: واجهة release candidate center.
+- `docs/kabeeri/ui/V14_UI_QA_HANDOFF.md`: handoff checklist لمالك المنصة وفريق التطوير.
+- `docs/kabeeri/ui/V14_UI_RELEASE_CANDIDATE.md`: release candidate report وGo/No-Go criteria.
+- `tests/Feature/V14UiReleaseCandidateTest.php`: اختبارات route inventory، coverage، docs، rendering، وrelease readiness.
+
 ## قواعد UI
 
 - لا تعرض كل المنصة دفعة واحدة للجمهور.
