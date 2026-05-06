@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\MallBusinessDirectoryController;
+use App\Http\Controllers\Web\MallCourseController;
 use App\Http\Controllers\Web\MallProductController;
 use App\Http\Controllers\Web\MallServiceController;
 use App\Http\Controllers\Web\PublicContentEntryController;
@@ -27,6 +28,10 @@ Route::get('/mall/services', [MallServiceController::class, 'index'])
     ->name('mall.services.index');
 Route::get('/mall/services/{service:slug}', [MallServiceController::class, 'show'])
     ->name('mall.services.show');
+Route::get('/mall/courses', [MallCourseController::class, 'index'])
+    ->name('mall.courses.index');
+Route::get('/mall/courses/{course:slug}', [MallCourseController::class, 'show'])
+    ->name('mall.courses.show');
 
 Route::scopeBindings()->group(function (): void {
     Route::get('/app/{site:slug}/{contentEntry:slug}', PublicContentEntryController::class)
