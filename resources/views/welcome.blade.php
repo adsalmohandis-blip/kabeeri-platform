@@ -87,6 +87,7 @@
         .section{margin-top:38px}.section-title{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:16px}.section-title h2{margin:0;font-family:Almarai,sans-serif;font-size:clamp(29px,3.2vw,46px);letter-spacing:-.8px}.section-title p{max-width:650px;margin:0;color:var(--muted);line-height:1.85}.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{border:1px solid var(--line);border-radius:30px;background:var(--cream);box-shadow:var(--soft);padding:24px}.card h3{margin:0 0 10px;font-family:Almarai,sans-serif;font-size:26px}.card p{margin:0;color:var(--muted);line-height:1.8}.tag{display:inline-flex;margin-bottom:14px;padding:8px 11px;border-radius:999px;background:rgba(65,83,60,.12);color:var(--olive);font-size:12px;font-weight:800}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.chip{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.56);font-size:12px;font-weight:800}.path{padding:15px;border-radius:18px;background:rgba(255,255,255,.44)}
         .step{position:relative;overflow:hidden;min-height:245px}.step:after{content:attr(data-step);position:absolute;inset-inline-end:18px;bottom:8px;color:rgba(21,17,12,.06);font-family:Almarai,sans-serif;font-weight:800;font-size:92px}.step small{color:var(--clay);font-weight:800}.feature{color:var(--paper);background:linear-gradient(145deg,#1f1811,#74442a 64%,#9b6432)}.feature p{color:rgba(255,249,237,.76)}
         .plan.featured{background:linear-gradient(160deg,rgba(31,24,17,.95),rgba(65,83,60,.95));color:var(--paper)}.plan ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:10px}.plan li{color:var(--muted)}.plan.featured li,.plan.featured p{color:rgba(255,249,237,.76)}.version-list{display:grid;gap:9px;margin-top:16px}.version-row{display:grid;grid-template-columns:48px 1fr 80px;gap:10px;align-items:center;padding:11px 12px;border-radius:16px;background:rgba(255,255,255,.46)}.bar{height:8px;border-radius:999px;background:rgba(21,17,12,.09);overflow:hidden}.bar span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--olive),var(--gold2))}.version-row em{font-style:normal;color:var(--muted);font-size:12px;text-align:left}.warn{color:#6f3524!important;font-weight:800}
+        .split-label{display:inline-flex;margin-bottom:14px;padding:9px 13px;border-radius:999px;background:rgba(152,85,54,.12);color:#6f3524;font-size:13px;font-weight:800}.portal{position:relative;overflow:hidden;min-height:310px}.portal.dark{color:var(--paper);background:linear-gradient(145deg,#1f1811,#41533c)}.portal.dark p,.portal.dark li{color:rgba(255,249,237,.76)}.portal ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:10px}.portal li{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.38);color:var(--muted)}.portal.dark li{background:rgba(255,249,237,.09)}.route-list{display:grid;gap:10px;margin-top:16px}.route-list a{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:15px;background:rgba(255,255,255,.44);font-weight:800}.portal.dark .route-list a{background:rgba(255,249,237,.09)}
         .final{margin-top:38px;padding:clamp(26px,5vw,48px);border-radius:38px;border:1px solid rgba(21,17,12,.12);background:linear-gradient(145deg,rgba(255,249,237,.88),rgba(255,239,203,.76));box-shadow:var(--shadow);text-align:center}.final h2{margin:0;font-family:Almarai,sans-serif;font-size:clamp(32px,5vw,62px);line-height:1.12}.final p{max-width:780px;margin:18px auto 26px;color:var(--muted);line-height:1.9;font-size:18px}
         @keyframes floatA{from{transform:translate3d(0,0,0) rotate(0)}to{transform:translate3d(38px,30px,0) rotate(9deg)}}@media(max-width:1100px){.hero-grid,.grid-2{grid-template-columns:1fr}.grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.shell{width:min(100% - 22px,1280px);padding-top:12px}.topbar{position:static;flex-direction:column;align-items:stretch;border-radius:22px}.topnav{justify-content:stretch}.nav-link{flex:1}.hero{border-radius:30px}.hero-grid{padding:24px}h1{letter-spacing:-1.2px}.grid-3,.grid-4,.metrics{grid-template-columns:1fr}.section-title{flex-direction:column;align-items:start}.version-row{grid-template-columns:44px 1fr 72px}}
     </style>
@@ -102,6 +103,8 @@
                 </div>
             </a>
             <nav class="topnav" aria-label="روابط الصفحة">
+                <a class="nav-link" href="#admin-developer">Admin/Dev</a>
+                <a class="nav-link" href="#public-audience">الجمهور</a>
                 <a class="nav-link" href="#audiences">لمن؟</a>
                 <a class="nav-link" href="#onboarding">Onboarding</a>
                 <a class="nav-link" href="#themes">الثيمات والبلجنز</a>
@@ -142,6 +145,59 @@
                 </aside>
             </div>
         </main>
+
+        <section class="section" id="admin-developer">
+            <div class="section-title">
+                <div>
+                    <span class="split-label">القسم الداخلي: الأدمن والمطور</span>
+                    <h2>مساحة تشغيل لك أنت: ماذا أبني؟ ماذا أراجع؟ وأين أتحكم؟</h2>
+                </div>
+                <p>هذا الجزء موجه لصاحب المنصة أو المطور الرئيسي. يختصر حالة البناء، روابط التشغيل، ونقاط القرار قبل تحويل الصفحة العامة إلى تجربة عميل نهائية.</p>
+            </div>
+            <div class="grid-2">
+                <article class="card portal dark">
+                    <span class="tag">Admin Developer</span>
+                    <h3>لوحة قيادة البناء والتشغيل</h3>
+                    <p>استخدم هذا المسار لإدارة المنصة، مراجعة الموارد، متابعة التاسكات، وتجهيز UX packs القادمة بدون خلطها مع الرسالة التسويقية للعميل.</p>
+                    <ul>
+                        <li>راجع حالة V1-V8 وخصوصًا V2 pending قبل النشر.</li>
+                        <li>ادخل لوحة الإدارة لإدارة الثيمات، البلجنز، المول، والموارد.</li>
+                        <li>حوّل أي قرار UX/UI كبير إلى task pack واضح قبل التنفيذ.</li>
+                    </ul>
+                    <div class="route-list">
+                        <a href="/admin"><span>فتح لوحة الإدارة</span><span>/admin</span></a>
+                        <a href="{{ route('mall.index') }}"><span>معاينة المول</span><span>/mall</span></a>
+                        <a href="{{ route('mobile.manifest') }}"><span>Mobile manifest</span><span>/api/mobile/manifest</span></a>
+                    </div>
+                </article>
+
+                <article class="card portal">
+                    <span class="tag">Public Experience</span>
+                    <h3>الصفحة العامة للعميل والجمهور</h3>
+                    <p>هذا هو المسار الذي يراه العميل والمطور الخارجي والمسوق. لا يحتاج تفاصيل تقنية كثيرة؛ يحتاج أن يفهم القيمة، مسار البداية، الاشتراك، وما الذي سيحصل عليه.</p>
+                    <ul>
+                        <li>رسالة واضحة: كابيري منصة تشغيل ونمو، وليست مجرد موقع.</li>
+                        <li>تقسيم الجمهور: أعمال، مؤسسات، مطورين، مسوقين وشركاء.</li>
+                        <li>شرح الثيمات والبلجنز كجزء من Marketplace قابل للنمو.</li>
+                    </ul>
+                    <div class="route-list">
+                        <a href="#public-audience"><span>ابدأ قسم الجمهور</span><span>Public</span></a>
+                        <a href="#onboarding"><span>مسار Onboarding</span><span>4 خطوات</span></a>
+                        <a href="#plans"><span>الاشتراكات</span><span>Plans</span></a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="public-audience">
+            <div class="section-title">
+                <div>
+                    <span class="split-label">القسم العام: الجمهور المستهدف</span>
+                    <h2>هنا نشرح المنصة للعميل، المطور، المسوق، والشريك.</h2>
+                </div>
+                <p>من هذه النقطة يبدأ المحتوى التسويقي والتعريفي: لمن المنصة، كيف يبدأ، ماذا يحصل عليه، وكيف تنمو معه.</p>
+            </div>
+        </section>
 
         <section class="section" id="audiences">
             <div class="section-title">
