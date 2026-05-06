@@ -414,6 +414,11 @@ class Organization extends Model
         return $this->hasMany(WorkNetworkProfile::class);
     }
 
+    public function academyBadgeAwards(): HasMany
+    {
+        return $this->hasMany(AcademyBadgeAward::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'organization_memberships')

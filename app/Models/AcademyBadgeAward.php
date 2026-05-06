@@ -2,42 +2,36 @@
 
 namespace App\Models;
 
-use Database\Factories\WorkNetworkProfileFactory;
+use Database\Factories\AcademyBadgeAwardFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 #[Fillable([
     'ulid',
     'organization_id',
+    'academy_badge_id',
     'user_id',
-    'employee_profile_id',
-    'display_name',
-    'slug',
-    'headline',
-    'bio',
-    'skills',
-    'links',
-    'visibility',
+    'work_network_profile_id',
+    'awarded_by_user_id',
     'status',
-    'availability_status',
-    'published_at',
+    'awarded_at',
+    'expires_at',
     'metadata',
 ])]
-class WorkNetworkProfile extends Model
+class AcademyBadgeAward extends Model
 {
-    /** @use HasFactory<WorkNetworkProfileFactory> */
+    /** @use HasFactory<AcademyBadgeAwardFactory> */
     use HasFactory, SoftDeletes;
 
     protected static function booted(): void
     {
-        static::creating(function (self $profile): void {
-            if (blank($profile->ulid)) {
-                $profile->ulid = (string) Str::ulid();
+        static::creating(function (self $award): void {
+            if (blank($award->ulid)) {
+                $award->ulid = (string) Str::ulid();
             }
         });
     }
@@ -48,9 +42,8 @@ class WorkNetworkProfile extends Model
     protected function casts(): array
     {
         return [
-            'skills' => 'array',
-            'links' => 'array',
-            'published_at' => 'datetime',
+            'awarded_at' => 'datetime',
+            'expires_at' => 'datetime',
             'metadata' => 'array',
             'deleted_at' => 'datetime',
         ];
@@ -61,18 +54,23 @@ class WorkNetworkProfile extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function academyBadge(): BelongsTo
+    {
+        return $this->belongsTo(AcademyBadge::class);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function employeeProfile(): BelongsTo
+    public function workNetworkProfile(): BelongsTo
     {
-        return $this->belongsTo(EmployeeProfile::class);
+        return $this->belongsTo(WorkNetworkProfile::class);
     }
 
-    public function academyBadgeAwards(): HasMany
+    public function awardedBy(): BelongsTo
     {
-        return $this->hasMany(AcademyBadgeAward::class);
+        return $this->belongsTo(User::class, 'awarded_by_user_id');
     }
 }
