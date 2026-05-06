@@ -19,7 +19,6 @@ use App\Models\Warehouse;
 use App\Models\WorkflowDefinition;
 use App\Modules\BusinessOperations\Services\ChartOfAccountsService;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class V3DemoSeeder extends Seeder
 {
@@ -164,7 +163,7 @@ class V3DemoSeeder extends Seeder
                 'title' => 'V3 Demo Widget',
                 'widget_type' => 'metric',
                 'status' => 'active',
-                'settings' => ['size' => 'sm', 'token' => Str::slug($warehouse->code ?? 'demo')],
+                'settings' => ['size' => 'sm', 'warehouse_code' => $warehouse->code ?? 'demo'],
             ],
         );
     }
