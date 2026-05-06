@@ -357,6 +357,10 @@ User-provided source path reviewed:
 
 `D:\My Project Ideas\Kabeeri\kabeeri_professional_knowledge_system_v1.6.6_task_tracking_auto\KBR_v1.6.6`
 
+Deep review output:
+
+- `docs/KBR_V166_DEEP_UI_UX_REVIEW.md`
+
 Key source documents used:
 
 - `02_FOUNDATION_ARCHITECTURE/14_UI_UX_Admin_Navigation_AR.docx`
@@ -373,3 +377,65 @@ Important alignment changes:
 - Laravel Blade should not be treated as the primary public theme runtime.
 - The theme/plugin marketplace must support manifests, permissions, review, compatibility checks, licensing metadata, and revenue share rules.
 - UI components must support Arabic-first typography, RTL/LTR, accessibility, semantic HTML, and reusable component primitives such as buttons, inputs, cards, tabs, modals, hero, pricing, FAQ, product cards, service grids, and profile cards.
+
+## 8. Deep Documentation Decisions
+
+These decisions are binding for V9-V14 unless the owner explicitly changes the product direction.
+
+### 8.1 Product Story
+
+- Do not present Kabeeri publicly as `CMS + ERP + Marketplace + AI + Rabet + Commerce + Teams + Developer Platform` all at once.
+- Present the public path progressively: stronger website than WordPress, easier commerce than WooCommerce, verified company via Rabet, gradual operations/ERP, public Kabeeri Mall visibility, then full growth platform.
+- The root/public UI must separate audience paths for business owners, agencies, developers/creators, marketers/partners, and enterprise buyers.
+- Pricing UI must support subscriptions, modules, verification fees, Mall visibility, AI credits, agency plans, enterprise contracts, and marketplace revenue share.
+
+### 8.2 Admin Spaces
+
+The admin UI must be organized around spaces, not one huge menu:
+
+- Personal Space.
+- Organization Workspace.
+- Site Admin.
+- Company Admin / Rabet OS.
+- Commerce Admin.
+- ERP Admin.
+- Kabeeri Mall Console.
+- Talent Console.
+- Kabeeri Teams.
+- Developer Console.
+- Billing Console.
+- Platform Admin.
+
+Each admin space must show the current context, relevant work, allowed actions, blocked actions, and review/approval queues where applicable.
+
+### 8.3 Naming Rules
+
+- Use `Kabeeri App` in user-facing copy when a non-technical user is managing a website, store, landing page, blog, or portal.
+- Keep `Site` as the technical database/backend term where needed.
+- Use `Organization` for workspace/admin scope.
+- Use `Company` for the legal/business entity.
+- Use `BusinessProfile` or business profile copy for public Mall appearance.
+- Do not mix `Kabeeri Marketplace` with `Kabeeri Mall`.
+
+### 8.4 Marketplace and Mall Separation
+
+- Kabeeri Marketplace is the internal extension marketplace for plugins, themes, ERP modules, commerce apps, connectors, AI skills, templates, industry solutions, and developer tools.
+- Kabeeri Mall is the external public marketplace for businesses, services, products, talent, verified companies, and B2B opportunities.
+- Marketplace install/update flows must show permissions, compatibility, license, signing, backup/rollback, and activity logs.
+- Mall public flows must show verification, moderation, trust, reporting, reviews, listing claim/submit, featured listings, lead generation, and disputes where relevant.
+
+### 8.5 Developer Economy
+
+- Developer/creator UX is a first-class product path.
+- Required concepts include Kabeeri Creator, Kabeeri Developer, Certified Creator, Publisher Account, Developer Profile, Design Market, and Package Store.
+- Required package lifecycle states are draft, submitted, under_review, needs_changes, approved, published, suspended, deprecated, and removed.
+- Required review flow is local tests, manifest validation, upload to Developer Console, automated dependency/permission/security/performance/RTL/accessibility/license checks, manual review, signing, publish, monitoring, reviews, and support obligations.
+
+### 8.6 UI Quality Gates
+
+- V9 must define tokens, spaces, route registry, and frontend/backend boundary before broad page production.
+- V10 must prove permission-aware admin navigation.
+- V11 must prove progressive public onboarding.
+- V12 must prove package manifest, permissions, signing, compatibility, licensing, and revenue-share UX.
+- V13 must prove public Mall trust/moderation and external user flows.
+- V14 must prove accessibility, RTL/LTR, responsive behavior, smoke tests, docs, and Next.js separation compliance.
