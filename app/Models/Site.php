@@ -180,4 +180,9 @@ class Site extends Model
     {
         return $this->hasMany(MallPublicationConsent::class);
     }
+
+    public function mallSyncSources(): HasMany
+    {
+        return $this->hasMany(MallSyncSource::class);
+    }
 }

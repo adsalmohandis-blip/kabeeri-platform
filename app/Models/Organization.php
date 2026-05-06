@@ -289,6 +289,11 @@ class Organization extends Model
         return $this->hasMany(MallPublicationConsent::class);
     }
 
+    public function mallSyncSources(): HasMany
+    {
+        return $this->hasMany(MallSyncSource::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);

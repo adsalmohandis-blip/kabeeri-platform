@@ -42,4 +42,9 @@ class ExternalSource extends Model
     {
         return $this->hasMany(CsvImport::class);
     }
+
+    public function mallSyncSources(): HasMany
+    {
+        return $this->hasMany(MallSyncSource::class);
+    }
 }
