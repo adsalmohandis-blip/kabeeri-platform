@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome', [
         'dashboard' => RootDashboardData::make(),
     ]);
-});
+})->name('home');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');

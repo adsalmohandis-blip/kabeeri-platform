@@ -6,6 +6,78 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'IBM Plex Sans Arabic', 'Almarai', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --color-kabeeri-ink: #17130d;
+    --color-kabeeri-paper: #fffaf0;
+    --color-kabeeri-sand: #f2ddb8;
+    --color-kabeeri-bronze: #c98a2e;
+    --color-kabeeri-olive: #3f5e47;
+    --color-kabeeri-sage: #78956f;
+    --color-kabeeri-clay: #9a5539;
+    --color-kabeeri-date: #20170f;
+    --color-kabeeri-sky: #2f5f73;
+    --radius-kabeeri-card: 1.75rem;
+    --shadow-kabeeri-soft: 0 18px 50px rgb(69 43 16 / 10%);
+    --shadow-kabeeri-strong: 0 30px 90px rgb(69 43 16 / 18%);
+}
+
+@layer base {
+    :root {
+        --kbr-ink: #17130d;
+        --kbr-paper: #fffaf0;
+        --kbr-sand: #f2ddb8;
+        --kbr-bronze: #c98a2e;
+        --kbr-olive: #3f5e47;
+        --kbr-sage: #78956f;
+        --kbr-clay: #9a5539;
+        --kbr-date: #20170f;
+        --kbr-sky: #2f5f73;
+        --kbr-success: #2f7d46;
+        --kbr-warning: #a76b1f;
+        --kbr-danger: #9b3f30;
+        --kbr-muted: #756a5e;
+        --kbr-focus-ring: 0 0 0 4px rgb(201 138 46 / 25%);
+    }
+
+    html {
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        color: var(--kbr-ink);
+        background: var(--kbr-paper);
+        font-family: var(--font-sans);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--kbr-bronze);
+        outline-offset: 3px;
+        box-shadow: var(--kbr-focus-ring);
+    }
+}
+
+@layer components {
+    .kbr-container {
+        width: min(100% - 2rem, 88rem);
+        margin-inline: auto;
+    }
+
+    .kbr-card {
+        border: 1px solid rgb(23 19 13 / 13%);
+        border-radius: var(--radius-kabeeri-card);
+        background: rgb(255 250 240 / 78%);
+        box-shadow: var(--shadow-kabeeri-soft);
+    }
+
+    .kbr-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: .5rem .8rem;
+        background: rgb(63 94 71 / 12%);
+        color: var(--kbr-olive);
+        font-size: .8rem;
+        font-weight: 800;
+    }
 }

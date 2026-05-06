@@ -19,6 +19,16 @@ V9-V14 هي مسار UX/UI فوق الباك إند الموجود، وليست 
 - RTL/accessibility/responsive standards.
 - UI smoke strategy.
 
+مخرجات التنفيذ داخل المشروع:
+
+- `config/kabeeri_ui.php`: مصدر truth للـ runtime boundaries والـ design tokens والـ admin spaces والـ route registry.
+- `App\Support\Ui\V9UiFoundation`: تقرير readiness قابل للاختبار.
+- `resources/css/app.css`: بداية tokens قابلة للاستخدام في Vite/Tailwind.
+- `docs/kabeeri/ui/V9_UI_FOUNDATION.md`: قواعد V9 وrelease gate.
+- `docs/kabeeri/ui/ROUTE_PAGE_REGISTRY.md`: سجل الصفحات والمسارات.
+- `docs/kabeeri/ui/UI_SMOKE_TEST_STRATEGY.md`: استراتيجية smoke testing.
+- `docs/kabeeri/ui/NEXT_PUBLIC_RUNTIME_PLAN.md`: خطة Next.js public runtime.
+
 ## V10
 
 هدف V10: جعل الأدمن مفهوم وقابل للتشغيل.
