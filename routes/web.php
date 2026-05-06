@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\MallCourseController;
 use App\Http\Controllers\Web\MallProductController;
 use App\Http\Controllers\Web\MallServiceController;
 use App\Http\Controllers\Web\MallTalentController;
+use App\Http\Controllers\Web\MallTravelTourismController;
 use App\Http\Controllers\Web\PublicContentEntryController;
 use App\Http\Controllers\Web\RobotsController;
 use App\Http\Controllers\Web\SitemapController;
@@ -37,6 +38,10 @@ Route::get('/mall/talent', [MallTalentController::class, 'index'])
     ->name('mall.talent.index');
 Route::get('/mall/talent/{talent:slug}', [MallTalentController::class, 'show'])
     ->name('mall.talent.show');
+Route::get('/mall/travel', [MallTravelTourismController::class, 'index'])
+    ->name('mall.travel.index');
+Route::get('/mall/travel/{listing:slug}', [MallTravelTourismController::class, 'show'])
+    ->name('mall.travel.show');
 
 Route::scopeBindings()->group(function (): void {
     Route::get('/app/{site:slug}/{contentEntry:slug}', PublicContentEntryController::class)
