@@ -103,8 +103,8 @@
                 </div>
             </a>
             <nav class="topnav" aria-label="روابط الصفحة">
-                <a class="nav-link" href="#admin-developer">Admin/Dev</a>
-                <a class="nav-link" href="#public-audience">الجمهور</a>
+                <a class="nav-link" href="#admin-developer">فحص النظام</a>
+                <a class="nav-link" href="#public-audience">عرض المنصة</a>
                 <a class="nav-link" href="#audiences">لمن؟</a>
                 <a class="nav-link" href="#onboarding">Onboarding</a>
                 <a class="nav-link" href="#themes">الثيمات والبلجنز</a>
@@ -138,9 +138,9 @@
                         </div>
                     </div>
                     <div class="metrics">
-                        <div class="metric"><span>Build</span><strong>{{ $overallPercent }}%</strong></div>
-                        <div class="metric"><span>Tasks</span><strong>{{ $totalTasks }}</strong></div>
-                        <div class="metric"><span>Pending</span><strong>{{ $totalPending }}</strong></div>
+                        <div class="metric"><span>System build</span><strong>{{ $overallPercent }}%</strong></div>
+                        <div class="metric"><span>Tracked tasks</span><strong>{{ $totalTasks }}</strong></div>
+                        <div class="metric"><span>Needs action</span><strong>{{ $totalPending }}</strong></div>
                     </div>
                 </aside>
             </div>
@@ -149,20 +149,20 @@
         <section class="section" id="admin-developer">
             <div class="section-title">
                 <div>
-                    <span class="split-label">القسم الداخلي: الأدمن والمطور</span>
-                    <h2>مساحة تشغيل لك أنت: ماذا أبني؟ ماذا أراجع؟ وأين أتحكم؟</h2>
+                    <span class="split-label">قسم فحص النظام للأدمن</span>
+                    <h2>Dashboard داخلي للتأكد من حالة النظام قبل أي نشر أو عرض للعميل.</h2>
                 </div>
-                <p>هذا الجزء موجه لصاحب المنصة أو المطور الرئيسي. يختصر حالة البناء، روابط التشغيل، ونقاط القرار قبل تحويل الصفحة العامة إلى تجربة عميل نهائية.</p>
+                <p>هذا الجزء مخصص للأدمن والمطور الرئيسي فقط: فحص حالة التاسكات، الوصول السريع للوحة الإدارة، مراجعة المسارات، ومعرفة ما يحتاج قرار قبل النشر.</p>
             </div>
             <div class="grid-2">
                 <article class="card portal dark">
-                    <span class="tag">Admin Developer</span>
-                    <h3>لوحة قيادة البناء والتشغيل</h3>
-                    <p>استخدم هذا المسار لإدارة المنصة، مراجعة الموارد، متابعة التاسكات، وتجهيز UX packs القادمة بدون خلطها مع الرسالة التسويقية للعميل.</p>
+                    <span class="tag">System Check</span>
+                    <h3>فحص النظام والتشغيل</h3>
+                    <p>استخدم هذا المسار كغرفة تحكم داخلية: هل الجداول محدثة؟ هل التاسكات مكتملة؟ هل توجد نقاط pending؟ وهل روابط التشغيل الأساسية تعمل؟</p>
                     <ul>
-                        <li>راجع حالة V1-V8 وخصوصًا V2 pending قبل النشر.</li>
-                        <li>ادخل لوحة الإدارة لإدارة الثيمات، البلجنز، المول، والموارد.</li>
-                        <li>حوّل أي قرار UX/UI كبير إلى task pack واضح قبل التنفيذ.</li>
+                        <li>حالة البناء الحالية: {{ $overallPercent }}% من التاسكات المتتبعة مكتملة.</li>
+                        <li>عدد التاسكات التي تحتاج إجراء: {{ $totalPending }}.</li>
+                        <li>راجع V2 pending وأي UX task pack قبل اعتماد النشر.</li>
                     </ul>
                     <div class="route-list">
                         <a href="/admin"><span>فتح لوحة الإدارة</span><span>/admin</span></a>
@@ -172,16 +172,16 @@
                 </article>
 
                 <article class="card portal">
-                    <span class="tag">Public Experience</span>
-                    <h3>الصفحة العامة للعميل والجمهور</h3>
-                    <p>هذا هو المسار الذي يراه العميل والمطور الخارجي والمسوق. لا يحتاج تفاصيل تقنية كثيرة؛ يحتاج أن يفهم القيمة، مسار البداية، الاشتراك، وما الذي سيحصل عليه.</p>
+                    <span class="tag">Admin Actions</span>
+                    <h3>إجراءات الأدمن السريعة</h3>
+                    <p>هذا الجزء لا يشرح المنصة للعميل؛ بل يساعدك أنت على اتخاذ قرار التشغيل التالي بسرعة: إدارة، معاينة، اختبار API، أو الانتقال للعرض العام.</p>
                     <ul>
-                        <li>رسالة واضحة: كابيري منصة تشغيل ونمو، وليست مجرد موقع.</li>
-                        <li>تقسيم الجمهور: أعمال، مؤسسات، مطورين، مسوقين وشركاء.</li>
-                        <li>شرح الثيمات والبلجنز كجزء من Marketplace قابل للنمو.</li>
+                        <li>افتح لوحة الإدارة لإدارة الموارد والثيمات والبلجنز.</li>
+                        <li>افتح المول لمعاينة تجربة الجمهور.</li>
+                        <li>افتح قسم العرض العام لمراجعة الرسالة التسويقية.</li>
                     </ul>
                     <div class="route-list">
-                        <a href="#public-audience"><span>ابدأ قسم الجمهور</span><span>Public</span></a>
+                        <a href="#public-audience"><span>ابدأ عرض الجمهور</span><span>Public</span></a>
                         <a href="#onboarding"><span>مسار Onboarding</span><span>4 خطوات</span></a>
                         <a href="#plans"><span>الاشتراكات</span><span>Plans</span></a>
                     </div>
@@ -192,10 +192,10 @@
         <section class="section" id="public-audience">
             <div class="section-title">
                 <div>
-                    <span class="split-label">القسم العام: الجمهور المستهدف</span>
-                    <h2>هنا نشرح المنصة للعميل، المطور، المسوق، والشريك.</h2>
+                    <span class="split-label">قسم عرض التفاصيل والإمكانيات للجمهور المستهدف</span>
+                    <h2>من هنا يبدأ شرح كابيري للعميل والمطور والمسوق والشريك.</h2>
                 </div>
-                <p>من هذه النقطة يبدأ المحتوى التسويقي والتعريفي: لمن المنصة، كيف يبدأ، ماذا يحصل عليه، وكيف تنمو معه.</p>
+                <p>هذا الجزء هو الوجه العام للمنصة: ماذا تفعل كابيري، من تستهدف، كيف يبدأ المستخدم، ما الإمكانيات المتاحة، وما قيمة الثيمات والبلجنز والاشتراكات.</p>
             </div>
         </section>
 
