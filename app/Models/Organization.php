@@ -404,6 +404,11 @@ class Organization extends Model
         return $this->hasMany(AgencyPartnerProfile::class);
     }
 
+    public function agencyDashboardSnapshots(): HasMany
+    {
+        return $this->hasMany(AgencyDashboardSnapshot::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'organization_memberships')
