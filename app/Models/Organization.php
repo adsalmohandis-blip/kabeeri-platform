@@ -294,6 +294,11 @@ class Organization extends Model
         return $this->hasMany(MallSyncSource::class);
     }
 
+    public function mallSyncEvents(): HasMany
+    {
+        return $this->hasMany(MallSyncEvent::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
