@@ -120,6 +120,11 @@ class Company extends Model
         return $this->hasMany(LegalPartnerProfile::class);
     }
 
+    public function creatorProfiles(): HasMany
+    {
+        return $this->hasMany(CreatorProfile::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'company_memberships')

@@ -394,6 +394,11 @@ class Organization extends Model
         return $this->hasMany(TrustBadgeAward::class);
     }
 
+    public function creatorProfiles(): HasMany
+    {
+        return $this->hasMany(CreatorProfile::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'organization_memberships')
