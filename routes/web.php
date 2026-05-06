@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\MallBusinessDirectoryController;
 use App\Http\Controllers\Web\MallProductController;
+use App\Http\Controllers\Web\MallServiceController;
 use App\Http\Controllers\Web\PublicContentEntryController;
 use App\Http\Controllers\Web\RobotsController;
 use App\Http\Controllers\Web\SitemapController;
@@ -22,6 +23,10 @@ Route::get('/mall/products', [MallProductController::class, 'index'])
     ->name('mall.products.index');
 Route::get('/mall/products/{product:slug}', [MallProductController::class, 'show'])
     ->name('mall.products.show');
+Route::get('/mall/services', [MallServiceController::class, 'index'])
+    ->name('mall.services.index');
+Route::get('/mall/services/{service:slug}', [MallServiceController::class, 'show'])
+    ->name('mall.services.show');
 
 Route::scopeBindings()->group(function (): void {
     Route::get('/app/{site:slug}/{contentEntry:slug}', PublicContentEntryController::class)
