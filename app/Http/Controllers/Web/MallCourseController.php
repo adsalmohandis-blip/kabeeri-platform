@@ -4,16 +4,22 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\MallMirrorCourse;
+use App\Support\Ui\V13ExternalExperience;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class MallCourseController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $courses = MallMirrorCourse::query()
-            ->where('mirror_status', 'published')
+        $courses = V13ExternalExperience::applyMallSearch(
+            MallMirrorCourse::query()->where('mirror_status', 'published'),
+            'courses',
+            $request->query('q'),
+        )
             ->orderBy('course_name')
-            ->paginate(24);
+            ->paginate(24)
+            ->withQueryString();
 
         return view('mall.courses.index', [
             'courses' => $courses,

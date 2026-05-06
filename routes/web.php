@@ -4,6 +4,7 @@ use App\Http\Controllers\Desktop\DesktopSyncController;
 use App\Http\Controllers\Mobile\MobileAuthController;
 use App\Http\Controllers\Mobile\MobileDeviceController;
 use App\Http\Controllers\Mobile\MobilePublicController;
+use App\Http\Controllers\Web\ExternalPortalController;
 use App\Http\Controllers\Web\MallBusinessDirectoryController;
 use App\Http\Controllers\Web\MallCourseController;
 use App\Http\Controllers\Web\MallHomeController;
@@ -43,6 +44,20 @@ Route::get('/pricing', [PublicMarketingController::class, 'pricing'])->name('pub
 Route::get('/trust', [PublicMarketingController::class, 'trust'])->name('public.trust');
 Route::get('/contact-sales', [PublicMarketingController::class, 'contact'])->name('public.contact');
 Route::post('/contact-sales', [PublicMarketingController::class, 'storeInquiry'])->name('public.contact.store');
+
+Route::get('/customer', [ExternalPortalController::class, 'customerDashboard'])->name('customer.dashboard');
+Route::get('/customer/theme-plugins', [ExternalPortalController::class, 'customerThemePlugins'])->name('customer.theme-plugins');
+Route::get('/customer/quick-setup', [ExternalPortalController::class, 'customerQuickSetup'])->name('customer.quick-setup');
+
+Route::get('/partners', [ExternalPortalController::class, 'partnerLanding'])->name('partners.landing');
+Route::get('/partners/agency-profile', [ExternalPortalController::class, 'agencyProfile'])->name('partners.agency-profile');
+Route::get('/partners/storefront', [ExternalPortalController::class, 'partnerStorefront'])->name('partners.storefront');
+Route::get('/partners/referrals', [ExternalPortalController::class, 'referralDashboard'])->name('partners.referrals');
+Route::get('/partners/campaigns', [ExternalPortalController::class, 'campaignResources'])->name('partners.campaigns');
+Route::get('/partners/legal-verification', [ExternalPortalController::class, 'legalVerification'])->name('partners.legal-verification');
+
+Route::get('/network', [ExternalPortalController::class, 'networkAcademy'])->name('network.academy');
+Route::get('/network/talent-path', [ExternalPortalController::class, 'talentPath'])->name('network.talent-path');
 
 Route::prefix('marketplace')->name('marketplace.')->group(function (): void {
     Route::get('/', [MarketplaceDeveloperController::class, 'marketplaceHome'])->name('home');
@@ -88,6 +103,12 @@ Route::prefix('api/desktop')->name('desktop.')->group(function (): void {
 
 Route::get('/mall', MallHomeController::class)
     ->name('mall.index');
+Route::get('/mall/search', [ExternalPortalController::class, 'mallSearch'])
+    ->name('mall.search');
+Route::get('/mall/trust', [ExternalPortalController::class, 'mallTrust'])
+    ->name('mall.trust');
+Route::get('/mall/claim-report', [ExternalPortalController::class, 'mallClaimReport'])
+    ->name('mall.claim-report');
 Route::get('/mall/businesses', [MallBusinessDirectoryController::class, 'index'])
     ->name('mall.businesses.index');
 Route::get('/mall/businesses/{business:slug}', [MallBusinessDirectoryController::class, 'show'])

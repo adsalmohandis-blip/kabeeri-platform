@@ -118,6 +118,21 @@ V9-V14 هي مسار UX/UI فوق الباك إند الموجود، وليست 
 - Agency/partner/marketer flows.
 - Trust, moderation, reports, listing claim.
 
+مخرجات التنفيذ داخل المشروع:
+
+- `config/kabeeri_external.php`: مصدر truth لصفحات V13، Mall sections، trust badges، search filters، customer steps، partner paths، referrals، campaign resources، network، legal verification، وrelease gates.
+- `App\Support\Ui\V13ExternalExperience`: service يجهز بيانات Mall/customer/partner/network ويفحص routes/admin routes/database/docs/task tracker readiness.
+- `App\Http\Controllers\Web\ExternalPortalController`: controller لصفحات Mall trust/search/claim، customer portal، partners، network، legal verification.
+- Mall routes الجديدة: `/mall/search`, `/mall/trust`, `/mall/claim-report` بجانب مسارات Mall الحالية.
+- Customer routes: `/customer`, `/customer/theme-plugins`, `/customer/quick-setup`.
+- Partner routes: `/partners`, `/partners/agency-profile`, `/partners/storefront`, `/partners/referrals`, `/partners/campaigns`, `/partners/legal-verification`.
+- Network routes: `/network`, `/network/talent-path`.
+- `resources/views/external/v13-page.blade.php`: واجهة Blade bridge للبوابات الخارجية.
+- `resources/views/mall/layout.blade.php` وتحديث كل قوالب Mall الحالية: home, business, products, services, courses, talent, travel.
+- `docs/kabeeri/ui/V13_MALL_CUSTOMER_PARTNER_UX.md`: شرح تجربة V13 وحدودها.
+- `docs/kabeeri/ui/V13_RELEASE_CANDIDATE.md`: release gate واختبارات V13.
+- `tests/Feature/V13ExternalExperienceTest.php`: اختبارات config/routes/render/search/trust/release readiness.
+
 ## V14
 
 هدف V14: release candidate للـ UI.

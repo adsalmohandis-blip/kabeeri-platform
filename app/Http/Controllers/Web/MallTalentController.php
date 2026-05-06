@@ -4,16 +4,22 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\MallMirrorTalent;
+use App\Support\Ui\V13ExternalExperience;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class MallTalentController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $talent = MallMirrorTalent::query()
-            ->where('mirror_status', 'published')
+        $talent = V13ExternalExperience::applyMallSearch(
+            MallMirrorTalent::query()->where('mirror_status', 'published'),
+            'talent',
+            $request->query('q'),
+        )
             ->orderBy('display_name')
-            ->paginate(24);
+            ->paginate(24)
+            ->withQueryString();
 
         return view('mall.talent.index', [
             'talent' => $talent,

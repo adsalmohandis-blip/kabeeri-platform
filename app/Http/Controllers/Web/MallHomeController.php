@@ -46,7 +46,7 @@ class MallHomeController extends Controller
                 [
                     'label' => 'Travel',
                     'route' => route('mall.travel.index'),
-                    'count' => TravelTourismMallListing::query()->where('mirror_status', 'published')->count(),
+                    'count' => TravelTourismMallListing::query()->where('listing_status', 'published')->count(),
                 ],
             ],
         ]);

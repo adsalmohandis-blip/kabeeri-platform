@@ -4,16 +4,22 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\TravelTourismMallListing;
+use App\Support\Ui\V13ExternalExperience;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class MallTravelTourismController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $listings = TravelTourismMallListing::query()
-            ->where('listing_status', 'published')
+        $listings = V13ExternalExperience::applyMallSearch(
+            TravelTourismMallListing::query()->where('listing_status', 'published'),
+            'travel',
+            $request->query('q'),
+        )
             ->orderBy('title')
-            ->paginate(24);
+            ->paginate(24)
+            ->withQueryString();
 
         return view('mall.travel.index', [
             'listings' => $listings,
