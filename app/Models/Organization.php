@@ -269,6 +269,11 @@ class Organization extends Model
         return $this->hasMany(CloudSite::class);
     }
 
+    public function cloudDomains(): HasMany
+    {
+        return $this->hasMany(CloudDomain::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);

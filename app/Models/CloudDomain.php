@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Database\Factories\CloudSiteFactory;
+use Database\Factories\CloudDomainFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -15,27 +14,28 @@ use Illuminate\Support\Str;
     'ulid',
     'organization_id',
     'site_id',
-    'environment',
-    'provider',
-    'region',
-    'deployment_status',
-    'health_status',
-    'public_url',
-    'last_deployed_at',
+    'cloud_site_id',
+    'domain',
+    'domain_type',
+    'verification_status',
+    'dns_status',
+    'ssl_status',
+    'is_primary',
+    'verified_at',
     'last_checked_at',
-    'settings',
+    'dns_records',
     'metadata',
 ])]
-class CloudSite extends Model
+class CloudDomain extends Model
 {
-    /** @use HasFactory<CloudSiteFactory> */
+    /** @use HasFactory<CloudDomainFactory> */
     use HasFactory, SoftDeletes;
 
     protected static function booted(): void
     {
-        static::creating(function (self $cloudSite): void {
-            if (blank($cloudSite->ulid)) {
-                $cloudSite->ulid = (string) Str::ulid();
+        static::creating(function (self $domain): void {
+            if (blank($domain->ulid)) {
+                $domain->ulid = (string) Str::ulid();
             }
         });
     }
@@ -43,9 +43,10 @@ class CloudSite extends Model
     protected function casts(): array
     {
         return [
-            'last_deployed_at' => 'datetime',
+            'is_primary' => 'boolean',
+            'verified_at' => 'datetime',
             'last_checked_at' => 'datetime',
-            'settings' => 'array',
+            'dns_records' => 'array',
             'metadata' => 'array',
             'deleted_at' => 'datetime',
         ];
@@ -61,8 +62,8 @@ class CloudSite extends Model
         return $this->belongsTo(Site::class);
     }
 
-    public function domains(): HasMany
+    public function cloudSite(): BelongsTo
     {
-        return $this->hasMany(CloudDomain::class);
+        return $this->belongsTo(CloudSite::class);
     }
 }
