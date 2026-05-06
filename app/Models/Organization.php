@@ -244,6 +244,16 @@ class Organization extends Model
         return $this->hasMany(ApprovalRequest::class);
     }
 
+    public function reportDefinitions(): HasMany
+    {
+        return $this->hasMany(ReportDefinition::class);
+    }
+
+    public function reportSnapshots(): HasMany
+    {
+        return $this->hasMany(ReportSnapshot::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
