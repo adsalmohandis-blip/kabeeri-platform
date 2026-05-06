@@ -30,14 +30,14 @@
             "prompt_id": "01",
             "title": "V3 Readiness Check",
             "size": "Unknown",
-            "status": "codex_done",
+            "status": "verified",
             "started_at": "2026-05-05T21:46:45+00:00",
             "completed_by_codex_at": "2026-05-05T21:48:17+00:00",
-            "verified_by_owner_at": null,
+            "verified_by_owner_at": "2026-05-06T02:19:59+00:00",
             "blocked_at": null,
             "commit": "pending",
             "tests": "php artisan test; vendor/bin/pint --test",
-            "notes": "V2 readiness verified; 155 tests pass with 621 assertions, formatter passes on 425 files.",
+            "notes": "reviewed",
             "source_prompt_file": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v3_codex_prompt_pack_ar.docx"
         },
         {
