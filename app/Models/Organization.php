@@ -179,6 +179,11 @@ class Organization extends Model
         return $this->hasMany(Supplier::class);
     }
 
+    public function purchaseOrders(): HasMany
+    {
+        return $this->hasMany(PurchaseOrder::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
