@@ -125,6 +125,11 @@ class Company extends Model
         return $this->hasMany(CreatorProfile::class);
     }
 
+    public function agencyPartnerProfiles(): HasMany
+    {
+        return $this->hasMany(AgencyPartnerProfile::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'company_memberships')
