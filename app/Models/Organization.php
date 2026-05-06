@@ -159,6 +159,11 @@ class Organization extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);
