@@ -199,6 +199,11 @@ class Organization extends Model
         return $this->hasMany(JournalEntry::class);
     }
 
+    public function employeeProfiles(): HasMany
+    {
+        return $this->hasMany(EmployeeProfile::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
