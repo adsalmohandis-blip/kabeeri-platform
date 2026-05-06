@@ -1,0 +1,27 @@
+TASK TRACKING AUTOMATION — MANDATORYBefore starting any task from this prompt pack, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php start FREEMIUM TXXAfter implementation and tests pass, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php done FREEMIUM TXX --prompt=XX --tests="php artisan test" --commit=pending --notes="short summary"If blocked, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php block FREEMIUM TXX --notes="reason"Codex must not mark tasks as verified. Only the project owner can run:php 24_kabeeri_task_tracking/scripts/kbr-task.php verify FREEMIUM TXX --notes="reviewed"Replace TXX and XX with the current task/prompt number. This rule is mandatory and comes before all implementation instructions.
+KABEERI Freemium Plans & Entitlements Codex Prompt Pack
+برومبتات Codex لتنفيذ Freemium بشكل آمن. كل Prompt يبدأ في صفحة جديدة داخل الملف.
+Version: v1.6.4 | Status: Approved Documentation Addendum
+هذا الملف جزء من تحديث Freemium & Plans ولا يغير ملفات V1 المجمدة مباشرة. أي تطبيق يتم عبر Addendum أو تاسك واضح في Codex.
+Prompt 00 — Freemium Rules and Boundaries
+You are working on KABEERI Freemium & Entitlements update only.Read:- 01_STRATEGY_AND_BUSINESS/04_Freemium_Plans_Entitlements_Architecture_AR.docx- 20_EXTENSION_TECHNICAL_ARCHITECTURE/00_Freemium_Technical_Entitlement_Enforcement_AR.docx- 04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/09_Database_v1.6.4_Freemium_Entitlements_Addendum_AR.docx- 04_DATABASE_ARCHITECTURE/00_APPROVED_PLAN_ENTITLEMENTS_AND_LIMITS_AR.docxHard rules:1. Do not rewrite existing V1 code unless the current task explicitly asks for an additive hook.2. Do not implement real payments in this update.3. Feature flags are not billing entitlements.4. Enforce limits in backend services, not UI only.5. Add tests for every entitlement check.6. Free plan must allow a real limited app.7. Do not create destructive migrations.8. Report files changed, commands run, tests added, and risks.
+Prompt 01 — Plans and Entitlements Schema
+Implement additive schema for plans, plan_versions, plan_entitlements, plan_limits, subscription_entitlements, usage_records, usage_aggregates, upgrade_triggers, fair_use_events, and plan_change_history if not already implemented.Acceptance criteria:- Migrations are additive.- Seeders create Free, Pro, Business, Agency, Enterprise.- Tests verify plan entitlements can be resolved.- No payment gateway integration.
+Prompt 02 — EntitlementService
+Implement EntitlementService and PlanResolverService.Required methods:- can($organization, $key)- limit($organization, $key)- assertCan($organization, $key)- assertWithinLimit($organization, $key, $currentUsage)Acceptance criteria:- Free plan returns correct limits.- Pro/Business override Free values.- Missing key fails safely.- Tests pass.
+Prompt 03 — UsageMeterService
+Implement UsageMeterService.Track usage for:- apps_created- pages_created- storage_mb_used- media_uploads- ai_credits_used- plugins_installed- themes_installedAcceptance criteria:- Usage records are written.- Aggregates can be queried by month.- Tests pass with deterministic fixtures.
+Prompt 04 — Free App Enforcement
+Add backend checks for Free App limits.Scope:- max_apps- max_pages- max_storage_mb- can_use_custom_domain- can_remove_brandingRules:- Backend must block limit violations.- UI may display upgrade trigger but cannot be the only protection.- Tests must cover Free limit denial and Pro allowance.
+Prompt 05 — Theme and Plugin Entitlement Checks
+Add entitlement checks before installing themes and plugins.Rules:- Free users can install official free themes/plugins.- Pro/Premium/paid items require entitlement or purchase placeholder.- Do not implement marketplace payments.Acceptance criteria:- Free theme install allowed.- Pro theme install denied on Free.- Upgrade trigger is recorded.- Tests pass.
+Prompt 06 — UpgradeTriggerService
+Implement UpgradeTriggerService.Trigger examples:- max_apps_reached- max_pages_reached- storage_limit_reached- custom_domain_required- branding_removal_required- pro_theme_required- paid_plugin_requiredAcceptance criteria:- Trigger can be recorded with context.- Duplicate triggers are rate-limited or de-duplicated safely.- Tests pass.
+Prompt 07 — Fair Use Guard
+Implement FairUseGuardService foundation.Scope:- spam risk placeholder- excessive uploads- excessive requests- suspicious public app behaviorRules:- Do not auto-delete data.- Record fair_use_events and optionally flag for review.- Tests pass.
+Prompt 08 — Filament Plan Visibility
+Add safe Filament/admin visibility for plan, entitlements, and usage.Scope:- read-only plan summary- usage summary- upgrade trigger listRules:- Do not expose billing secrets.- Do not implement payment collection.- Respect organization scope.- Tests or smoke checks pass.
+Prompt 09 — Freemium Smoke Tests
+Create smoke tests for Freemium.Tests:1. Free user can create one app.2. Free user cannot create second app.3. Free user can publish within page limit.4. Free user cannot exceed storage.5. Free user cannot install Pro theme.6. Upgrade trigger is recorded.7. Pro user can use custom domain.Acceptance criteria:- Tests pass.- Existing tests pass.
+Prompt 10 — Documentation Update
+Update developer documentation for Freemium.Update:- README or billing docs- Entitlement keys reference- Seeder instructions- Test command notesRules:- Keep docs accurate to implemented code.- Do not add new features.- Tests pass.

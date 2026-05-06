@@ -1,0 +1,649 @@
+KABEERI V3 — Business Foundation + ERP Essentials
+الإصدار الثالث من منصة KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يشرح V3 بالتفصيل بعد بناء V1 وV2.
+V3 هو الإصدار الذي ينقل Kabeeri من:
+CMS + Migration + Commerce Foundation
+إلى:
+Business Operating Platform+ Rabet Company OS Foundation+ ERP Essentials
+الرسالة التنفيذية لـ V3:
+Kabeeri V3 يحوّل الموقع والمتجر إلى شركة رقمية قابلة للتشغيل: عملاء، Leads، عروض أسعار، فواتير، مخزون، موردين، مهام، فريق، توثيق، وتقارير أساسية.
+1. هدف V3
+1.1 الهدف التقني
+بناء أساس Business Operations داخل Kabeeri، وربط مخرجات V2 — مثل Service Requests وOrders وCustomers وProducts — بموديولات تشغيلية أساسية مثل CRM وSales وInventory وInvoicing وAccounting Starter وRabet Verification.
+1.2 الهدف التجاري
+إثبات أن Kabeeri ليس فقط بديل WordPress أو WooCommerce، بل منصة يمكن للشركات الصغيرة والمتوسطة أن تبدأ استخدامها لإدارة أعمالها اليومية.
+1.3 هدف المنتج
+V3 يجب أن يثبت 5 وعود:
+1. طلب الخدمة يمكن أن يتحول إلى Lead.2. العميل يمكن أن يدخل CRM Timeline.3. المنتج يمكن ربطه بالمخزون.4. الطلب أو عرض السعر يمكن أن يتحول إلى Invoice.5. الشركة يمكن أن تبدأ رحلة Rabet Verification وDigital Office.
+2. V3 يعتمد على ماذا؟
+V3 يعتمد على استقرار V1 وV2:
+UsersOrganizationsCompaniesCompany MembershipsSitesBusiness ProfilesService ListingsService RequestsProductsCustomersOrdersTasks basicNotificationsActivity LogsPermissionsFeature FlagsImport/Export foundation
+لا يبدأ V3 إذا كانت هذه الأساسات غير مستقرة.
+3. ما هو V3؟
+V3 هو:
+Rabet Company OS Foundation+ CRM Lite+ Sales Basic+ Inventory Basic+ Invoicing Basic+ Accounting Starter+ Purchasing Basic+ Employee Profiles+ Evaluations Basic+ Workflow Automation V1+ Reports Basic
+4. ما ليس V3؟
+V3 ليس:
+ERP كامل.
+Accounting كامل.
+Payroll.
+Manufacturing.
+WMS متقدم.
+BI متقدم.
+Treasury.
+Financial consolidation.
+Full Kabeeri Mall.
+Full Talent Marketplace.
+Full Cloud.
+Marketplace داخلي مفتوح.
+Legal Partner Network كامل.
+AI Co-builder كامل.
+Enterprise governance.
+V3 يبني الأساس فقط، وليس النسخة النهائية من ERP.
+5. رسالة V3 التسويقية
+5.1 للشركات الصغيرة
+Kabeeri V3 لا يكتفي ببناء موقعك أو متجرك؛ بل يساعدك على إدارة العملاء والمبيعات والمخزون والفواتير والفريق من مكان واحد.
+5.2 لوكالات الخدمات
+حوّل طلبات الخدمات إلى Leads، ثم عروض أسعار، ثم فواتير، ثم مهام للفريق.
+5.3 للتجار
+اربط المنتجات والطلبات بالمخزون والفواتير والعملاء بدل أن يبقى المتجر منفصلًا عن التشغيل.
+5.4 ضد ERP التقليدي
+Kabeeri لا يبدأ كنظام ERP ثقيل؛ يبدأ من موقعك ومتجرك ثم يضيف التشغيل الذي تحتاجه تدريجيًا.
+6. نطاق V3 الرئيسي
+6.1 Rabet Company OS Foundation
+Company Dashboard.
+Company profile improvements.
+Business Profile public readiness.
+Verification workflow V1.
+Verification review internal.
+Trust record basic.
+Team setup.
+Departments.
+Digital Office basic.
+Activity feed.
+6.2 CRM Lite
+Leads.
+Contacts.
+Customer timeline.
+Lead sources.
+Lead stages.
+Lead assignment.
+Convert service request to lead.
+Convert form submission to lead.
+6.3 Sales Basic
+Quotations.
+Quotation items.
+Quotation statuses.
+Convert lead to quotation.
+Convert quotation to invoice.
+Sales pipeline basic.
+6.4 Invoicing Basic
+Customer invoices.
+Invoice items.
+Invoice numbering.
+PDF invoice basic.
+Invoice status.
+Payment recording.
+Convert order to invoice.
+Convert quotation to invoice.
+6.5 Inventory Basic
+Warehouses basic.
+Stock balances.
+Stock movements basic.
+Stock adjustment.
+Stock reservation from order.
+Low stock alerts.
+6.6 Purchasing Basic
+Suppliers.
+Purchase orders basic.
+Purchase order items.
+Receive stock from purchase order.
+6.7 Accounting Starter
+Chart of accounts starter.
+Journal entries draft/post foundation.
+Basic AR/AP linkage.
+Payments tracking.
+Starter financial reports.
+6.8 Employee Profiles
+Employee records.
+Departments.
+Job titles.
+Manager relation.
+Work history link.
+Employee documents foundation.
+6.9 Evaluations Basic
+Employee evaluation forms basic.
+Manager evaluation.
+Private evaluation visibility.
+Performance notes.
+6.10 Workflow Automation V1
+Workflow definitions basic.
+Workflow runs.
+Approval requests basic.
+Trigger from event.
+Simple approval steps.
+6.11 Reports Basic
+Sales summary.
+Orders summary.
+Inventory summary.
+Leads summary.
+Tasks summary.
+Verification summary.
+7. V3 Feature Flags
+enable_rabet_company_osenable_company_dashboardenable_verification_reviewenable_trust_recordsenable_crm_liteenable_sales_basicenable_quotationsenable_invoicing_basicenable_inventory_basicenable_purchasing_basicenable_accounting_starterenable_employee_profilesenable_evaluations_basicenable_workflow_automation_v1enable_approval_requestsenable_reports_basic
+8. V3 User Stories
+8.1 تحويل Service Request إلى Lead
+As a sales userI want to convert a service request into a CRM leadSo I can follow up with the potential customer.
+8.2 إنشاء عرض سعر
+As a sales userI want to create a quotation for a customerSo I can send pricing before issuing an invoice.
+8.3 تحويل عرض سعر إلى فاتورة
+As a business ownerI want to convert an approved quotation into an invoiceSo I can bill the customer.
+8.4 خصم المخزون عند الطلب
+As an inventory managerI want stock to be updated when an order is confirmedSo I can track available quantities.
+8.5 إنشاء مورد وأمر شراء
+As a purchasing userI want to create a purchase order for a supplierSo I can restock products.
+8.6 متابعة حالة توثيق الشركة
+As a company ownerI want to track my verification requestSo I know what documents are required and what is pending.
+8.7 تقييم موظف
+As a managerI want to evaluate a team member privatelySo HR and management can track performance.
+8.8 موافقة بسيطة
+As a managerI want to approve a quotation or purchase requestSo sensitive actions are controlled.
+9. Roles الجديدة أو الموسعة في V3
+9.1 Company Owner
+يدير الشركة والتوثيق والفريق والموديولات.
+9.2 Company Admin
+يدير العمليات داخل الشركة حسب الصلاحيات.
+9.3 Sales Manager
+يدير Leads وQuotations وInvoices المرتبطة بالمبيعات.
+9.4 Sales Agent
+يتابع Leads ويجهز عروض أسعار.
+9.5 Inventory Manager
+يدير المخزون والمستودعات والحركات.
+9.6 Purchasing Manager
+يدير الموردين وأوامر الشراء.
+9.7 Finance Manager
+يرى الفواتير والمدفوعات والتقارير المالية الأساسية.
+9.8 Accountant Starter
+يتعامل مع invoicing وjournal entries الأساسية حسب الصلاحية.
+9.9 HR Manager Basic
+يدير سجلات الموظفين والتقييمات الأساسية.
+9.10 Department Manager
+يدير فريق أو قسم ومهام وتقييمات.
+9.11 Verification Reviewer Internal
+مستخدم داخلي يراجع طلبات التوثيق قبل Legal Partner Network الكامل في V4.
+10. Permissions الجديدة في V3
+10.1 Rabet / Company OS
+company.dashboard.viewcompany.profile.editcompany.departments.managecompany.activity_feed.viewcompany.trust.viewcompany.verification.review_internalcompany.verification.approve_internalcompany.verification.reject_internal
+10.2 CRM
+crm.lead.viewcrm.lead.createcrm.lead.editcrm.lead.assigncrm.lead.convertcrm.lead.deletecrm.contact.viewcrm.contact.managecrm.timeline.view
+10.3 Sales
+sales.quotation.viewsales.quotation.createsales.quotation.editsales.quotation.approvesales.quotation.sendsales.quotation.convert_to_invoicesales.pipeline.viewsales.pipeline.manage
+10.4 Invoicing
+finance.invoice.viewfinance.invoice.createfinance.invoice.editfinance.invoice.issuefinance.invoice.cancelfinance.invoice.payment.recordfinance.invoice.pdf.generate
+10.5 Inventory
+inventory.viewinventory.warehouse.manageinventory.stock.viewinventory.stock.adjustinventory.stock.reserveinventory.stock.receiveinventory.low_stock.view
+10.6 Purchasing
+purchasing.supplier.viewpurchasing.supplier.managepurchasing.po.viewpurchasing.po.createpurchasing.po.editpurchasing.po.approvepurchasing.po.receive
+10.7 Accounting Starter
+accounting.coa.viewaccounting.coa.manageaccounting.journal.viewaccounting.journal.createaccounting.journal.postaccounting.reports.view
+10.8 HR Basic
+hr.employee.viewhr.employee.createhr.employee.edithr.employee.documents.managehr.evaluation.viewhr.evaluation.createhr.evaluation.manage
+10.9 Workflows / Approvals
+workflow.viewworkflow.createworkflow.manageworkflow.runapproval.request.viewapproval.request.createapproval.request.approveapproval.request.reject
+10.10 Reports
+reports.sales.viewreports.inventory.viewreports.crm.viewreports.tasks.viewreports.finance_basic.view
+11. قاعدة بيانات V3
+هذا القسم يضيف الجداول الأساسية على V1 وV2.
+11.1 Rabet / Company OS Tables
+departments
+idcompany_idparent_id nullablenameslugmanager_user_id nullablestatus default activecreated_atupdated_at
+company_activity_items
+idcompany_idactor_user_id nullableactionsubject_type nullablesubject_id nullabledescription nullablemetadata json nullablecreated_at
+trust_records
+idcompany_idrecord_typescore_delta integer default 0titledescription nullablesource_type nullablesource_id nullablevisibility default privatecreated_atupdated_at
+record_type examples
+verification_approvedverification_rejecteddispute_openeddispute_resolvedpositive_reviewdocument_expired
+verification_reviews
+idverification_request_idreviewer_user_id nullablereviewer_type default internalstatusnotes nullablechecklist json nullablereviewed_at nullablecreated_atupdated_at
+11.2 CRM Tables
+leads
+idorganization_idcompany_id nullablecustomer_id nullableassigned_to nullablesource_type nullablesource_id nullablesource default manualnameemail nullablephone nullablecompany_name nullabletitle nullablemessage longtext nullablestatus default newstage default newpriority default normalestimated_value decimal(15,2) nullablecurrency default EGPexpected_close_date nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+stage values
+newcontactedqualifiedproposalwonlost
+crm_contacts
+idorganization_idcompany_id nullablecustomer_id nullableuser_id nullablenameemail nullablephone nullablejob_title nullablecompany_name nullablesource nullablestatus default activemetadata json nullablecreated_atupdated_atdeleted_at nullable
+customer_timeline_entries
+idcustomer_idorganization_idcompany_id nullableentry_typesubject_type nullablesubject_id nullabletitledescription nullablemetadata json nullablecreated_at
+11.3 Sales Tables
+sales_pipelines
+idorganization_idcompany_id nullablenameslugstatus default activecreated_atupdated_at
+sales_pipeline_stages
+idsales_pipeline_idnameslugorder_column default 0probability integer nullablestatus default activecreated_atupdated_at
+quotations
+idorganization_idcompany_id nullablecustomer_id nullablelead_id nullablequotation_numberstatus default draftcurrency default EGPsubtotal decimal(15,2) default 0discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2) default 0valid_until nullablenotes nullableterms nullablecreated_by nullableapproved_by nullableapproved_at nullablesent_at nullableaccepted_at nullablerejected_at nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+quotation status values
+draftpending_approvalapprovedsentacceptedrejectedexpiredconvertedcancelled
+quotation_items
+idquotation_iditem_type nullableitem_id nullabledescriptionquantity decimal(15,2) default 1unit_price decimal(15,2)discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2)metadata json nullablecreated_atupdated_at
+11.4 Invoicing Tables
+invoices
+لو كان جدول invoices موجودًا للـ platform billing، يجب التفريق عبر invoice_type.
+idorganization_idcompany_id nullablecustomer_id nullablesource_type nullablesource_id nullableinvoice_numberinvoice_type default customer_invoicestatus default draftpayment_status default unpaidcurrency default EGPsubtotal decimal(15,2) default 0discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2) default 0issued_at nullabledue_date nullablepaid_at nullablecancelled_at nullablenotes nullableterms nullablepdf_media_id nullablecreated_by nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+invoice_type values
+customer_invoiceplatform_invoicesupplier_bill
+invoice status values
+draftissuedsentcancelledvoid
+invoice_items
+idinvoice_iditem_type nullableitem_id nullabledescriptionquantity decimal(15,2) default 1unit_price decimal(15,2)discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2)metadata json nullablecreated_atupdated_at
+invoice_payments
+idinvoice_idpayment_id nullableamount decimal(15,2)currency default EGPpaid_atmethod nullablereference nullablenotes nullablecreated_by nullablecreated_atupdated_at
+11.5 Inventory Tables
+warehouses
+idorganization_idcompany_id nullablenameslugcode nullableaddress nullablestatus default activecreated_atupdated_at
+stock_balances
+idorganization_idcompany_id nullablewarehouse_idproduct_idquantity_on_hand decimal(15,3) default 0quantity_reserved decimal(15,3) default 0quantity_available decimal(15,3) default 0reorder_level decimal(15,3) nullablecreated_atupdated_at
+stock_movements
+idorganization_idcompany_id nullablewarehouse_id nullableproduct_idmovement_typequantity decimal(15,3)balance_after decimal(15,3) nullablesource_type nullablesource_id nullablereason nullablecreated_by nullablecreated_at
+movement_type values
+initialadjustmentsale_reservationsale_releasesale_fulfillmentpurchase_receipttransfer_intransfer_outreturn
+11.6 Purchasing Tables
+suppliers
+idorganization_idcompany_id nullablenameemail nullablephone nullabletax_number nullablecountry nullablecity nullableaddress nullablestatus default activemetadata json nullablecreated_atupdated_atdeleted_at nullable
+purchase_orders
+idorganization_idcompany_id nullablesupplier_id nullablewarehouse_id nullablepo_numberstatus default draftcurrency default EGPsubtotal decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2) default 0ordered_at nullableexpected_at nullableapproved_by nullableapproved_at nullablereceived_at nullablenotes nullablecreated_by nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+status values
+draftpending_approvalapprovedsentpartially_receivedreceivedcancelled
+purchase_order_items
+idpurchase_order_idproduct_id nullabledescriptionquantity decimal(15,3)received_quantity decimal(15,3) default 0unit_price decimal(15,2)tax_total decimal(15,2) default 0total decimal(15,2)created_atupdated_at
+11.7 Accounting Starter Tables
+chart_of_accounts
+idorganization_idcompany_id nullableparent_id nullablecodenameaccount_typenormal_balancestatus default activecreated_atupdated_at
+account_type values
+assetliabilityequityrevenueexpensecost_of_goods_sold
+journal_entries
+idorganization_idcompany_id nullableentry_numberstatus default draftentry_datedescription nullablesource_type nullablesource_id nullablecreated_by nullableposted_by nullableposted_at nullablecreated_atupdated_at
+status values
+draftpostedvoid
+journal_entry_lines
+idjournal_entry_idaccount_iddescription nullabledebit decimal(15,2) default 0credit decimal(15,2) default 0created_atupdated_at
+11.8 HR Basic Tables
+employee_records
+idcompany_iduser_id nullablecompany_membership_id nullableemployee_number nullablefull_namework_email nullablepersonal_email nullablephone nullablejob_title nullabledepartment_id nullablemanager_user_id nullableemployment_type nullablestatus default activehire_date nullableend_date nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+employee_documents
+idemployee_record_idmedia_asset_iddocument_typestatus default activeexpires_at nullablevisibility default hr_onlycreated_atupdated_at
+evaluations
+idcompany_idemployee_record_id nullablereviewed_user_id nullablereviewer_user_id nullableevaluation_type default manager_reviewperiod_start nullableperiod_end nullablescore decimal(5,2) nullablesummary nullablestrengths longtext nullableimprovements longtext nullablevisibility default private_company_evaluationstatus default draftsubmitted_at nullablecreated_atupdated_at
+11.9 Workflow / Approval Tables
+workflow_definitions
+idorganization_id nullablecompany_id nullablenameslugdescription nullabletrigger_typetrigger_event nullablestatus default draftversion default 1created_by nullablecreated_atupdated_at
+workflow_steps
+idworkflow_definition_idstep_order integerstep_typenameconfig json nullableconditions json nullablenext_step_id nullablecreated_atupdated_at
+workflow_runs
+idworkflow_definition_idtriggered_by_user_id nullabletrigger_event nullablesubject_type nullablesubject_id nullablestatus default runningcurrent_step_id nullablestarted_at nullablecompleted_at nullablefailed_at nullablemetadata json nullablecreated_atupdated_at
+approval_requests
+idorganization_id nullablecompany_id nullableworkflow_run_id nullablesubject_typesubject_idrequested_by nullableassigned_to nullableapproval_typestatus default pendingnotes nullabledecision_notes nullableapproved_at nullablerejected_at nullablecreated_atupdated_at
+12. Indexes مهمة في V3
+leads.organization_idleads.company_idleads.assigned_toleads.stagecrm_contacts.organization_idcrm_contacts.customer_idquotations.company_idquotations.customer_idquotations.lead_idquotations.quotation_numberinvoices.company_idinvoices.customer_idinvoices.invoice_numberinvoices.statusinvoices.payment_statuswarehouses.company_idstock_balances.warehouse_id + product_idstock_movements.product_idstock_movements.source_type + source_idsuppliers.company_idpurchase_orders.company_idpurchase_orders.supplier_idchart_of_accounts.company_id + codejournal_entries.company_idemployee_records.company_idemployee_records.user_idevaluations.company_idworkflow_definitions.company_idworkflow_runs.subject_type + subject_idapproval_requests.assigned_toapproval_requests.status
+Composite unique:
+unique(quotations.company_id, quotation_number)unique(invoices.company_id, invoice_number)unique(purchase_orders.company_id, po_number)unique(chart_of_accounts.company_id, code)unique(stock_balances.warehouse_id, product_id)
+13. Laravel Structure المضافة في V3
+app/  Rabet/    CompanyOS/      Dashboard/      Activity/      Trust/    Verification/      Reviews/      Workflows/  ERP/    CRM/      Leads/      Contacts/      Timeline/    Sales/      Pipelines/      Quotations/    Invoicing/      Invoices/      Payments/      PDF/    Inventory/      Warehouses/      StockBalances/      StockMovements/    Purchasing/      Suppliers/      PurchaseOrders/    Accounting/      ChartOfAccounts/      JournalEntries/      Reports/    HR/      Employees/      Evaluations/  Workflows/    Definitions/    Runs/    Steps/    Approvals/    Actions/    Conditions/  Reports/    Sales/    CRM/    Inventory/    FinanceBasic/    Tasks/
+14. Rabet Company OS في V3
+14.1 Company Dashboard
+يعرض:
+Verification status.
+Business Profile status.
+Team members.
+Open tasks.
+Leads.
+Open quotations.
+Unpaid invoices.
+Low stock alerts.
+Recent activity.
+14.2 Verification V1
+في V3 التوثيق يصبح workflow حقيقي داخلي، لكن بدون Legal Partner Network كامل.
+Flow:
+Company uploads documents→ Submit verification request→ Internal reviewer reviews→ Need info / Approve internally / Reject→ Verification status updated→ Trust record created
+14.3 Trust Record Basic
+Trust score لا يكون معقدًا بعد.
+في V3 نسجل أحداث الثقة فقط:
+submitted documents.
+internal approval.
+rejection.
+expired document.
+الحساب المتقدم يدخل لاحقًا.
+15. CRM Lite في V3
+15.1 مصادر Leads
+Service RequestContact FormManual EntryOrderBusiness Directory Inquiry
+15.2 Lead Stages
+NewContactedQualifiedProposalWonLost
+15.3 Customer Timeline
+يجمع:
+Orders.
+Service requests.
+Leads.
+Quotations.
+Invoices.
+Notes.
+Tasks.
+15.4 تحويل Service Request إلى Lead
+ServiceRequestCreated→ optional CreateLeadFromServiceRequest→ notify sales→ create follow-up task
+16. Sales Basic في V3
+16.1 Quotation Flow
+Lead / Customer→ Create quotation→ Add items→ Send / approve→ Accept→ Convert to invoice
+16.2 Quotation Items
+يمكن أن تكون:
+Product.
+Service.
+Custom line.
+16.3 Approval
+Quotation فوق قيمة معينة يمكن أن يحتاج approval.
+17. Invoicing Basic في V3
+17.1 Sources
+Invoice يمكن أن يأتي من:
+Order.
+Quotation.
+Manual creation.
+17.2 Invoice Numbering
+مثال:
+INV-{YYYY}{MM}-{sequence}
+17.3 PDF Invoice
+V3 يحتاج PDF بسيط.
+ليس مطلوبًا E-invoicing كامل.
+17.4 Payment Recording
+manual payment record.
+partial payment optional.
+update payment status.
+18. Inventory Basic في V3
+18.1 الفلسفة
+V2 كان stock_quantity بسيط داخل product.
+V3 ينقل المخزون إلى:
+WarehousesStock BalancesStock Movements
+18.2 Stock Balance
+يمثل الكمية الحالية لكل منتج في كل مخزن.
+18.3 Stock Movement
+سجل حركة لا يجب حذفه بسهولة.
+18.4 Order Integration
+Order confirmed→ reserve stockOrder completed/fulfilled→ fulfill stockOrder cancelled→ release stock
+18.5 Low Stock
+إذا quantity_available أقل من reorder_level:
+LowStockDetected→ notify inventory manager→ optional purchase request لاحقًا
+19. Purchasing Basic في V3
+19.1 Supplier
+سجل مورد بسيط.
+19.2 Purchase Order Flow
+Create PO→ approve optional→ send to supplier optional→ receive items→ stock movement purchase_receipt
+19.3 لا يدخل بعد
+Supplier invoices advanced.
+AP aging.
+3-way matching.
+Tendering/RFQ.
+20. Accounting Starter في V3
+20.1 الهدف
+ليس Accounting كامل، بل أساس محاسبي.
+20.2 يشمل
+Chart of Accounts starter.
+Journal entry model.
+Journal lines.
+Posting foundation.
+Link invoice/payment to journal entry optional.
+20.3 ممنوع في V3
+إغلاق فترات مالية.
+Tax engine كامل.
+Financial consolidation.
+Advanced reports.
+Full AP/AR automation.
+20.4 Starter Reports
+Basic revenue report.
+Unpaid invoices.
+Payments received.
+Simple trial balance optional.
+21. Employee Profiles في V3
+21.1 العلاقة مع User
+EmployeeRecord لا يساوي User.
+يمكن أن يكون:
+linked to user.
+manual employee record.
+linked to company_membership.
+21.2 يحتوي على
+full name.
+job title.
+department.
+manager.
+employment type.
+hire date.
+documents.
+22. Evaluations Basic في V3
+22.1 أنواع التقييم
+manager_reviewhr_reviewproject_reviewprobation_review
+22.2 الخصوصية
+التقييمات Private by default.
+يرى التقييم:
+HR.
+Manager.
+Company Owner حسب policy.
+Employee حسب إعدادات لاحقة.
+22.3 لا يدخل في V3
+Public professional ratings.
+Talent reputation كامل.
+360 evaluations.
+23. Workflow Automation V1
+23.1 الهدف
+بناء Workflow بسيط قابل للتوسع.
+23.2 Supported Triggers
+manualevent
+23.3 Supported Steps
+approvalnotificationcreate_taskupdate_status
+23.4 أمثلة Workflows
+Quotation Approval
+Quotation created with total > threshold→ Approval request to Sales Manager→ If approved, status approved→ Notify creator
+Purchase Order Approval
+PO created→ Manager approval→ Status approved→ Notify purchasing
+Verification Review
+Verification submitted→ Assign internal reviewer→ Review documents→ Need info / approved / rejected
+24. Events في V3
+24.1 Rabet Events
+CompanyDashboardViewedVerificationSubmittedVerificationReviewCreatedVerificationApprovedInternallyVerificationRejectedInternallyTrustRecordCreated
+24.2 CRM Events
+LeadCreatedLeadAssignedLeadStageChangedLeadConvertedContactCreatedCustomerTimelineEntryCreated
+24.3 Sales Events
+QuotationCreatedQuotationSubmittedForApprovalQuotationApprovedQuotationSentQuotationAcceptedQuotationConvertedToInvoice
+24.4 Invoice Events
+InvoiceCreatedInvoiceIssuedInvoicePdfGeneratedInvoicePaymentRecordedInvoicePaid
+24.5 Inventory Events
+WarehouseCreatedStockAdjustedStockReservedStockReleasedStockFulfilledLowStockDetected
+24.6 Purchasing Events
+SupplierCreatedPurchaseOrderCreatedPurchaseOrderApprovedPurchaseOrderReceived
+24.7 HR Events
+EmployeeRecordCreatedEmployeeDocumentUploadedEvaluationSubmitted
+24.8 Workflow Events
+WorkflowStartedWorkflowStepCompletedApprovalRequestCreatedApprovalRequestApprovedApprovalRequestRejectedWorkflowCompletedWorkflowFailed
+25. Listeners في V3
+CreateLeadFromServiceRequestCreateCustomerTimelineEntryNotifyLeadAssigneeCreateFollowUpTaskForLeadGenerateQuotationNumberNotifyQuotationApprovalNeededGenerateInvoiceNumberGenerateInvoicePdfCreateTimelineEntryForInvoiceReserveStockOnOrderConfirmedReleaseStockOnOrderCancelledDetectLowStockCreateStockMovementFromPurchaseReceiptNotifyApprovalAssigneeLogWorkflowActivityCreateTrustRecordFromVerificationDecision
+26. Admin UI Scope في V3
+26.1 Company Dashboard
+Company OverviewVerification StatusTeam SummaryOpen TasksLeadsQuotationsInvoicesInventory AlertsRecent Activity
+26.2 CRM
+CRM  Leads  Contacts  Customer Timeline  Lead Sources  Pipeline
+26.3 Sales
+Sales  Quotations  Pipeline  Customers
+26.4 Invoicing
+Finance  Invoices  Payments  Basic Reports
+26.5 Inventory
+Inventory  Warehouses  Stock Balances  Stock Movements  Adjustments  Low Stock
+26.6 Purchasing
+Purchasing  Suppliers  Purchase Orders  Receipts
+26.7 HR Basic
+People  Employees  Departments  Evaluations  Documents
+26.8 Workflows
+Workflows  Definitions  Runs  Approval Requests
+26.9 Rabet
+Rabet  Company Profile  Business Profile  Verification  Trust Record  Activity
+27. V3 Navigation المقترح
+DashboardContentCommerce  Products  Orders  CustomersBusiness  Business Profile  Services  Service RequestsRabet  Company Dashboard  Verification  Trust RecordCRM  Leads  Contacts  Customer TimelineSales  QuotationsFinance  Invoices  Payments  Basic ReportsInventory  Warehouses  Stock Balances  Stock MovementsPurchasing  Suppliers  Purchase OrdersPeople  Employees  Departments  EvaluationsWork  Tasks  Approvals  WorkflowsSystem  Activity Log  Settings  System Status
+28. Public UI في V3
+V3 لا يغير Public Site كثيرًا، لكنه يضيف:
+Improved Business Profile public page.
+Verification status badge basic.
+Public service pages أفضل.
+Optional request quote buttons.
+Customer-facing quotation/invoice link optional.
+29. Reports Basic في V3
+29.1 CRM Report
+Leads by stage.
+Leads by source.
+Leads assigned by user.
+29.2 Sales Report
+Quotations by status.
+Accepted quotations.
+Quotation total value.
+29.3 Finance Basic Report
+Invoices issued.
+Paid invoices.
+Unpaid invoices.
+Payments received.
+29.4 Inventory Report
+Stock balances.
+Low stock products.
+Recent movements.
+29.5 Team Report
+Tasks by status.
+Tasks by assignee.
+30. Security في V3
+30.1 ERP Permissions صارمة
+أي Finance/Inventory/HR action يحتاج permissions دقيقة.
+30.2 Audit مطلوب
+يجب تسجيل:
+Invoice issued.
+Payment recorded.
+Stock adjusted.
+Journal entry posted.
+Employee evaluation submitted.
+Verification decision.
+Approval decision.
+30.3 Sensitive data
+Employee documents private.
+Evaluations private.
+Financial reports restricted.
+Verification documents restricted.
+30.4 ممنوع
+حذف stock movements بسهولة.
+حذف issued invoice بسهولة.
+تعديل journal entry posted بدون audit.
+31. Performance في V3
+31.1 Reports
+Reports يجب أن تكون paginated ومفلترة بالتاريخ.
+31.2 Inventory
+لا تحسب المخزون من كل stock movements في كل request.
+استخدم:
+stock_balances
+31.3 Timeline
+Customer timeline يجب أن تكون paginated.
+31.4 Events
+العمليات الثقيلة مثل PDF generation وreports يمكن أن تعمل في queue.
+32. Testing في V3
+32.1 CRM Tests
+Create lead testAssign lead testConvert service request to lead testLead stage change testCustomer timeline test
+32.2 Sales Tests
+Create quotation testApprove quotation testConvert quotation to invoice testQuotation totals calculation test
+32.3 Invoicing Tests
+Create invoice testIssue invoice testGenerate invoice number testRecord payment testInvoice paid status test
+32.4 Inventory Tests
+Create warehouse testAdjust stock testReserve stock from order testRelease stock on cancellation testLow stock detection test
+32.5 Purchasing Tests
+Create supplier testCreate purchase order testApprove purchase order testReceive PO updates stock test
+32.6 HR Tests
+Create employee record testManager can evaluate employee testUnauthorized user cannot view private evaluation test
+32.7 Workflow Tests
+Create approval request testApprove request testReject request testWorkflow run completes test
+32.8 Security Tests
+Employee cannot view finance reportsSales agent cannot post journal entryInventory user cannot view payroll/evaluationsLegal/verification reviewer sees only verification data
+33. Seeders في V3
+ERPPermissionsSeederERPRolesSeederDefaultDepartmentsSeederDefaultSalesPipelineSeederDefaultChartOfAccountsSeederDefaultWarehouseSeederDemoLeadsSeederDemoQuotationsSeederDemoInvoicesSeederDemoInventorySeederDemoEmployeesSeederDemoWorkflowsSeeder
+34. CLI Commands في V3
+php artisan kabeeri:crm:create-default-pipelinephp artisan kabeeri:invoices:generate-pdf {invoiceId}php artisan kabeeri:inventory:recalculate-balancesphp artisan kabeeri:inventory:detect-low-stockphp artisan kabeeri:accounting:seed-coa {companyId}php artisan kabeeri:workflows:run-pendingphp artisan kabeeri:reports:refresh-basic
+35. Build Order العملي لـ V3
+المرحلة 1 — Company OS Preparation
+راجع companies/company_membershipsأضف departmentsأضف company dashboardأضف company activity feedأضف trust_records
+المرحلة 2 — Verification V1
+verification_reviewsreview UIinternal reviewer rolestatus transitionstrust record integration
+المرحلة 3 — CRM Lite
+leadscrm_contactscustomer_timeline_entriesconvert service request to leadlead stageslead assignment
+المرحلة 4 — Sales Basic
+sales pipelinesquotationsquotation itemsquotation totalsapproval optionalconvert quotation to invoice
+المرحلة 5 — Invoicing Basic
+invoicesinvoice itemsinvoice numberinginvoice PDFpayment recordingcustomer timeline integration
+المرحلة 6 — Inventory Basic
+warehousesstock_balancesstock_movementsstock adjustmentorder stock reservationlow stock alerts
+المرحلة 7 — Purchasing Basic
+supplierspurchase_orderspurchase_order_itemsreceive stockpurchase receipt stock movements
+المرحلة 8 — Accounting Starter
+chart_of_accountsjournal_entriesjournal_entry_linesbasic postingbasic reports
+المرحلة 9 — People / HR Basic
+employee_recordsdepartments relationemployee documentsevaluations basicprivacy policies
+المرحلة 10 — Workflows / Approvals
+workflow_definitionsworkflow_stepsworkflow_runsapproval_requestsquotation approval workflowPO approval workflowverification workflow
+المرحلة 11 — Reports + Polish
+reports basictestspermissions auditactivity logsdemo datarelease notes
+36. AI Build Prompts لـ V3
+36.1 CRM Lead
+ابني Laravel migration وModel وPolicy وFilament Resource لجدول leads حسب schema المحدد، مع permissions crm.lead.* واختبارات إنشاء lead وتغيير stage.
+36.2 Convert Service Request to Lead
+ابني Action باسم ConvertServiceRequestToLead يأخذ service_request_id وينشئ lead ويربط source_type/source_id ويسجل customer_timeline_entry وactivity log.
+36.3 Quotation
+ابني Quotation model مع quotation_items وحساب totals server-side، واكتب tests للتأكد أن الإجمالي لا يأتي من frontend.
+36.4 Invoice
+ابني ConvertQuotationToInvoiceAction ينشئ invoice وinvoice_items من quotation approved فقط، ويمنع التحويل لو quotation غير approved أو converted.
+36.5 Inventory
+ابني StockService يحتوي adjustStock, reserveStock, releaseStock, fulfillStock ويحدث stock_balances ويسجل stock_movements.
+36.6 Workflow Approval
+ابني ApprovalRequest model وApproveApprovalRequestAction وRejectApprovalRequestAction مع Policy واختبارات permissions.
+37. Definition of Done لـ V3
+V3 يعتبر مكتملًا فقط إذا:
+Company Dashboard يعملVerification internal review يعملTrust records basic تعملService request يتحول إلى LeadCRM Leads تعملCustomer timeline يعملQuotations تعملQuotation تتحول إلى InvoiceOrder يتحول إلى InvoiceInvoices تصدر وتولد PDF basicPayments تسجلWarehouses تعملStock balances تعملStock movements تسجلOrder يحجز أو يخصم مخزون حسب الإعدادLow stock alerts تعملSuppliers تعملPurchase orders تعملReceive PO يضيف مخزونChart of accounts starter موجودJournal entries foundation موجودEmployee profiles تعملEvaluations basic تعمل مع privacyApproval requests تعملWorkflow V1 يعمل لأمثلة بسيطةReports basic تعملPermissions مستقرةActivity/Audit logs للأحداث الحساسة موجودةTests أساسية موجودةDemo V3 مكتمل
+38. V3 Demo النهائي
+38.1 Demo — Service Company Operating Flow
+شركة خدمات تستقبل Service Request→ يتحول إلى Lead→ يتم تعيينه لمندوب مبيعات→ يتم إنشاء Quotation→ تتم الموافقة عليه→ يتحول إلى Invoice→ تسجل دفعة→ تنشأ مهمة متابعة للفريق
+38.2 Demo — Simple Product Business
+شركة تبيع منتجات→ لديها Warehouse→ لديها Stock Balances→ تستقبل Order→ يتم حجز المخزون→ يصدر Invoice→ تظهر حركة مخزون
+38.3 Demo — Rabet Foundation
+شركة ترفع مستندات توثيق→ reviewer يراجع→ يطلب معلومات أو يوافق داخليًا→ Trust record يتحدث→ Company dashboard يعرض الحالة
+38.4 Demo — Employee Evaluation
+مدير ينشئ تقييمًا لموظف→ التقييم private→ HR يراه→ الموظف لا يراه إلا حسب policy
+39. Documentation المطلوبة لـ V3
+Company OS GuideRabet Verification V1 GuideCRM Lite GuideSales / Quotations GuideInvoicing GuideInventory Basic GuidePurchasing Basic GuideAccounting Starter GuideEmployee Profiles GuideEvaluations GuideWorkflow & Approvals V1 GuideReports Basic Guide
+40. V3 Release Gate
+لا ننتقل إلى V4 إلا إذا:
+Company OS basic worksVerification internal review worksCRM Lite worksQuotations workInvoices workInventory basic worksPurchasing basic worksAccounting starter is safeEmployee records workEvaluations privacy worksApproval workflow worksReports basic workPermissions and logs are stableDemo completeNo critical bugs
+41. ما يمهد له V3 في V4
+V3 يمهد لـ V4 عبر:
+Company OS → Rabet Company OS V1Verification internal → Legal Partner NetworkBusiness Profile + Trust → Kabeeri Mall V1Invoicing + Billing foundation → Cloud BillingPackage foundation → Internal Marketplace V1Tasks + Notifications → Kabeeri Teams V1Approvals + Workflows → AI Co-builder safe actionsERP Essentials → ERP Pro later
+42. أخطاء ممنوعة في V3
+42.1 لا تبني Accounting كامل
+V3 فقط Accounting Starter.
+42.2 لا تبني Payroll
+Payroll يحتاج Country Packs ومراجعة قانونية.
+42.3 لا تجعل Stock مجرد رقم داخل Product بعد V3
+يجب الانتقال إلى Stock Balances/Movements.
+42.4 لا تسمح بحذف financial أو stock records بدون trace
+أي تعديل حساس يحتاج audit.
+42.5 لا تخلط Invoice المنصة مع Invoice الشركة
+استخدم invoice_type أو فصل واضح.
+42.6 لا تفتح Legal Partner Network كامل في V3
+هذا V4.
+42.7 لا تفتح Kabeeri Mall كامل
+V3 يبني foundation فقط.
+42.8 لا تجعل Evaluations عامة
+التقييمات private by default.
+42.9 لا تعرض ERP كله في UI دفعة واحدة
+اعرض فقط modules المفعلة.
+43. ملخص V3 التنفيذي
+V3 ينجز التالي:
+يحوّل Kabeeri من CMS/Commerce Foundation إلى Business Platformيربط Service Requests بالـ CRMيربط Orders وQuotations بالفواتيرينقل المنتجات إلى مخزون حقيقييضيف موردين ومشتريات أساسيةيضع أساس المحاسبةيضع أساس الموظفين والتقييماتيضع أساس approvals/workflowsويجعل Rabet Company OS قابلًا للإطلاق في V4
+القاعدة النهائية:
+V3 هو الإصدار الذي يبدأ فيه Kabeeri تشغيل الشركة، وليس فقط بناء موقعها أو متجرها.
+44. الخطوة التالية بعد اعتماد V3
+بعد تنفيذ أو اعتماد V3، ننتقل إلى:
+KABEERI V4 — Cloud + Marketplace + Rabet Company OS + Kabeeri Mall
+وفيه تبدأ:
+Kabeeri Cloud V1Billing subscriptionsInternal Marketplace V1Kabeeri Mall V1Talent Marketplace V1Legal Partner Network V1Rabet Company OS V1Agency DashboardTeams V1AI Co-builder V1Security Center

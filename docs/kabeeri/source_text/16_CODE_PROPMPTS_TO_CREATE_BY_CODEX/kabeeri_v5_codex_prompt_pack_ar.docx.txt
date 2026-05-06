@@ -1,0 +1,970 @@
+KABEERI V5 Codex Prompt Pack
+ERP Pro, Integration Hub, Advanced Reporting, Package Operations
+كل Prompt يبدأ في صفحة جديدة — نفّذ Prompt واحد فقط في كل مرة
+Version: V5 Prompt Pack | For ChatGPT Codex / Coding Agent
+Scope Summary
+TASK TRACKING AUTOMATION — MANDATORYBefore starting any task from this prompt pack, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php start V5 TXXAfter implementation and tests pass, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php done V5 TXX --prompt=XX --tests="php artisan test" --commit=pending --notes="short summary"If blocked, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php block V5 TXX --notes="reason"Codex must not mark tasks as verified. Only the project owner can run:php 24_kabeeri_task_tracking/scripts/kbr-task.php verify V5 TXX --notes="reviewed"Replace TXX and XX with the current task/prompt number. This rule is mandatory and comes before all implementation instructions.--- ORIGINAL PROMPT 00 CONTENT ---Included in V5
+Not Included in V5
+ERP Pro, Integration Hub, Advanced Reporting Foundation, Commission/Payouts, Package Operations, Billing usage, V5 security/performance passes.
+V6 enterprise GRC/Data Platform, public developer marketplace, full AI agents, full manufacturing, advanced payroll, SSO/SIEM enterprise.
+Prompt 00 — V5 Rules and Boundaries
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+You are working on KABEERI V5 only.
+Read the documentation in /docs/kabeeri before making changes, especially:
+- CODING_START_HERE.md
+- V5 Coding Plan
+- Laravel Module Architecture
+- Laravel Migration Build Order v1.1.0 Update
+- Database v1.3.0 Addendum
+- ERP Pro Database
+- Integration Hub Database
+- Billing & Subscriptions Database
+- Internal Marketplace & Packages Database
+- Security & Compliance Database
+- Testing / QA / DevOps Operational Database
+Hard rules:
+1. Implement V5 only. Do not implement V6 enterprise features unless explicitly requested.
+2. Do not implement public developer marketplace, GRC enterprise suite, full data warehouse platform, full AI Co-builder advanced agents, SSO/SIEM enterprise, manufacturing full suite, payroll advanced, or public connector marketplace in this task.
+3. V5 extends a stable V1–V4 codebase. Do not rewrite Core, CMS, Commerce, Rabet, Mall, or Talent foundations.
+4. Keep ERP Pro and Integration Hub modular. Do not make random cross-module calls.
+5. Never store external credentials as plain text. Store encrypted references or vault references only.
+6. Any sync, webhook, integration, payout, commission, or accounting action must be auditable.
+7. Every migration must be tenant-scoped where relevant.
+8. Add tests for every feature.
+9. Use queues for heavy sync/reporting work.
+10. After changes, run tests and report exactly what changed.
+Your output should include:
+- Summary of changes
+- Files changed
+- Commands run
+- Tests added
+- Test results
+- Risks or TODOs
+Prompt 01 — V5 Readiness Check
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Perform a V5 readiness check before implementing features.
+Check that the codebase has stable foundations for:
+- Core users, organizations, companies, sites/apps
+- RBAC and permissions
+- Activity logs and audit logs
+- CMS and Media
+- Commerce Foundation
+- Billing and subscriptions foundation
+- Events and workflows foundation
+- Notifications
+- Marketplace package foundation
+- ERP Essentials
+- Integration Hub foundation if already introduced
+Tasks:
+1. Inspect migrations, models, policies, and tests.
+2. Identify missing prerequisites for V5.
+3. Do not add new features.
+4. Produce a readiness report.
+Acceptance criteria:
+- Report confirms whether V5 can start.
+- Missing prerequisites are listed clearly.
+- No unrelated code changes.
+Do not implement ERP Pro or Integration Hub features in this task.
+Prompt 02 — V5 Module Boundaries
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Create or update V5 module boundary documentation and module skeletons only.
+Modules expected in V5:
+- ERPPro
+- IntegrationHub
+- AdvancedReporting
+- PartnerPayouts
+- CommissionEngine
+- PackageOperations
+Tasks:
+1. Ensure app/Modules has clear folders for V5 modules.
+2. Add or update MODULES.md with V5 boundaries.
+3. Define what each module owns and what it may consume through contracts/events.
+4. Do not implement database tables yet.
+Acceptance criteria:
+- V5 module boundaries are documented.
+- No feature behavior is added.
+- Tests still pass.
+Prompt 03 — ERP Pro: CRM Pro Pipelines
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 CRM Pro pipeline foundation.
+Create migrations, models, factories, policies, and tests for:
+- crm_pipelines
+- crm_pipeline_stages
+- crm_deals
+- crm_deal_activities
+Rules:
+- Tenant-scoped by organization_id.
+- company_id nullable where appropriate.
+- crm_deals may link to customer/contact/lead from existing CRM foundation.
+- Do not replace existing CRM Lite tables; extend them safely.
+- Add activity logs for create/update/stage changes.
+Acceptance criteria:
+- Organization can create pipelines and stages.
+- Deals can move between stages.
+- Permissions control create/update/view.
+- Tests pass.
+Do not implement AI forecasting, enterprise BI, or external CRM sync in this task.
+Prompt 04 — ERP Pro: Sales Pro Documents
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 Sales Pro document foundation.
+Create or extend models/migrations for:
+- sales_quotations
+- sales_quotation_items
+- sales_orders
+- sales_order_items
+- sales_document_status_logs
+Rules:
+- Keep numbering scoped by organization/company.
+- Link to customers/leads/products where existing tables allow.
+- Do not implement full accounting posting in this task.
+- Add audit log for status changes.
+- Add events: QuotationCreated, QuotationAccepted, SalesOrderCreated.
+Acceptance criteria:
+- Quotation can be created with items.
+- Quotation can be converted to sales order.
+- Status changes are logged.
+- Tests pass.
+Prompt 05 — ERP Pro: Invoicing Links
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Extend existing invoicing foundation for V5 Sales Pro integration.
+Tasks:
+1. Add safe links between sales_orders and invoices if invoices already exist.
+2. Add invoice source fields if needed:
+- source_type
+- source_id
+3. Add tests for creating invoice from sales order.
+4. Add audit and activity logs.
+Rules:
+- Do not implement tax engines or country-specific e-invoicing.
+- Do not implement full double-entry accounting posting here.
+- Do not modify historical invoices unsafely.
+Acceptance criteria:
+- Sales order can generate a draft invoice.
+- Duplicate invoice generation is prevented.
+- Tests pass.
+Prompt 06 — Inventory Pro: Warehouses and Stock Movements
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 Inventory Pro core.
+Create migrations, models, factories, policies, and tests for:
+- warehouses
+- inventory_locations
+- inventory_stock_balances
+- inventory_stock_movements
+- inventory_adjustments
+- inventory_transfer_orders
+- inventory_transfer_items
+Rules:
+- Tenant-scoped by organization_id.
+- Do not allow negative stock unless explicit setting allows it.
+- All stock changes must create stock movement records.
+- Audit inventory adjustments.
+- Do not implement manufacturing/MRP.
+Acceptance criteria:
+- Product stock can be received, adjusted, and transferred.
+- Stock balance updates are consistent.
+- Tests pass.
+Prompt 07 — Purchasing Pro: Suppliers, RFQ, Purchase Orders
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 Purchasing Pro foundation.
+Create migrations, models, factories, policies, and tests for:
+- suppliers
+- purchase_requests
+- purchase_request_items
+- supplier_rfqs
+- supplier_rfq_items
+- purchase_orders
+- purchase_order_items
+- goods_receipts
+- goods_receipt_items
+Rules:
+- Tenant-scoped by organization_id.
+- Purchase orders may generate goods receipt.
+- Goods receipt may create inventory movement if Inventory Pro exists.
+- Use events rather than direct cross-module coupling where possible.
+Acceptance criteria:
+- Supplier can be created.
+- RFQ can be created.
+- Purchase order can be created from RFQ or manually.
+- Goods receipt can update stock through a safe service.
+- Tests pass.
+Prompt 08 — Accounting Pro Foundation: Chart and Journals
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 accounting foundation only.
+Create migrations, models, factories, and tests for:
+- accounting_chart_of_accounts
+- accounting_journals
+- accounting_journal_entries
+- accounting_journal_entry_lines
+- accounting_periods
+Rules:
+- This is accounting foundation, not full country-specific accounting.
+- Journal entries must balance debit and credit.
+- Do not implement payroll, e-invoicing, or tax filing.
+- Do not auto-post from every business event yet unless explicitly requested.
+Acceptance criteria:
+- Account can be created.
+- Journal entry with balanced lines can be posted.
+- Unbalanced journal entry is rejected.
+- Tests pass.
+Prompt 09 — Accounting Pro: Posting Interfaces
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement safe posting interfaces between ERP Pro and Accounting Foundation.
+Tasks:
+1. Create AccountingPostingService.
+2. Support draft posting from invoices, payments, purchase receipts, or manual journal sources where existing modules allow.
+3. Add source_type/source_id on journal entries if needed.
+4. Add idempotency guard to prevent duplicate postings.
+5. Add tests.
+Rules:
+- Do not implement tax rules.
+- Do not implement payroll.
+- Do not implement country-specific reports.
+- Keep posting transparent and auditable.
+Acceptance criteria:
+- Posting is idempotent.
+- Journal entry sources are traceable.
+- Tests pass.
+Prompt 10 — Contracts / CLM Basic
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 Contracts / CLM basic foundation.
+Create migrations, models, factories, policies, and tests for:
+- contracts
+- contract_parties
+- contract_versions
+- contract_milestones
+- contract_obligations
+- contract_renewals
+Rules:
+- Link contracts to organization/company/customer/supplier where available.
+- Store document references through media_assets or documents foundation.
+- Status changes must be audited.
+- Do not implement digital signatures unless already available.
+Acceptance criteria:
+- Contract can be created with parties.
+- Version can be added.
+- Renewal date can be tracked.
+- Tests pass.
+Prompt 11 — Helpdesk / ITSM Basic
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 Helpdesk / ITSM foundation.
+Create migrations, models, factories, policies, and tests for:
+- support_queues
+- support_tickets
+- support_ticket_messages
+- support_ticket_assignments
+- support_ticket_status_logs
+- support_sla_policies
+Rules:
+- Tenant-scoped.
+- Tickets may link to customer, order, invoice, app/site, or external subject.
+- Notifications should be triggered through existing notification service.
+- Do not implement full call center.
+Acceptance criteria:
+- Ticket can be created, assigned, replied to, and closed.
+- SLA due time can be calculated simply.
+- Tests pass.
+Prompt 12 — POS Basic
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 POS basic foundation.
+Create migrations, models, factories, policies, and tests for:
+- pos_terminals
+- pos_sessions
+- pos_sales
+- pos_sale_items
+- pos_payments
+- pos_cash_movements
+Rules:
+- Tenant-scoped by organization/company/site where appropriate.
+- POS sale may create order/invoice links if commerce foundation exists.
+- Inventory stock movement should be event-driven if Inventory Pro exists.
+- Do not implement hardware integrations.
+Acceptance criteria:
+- POS session can open/close.
+- POS sale can be recorded with items and payment.
+- Tests pass.
+Prompt 13 — Commission Engine
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 Commission Engine foundation.
+Create migrations, models, factories, policies, and tests for:
+- commission_programs
+- commission_rules
+- commission_eligible_subjects
+- commission_events
+- commission_calculations
+- commission_adjustments
+Rules:
+- Commission may relate to salespeople, growth partners, agencies, creators, or affiliates.
+- Do not pay out directly in this task.
+- Commission events must be auditable and reversible if source is refunded/cancelled.
+- Keep calculations deterministic.
+Acceptance criteria:
+- Commission rule can be created.
+- Sale/order/subscription event can create commission event.
+- Commission can be calculated and marked pending.
+- Tests pass.
+Prompt 14 — Partner Payouts
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 Partner Payouts foundation.
+Create migrations, models, factories, policies, and tests for:
+- payout_accounts
+- payout_batches
+- payout_items
+- payout_status_logs
+- payout_holds
+Rules:
+- No real money transfer integration in this task.
+- Payout items can reference commission calculations, package sales, or partner earnings.
+- Add hold period support.
+- Add audit logs for approval/rejection/paid status.
+Acceptance criteria:
+- Partner payout account can be created.
+- Pending commission can be added to payout batch.
+- Payout batch can move through statuses.
+- Tests pass.
+Prompt 15 — Advanced Approvals for ERP Pro
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 advanced approvals for ERP Pro documents.
+Tasks:
+1. Extend existing workflow/approval foundation to support approval policies for:
+- purchase_orders
+- sales_orders
+- invoices
+- contracts
+- inventory_adjustments
+- payouts
+2. Add approval rule scopes by organization/company/document_type/amount.
+3. Add tests.
+Rules:
+- Do not build a full visual workflow designer.
+- Use existing approval tables/services where possible.
+- Audit approval decisions.
+Acceptance criteria:
+- Purchase order above configured amount requires approval.
+- Approved document can proceed.
+- Rejected document cannot proceed.
+- Tests pass.
+Prompt 16 — ERP Pro Filament Resources
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Create V5 Filament resources for ERP Pro modules.
+Resources may include:
+- CRM Pipelines / Deals
+- Sales Quotations
+- Sales Orders
+- Warehouses / Stock Movements
+- Suppliers / Purchase Orders
+- Accounting Chart / Journals
+- Contracts
+- Helpdesk Tickets
+- POS Sessions
+- Commission Programs
+- Payout Batches
+Rules:
+- Keep navigation organized.
+- Respect policies and tenant scope.
+- Read-only status logs.
+- Do not expose destructive actions unsafely.
+Acceptance criteria:
+- Resources load.
+- Tenant isolation works.
+- Tests or smoke checks pass.
+Prompt 17 — Integration Hub Core Tables
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement or extend V5 Integration Hub core tables.
+Create migrations, models, factories, and tests for:
+- connector_definitions
+- connector_versions
+- integration_connections
+- integration_connection_settings
+- integration_capabilities
+Rules:
+- Connector definition is global/catalog-level.
+- Integration connection is tenant-scoped.
+- Do not store credentials plain text.
+- Use status fields and health checks.
+Acceptance criteria:
+- Connector definition can be registered.
+- Organization can create connection shell.
+- Tests pass.
+Prompt 18 — Integration Credentials Vault References
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Integration Hub credential reference handling.
+Create or update tables/services for:
+- credential_references
+- integration_secret_refs or equivalent
+Rules:
+- Never store API keys, passwords, access tokens, or refresh tokens as plain text.
+- Store only vault reference, encrypted reference, or placeholder secret_ref.
+- Include scopes and expires_at metadata where useful.
+- Add audit log for credential create/update/revoke.
+Acceptance criteria:
+- Connection can reference credentials without exposing secret values.
+- Secret values are masked in Filament/API outputs.
+- Tests pass.
+Prompt 19 — Integration OAuth Flow Placeholders
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement safe OAuth flow placeholders for Integration Hub.
+Tasks:
+1. Add OAuth state/session table if needed.
+2. Add services/classes for starting and completing OAuth flow.
+3. Store resulting credentials only via credential reference service.
+4. Add tests using fake provider.
+Rules:
+- Do not connect to real third-party providers in tests.
+- Do not hardcode secrets.
+- Do not store tokens plain text.
+Acceptance criteria:
+- OAuth start produces state.
+- OAuth callback validates state.
+- Credential reference is created.
+- Tests pass.
+Prompt 20 — External Object Links
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement external object link tracking.
+Create migrations, models, factories, and tests for:
+- external_object_links
+Fields should track:
+- organization_id
+- connection_id
+- local_subject_type
+- local_subject_id
+- external_object_type
+- external_object_id
+- external_url nullable
+- last_synced_at nullable
+- metadata json nullable
+Rules:
+- Links map Kabeeri objects to external system objects.
+- Do not duplicate private external data unnecessarily.
+Acceptance criteria:
+- Product/customer/order/lead can link to external object.
+- Duplicate links are prevented.
+- Tests pass.
+Prompt 21 — Field Mapping Engine
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 field mapping engine.
+Create migrations, models, factories, and tests for:
+- integration_mapping_sets
+- integration_field_mappings
+Rules:
+- Mapping set belongs to organization and connection.
+- Field mappings define source_field, target_field, transform_type, required flag.
+- Do not execute arbitrary code transforms.
+- Keep transformations safe and whitelisted.
+Acceptance criteria:
+- Mapping set can map external product fields to Kabeeri product fields.
+- Required fields are validated.
+- Tests pass.
+Prompt 22 — Value Mapping Engine
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 value mapping engine.
+Create migrations, models, factories, and tests for:
+- integration_value_maps
+- integration_value_map_entries
+Use cases:
+- external category to local category
+- external status to local status
+- external currency to local currency
+Rules:
+- Tenant-scoped by organization.
+- Value maps can be used by sync jobs.
+Acceptance criteria:
+- Value mapping can translate external status/category values.
+- Missing mapping can be detected and reported.
+- Tests pass.
+Prompt 23 — Sync Jobs
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Integration Hub sync jobs foundation.
+Create migrations, models, factories, and tests for:
+- integration_sync_jobs
+- integration_sync_job_items
+Rules:
+- Sync jobs are queued and auditable.
+- Support directions: inbound, outbound, bidirectional placeholder.
+- Support modes: manual, scheduled, webhook_triggered.
+- Do not implement all connectors; use fake connector for tests.
+Acceptance criteria:
+- Sync job can be created and processed with fake connector.
+- Items track status and errors.
+- Tests pass.
+Prompt 24 — Sync Logs and Errors
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement sync logs and error reporting for Integration Hub.
+Create or extend:
+- integration_sync_logs
+- integration_sync_errors
+Rules:
+- Log summary counts: created, updated, skipped, failed.
+- Store error code and safe message.
+- Do not store sensitive payloads unless sanitized.
+- Add masking/sanitization helper.
+Acceptance criteria:
+- Sync logs are written.
+- Errors are visible but sanitized.
+- Tests pass.
+Prompt 25 — Retry Queue
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Integration Hub retry queue foundation.
+Create migrations/models/services for:
+- integration_retry_items
+Rules:
+- Retry items link to failed sync job item or webhook delivery.
+- Support retry_after, attempts, max_attempts, status.
+- Use queues.
+- Do not retry permanently failing validation errors unless marked retryable.
+Acceptance criteria:
+- Failed retryable item is scheduled.
+- Retry attempt updates status.
+- Max attempts stops retry.
+- Tests pass.
+Prompt 26 — Conflict Resolution
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 conflict resolution foundation for Integration Hub.
+Create migrations, models, factories, and tests for:
+- integration_conflicts
+- integration_conflict_resolutions
+Rules:
+- Conflict may occur when external and local records changed.
+- Support resolution decisions:
+- use_local
+- use_external
+- merge_manual
+- skip
+- Do not auto-overwrite without policy.
+Acceptance criteria:
+- Conflict can be detected and recorded.
+- Authorized user can resolve conflict.
+- Resolution is audited.
+- Tests pass.
+Prompt 27 — Webhook Receiver Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Integration Hub webhook receiver foundation.
+Create migrations/models/services for:
+- integration_webhook_endpoints
+- integration_webhook_events
+Rules:
+- Endpoint belongs to connection/organization.
+- Validate signatures where supported; for V5 provide generic signature validation interface.
+- Store payload safely and sanitize sensitive fields.
+- Queue processing.
+Acceptance criteria:
+- Webhook endpoint can receive fake signed payload.
+- Event is queued for processing.
+- Invalid signature is rejected.
+- Tests pass.
+Prompt 28 — Webhook Delivery Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement outbound webhook delivery foundation.
+Create migrations/models/services for:
+- outbound_webhook_subscriptions
+- outbound_webhook_deliveries
+Rules:
+- Organization can subscribe external endpoint to selected safe events.
+- Delivery uses queue.
+- Track status, response code, attempts.
+- Redact secrets in logs.
+Acceptance criteria:
+- Event creates outbound delivery.
+- Fake HTTP client can simulate success/failure.
+- Retryable failure schedules retry.
+- Tests pass.
+Prompt 29 — Rate Limits for Integrations
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Integration Hub rate limit foundation.
+Create migrations/models/services for:
+- integration_rate_limits
+- integration_rate_limit_usage
+Rules:
+- Rate limits can be defined per connector/connection/operation.
+- Sync jobs respect rate limit service.
+- Keep implementation simple for V5.
+Acceptance criteria:
+- Operation is allowed until limit reached.
+- Operation is blocked or delayed after limit reached.
+- Tests pass.
+Prompt 30 — Integration Hub Permissions
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 Integration Hub permissions and policies.
+Permissions to add:
+- integration.connector.view
+- integration.connection.create
+- integration.connection.manage
+- integration.mapping.manage
+- integration.sync.run
+- integration.sync.view
+- integration.webhook.manage
+- integration.credentials.manage
+Tasks:
+1. Update seeders idempotently.
+2. Add policies for Integration Hub resources.
+3. Add tests.
+Rules:
+- credential management is high-risk.
+- Do not allow normal editor roles to manage credentials.
+Acceptance criteria:
+- Authorized integration admin can manage connection.
+- Unauthorized user cannot view secrets or manage credentials.
+- Tests pass.
+Prompt 31 — Filament Resources for Integration Hub
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Create V5 Filament resources/pages for Integration Hub.
+Resources:
+- Connector Definitions
+- Integration Connections
+- Field Mappings
+- Value Maps
+- Sync Jobs
+- Sync Logs
+- Conflicts
+- Webhooks
+- Retry Items
+Rules:
+- Credential values must be masked.
+- Logs are read-only where appropriate.
+- Conflicts should have safe resolution actions.
+- Respect tenant scope and policies.
+Acceptance criteria:
+- Integration admin can manage connections and mappings.
+- Sync logs visible.
+- Secrets are never displayed.
+- Tests or smoke checks pass.
+Prompt 32 — External Product/Service Catalog Sync Advanced
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 advanced external catalog sync hooks, building on earlier External Sync foundation.
+Scope:
+- External Product Sync
+- External Service Sync
+- External Course Sync placeholders if already modeled
+Tasks:
+1. Use Integration Hub sync jobs and mappings.
+2. Sync into public mirror/staging tables only, not directly into private operational tables unless explicitly configured.
+3. Add moderation/publishing status fields if needed.
+4. Add tests with fake connector.
+Rules:
+- Do not implement arbitrary platform connectors.
+- Do not implement two-way order sync.
+- Only sync public/approved catalog data.
+Acceptance criteria:
+- Fake external product feed syncs to mirror/staging catalog.
+- Errors are logged.
+- Tests pass.
+Prompt 33 — Advanced Reporting Foundation V5
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 advanced reporting foundation.
+Create migrations/models/services for:
+- report_definitions
+- report_filters
+- report_runs
+- report_exports
+- dashboard_definitions
+- dashboard_widgets
+- kpi_definitions
+- kpi_values
+Rules:
+- Use queued report runs for heavy reports.
+- Do not implement V6 data warehouse.
+- Reports must be permission-aware.
+- Start with operational reports for ERP Pro and Integration Hub.
+Acceptance criteria:
+- Report definition can be created.
+- Report run can be queued and completed with fake data provider.
+- Dashboard widget can reference report/KPI.
+- Tests pass.
+Prompt 34 — ERP Pro Dashboards
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 ERP Pro dashboard widgets.
+Widgets may include:
+- Sales pipeline value
+- Open quotations
+- Outstanding invoices
+- Stock alerts
+- Purchase orders pending approval
+- Open helpdesk tickets
+- Contracts expiring soon
+- Pending payouts
+- Integration sync failures
+Rules:
+- Use existing reporting foundation.
+- Do not implement V6 executive BI.
+- Respect permissions and tenant scope.
+Acceptance criteria:
+- Dashboard widgets return scoped metrics.
+- Unauthorized user cannot view metrics.
+- Tests pass.
+Prompt 35 — Package Operations: Versioning and Updates
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 package operations foundation.
+Create or extend tables/models for:
+- package_versions
+- package_update_channels
+- package_update_checks
+- package_update_logs
+Rules:
+- Still not public developer marketplace.
+- Support official and verified partner packages only if V5 docs allow.
+- Update logs must be auditable.
+- Do not auto-update risky packages without approval.
+Acceptance criteria:
+- Package version can be registered.
+- Installation can check for available update.
+- Update log is recorded.
+- Tests pass.
+Prompt 36 — Package Review and Signing Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V5 package review and signing foundation.
+Create or extend:
+- package_review_requests
+- package_security_reviews
+- package_signatures
+- package_compatibility_checks
+Rules:
+- Do not open public marketplace.
+- Signing can be simulated/internal in V5.
+- Review status must be required before install if package is not official.
+Acceptance criteria:
+- Package review can be submitted and approved/rejected.
+- Signed package can be marked installable.
+- Unsigned risky package cannot be installed.
+- Tests pass.
+Prompt 37 — Billing Usage for V5 Modules
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Extend Billing to track V5 usage and add-ons.
+Usage examples:
+- integration_sync_events
+- external_connections_count
+- report_runs_count
+- ai_marketing_usage if existing
+- erp_pro_users_count
+- pos_terminals_count
+- storage_usage
+Tasks:
+1. Add usage types or seeders.
+2. Add usage record service helpers.
+3. Add tests.
+Rules:
+- Do not implement real payment provider changes.
+- Do not change subscription pricing logic aggressively.
+Acceptance criteria:
+- V5 usage can be recorded by module.
+- Reports can aggregate usage by billing account/organization.
+- Tests pass.
+Prompt 38 — V5 Feature Flags
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Add V5 feature flags idempotently.
+Suggested flags:
+- enable_erp_pro
+- enable_crm_pro
+- enable_sales_pro
+- enable_inventory_pro
+- enable_purchasing_pro
+- enable_accounting_foundation
+- enable_contracts_clm
+- enable_helpdesk
+- enable_pos_basic
+- enable_commission_engine
+- enable_partner_payouts
+- enable_integration_hub
+- enable_external_catalog_sync_advanced
+- enable_advanced_reporting_foundation
+- enable_package_operations_v5
+Rules:
+- Do not enable all flags by default unless docs specify.
+- Tests should verify flags are seeded and resolvable.
+Acceptance criteria:
+- Flags seeded idempotently.
+- FeatureFlagService resolves them.
+- Tests pass.
+Prompt 39 — V5 Permissions Seeder
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Add V5 permissions idempotently.
+Permission groups:
+- erp_pro
+- crm_pro
+- sales_pro
+- inventory_pro
+- purchasing_pro
+- accounting
+- contracts
+- helpdesk
+- pos
+- commissions
+- payouts
+- integration_hub
+- reporting
+- package_operations
+Rules:
+- Assign high-risk permissions only to admin/owner roles by default.
+- Credential, payout, accounting posting, and package signing permissions are high risk.
+Acceptance criteria:
+- Permissions seeded.
+- Roles updated carefully.
+- Tests pass.
+Prompt 40 — V5 Demo Seed Data
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Create V5 demo seed data.
+Seed safely:
+- Demo CRM pipeline and deals
+- Demo quotation and sales order
+- Demo warehouse and stock movements
+- Demo supplier and purchase order
+- Demo accounting chart sample
+- Demo contract
+- Demo helpdesk ticket
+- Demo connector definition and fake connection
+- Demo sync job with log
+- Demo report dashboard
+Rules:
+- Idempotent seeders.
+- Do not seed real credentials.
+- Do not seed fake financial data that looks real without demo labels.
+Acceptance criteria:
+- Fresh database can migrate and seed.
+- V5 demo screens have data.
+- Tests pass.
+Prompt 41 — V5 Smoke Test Suite
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Create V5 smoke test suite.
+Tests should cover:
+1. CRM deal stage movement.
+2. Quotation to sales order.
+3. Inventory stock movement.
+4. Purchase order to goods receipt.
+5. Balanced accounting journal.
+6. Contract versioning.
+7. Helpdesk ticket lifecycle.
+8. POS session/sale basic.
+9. Commission calculation pending.
+10. Payout batch creation.
+11. Integration connection and fake sync job.
+12. Field mapping validation.
+13. Webhook receiver signature validation.
+14. Reporting run completion.
+15. Package update check.
+16. Tenant isolation across V5 resources.
+Rules:
+- Do not rely on external services.
+- Use fake connectors and fake HTTP clients.
+Acceptance criteria:
+- Smoke tests pass.
+- Existing V1–V4 tests still pass.
+Prompt 42 — V5 Security Pass
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Perform V5 security pass.
+Check:
+- Integration credentials are masked and not stored plain text.
+- Tenant isolation for ERP Pro and Integration Hub.
+- Payout approvals and accounting posting are restricted.
+- Package signing/review permissions are restricted.
+- Webhook endpoints validate signatures where configured.
+- Logs sanitize sensitive payloads.
+- Audit logs exist for high-risk actions.
+Tasks:
+1. Inspect implementation.
+2. Add missing tests.
+3. Fix only security issues.
+4. Report remaining risks.
+Acceptance criteria:
+- Security tests pass.
+- No secrets in logs/responses.
+- Tenant isolation tests pass.
+Prompt 43 — V5 Performance and Queue Pass
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Perform V5 performance and queue pass.
+Check:
+- Sync jobs use queues.
+- Webhook processing is queued.
+- Report runs are queued.
+- Heavy exports are queued.
+- Indexes exist on high-volume tables.
+- Retry items do not loop infinitely.
+Tasks:
+1. Inspect performance-sensitive code.
+2. Add missing indexes where safe.
+3. Add queue-related tests using fake queues.
+4. Report risks.
+Acceptance criteria:
+- Heavy V5 operations do not run synchronously in request paths.
+- Tests pass.
+Prompt 44 — V5 Documentation Update
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Update documentation for V5 implementation.
+Update:
+- README
+- MODULES.md
+- Integration Hub docs
+- ERP Pro docs
+- developer setup docs
+- seed/demo docs
+- permissions and feature flags docs
+Include:
+- What V5 implements
+- What is intentionally postponed to V6
+- How to run V5 sync demos
+- How to use fake connector in local testing
+- How to run V5 tests
+Rules:
+- Do not add features while updating docs.
+- Keep docs accurate and concise.
+Acceptance criteria:
+- Docs match actual commands and implemented features.
+- Tests pass.
+Prompt 45 — V5 Release Candidate Check
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Prepare KABEERI V5 Release Candidate check.
+Do not add new features.
+Tasks:
+1. Run all tests.
+2. Run Pint.
+3. Confirm fresh migrate + seed works.
+4. Confirm V5 demo data appears.
+5. Confirm ERP Pro smoke tests pass.
+6. Confirm Integration Hub fake sync works.
+7. Confirm no real credentials are stored.
+8. Confirm tenant isolation tests exist.
+9. Confirm V6 features are not accidentally implemented.
+10. Produce release readiness report.
+Acceptance criteria:
+- Tests pass.
+- Fresh setup works.
+- Report includes:
+- Completed V5 features
+- Skipped V6 features
+- Risks
+- Next sprint recommendations
+Prompt FIX — Safe Fix Prompt for V5
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Fix only the failing tests or errors from the last V5 change.
+Rules:
+1. Do not add new features.
+2. Do not refactor unrelated code.
+3. Do not change database structure unless the failure is directly caused by the current task.
+4. Do not expose secrets or weaken policies to make tests pass.
+5. Explain the root cause.
+6. Run tests again.
+Error/output:
+[paste the exact error here]
+Prompt REVIEW — V5 Pre-Commit Review Prompt
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Review the current uncommitted V5 changes.
+Check:
+- Does this stay within V5 scope?
+- Any accidental V6 feature?
+- Any tenant isolation risk?
+- Any secrets stored or displayed?
+- Any missing tests?
+- Any unsafe migrations?
+- Any heavy sync/reporting operation running synchronously?
+- Any unauthorized payout/accounting/package operation?
+Do not modify files unless you find a clear issue.
+Return a review report first.
+Prompt COMMIT — V5 Commit Message Prompt
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Generate a concise conventional commit message for the current V5 changes.
+Rules:
+- Mention the V5 module.
+- Keep it short.
+- Do not exaggerate.
+- Include test status if relevant.
+Return only:
+1. Commit title
+2. Optional commit body
+KABEERI V5 Codex Prompt Pack

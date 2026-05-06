@@ -1,0 +1,19 @@
+KABEERI v1.6.5 Folder Map Addendum
+إضافة نظام Solo AI Builder داخل بنية الملفات
+1. الغرض
+هذا الملحق يوضح الملفات الجديدة المضافة في v1.6.5. لا يغير خريطة الفولدرات الأصلية؛ فقط يضيف طبقة تشغيل مرنة داخل فولدر 13_CODING_READY_EXECUTION لمساعدة مؤسس واحد يعمل بالذكاء الاصطناعي ووقت متغير.
+2. الملفات الجديدة
+المسار
+الغرض
+13_CODING_READY_EXECUTION/10_Solo_AI_Builder_Execution_System_AR.docx
+نظام العمل اليومي المرن مع Codex حسب الوقت المتاح
+13_CODING_READY_EXECUTION/11_V1_Flexible_Task_Cards_Board_AR.docx
+تحويل Prompts V1 إلى بطاقات مهام صغيرة ومتوسطة وكبيرة
+13_CODING_READY_EXECUTION/12_Worklog_Session_Templates_AR.docx
+قوالب متابعة الجلسات اليومية واستعادة السياق
+13_CODING_READY_EXECUTION/13_Codex_Solo_Risk_Control_Checklists_AR.docx
+قوائم مراجعة لتقليل مخاطر Codex قبل وبعد التنفيذ
+13_CODING_READY_EXECUTION/WORKLOG_TEMPLATE.md
+قالب عملي ينسخ داخل مشروع Laravel لتسجيل التقدم
+3. طريقة الاستخدام
+عند العمل على V1 افتح أولًا ملف V1 Codex Prompt Pack من فولدر 16، ثم استخدم الملفات الجديدة في فولدر 13 لتحديد المهمة المناسبة حسب وقتك. لا تستخدم ملفات V2–V8 قبل استقرار V1.

@@ -1,0 +1,209 @@
+KABEERI / Kabeeri — powered by ADMIT
+KABEERI Database v1.2.1 — Mall Multi-Catalog Addendum
+تعديلات قاعدة البيانات لدعم مول المنتجات والخدمات والبزنسز/المشاريع من كل مصادر التطبيقات
+Version: v1.2.1 — Coding Ready Addendum
+1. الهدف
+هذا الملحق لا يستبدل ملف Mall Public Marketplace Database، بل يوسعه ليحول Kabeeri Mall إلى شبكة كتالوجات عامة: منتجات، خدمات، بزنسز/مشاريع، مواهب، وثيمات/إضافات. الملحق يراعي أن المصدر قد يكون Cloud أو Frontend Anywhere أو Portable أو Dedicated أو WordPress خارجي.
+2. مبدأ عدم التكرار
+لا نكرر mall_mirror_products أو mall_mirror_services أو mall_mirror_businesses إذا كانت موجودة. نضيف طبقة catalog/channel/source تربط هذه الجداول بتجربة المول العامة، ونضيف جداول جديدة فقط حيث توجد فجوة حقيقية مثل App/Project public listings.
+3. الجداول الجديدة المقترحة
+الجدول
+الهدف
+يعتمد على
+mall_catalogs
+تعريف كتالوجات المول: products/services/businesses/projects/talent/themes
+Core / Mall
+mall_catalog_categories
+تصنيفات عامة لكل كتالوج
+mall_catalogs
+mall_catalog_item_links
+ربط أي mirror item بكتالوج وتصنيف بدون تكرار
+mall_catalogs + mirror tables
+mall_publication_channels
+قنوات النشر: Product Mall, Service Mall, Business Mall, Partner Storefront
+Mall / Marketing
+mall_mirror_apps
+نسخة عامة من تطبيق/موقع/متجر منشور كمشروع أو App Listing
+sites/apps + external connections
+mall_source_publication_settings
+إعدادات نشر لكل مصدر بيانات
+mall_sync_sources / external_site_connections
+external_wordpress_mall_sources
+ربط مواقع WordPress/WooCommerce الخارجية كمصادر عامة للمول
+external_site_connections
+mall_fulfillment_policies
+توضيح من ينفذ الطلب: merchant/provider/source owner
+mirror items
+mall_contact_requests
+طلبات تواصل من المول قبل تحويلها إلى Lead/Service Request
+CRM / Services
+mall_item_visibility_rules
+قواعد ظهور حسب البلد/القطاع/الخطة/الموافقة
+Billing / Consent
+4. mall_catalogs
+الحقل
+النوع/القيمة
+ملاحظة
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للروابط والتكامل
+code
+varchar unique
+products, services, businesses, projects, talent, themes
+name
+varchar
+اسم الكتالوج
+status
+varchar
+active/paused/archived
+visibility
+varchar
+public/internal/private
+settings
+json nullable
+filters, ranking, UI options
+created_at/updated_at
+timestamps
+5. mall_catalog_item_links
+جدول polymorphic يربط أي عنصر mirror بأي كتالوج وتصنيف، بدل إنشاء جداول منفصلة لكل تجربة عرض.
+الحقل
+القيمة
+ملاحظة
+mall_catalog_id
+FK
+الكتالوج
+category_id
+nullable FK
+تصنيف داخل الكتالوج
+item_type
+varchar
+mall_mirror_product / service / business / app / talent / package
+item_id
+bigint
+معرف العنصر
+source_type
+varchar
+cloud / portable / dedicated / wordpress / manual
+publication_status
+varchar
+draft/pending_review/published/hidden/suspended
+rank_score
+decimal nullable
+للترتيب والظهور
+metadata
+json nullable
+6. mall_mirror_apps
+هذا الجدول يدعم مول المشاريع/البزنسز عندما يكون المعروض تطبيقًا عامًا أو موقعًا أو متجرًا أو مشروعًا منشورًا، وليس مجرد Company Profile.
+الحقل
+القيمة
+ملاحظة
+id, uuid
+keys
+organization_id
+nullable indexed
+قد يكون مصدر خارجي بدون organization داخلي كامل
+site_id
+nullable indexed
+Kabeeri App/Site
+company_id
+nullable indexed
+البزنس المرتبط
+external_site_connection_id
+nullable FK
+WordPress/external
+app_type
+varchar
+website/store/portal/partner_storefront/external_wordpress
+name, slug, description
+text fields
+بيانات عامة
+public_url
+nullable
+رابط المصدر أو صفحة Kabeeri
+logo_url, cover_url
+nullable
+source_status
+varchar
+active/stale/disconnected
+publication_status
+varchar
+draft/pending_review/published/hidden
+last_synced_at
+timestamp nullable
+metadata
+json nullable
+7. external_wordpress_mall_sources
+الحقل
+القيمة
+ملاحظة
+external_site_connection_id
+FK
+يربط بجدول external_site_connections
+source_url
+varchar
+موقع WordPress
+wordpress_site_name
+nullable
+woocommerce_enabled
+boolean
+هل يوجد منتجات
+services_feed_enabled
+boolean
+هل يوجد خدمات/صفحات خدمات
+business_profile_enabled
+boolean
+هل ينشر بروفايل بزنس
+sync_mode
+varchar
+plugin/api/feed/manual
+last_pull_at
+timestamp nullable
+last_push_at
+timestamp nullable
+status
+varchar
+active/paused/error/disconnected
+8. تحديثات على الجداول الموجودة
+الجدول الموجود
+التعديل المقترح
+mall_sync_sources
+إضافة source_type=external_wordpress وsource_mode=plugin_push/feed_pull عند الحاجة.
+mall_publication_consents
+إضافة consent scopes: product_mall, service_mall, business_mall, project_mall, partner_storefront_share.
+mall_mirror_products
+إضافة fulfillment_owner_type وfulfillment_owner_id وsource_public_url إن لم تكن موجودة.
+mall_mirror_services
+إضافة request_mode: contact/booking/quote/external_redirect.
+mall_mirror_businesses
+إضافة business_mall_enabled وprimary_app_listing_id nullable.
+external_site_connections
+إضافة connection_type=external_wordpress_mall_source إن لم يكن موجودًا.
+9. Build Order
+Wave
+الجداول
+Wave Mall Core
+mall_catalogs, mall_catalog_categories, mall_publication_channels
+Wave Mirror Extensions
+mall_mirror_apps, mall_catalog_item_links
+Wave External Sources
+external_wordpress_mall_sources, mall_source_publication_settings
+Wave Governance
+mall_item_visibility_rules, mall_fulfillment_policies
+Wave Requests
+mall_contact_requests ثم ربطها لاحقًا بـ CRM/Services
+10. Acceptance Rules
+القاعدة
+شرط القبول
+No private data
+أي record في mirror لا يحتوي بيانات عملاء/طلبات/تكاليف داخلية.
+Consent required
+كل item published يجب أن يرتبط بموافقة أو rule واضح.
+Source traceability
+كل item يعرف مصدره: Cloud/Portable/Dedicated/WordPress/manual.
+Moderation ready
+كل item يقبل publication_status وتغييرات moderation.
+Rebuildable mirror
+يمكن حذف وإعادة بناء mirror من المصدر بدون فقد source of truth.

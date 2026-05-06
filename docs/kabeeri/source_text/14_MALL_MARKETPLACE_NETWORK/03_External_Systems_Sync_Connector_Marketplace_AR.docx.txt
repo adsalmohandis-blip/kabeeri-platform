@@ -1,0 +1,78 @@
+KABEERI External Systems Sync & Connector Marketplace Architecture
+خطة التكامل مع أي منصة معروفة أو نظام مخصص لإظهار البيانات العامة داخل Kabeeri Mall أو ربط النظام الإداري Kabeeri بموقع/متجر موجود.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. مداخل Kabeeri الثلاثة
+Build on Kabeeri: بناء التطبيق كاملًا داخل المنصة.
+Migrate to Kabeeri: نقل WordPress/WooCommerce أو نظام خارجي إلى Kabeeri.
+Connect to Kabeeri: البقاء على الموقع الحالي مع مزامنة بيانات عامة أو استخدام Backoffice Kabeeri.
+2. أنواع الأنظمة المدعومة
+الفئة
+أمثلة
+البيانات المسموحة
+القيود
+المرحلة
+CMS / Website
+WordPress، Webflow، Wix، Squarespace، Ghost، Drupal، Joomla، Custom HTML
+Business profile، services، pages metadata، public posts
+لا private drafts، لا admin credentials
+V2/V3
+E-commerce
+WooCommerce، Shopify، Magento، OpenCart، BigCommerce، Custom stores
+products، prices، availability، categories، public URL
+لا customer data، لا payment tokens، لا orders إلا بإذن متقدم
+V2/V4
+ERP / Accounting
+Odoo، ERPNext، Zoho، SAP B1، Dynamics، NetSuite، QuickBooks، Xero، Daftra
+product catalog، stock summary، invoice summaries بإذن
+لا payroll، لا costs/margins، لا private finance
+V4/V5
+CRM
+HubSpot، Zoho CRM، Salesforce، Pipedrive
+lead routing، contact permission، campaign source
+لا استيراد شامل بدون موافقة
+V3/V4
+Booking
+Calendly، Google Calendar، Microsoft Bookings، Amelia/Bookly
+services، booking link، availability summary
+لا بيانات المرضى أو العملاء الخاصة
+V3/V4
+LMS
+Moodle، LearnDash، Tutor LMS، Teachable، Thinkific
+courses، trainers، price، enrollment link
+لا بيانات الطلاب الخاصة
+V3/V4
+Feeds
+CSV، Excel، XML، JSON، Google Sheets، public feed URL
+أي كتالوج عام قابل للمطابقة
+يتطلب mapping وvalidation
+V2
+Custom API
+REST/GraphQL/Webhooks
+حسب contract وموافقة owner
+scopes + rate limit + logs
+V4/V5
+3. مستويات التكامل
+المستوى
+الاسم
+الوصف
+Level 1
+External Listing Sync
+ظهور بزنس/منتجات/خدمات عامة فقط في المول.
+Level 2
+Lead / Inquiry Routing
+إرسال استفسارات المول للنظام الخارجي أو لصاحب البزنس.
+Level 3
+Catalog Sync
+تحديث دوري للكتالوج عبر API/Feed.
+Level 4
+Order / Booking Routing
+إنشاء طلب أو حجز وإرساله للبائع الأصلي.
+Level 5
+Two-way Sync
+مزامنة اتجاهين بحذر وبعقود وصلاحيات.
+Level 6
+Migration Path
+تحويل الربط إلى هجرة كاملة عند رغبة العميل.
+4. Connector Marketplace
+Connectors الرسمية تبدأ من WordPress/WooCommerce/CSV/Google Sheets، ثم Shopify وMoodle وZoho/Odoo، ثم Custom Connector SDK في V6. كل Connector يحتاج manifest، scopes، rate limits، logs، وsecurity review.

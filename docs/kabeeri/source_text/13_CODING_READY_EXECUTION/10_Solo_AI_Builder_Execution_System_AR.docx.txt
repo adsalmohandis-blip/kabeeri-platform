@@ -1,0 +1,82 @@
+KABEERI Solo AI Builder Execution System
+نظام تنفيذ مرن لشخص واحد يعمل بالذكاء الاصطناعي — v1.6.5
+1. الغرض من الملف
+هذا الملف يحوّل تنفيذ KABEERI من خطة زمنية ثابتة إلى نظام تنفيذ مرن مناسب لشخص واحد يعمل بمساعدة Codex/ChatGPT. لأن وقت العمل اليومي غير ثابت، يعتمد النظام على بطاقات مهام صغيرة بدل سبرنتات إلزامية بالأيام.
+2. القاعدة الذهبية
+One prompt → one branch → one small feature → tests → review → commit.
+لا يتم تنفيذ أكثر من Prompt في نفس الوقت. لا يتم فتح V2 قبل استقرار V1. لا يتم إدخال Mall أو Commerce أو Freemium أو V7/V8 داخل V1 إلا إذا كان ذلك ضمن Prompt صريح ومجمد.
+3. تصنيف جلسات العمل
+نوع الجلسة
+الوقت التقريبي
+نوع المهمة المناسبة
+أمثلة
+Micro Session
+30–60 دقيقة
+مهمة واحدة صغيرة جدًا
+migration واحدة، model، policy، test إصلاح بسيط، README update
+Standard Session
+2–3 ساعات
+Prompt كامل من V1
+Organizations، Memberships، Sites/Apps، Feature Flags
+Deep Work Block
+4–8 ساعات
+مجموعة Prompts مترابطة
+CMS tables + actions + Filament resource، أو Media + policies + tests
+Recovery Session
+أي وقت قصير
+فهم أين توقفت واستعادة السياق
+قراءة WORKLOG، تشغيل tests، تحديد الـ Prompt التالي
+4. طريقة اختيار المهمة القادمة
+لو عندك وقت
+افتح
+اعمل
+أقل من ساعة
+V1 Task Cards Board
+اختر Micro Task فقط أو راجع tests/README
+من ساعتين إلى 3 ساعات
+V1 Codex Prompt Pack
+نفّذ Prompt واحد كامل
+يوم كامل
+V1 Prompt Pack + V1 Task Cards
+نفّذ 2–4 Prompts بشرط commit بعد كل Prompt
+بعد انقطاع يوم أو أكثر
+WORKLOG.md
+اقرأ آخر جلسة، شغل tests، ثم كمل من Next Task
+5. دورة الجلسة القياسية
+• افتح WORKLOG.md واعرف آخر Prompt مكتمل.
+• افتح ملف V1 Codex Prompt Pack ولا تختار إلا Prompt واحد.
+• أنشئ branch جديد باسم واضح مثل feature/v1-organizations.
+• شغّل Codex على الـ Prompt فقط، مع قواعد V1.
+• راجع الملفات المتغيرة قبل قبولها.
+• شغّل php artisan test وvendor/bin/pint عند الحاجة.
+• اكتب ملخص في WORKLOG.md.
+• اعمل commit واحد واضح.
+• لا تبدأ Prompt جديد إلا بعد commit.
+6. متى ترفض كود Codex؟
+الحالة
+الإجراء
+أضاف feature من V2 أو أعلى
+ارفض التغيير واطلب منه إزالة أي future scope
+عدل جدول users بإضافة organization_id أو role
+ارفض فورًا؛ هذا anti-pattern ممنوع
+غيّر migrations قديمة بدون سبب
+ارفض أو اطلب migration additive جديدة
+لم يضف tests
+اطلب tests قبل commit
+كتب logic كبير في Controller
+اطلب Actions/Services طبقًا للمعمارية
+كسر tenant isolation
+أوقف الجلسة ونفّذ Security Fix Prompt فقط
+7. ملفات التنفيذ التي تبدأ منها الآن
+الملف
+الغرض
+16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v1_codex_prompt_pack_ar.docx
+الملف الأساسي للتنفيذ الحالي مع Codex
+13_CODING_READY_EXECUTION/08_V1_Sprint_1_Coding_Plan_FINAL_AR.docx
+الخطة العملية لأول Sprint
+13_CODING_READY_EXECUTION/10_Solo_AI_Builder_Execution_System_AR.docx
+هذا الملف: طريقة العمل اليومية المرنة
+13_CODING_READY_EXECUTION/11_V1_Flexible_Task_Cards_Board_AR.docx
+تحويل V1 إلى بطاقات مهام حسب الوقت
+13_CODING_READY_EXECUTION/WORKLOG_TEMPLATE.md
+قالب متابعة يومي داخل مشروع Laravel

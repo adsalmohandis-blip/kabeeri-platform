@@ -1,0 +1,114 @@
+KABEERI / powered by ADMIT
+KABEERI Feature Flags Matrix V1
+مصفوفة تفعيل المزايا للإصدار الأول وما بعده
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. الهدف
+Feature flags تمنع تضخم V1 وتسمح ببناء foundation دون فتح المزايا للمستخدمين قبل جاهزيتها.
+2. Matrix
+Flag
+Module
+Default
+Release
+Controlled By
+enable_cms
+CMS
+true
+V1
+Core
+enable_media_library
+Media
+true
+V1
+Core
+enable_theme_system
+Themes
+true
+V1
+Core
+enable_package_foundation
+Packages
+true
+V1
+Core
+enable_wordpress_import_foundation
+Migration
+false
+V1
+Owner/Admin
+enable_professional_profiles
+Talent
+false
+V1 foundation
+Owner
+enable_user_capabilities
+Work Network
+false
+V1 foundation
+Platform
+enable_academy_foundation
+Academy
+false
+V1 foundation
+Platform
+enable_commerce_foundation
+Commerce
+false
+V2
+Plan
+enable_forms
+Forms
+false
+V2
+Plan
+enable_crm_lite
+ERP/CRM
+false
+V3
+Plan
+enable_rabet_company_os
+Rabet
+false
+V3
+Plan
+enable_mall_public
+Mall
+false
+V4
+Platform
+enable_agency_partner
+Agency
+false
+V4
+Platform
+enable_affiliate_network
+Growth
+false
+V4/V5
+Platform
+enable_marketing_suite
+Marketing
+false
+V3/V4
+Plan
+enable_ai_cobuilder
+AI
+false
+V4
+Plan
+enable_integration_hub
+Integration
+false
+V5
+Plan
+enable_enterprise_security
+Security
+false
+V6
+Enterprise
+3. قواعد الاستخدام
+• كل module جديد له flag قبل أي UI.
+• لا يكفي flag إذا كانت الميزة مدفوعة؛ يجب entitlement check أيضًا.
+• Feature flag لا يتجاوز permissions.
+• Flags الخاصة بالـ Platform لا يراها العميل.
+• Seed default flags في بيئة التطوير يمكن أن تختلف عن production.

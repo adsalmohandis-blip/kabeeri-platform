@@ -1,0 +1,532 @@
+KABEERI Database File 10
+Kabeeri Commerce Database
+نظام التجارة والطلبات والدفع والشحن
+ملف تفصيلي لقاعدة بيانات Commerce داخل KABEERI، ليغطي المنتجات، التصنيفات، السلة، checkout، الطلبات، العملاء، الكوبونات، الدفع، الشحن، الضرائب، الربط مع المخزون والفواتير، والتكامل مع Cloud وFrontend Anywhere وPortable وDedicated وKabeeri Mall.
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+1. تعريف Commerce Database
+Commerce Database هي الطبقة التي تجعل Kabeeri قادرا على بيع المنتجات والخدمات واستقبال الطلبات بطريقة آمنة وقابلة للتوسع. في V2 تبدأ هذه الطبقة كـ Commerce Foundation بسيط، ثم في V3 تتحول إلى Commerce Pro V1 مرتبط بالمخزون والفواتير والضرائب والشحن، ثم في الإصدارات اللاحقة تتوسع إلى Multi-vendor وMall Commerce وERP-linked Commerce.
+الهدف ليس بناء بديل كامل لـ Shopify من أول نسخة، بل بناء أساس متين لا يكسر لاحقا عند إضافة Inventory وInvoicing وAccounting وMall وIntegration Hub.
+2. نطاق الملف
+Catalog: المنتجات، التصنيفات، الصور، الأسعار، المتغيرات، والـ SKU.
+Cart & Checkout: السلة، عناصر السلة، جلسات الدفع، وإعادة حساب الإجماليات من السيرفر.
+Orders: الطلبات، عناصر الطلب، العناوين، تاريخ الحالات، وربط الطلب بالفاتورة والمخزون.
+Customers: العملاء، العناوين، قنوات التواصل، وربطهم بالطلبات والـ CRM لاحقا.
+Coupons & Discounts: كوبونات V2، ثم قواعد خصم أوسع في V3.
+Payments: طرق دفع أساسية، معاملات دفع، Manual/COD/Bank Transfer كبداية، ثم بوابات دفع لاحقا.
+Shipping & Taxes: foundation للشحن والضرائب، مع Country Packs لاحقا.
+Integration: الربط مع Inventory، Invoicing، Mall Mirror، Frontend Anywhere، Portable، Dedicated.
+3. ما يدخل وما لا يدخل
+يدخل في هذا الملف
+لا يدخل هنا
+Products / SKUs / Variants
+Accounting الكامل، لأنه يدخل في ERP/Finance.
+Carts / Checkout Sessions / Orders
+Payroll أو HR.
+Customers / Addresses
+Mall moderation والتقييمات العامة التفصيلية؛ لها ملف Mall.
+Coupons / Payment Transactions / Shipping / Tax foundation
+بوابات دفع كاملة لكل دولة من البداية.
+Inventory Link / Invoice Link / Mall Mirror Link
+Stored card tokens أو بيانات دفع حساسة.
+4. مبادئ تصميم Commerce
+لا نثق في أسعار السلة القادمة من الواجهة. كل subtotal وtax وdiscount وtotal يعاد حسابه server-side.
+كل جدول أساسي يجب أن يكون scoped بـ organization_id، ومعه site_id أو company_id عند الحاجة.
+المنتج قد يظهر في Site، وقد يرتبط بـ Company أو Business Profile، وقد يظهر لاحقا في Mall Mirror.
+لا نحذف طلبا مؤكدا أو حركة دفع أو حركة مخزون بدون audit trail. نستخدم status/cancellation/refund بدلا من الحذف.
+نفصل بين فواتير منصة Kabeeri للعميل وبين فواتير العميل لعملائه. invoices_platform شيء، customer_invoices شيء آخر.
+Payment provider data تحفظ كـ metadata محدودة وآمنة، ولا تخزن card numbers أو payment tokens حساسة إلا عبر vault/provider.
+Commerce V2 يجب أن يعمل حتى بدون ERP كامل. لكن تصميمه يترك hooks واضحة لـ Inventory وInvoicing وAccounting.
+5. الاعتماديات
+يعتمد على
+سبب الاعتماد
+Core Kernel
+Users, Organizations, Sites, Companies, Permissions, Settings, Feature Flags, Activity Logs.
+Media & Files
+صور المنتجات، ملفات الكتالوج، PDF invoices، ومرفقات الطلبات.
+CMS
+صفحات المنتجات، SEO، slugs، وربط المنتج بالمحتوى والتصنيفات العامة.
+Rabet / Business Profile
+ربط المنتجات والخدمات بالبزنس الذي سيظهر في Mall.
+Cloud / Entitlements
+تفعيل commerce حسب الخطة وحدود المنتجات والطلبات والتخزين.
+Events & Workflows
+OrderCreated, OrderPaid, PaymentFailed, InventoryReserved, InvoiceCreated.
+6. الجداول الأساسية المقترحة
+المجموعة
+الجداول
+Store / Channel
+commerce_stores, commerce_channels, commerce_settings
+Catalog
+product_categories, products, product_variants, product_skus, product_media, product_prices
+Customers
+customers, customer_addresses
+Cart / Checkout
+carts, cart_items, checkout_sessions
+Orders
+orders, order_items, order_addresses, order_status_history, order_notes
+Payments
+payment_methods, payment_transactions, refunds
+Shipping
+shipping_zones, shipping_methods, shipments, shipment_items
+Taxes
+tax_classes, tax_rates, order_taxes
+Discounts
+coupons, coupon_redemptions, discount_rules
+Links
+commerce_inventory_links, commerce_invoice_links, commerce_mall_publication_links
+7. commerce_stores
+الحقول المقترحة:
+iduuidorganization_idsite_idcompany_id nullablebusiness_profile_id nullablenameslugstatus default activedefault_currency_code default EGPdefault_language default artimezone default Africa/Cairocatalog_visibility default publiccheckout_mode default basicsettings json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+status: draft, active, paused, suspended, archivedcatalog_visibility: public, hidden, members_only, privatecheckout_mode: catalog_only, request_only, basic, headless, redirect
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(company_id)unique(site_id, slug)index(status)
+ملاحظات:
+يمثل المتجر داخل الموقع. في V2 يمكن أن يكون لكل site متجر واحد، لكن نترك schema قابلا لتعدد القنوات لاحقا.
+checkout_mode يساعد Frontend Anywhere: catalog_only أو headless أو redirect.
+8. commerce_channels
+الحقول المقترحة:
+iduuidorganization_idcommerce_store_idchannel_typenamestatus default activesource_type nullablesource_id nullablesettings json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+channel_type: web_store, frontend_anywhere, mall, pos, api, social, marketplace_connectorstatus: active, paused, disconnected, archived
+الفهارس المقترحة:
+index(organization_id)index(commerce_store_id)index(channel_type)index(status)
+ملاحظات:
+يسمح بأن يكون للمتجر أكثر من قناة بيع أو عرض بدون تكرار بيانات المنتجات.
+Kabeeri Mall قد يكون قناة عرض فقط في البداية وليس قناة checkout كاملة.
+9. product_categories
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecommerce_store_id nullableparent_id nullablenameslugdescription nullableimage_media_id nullablesort_order default 0status default activevisibility default publicseo_title nullableseo_description nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+status: active, hidden, archivedvisibility: public, private, organization_only, mall_public
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(commerce_store_id)index(parent_id)unique(commerce_store_id, slug)index(status)
+ملاحظات:
+تستخدم للمتجر الداخلي، ويمكن مزامنة جزء منها لاحقا إلى Mall categories أو mapping table.
+10. products
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecompany_id nullablecommerce_store_id nullablebusiness_profile_id nullableproduct_category_id nullablenameslugsku nullableshort_description nullabledescription longtext nullableproduct_type default simplestatus default draftvisibility default publicprice decimal(15,2) nullablesale_price decimal(15,2) nullablecurrency_code default EGPstock_tracking_mode default nonestock_quantity decimal(15,3) nullableweight decimal(15,3) nullabledimensions json nullablemain_media_id nullableseo_title nullableseo_description nullablecanonical_url nullablepublished_at nullablecreated_by nullableupdated_by nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+product_type: simple, variable, digital, service_like, bundle, externalstatus: draft, review, published, hidden, suspended, archivedvisibility: public, private, unlisted, mall_public, members_onlystock_tracking_mode: none, simple_quantity, inventory_module, external_erp
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(company_id)index(commerce_store_id)unique(commerce_store_id, slug)index(sku)index(status)index(visibility)index(product_category_id)
+ملاحظات:
+في V2 يمكن الاكتفاء بـ price وstock_quantity البسيطة.
+بعد V3، stock_quantity لا يكون المصدر الحقيقي للمخزون؛ المصدر يصبح stock_balances/stock_movements في Inventory.
+لا نخلط Product مع Service Listing. service_like موجود فقط للتعامل التجاري إذا كان مطلوبا بيع خدمة داخل checkout.
+11. product_variants
+الحقول المقترحة:
+iduuidorganization_idproduct_idname nullablevariant_key nullableattributes jsonstatus default activesort_order default 0metadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+status: active, hidden, discontinued, archived
+الفهارس المقترحة:
+index(organization_id)index(product_id)index(status)unique(product_id, variant_key)
+ملاحظات:
+يدخل بشكل كامل في V3 Commerce Pro أو عند دعم WooCommerce/Shopify migration بشكل أعمق.
+attributes مثال: color=black, size=L.
+12. product_skus
+الحقول المقترحة:
+iduuidorganization_idproduct_idproduct_variant_id nullableskubarcode nullableprice decimal(15,2) nullablesale_price decimal(15,2) nullablecurrency_code nullablecost_price decimal(15,2) nullablestock_tracking_mode default inheritstatus default activemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+status: active, inactive, discontinued, archivedstock_tracking_mode: inherit, none, inventory_module, external_erp
+الفهارس المقترحة:
+index(organization_id)index(product_id)index(product_variant_id)unique(organization_id, sku)index(barcode)index(status)
+ملاحظات:
+يسمح بفصل المنتج العام عن وحدة البيع/المخزون.
+cost_price حساس ولا يظهر للواجهات العامة أو Mall Mirror.
+13. product_media
+الحقول المقترحة:
+idproduct_idmedia_asset_idproduct_variant_id nullableusage_type default gallerysort_order default 0alt_text nullablecreated_at
+القيم / الحالات المقترحة:
+usage_type: main, gallery, variant_image, seo_image, downloadable_file
+الفهارس المقترحة:
+index(product_id)index(media_asset_id)index(product_variant_id)index(usage_type)
+ملاحظات:
+يربط المنتجات بـ media_assets بدون نسخ الملفات.
+downloadable_file يحتاج visibility وصلاحيات خاصة خصوصا للمنتجات الرقمية.
+14. product_prices
+الحقول المقترحة:
+iduuidorganization_idproduct_idproduct_sku_id nullableprice_type default regularcurrency_codeamount decimal(15,2)starts_at nullableends_at nullablecustomer_group nullablechannel_type nullablestatus default activemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+price_type: regular, sale, b2b, wholesale, campaign, contractstatus: active, scheduled, expired, disabled
+الفهارس المقترحة:
+index(organization_id)index(product_id)index(product_sku_id)index(currency_code)index(status)index(starts_at, ends_at)
+ملاحظات:
+اختياري في V2، لكنه مهم لاحقا للتسعير المتعدد والعملات والعروض.
+15. customers
+الحقول المقترحة:
+iduuidorganization_idcompany_id nullablesite_id nullableuser_id nullablecustomer_type default individualnameemail nullablephone nullablecompany_name nullabletax_number nullablestatus default activesource default commercecrm_contact_id nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+customer_type: individual, company, gueststatus: active, inactive, blocked, archivedsource: commerce, service_request, form, migration, mall, import, api
+الفهارس المقترحة:
+index(organization_id)index(company_id)index(site_id)index(user_id)index(email)index(phone)index(status)
+ملاحظات:
+يمكن ربط Customer بـ User إذا كان لديه حساب، أو يبقى Guest customer.
+crm_contact_id يظهر بعد V3 عند ربط Commerce بالـ CRM.
+16. customer_addresses
+الحقول المقترحة:
+iduuidorganization_idcustomer_idaddress_type default shippingname nullablephone nullablecountry_id nullablecity nullablestate nullablepostal_code nullableaddress_line1address_line2 nullableis_default default falsemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+address_type: billing, shipping, both
+الفهارس المقترحة:
+index(organization_id)index(customer_id)index(country_id)index(address_type)
+ملاحظات:
+Country Packs لاحقا تحدد validation أعمق لتنسيق العنوان.
+17. carts
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecommerce_store_id nullablecustomer_id nullableuser_id nullablesession_id nullablestatus default activecurrency_code default EGPsubtotal decimal(15,2) default 0discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0shipping_total decimal(15,2) default 0total decimal(15,2) default 0expires_at nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+status: active, converted, abandoned, expired, merged, cancelled
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(commerce_store_id)index(customer_id)index(user_id)index(session_id)index(status)index(expires_at)
+ملاحظات:
+الإجماليات في cart للاستخدام السريع فقط، ويجب إعادة حسابها عند checkout.
+لا نعتمد على cart totals عند إنشاء order بدون recalculation.
+18. cart_items
+الحقول المقترحة:
+idcart_idproduct_idproduct_sku_id nullableproduct_variant_id nullablequantity decimal(15,3)unit_price decimal(15,2)original_unit_price decimal(15,2) nullablediscount_total decimal(15,2) default 0tax_total decimal(15,2) default 0line_total decimal(15,2) default 0snapshot json nullablemetadata json nullablecreated_atupdated_at
+الفهارس المقترحة:
+index(cart_id)index(product_id)index(product_sku_id)
+ملاحظات:
+snapshot يحفظ اسم المنتج وsku والخصائص وقت الإضافة، لكن السعر النهائي يعاد حسابه عند checkout.
+19. checkout_sessions
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecommerce_store_id nullablecart_id nullablecustomer_id nullablestatus default pendingcheckout_token_hash nullableexpires_at nullableselected_payment_method nullableselected_shipping_method_id nullablebilling_address json nullableshipping_address json nullabletotals_snapshot json nullablerisk_score nullablemetadata json nullablecreated_atupdated_atcompleted_at nullable
+القيم / الحالات المقترحة:
+status: pending, validating, payment_pending, completed, failed, expired, cancelled
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(cart_id)index(customer_id)index(status)index(expires_at)
+ملاحظات:
+يفيد في Frontend Anywhere headless checkout وفي تقليل أخطاء refresh/retry.
+20. orders
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecompany_id nullablecommerce_store_id nullablecustomer_id nullablecart_id nullablecheckout_session_id nullableorder_numberstatus default pendingpayment_status default unpaidfulfillment_status default unfulfilledcurrency_code default EGPsubtotal decimal(15,2)discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0shipping_total decimal(15,2) default 0total decimal(15,2)customer_email nullablecustomer_phone nullableplaced_at nullablecancelled_at nullablesource_channel nullablesource_url nullablenotes nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+status: draft, pending, confirmed, processing, completed, cancelled, failed, refunded, archivedpayment_status: unpaid, pending, authorized, paid, partially_paid, failed, refunded, partially_refunded, voidedfulfillment_status: unfulfilled, reserved, partially_fulfilled, fulfilled, shipped, delivered, returned, cancelled
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(company_id)index(customer_id)unique(organization_id, order_number)index(status)index(payment_status)index(fulfillment_status)index(placed_at)
+ملاحظات:
+order_number يجب أن يكون فريدا داخل organization وليس global.
+لا نحذف الطلب المؤكد. نستخدم cancellation/refund/status history.
+بعد V3، order يمكن أن يتحول إلى invoice ويرتبط بحركة مخزون.
+21. order_items
+الحقول المقترحة:
+idorder_idproduct_id nullableproduct_sku_id nullableproduct_variant_id nullableitem_type default productnamesku nullablequantity decimal(15,3)unit_price decimal(15,2)discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0line_total decimal(15,2)fulfillment_status default unfulfilledinventory_reserved_quantity decimal(15,3) default 0snapshot json nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+item_type: product, service, shipping, discount, fee, tax, gift_cardfulfillment_status: unfulfilled, reserved, picked, packed, shipped, delivered, returned, cancelled
+الفهارس المقترحة:
+index(order_id)index(product_id)index(product_sku_id)index(fulfillment_status)
+ملاحظات:
+snapshot مهم للحفاظ على اسم وسعر المنتج وقت الطلب حتى لو تغير المنتج لاحقا.
+22. order_addresses
+الحقول المقترحة:
+idorder_idaddress_typename nullablephone nullableemail nullablecountry_id nullablecity nullablestate nullablepostal_code nullableaddress_line1 nullableaddress_line2 nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+address_type: billing, shipping
+الفهارس المقترحة:
+index(order_id)index(address_type)index(country_id)
+ملاحظات:
+يحفظ snapshot للعناوين وقت الطلب ولا يعتمد فقط على customer_addresses المتغيرة.
+23. order_status_history
+الحقول المقترحة:
+iduuidorganization_idorder_idfrom_status nullableto_statusstatus_type default orderchanged_by nullablereason nullablemetadata json nullablecreated_at
+القيم / الحالات المقترحة:
+status_type: order, payment, fulfillment, fraud, refund
+الفهارس المقترحة:
+index(organization_id)index(order_id)index(status_type)index(created_at)
+ملاحظات:
+أي تغيير حالة مهم يجب أن يدخل هنا وأن يسجل أيضا في activity/audit عند الحاجة.
+24. order_notes
+الحقول المقترحة:
+idorder_iduser_id nullablenote_type default internalbody longtextvisibility default internalcreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+note_type: internal, customer_visible, system, payment, shippingvisibility: internal, customer, support_only
+الفهارس المقترحة:
+index(order_id)index(user_id)index(note_type)
+ملاحظات:
+تفيد في خدمة العملاء وربط order discussion لاحقا مع Teams/Helpdesk.
+25. payment_methods
+الحقول المقترحة:
+iduuidorganization_id nullablesite_id nullablecommerce_store_id nullablemethod_keydisplay_namepayment_typeprovider nullablestatus default activeis_manual default falsesettings json nullablesort_order default 0created_atupdated_at
+القيم / الحالات المقترحة:
+payment_type: manual, cash_on_delivery, bank_transfer, card_provider, wallet, gateway, externalstatus: active, disabled, sandbox, archived
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(commerce_store_id)index(method_key)index(status)
+ملاحظات:
+في V2 نبدأ بـ manual، cash_on_delivery، bank_transfer.
+إعدادات حساسة يجب أن تحفظ encrypted أو في vault، لا raw JSON غير مشفر.
+26. payment_transactions
+الحقول المقترحة:
+iduuidorganization_idorder_id nullablecustomer_id nullablepayment_method_id nullabletransaction_type default paymentstatus default pendingamount decimal(15,2)currency_code default EGPprovider nullableprovider_reference nullableprovider_status nullableauthorized_at nullablecaptured_at nullablefailed_at nullablerefunded_at nullablefailure_reason nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+transaction_type: authorization, payment, capture, refund, void, manual_recordstatus: pending, authorized, paid, failed, cancelled, refunded, partially_refunded, voided
+الفهارس المقترحة:
+index(organization_id)index(order_id)index(customer_id)index(status)index(provider)index(provider_reference)
+ملاحظات:
+لا تخزن card number أو CVV أو stored card tokens.
+provider_reference مسموح لأنه مرجع خارجي لا يكشف بيانات دفع حساسة.
+27. refunds
+الحقول المقترحة:
+iduuidorganization_idorder_idpayment_transaction_id nullablerefund_number nullablestatus default pendingamount decimal(15,2)currency_codereason nullablerequested_by nullableapproved_by nullableprocessed_at nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+status: pending, approved, rejected, processing, completed, failed, cancelled
+الفهارس المقترحة:
+index(organization_id)index(order_id)index(payment_transaction_id)index(status)
+ملاحظات:
+قد يدخل بشكل مبسط في V3 أو V4، لكنه مهم لتصميم order lifecycle مبكرا.
+28. shipping_zones
+الحقول المقترحة:
+iduuidorganization_idcommerce_store_id nullablenamestatus default activecountries json nullablecities json nullablepostal_codes json nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+status: active, disabled, archived
+الفهارس المقترحة:
+index(organization_id)index(commerce_store_id)index(status)
+ملاحظات:
+Foundation فقط. Country Packs لاحقا تحول القواعد إلى جداول أدق حسب الدولة.
+29. shipping_methods
+الحقول المقترحة:
+iduuidorganization_idcommerce_store_id nullableshipping_zone_id nullablemethod_keynameprovider nullablepricing_type default flatbase_price decimal(15,2) default 0currency_code default EGPstatus default activesettings json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+pricing_type: free, flat, weight_based, order_total_based, provider_ratestatus: active, disabled, archived
+الفهارس المقترحة:
+index(organization_id)index(commerce_store_id)index(shipping_zone_id)index(status)
+ملاحظات:
+في V2 يمكن تأجيل الشحن أو استخدام manual shipping.
+30. shipments
+الحقول المقترحة:
+iduuidorganization_idorder_idshipping_method_id nullablestatus default pendingcarrier nullabletracking_number nullabletracking_url nullableshipped_at nullabledelivered_at nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+status: pending, ready, shipped, in_transit, delivered, failed, returned, cancelled
+الفهارس المقترحة:
+index(organization_id)index(order_id)index(status)index(tracking_number)
+ملاحظات:
+يمكن دخول shipments بعد V2، لكن schema موجود حتى لا نكسر orders لاحقا.
+31. shipment_items
+الحقول المقترحة:
+idshipment_idorder_item_idquantity decimal(15,3)created_at
+الفهارس المقترحة:
+index(shipment_id)index(order_item_id)
+ملاحظات:
+يسمح بتقسيم الطلب إلى أكثر من شحنة.
+32. tax_classes
+الحقول المقترحة:
+iduuidorganization_id nullablecountry_id nullablenamecodedescription nullablestatus default activemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+status: active, disabled, archived
+الفهارس المقترحة:
+index(organization_id)index(country_id)unique(organization_id, code)index(status)
+ملاحظات:
+في V2 يمكن أن تكون بسيطة. التفاصيل الكاملة تأتي مع Localization & Country Packs.
+33. tax_rates
+الحقول المقترحة:
+iduuidorganization_id nullabletax_class_id nullablecountry_id nullableregion nullablenamerate decimal(8,4)is_inclusive default falsestatus default activestarts_at nullableends_at nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+status: active, scheduled, expired, disabled
+الفهارس المقترحة:
+index(organization_id)index(tax_class_id)index(country_id)index(status)index(starts_at, ends_at)
+ملاحظات:
+tax rules النهائية يجب أن تأتي من Country Pack عند التوسع متعدد الدول.
+34. order_taxes
+الحقول المقترحة:
+idorder_idorder_item_id nullabletax_rate_id nullabletax_namerate decimal(8,4)amount decimal(15,2)metadata json nullablecreated_at
+الفهارس المقترحة:
+index(order_id)index(order_item_id)index(tax_rate_id)
+ملاحظات:
+Snapshot للضريبة وقت الطلب. لا نعتمد على tax_rates فقط لأن القواعد قد تتغير.
+35. coupons
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecommerce_store_id nullablecodename nullabledescription nullablediscount_typediscount_value decimal(15,2)currency_code nullableusage_limit nullableusage_limit_per_customer nullableminimum_order_total decimal(15,2) nullablestarts_at nullableends_at nullablestatus default activemetadata json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+discount_type: fixed_amount, percentage, free_shippingstatus: active, scheduled, expired, disabled, archived
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(commerce_store_id)unique(commerce_store_id, code)index(status)index(starts_at, ends_at)
+ملاحظات:
+V2 يدعم coupons basic فقط.
+Discount Rules الأوسع تدخل لاحقا بدون كسر coupon model.
+36. coupon_redemptions
+الحقول المقترحة:
+idcoupon_idorganization_idorder_id nullablecustomer_id nullablecart_id nullablediscount_amount decimal(15,2)redeemed_atmetadata json nullablecreated_at
+الفهارس المقترحة:
+index(coupon_id)index(organization_id)index(order_id)index(customer_id)index(redeemed_at)
+ملاحظات:
+تستخدم لمنع تجاوز limits ولتحليل أداء الكوبونات.
+37. discount_rules
+الحقول المقترحة:
+iduuidorganization_idcommerce_store_id nullablenamerule_typeconditions jsonactions jsonpriority default 0stackable default falsestatus default draftstarts_at nullableends_at nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+rule_type: product_discount, cart_discount, customer_group_discount, b2b_price, shipping_discountstatus: draft, active, scheduled, expired, disabled, archived
+الفهارس المقترحة:
+index(organization_id)index(commerce_store_id)index(rule_type)index(status)index(priority)
+ملاحظات:
+ليس ضروريا في V2، لكنه يدخل في V3 Commerce Pro V1.
+38. product_reviews
+الحقول المقترحة:
+iduuidorganization_idproduct_idcustomer_id nullableorder_id nullablerating tinyinttitle nullablebody nullablestatus default pendingvisibility default publicverified_purchase default falsecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+status: pending, approved, rejected, spam, hiddenvisibility: public, hidden, internal
+الفهارس المقترحة:
+index(organization_id)index(product_id)index(customer_id)index(order_id)index(status)index(rating)
+ملاحظات:
+الـ reviews العامة المتقدمة والسمعة العامة تدخل في Mall/Reviews Engine، لكن product_reviews basic يمكن أن يبدأ هنا.
+39. abandoned_carts
+الحقول المقترحة:
+iduuidorganization_idcart_idcustomer_id nullableemail nullablestatus default detecteddetected_atlast_reminder_at nullablerecovered_order_id nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+status: detected, reminder_sent, recovered, ignored, expired
+الفهارس المقترحة:
+index(organization_id)index(cart_id)index(customer_id)index(email)index(status)
+ملاحظات:
+يدخل غالبا بعد V3 أو V4، لكنه مذكور لأن V3 Commerce Pro يمهد له.
+40. commerce_inventory_links
+الحقول المقترحة:
+idorganization_idproduct_idproduct_sku_id nullableinventory_item_id nullablewarehouse_id nullablesync_mode default manualstatus default activecreated_atupdated_at
+القيم / الحالات المقترحة:
+sync_mode: manual, inventory_module, external_erp, connectorstatus: active, paused, broken, archived
+الفهارس المقترحة:
+index(organization_id)index(product_id)index(product_sku_id)index(inventory_item_id)index(status)
+ملاحظات:
+هذا جدول ربط، وليس بديل عن Inventory module.
+بعد V3، Stock Movements/Balances هي المصدر الحقيقي للمخزون.
+41. commerce_invoice_links
+الحقول المقترحة:
+idorganization_idorder_idinvoice_id nullableinvoice_number nullablelink_status default pendingcreated_atupdated_at
+القيم / الحالات المقترحة:
+link_status: pending, created, linked, failed, cancelled
+الفهارس المقترحة:
+index(organization_id)index(order_id)index(invoice_id)index(link_status)
+ملاحظات:
+يربط Order بـ Invoicing Basic في V3.
+لا تخلط هذا مع invoices_platform الخاصة بفوترة Kabeeri نفسها.
+42. commerce_mall_publication_links
+الحقول المقترحة:
+idorganization_idproduct_id nullableproduct_sku_id nullablemall_mirror_product_id nullablepublication_status default draftlast_synced_at nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+publication_status: draft, pending_review, published, hidden, suspended, rejected, stale
+الفهارس المقترحة:
+index(organization_id)index(product_id)index(mall_mirror_product_id)index(publication_status)
+ملاحظات:
+Mall لا يقرأ من products مباشرة، بل من Mall Mirror/Synchronization layer.
+هذا الرابط يساعد التتبع فقط، والقرار النهائي للنشر يخضع للموافقة والـ moderation.
+43. Commerce ERD
+erDiagram ORGANIZATIONS ||--o{ COMMERCE_STORES : owns SITES ||--o{ COMMERCE_STORES : hosts COMMERCE_STORES ||--o{ COMMERCE_CHANNELS : sells_through COMMERCE_STORES ||--o{ PRODUCT_CATEGORIES : organizes PRODUCT_CATEGORIES ||--o{ PRODUCTS : contains PRODUCTS ||--o{ PRODUCT_VARIANTS : has PRODUCTS ||--o{ PRODUCT_SKUS : has PRODUCTS ||--o{ PRODUCT_MEDIA : displays PRODUCTS ||--o{ PRODUCT_PRICES : priced_by ORGANIZATIONS ||--o{ CUSTOMERS : has CUSTOMERS ||--o{ CUSTOMER_ADDRESSES : stores COMMERCE_STORES ||--o{ CARTS : receives CARTS ||--o{ CART_ITEMS : contains CARTS ||--o{ CHECKOUT_SESSIONS : checks_out CUSTOMERS ||--o{ ORDERS : places ORDERS ||--o{ ORDER_ITEMS : contains ORDERS ||--o{ ORDER_ADDRESSES : snapshots ORDERS ||--o{ ORDER_STATUS_HISTORY : tracks ORDERS ||--o{ PAYMENT_TRANSACTIONS : paid_by ORDERS ||--o{ SHIPMENTS : ships COUPONS ||--o{ COUPON_REDEMPTIONS : redeemed_as PRODUCTS ||--o{ COMMERCE_INVENTORY_LINKS : maps_to_inventory ORDERS ||--o{ COMMERCE_INVOICE_LINKS : invoices PRODUCTS ||--o{ COMMERCE_MALL_PUBLICATION_LINKS : publishes_to_mall
+44. Product Publishing Flow
+Create product draft→ upload product media→ set category / price / SKU→ validate required fields→ publish product→ create activity log→ optional: update sitemap/search index→ optional: sync public product to Mall Mirror if consent exists
+45. Cart & Checkout Flow
+Visitor adds product to cart→ cart_item created with snapshot→ cart totals are estimated→ checkout_session created→ server recalculates product prices, discounts, tax, shipping→ validate stock availability→ create order + order_items→ create payment_transaction or manual payment instruction→ cart status converted→ OrderCreated event fired
+46. Payment Flow في V2
+Order created→ payment_status = unpaid→ selected method: COD / bank transfer / manual→ admin records payment manually or customer follows instructions→ payment_transaction created→ order.payment_status updated→ OrderPaid event fired if paid→ optional invoice generation in V3
+في V2 لا يجب تخزين أي بيانات دفع حساسة. بوابات الدفع الكاملة تدخل تدريجيا عبر Commerce Apps أو Integration Hub، مع إعلان الصلاحيات المطلوبة لكل مزود دفع.
+47. Inventory Link Flow في V3
+Order confirmed→ check commerce_inventory_links→ reserve stock in Inventory module if enabled→ create stock_reservation / stock_movement→ update order fulfillment_status→ low stock alerts may fire→ fulfillment/shipment updates inventory state
+48. Order to Invoice Flow في V3
+Order confirmed or paid→ create customer invoice draft/issued according to settings→ commerce_invoice_links created→ invoice PDF generated→ payment allocation optional→ accounting starter receives draft/posting event later
+49. Frontend Anywhere Rules
+الواجهة الخارجية تقرأ published products وpublic categories وpublic media فقط.
+لا ترى cost_price أو stock internal details أو supplier data أو private customer data.
+checkout headless يحتاج API key scopes: read_public_products, create_cart, create_order.
+يجب تسجيل public_api_requests للطلبات العامة والتحكم في rate limits وCORS.
+في المرحلة الأولى الأفضل: Catalog + Forms + Service Requests، ثم cart/order API لاحقا.
+50. Portable Rules
+products, categories, customers, orders, coupons يمكن تصديرها ضمن tenant export registry إذا كانت ضمن نطاق العميل.
+payment tokens أو بيانات مزود دفع حساسة لا تصدر.
+provider references قد تصدر فقط إذا كانت آمنة ومفيدة للمراجعة.
+UUIDs يجب الحفاظ عليها لمزامنة Mall Mirror بعد الخروج.
+ملفات media الخاصة بالمنتجات تدخل في media/public أو media/private حسب visibility.
+51. Dedicated Rules
+Dedicated يستخدم نفس Commerce schema داخل Dedicated DB لتوحيد الكود.
+billing relationship يبقى في Kabeeri Central، أما orders/customers الخاصة بالعميل فتكون في Dedicated DB.
+Mall Sync يتم عبر API/bridge وليس عبر قراءة Dedicated DB مباشرة.
+health reports أو usage summaries لا يجب أن تحتوي بيانات عملاء أو تفاصيل طلبات حساسة.
+52. Mall Sync Rules للمنتجات
+Kabeeri Mall لا يعتمد مباشرة على جدول products. المنتجات العامة تنتقل إلى mall_mirror_products عبر mall_sync_sources وmall_sync_events بعد وجود موافقة نشر واضحة.
+يسمح بالمزامنة إلى Mall
+لا يسمح بالمزامنة إلى Mall
+product name
+cost_price
+description public
+supplier cost
+public price
+private margin
+availability public
+internal stock movement
+public image_url
+purchase history
+public_url
+customer order history
+53. Permissions المقترحة
+commerce.store.viewcommerce.store.managecommerce.product.viewcommerce.product.createcommerce.product.editcommerce.product.publishcommerce.product.deletecommerce.product.price.managecommerce.product.inventory_link.managecommerce.customer.viewcommerce.customer.managecommerce.cart.viewcommerce.order.viewcommerce.order.managecommerce.order.status.updatecommerce.order.cancelcommerce.payment.viewcommerce.payment.recordcommerce.payment.refundcommerce.coupon.viewcommerce.coupon.managecommerce.shipping.managecommerce.tax.managecommerce.mall.publish_requestcommerce.report.view
+54. Roles المقترحة
+Role
+الوصف
+Store Owner
+يدير المتجر بالكامل داخل Organization/Site.
+Store Manager
+يدير المنتجات والطلبات والعملاء والكوبونات.
+Product Manager
+يدير الكتالوج والمنتجات والأسعار والصور.
+Order Manager
+يرى الطلبات ويحدث حالاتها ويدير fulfillment.
+Payment Manager
+يسجل المدفوعات اليدوية ويتابع معاملات الدفع.
+Shipping Manager
+يدير الشحن والشحنات والتتبع.
+Customer Support
+يرى الطلبات وملاحظات العملاء بدون صلاحيات مالية حساسة.
+55. Indexes المهمة
+products.organization_idproducts.site_idproducts.commerce_store_idproducts.slugproducts.skuproducts.statusproducts.visibilityproduct_categories.commerce_store_id + slugproduct_skus.organization_id + skucustomers.organization_idcustomers.emailcustomers.phonecarts.organization_idcarts.session_idorders.organization_idorders.site_idorders.customer_idorders.order_numberorders.statusorders.payment_statusorders.placed_atpayment_transactions.order_idpayment_transactions.provider + provider_referencecoupons.commerce_store_id + codeshipments.order_idcommerce_mall_publication_links.product_id
+56. Events المقترحة
+ProductPublishedProductPriceChangedProductStockModeChangedCartCreatedCartAbandonedCheckoutStartedOrderCreatedOrderConfirmedOrderCancelledOrderPaidOrderRefundedPaymentRecordedPaymentFailedShipmentCreatedShipmentDeliveredCouponRedeemedProductMallPublicationRequested
+57. Testing Priorities
+Create product test.
+Publish product test.
+Product slug uniqueness test.
+Add to cart test.
+Checkout creates order test.
+Order totals calculated server-side test.
+Coupon apply test.
+Coupon usage limit test.
+Order status update permission test.
+Manual payment record test.
+Payment transaction cannot store sensitive card data test.
+Order to inventory reservation test في V3.
+Order to invoice link test في V3.
+Frontend Anywhere public API scope test.
+Portable export excludes sensitive payment data test.
+58. Seeders المقترحة
+CommercePermissionsSeederCommerceRolesSeederDefaultCommerceStoreSeederDefaultPaymentMethodsSeederDefaultShippingMethodsSeederDefaultTaxClassesSeederDemoProductCategoriesSeederDemoProductsSeederDemoCouponsSeederDemoCustomersSeederDemoOrdersSeeder
+59. CLI Commands المقترحة
+php artisan kabeeri:commerce:seed-demophp artisan kabeeri:orders:recalculate {orderId}php artisan kabeeri:orders:sync-inventory {orderId}php artisan kabeeri:orders:create-invoice {orderId}php artisan kabeeri:products:reindex {siteId}php artisan kabeeri:commerce:cleanup-cartsphp artisan kabeeri:commerce:mall-sync-products {organizationId}
+60. Build Order العملي
+تأكد من استقرار Core Kernel: organizations, sites, companies, permissions, media.
+أنشئ commerce_stores وcommerce_settings.
+أنشئ product_categories وproducts وproduct_media.
+ابن product admin UI وpublic product page.
+أنشئ carts وcart_items وCartService.
+أنشئ checkout_sessions وOrderService.
+أنشئ orders وorder_items وorder_addresses وorder_status_history.
+أضف customers وcustomer_addresses.
+أضف coupons وcoupon_redemptions.
+أضف payment_methods وpayment_transactions للـ manual/COD/bank transfer.
+أضف shipping/tax foundation حسب الحاجة.
+أضف tests وseeders وdemo store.
+في V3: أضف variants/SKUs وinventory links وinvoice links وdiscount_rules.
+61. أخطاء ممنوعة
+لا تحفظ card numbers أو CVV أو payment tokens داخل قاعدة بيانات Kabeeri.
+لا تعتمد على السعر القادم من frontend.
+لا تجعل stock_quantity داخل products هو مصدر الحقيقة بعد تفعيل Inventory module.
+لا تخلط invoices_platform الخاصة بفوترة Kabeeri مع invoices الخاصة بعملاء المتجر.
+لا تنشر المنتجات في Mall بدون consent وmoderation readiness.
+لا تحذف orders أو payment_transactions بعد تأكيدها بدون audit/void/refund flow.
+لا تبدأ بـ multi-vendor checkout قبل استقرار single-vendor commerce.
+62. AI Build Prompts مقترحة
+هذه prompts تستخدم عند بناء الموديول بمساعدة AI مع مراجعة بشرية:
+ابن Laravel migration + model + policy لجدول products حسب Kabeeri Commerce Database، مع tenant scoping بـ organization_id وsite_id واختبارات صلاحيات publish/edit.ابن CartService يعيد حساب cart totals من قاعدة البيانات ولا يثق في السعر القادم من الواجهة، مع tests لإضافة منتج وتحديث كمية وحذف item.ابن OrderService يحول checkout_session إلى order/order_items ويولد order_number داخل organization، ويكتب order_status_history وactivity_log.ابن PaymentTransaction model وManualPaymentRecordAction بدون تخزين أي بيانات دفع حساسة، مع permission commerce.payment.record.ابن CouponService يدعم fixed_amount وpercentage وusage_limit ويكتب coupon_redemptions.
+63. ملخص تنفيذي
+هذا الملف يجعل Commerce في Kabeeri يبدأ صغيرا وآمنا في V2: products, cart, checkout, orders, customers, coupons, manual payments. ثم يترك مسارات واضحة للتوسع في V3: product variants, inventory link, invoice link, shipping/tax foundations, discount rules. كما يضمن أن Frontend Anywhere وPortable وDedicated وMall Sync لا تكسر ملكية البيانات أو خصوصية العميل.
+القاعدة النهائية: Commerce لا يبقى متجرا منفصلا عن المنصة؛ بل يصبح جزءا من رحلة Build → Sell → Operate → Verify → Discover → Scale.
+64. ملاحظات مرجعية داخلية
+V2 يحدد Commerce Foundation: Products, Cart, Checkout basic, Orders, Customers, Coupons, COD/Bank Transfer.
+V3 يضيف الربط التشغيلي: Inventory Basic, Invoicing Basic, Accounting Starter, Product variants, Shipping zones, Tax rules, Payment gateways initial.
+Dependencies Map يضع Commerce Layer بعد Core/CMS وقبل ERP/Mall الكامل، ويؤكد اعتماده على Organizations, Sites, Companies optional, Business Profiles optional, Media, Content/SEO, Notifications, Activity Log.
+Frontend Anywhere يسمح للواجهة الخارجية بقراءة المنتجات العامة وإنشاء cart/order فقط عبر scopes محددة.
+Migration Strategy يضيف ضرورة دعم WooCommerce/Shopify mapping لاحقا بعد استقرار products/orders/customers/variants.

@@ -1,0 +1,66 @@
+KABEERI / powered by ADMIT
+KABEERI V1 Scope Freeze
+تجميد نطاق الإصدار الأول قبل كتابة الكود
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. قرار التجميد
+V1 ليس نسخة Kabeeri الكاملة. V1 هدفه بناء نواة قابلة للتوسع: مستخدم، منظمة، تطبيق، CMS، Media، Themes basic، Package foundation، Import foundation، وصلاحيات. أي ميزة لا تخدم هذا الهدف تؤجل.
+2. داخل V1
+المجال
+يدخل في V1
+ملاحظات
+Core
+Users, Organizations, Memberships, Roles, Permissions
+أساسي
+Apps/Sites
+إنشاء تطبيق/موقع، إعدادات، دومين placeholder
+UI label = App
+CMS
+Pages, Posts, Content Types basic, SEO fields
+بدون page builder متقدم
+Media
+Upload, Library, public/private visibility
+بدون transformations متقدمة
+Themes
+Theme registry, activation, starter theme, demo import basic
+بدون public theme marketplace
+Packages
+Package foundation + official only
+لا public submissions
+WordPress Migration
+Import foundation + XML parser skeleton
+الاستيراد الكامل في V2
+Professional Profile
+Basic profile + visibility
+Talent marketplace public لاحقًا
+Capabilities
+capability_definitions + user_capabilities foundation
+بدون اعتماد كامل
+Onboarding
+Setup wizard basic
+Organization + App + Theme
+Testing
+Core tests + permission tests + CMS smoke tests
+إجباري
+3. خارج V1
+• Full Commerce / checkout / payments.
+• Full ERP.
+• Kabeeri Mall public marketplace.
+• Full Talent Marketplace.
+• Agency Partner dashboard.
+• Full Academy LMS.
+• Affiliate/Dropshipping flows.
+• Public Developer Marketplace.
+• AI applying changes without strict guardrails.
+• Advanced BI/GRC/Enterprise.
+4. Release Gate V1
+• يمكن إنشاء مستخدم ومنظمة وتطبيق.
+• يمكن دعوة عضو وإعطاؤه دور.
+• يمكن إنشاء صفحة ونشرها.
+• يمكن رفع صورة واستخدامها.
+• يمكن تفعيل ثيم رسمي.
+• يمكن رؤية activity log.
+• يمكن تشغيل tests الأساسية بنجاح.
+• يمكن إنشاء demo company website من seed data.
+5. قاعدة منع التوسع
+أي Feature جديدة أثناء V1 يجب أن تجيب على سؤال: هل هي مطلوبة لتثبيت Core أو لإطلاق Demo قابل للتجربة؟ إذا كانت الإجابة لا، توضع في Backlog ولا تدخل الكود.

@@ -1,0 +1,17 @@
+# KABEERI v1.6.4 — Freemium Plans & Entitlements Completion
+
+## Added
+- Freemium Plans & Entitlements Architecture.
+- Freemium Technical Entitlement Enforcement.
+- Database Addendum for Freemium, Plans, Limits, Usage, Upgrade Triggers, and Fair Use.
+- Approved Plan Entitlements & Limits reference.
+- Freemium Codex Prompt Pack.
+- Freemium Acceptance Checklist.
+- Update File Pack & Codex Workflow Rules.
+- Updated Project Folder Map & Architecture.
+
+## Policy
+- V1 remains frozen because coding has started.
+- V2–V6 remain editable until their coding starts.
+- Core Codex prompts remain in `16_CODE_PROPMPTS_TO_CREATE_BY_CODEX`.
+- Extension/update prompts remain in `22_EXTENSION_CODEX_PROMPTS`.

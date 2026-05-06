@@ -1,0 +1,37 @@
+KABEERI Freemium Plans & Entitlements Acceptance Checklist
+قائمة قبول تنفيذ Freemium وحدود الخطط قبل إدخالها في الإنتاج.
+Version: v1.6.4 | Status: Approved Documentation Addendum
+هذا الملف جزء من تحديث Freemium & Plans ولا يغير ملفات V1 المجمدة مباشرة. أي تطبيق يتم عبر Addendum أو تاسك واضح في Codex.
+قاعدة القبول
+لا تعتبر Freemium مكتملة إلا إذا كانت الحدود مفروضة في الباك إند ومغطاة باختبارات، وليس فقط ظاهرة في الواجهة.
+Checklist
+Check
+Required Level
+Target Release
+Free account can create one limited app
+Must pass
+V1/V2
+Free app cannot exceed app/page/storage limits
+Must pass
+V1/V2
+Free app uses Kabeeri branding
+Must pass before launch
+V2
+Custom domain blocked or add-on for Free
+Must pass
+V2
+Pro/Premium themes blocked on Free unless purchased
+Must pass
+V2
+Usage recorded for limited resources
+Must pass
+V2
+Upgrade triggers stored and visible
+Must pass
+V2
+Fair use events logged
+Should pass
+V2/V3
+No payment gateway required for Free enforcement
+Must pass
+V2

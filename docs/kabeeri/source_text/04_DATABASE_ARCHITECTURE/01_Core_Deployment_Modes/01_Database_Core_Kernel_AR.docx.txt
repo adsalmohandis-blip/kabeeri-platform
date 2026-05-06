@@ -1,0 +1,268 @@
+KABEERI Database File 01 — Core Kernel Database
+نظام النواة الأساسية التي سيعمل عليها كل شيء
+هذا الملف يصف قاعدة بيانات النواة الأساسية لمنصة KABEERI، وهي الطبقة التي تعتمد عليها كل الأنظمة الأخرى:
+Kabeeri CloudKabeeri Frontend AnywhereKabeeri PortableKabeeri DedicatedKabeeri Mall SyncERPCMSCommerceRabetAIMarketplace
+النواة ليست Module اختياريًا.
+النواة هي أساس المنصة بالكامل.
+1. هدف Core Kernel
+هدف النواة الأساسية هو توفير:
+هوية المستخدمين.
+ملف العميل.
+تعدد المؤسسات.
+تعدد الشركات.
+تعدد المواقع.
+الصلاحيات.
+الإعدادات.
+التسجيلات.
+الملفات.
+التفعيل التجاري للخصائص.
+قابلية التصدير.
+قابلية الاستضافة الخارجية.
+قابلية الربط مع Kabeeri Mall.
+القاعدة:
+أي Module في Kabeeri يجب أن يعرف: يتبع أي Organization؟ أي Site؟ أي Company؟ وأي User فعل التغيير؟
+2. المفهوم الأعلى للبيانات
+Kabeeri يجب أن يبدأ من ملف العميل وليس من الموقع.
+الترتيب الصحيح:
+User→ Organization / Customer Account→ Company / Business Account→ Site / Store / Portal→ Business Profile→ Mall Listing→ Modules / ERP / Commerce / AI
+3. Core Ownership Model
+3.1 User
+الشخص الحقيقي الذي يدخل المنصة.
+3.2 Organization
+ملف العميل أو الـ Tenant الأساسي.
+يشبه ملف العميل في البنك.
+3.3 Company
+ملف بزنس أو شركة داخل حساب العميل.
+يشبه الحساب التجاري داخل ملف العميل البنكي.
+3.4 Site
+واجهة رقمية أو قناة نشر تابعة للـ Organization، وقد ترتبط بـ Company.
+3.5 Business Profile
+الملف العام للبزنس، وهو الذي يمكن أن يظهر في Kabeeri Mall.
+4. مبادئ تصميم قاعدة بيانات النواة
+4.1 Tenant Scoped
+كل بيانات العميل يجب أن تكون مرتبطة بـ:
+organization_id
+وعند الحاجة:
+site_idcompany_id
+4.2 Portable
+كل بيانات العميل يجب أن تكون قابلة للتجميع والتصدير.
+4.3 Modular
+كل Module يضيف جداوله، لكنه يلتزم بنفس قواعد النواة.
+4.4 Auditable
+كل حدث مهم يجب أن يترك أثرًا.
+4.5 Economical
+نبدأ بـ:
+Shared Database + Tenant Scoping
+ولا نبدأ بـ Database لكل عميل من اليوم الأول.
+5. أنواع الجداول في النواة
+5.1 Global Platform Tables
+جداول عامة للمنصة كلها.
+أمثلة:
+countries.
+currencies.
+global permissions.
+platform plans.
+global package catalog.
+5.2 Tenant Tables
+جداول تخص العميل.
+كلها يجب أن تحتوي organization_id أو تكون مرتبطة بجدول يحتويه.
+5.3 Public Mirror Tables
+جداول عامة للعرض في Kabeeri Mall، لا تساوي قاعدة بيانات العميل الأصلية.
+5.4 Derived Tables
+جداول مشتقة للتقارير أو الكاش، ويمكن إعادة بنائها.
+6. الأعمدة القياسية للكيانات المهمة
+أي جدول Business Entity مهم يفضل أن يحتوي:
+id bigint unsigned primary keyuuid char(26 or 36) uniqueorganization_id bigint unsigned nullable/indexedsite_id bigint unsigned nullable/indexedcompany_id bigint unsigned nullable/indexedstatus varchar(50) indexedvisibility varchar(50) nullablemetadata json nullablecreated_by bigint unsigned nullableupdated_by bigint unsigned nullablecreated_at timestampupdated_at timestampdeleted_at timestamp nullable
+ملاحظة
+id للعلاقات الداخلية السريعة.
+uuid أو ulid للـ API والتصدير والروابط العامة.
+7. Core Tables Overview
+الجداول الأساسية للنواة:
+usersuser_profilesorganizationsorganization_membershipscompaniescompany_membershipssitesrolespermissionsrole_permissionmembership_role_assignmentsmembership_permission_overridessettingsfeature_flagsfeature_flag_overridesactivity_logsaudit_logsnotificationsmedia_assetsmedia_usagescountriescurrenciesmodulesmodule_installations
+8. users
+يمثل المستخدم الحقيقي.
+الحقول
+iduuidnameemailemail_verified_atphone nullablephone_verified_at nullablepasswordavatar_media_id nullablelocale default artimezone default Africa/Cairostatus default activelast_login_at nullableremember_tokencreated_atupdated_atdeleted_at nullable
+فهارس
+unique(email)index(phone)index(status)index(last_login_at)
+ملاحظات
+ممنوع إضافة:
+company_idorganization_idrole
+داخل جدول users.
+لأن نفس المستخدم قد يكون في أكثر من Organization أو Company.
+9. user_profiles
+الملف الشخصي العام/الخاص للمستخدم.
+iduser_idbio nullablecountry_id nullablecity nullablewebsite_url nullablesocial_links json nullablevisibility default privatemetadata json nullablecreated_atupdated_at
+العلاقات
+user_profiles.user_id → users.id
+10. organizations
+يمثل ملف العميل الأساسي.
+iduuidnameslugowner_user_idaccount_type default businessstatus default activeplan_code nullablecountry_id nullablelocale default artimezone default Africa/Cairosettings json nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+account_type
+individualbusinessagencyenterpriselegal_partnerplatform_internal
+فهارس
+unique(slug)index(owner_user_id)index(account_type)index(status)
+مفهوم بنكي
+هذا الجدول هو:
+Customer Account / ملف العميل
+11. organization_memberships
+يربط users بـ organizations.
+iduuidorganization_iduser_idmembership_typestatus default activejob_title nullableinvited_by nullableinvited_at nullableaccepted_at nullablestart_date nullableend_date nullablevisibility default organization_onlymetadata json nullablecreated_atupdated_atdeleted_at nullable
+membership_type
+owneradminemployeecontractorfreelancerconsultantexternal_collaboratorlegal_revieweragency_member
+فهارس
+unique(organization_id, user_id)index(user_id)index(status)index(membership_type)
+12. companies
+يمثل Business Account داخل Organization.
+iduuidorganization_idlegal_name nullabletrade_nameslugcountry_id nullablecity nullablelegal_type nullableregistration_number nullabletax_number nullableindustry nullablecompany_size nullablestatus default draftverification_status default not_submittedverified_at nullableverification_expires_at nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+فهارس
+index(organization_id)unique(organization_id, slug)index(verification_status)index(status)
+مفهوم بنكي
+هذا الجدول يشبه:
+Business Account / حساب بزنس داخل ملف العميل
+13. company_memberships
+يربط users بالشركات.
+iduuidcompany_iduser_idorganization_membership_id nullablerole_title nullabledepartment_id nullablemanager_user_id nullableemployment_type nullablestatus default activestart_date nullableend_date nullablepublic_work_history default falsemetadata json nullablecreated_atupdated_atdeleted_at nullable
+فهارس
+unique(company_id, user_id)index(user_id)index(company_id, status)
+14. sites
+يمثل موقعًا أو متجرًا أو بوابة.
+iduuidorganization_idcompany_id nullablenameslugdomain nullablesubdomain nullablesite_type default websitestatus default activelanguage default artimezone default Africa/Cairotheme_id nullablesettings json nullablemetadata json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+site_type
+websiteblogstoreportallandinginternal_portalmall_seller_site
+فهارس
+unique(organization_id, slug)unique(domain)index(subdomain)index(company_id)index(status)
+15. roles
+الأدوار قابلة لأن تكون عامة أو خاصة بعميل.
+iduuidorganization_id nullablecompany_id nullablesite_id nullablenameslugscopeis_system default falsecreated_atupdated_at
+scope
+platformorganizationcompanysitemodulelegal_partnermall
+فهارس
+index(organization_id)index(company_id)index(site_id)unique(scope, organization_id, company_id, site_id, slug)
+16. permissions
+الصلاحيات الأساسية.
+idnamesluggroupdescription nullablerisk_level default lowcreated_atupdated_at
+slug examples
+organization.managesite.createcontent.publishmedia.uploadcompany.manageverification.submitfinance.invoice.issueinventory.stock.adjust
+فهارس
+unique(slug)index(group)index(risk_level)
+17. role_permission
+role_idpermission_idcreated_atprimary(role_id, permission_id)
+18. membership_role_assignments
+لإسناد دور لعضوية محددة.
+idmembership_typemembership_idrole_idscope_type nullablescope_id nullablecreated_by nullablecreated_at
+membership_type
+organization_membershipcompany_membershiplegal_partner_user
+19. membership_permission_overrides
+لتخصيص allow/deny.
+idmembership_typemembership_idpermission_ideffectreason nullablecreated_by nullablecreated_at
+effect
+allowdeny
+20. settings
+إعدادات مرنة لكل Scope.
+idorganization_id nullablescope_typescope_id nullablekeyvalue json nullablevalue_type default stringis_encrypted default falsecreated_atupdated_at
+أمثلة scope_type
+platformorganizationcompanysitemoduleuser
+فهارس
+unique(scope_type, scope_id, key)index(organization_id)
+21. feature_flags
+idkeydescription nullabledefault_value boolean default falsestatus default activecreated_atupdated_at
+22. feature_flag_overrides
+idfeature_flag_idorganization_id nullablescope_type nullablescope_id nullablevalue booleancreated_atupdated_at
+23. activity_logs
+للأحداث العامة.
+iduuidorganization_id nullablecompany_id nullablesite_id nullableactor_user_id nullableactionsubject_type nullablesubject_id nullabledescription nullableip_address nullableuser_agent nullablemetadata json nullablecreated_at
+فهارس
+index(organization_id, created_at)index(company_id, created_at)index(site_id, created_at)index(actor_user_id)index(action)index(subject_type, subject_id)
+24. audit_logs
+للأحداث الحساسة.
+iduuidorganization_id nullablecompany_id nullablesite_id nullableactor_user_id nullableactionrisk_levelsubject_type nullablesubject_id nullablebefore json nullableafter json nullablereason nullableip_address nullableuser_agent nullablecreated_at
+أمثلة أحداث Audit
+role_changedpermission_override_createdinvoice_issuedstock_adjustedverification_approvedai_change_appliedpackage_installedexport_requestedself_hosted_connected
+25. notifications
+iduuidrecipient_user_idorganization_id nullablecompany_id nullablesite_id nullabletypetitlebody nullableaction_url nullablepriority default normalread_at nullablemetadata json nullablecreated_atupdated_at
+26. media_assets
+الملفات لا تحفظ داخل DB، فقط metadata.
+iduuidorganization_idsite_id nullablecompany_id nullableuploaded_by nullablediskpathrelative_pathfilenameoriginal_filenamemime_typeextensionsize_byteswidth nullableheight nullablevisibility default privatealt_text nullablecaption nullablechecksum nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+visibility
+publicprivateorganization_onlycompany_onlysensitive
+قاعدة مهمة
+لا تخزن URL كامل في path.
+استخدم relative paths لتسهيل التصدير.
+27. media_usages
+idmedia_asset_idusable_typeusable_idfield_name nullablecreated_at
+28. countries
+idiso2iso3 nullablenamenative_name nullablephone_code nullabledefault_currency_code nullabledefault_language nullablestatus default activecreated_atupdated_at
+29. currencies
+idcodenamesymbol nullabledecimal_places default 2status default activecreated_atupdated_at
+30. modules
+يسجل الموديولات المنطقية.
+idkeynamedescription nullablemodule_typestatus default activeversion nullablerequires json nullablecreated_atupdated_at
+module_type
+corecmscommerceerpmallaiintegrationsecurityindustry
+31. module_installations
+تفعيل Module لعميل أو شركة أو موقع.
+idorganization_idcompany_id nullablesite_id nullablemodule_idstatus default activeinstalled_by nullableinstalled_at nullablesettings json nullablecreated_atupdated_at
+فهارس
+unique(organization_id, company_id, site_id, module_id)index(status)
+32. Core Kernel ERD
+erDiagram    USERS ||--o{ USER_PROFILES : has    USERS ||--o{ ORGANIZATION_MEMBERSHIPS : joins    ORGANIZATIONS ||--o{ ORGANIZATION_MEMBERSHIPS : contains    ORGANIZATIONS ||--o{ COMPANIES : owns    ORGANIZATIONS ||--o{ SITES : owns    COMPANIES ||--o{ COMPANY_MEMBERSHIPS : has    USERS ||--o{ COMPANY_MEMBERSHIPS : works_in    ORGANIZATIONS ||--o{ SETTINGS : has    ORGANIZATIONS ||--o{ ACTIVITY_LOGS : logs    ORGANIZATIONS ||--o{ MEDIA_ASSETS : stores    SITES ||--o{ MEDIA_ASSETS : uses    ROLES ||--o{ ROLE_PERMISSION : maps    PERMISSIONS ||--o{ ROLE_PERMISSION : maps    MODULES ||--o{ MODULE_INSTALLATIONS : installed_as    ORGANIZATIONS ||--o{ MODULE_INSTALLATIONS : installs
+33. Core Module Dependency Chart
+flowchart TD    A[Users] --> B[Organizations]    B --> C[Organization Memberships]    B --> D[Companies]    B --> E[Sites]    C --> F[Roles]    F --> G[Permissions]    B --> H[Settings]    B --> I[Feature Flags]    B --> J[Media]    B --> K[Activity Logs]    B --> L[Audit Logs]    B --> M[Notifications]    B --> N[Modules]    N --> O[Module Installations]
+34. قواعد Tenant Isolation
+34.1 كل Query في Admin يجب أن تحتوي Scope
+مثال:
+where organization_id = currentOrganizationId
+34.2 ممنوع الاعتماد على UI فقط
+العزل يجب أن يكون في:
+Policies.
+Query scopes.
+Services.
+Tests.
+34.3 اختبارات إلزامية
+User from organization A cannot view organization B dataUser from company A cannot manage company B dataSite admin cannot access unrelated site
+35. Tenant Export Readiness في النواة
+النواة يجب أن تجهز الجداول التالية، حتى لو التنفيذ الكامل لاحقًا:
+export_jobstenant_export_itemsexport_manifests
+لكن تفاصيلها في ملف Portable.
+36. Mall Sync Readiness في النواة
+النواة يجب أن تسمح بربط:
+organizationcompanybusiness_profilesite
+بـ Mall Mirror لاحقًا.
+أي Business عام يجب أن يكون له:
+public identitysource ownervisibilitypublication status
+37. Naming Rules
+الجداول
+plural_snake_case
+الموديلات
+SingularStudlyCase
+الصلاحيات
+module.resource.action
+UUIDs الخارجية
+لا تعرض internal id في API العامة.
+38. JSON Usage Rules
+مسموح في
+metadatasettingsfeature flags configmodule settingsAI config
+ممنوع كبديل لـ
+money fieldsinventory quantitiesforeign keyspermissionsaccounting lines
+39. Soft Delete Rules
+استخدم soft delete في:
+organizationssitescompaniescontentmediabusiness_profilesproductscustomersemployees
+لا تستخدمه وحده في الأحداث الحساسة.
+الأحداث الحساسة تحتاج Audit.
+40. Core Kernel Release Requirements
+النواة تعتبر جاهزة عندما:
+User can register/loginOrganization can be createdUser can join multiple organizationsCompany can be created under organizationSite can be created under organizationRBAC worksSettings workFeature flags workMedia storage is tenant-scopedActivity logs workAudit logs workModules can be registered and installedTenant isolation tests pass
+41. الخلاصة
+Core Kernel هو أساس Kabeeri.
+أي خطأ في النواة سيؤثر على:
+Cloud.
+Portable.
+Dedicated.
+Frontend Anywhere.
+Mall Sync.
+ERP.
+AI.
+Security.
+القاعدة النهائية:
+لا تبدأ Modules ضخمة قبل أن تكون النواة مستقرة، معزولة، قابلة للتصدير، وقابلة للتدقيق.

@@ -1,0 +1,964 @@
+KABEERI Database File 30 — Onboarding Wizard Database
+نظام Onboarding Wizard / Guided Setup
+هذا الملف يصف تصميم قاعدة البيانات الخاص بطبقة التهيئة الموجهة داخل Kabeeri، وهي الطبقة التي تحول أول تجربة للمستخدم من شاشة فارغة إلى مسار واضح حسب هدفه: موقع، متجر، توثيق شركة، ظهور في Mall، ملف مهني، وكالة، أو هجرة من WordPress.
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+البند
+القيمة
+رقم الملف
+Database File 30
+النطاق
+Core Operating Layer / Onboarding Wizard
+يدخل مبكرًا؟
+نعم — Onboarding basic في V1، ويتوسع لاحقًا حسب الموديولات
+مصدر الحقيقة
+Core Kernel + Onboarding tables + Feature Flags + Entitlements
+يعتمد على
+Users, Organizations, Sites, Settings, Feature Flags, Activity Logs, Notifications
+1. تعريف Onboarding Wizard
+Onboarding Wizard هو نظام التهيئة الموجهة الذي يظهر للمستخدم بعد التسجيل أو عند بدء مساحة جديدة، ويساعده على اختيار المسار الصحيح ثم تنفيذ خطوات صغيرة قابلة للقياس حتى يصل إلى نتيجة عملية. الهدف ليس مجرد شاشة ترحيب، بل محرك إعدادات وتشغيل أولي قابل للتوسع مع كل موديول.
+يسأل المستخدم عن هدفه الأساسي بدل عرض كل المنصة دفعة واحدة.
+ينشئ Organization / Site / Business Profile / Store / Professional Profile حسب المسار.
+يفعّل feature flags أو modules المسموحة حسب الخطة والصلاحيات.
+يربط المستخدم بـ checklists وquick actions وrecommended next steps.
+يسجل التقدم والأحداث والاختيارات حتى يمكن الرجوع والتحليل والتحسين.
+2. لماذا يحتاج Onboarding إلى Database مستقلة؟
+لأن Kabeeri منصة واسعة، ولا يكفي hardcoded setup wizard داخل الواجهة. نحتاج طبقة بيانات تعرف المسارات والنسخ والخطوات والإجابات والتوصيات والأفعال التي نفذها النظام. هذا يسمح بتغيير التجربة بدون إعادة نشر كود كبير، وبناء onboarding مختلف حسب الدولة والخطة ونوع العميل واللغة والموديولات المفعلة.
+مستخدم يريد موقعًا بسيطًا يحتاج خطوات مختلفة عن مستخدم يريد متجرًا.
+شركة تريد توثيق Rabet تحتاج مستندات ومسار تحقق.
+وكالة تحتاج ربط عملاء ومواقع وصلاحيات.
+Portable/Dedicated يحتاجان onboarding تقني مختلف عن Cloud.
+AI-assisted onboarding في V6 يحتاج تخزين اقتراحات وخطط وسياق، وليس مجرد نصوص ثابتة.
+3. موقع Onboarding داخل المعمارية
+Core Kernel  -> Users / Organizations / Sites / Companies  -> Feature Flags / Settings / Activity Logs  -> Onboarding Wizard      -> Flow Templates      -> Sessions / Progress      -> Answers / Recommendations      -> Actions / Checklists      -> Notifications / Activity Logs  -> CMS / Commerce / Rabet / Mall / Talent / Agency / Cloud
+4. مبادئ التصميم
+المبدأ
+الشرح
+Context-first
+المسار يتحدد حسب المستخدم والسياق: شخصي، منظمة، موقع، شركة، متجر، وكالة.
+Permission-aware
+لا تعرض خطوة لا يملك المستخدم صلاحيتها أو لا تسمح بها الخطة.
+Feature-flag aware
+كل خطوة يمكن ربطها بـ feature flag أو entitlement.
+Progressive disclosure
+لا تعرض كل قدرات Kabeeri في البداية.
+Resumable
+يمكن للمستخدم إيقاف المسار والرجوع لاحقًا.
+Auditable
+كل action مهم يسجل في Activity Log.
+Portable-aware
+التقدم والاختيارات يمكن تصديرها ضمن export package عند الحاجة.
+Versioned flows
+أي تعديل في flow لا يكسر sessions قديمة؛ لذلك نحتاج flow_versions.
+5. أنواع مسارات Onboarding
+المسار
+الهدف
+المخرجات المتوقعة
+website_setup
+أريد بناء موقع
+Organization + Site + Theme + first page + basic SEO
+store_setup
+أريد بناء متجر
+Site store + products checklist + payment/shipping setup
+company_verification
+أريد توثيق شركتي
+Company + Business Profile + Verification Request
+mall_presence
+أريد الظهور في Kabeeri Mall
+Publication consent + Business/Profile readiness checklist
+professional_profile
+أريد إنشاء ملف مهني
+Professional Profile + skills + visibility settings
+team_setup
+أريد إدارة فريق
+Members invites + roles + starter tasks
+wordpress_migration
+أريد نقل موقعي من WordPress
+Import job + migration report + redirects checklist
+agency_setup
+أنا وكالة
+Agency profile + client onboarding + access grants
+frontend_anywhere
+أريد واجهة خارجية
+Frontend project + API key scopes + deployment checklist
+portable_export
+أريد نسخة Portable
+Export readiness checklist + license + sync setup
+dedicated_setup
+أريد بيئة Dedicated
+Dedicated tenant + environment provisioning checklist
+6. الجداول الأساسية
+مجموعة الجداول
+الجداول
+تعريف المسارات
+onboarding_flows, onboarding_flow_versions, onboarding_steps, onboarding_step_options, onboarding_step_requirements
+التقدم والإجابات
+onboarding_sessions, onboarding_progress, onboarding_answers, onboarding_skipped_steps
+الأفعال والقوائم
+onboarding_checklist_items, onboarding_actions, onboarding_action_runs
+التوصيات والذكاء
+onboarding_recommendation_rules, onboarding_suggestions, onboarding_ai_suggestions, onboarding_context_snapshots
+المراقبة والتحسين
+onboarding_events, onboarding_feedback
+القوالب
+onboarding_templates, onboarding_template_items
+7. onboarding_flows
+يمثل مسار onboarding منطقي مثل website_setup أو store_setup.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+uuid
+char(26/36)
+لـ API والتصدير
+name
+varchar
+اسم المسار
+slug
+varchar unique
+website_setup / store_setup / agency_setup
+target_type
+varchar
+user / organization / site / company / agency / professional
+flow_category
+varchar
+core / cms / commerce / rabet / mall / talent / cloud / agency
+default_locale
+varchar
+ar أو en
+status
+varchar
+draft / active / deprecated / archived
+is_system
+boolean
+مسار رسمي من Kabeeri
+created_by
+FK users nullable
+من أنشأ المسار
+metadata
+json nullable
+إعدادات إضافية
+created_at / updated_at
+timestamps
+فهارس مقترحة: unique(slug), index(target_type), index(flow_category), index(status).
+8. onboarding_flow_versions
+لمنع كسر جلسات قديمة عند تعديل خطوات المسار، كل Flow له إصدارات.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+flow_id
+FK onboarding_flows
+version
+varchar
+مثال: 1.0.0
+status
+varchar
+draft / active / locked / deprecated
+title
+varchar
+عنوان النسخة
+description
+longtext nullable
+published_at
+timestamp nullable
+locked_at
+timestamp nullable
+بعد النشر لا يتم تعديلها مباشرة
+metadata
+json nullable
+created_at / updated_at
+timestamps
+9. onboarding_steps
+يمثل خطوة داخل نسخة Flow محددة.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+flow_version_id
+FK onboarding_flow_versions
+step_key
+varchar
+create_organization / choose_theme
+step_order
+integer
+ترتيب الخطوة
+title
+varchar
+description
+longtext nullable
+step_type
+varchar
+info / form / choice / action / checklist / external_link / upload / ai_assist
+is_required
+boolean
+هل الخطوة إجبارية؟
+can_skip
+boolean
+feature_flag_key
+varchar nullable
+إخفاء/إظهار حسب feature flag
+entitlement_key
+varchar nullable
+إظهار حسب الخطة
+permission_slug
+varchar nullable
+مثال organization.manage
+settings
+json nullable
+schema الواجهة/الحقول
+created_at / updated_at
+timestamps
+10. onboarding_step_options
+خيارات المستخدم في خطوات الاختيار.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+step_id
+FK onboarding_steps
+option_key
+varchar
+website / store / verify_company
+label
+varchar
+النص الظاهر للمستخدم
+description
+longtext nullable
+next_step_key
+varchar nullable
+للـ branching
+recommended_flow_slug
+varchar nullable
+لو الاختيار ينقل لمسار آخر
+sort_order
+integer default 0
+metadata
+json nullable
+created_at / updated_at
+timestamps
+11. onboarding_step_requirements
+متطلبات ظهور أو إكمال خطوة معينة.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+step_id
+FK onboarding_steps
+requirement_type
+varchar
+permission / feature_flag / entitlement / module_installed / object_exists / answer_value
+requirement_key
+varchar
+مثال: enable_commerce أو site.exists
+operator
+varchar
+equals / not_equals / exists / missing / in
+expected_value
+json nullable
+failure_behavior
+varchar
+hide / disable / show_upgrade / show_message
+message
+varchar nullable
+created_at / updated_at
+timestamps
+12. onboarding_sessions
+جلسة onboarding فعلية لمستخدم داخل سياق محدد.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+uuid
+char(26/36)
+flow_id
+FK onboarding_flows
+flow_version_id
+FK onboarding_flow_versions
+تجميد نسخة المسار المستخدمة
+user_id
+FK users
+organization_id
+FK nullable
+قد تبدأ قبل إنشاء organization
+company_id
+FK nullable
+site_id
+FK nullable
+target_type
+varchar
+user / organization / site / company / agency
+target_id
+bigint nullable
+status
+varchar
+not_started / active / completed / skipped / abandoned / expired
+entry_point
+varchar nullable
+registration / dashboard / module / migration / invite
+started_at
+timestamp nullable
+completed_at
+timestamp nullable
+last_activity_at
+timestamp nullable
+metadata
+json nullable
+created_at / updated_at
+timestamps
+13. onboarding_progress
+يخزن حالة كل خطوة داخل الجلسة.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+session_id
+FK onboarding_sessions
+step_id
+FK onboarding_steps
+step_key
+varchar
+نسخة نصية لتسهيل التقارير
+status
+varchar
+pending / active / completed / skipped / blocked / failed
+started_at
+timestamp nullable
+completed_at
+timestamp nullable
+skipped_at
+timestamp nullable
+blocked_reason
+varchar nullable
+progress_percent
+integer default 0
+metadata
+json nullable
+created_at / updated_at
+timestamps
+فهارس: unique(session_id, step_id), index(status), index(step_key).
+14. onboarding_answers
+إجابات المستخدم أثناء مسار التهيئة. لا نستخدمها كمصدر حقيقة دائم، لكنها تساعد في التوصية والتقارير.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+session_id
+FK onboarding_sessions
+step_id
+FK onboarding_steps nullable
+question_key
+varchar
+business_type / website_goal / selling_online
+answer_value
+json
+answer_text
+longtext nullable
+للبحث/التلخيص
+source
+varchar
+user / ai / imported / default
+created_at / updated_at
+timestamps
+15. onboarding_checklist_items
+قائمة مهام موجهة تظهر للمستخدم بعد أو أثناء onboarding.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+uuid
+char(26/36)
+organization_id
+FK nullable
+company_id
+FK nullable
+site_id
+FK nullable
+session_id
+FK onboarding_sessions nullable
+item_key
+varchar
+publish_first_page / add_logo / invite_member
+title
+varchar
+description
+longtext nullable
+status
+varchar
+pending / completed / skipped / dismissed / blocked
+priority
+varchar
+low / normal / high / critical
+due_at
+timestamp nullable
+completed_by
+FK users nullable
+completed_at
+timestamp nullable
+related_type / related_id
+polymorphic nullable
+metadata
+json nullable
+created_at / updated_at
+timestamps
+16. onboarding_actions
+تعريف Action قابل للتنفيذ من المسار، مثل إنشاء Organization أو Site أو Business Profile Draft.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+action_key
+varchar unique
+create_organization / create_site / invite_member
+name
+varchar
+description
+longtext nullable
+handler_class
+varchar nullable
+Laravel action/service class
+required_permission
+varchar nullable
+risk_level
+varchar
+low / medium / high / critical
+requires_confirmation
+boolean
+creates_subject_type
+varchar nullable
+organization / site / company
+status
+varchar
+active / deprecated / disabled
+metadata
+json nullable
+created_at / updated_at
+timestamps
+17. onboarding_action_runs
+تنفيذ فعلي لـ onboarding action، مع النتيجة والأخطاء والكيان الذي تم إنشاؤه.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+uuid
+char(26/36)
+session_id
+FK onboarding_sessions
+action_id
+FK onboarding_actions
+step_id
+FK onboarding_steps nullable
+status
+varchar
+pending / running / completed / failed / rolled_back
+input_payload
+json nullable
+output_payload
+json nullable
+created_subject_type
+varchar nullable
+created_subject_id
+bigint nullable
+error_message
+longtext nullable
+started_at / completed_at
+timestamps nullable
+created_at / updated_at
+timestamps
+18. onboarding_recommendation_rules
+قواعد توصية مسار أو خطوة بناءً على إجابات المستخدم أو نوع حسابه أو الخطة.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+name
+varchar
+slug
+varchar unique
+trigger_type
+varchar
+answer / plan / account_type / country / module / behavior
+conditions
+json
+شروط التفعيل
+recommended_flow_id
+FK nullable
+recommended_step_key
+varchar nullable
+recommended_action_key
+varchar nullable
+priority
+integer default 0
+status
+varchar
+active / disabled
+created_at / updated_at
+timestamps
+19. onboarding_templates و onboarding_template_items
+قوالب جاهزة لإنشاء مواقع أو متاجر أو ملفات بزنس بشكل سريع بناء على اختيار المستخدم.
+الجدول
+أهم الحقول
+onboarding_templates
+id, uuid, name, slug, template_type, industry, country_id, locale, status, preview_media_id, metadata, created_at, updated_at
+onboarding_template_items
+id, template_id, item_type, item_key, payload json, sort_order, required, created_at, updated_at
+template_type values: website_starter, store_starter, service_business, professional_profile, agency_client, migration_plan.
+20. onboarding_suggestions
+توصيات غير ملزمة تظهر بعد تحليل حالة الحساب.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+uuid
+char(26/36)
+organization_id / company_id / site_id
+FK nullable
+السياق
+user_id
+FK nullable
+المستخدم المستهدف
+suggestion_type
+varchar
+next_step / upgrade / content / verification / migration / security
+title
+varchar
+body
+longtext nullable
+action_key
+varchar nullable
+action_url
+varchar nullable
+priority
+varchar
+low / normal / high
+status
+varchar
+active / accepted / dismissed / expired
+expires_at
+timestamp nullable
+metadata
+json nullable
+created_at / updated_at
+timestamps
+21. onboarding_skipped_steps
+تخزين الخطوات التي تم تخطيها مهم لتحليل التعثر وتحسين التجربة.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+session_id
+FK onboarding_sessions
+step_id
+FK onboarding_steps
+skipped_by
+FK users nullable
+reason
+varchar nullable
+user_choice / not_relevant / blocked / later
+notes
+longtext nullable
+created_at
+timestamp
+22. onboarding_events
+سجل أحداث تفصيلي لتجربة onboarding. لا يغني عن Activity Log، لكنه مخصص للتحليلات وتحسين المنتج.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+session_id
+FK onboarding_sessions nullable
+user_id
+FK nullable
+organization_id
+FK nullable
+event_type
+varchar
+flow_started / step_viewed / answer_saved / action_run / flow_completed
+step_key
+varchar nullable
+subject_type / subject_id
+polymorphic nullable
+metadata
+json nullable
+created_at
+timestamp
+23. onboarding_feedback
+ملاحظات المستخدم على تجربة التهيئة.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+session_id
+FK onboarding_sessions nullable
+user_id
+FK users
+rating
+integer nullable
+1-5
+feedback_text
+longtext nullable
+feedback_type
+varchar
+confusing / helpful / missing_step / bug / other
+status
+varchar
+new / reviewed / actioned / ignored
+created_at / updated_at
+timestamps
+24. onboarding_context_snapshots
+لقطة من حالة الحساب وقت إنشاء توصية أو AI suggestion، حتى لا تتغير النتائج بتغير البيانات.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+uuid
+char(26/36)
+session_id
+FK onboarding_sessions nullable
+user_id / organization_id / company_id / site_id
+FK nullable
+snapshot_type
+varchar
+recommendation / ai_suggestion / completion_report
+payload
+json
+حالة مختصرة لا تحتوي أسرار
+created_at
+timestamp
+25. onboarding_ai_suggestions
+اقتراحات AI-assisted onboarding في المراحل المتقدمة. لا تنفذ تلقائياً بدون plan/preview/approval لو كان action مؤثرًا.
+الحقل
+النوع / القيم
+ملاحظات
+id
+bigint unsigned
+Primary key
+uuid
+char(26/36)
+session_id
+FK nullable
+context_snapshot_id
+FK nullable
+ai_session_id
+FK nullable
+يربط بملف AI Co-builder عند توفره
+suggestion_type
+varchar
+flow / step / template / content / module / checklist
+title
+varchar
+body
+longtext nullable
+risk_level
+varchar
+low / medium / high
+status
+varchar
+draft / shown / accepted / rejected / expired
+metadata
+json nullable
+created_at / updated_at
+timestamps
+26. ERD مختصر
+erDiagram  ONBOARDING_FLOWS ||--o{ ONBOARDING_FLOW_VERSIONS : versions  ONBOARDING_FLOW_VERSIONS ||--o{ ONBOARDING_STEPS : contains  ONBOARDING_STEPS ||--o{ ONBOARDING_STEP_OPTIONS : offers  ONBOARDING_STEPS ||--o{ ONBOARDING_STEP_REQUIREMENTS : requires  USERS ||--o{ ONBOARDING_SESSIONS : starts  ORGANIZATIONS ||--o{ ONBOARDING_SESSIONS : scopes  ONBOARDING_SESSIONS ||--o{ ONBOARDING_PROGRESS : tracks  ONBOARDING_SESSIONS ||--o{ ONBOARDING_ANSWERS : stores  ONBOARDING_SESSIONS ||--o{ ONBOARDING_ACTION_RUNS : runs  ONBOARDING_ACTIONS ||--o{ ONBOARDING_ACTION_RUNS : executed_as  ONBOARDING_SESSIONS ||--o{ ONBOARDING_CHECKLIST_ITEMS : creates  ONBOARDING_SESSIONS ||--o{ ONBOARDING_EVENTS : logs  ONBOARDING_CONTEXT_SNAPSHOTS ||--o{ ONBOARDING_AI_SUGGESTIONS : informs
+27. Flow التسجيل لأول مرة
+User registers  -> onboarding_session created for website_setup or first_goal_selection  -> Step 1: choose goal  -> Step 2: create organization  -> Step 3: create site  -> Step 4: choose theme/template  -> Step 5: create first page  -> Step 6: optional business profile draft  -> Step 7: optional invite team member  -> checklist created  -> activity logs + notification
+28. Flow بناء موقع
+الخطوة
+Action
+النتيجة
+اختيار نوع الموقع
+save_answer
+site_type = website/blog/landing
+إنشاء Organization
+create_organization
+organizations + membership owner
+إنشاء Site
+create_site
+sites record
+اختيار Theme
+activate_theme
+theme activated for site
+إنشاء أول صفحة
+create_first_page
+content_entries record
+ضبط SEO أساسي
+update_site_seo
+settings / seo fields
+إنهاء المسار
+complete_flow
+checklist + suggestions
+29. Flow بناء متجر
+يظهر فقط إذا كانت commerce feature مفعلة أو يمكن عرض upgrade path. في V1 لا يدخل Commerce كامل، لذلك المسار قد يكون readiness checklist فقط. في V2 يبدأ التنفيذ الفعلي.
+الخطوة
+متى تظهر؟
+الناتج
+تفعيل store mode
+enable_commerce أو upgrade
+site_type = store أو commerce module enabled
+إضافة أول منتج
+V2+
+product draft
+ضبط الدفع
+V2+ حسب الدولة
+payment settings
+ضبط الشحن/الضرائب
+V2/V3+
+shipping/tax checklist
+اختبار order
+V2+
+test order أو manual order
+30. Flow توثيق شركة Rabet
+الخطوة
+Action
+ملاحظات
+إنشاء Company
+create_company
+مرتبط بـ organization
+إنشاء Business Profile draft
+create_business_profile_draft
+لا يظهر للعامة تلقائيًا
+رفع مستندات
+upload_verification_document
+يرتبط بـ documents/media sensitive
+إرسال طلب توثيق
+submit_verification_request
+يحتاج permission verification.submit
+متابعة الحالة
+track_verification_status
+notifications + checklist
+31. Flow الظهور في Kabeeri Mall
+لا يتم النشر في Mall بدون Consent وModeration readiness. Onboarding لا ينشر مباشرة؛ هو يجهز البيانات ويطلب الموافقة.
+فحص وجود business profile public-ready.
+فحص verification status أو trust badge إن وجد.
+طلب mall_publication_consent.
+إنشاء checklist للصور والوصف والخدمات وبيانات التواصل العامة.
+إرسال للمراجعة أو إنشاء mall mirror draft حسب النظام.
+32. Flow ملف مهني Talent
+الخطوة
+الناتج
+إنشاء Professional Profile
+professional_profiles
+إضافة المهارات
+professional_skills
+إضافة الخبرات العامة
+professional_work_history
+ضبط الخصوصية
+visibility/privacy settings
+open_to_offers
+availability status
+النشر الاختياري
+talent publication consent / mirror draft
+33. Flow وكالة Agency
+اختيار account_type = agency أو تفعيل agency profile.
+إنشاء agency_profile.
+إضافة client organization أو ربط عميل موجود.
+منح access grants بصلاحيات محددة.
+إنشاء maintenance checklist لكل موقع عميل.
+عرض bulk status overview.
+34. صلاحيات Onboarding
+Permission
+الوصف
+onboarding.view
+رؤية مسارات التهيئة
+onboarding.start
+بدء جلسة onboarding
+onboarding.skip
+تخطي خطوة أو مسار
+onboarding.complete
+إنهاء مسار
+onboarding.manage_flows
+إدارة flows — platform/admin فقط
+onboarding.run_action
+تنفيذ actions من onboarding
+onboarding.ai_suggest
+استخدام AI suggestions
+onboarding.analytics.view
+رؤية تقارير التعثر والإكمال
+35. Feature Flags
+Flag
+الوصف
+enable_onboarding_basic
+تفعيل onboarding الأساسي
+enable_onboarding_templates
+تفعيل القوالب الجاهزة
+enable_onboarding_checklists
+تفعيل checklists
+enable_onboarding_ai_suggestions
+تفعيل AI-assisted onboarding
+enable_onboarding_analytics
+تفعيل قياسات التحسن والتعثر
+enable_agency_onboarding
+تفعيل مسارات الوكالات
+enable_portable_onboarding
+تفعيل onboarding للنسخ Portable
+enable_dedicated_onboarding
+تفعيل onboarding للبيئات Dedicated
+36. Events
+Event
+يحدث عند
+OnboardingFlowStarted
+بدء مسار
+OnboardingStepViewed
+رؤية خطوة
+OnboardingAnswerSaved
+حفظ إجابة
+OnboardingStepCompleted
+إكمال خطوة
+OnboardingStepSkipped
+تخطي خطوة
+OnboardingActionRunStarted
+بدء تنفيذ action
+OnboardingActionRunCompleted
+نجاح action
+OnboardingActionRunFailed
+فشل action
+OnboardingFlowCompleted
+إكمال المسار
+OnboardingSuggestionAccepted
+قبول توصية
+37. Activity Log و Audit
+لا تحتاج كل خطوة بسيطة إلى audit log حساس، لكن أي action ينشئ أو يغير كيانًا أساسيًا يجب تسجيله في activity_logs. actions الحساسة مثل تفعيل خطة، إرسال طلب توثيق، منح صلاحية، أو إنشاء API key يجب أن تسجل أيضًا في audit/security logs حسب نوعها.
+Action
+التسجيل المطلوب
+create_organization
+Activity Log
+create_site
+Activity Log
+invite_member
+Activity Log + Notification
+submit_verification_request
+Activity Log + Audit Log
+create_frontend_api_key
+Audit/Security Log
+request_portable_export
+Audit Log
+grant_agency_access
+Audit Log
+38. Frontend Anywhere / Portable / Dedicated
+الوضع
+قواعد Onboarding
+Cloud
+الأكثر اكتمالًا؛ يتم إنشاء organization/site/cloud_site والـ checklist داخل Cloud DB.
+Frontend Anywhere
+يضيف خطوات frontend_project وAPI scopes وallowed origins وwebhooks.
+Portable
+يضيف export readiness checklist وlicense key وself-hosted registration وmall sync setup.
+Dedicated
+يضيف dedicated_tenant وenvironment وbackup/migration window وsupport access setup.
+39. Data Retention وPrivacy
+إجابات onboarding ليست بديلًا عن بيانات الكيانات الرسمية؛ بعد إنشاء site أو company يصبح مصدر الحقيقة في جداولها الأصلية.
+لا نخزن أسرار مثل API keys أو payment credentials داخل onboarding_answers.
+يمكن حذف أو anonymize onboarding_events القديمة بعد مدة حسب privacy policy.
+context snapshots يجب أن تكون مختصرة ولا تحتوي مستندات أو بيانات حساسة كاملة.
+عند Portable export، يمكن تضمين onboarding_sessions/checklists كبيانات تشغيلية اختيارية، لكن platform analytics تبقى مركزية أو anonymized.
+40. Laravel Structure
+app/Core/Onboarding/  Models/    OnboardingFlow.php    OnboardingFlowVersion.php    OnboardingStep.php    OnboardingSession.php    OnboardingProgress.php    OnboardingAnswer.php    OnboardingChecklistItem.php  Actions/    StartOnboardingFlow.php    CompleteOnboardingStep.php    RunOnboardingAction.php    GenerateOnboardingChecklist.php  Services/    OnboardingResolver.php    OnboardingRequirementChecker.php    OnboardingRecommendationService.php  Policies/  Events/  Listeners/
+41. Seeders المطلوبة
+OnboardingFlowsSeeder
+OnboardingFlowVersionsSeeder
+WebsiteSetupStepsSeeder
+BusinessProfileSetupStepsSeeder
+VerificationOnboardingSeeder
+MigrationOnboardingSeeder
+AgencyOnboardingSeeder لاحقًا
+DefaultOnboardingTemplatesSeeder
+42. Tests
+الاختبار
+المطلوب
+start onboarding flow
+يبدأ المستخدم flow صحيح بعد التسجيل
+create organization action
+ينشئ organization ويعيّن المستخدم owner
+permission hidden step
+لا تظهر خطوة بلا صلاحية
+feature flag hidden step
+لا تظهر خطوة feature معطلة
+resume session
+يمكن متابعة session غير مكتملة
+skip optional step
+يمكن تخطي optional step فقط
+action audit
+أي action مهم يسجل activity log
+completion checklist
+بعد completion تنشأ checklist مناسبة
+template applied
+قالب الموقع ينشئ صفحات مبدئية بدون تكرار
+portable export
+يمكن تضمين onboarding data حسب policy
+43. ما يدخل في V1
+onboarding_flows basic.
+onboarding_sessions.
+onboarding_progress.
+onboarding_answers basic.
+Setup wizard بعد التسجيل: Create Organization, Create Site, Choose Theme, Create first page.
+Optional Business Profile Draft.
+Optional Invite Team Member.
+Activity logs للأفعال المهمة.
+44. ما لا يدخل في V1
+AI-assisted onboarding الكامل.
+Advanced onboarding analytics.
+Agency onboarding الكامل.
+Portable/Dedicated onboarding الكامل.
+Commerce setup الكامل قبل V2.
+Mall publication automation.
+Enterprise guided governance setup.
+45. التوسع عبر الإصدارات
+الإصدار
+توسع Onboarding
+V1
+Setup wizard + Organization/Site + first page + Business Profile Draft + Invite Member
+V2
+WordPress migration onboarding + Commerce foundation setup + Forms/Redirects guidance
+V3
+Rabet verification + CRM/Invoice/Inventory starter checklists
+V4
+Cloud billing setup + Mall presence + Talent + Agency + Legal Partner onboarding
+V5
+Integration setup + ERP Pro guided configuration + Contracts/Helpdesk/POS setup
+V6
+AI-assisted onboarding + Enterprise governance setup + GRC/BI/Industry solutions
+46. Acceptance Criteria
+يمكن لمستخدم جديد إنشاء Organization وSite من wizard بدون دخول إعدادات معقدة.
+يمكن حفظ التقدم والرجوع لاحقًا.
+لا تظهر خطوات لا يملك المستخدم صلاحيتها.
+أي Action مهم يسجل Activity Log.
+كل flow قابل للتعطيل أو تغيير نسخه بدون كسر sessions القديمة.
+توجد checklists عملية بعد إكمال المسار.
+يمكن تتبع completion rate وdrop-off rate لاحقًا.
+47. الخلاصة التنفيذية
+Onboarding Wizard ليس شاشة ترحيب، بل طبقة تشغيل أساسية تمنع المستخدم من الضياع داخل منصة ضخمة. يبدأ في V1 بشكل بسيط لكنه يجب أن يبنى كقاعدة بيانات قابلة للتوسع، لأن كل موديول لاحق سيحتاج طريقة موجهة للدخول والاستخدام. القاعدة: لا تعرض كل Kabeeri مرة واحدة؛ اسأل المستخدم ماذا يريد، ثم أنشئ له المسار والبيانات والمهام المناسبة بأمان.
+KABEERI Database File 30 — Onboarding Wizard Database

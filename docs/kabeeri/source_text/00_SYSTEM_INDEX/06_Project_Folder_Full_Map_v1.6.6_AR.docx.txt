@@ -1,0 +1,566 @@
+خريطة فولدرات مشروع KABEERI v1.6.6
+Folder-by-Folder Index + Full File List
+هذا الملف يجمع الفولدرات بالترتيب كما ظهرت داخل الحزمة، مع بيان دور كل فولدر وأهميته وتأثيره وقائمة ملفاته بدون حذف أي فولدر رئيسي أو ملف من القائمة.
+اسم الحزمة الأصلية: kabeeri_professional_knowledge_system_v1.6.6_task_tracking_auto.zip
+جذر المشروع داخل الحزمة: KBR_v1.6.6
+إجمالي الفولدرات الرئيسية: 26 | إجمالي الملفات: 228 | الحجم غير المضغوط: 8.05 MB
+مكان الحفظ المقترح داخل المشروع
+احفظ هذا الملف داخل فولدر 00_SYSTEM_INDEX لأنه فولدر الفهارس والتحكم المركزي، وبذلك يصبح بجوار خريطة المشروع وملفات الـ Manifest والـ Release Notes.
+KBR_v1.6.6/00_SYSTEM_INDEX/06_Project_Folder_Full_Map_v1.6.6_AR.docx
+الفهرس المختصر للفولدرات الرئيسية
+01. 00_SYSTEM_INDEX | files: 38 | subfolders: 0 | size: 473.3 KB
+الدور المختصر: فولدر التحكم المركزي والفهرسة العامة للنسخة.
+02. 01_STRATEGY_AND_BUSINESS | files: 4 | subfolders: 0 | size: 124.1 KB
+الدور المختصر: فولدر استراتيجية المنتج والبزنس ونموذج الإيرادات.
+03. 02_FOUNDATION_ARCHITECTURE | files: 18 | subfolders: 0 | size: 425.0 KB
+الدور المختصر: الأساس المعماري العام للمنصة.
+04. 03_RELEASE_SPECS | files: 6 | subfolders: 0 | size: 201.1 KB
+الدور المختصر: مواصفات الإصدارات من V1 إلى V6.
+05. 04_DATABASE_ARCHITECTURE | files: 47 | subfolders: 4 | size: 2.14 MB
+الدور المختصر: تصميم قواعد البيانات والخرائط المرجعية لكل الموديولات.
+06. 05_EXECUTION_LARAVEL | files: 8 | subfolders: 0 | size: 323.7 KB
+الدور المختصر: تحويل المعمارية إلى خطة تنفيذ Laravel.
+07. 06_WORDPRESS_MIGRATION_CENTER | files: 2 | subfolders: 0 | size: 77.0 KB
+الدور المختصر: مركز هجرة WordPress.
+08. 07_COMPETITIVE_PRODUCT_MOATS | files: 1 | subfolders: 0 | size: 37.7 KB
+الدور المختصر: فولدر التميز والـ moats التنافسية.
+09. 08_DEVELOPER_ECONOMY | files: 1 | subfolders: 0 | size: 47.4 KB
+الدور المختصر: اقتصاد المطورين والثيمات والبلجنز.
+10. 09_ENGINEERING_STANDARDS | files: 5 | subfolders: 0 | size: 191.3 KB
+الدور المختصر: معايير الهندسة والجودة.
+11. 10_PEOPLE_PARTNER_WORK_NETWORK | files: 7 | subfolders: 0 | size: 269.5 KB
+الدور المختصر: شبكة الأشخاص والشركاء والعمل.
+12. 11_THEME_PLUGIN_MARKETING_ECOSYSTEM | files: 16 | subfolders: 0 | size: 613.6 KB
+الدور المختصر: منظومة الثيمات والبلجنز والتسويق.
+13. 12_EXTERNAL_REFERENCES | files: 1 | subfolders: 0 | size: 1.04 MB
+الدور المختصر: مراجع خارجية داعمة.
+14. 13_CODING_READY_EXECUTION | files: 8 | subfolders: 0 | size: 265.5 KB
+الدور المختصر: جاهزية التكويد وتنظيم التنفيذ الفردي مع AI.
+15. 14_MALL_MARKETPLACE_NETWORK | files: 5 | subfolders: 0 | size: 191.7 KB
+الدور المختصر: تصميم Kabeeri Mall وشبكة الاكتشاف العامة.
+16. 15_VERSION_CODING_PLANS | files: 6 | subfolders: 0 | size: 223.3 KB
+الدور المختصر: خطط التكويد لكل إصدار.
+17. 16_CODE_PROPMPTS_TO_CREATE_BY_CODEX | files: 6 | subfolders: 0 | size: 300.0 KB
+الدور المختصر: حزم برومبتات Codex للإصدارات.
+18. 17_EXTENSION_GOVERNANCE | files: 8 | subfolders: 0 | size: 257.8 KB
+الدور المختصر: حوكمة الامتدادات والتحديثات.
+19. 18_TECHNOLOGY_GOVERNANCE | files: 3 | subfolders: 0 | size: 73.7 KB
+الدور المختصر: حوكمة القرارات التقنية.
+20. 19_EXTENSION_BUSINESS_ARCHITECTURE | files: 2 | subfolders: 0 | size: 73.2 KB
+الدور المختصر: معمارية الأعمال للامتدادات المستقبلية.
+21. 20_EXTENSION_TECHNICAL_ARCHITECTURE | files: 3 | subfolders: 0 | size: 110.3 KB
+الدور المختصر: المعمارية التقنية للامتدادات.
+22. 21_EXTENSION_DATABASE_API_ADDENDUM | files: 2 | subfolders: 0 | size: 73.2 KB
+الدور المختصر: إضافات الداتابيز والـ API للامتدادات.
+23. 22_EXTENSION_CODEX_PROMPTS | files: 5 | subfolders: 0 | size: 151.5 KB
+الدور المختصر: برومبتات Codex للامتدادات والتحديثات.
+24. 23_EXTENSION_ACCEPTANCE_CHECKLISTS | files: 3 | subfolders: 0 | size: 109.4 KB
+الدور المختصر: قوائم قبول الامتدادات.
+25. 24_kabeeri_task_tracking | files: 20 | subfolders: 5 | size: 299.5 KB
+الدور المختصر: نظام تتبع التاسكات الآلي المضاف في v1.6.6.
+26. 99_ARCHIVE_SUPERSEDED | files: 3 | subfolders: 0 | size: 78.6 KB
+الدور المختصر: أرشيف الملفات القديمة المستبدلة.
+التفصيل الكامل فولدر بفولدر
+01 - 00_SYSTEM_INDEX
+PATH: KBR_v1.6.6/00_SYSTEM_INDEX/
+عدد الملفات: 38 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 473.3 KB
+الدور: فولدر التحكم المركزي والفهرسة العامة للنسخة.
+الأهمية: يثبت رقم النسخة، خريطة الملفات، سجل التغييرات، نقاط البداية، وترتيب القراءة والتنفيذ.
+التأثير على المشروع: أي مطور أو جلسة AI تبدأ منه حتى لا يتم العمل على نسخة قديمة أو ملف خاطئ.
+طريقة الاستخدام: احفظ ملف الفهرس الجديد هنا لأنه امتداد مباشر لخريطة المشروع والـ Addendums.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_KABEERI_SYSTEM_INDEX_AR.docx  [37.7 KB]
+- 01_System_Features_Catalog_AR.docx  [53.9 KB]
+- 02_System_Features_Catalog_v1.3.0_Addendum_AR.docx  [37.0 KB]
+- 03_Project_Folder_Map_Architecture_AR.docx  [38.3 KB]
+- 04_Solo_AI_Builder_File_Map_Addendum_AR.docx  [36.9 KB]
+- 05_Task_Tracking_File_Map_Addendum_AR.docx  [36.6 KB]
+- BUILD_SEQUENCE.md  [850 B]
+- CODING_START_HERE.md  [539 B]
+- CURRENT_VERSION.md  [98 B]
+- FINAL_CHANGELOG.md  [1.6 KB]
+- MANIFEST.csv  [15.7 KB]
+- MANIFEST.json  [26.7 KB]
+- MANIFEST_v1.6.2.csv  [11.2 KB]
+- MANIFEST_v1.6.2.json  [12.2 KB]
+- MANIFEST_v1.6.3.csv  [13.5 KB]
+- MANIFEST_v1.6.3.json  [19.7 KB]
+- MANIFEST_v1.6.4.csv  [14.2 KB]
+- MANIFEST_v1.6.4.json  [20.7 KB]
+- MANIFEST_v1.6.5.csv  [15.7 KB]
+- MANIFEST_v1.6.5.json  [26.7 KB]
+- MANIFEST_v1.6.6.csv  [16.1 KB]
+- MANIFEST_v1.6.6.json  [25.1 KB]
+- OPTIONAL_BACKLOG.md  [619 B]
+- PATH_LENGTH_CHECK_v1.6.3.md  [205 B]
+- PATH_LENGTH_CHECK_v1.6.4.md  [72 B]
+- PATH_LENGTH_CHECK_v1.6.5.md  [315 B]
+- PATH_LENGTH_CHECK_v1.6.6.md  [192 B]
+- README.md  [3.0 KB]
+- RELEASE_NOTES_v1.1.0.md  [1.3 KB]
+- RELEASE_NOTES_v1.2.0.md  [947 B]
+- RELEASE_NOTES_v1.2.1.md  [1.4 KB]
+- RELEASE_NOTES_v1.3.0.md  [544 B]
+- RELEASE_NOTES_v1.6.2.md  [464 B]
+- RELEASE_NOTES_v1.6.3.md  [826 B]
+- RELEASE_NOTES_v1.6.4.md  [701 B]
+- RELEASE_NOTES_v1.6.5.md  [580 B]
+- RELEASE_NOTES_v1.6.6.md  [510 B]
+- VERSIONING.md  [558 B]
+02 - 01_STRATEGY_AND_BUSINESS
+PATH: KBR_v1.6.6/01_STRATEGY_AND_BUSINESS/
+عدد الملفات: 4 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 124.1 KB
+الدور: فولدر استراتيجية المنتج والبزنس ونموذج الإيرادات.
+الأهمية: يشرح لماذا توجد Kabeeri، لمن تُباع، كيف تتموضع في السوق، وكيف تعمل الخطط والحدود.
+التأثير على المشروع: يوجه قرارات التسعير والـ entitlements والرسالة التسويقية ويمنع بناء ميزات بلا قيمة تجارية.
+طريقة الاستخدام: مرجع لقرارات الـ GTM، الخطط، الفريميوم، والإيرادات.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_Kabeeri_Platform_Master_Summary_AR.docx  [39.0 KB]
+- 02_Product_Positioning_GTM_AR.docx  [24.6 KB]
+- 03_Monetization_Pricing_AR.docx  [22.1 KB]
+- 04_Freemium_Plans_Entitlements_Architecture_AR.docx  [38.4 KB]
+03 - 02_FOUNDATION_ARCHITECTURE
+PATH: KBR_v1.6.6/02_FOUNDATION_ARCHITECTURE/
+عدد الملفات: 18 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 425.0 KB
+الدور: الأساس المعماري العام للمنصة.
+الأهمية: يحدد مفاهيم الـ Organization-first، الطبقات التشغيلية، الصلاحيات، الأحداث، الـ AI، السوق، البيانات، الأمن، الأداء، التوطين، والاستضافة.
+التأثير على المشروع: يحمي V1 من أن يصبح CMS ضيق لا يقبل التوسع إلى Rabet وCommerce وERP وMall لاحقا.
+طريقة الاستخدام: مرجع قبل كتابة أي model أو service أو permission أو workflow.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_CMS_Foundation_Blueprint_AR.docx  [30.7 KB]
+- 01_Foundation_Architecture_AR.docx  [25.8 KB]
+- 02_Operating_Layers_AR.docx  [22.5 KB]
+- 03_Dependencies_Map_AR.docx  [26.6 KB]
+- 04_Release_Gates_AR.docx  [23.8 KB]
+- 05_Permissions_Privacy_AR.docx  [24.0 KB]
+- 06_Event_Workflow_AR.docx  [23.2 KB]
+- 07_AI_Cobuilder_Guardrails_AR.docx  [22.4 KB]
+- 08_Marketplace_Governance_AR.docx  [22.0 KB]
+- 09_Data_Model_Dictionary_AR.docx  [25.5 KB]
+- 11_Security_Compliance_AR.docx  [22.5 KB]
+- 12_Developer_Platform_SDK_AR.docx  [21.6 KB]
+- 13_Testing_QA_DevOps_AR.docx  [21.3 KB]
+- 14_UI_UX_Admin_Navigation_AR.docx  [21.4 KB]
+- 15_Migration_Strategy_AR.docx  [20.2 KB]
+- 16_Localization_Country_Packs_AR.docx  [19.4 KB]
+- 17_Performance_Scalability_AR.docx  [20.9 KB]
+- 18_Data_Ownership_Hosting_Sync_Decision_AR.docx  [31.0 KB]
+04 - 03_RELEASE_SPECS
+PATH: KBR_v1.6.6/03_RELEASE_SPECS/
+عدد الملفات: 6 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 201.1 KB
+الدور: مواصفات الإصدارات من V1 إلى V6.
+الأهمية: يفصل حدود كل إصدار وما يدخل فيه وما لا يدخل فيه.
+التأثير على المشروع: يمنع scope creep ويحافظ على ترتيب بناء المنصة.
+طريقة الاستخدام: مرجع تحديد النطاق قبل أي Sprint أو Prompt أو Migration.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_V1_Core_Foundation_CMS_Company_OS_AR.docx  [29.1 KB]
+- 02_V2_WordPress_Migration_Commerce_Foundation_AR.docx  [28.9 KB]
+- 03_V3_Business_Foundation_ERP_Essentials_AR.docx  [30.8 KB]
+- 04_V4_Cloud_Marketplace_Rabet_Mall_AR.docx  [35.4 KB]
+- 05_V5_ERP_Pro_Integration_Hub_AR.docx  [36.6 KB]
+- 06_V6_Enterprise_Complete_Platform_AR.docx  [40.3 KB]
+05 - 04_DATABASE_ARCHITECTURE
+PATH: KBR_v1.6.6/04_DATABASE_ARCHITECTURE/
+عدد الملفات: 47 | عدد المجلدات الفرعية: 4 | الحجم غير المضغوط: 2.14 MB
+الدور: تصميم قواعد البيانات والخرائط المرجعية لكل الموديولات.
+الأهمية: أكبر مركز تقني في الحزمة، ويغطي Core/Cloud/Portable/Dedicated، CMS، Media، Rabet، Commerce، Mall، Talent، ERP، Billing، Security، BI وغيرها.
+التأثير على المشروع: أي خطأ هنا يؤثر على multi-tenancy، الصلاحيات، الـ sync، الـ mall mirror، والتوسع المستقبلي.
+طريقة الاستخدام: مرجع المايجريشنز والعلاقات قبل التكويد في Laravel.
+المجلدات الفرعية
+- 01_Core_Deployment_Modes/
+- 02_Module_Databases/
+- 03_Enterprise_Industry_Extensions/
+- 04_Master_Database_Maps/
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_APPROVED_DATABASE_NAMES_AR.docx  [36.3 KB]
+- 00_APPROVED_PLAN_ENTITLEMENTS_AND_LIMITS_AR.docx  [37.6 KB]
+- 01_Core_Deployment_Modes/01_Database_Core_Kernel_AR.docx  [19.1 KB]
+- 01_Core_Deployment_Modes/02_Database_Cloud_AR.docx  [17.3 KB]
+- 01_Core_Deployment_Modes/03_Database_Frontend_Anywhere_AR.docx  [17.4 KB]
+- 01_Core_Deployment_Modes/04_Database_Portable_AR.docx  [17.9 KB]
+- 01_Core_Deployment_Modes/05_Database_Dedicated_AR.docx  [17.1 KB]
+- 01_Core_Deployment_Modes/06_Database_Five_Systems_Integration_AR.docx  [18.9 KB]
+- 02_Module_Databases/07_Database_CMS_AR.docx  [51.0 KB]
+- 02_Module_Databases/08_Database_Media_Files_AR.docx  [45.7 KB]
+- 02_Module_Databases/09_Database_Rabet_Verification_AR.docx  [52.7 KB]
+- 02_Module_Databases/10_Database_Commerce_AR.docx  [52.7 KB]
+- 02_Module_Databases/11_Database_Mall_Public_Marketplace_AR.docx  [56.2 KB]
+- 02_Module_Databases/12_Database_Talent_Marketplace_AR.docx  [49.7 KB]
+- 02_Module_Databases/13_Database_ERP_Essentials_AR.docx  [59.2 KB]
+- 02_Module_Databases/14_Database_ERP_Pro_AR.docx  [64.0 KB]
+- 02_Module_Databases/15_Database_Integration_Hub_AR.docx  [57.5 KB]
+- 02_Module_Databases/16_Database_AI_Cobuilder_AR.docx  [62.1 KB]
+- 02_Module_Databases/17_Database_Events_Workflows_AR.docx  [37.7 KB]
+- 02_Module_Databases/18_Database_Security_Compliance_AR.docx  [58.7 KB]
+- 02_Module_Databases/19_Database_Internal_Marketplace_Packages_AR.docx  [51.1 KB]
+- 02_Module_Databases/20_Database_Localization_Country_Packs_AR.docx  [55.2 KB]
+- 02_Module_Databases/21_Database_Migration_AR.docx  [58.9 KB]
+- 02_Module_Databases/22_Database_Billing_Subscriptions_AR.docx  [62.2 KB]
+- 02_Module_Databases/23_Database_Notifications_Inbox_AR.docx  [37.5 KB]
+- 02_Module_Databases/24_Database_Reviews_Reputation_AR.docx  [50.7 KB]
+- 02_Module_Databases/25_Database_Dispute_Resolution_AR.docx  [53.5 KB]
+- 02_Module_Databases/26_Database_Search_Engine_AR.docx  [54.6 KB]
+- 02_Module_Databases/27_Database_Moderation_System_AR.docx  [48.2 KB]
+- 02_Module_Databases/28_Database_Teams_Collaboration_AR.docx  [50.6 KB]
+- 02_Module_Databases/29_Database_Agency_Platform_AR.docx  [49.5 KB]
+- 02_Module_Databases/30_Database_Onboarding_Wizard_AR.docx  [53.0 KB]
+- 02_Module_Databases/31_Database_BI_Analytics_AR.docx  [48.3 KB]
+- 02_Module_Databases/32_Database_GRC_Risk_Compliance_AR.docx  [58.7 KB]
+- 02_Module_Databases/33_Database_Developer_Console_SDK_AR.docx  [54.7 KB]
+- 03_Enterprise_Industry_Extensions/34_Database_Industry_Solutions_AR.docx  [52.7 KB]
+- 03_Enterprise_Industry_Extensions/35_Database_Enterprise_Architecture_App_Portfolio_AR.docx  [55.8 KB]
+- 03_Enterprise_Industry_Extensions/36_Database_Testing_QA_DevOps_AR.docx  [57.4 KB]
+- 03_Enterprise_Industry_Extensions/37_Database_Data_Warehouse_Platform_AR.docx  [50.3 KB]
+- 03_Enterprise_Industry_Extensions/38_Database_ESG_EHS_Sustainability_AR.docx  [55.5 KB]
+- 03_Enterprise_Industry_Extensions/39_Database_PLM_RD_Engineering_AR.docx  [51.2 KB]
+- 04_Master_Database_Maps/00_Database_Master_Index_AR.docx  [53.5 KB]
+- 04_Master_Database_Maps/01_Master_ERD_Relationship_Map_AR.docx  [46.5 KB]
+- 04_Master_Database_Maps/05_Database_v1.1.0_Addendum_AR.docx  [40.0 KB]
+- 04_Master_Database_Maps/06_Database_v1.2.1_Mall_Multi_Catalog_Addendum_AR.docx  [40.0 KB]
+- 04_Master_Database_Maps/08_Database_v1.3.0_Addendum_External_Sync_Universal_Mall_AR.docx  [38.2 KB]
+- 04_Master_Database_Maps/09_Database_v1.6.4_Freemium_Entitlements_Addendum_AR.docx  [37.4 KB]
+06 - 05_EXECUTION_LARAVEL
+PATH: KBR_v1.6.6/05_EXECUTION_LARAVEL/
+عدد الملفات: 8 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 323.7 KB
+الدور: تحويل المعمارية إلى خطة تنفيذ Laravel.
+الأهمية: يوضح build order، modular monolith، blueprint V1، وخطة Sprint 1 النهائية.
+التأثير على المشروع: يوجه Codex والمطور في ترتيب إنشاء المشروع والمايجريشنز والموديولات والاختبارات.
+طريقة الاستخدام: مرجع يومي أثناء تنفيذ V1 في Laravel.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_Master_Execution_Plan_Solo_Builder_AI_AR.docx  [27.2 KB]
+- 01_Laravel_Migration_Build_Order_AR.docx  [49.3 KB]
+- 02_Laravel_Module_Architecture_AR.docx  [47.2 KB]
+- 03_V1_Implementation_Blueprint_AR.docx  [49.0 KB]
+- 04_V1_Sprint_1_Coding_Plan_AR.docx  [37.7 KB]
+- 06_Laravel_Migration_Build_Order_v1.1.0_Update_AR.docx  [38.0 KB]
+- 07_V1_Scope_Freeze_AR.docx  [37.7 KB]
+- 08_V1_Sprint_1_Coding_Plan_FINAL_AR.docx  [37.5 KB]
+07 - 06_WORDPRESS_MIGRATION_CENTER
+PATH: KBR_v1.6.6/06_WORDPRESS_MIGRATION_CENTER/
+عدد الملفات: 2 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 77.0 KB
+الدور: مركز هجرة WordPress.
+الأهمية: يحدد توافق الهجرة من WordPress، البلجنز، الثيمات، المحتوى، الميديا، والقيود.
+التأثير على المشروع: يجعل Kabeeri قابلة لجذب مستخدمي WordPress بدون البدء من الصفر.
+طريقة الاستخدام: مرجع بدءا من V2 وليس V1 إلا كتصميم مستقبلي.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_WordPress_Migration_Compatibility_Architecture_AR.docx  [38.6 KB]
+- 02_WordPress_Plugin_Theme_Migration_Architecture_AR.docx  [38.3 KB]
+08 - 07_COMPETITIVE_PRODUCT_MOATS
+PATH: KBR_v1.6.6/07_COMPETITIVE_PRODUCT_MOATS/
+عدد الملفات: 1 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 37.7 KB
+الدور: فولدر التميز والـ moats التنافسية.
+الأهمية: يوضح لماذا Kabeeri ليست WordPress آخر أو Shopify آخر أو ERP فقط.
+التأثير على المشروع: يساعد في قرارات المنتج والتسويق والاستثمار والرسالة السوقية.
+طريقة الاستخدام: مرجع positioning وحماية الفكرة من التشابه العام.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_Competitive_Differentiation_Product_Moats_AR.docx  [37.7 KB]
+09 - 08_DEVELOPER_ECONOMY
+PATH: KBR_v1.6.6/08_DEVELOPER_ECONOMY/
+عدد الملفات: 1 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 47.4 KB
+الدور: اقتصاد المطورين والثيمات والبلجنز.
+الأهمية: يؤسس لفكرة marketplace حول المنصة بدلا من منتج مغلق.
+التأثير على المشروع: يمهد لنظام publishers، packages، revenue share، certification، ونمو مجتمع المطورين.
+طريقة الاستخدام: مرجع لبناء Theme/Plugin Marketplace في المراحل اللاحقة.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_Theme_Plugin_Developer_Economy_Architecture_AR.docx  [47.4 KB]
+10 - 09_ENGINEERING_STANDARDS
+PATH: KBR_v1.6.6/09_ENGINEERING_STANDARDS/
+عدد الملفات: 5 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 191.3 KB
+الدور: معايير الهندسة والجودة.
+الأهمية: يثبت delivery standards، API standards، permissions matrix، feature flags، وseed demo scenario.
+التأثير على المشروع: يمنع الكود العشوائي ويجعل مخرجات Codex قابلة للمراجعة والاختبار.
+طريقة الاستخدام: مرجع acceptance وquality gates لكل Task.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_Engineering_Delivery_Standards_AR.docx  [41.7 KB]
+- 02_API_Design_Standards_AR.docx  [37.4 KB]
+- 03_Permissions_Matrix_V1_AR.docx  [37.6 KB]
+- 04_Feature_Flags_Matrix_V1_AR.docx  [37.4 KB]
+- 05_Seed_Data_Demo_Scenario_AR.docx  [37.2 KB]
+11 - 10_PEOPLE_PARTNER_WORK_NETWORK
+PATH: KBR_v1.6.6/10_PEOPLE_PARTNER_WORK_NETWORK/
+عدد الملفات: 7 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 269.5 KB
+الدور: شبكة الأشخاص والشركاء والعمل.
+الأهمية: يغطي talent marketplace، academy، agencies، legal partners، affiliates، dropshipping، ومصفوفة القدرات.
+التأثير على المشروع: يوصل Kabeeri بمنظومة بشرية وشركاء وليس فقط نظام برمجي.
+طريقة الاستخدام: مرجع V4 وما بعدها لعمل network وpartner ecosystem.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_User_Partner_Work_Network_Architecture_AR.docx  [40.1 KB]
+- 02_Talent_Marketplace_Public_Professionals_AR.docx  [38.4 KB]
+- 03_Academy_Certification_Architecture_AR.docx  [38.3 KB]
+- 04_Agency_Partner_Operations_AR.docx  [38.2 KB]
+- 05_Legal_Partner_Network_Rabet_Verification_Operations_AR.docx  [37.9 KB]
+- 06_Partner_Affiliate_Dropshipping_Commerce_AR.docx  [38.3 KB]
+- 07_Work_Network_Roles_Capabilities_Matrix_AR.docx  [38.3 KB]
+12 - 11_THEME_PLUGIN_MARKETING_ECOSYSTEM
+PATH: KBR_v1.6.6/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/
+عدد الملفات: 16 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 613.6 KB
+الدور: منظومة الثيمات والبلجنز والتسويق.
+الأهمية: يغطي 300 themes strategy، plugin catalog، bundles، manifests، design system، demo importer، QA، licensing.
+التأثير على المشروع: يفتح طريق بناء ecosystem شبيه WordPress ولكن بحوكمة أقوى.
+طريقة الاستخدام: مرجع للـ Theme Store والـ Plugin Marketplace والـ demo importer.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_300_Launch_Themes_Strategy_Taxonomy_AR.docx  [39.2 KB]
+- 02_Plugin_Module_App_Ecosystem_Architecture_AR.docx  [38.9 KB]
+- 03_Digital_Marketing_Plugin_Suite_AR.docx  [38.5 KB]
+- 04_Theme_Plugin_Bundle_Matrix_Overview_AR.docx  [39.0 KB]
+- 05_300_Themes_Master_Catalog_AR.docx  [42.9 KB]
+- 06_300_Themes_App_Recipes_AR.docx  [40.2 KB]
+- 07_Plugin_Master_Catalog_AR.docx  [39.2 KB]
+- 08_Plugin_Bundles_By_Project_Type_AR.docx  [39.2 KB]
+- 09_Theme_Plugin_Mobile_Profile_Matrix_AR.docx  [38.4 KB]
+- 10_Theme_Package_Standard_Manifest_AR.docx  [36.7 KB]
+- 11_Plugin_Package_Standard_Manifest_AR.docx  [36.9 KB]
+- 12_Design_System_UI_Components_Library_AR.docx  [37.1 KB]
+- 13_Demo_Data_Demo_Importer_Specification_AR.docx  [36.6 KB]
+- 14_Theme_QA_Publishing_Checklist_AR.docx  [36.8 KB]
+- 15_Plugin_QA_Security_Permission_Checklist_AR.docx  [36.8 KB]
+- 16_Marketplace_Licensing_Pricing_Revenue_Share_AR.docx  [37.1 KB]
+13 - 12_EXTERNAL_REFERENCES
+PATH: KBR_v1.6.6/12_EXTERNAL_REFERENCES/
+عدد الملفات: 1 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 1.04 MB
+الدور: مراجع خارجية داعمة.
+الأهمية: يحتوي مرجع Rabet B2B الاستراتيجي.
+التأثير على المشروع: يدعم خلفية Rabet والـ B2B لكنه ليس ملف تنفيذ مباشر.
+طريقة الاستخدام: مرجع قراءة وتحليل عند تطوير Rabet أو الرسائل الاستراتيجية.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- Rabet_B2B_Strategic_Management_Semi_Project.pdf  [1.04 MB]
+14 - 13_CODING_READY_EXECUTION
+PATH: KBR_v1.6.6/13_CODING_READY_EXECUTION/
+عدد الملفات: 8 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 265.5 KB
+الدور: جاهزية التكويد وتنظيم التنفيذ الفردي مع AI.
+الأهمية: يشمل coding readiness، acceptance checklist، roadmap، task cards، worklog، وrisk control.
+التأثير على المشروع: يحول المشروع الكبير إلى شغل يومي صغير قابل للتتبع.
+طريقة الاستخدام: مرجع جلسات العمل، المراجعة، وتوثيق ما تم.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_Coding_Readiness_Final_Index_AR.docx  [37.1 KB]
+- 01_Coding_Ready_Acceptance_Checklist_AR.docx  [37.3 KB]
+- 02_V1_to_V6_Coding_Roadmap_AR.docx  [37.8 KB]
+- 10_Solo_AI_Builder_Execution_System_AR.docx  [38.4 KB]
+- 11_V1_Flexible_Task_Cards_Board_AR.docx  [39.7 KB]
+- 12_Worklog_Session_Templates_AR.docx  [37.3 KB]
+- 13_Codex_Solo_Risk_Control_Checklists_AR.docx  [37.2 KB]
+- WORKLOG_TEMPLATE.md  [748 B]
+15 - 14_MALL_MARKETPLACE_NETWORK
+PATH: KBR_v1.6.6/14_MALL_MARKETPLACE_NETWORK/
+عدد الملفات: 5 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 191.7 KB
+الدور: تصميم Kabeeri Mall وشبكة الاكتشاف العامة.
+الأهمية: يغطي multi-catalog mall، universal discovery، external sync، backoffice anywhere، travel/tourism mall.
+التأثير على المشروع: يحافظ على فصل source of truth الداخلي عن public mirror في الـ Mall.
+طريقة الاستخدام: مرجع V4 وما بعدها للـ Mall وMarketplace discovery.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_Mall_Multi_Catalog_Network_Architecture_AR.docx  [40.0 KB]
+- 02_Universal_Mall_Discovery_Network_AR.docx  [38.5 KB]
+- 03_External_Systems_Sync_Connector_Marketplace_AR.docx  [38.3 KB]
+- 04_Backoffice_Anywhere_Admin_For_Existing_Websites_AR.docx  [37.4 KB]
+- 05_Travel_Tourism_Mall_AR.docx  [37.5 KB]
+16 - 15_VERSION_CODING_PLANS
+PATH: KBR_v1.6.6/15_VERSION_CODING_PLANS/
+عدد الملفات: 6 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 223.3 KB
+الدور: خطط التكويد لكل إصدار.
+الأهمية: يعطي خطة V1 إلى V6 بطريقة تنفيذية.
+التأثير على المشروع: يربط release specs بالتنفيذ الفعلي ويحدد السبرنتات.
+طريقة الاستخدام: ابدأ من V1 coding plan عند التنفيذ الفعلي.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_V1_Coding_Plan_Core_MVP_AR.docx  [37.2 KB]
+- 02_V2_Coding_Plan_Migration_Discovery_AR.docx  [37.2 KB]
+- 03_V3_Coding_Plan_Business_Operations_AR.docx  [37.2 KB]
+- 04_V4_Coding_Plan_Marketplace_Work_Network_AR.docx  [37.2 KB]
+- 05_V5_Coding_Plan_ERP_Pro_Integration_AR.docx  [37.2 KB]
+- 06_V6_Coding_Plan_Enterprise_Platform_AR.docx  [37.2 KB]
+17 - 16_CODE_PROPMPTS_TO_CREATE_BY_CODEX
+PATH: KBR_v1.6.6/16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/
+عدد الملفات: 6 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 300.0 KB
+الدور: حزم برومبتات Codex للإصدارات.
+الأهمية: يحتوي prompt packs من V1 إلى V6، خاصة V1 prompt pack الجاهز للتنفيذ.
+التأثير على المشروع: يجعل التكويد مع Codex منظما: prompt واحد، task واحدة، review، tests، commit.
+طريقة الاستخدام: انسخ منه Prompt واحد فقط في كل مرة حسب الـ task board.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- kabeeri_v1_codex_prompt_pack_ar.docx  [54.7 KB]
+- kabeeri_v2_codex_prompt_pack_ar.docx  [52.6 KB]
+- kabeeri_v3_codex_prompt_pack_ar.docx  [48.6 KB]
+- kabeeri_v4_codex_prompt_pack_ar.docx  [46.9 KB]
+- kabeeri_v5_codex_prompt_pack_ar.docx  [50.9 KB]
+- kabeeri_v6_codex_prompt_pack_ar.docx  [46.4 KB]
+18 - 17_EXTENSION_GOVERNANCE
+PATH: KBR_v1.6.6/17_EXTENSION_GOVERNANCE/
+عدد الملفات: 8 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 257.8 KB
+الدور: حوكمة الامتدادات والتحديثات.
+الأهمية: ينظم registry، قواعد الملفات، template packs، freeze policy، prompt rules، update workflow.
+التأثير على المشروع: يمنع إضافة ميزات جديدة بطريقة تكسر V1 أو تلوث الملفات الأساسية.
+طريقة الاستخدام: أي إضافة بعد التجميد تدخل عبر هذا المسار.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_Extension_Development_Governance_AR.docx  [36.9 KB]
+- 02_Extension_Registry_AR.docx  [36.5 KB]
+- 03_File_Folder_Architecture_Rules_AR.docx  [36.6 KB]
+- 04_New_Feature_File_Pack_Template_AR.docx  [36.6 KB]
+- 05_Progressive_Version_Freeze_Policy_AR.docx  [36.5 KB]
+- 06_Extension_Codex_Prompt_Rules_AR.docx  [37.4 KB]
+- 07_Update_File_Pack_Codex_Workflow_AR.docx  [37.1 KB]
+- README_EXTENSION_GOVERNANCE.md  [188 B]
+19 - 18_TECHNOLOGY_GOVERNANCE
+PATH: KBR_v1.6.6/18_TECHNOLOGY_GOVERNANCE/
+عدد الملفات: 3 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 73.7 KB
+الدور: حوكمة القرارات التقنية.
+الأهمية: يثبت stack decisions وفصل frontend/backend.
+التأثير على المشروع: يمنع تغيير التقنيات بشكل عشوائي ويجهز للفصل المستقبلي.
+طريقة الاستخدام: مرجع عند مراجعة Laravel/Frontend/API/Hosting decisions.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 01_Technology_Stack_Governance_Decision_Records_AR.docx  [37.1 KB]
+- 02_Frontend_Backend_Separation_Architecture_AR.docx  [36.5 KB]
+- README_TECHNOLOGY_GOVERNANCE.md  [163 B]
+20 - 19_EXTENSION_BUSINESS_ARCHITECTURE
+PATH: KBR_v1.6.6/19_EXTENSION_BUSINESS_ARCHITECTURE/
+عدد الملفات: 2 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 73.2 KB
+الدور: معمارية الأعمال للامتدادات المستقبلية.
+الأهمية: يغطي V7 Mobile وV8 Desktop من زاوية تجارية.
+التأثير على المشروع: يفصل المستقبل البعيد عن نطاق V1-V6 الأساسي.
+طريقة الاستخدام: لا يستخدم في V1، ويعود له بعد نضج المنصة.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- V7_01_Mobile_Business_AR.docx  [36.6 KB]
+- V8_01_Desktop_Business_AR.docx  [36.5 KB]
+21 - 20_EXTENSION_TECHNICAL_ARCHITECTURE
+PATH: KBR_v1.6.6/20_EXTENSION_TECHNICAL_ARCHITECTURE/
+عدد الملفات: 3 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 110.3 KB
+الدور: المعمارية التقنية للامتدادات.
+الأهمية: يشمل Freemium technical entitlement enforcement وV7 Mobile وV8 Desktop technical.
+التأثير على المشروع: يربط الخطط والفريميوم بالتنفيذ التقني والقيود الفعلية.
+طريقة الاستخدام: مرجع EntitlementService/UsageMeterService والامتدادات التقنية.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_Freemium_Technical_Entitlement_Enforcement_AR.docx  [37.6 KB]
+- V7_02_Mobile_Technical_AR.docx  [36.3 KB]
+- V8_02_Desktop_Technical_AR.docx  [36.4 KB]
+22 - 21_EXTENSION_DATABASE_API_ADDENDUM
+PATH: KBR_v1.6.6/21_EXTENSION_DATABASE_API_ADDENDUM/
+عدد الملفات: 2 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 73.2 KB
+الدور: إضافات الداتابيز والـ API للامتدادات.
+الأهمية: يغطي DB/API للموبايل والديسكتوب.
+التأثير على المشروع: يمنع تصميم APIs مستقبلية بشكل منفصل عن معمارية البيانات.
+طريقة الاستخدام: مرجع لاحق عند تنفيذ V7/V8.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- V7_03_Mobile_DB_API_AR.docx  [36.6 KB]
+- V8_03_Desktop_DB_API_AR.docx  [36.6 KB]
+23 - 22_EXTENSION_CODEX_PROMPTS
+PATH: KBR_v1.6.6/22_EXTENSION_CODEX_PROMPTS/
+عدد الملفات: 5 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 151.5 KB
+الدور: برومبتات Codex للامتدادات والتحديثات.
+الأهمية: يفصل برومبتات التحديثات والفريميوم والموبايل والديسكتوب عن V1-V6.
+التأثير على المشروع: يمنع خلط extension work داخل core prompts.
+طريقة الاستخدام: يستخدم فقط عندما يتم فتح extension scope رسميا.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_Extension_Update_Codex_Prompt_Pack_AR.docx  [37.6 KB]
+- 01_Freemium_Plans_Entitlements_Codex_Prompt_Pack_AR.docx  [38.7 KB]
+- README_CODEX_PROMPTS_EXTENSIONS.md  [178 B]
+- V7_04_Mobile_Codex_Prompts_AR.docx  [37.5 KB]
+- V8_04_Desktop_Codex_Prompts_AR.docx  [37.5 KB]
+24 - 23_EXTENSION_ACCEPTANCE_CHECKLISTS
+PATH: KBR_v1.6.6/23_EXTENSION_ACCEPTANCE_CHECKLISTS/
+عدد الملفات: 3 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 109.4 KB
+الدور: قوائم قبول الامتدادات.
+الأهمية: يعطي checklists للفريميوم والموبايل والديسكتوب.
+التأثير على المشروع: يمنع اعتبار الامتداد جاهزا قبل اختباراته وقبوله.
+طريقة الاستخدام: مرجع release gate للامتدادات.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_Freemium_Plans_Entitlements_Acceptance_AR.docx  [36.9 KB]
+- V7_05_Mobile_Acceptance_AR.docx  [36.2 KB]
+- V8_05_Desktop_Acceptance_AR.docx  [36.3 KB]
+25 - 24_kabeeri_task_tracking
+PATH: KBR_v1.6.6/24_kabeeri_task_tracking/
+عدد الملفات: 20 | عدد المجلدات الفرعية: 5 | الحجم غير المضغوط: 299.5 KB
+الدور: نظام تتبع التاسكات الآلي المضاف في v1.6.6.
+الأهمية: يحتوي README، قواعد Codex، سكريبت kbr-task.php، ملفات JSON للتاسكات، logs، reports، وVS Code tasks.
+التأثير على المشروع: يربط الوثائق بالتنفيذ اليومي ويمنع ضياع حالة كل Task.
+طريقة الاستخدام: استخدمه مع V1 prompt pack لتشغيل list/next/start/done/verify/report.
+المجلدات الفرعية
+- logs/
+- reports/
+- scripts/
+- tasks/
+- vscode/
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- 00_Task_Tracking_START_HERE_AR.docx  [36.3 KB]
+- 01_Task_Tracking_System_Architecture_AR.docx  [36.2 KB]
+- 02_VS_Code_Commands_Table_AR.docx  [36.6 KB]
+- 03_Codex_Auto_Update_Rules_AR.docx  [36.2 KB]
+- README_TASK_TRACKING.md  [1009 B]
+- TASK_TRACKER_QUICK_PROMPT.md  [632 B]
+- logs/.gitkeep  [0 B]
+- reports/.gitkeep  [0 B]
+- scripts/kbr-task.php  [5.7 KB]
+- tasks/ext_update.tasks.json  [3.4 KB]
+- tasks/freemium.tasks.json  [5.2 KB]
+- tasks/v1.tasks.json  [18.2 KB]
+- tasks/v2.tasks.json  [22.1 KB]
+- tasks/v3.tasks.json  [21.8 KB]
+- tasks/v4.tasks.json  [23.1 KB]
+- tasks/v5.tasks.json  [20.5 KB]
+- tasks/v6.tasks.json  [23.0 KB]
+- tasks/v7.tasks.json  [4.5 KB]
+- tasks/v8.tasks.json  [4.5 KB]
+- vscode/tasks.example.json  [584 B]
+26 - 99_ARCHIVE_SUPERSEDED
+PATH: KBR_v1.6.6/99_ARCHIVE_SUPERSEDED/
+عدد الملفات: 3 | عدد المجلدات الفرعية: 0 | الحجم غير المضغوط: 78.6 KB
+الدور: أرشيف الملفات القديمة المستبدلة.
+الأهمية: يحفظ النسخ السابقة لأغراض تاريخية فقط.
+التأثير على المشروع: يمنع الرجوع لملفات قديمة في التنفيذ الحالي مع الاحتفاظ بالأثر التاريخي.
+طريقة الاستخدام: لا يستخدم كمصدر تنفيذ إلا عند مراجعة تاريخية واعية.
+قائمة الملفات كما هي داخل هذا الفولدر
+القائمة التالية مأخوذة من الحزمة الأصلية وتحافظ على أسماء الملفات والمسارات الفرعية كما هي:
+- Kabeeri_Database_Laravel_Migration_Roadmap_AR_SUPERSEDED.docx  [25.4 KB]
+- Kabeeri_Database_Master_ERD_Module_Blueprint_AR_SUPERSEDED.docx  [24.7 KB]
+- Kabeeri_Database_V1_Exact_Migration_Pack_AR_SUPERSEDED.docx  [28.5 KB]
+خريطة الترابط المختصرة بين الفولدرات
+00_SYSTEM_INDEX
+يحدد النسخة والخريطة والبداية.
+01_STRATEGY_AND_BUSINESS
+يحدد لماذا المنتج موجود وكيف يربح.
+02_FOUNDATION_ARCHITECTURE
+يحول الرؤية إلى معمارية قابلة للتوسع.
+03_RELEASE_SPECS
+يقسم الرؤية إلى إصدارات واضحة.
+04_DATABASE_ARCHITECTURE
+يحول المعمارية إلى بيانات وجداول وعلاقات.
+05_EXECUTION_LARAVEL
+يحول الداتابيز والمعمارية إلى تنفيذ Laravel.
+09_ENGINEERING_STANDARDS
+يحدد جودة التنفيذ والصلاحيات والـ flags.
+15_VERSION_CODING_PLANS
+يحول الإصدارات إلى خطط Sprint.
+16_CODE_PROPMPTS_TO_CREATE_BY_CODEX
+يحول الخطة إلى prompts قابلة للتنفيذ.
+24_kabeeri_task_tracking
+يتابع حالة كل task أثناء التنفيذ.
+17-23_EXTENSION_*
+يحكم الإضافات المستقبلية بعد تجميد النطاق.
+99_ARCHIVE_SUPERSEDED
+يحفظ الملفات القديمة دون استخدامها كمصدر تنفيذ.
+القرار النهائي لمكان الملف
+المكان النهائي المقترح:
+KBR_v1.6.6/00_SYSTEM_INDEX/06_Project_Folder_Full_Map_v1.6.6_AR.docx
+السبب: هذا الملف عبارة عن فهرس وMap للمشروع بالكامل، لذلك مكانه الطبيعي داخل 00_SYSTEM_INDEX وليس داخل فولدر التنفيذ أو البرومبتات أو التاسكات.
+KABEERI v1.6.6 - Project Folder Full Map

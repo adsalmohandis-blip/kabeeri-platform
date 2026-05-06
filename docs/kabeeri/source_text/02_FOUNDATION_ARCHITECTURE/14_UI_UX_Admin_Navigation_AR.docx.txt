@@ -1,0 +1,523 @@
+KABEERI — ملحق 14: معمارية تجربة المستخدم ولوحة التحكم
+UI/UX & Admin Navigation Architecture
+هذا الملحق يحدد شكل تجربة المستخدم داخل Kabeeri، وتقسيم لوحات التحكم، والقوائم، والـ dashboards، ومسارات التنقل بين أجزاء المنصة.
+الهدف:
+جعل Kabeeri منصة ضخمة لكنها سهلة الاستخدام، بحيث لا يشعر المستخدم أنه داخل نظام معقد يجمع CMS وERP وMarketplace وRabet وAI دفعة واحدة.
+1. لماذا UI/UX Architecture مهمة؟
+Kabeeri ليست CMS فقط.
+Kabeeri تحتوي على:
+CMSCommerceERPRabet Company OSKabeeri MallTalent MarketplaceTeamsAI Co-builderMarketplace داخليBillingLegal VerificationDeveloper Platform
+لو كل شيء ظهر في قائمة واحدة، ستصبح المنصة مرعبة ومربكة.
+لذلك يجب تقسيم التجربة حسب:
+من المستخدم؟ما السياق الحالي؟هل يعمل على موقع؟ شركة؟ متجر؟ Marketplace؟ منصة؟ما الموديولات المفعلة؟ما صلاحياته؟
+2. القاعدة الرئيسية للتجربة
+لا نعرض للمستخدم إلا ما يحتاجه الآن.
+Context-first InterfacePermission-aware NavigationProgressive DisclosureRole-based Dashboards
+يعني:
+صاحب موقع يرى أدوات الموقع أولًا.
+صاحب شركة يرى الشركة والفريق والمهام.
+البائع يرى المنتجات والطلبات.
+المحاسب يرى الفواتير والتقارير.
+مكتب المحاماة يرى طلبات التوثيق فقط.
+المطور يرى الحزم والـ SDK.
+Platform Admin يرى إدارة المنصة.
+3. المساحات الأساسية داخل Kabeeri
+Kabeeri يجب أن تقسم إلى Spaces واضحة:
+1. Personal Space2. Organization Workspace3. Site Admin4. Company Admin / Rabet OS5. Commerce Admin6. ERP Admin7. Kabeeri Mall Console8. Talent Console9. Kabeeri Teams10. Developer Console11. Billing Console12. Platform Admin
+4. Personal Space
+4.1 الهدف
+مساحة المستخدم الشخصية.
+4.2 تحتوي على
+My Profile.
+Professional Profile.
+My Organizations.
+My Companies.
+My Tasks.
+My Messages.
+My Notifications.
+My Job Offers.
+Privacy Settings.
+Security Settings.
+4.3 تظهر لمن؟
+كل مستخدم مسجل.
+5. Organization Workspace
+5.1 الهدف
+المساحة الإدارية الرئيسية للـ Organization.
+5.2 تحتوي على
+Overview.
+Sites.
+Companies.
+Members.
+Roles & Permissions.
+Modules.
+Settings.
+Billing.
+Activity Log.
+Feature Flags حسب الصلاحية.
+5.3 Navigation مقترح
+OverviewSitesCompaniesMembersRoles & PermissionsModulesBillingActivity LogSettings
+5.4 تظهر لمن؟
+Organization Owner.
+Organization Admin.
+Users لديهم organization.view.
+6. Site Admin
+6.1 الهدف
+إدارة الموقع أو المتجر من ناحية المحتوى والواجهة.
+6.2 تحتوي على
+Dashboard.
+Pages.
+Posts.
+Content Types.
+Media Library.
+Menus.
+Forms.
+SEO.
+Redirects.
+Themes.
+Plugins.
+Site Settings.
+6.3 Navigation V1
+DashboardPagesPostsMediaCategories & TagsSEOThemesPluginsSettings
+6.4 Navigation لاحقًا
+DashboardContent  Pages  Posts  Content Types  TaxonomiesMediaFormsSEORedirectsDesign  Themes  Menus  Visual BuilderPluginsAnalyticsSettings
+6.5 يظهر لمن؟
+Site Admin.
+Editor.
+Author حسب الصلاحيات.
+SEO Manager.
+Media Manager.
+7. Company Admin / Rabet OS
+7.1 الهدف
+إدارة الشركة ككيان تشغيلي موثق.
+7.2 يحتوي على
+Company Dashboard.
+Business Profile.
+Verification.
+Team.
+Departments.
+Tasks.
+Projects.
+Services.
+Trust Record.
+Reviews.
+Documents.
+Settings.
+7.3 Navigation مقترح
+Company DashboardBusiness ProfileVerificationTeamDepartmentsTasksProjectsServicesDocumentsTrust & ReviewsSettings
+7.4 يظهر لمن؟
+Company Owner.
+Company Admin.
+Managers حسب الصلاحيات.
+Team members حسب صلاحياتهم.
+8. Commerce Admin
+8.1 الهدف
+إدارة المتجر والطلبات والمنتجات.
+8.2 يحتوي على
+Store Dashboard.
+Products.
+Categories.
+Inventory basic.
+Orders.
+Customers.
+Coupons.
+Payments.
+Shipping.
+Taxes.
+Store Settings.
+8.3 Navigation مقترح
+Store DashboardProductsOrdersCustomersCouponsInventoryPaymentsShippingTaxesSettings
+8.4 V1؟
+لا يدخل Commerce Admin كامل في V1.
+يدخل لاحقًا من V2.
+9. ERP Admin
+9.1 الهدف
+إدارة العمليات المؤسسية.
+9.2 لا يظهر كله دفعة واحدة
+ERP ضخم جدًا، لذلك يجب تقسيمه إلى Suites.
+9.3 Navigation حسب Suites
+CRMSalesInventoryPurchasingFinanceHRProjectsHelpdeskReportsSettings
+9.4 ERP Navigation تفصيلي لاحقًا
+CRM
+LeadsContactsCompaniesDealsPipelinesActivities
+Sales
+QuotationsSales OrdersInvoicesCustomersPrice Lists
+Inventory
+ItemsWarehousesStock MovementsAdjustmentsLow Stock
+Finance
+Chart of AccountsJournal EntriesAccounts ReceivableAccounts PayablePaymentsReports
+HR
+EmployeesAttendanceLeavePayrollEvaluations
+9.5 V1؟
+لا يدخل ERP Admin في V1.
+نجهز فقط Company/Team/Tasks foundation.
+10. Kabeeri Mall Console
+10.1 الهدف
+إدارة ظهور البزنس والخدمات والمنتجات والمواهب داخل كبيري مول.
+10.2 يحتوي على
+Mall Dashboard.
+Business Listing.
+Service Listings.
+Product Listings.
+Talent Visibility.
+Reviews.
+Leads.
+Messages.
+Featured Listings.
+Analytics.
+10.3 Navigation مقترح
+Mall DashboardBusiness ListingServicesProductsLeads & RequestsReviewsMessagesAnalyticsSettings
+10.4 V1؟
+لا يدخل كاملًا.
+V1 يحتوي فقط على Business Profile draft.
+11. Talent Console
+11.1 الهدف
+إدارة الملف المهني، الظهور، عروض الوظائف، وسجل العمل.
+11.2 يحتوي على
+Professional Profile.
+Skills.
+Portfolio.
+Work History.
+Availability.
+Job Offers.
+Evaluations.
+Privacy Settings.
+11.3 Navigation مقترح
+ProfileSkillsPortfolioWork HistoryJob OffersEvaluationsPrivacy
+11.4 V1؟
+لا يدخل كاملًا.
+يمكن تجهيز Professional Profile basic لاحقًا أو كـ should-have.
+12. Kabeeri Teams
+12.1 الهدف
+التعاون الداخلي المرتبط بالعمل.
+12.2 يحتوي على
+Channels.
+Direct Messages.
+Threads.
+Mentions.
+Files.
+Tasks from messages.
+Approvals from chat.
+System alert channels.
+12.3 Navigation مقترح
+ChannelsDirect MessagesThreadsFilesTasksAlerts
+12.4 V1؟
+لا يدخل Teams كاملًا.
+V1 يحتوي notifications وactivity log وtask comments لو أمكن.
+13. Developer Console
+13.1 الهدف
+إدارة الحزم، البلجنز، الثيمات، الـ connectors، والـ AI Skills.
+13.2 يحتوي على
+Developer Profile.
+Packages.
+Submissions.
+Reviews.
+Documentation.
+API Keys.
+Webhooks.
+Analytics.
+Payouts لاحقًا.
+13.3 Navigation مقترح
+OverviewPackagesSubmissionsAPI KeysWebhooksDocsAnalyticsPayoutsSettings
+13.4 V1؟
+لا يدخل كاملًا.
+V1 يحتاج package foundation فقط.
+14. Billing Console
+14.1 الهدف
+إدارة الاشتراكات والفواتير والدفع.
+14.2 يحتوي على
+Current Plan.
+Usage.
+Invoices.
+Payment Methods.
+Add-ons.
+License Keys.
+Billing Settings.
+14.3 Navigation مقترح
+PlanUsageInvoicesPayment MethodsAdd-onsLicense KeysSettings
+14.4 V1؟
+لا يدخل كاملًا.
+V1 يحتاج billing foundation فقط.
+15. Platform Admin
+15.1 الهدف
+إدارة منصة Kabeeri نفسها.
+15.2 يحتوي على
+Users.
+Organizations.
+Sites.
+Companies.
+Verifications.
+Legal Partners.
+Kabeeri Mall moderation.
+Marketplace packages.
+Billing.
+Security.
+System Health.
+Settings.
+15.3 Navigation مقترح
+DashboardUsersOrganizationsSitesCompaniesVerificationsLegal PartnersMall ModerationPackagesBillingSecuritySystem HealthSettings
+15.4 يظهر لمن؟
+Platform admins فقط.
+16. Global Navigation Model
+16.1 Top Bar
+يحتوي على:
+Organization switcher.
+Site/Company switcher.
+Search.
+Notifications.
+AI Assistant button.
+User menu.
+16.2 Sidebar
+تتغير حسب السياق الحالي:
+Site context → Site Admin menuCompany context → Company/Rabet menuStore context → Commerce menuPlatform context → Platform Admin menu
+16.3 Context Switcher
+مهم جدًا.
+المستخدم قد يكون في أكثر من:
+Organization.
+Company.
+Site.
+لذلك يحتاج switcher واضح.
+مثال:
+Current Organization: ADMITCurrent Site: kabeeri.comCurrent Company: ADMIT LLC
+17. Dashboard Strategy
+لا يوجد dashboard واحد لكل شيء.
+17.1 Dashboards حسب السياق
+Personal DashboardOrganization DashboardSite DashboardCompany DashboardStore DashboardERP DashboardMall DashboardPlatform Dashboard
+17.2 Personal Dashboard
+يعرض:
+My tasks.
+Notifications.
+Messages.
+Job offers.
+Recent activity.
+17.3 Site Dashboard
+يعرض:
+Page count.
+Posts.
+Recent content.
+SEO status.
+Media usage.
+Traffic لاحقًا.
+17.4 Company Dashboard
+يعرض:
+Team summary.
+Tasks status.
+Verification status.
+Business profile status.
+Service requests.
+Trust score لاحقًا.
+17.5 Store Dashboard
+يعرض:
+Orders.
+Revenue.
+Products.
+Low stock.
+Customers.
+17.6 Platform Dashboard
+يعرض:
+Users.
+Organizations.
+Active sites.
+Verifications pending.
+Billing.
+System health.
+18. AI Assistant UI
+18.1 مكان AI
+AI يجب أن يكون حاضرًا لكن لا يزعج.
+اقتراح:
+زر ثابت في top bar.
+Command palette.
+Context-aware panel.
+18.2 AI Panel
+يظهر حسب السياق:
+في Site Admin:
+Build pageImprove SEOCreate formGenerate content
+في Company Admin:
+Create tasksBuild service catalogPrepare verification checklistAnalyze team workload
+في Commerce:
+Write product descriptionsCreate discountAnalyze orders
+18.3 AI لا يطبق مباشرة
+أي تغيير يظهر كـ:
+PlanPreviewApproveApply
+19. Search UX
+19.1 Global Search
+يبحث في:
+Pages.
+Posts.
+Media.
+Sites.
+Companies.
+Tasks.
+Orders.
+Customers.
+Documents.
+حسب الصلاحيات.
+19.2 Contextual Search
+داخل كل مساحة:
+Site search.
+Company search.
+Store search.
+Mall search.
+ERP search.
+20. Notifications UX
+20.1 Notification Center
+يحتوي على:
+All.
+Mentions.
+Tasks.
+Approvals.
+Verification.
+Billing.
+Security.
+20.2 Priorities
+lownormalhighcritical
+20.3 Critical notifications
+تظهر بشكل أوضح، مثل:
+Payment failed.
+Security alert.
+Verification rejected.
+Backup failed.
+21. Onboarding UX
+21.1 أول سؤال بعد التسجيل
+ماذا تريد أن تفعل؟
+الاختيارات:
+بناء موقعنقل موقع WordPressإنشاء متجرتوثيق شركةإدارة فريقإنشاء ملف مهنياستكشاف Kabeeri Mall
+21.2 V1 Onboarding
+V1 يركز على:
+Create OrganizationCreate SiteChoose ThemeCreate First PageCreate Business Profile Draft optionalInvite Team Member optional
+22. Empty States
+أي شاشة فارغة يجب أن ترشد المستخدم.
+مثال Pages فارغة:
+لا توجد صفحات بعد.ابدأ بإنشاء الصفحة الرئيسية أو استخدم AI لبناء صفحة.
+مثال Business Profile:
+لم تنشئ بروفايل بزنس بعد.أنشئ بروفايلك الآن لتكون جاهزًا للظهور في Kabeeri Mall لاحقًا.
+23. Progressive Disclosure
+لا نعرض كل الميزات دفعة واحدة.
+مثال:
+لو Commerce غير مفعل، لا تظهر قوائم المتجر.
+لو Rabet غير مفعل، يظهر CTA:
+حوّل موقعك إلى شركة موثقة عبر Rabet
+لو AI غير مفعل، يظهر:
+فعّل AI Co-builder لبناء أسرع
+24. Permission-aware UI
+القوائم والأزرار يجب أن تحترم الصلاحيات.
+لكن لا نعتمد على UI فقط.
+UI hides unauthorized actionsBackend enforces permissions
+25. Status Badges
+Kabeeri يحتاج badges واضحة.
+أمثلة:
+DraftPublishedPending ReviewVerifiedUnverifiedSuspendedPayment FailedNeeds Attention
+26. Design System Foundation
+26.1 يجب بناء Design System بسيط من البداية
+يشمل:
+Buttons.
+Inputs.
+Cards.
+Tables.
+Badges.
+Modals.
+Alerts.
+Dropdowns.
+Tabs.
+Sidebar.
+Topbar.
+Empty states.
+Breadcrumbs.
+26.2 RTL من البداية
+Kabeeri يستهدف السوق العربي، لذلك:
+RTL support.
+Arabic labels.
+English support.
+اتجاه مرن.
+27. Admin UI Technology
+27.1 التوصية للـ Solo Builder
+Laravel Blade + Livewire أو Filament كبداية
+الأسباب:
+أسرع في البناء.
+مناسب لـ PHP/Laravel.
+يقلل تعقيد React في البداية.
+يساعد على إطلاق V1 بسرعة.
+27.2 لاحقًا
+يمكن استخدام:
+React/TypeScriptInertiaDedicated frontend app
+للموديولات المتقدمة أو Cloud dashboard.
+28. V1 UI Scope
+Must-have في V1
+Login/RegisterSetup WizardOrganization DashboardSite DashboardPages CRUDPosts CRUDMedia Library basicCategories/TagsSEO fieldsTheme selectionPlugin list basicSettingsUsers/Members basicRoles basicActivity LogBusiness Profile draftVerification document upload basicSystem Status page
+Should-have في V1
+Notifications center basicFeature flags UI basicBackup buttonImport/export jobs list
+Not required in V1
+Full ERP UIFull Commerce UIFull Kabeeri Mall UIFull Talent UIFull Teams UIFull AI panelFull Visual BuilderAdvanced analytics
+29. V1 Navigation مقترح
+29.1 Main Admin Sidebar V1
+DashboardContent  Pages  Posts  Categories  TagsMediaAppearance  ThemesPluginsBusiness  Business Profile  VerificationTeam  Members  RolesSystem  Activity Log  Settings  System Status
+29.2 لماذا هذا التقسيم؟
+لأنه يحافظ على V1 كـ CMS، لكنه يجهز Rabet/Company OS مبكرًا.
+30. UI Roadmap عبر الإصدارات
+V1
+CMS Admin.
+Organization/Site admin.
+Business profile draft.
+Activity log.
+Basic team/roles.
+V2
+WordPress import UI.
+Commerce foundation UI.
+Forms UI.
+Business directory basic.
+Service listing basic.
+V3
+Rabet Digital Office.
+Tasks full UI.
+CRM Lite UI.
+Invoicing/Inventory basic UI.
+Employee profile UI.
+V4
+Cloud dashboard.
+Billing UI.
+Internal Marketplace UI.
+Kabeeri Mall seller console.
+Talent Marketplace UI.
+Legal Partner Portal.
+AI Co-builder panel.
+Teams V1.
+V5
+ERP Pro UI.
+Integration Hub UI.
+Advanced approvals UI.
+Contracts UI.
+Advanced workforce UI.
+V6
+Enterprise dashboards.
+Visual Builder complete.
+Full AI Co-builder.
+Advanced BI.
+Complete Kabeeri Mall.
+Full Developer Console.
+31. UX Metrics
+يجب قياس:
+Time to create first siteTime to publish first pageTime to create business profileTime to invite team memberTime to upload mediaTime to complete onboardingUser drop-off during setupAdmin page load timeSearch success rate
+32. أخطاء ممنوعة
+32.1 لا تعرض كل الموديولات لكل المستخدمين
+هذا سيجعل النظام مرعبًا.
+32.2 لا تخلط Site Admin مع Company Admin
+الموقع شيء، والشركة شيء آخر.
+32.3 لا تجعل ERP يظهر في V1
+هذا سيشتت المنتج.
+32.4 لا تعتمد على UI لإخفاء الصلاحيات فقط
+Backend يجب أن يحمي دائمًا.
+32.5 لا تهمل RTL
+السوق العربي أساسي.
+32.6 لا تبدأ بـ Visual Builder ضخم
+ابدأ بـ Themes وPages، ثم توسع.
+33. الخلاصة التنفيذية
+Kabeeri يجب أن يكون قويًا من الداخل وبسيطًا من الخارج.
+القاعدة النهائية:
+Show the right toolsfor the right userin the right contextat the right time
+أو بالعربي:
+اعرض الأداة المناسبة للمستخدم المناسب في السياق المناسب، ولا تعرض كل شيء دفعة واحدة.
+34. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق اختياري إضافي:
+ملحق 15 — Migration Strategy
+إذا أردنا تثبيت استراتيجية الهجرة من WordPress/WooCommerce/Shopify/Odoo قبل V1.

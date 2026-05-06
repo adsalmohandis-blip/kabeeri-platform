@@ -1,0 +1,29 @@
+جدول أوامر VS Code لنظام KABEERI Task Tracking
+استخدم هذه الأوامر من Terminal داخل مشروع kabeeri-platform
+الغرض
+الأمر
+ملاحظات
+عرض تاسكات V1
+php 24_kabeeri_task_tracking/scripts/kbr-task.php list V1
+يعرض كل تاسكات V1 وحالتها
+معرفة التاسك التالي
+php 24_kabeeri_task_tracking/scripts/kbr-task.php next V1
+يعرض أول تاسك pending
+بدء تاسك
+php 24_kabeeri_task_tracking/scripts/kbr-task.php start V1 T07
+يحول الحالة إلى in_progress
+إنهاء Codex للتاسك
+php 24_kabeeri_task_tracking/scripts/kbr-task.php done V1 T07 --prompt=07 --tests="php artisan test" --commit=pending --notes="summary"
+يحول الحالة إلى codex_done
+اعتمادك النهائي
+php 24_kabeeri_task_tracking/scripts/kbr-task.php verify V1 T07 --notes="reviewed"
+يحول الحالة إلى verified
+تعطيل تاسك
+php 24_kabeeri_task_tracking/scripts/kbr-task.php block V1 T07 --notes="reason"
+يحول الحالة إلى blocked
+تقرير مختصر
+php 24_kabeeri_task_tracking/scripts/kbr-task.php report V1
+يعرض عدد التاسكات حسب الحالة
+عرض حالة تاسك
+php 24_kabeeri_task_tracking/scripts/kbr-task.php status V1 T07
+يعرض تفاصيل التاسك كـ JSON

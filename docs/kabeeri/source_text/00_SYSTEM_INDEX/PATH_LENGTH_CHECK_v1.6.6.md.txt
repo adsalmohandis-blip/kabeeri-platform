@@ -1,0 +1,6 @@
+# Path Length Check v1.6.6
+
+Max relative path length: 116
+
+Longest path:
+`04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/35_Database_Enterprise_Architecture_App_Portfolio_AR.docx`

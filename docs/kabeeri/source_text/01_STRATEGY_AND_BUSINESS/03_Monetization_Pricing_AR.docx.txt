@@ -1,0 +1,545 @@
+KABEERI — ملحق 10: نموذج الإيرادات والتسعير
+Monetization & Pricing Architecture
+هذا الملحق يحدد كيف ستحقق Kabeeri الإيرادات من كل طبقات المنصة، وكيف يتم تسعير المنتجات والخطط والاشتراكات والعمولات والموديولات والتوثيق والـ Marketplaces.
+الهدف:
+تحويل Kabeeri من منصة تقنية ضخمة إلى Business Model واضح وقابل للبيع والنمو.
+1. القاعدة الرئيسية
+Kabeeri ليست منتجًا واحدًا بسعر واحد.
+Kabeeri منصة متعددة المنتجات:
+CMS+ Commerce+ ERP Modules+ Rabet Company OS+ Kabeeri Cloud+ Self-hosted Pro+ Kabeeri Marketplace+ Kabeeri Mall+ Legal Verification+ Talent Marketplace+ AI Co-builder+ Enterprise
+لذلك نموذج الإيرادات يجب أن يكون متعدد الطبقات.
+2. مصادر الإيرادات الرئيسية
+1. Kabeeri Cloud subscriptions2. Kabeeri Self-hosted Pro licenses3. ERP module subscriptions4. Commerce module subscriptions5. Rabet Company OS subscriptions6. Legal verification fees7. Kabeeri Mall featured listings8. Kabeeri Mall commissions9. Lead generation fees10. Talent Marketplace hiring fees11. Internal Marketplace revenue share12. AI usage credits13. Agency plans14. Enterprise contracts15. Implementation / Support / Training services
+3. المنتجات التجارية الأساسية
+3.1 Kabeeri Core / Community
+نسخة أساسية مجانية أو منخفضة التكلفة.
+الهدف
+جذب جمهور WordPress.
+زيادة الانتشار.
+بناء مجتمع مطورين.
+جعل الناس تجرب Kabeeri بدون مخاطرة.
+تشمل
+CMS basic.
+Pages.
+Posts.
+Media.
+Themes basic.
+SEO basic.
+Self-hosted install.
+لا تشمل
+Pro modules.
+ERP advanced.
+Cloud management.
+Marketplace premium.
+AI advanced.
+Rabet verified features.
+3.2 Kabeeri Pro
+ترخيص مدفوع للنسخة self-hosted.
+يشمل
+Safe updates.
+Backup Pro.
+Advanced SEO.
+Forms Pro.
+Security Center basic.
+Commerce Lite.
+Priority updates.
+Pro themes.
+مناسب لـ
+مواقع شركات.
+وكالات.
+مدونات احترافية.
+متاجر صغيرة self-hosted.
+3.3 Kabeeri Cloud
+نسخة SaaS مستضافة ومدارة.
+يشمل
+Hosting.
+SSL.
+CDN.
+Backups.
+Updates.
+Monitoring.
+Staging حسب الخطة.
+Support.
+مناسب لـ
+شركات لا تريد إدارة الاستضافة.
+وكالات.
+متاجر.
+SMBs.
+3.4 Kabeeri Commerce
+مكون تجاري يمكن أن يكون ضمن خطة أو add-on.
+مستويات
+Commerce LiteCommerce ProCommerce AdvancedCommerce Enterprise
+يشمل حسب المستوى
+Products.
+Cart.
+Checkout.
+Orders.
+Coupons.
+Payments.
+Shipping.
+Abandoned carts.
+Multi-currency.
+B2B catalogs.
+3.5 Kabeeri ERP Suite
+مجموعات موديولات مدفوعة.
+Suites
+Finance Suite.
+CRM Suite.
+Sales Suite.
+Inventory Suite.
+Purchasing Suite.
+HR Suite.
+Projects Suite.
+Helpdesk Suite.
+Manufacturing Suite.
+BI Suite.
+التسعير
+يمكن أن يكون:
+Per module.
+Per suite.
+Per user.
+Per company.
+Per usage.
+Enterprise contract.
+3.6 Rabet Company OS
+اشتراك لتحويل الموقع أو البزنس إلى شركة موثقة ومكتب رقمي.
+يشمل
+Company profile.
+Digital office.
+Team management.
+Task management.
+Trust record.
+Verification status.
+B2B visibility.
+Service exchange.
+مستويات
+Rabet BasicRabet VerifiedRabet Company OSRabet B2B ProRabet Enterprise
+3.7 Kabeeri Mall
+واجهة السوق العامة.
+مصادر الدخل
+Featured listing.
+Sponsored listing.
+Lead fees.
+Sales commission.
+Service booking commission.
+Seller subscription.
+Verified profile subscription.
+Ads.
+B2B marketplace subscription.
+3.8 Legal Verification
+خدمة توثيق عبر مكاتب محاماة معتمدة.
+مصادر الدخل
+رسوم توثيق أول مرة.
+رسوم تجديد سنوي.
+رسوم توثيق سريع.
+رسوم توثيق قطاعي regulated.
+نسبة من أتعاب مكتب المحاماة.
+اشتراك verified business.
+3.9 Talent Marketplace
+سوق المواهب والموظفين والمحترفين.
+مصادر الدخل
+Job posting fees.
+Hiring success fee.
+Premium professional profile.
+Verified professional badge.
+Recruitment tools.
+Talent search subscription.
+Company recruiting plan.
+3.10 Kabeeri Marketplace الداخلي
+سوق الإضافات والثيمات والموديولات.
+مصادر الدخل
+Revenue share من المبيعات.
+Developer subscription.
+Featured package placement.
+Certification fees.
+Paid review fast track.
+Enterprise private marketplace.
+3.11 AI Co-builder
+يمكن تسعيره كـ usage أو ضمن الخطط.
+مصادر الدخل
+AI credits.
+AI actions per month.
+AI advanced agents.
+AI workflow builder.
+AI ERP assistant.
+AI developer assistant.
+Enterprise private AI.
+4. نموذج الخطط المقترح
+4.1 Self-hosted Plans
+الخطة
+الجمهور
+تشمل
+Community
+أفراد ومطورون
+CMS basic
+Pro
+شركات صغيرة
+CMS Pro + SEO + Backup
+Business
+مواقع ومتاجر
+Pro + Commerce Lite + Forms Pro
+Agency
+وكالات
+Multiple sites + client tools
+Enterprise Self-hosted
+شركات كبيرة
+Enterprise features + support
+4.2 Cloud Plans
+الخطة
+الجمهور
+تشمل
+Cloud Starter
+موقع صغير
+CMS + hosting
+Cloud Business
+شركة
+CMS Pro + forms + backup
+Cloud Store
+متجر
+Commerce foundation
+Cloud Growth
+شركة نامية
+Commerce Pro + Rabet Basic
+Cloud Enterprise
+شركات كبيرة
+SLA + governance + integrations
+4.3 Rabet Plans
+الخطة
+تشمل
+Rabet Profile
+Public business profile
+Rabet Verified
+Legal verification + badge
+Rabet Office
+Team + tasks + digital office
+Rabet B2B
+RFQs + service marketplace + contracts
+Rabet Enterprise
+Multi-company + governance + compliance
+4.4 ERP Plans
+الخطة
+تشمل
+ERP Essentials
+CRM Lite + Sales + Invoicing + Inventory Basic
+ERP Finance
+Accounting + AP/AR + reports
+ERP Operations
+Inventory + Purchasing + WMS
+ERP People
+HR + Attendance + Payroll add-ons
+ERP Pro
+Finance + Sales + Inventory + HR + Projects
+ERP Enterprise
+Advanced governance + integrations
+4.5 Kabeeri Mall Plans
+الخطة
+الجمهور
+تشمل
+Free Listing
+أي بزنس
+ظهور أساسي
+Verified Listing
+بزنس موثق
+Badge + ranking أفضل
+Featured Business
+بزنس يريد ظهور أعلى
+Featured placement
+Seller Plan
+بائع منتجات
+product listings + dashboard
+Service Provider Plan
+مقدم خدمات
+service leads + RFQs
+B2B Pro
+شركات B2B
+RFQs + contracts + trust tools
+4.6 Talent Plans
+الخطة
+الجمهور
+تشمل
+Professional Free
+أفراد
+Profile basic
+Professional Pro
+محترفين
+Featured profile + analytics
+Company Hiring
+شركات
+Search + job offers
+Recruiter Plan
+توظيف
+Advanced search + pipelines
+Enterprise Talent
+شركات كبيرة
+Workforce analytics + integrations
+5. Add-ons
+بعض المزايا تكون Add-ons بدل خطط كاملة.
+أمثلة:
+Extra storageExtra AI creditsExtra team seatsExtra sitesAdvanced backupsStaging environmentsAdvanced securityAdditional ERP modulePayment gateway add-onLegal verification add-onPremium support
+6. Usage-based Pricing
+بعض الأشياء الأفضل تسعر حسب الاستخدام.
+6.1 أمثلة usage metrics
+Number of sitesNumber of users/seatsStorage usedBandwidthAI creditsOrders per monthProducts countBusiness listingsService requestsJob offersERP usersAPI callsWebhook eventsIntegration sync runs
+6.2 Soft limits وHard limits
+Soft Limit
+تنبيه عند تخطي حد معين.
+مثال:
+وصلت إلى 80% من AI credits.
+Hard Limit
+إيقاف feature حتى الترقية.
+مثال:
+لا يمكن إضافة موقع جديد قبل ترقية الخطة.
+7. Commission Model
+7.1 Kabeeri Mall Commissions
+يمكن فرض عمولة على:
+مبيعات المنتجات.
+حجوزات الخدمات.
+Leads المؤهلة.
+RFQs.
+عقود B2B.
+7.2 Internal Marketplace Commissions
+عمولة على:
+بيع plugins.
+بيع themes.
+بيع ERP modules.
+بيع AI Skills.
+subscriptions للحزم.
+8. Lead Generation Pricing
+في بعض الأسواق، البيع لا يتم عبر checkout، بل عبر lead.
+أمثلة:
+استشارة قانونية.
+تصميم موقع.
+مقاولات.
+عقارات.
+خدمات طبية.
+نماذج التسعير
+Pay per leadPay per qualified leadMonthly lead packageCommission after deal
+9. Verification Pricing
+9.1 مستويات التوثيق
+Basic VerificationLegal VerificationAdvanced VerificationRegulated Verification
+9.2 التسعير حسب الدولة
+التوثيق يجب أن يختلف حسب الدولة لأن تكلفة مكاتب المحاماة تختلف.
+أمثلة:
+Egypt Verification PackSaudi Verification PackUAE Verification Pack
+9.3 توزيع الإيراد
+Customer pays verification fee→ Kabeeri platform fee→ Legal partner fee→ taxes/processing fees
+10. Revenue Share مع الشركاء
+10.1 Legal Partners
+مكتب المحاماة يحصل على نسبة أو أتعاب ثابتة.
+10.2 Developers
+مطورو Kabeeri Marketplace يحصلون على نسبة من بيع packages.
+10.3 Agencies
+الوكالات قد تحصل على reseller margin.
+10.4 Service providers
+في Kabeeri Mall، المنصة تحصل على عمولة أو lead fee.
+11. Agency Business Model
+الوكالات مهمة جدًا لانتشار Kabeeri.
+11.1 Agency Plan
+يشمل:
+Client sites.
+White label.
+Bulk updates.
+Bulk backups.
+Client billing optional.
+Team seats.
+Maintenance reports.
+Priority support.
+11.2 Agency Revenue Options
+Monthly agency subscription.
+Per client site fee.
+Revenue share.
+White label license.
+Implementation partner program.
+12. Enterprise Business Model
+Enterprise لا يباع بنفس طريقة SMB.
+12.1 يشمل
+Custom contract.
+SLA.
+Dedicated support.
+Security review.
+SSO/SAML.
+Private cloud أو on-prem.
+Dedicated connectors.
+Data residency.
+Custom modules.
+Training.
+12.2 التسعير
+Annual contractImplementation feeSupport feeCustom module feeIntegration feePrivate deployment fee
+13. Implementation Services
+Kabeeri يمكن أن يبيع خدمات تنفيذ بجانب الاشتراكات.
+خدمات مقترحة
+WordPress migrationWooCommerce migrationShopify migrationERP setupRabet company setupLegal verification assistanceCustom theme developmentCustom module developmentIntegration setupTrainingSupport retainer
+14. Support Plans
+مستويات الدعم
+Community SupportStandard SupportPriority SupportAgency SupportEnterprise SupportDedicated Account Manager
+يمكن تسعيره حسب
+زمن الاستجابة.
+عدد التذاكر.
+قنوات التواصل.
+ساعات الدعم.
+onboarding sessions.
+15. Pricing Philosophy
+15.1 لا تجعل Kabeeri رخيصًا فقط
+القيمة ليست أنه أرخص من Shopify أو WordPress.
+القيمة:
+حرية + تحكم + تشغيل + Marketplace + ERP + AI + Trust
+15.2 ابدأ بأسعار بسيطة
+في البداية لا تعقد pricing.
+استخدم:
+Free / Pro / Business / Agency / Enterprise
+ثم أضف add-ons.
+15.3 لا تسعر ERP بسعر CMS
+ERP يقدم قيمة أكبر ويجب تسعيره بشكل منفصل.
+15.4 لا تجعل AI مجانيًا بالكامل
+AI له تكلفة مباشرة، يجب أن يرتبط بـ credits أو limits.
+16. Billing Data Model
+16.1 billing_accounts
+idorganization_id nullablecompany_id nullableuser_id nullablebilling_typelegal_namebilling_emailcountrycurrencytax_numberstatuscreated_atupdated_at
+16.2 plans
+idnameslugdescriptionplan_typepricecurrencybilling_cycletrial_daysfeatures jsonlimits jsonstatuscreated_atupdated_at
+16.3 subscriptions
+idbilling_account_idplan_idstatusstarted_attrial_ends_atcurrent_period_startcurrent_period_endcancelled_atrenewal_statusmetadata jsoncreated_atupdated_at
+16.4 subscription_items
+idsubscription_iditem_typeitem_idquantityunit_pricemetadata jsoncreated_atupdated_at
+16.5 invoices
+idbilling_account_idsubscription_id nullableinvoice_numberinvoice_typestatussubtotaltax_totaldiscount_totaltotalcurrencydue_datepaid_atmetadata jsoncreated_atupdated_at
+16.6 payments
+idinvoice_id nullablebilling_account_idpayment_providerprovider_referenceamountcurrencystatuspaid_atfailure_reasonmetadata jsoncreated_atupdated_at
+16.7 usage_records
+idorganization_id nullablecompany_id nullableuser_id nullableusage_typequantityunitmetadata jsonrecorded_atcreated_at
+16.8 commissions
+idsource_typesource_idseller_account_idplatform_amountseller_amounttotal_amountcurrencystatuscreated_atupdated_at
+17. Entitlements System
+لا يكفي وجود subscription. يجب معرفة ما الذي يحق للعميل استخدامه.
+17.1 Entitlement
+حق استخدام feature أو limit.
+أمثلة:
+enable_commercemax_sites = 5max_team_members = 20ai_credits = 10000enable_rabet_verifiedenable_erp_finance
+17.2 جداول مقترحة
+entitlements
+idkeydescriptionvalue_typecreated_atupdated_at
+account_entitlements
+idbilling_account_identitlement_keyvalue jsonsource_typesource_idexpires_at nullablecreated_atupdated_at
+18. Licensing for Self-hosted
+18.1 License Key
+Self-hosted يحتاج ترخيص.
+license_keys
+idbilling_account_idlicense_key_hashstatusallowed_domainsmax_sitesexpires_atlast_check_atmetadata jsoncreated_atupdated_at
+18.2 License Check
+Local installation→ calls license server→ validates domain/version/plan→ receives entitlements→ caches result
+18.3 Grace Period
+لو فشل الاتصال:
+allow grace periodthen disable pro updates/features gradually
+19. Taxes & Invoicing
+Kabeeri نفسها تحتاج فواتير لعملائها.
+يجب دعم:
+VAT/GST حسب الدولة لاحقًا.
+Tax number.
+Invoice numbering.
+Billing address.
+PDF invoice.
+Payment receipt.
+ملاحظة:
+Platform billing invoices منفصلة عن ERP customer invoices.
+20. Refunds & Cancellations
+قواعد مطلوبة
+Refund policy لكل منتج.
+Cancellation flow.
+Downgrade behavior.
+Data retention after cancellation.
+Grace period.
+Export data before deletion.
+21. Trials & Freemium
+21.1 Trial
+يمكن استخدام trials لـ:
+Cloud.
+Pro.
+ERP modules.
+AI credits.
+21.2 Freemium
+Community أو Free Listing يمكن أن يجذب المستخدمين.
+لكن يجب تحديد limits واضحة:
+1 sitelimited storagelimited AIno advanced commerceno ERP advancedno verification badge
+22. Marketplace Pricing Rules
+22.1 Kabeeri Marketplace الداخلي
+أنواع التسعير:
+FreeOne-time purchaseMonthly subscriptionAnnual subscriptionUsage-basedEnterprise quote
+22.2 Kabeeri Mall
+أنواع التسعير:
+Free listingPaid listingFeatured placementSponsored placementCommissionLead feeSubscription
+23. Financial Reporting للمنصة
+Kabeeri كمنصة تحتاج تقارير مالية داخلية:
+MRR.
+ARR.
+Churn.
+Trial conversion.
+ARPU.
+Revenue by product.
+Marketplace GMV.
+Commission revenue.
+Verification revenue.
+AI usage cost.
+Partner payouts.
+24. V1 Requirements من هذا الملحق
+Must-have في V1
+لا نحتاج Billing كامل، لكن نحتاج foundation:
+billing_accounts basicplans basicfeature flagsentitlements conceptsettings for plan limitslicense concept placeholder
+Should-have في V1
+subscriptions table draftusage_records table draftlicense_keys table draft
+Not required في V1
+Full payment integrationFull invoicingCommissionsRevenue shareMarketplace transactionsAI billingEnterprise contracts
+25. Roadmap عبر الإصدارات
+V1
+Billing foundation.
+Plan/feature flag concepts.
+Self-hosted license placeholder.
+V2
+Pro plan basic.
+Commerce add-on concept.
+Simple service request monetization optional.
+V3
+ERP module plans.
+Rabet basic plan.
+Verification fee model draft.
+V4
+Full subscriptions.
+Cloud billing.
+Legal verification payments.
+Featured listings.
+Marketplace package purchases basic.
+V5
+Commission engine.
+Partner payouts.
+AI usage billing.
+Connector subscriptions.
+Enterprise contract support.
+V6
+Full monetization platform.
+Multi-currency billing.
+Taxes by country.
+Marketplace revenue share.
+Advanced analytics.
+Enterprise billing.
+26. أخطاء ممنوعة
+26.1 لا تبدأ بتسعير معقد جدًا
+ابدأ بسيطًا ثم توسع.
+26.2 لا تخلط بين فاتورة Kabeeri وفاتورة العميل داخل ERP
+يجب التفريق بين:
+Platform billingBusiness invoicing
+26.3 لا تجعل كل شيء free
+خصوصًا AI وERP وCloud.
+26.4 لا تبني Cloud بدون Billing foundation
+Cloud يحتاج subscription وlimits وinvoices.
+26.5 لا تبني Marketplace commissions بدون Disputes وRefund rules
+العمولات تحتاج حوكمة.
+27. الخلاصة التنفيذية
+Kabeeri يجب أن تربح من عدة طبقات:
+Cloud subscriptionsSelf-hosted Pro licensesERP modulesRabet Company OSLegal verificationKabeeri Mall listings/commissionsTalent hiring toolsInternal Marketplace revenue shareAI creditsEnterprise contractsServices/support/training
+القاعدة النهائية:
+Kabeeri لا تبيع CMS فقط؛ Kabeeri تبيع منصة تشغيل ونمو وثقة للشركات.
+28. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق إضافي اختياري:
+ملحق 11 — Security & Compliance Architecture
+إذا أردنا تثبيت الأمن والامتثال قبل V1.

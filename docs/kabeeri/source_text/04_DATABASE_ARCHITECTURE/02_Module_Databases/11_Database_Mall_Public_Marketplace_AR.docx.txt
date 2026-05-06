@@ -1,0 +1,1544 @@
+KABEERI Database File 11 — Kabeeri Mall & Public Marketplace Database
+قاعدة بيانات Kabeeri Mall والسوق العام
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يصف تصميم قاعدة البيانات الخاصة بطبقة Kabeeri Mall، وهي السوق الخارجي العام الذي يظهر للجمهور ويعرض الشركات والخدمات والمنتجات والمواهب، مع طبقات ثقة وتوثيق ومراجعة وبلاغات وتقييمات وظهور مميز.
+هذا الملف لا يصف Kabeeri Marketplace الداخلي الخاص بالـ plugins/themes/modules. السوق الداخلي له ملف مستقل لاحقًا. هذا الملف يركز على Mall Kabeeri باعتباره شبكة اكتشاف عامة.
+1. تعريف Kabeeri Mall
+Kabeeri Mall هو السوق الخارجي العام داخل Kabeeri. يستخدمه الزوار والعملاء والشركات والمهنيون لاكتشاف businesses، services، products، talent، وRabet verified companies.
+الغرض منه ليس أن يكون مجرد directory، بل طبقة اكتشاف وثقة تربط الموقع والشركة والتوثيق والخدمات والمنتجات والمواهب بواجهة عامة قابلة للبحث والمراجعة والتواصل.
+Business Marketplace: ظهور الشركات والبروفايلات التجارية.
+Services Marketplace: عرض الخدمات واستقبال الطلبات أو RFQ.
+Products Marketplace: عرض منتجات عامة وربطها بمتجر Kabeeri أو رابط خارجي.
+Talent Marketplace: ظهور المهنيين حسب إعدادات الخصوصية.
+Trust Layer: توثيق Rabet، تقييمات، مراجعات، بلاغات، Moderation، وسجل ثقة.
+2. الهدف من قاعدة بيانات Mall
+إنشاء طبقة عامة قابلة للبحث لا تكشف بيانات العميل الخاصة.
+ربط Business Profile وService وProduct وProfessional Profile بواجهة عامة واحدة.
+دعم Mall Mirror بحيث لا يقرأ Mall مباشرة من قواعد بيانات Cloud أو Portable أو Dedicated.
+إدارة publication consent قبل نشر أي بيانات عامة.
+تفعيل moderation وreports قبل الإطلاق العام.
+دعم featured listings وsponsored placements لاحقًا بدون خلطها بالترتيب الطبيعي.
+إتاحة مسار lead/contact/request بدون إطلاق multi-vendor checkout مبكرًا.
+تحضير النظام مستقبلًا لـ V5 commissions وV6 multi-vendor commerce.
+3. ما يدخل وما لا يدخل
+3.1 يدخل في هذا الملف
+النطاق
+يدخل
+Public listings
+business/service/product/talent listing wrappers
+Mall Mirror
+نسخ عامة من بيانات البزنس والخدمات والمنتجات والمواهب
+Search & categories
+تصنيفات، فلاتر، search index، ranking signals
+Reviews
+تقييمات، ردود، بلاغات، moderation
+Moderation
+queue، cases، actions، suspension، appeal foundation
+Featured visibility
+featured listings/campaigns/placements
+Inquiries
+رسائل تواصل وطلبات عامة بدون كشف بيانات خاصة
+Consent
+موافقة النشر لكل نوع بيانات
+3.2 لا يدخل في هذا الملف
+الجزء
+مكانه الصحيح
+Orders / Checkout / Cart
+Kabeeri Commerce Database
+Internal package marketplace
+Kabeeri Marketplace / Packages Database
+Legal verification workflow
+Rabet & Verification Database
+CRM lead pipeline
+ERP Essentials / CRM Database
+Private invoices/accounting/payroll
+ERP / Finance / HR Databases
+Full recruiting workflow
+Talent Marketplace Database
+Full multi-vendor settlement
+V5/V6 Commission & Payout Database
+4. المبادئ الحاكمة
+Mall لا يقرأ مباشرة من قاعدة بيانات العميل؛ يستخدم Mall Mirror أو Mall Listing Index.
+أي نشر عام يحتاج publication consent واضح.
+أي تحديث من Portable أو Dedicated يدخل عبر Mall Sync API ثم moderation/trust checks.
+البيانات الخاصة لا تنتقل إلى Mall: orders private، invoices، accounting، payroll، internal messages، private contracts، supplier costs.
+Verified لا تعني أن كل بيانات الشركة صحيحة للأبد؛ يجب دعم verification_level وexpiry وtrust_status.
+Moderation يغلب Source. حتى لو أرسل المصدر تحديثًا، يستطيع moderator إخفاء أو تعليق العنصر.
+Featured/Sponsored يجب أن تكون طبقة منفصلة عن الثقة، ولا يجب أن تبدو كتوثيق.
+V4 يبدأ بـ contact/request actions وcatalog؛ لا يبدأ بـ full multi-vendor checkout.
+5. الاعتماديات
+5.1 يعتمد Mall على
+الطبقة
+سبب الاعتماد
+Core Kernel
+Organizations, Companies, Sites, Users, Permissions, Feature Flags, Activity Logs
+Rabet & Verification
+verified badge, verification level, trust records
+Commerce
+product source data وpublic product availability
+Talent
+professional profiles وprivacy controls
+Media & Files
+logos, images, public media URLs
+Events & Workflows
+indexing, moderation queue, review reports, notifications
+Cloud/Portable/Dedicated Integration
+Mall Sync Sources and mirror updates
+Billing
+featured listings, seller plans, sponsored placements لاحقًا
+6. Data Domains
+Publication & Consent Domain
+Mirror & Source Domain
+Listing Index Domain
+Categories & Classification Domain
+Reviews & Reputation Domain
+Moderation & Reports Domain
+Inquiries & Requests Domain
+Featured / Sponsored Visibility Domain
+Search / Ranking / Analytics Domain
+7. الجداول الأساسية
+mall_publication_consents
+mall_sync_sources
+mall_sync_events
+mall_sync_errors
+mall_mirror_businesses
+mall_mirror_services
+mall_mirror_products
+mall_mirror_talent
+mall_listings
+mall_listing_categories
+mall_listing_category_assignments
+mall_listing_media
+mall_listing_contacts
+mall_listing_stats
+mall_search_index
+mall_reviews
+mall_review_responses
+mall_review_votes
+mall_review_reports
+mall_reports
+mall_moderation_cases
+mall_moderation_actions
+mall_featured_campaigns
+mall_featured_listings
+mall_inquiries
+mall_saved_listings
+mall_ranking_signals
+8. mall_publication_consents
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف آمن للـ API والتصدير.
+organization_id
+fk nullable
+المنظمة المالكة للموافقة.
+company_id
+fk nullable
+الشركة المعنية.
+business_profile_id
+fk nullable
+البروفايل العام إن وجد.
+subject_type
+varchar(80)
+business_profile, service, product, talent, review, trust_badge.
+subject_id
+bigint nullable
+السجل الأصلي إن كان داخل Cloud.
+consent_type
+varchar(80)
+نوع النشر أو المشاركة.
+status
+active|revoked|expired|pending
+حالة الموافقة.
+granted_by
+fk users nullable
+من منح الموافقة.
+granted_at
+timestamp nullable
+وقت الموافقة.
+revoked_by
+fk users nullable
+من ألغى الموافقة.
+revoked_at
+timestamp nullable
+وقت الإلغاء.
+terms_version
+varchar nullable
+إصدار شروط النشر.
+metadata
+json nullable
+تفاصيل إضافية.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+9. mall_sync_sources
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف المصدر.
+organization_id
+fk nullable
+العميل المرتبط بالمصدر.
+company_id
+fk nullable
+الشركة المرتبطة بالمصدر.
+business_profile_id
+fk nullable
+بروفايل البزنس المرتبط.
+source_type
+kabeeri_cloud|frontend_anywhere|kabeeri_portable|kabeeri_dedicated|external_erp|manual
+نوع مصدر البيانات العامة.
+source_mode
+internal_event|api_push|api_pull|manual_update|csv_upload
+طريقة وصول البيانات.
+source_name
+varchar
+اسم المصدر للعرض الداخلي.
+external_base_url
+varchar nullable
+رابط المصدر الخارجي إن وجد.
+api_key_hash
+varchar nullable
+هاش مفتاح API للمصادر الخارجية.
+status
+active|paused|stale|disconnected|suspended|revoked
+حالة المصدر.
+last_sync_at
+timestamp nullable
+آخر مزامنة ناجحة.
+last_error_at
+timestamp nullable
+آخر خطأ.
+settings
+json nullable
+إعدادات المزامنة.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+10. mall_sync_events
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف الحدث.
+mall_sync_source_id
+fk
+مصدر البيانات.
+event_type
+created|updated|deleted|published|unpublished|bulk_sync|heartbeat
+نوع الحدث.
+entity_type
+business|service|product|talent|availability|media|review
+نوع الكيان العام.
+external_id
+varchar nullable
+معرف السجل في المصدر الخارجي.
+local_subject_type
+varchar nullable
+نوع السجل الأصلي داخل Kabeeri إن وجد.
+local_subject_id
+bigint nullable
+معرف السجل الأصلي داخل Kabeeri إن وجد.
+status
+pending|validated|processed|failed|ignored|needs_review
+حالة معالجة الحدث.
+payload_hash
+varchar nullable
+هاش لمنع التكرار.
+payload
+json nullable
+البيانات العامة المستقبلة.
+received_at / processed_at
+timestamps nullable
+مواعيد الاستقبال والمعالجة.
+errors
+json nullable
+أخطاء التحقق أو المعالجة.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+11. mall_sync_errors
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_sync_source_id
+fk nullable
+المصدر المرتبط.
+mall_sync_event_id
+fk nullable
+الحدث المرتبط.
+severity
+info|warning|error|critical
+درجة الخطورة.
+error_code
+varchar
+كود الخطأ.
+message
+text
+وصف الخطأ.
+payload
+json nullable
+بيانات مساعدة.
+resolved_by
+fk users nullable
+من حل المشكلة.
+resolved_at
+timestamp nullable
+وقت الحل.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+12. Mall Mirror Tables
+جداول الـ Mirror هي نسخة عامة مختارة من بيانات العميل. هذه الجداول ليست بديلًا عن قاعدة بيانات العميل وليست كل بياناته. هدفها حماية الخصوصية، دعم Portable/Dedicated، وتوفير مصدر موحد لـ Kabeeri Mall.
+12.1 mall_mirror_businesses
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف عام.
+organization_id
+fk nullable
+المنظمة الأصلية إن كانت معروفة.
+company_id
+fk nullable
+الشركة الأصلية إن كانت داخل Kabeeri.
+business_profile_id
+fk nullable
+Business Profile الأصلي.
+mall_sync_source_id
+fk nullable
+مصدر المزامنة.
+external_id
+varchar nullable
+معرف خارجي للمصادر Portable/Dedicated.
+name
+varchar
+اسم البزنس العام.
+slug
+varchar indexed
+رابط عام.
+description
+text nullable
+وصف عام.
+industry
+varchar nullable
+مجال العمل.
+category_id
+fk nullable
+التصنيف الأساسي.
+country_id
+fk nullable
+الدولة.
+city
+varchar nullable
+المدينة.
+logo_url / cover_url
+varchar nullable
+صور عامة.
+website_url
+varchar nullable
+الموقع العام.
+phone_public / email_public
+varchar nullable
+وسائل تواصل عامة فقط.
+verification_level
+unverified|basic|legal|trusted|enterprise
+مستوى التوثيق.
+trust_score
+decimal nullable
+درجة الثقة العامة.
+source_status
+active|inactive|deleted|stale
+حالة السجل في المصدر.
+publication_status
+draft|pending_review|published|hidden|suspended|rejected
+حالة النشر في Mall.
+last_synced_at
+timestamp nullable
+آخر مزامنة.
+metadata
+json nullable
+إضافات عامة.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+12.2 mall_mirror_services
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف عام.
+mall_mirror_business_id
+fk nullable
+البزنس المالك للخدمة.
+mall_sync_source_id
+fk nullable
+مصدر المزامنة.
+external_id
+varchar nullable
+معرف خارجي.
+name
+varchar
+اسم الخدمة.
+slug
+varchar indexed
+رابط الخدمة.
+short_description
+varchar nullable
+وصف مختصر.
+description
+text nullable
+وصف عام.
+category_id
+fk nullable
+تصنيف الخدمة.
+pricing_type
+fixed|from|range|quote|free|hidden
+نمط التسعير العام.
+price_from / price_to
+decimal nullable
+السعر العام إن وجد.
+currency_code
+char(3) nullable
+العملة.
+public_url
+varchar nullable
+رابط الخدمة في المصدر.
+image_url
+varchar nullable
+صورة عامة.
+source_status
+active|inactive|deleted|stale
+حالة المصدر.
+publication_status
+draft|pending_review|published|hidden|suspended|rejected
+حالة النشر.
+last_synced_at
+timestamp nullable
+آخر مزامنة.
+metadata
+json nullable
+إضافات عامة.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+12.3 mall_mirror_products
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف عام.
+mall_mirror_business_id
+fk nullable
+البزنس/البائع المرتبط.
+mall_sync_source_id
+fk nullable
+مصدر المزامنة.
+external_id
+varchar nullable
+معرف خارجي أو product uuid.
+name
+varchar
+اسم المنتج.
+slug
+varchar indexed
+رابط عام.
+description
+text nullable
+وصف عام.
+category_id
+fk nullable
+تصنيف المنتج.
+price
+decimal nullable
+السعر العام.
+currency_code
+char(3) nullable
+العملة.
+availability
+in_stock|out_of_stock|preorder|on_request|hidden
+التوفر العام.
+public_url
+varchar nullable
+رابط المنتج في المتجر أو المصدر.
+image_url
+varchar nullable
+صورة عامة.
+source_status
+active|inactive|deleted|stale
+حالة المصدر.
+publication_status
+draft|pending_review|published|hidden|suspended|rejected
+حالة النشر.
+last_synced_at
+timestamp nullable
+آخر مزامنة.
+metadata
+json nullable
+بيانات عامة مثل brand أو public SKU.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+12.4 mall_mirror_talent
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف عام.
+user_id
+fk nullable
+المستخدم إذا كان داخل Kabeeri.
+professional_profile_id
+fk nullable
+الملف المهني الأصلي.
+mall_sync_source_id
+fk nullable
+مصدر المزامنة.
+external_id
+varchar nullable
+معرف خارجي.
+headline
+varchar nullable
+العنوان المهني.
+summary
+text nullable
+ملخص عام.
+skills
+json nullable
+مهارات عامة.
+country_id
+fk nullable
+الدولة.
+city
+varchar nullable
+المدينة.
+availability_status
+open_to_offers|busy|hidden|not_available
+حالة التوفر العامة.
+visibility
+public|limited|hidden
+إعدادات الظهور.
+source_status
+active|inactive|deleted|stale
+حالة المصدر.
+publication_status
+draft|pending_review|published|hidden|suspended|rejected
+حالة النشر.
+last_synced_at
+timestamp nullable
+آخر مزامنة.
+metadata
+json nullable
+بيانات عامة فقط.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+13. Unified Listing Index
+mall_listings هو جدول موحد يسهل البحث، التصفية، الترتيب، featured listings، moderation، وanalytics دون أن يعرف الـ UI تفاصيل كل نوع. السجلات التفصيلية تظل في mirror tables أو source tables.
+13.1 mall_listings
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف عام.
+organization_id
+fk nullable
+المنظمة إن وجدت.
+company_id
+fk nullable
+الشركة إن وجدت.
+mall_sync_source_id
+fk nullable
+مصدر البيانات.
+listing_type
+business|service|product|talent
+نوع العنصر.
+source_table
+varchar
+اسم جدول mirror/source.
+source_id
+bigint
+معرف السجل التفصيلي.
+external_id
+varchar nullable
+معرف خارجي للمطابقة.
+title
+varchar indexed
+العنوان العام.
+slug
+varchar indexed
+الرابط العام داخل Mall.
+summary
+varchar nullable
+وصف مختصر للبحث والبطاقات.
+primary_image_url
+varchar nullable
+الصورة الأساسية.
+country_id
+fk nullable
+الدولة.
+city
+varchar nullable
+المدينة.
+category_id
+fk nullable
+التصنيف الأساسي.
+verification_level
+varchar default unverified
+مستوى التوثيق الظاهر.
+trust_score
+decimal nullable
+درجة الثقة.
+rating_average
+decimal default 0
+متوسط التقييم.
+rating_count
+integer default 0
+عدد التقييمات.
+publication_status
+draft|pending_review|published|hidden|suspended|rejected|stale|disconnected
+حالة النشر.
+moderation_status
+clean|pending|flagged|restricted|suspended
+حالة المراجعة.
+visibility
+public|limited|hidden
+الظهور العام.
+is_featured
+boolean default false
+هل العنصر مميز حاليًا؟
+published_at
+timestamp nullable
+وقت النشر.
+last_synced_at
+timestamp nullable
+آخر مزامنة.
+metadata
+json nullable
+بيانات إضافية عامة.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+deleted_at
+timestamp nullable
+حذف لين عند الحاجة.
+13.2 mall_listing_categories
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف عام.
+parent_id
+fk nullable
+تصنيف أب.
+name
+varchar
+اسم التصنيف.
+slug
+varchar unique
+رابط التصنيف.
+listing_type
+business|service|product|talent|mixed
+نوع العناصر المستهدفة.
+description
+text nullable
+وصف التصنيف.
+icon
+varchar nullable
+أيقونة اختيارية.
+sort_order
+integer default 0
+ترتيب العرض.
+status
+active|hidden|archived
+حالة التصنيف.
+metadata
+json nullable
+إعدادات إضافية.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+13.3 mall_listing_category_assignments
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_listing_id
+fk
+العنصر العام.
+mall_listing_category_id
+fk
+التصنيف.
+is_primary
+boolean default false
+هل هو التصنيف الأساسي؟
+created_at
+timestamp
+وقت الربط.
+13.4 mall_listing_media
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_listing_id
+fk
+العنصر العام.
+media_asset_id
+fk nullable
+ملف داخلي إن كان داخل Kabeeri.
+external_url
+varchar nullable
+رابط خارجي من Portable/Dedicated.
+media_type
+logo|cover|gallery|document_public|video
+نوع الملف العام.
+alt_text
+varchar nullable
+نص بديل.
+sort_order
+integer default 0
+الترتيب.
+status
+active|hidden|removed
+حالة الملف.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+13.5 mall_listing_contacts
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_listing_id
+fk
+العنصر العام.
+contact_type
+website|phone|email|whatsapp|form|external_url
+نوع التواصل.
+label
+varchar nullable
+تسمية اختيارية.
+value
+varchar nullable
+القيمة العامة.
+is_public
+boolean default true
+هل تظهر للزائر؟
+requires_login
+boolean default false
+هل تحتاج تسجيل دخول؟
+status
+active|hidden|disabled
+حالة وسيلة التواصل.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+14. Reviews & Reputation
+Reviews داخل Mall هي جزء من طبقة الثقة. لذلك لا يجب حذفها عشوائيًا ولا يجب ربطها بالكامل ببيانات خاصة. المراجعة قد تحتاج moderation قبل النشر، وقد تؤثر على trust/ranking.
+14.1 mall_reviews
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف عام.
+mall_listing_id
+fk
+العنصر الذي تمت مراجعته.
+reviewer_user_id
+fk nullable
+المستخدم المراجع إن كان مسجلًا.
+reviewer_display_name
+varchar nullable
+اسم ظاهر لو مسموح.
+review_context_type
+service_request|product_purchase|manual|imported|verified_interaction
+سبب/سياق التقييم.
+review_context_id
+bigint nullable
+السجل المرتبط إن وجد.
+rating
+tinyint 1-5
+درجة التقييم.
+title
+varchar nullable
+عنوان مختصر.
+body
+text nullable
+نص المراجعة.
+status
+draft|pending_review|published|hidden|rejected|reported|removed
+حالة المراجعة.
+is_verified_interaction
+boolean default false
+هل التقييم مبني على تعامل موثق؟
+moderation_status
+clean|pending|flagged|restricted
+حالة المراجعة.
+published_at
+timestamp nullable
+وقت النشر.
+metadata
+json nullable
+بيانات إضافية.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+deleted_at
+timestamp nullable
+حذف لين.
+14.2 mall_review_responses
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_review_id
+fk
+التقييم المرتبط.
+responder_user_id
+fk
+من رد.
+organization_id
+fk nullable
+المنظمة صاحبة الرد.
+company_id
+fk nullable
+الشركة صاحبة الرد.
+body
+text
+نص الرد.
+status
+pending_review|published|hidden|removed
+حالة الرد.
+published_at
+timestamp nullable
+وقت النشر.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+14.3 mall_review_votes
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_review_id
+fk
+التقييم.
+user_id
+fk nullable
+المستخدم.
+vote_type
+helpful|not_helpful
+نوع التصويت.
+ip_hash
+varchar nullable
+هاش IP لمنع التلاعب.
+created_at
+timestamp
+وقت التصويت.
+14.4 mall_review_reports
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_review_id
+fk
+التقييم المبلغ عنه.
+reported_by
+fk users nullable
+من أبلغ.
+reason
+spam|abuse|fake|privacy|conflict_of_interest|other
+سبب البلاغ.
+details
+text nullable
+تفاصيل.
+status
+pending|under_review|resolved|rejected
+حالة البلاغ.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+15. Reports & Moderation
+15.1 mall_reports
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف البلاغ.
+reportable_type
+listing|review|message|media|seller|talent
+نوع الشيء المبلغ عنه.
+reportable_id
+bigint
+معرف الشيء.
+reported_by
+fk users nullable
+المستخدم المبلغ.
+reason
+fake|spam|illegal|misleading|privacy|abuse|duplicate|other
+سبب البلاغ.
+details
+text nullable
+تفاصيل البلاغ.
+status
+pending|triaged|under_review|resolved|rejected|escalated
+حالة البلاغ.
+priority
+low|normal|high|critical
+الأولوية.
+assigned_to
+fk users nullable
+المراجع المسؤول.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+15.2 mall_moderation_cases
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف الحالة.
+case_type
+listing_review|content_report|trust_review|seller_review|appeal
+نوع الحالة.
+subject_type
+listing|business|service|product|talent|review|seller
+نوع الموضوع.
+subject_id
+bigint
+معرف الموضوع.
+opened_by
+fk users nullable
+من فتح الحالة.
+assigned_to
+fk users nullable
+المراجع.
+status
+open|under_review|needs_info|actioned|closed|appealed
+حالة الحالة.
+risk_level
+low|medium|high|critical
+مستوى الخطر.
+decision
+approve|hide|suspend|reject|request_changes|no_action nullable
+القرار.
+decision_reason
+text nullable
+سبب القرار.
+closed_at
+timestamp nullable
+وقت الإغلاق.
+metadata
+json nullable
+بيانات إضافية.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+15.3 mall_moderation_actions
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_moderation_case_id
+fk
+الحالة المرتبطة.
+action_type
+approve|hide|unhide|suspend|unsuspend|reject|request_info|warn|escalate
+الإجراء.
+performed_by
+fk users nullable
+من نفذ الإجراء.
+reason
+text nullable
+سبب الإجراء.
+before
+json nullable
+الحالة قبل الإجراء.
+after
+json nullable
+الحالة بعد الإجراء.
+created_at
+timestamp
+وقت الإجراء.
+16. Featured & Sponsored Visibility
+Featured/Sponsored ليست توثيقًا ولا تعني ثقة أعلى. هي طبقة ظهور مدفوعة أو محررة يجب تمييزها في الواجهة وتسجيلها في Billing/Entitlements لاحقًا.
+16.1 mall_featured_campaigns
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف الحملة.
+organization_id
+fk nullable
+العميل صاحب الحملة.
+company_id
+fk nullable
+الشركة.
+campaign_name
+varchar
+اسم الحملة.
+placement
+mall_home|category_page|search_top|business_page|service_page|product_page
+موضع الظهور.
+status
+draft|scheduled|active|paused|completed|cancelled
+حالة الحملة.
+starts_at / ends_at
+timestamps nullable
+مدة الحملة.
+budget_amount
+decimal nullable
+ميزانية اختيارية.
+currency_code
+char(3) nullable
+العملة.
+billing_account_id
+fk nullable
+حساب الفوترة.
+metadata
+json nullable
+إعدادات إضافية.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+16.2 mall_featured_listings
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_featured_campaign_id
+fk nullable
+الحملة إن وجدت.
+mall_listing_id
+fk
+العنصر المميز.
+placement
+varchar
+موضع الظهور.
+priority
+integer default 0
+الأولوية داخل الموضع.
+label
+featured|sponsored|recommended
+التسمية الظاهرة.
+status
+active|paused|expired|removed
+الحالة.
+starts_at / ends_at
+timestamps nullable
+مدة التمييز.
+created_by
+fk users nullable
+من أنشأ التمييز.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+17. Inquiries & Requests
+في V4، الأفضل أن يبدأ Mall بـ contact/request actions بدل full checkout. لذلك نحتاج جدولًا موحدًا للاستفسارات يمكن تحويله لاحقًا إلى CRM lead أو service request أو conversation.
+17.1 mall_inquiries
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف الاستفسار.
+mall_listing_id
+fk nullable
+العنصر الذي جاء منه الاستفسار.
+inquiry_type
+contact|service_request|product_inquiry|rfq|job_offer_interest|report_interest
+نوع الطلب.
+sender_user_id
+fk nullable
+المستخدم إن كان مسجلًا.
+sender_name
+varchar nullable
+اسم المرسل.
+sender_email
+varchar nullable
+إيميل المرسل.
+sender_phone
+varchar nullable
+هاتف المرسل.
+message
+text nullable
+نص الرسالة.
+recipient_organization_id
+fk nullable
+المنظمة المستقبلة.
+recipient_company_id
+fk nullable
+الشركة المستقبلة.
+status
+new|seen|responded|converted|closed|spam
+حالة الطلب.
+converted_to_type
+lead|conversation|service_request|rfq|job_offer nullable
+ما تم التحويل إليه.
+converted_to_id
+bigint nullable
+معرف السجل الناتج.
+metadata
+json nullable
+بيانات إضافية.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+17.2 mall_saved_listings
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+user_id
+fk
+المستخدم.
+mall_listing_id
+fk
+العنصر المحفوظ.
+collection_name
+varchar nullable
+اسم مجموعة اختيارية.
+created_at
+timestamp
+وقت الحفظ.
+18. Search, Ranking & Analytics
+18.1 mall_search_index
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_listing_id
+fk
+العنصر.
+listing_type
+business|service|product|talent
+نوع العنصر.
+title_text
+text nullable
+نص العنوان للبحث.
+description_text
+text nullable
+نص الوصف.
+category_text
+text nullable
+نص التصنيفات.
+location_text
+text nullable
+نص الموقع الجغرافي.
+skills_text
+text nullable
+مهارات talent إن وجدت.
+search_payload
+json nullable
+Payload لمحرك البحث الخارجي لاحقًا.
+indexed_at
+timestamp nullable
+وقت الفهرسة.
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+18.2 mall_listing_stats
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_listing_id
+fk
+العنصر.
+views_count
+integer default 0
+عدد المشاهدات.
+clicks_count
+integer default 0
+عدد النقرات.
+inquiries_count
+integer default 0
+عدد الاستفسارات.
+reviews_count
+integer default 0
+عدد التقييمات.
+rating_average
+decimal default 0
+متوسط التقييم.
+last_viewed_at
+timestamp nullable
+آخر مشاهدة.
+last_inquiry_at
+timestamp nullable
+آخر استفسار.
+updated_at
+timestamp
+آخر تحديث.
+18.3 mall_ranking_signals
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+mall_listing_id
+fk
+العنصر.
+signal_key
+varchar
+اسم إشارة الترتيب.
+signal_value
+decimal
+القيمة.
+source
+trust|reviews|activity|featured|moderation|freshness|manual
+مصدر الإشارة.
+calculated_at
+timestamp
+وقت الحساب.
+metadata
+json nullable
+تفاصيل إضافية.
+19. Mall Status Values
+19.1 publication_status
+القيمة
+المعنى
+draft
+لم يطلب النشر بعد.
+pending_review
+في انتظار مراجعة Mall.
+published
+منشور للعامة.
+hidden
+مخفي من صاحب العنصر أو النظام.
+suspended
+معلق بسبب moderation أو trust issue.
+rejected
+مرفوض للنشر.
+stale
+المصدر لم يتزامن منذ مدة.
+disconnected
+مصدر البيانات غير متصل.
+19.2 moderation_status
+القيمة
+المعنى
+clean
+لا توجد مشاكل معروفة.
+pending
+يحتاج مراجعة.
+flagged
+عليه بلاغ أو مؤشر خطر.
+restricted
+منشور بقيود.
+suspended
+موقوف مؤقتًا أو دائمًا.
+20. العلاقات ERD
+erDiagram
+ORGANIZATIONS ||--o{ MALL_PUBLICATION_CONSENTS : grants
+MALL_SYNC_SOURCES ||--o{ MALL_SYNC_EVENTS : receives
+MALL_SYNC_EVENTS ||--o{ MALL_SYNC_ERRORS : may_fail
+MALL_SYNC_SOURCES ||--o{ MALL_MIRROR_BUSINESSES : provides
+MALL_SYNC_SOURCES ||--o{ MALL_MIRROR_SERVICES : provides
+MALL_SYNC_SOURCES ||--o{ MALL_MIRROR_PRODUCTS : provides
+MALL_SYNC_SOURCES ||--o{ MALL_MIRROR_TALENT : provides
+MALL_LISTINGS ||--o{ MALL_LISTING_MEDIA : shows
+MALL_LISTINGS ||--o{ MALL_LISTING_CONTACTS : exposes
+MALL_LISTINGS ||--o{ MALL_REVIEWS : receives
+MALL_REVIEWS ||--o{ MALL_REVIEW_RESPONSES : has
+MALL_REVIEWS ||--o{ MALL_REVIEW_REPORTS : can_be_reported
+MALL_LISTINGS ||--o{ MALL_REPORTS : can_be_reported
+MALL_REPORTS ||--o{ MALL_MODERATION_CASES : may_open
+MALL_MODERATION_CASES ||--o{ MALL_MODERATION_ACTIONS : records
+MALL_FEATURED_CAMPAIGNS ||--o{ MALL_FEATURED_LISTINGS : promotes
+MALL_LISTINGS ||--o{ MALL_INQUIRIES : generates
+MALL_LISTINGS ||--|| MALL_SEARCH_INDEX : indexed_as
+MALL_LISTINGS ||--|| MALL_LISTING_STATS : measured_by
+21. Flows
+21.1 نشر Business Profile في Mall
+Business owner requests Mall publication
+→ check permission mall.business.publish
+→ check mall_publication_consent
+→ create/update mall_mirror_businesses
+→ create/update mall_listings type=business
+→ moderation status = pending
+→ moderator approves
+→ publication_status = published
+→ search index updated
+→ activity/audit log recorded
+21.2 نشر Product من Commerce إلى Mall
+Product marked as public and mall_enabled
+→ check consent products_publication
+→ copy only public fields to mall_mirror_products
+→ create mall_listing type=product
+→ exclude private cost, supplier data, margins, internal stock details
+→ moderation/trust checks
+→ index listing
+→ visitor can view product or click external/store URL
+21.3 تحديث من Portable أو Dedicated
+External instance fires ProductUpdated
+→ signed payload sent to Mall Sync API
+→ validate token and source status
+→ validate allowed public fields
+→ create mall_sync_event
+→ update mirror table
+→ moderation may hold or approve change
+→ listing index updated
+→ public Mall displays latest approved mirror
+21.4 بلاغ ومراجعة
+Visitor reports listing or review
+→ mall_report created
+→ if high risk open moderation case
+→ moderator reviews content and trust context
+→ action is recorded
+→ listing/review status changes
+→ affected owner notified
+→ appeal may be allowed later
+21.5 Featured Listing
+Business requests featured placement
+→ entitlement/billing check
+→ campaign created
+→ moderation status must be clean
+→ featured listing scheduled
+→ public UI shows label Featured/Sponsored
+→ impressions/clicks tracked
+→ campaign expires automatically
+22. Data Access Rules
+22.1 المسموح في Mall
+نوع البيانات
+أمثلة
+Business public data
+name, logo, cover, description, city, category, public contacts
+Services public data
+name, description, public price/range, category, public URL
+Products public data
+name, description, images, public price, availability, public URL
+Trust public data
+verification badge, verification level, public trust signals
+Reviews
+published reviews, ratings, business responses
+Talent public data
+headline, skills, public summary, availability حسب privacy
+22.2 الممنوع في Mall
+نوع البيانات
+سبب المنع
+orders private
+بيانات تعاملات خاصة.
+invoices/accounting
+بيانات مالية غير عامة.
+payroll/employee evaluations
+بيانات موظفين حساسة.
+supplier costs/margins
+أسرار تجارية.
+bank data
+بيانات مالية حساسة.
+private contracts
+مستندات قانونية خاصة.
+internal messages
+محادثات داخلية.
+verification private documents
+مستندات توثيق سرية.
+23. Permissions
+23.1 صلاحيات Mall
+الصلاحية
+المعنى
+mall.view_console
+دخول Mall Console.
+mall.business.publish
+طلب نشر بزنس.
+mall.business.manage
+إدارة ظهور البزنس.
+mall.service.publish
+طلب نشر خدمة.
+mall.service.manage
+إدارة الخدمات العامة.
+mall.product.publish
+طلب نشر منتج.
+mall.product.manage
+إدارة المنتجات العامة.
+mall.review.respond
+الرد على التقييمات.
+mall.listing.feature
+إدارة أو طلب featured listings.
+mall.report.create
+إنشاء بلاغ.
+mall.moderation.view
+عرض طابور المراجعة.
+mall.moderation.manage
+اتخاذ إجراءات moderation.
+mall.sync.manage
+إدارة مصادر المزامنة.
+mall.analytics.view
+عرض تحليلات Mall.
+24. Feature Flags
+enable_kabeeri_mall_v1
+enable_mall_business_listings
+enable_mall_service_listings
+enable_mall_product_listings
+enable_mall_talent_listings
+enable_mall_reviews_basic
+enable_mall_moderation
+enable_mall_reports
+enable_mall_featured_listings
+enable_mall_sync_api
+enable_mall_search_index
+enable_mall_public_inquiries
+25. Indexes مهمة
+mall_listings: index(listing_type, publication_status, moderation_status)
+mall_listings: unique(slug)
+mall_listings: index(country_id, city)
+mall_listings: index(category_id, listing_type)
+mall_mirror_*: index(mall_sync_source_id, external_id)
+mall_sync_events: index(mall_sync_source_id, status, created_at)
+mall_reviews: index(mall_listing_id, status, rating)
+mall_reports: index(status, priority, created_at)
+mall_featured_listings: index(placement, status, starts_at, ends_at)
+mall_inquiries: index(recipient_company_id, status, created_at)
+26. Events
+MallListingSubmitted
+MallListingApproved
+MallListingRejected
+MallListingPublished
+MallListingSuspended
+MallListingSynced
+MallReviewSubmitted
+MallReviewPublished
+MallReportCreated
+MallModerationActionApplied
+MallInquiryCreated
+MallFeaturedListingActivated
+MallFeaturedListingExpired
+MallSearchIndexUpdated
+27. CLI Commands
+php artisan kabeeri:mall:index-listings
+php artisan kabeeri:mall:sync-source {sourceId}
+php artisan kabeeri:mall:process-sync-events
+php artisan kabeeri:mall:rebuild-search-index
+php artisan kabeeri:mall:recalculate-rankings
+php artisan kabeeri:mall:expire-featured-listings
+php artisan kabeeri:mall:moderation:queue
+php artisan kabeeri:mall:stats:aggregate
+28. Seeders
+MallPermissionsSeeder
+MallFeatureFlagsSeeder
+MallDefaultCategoriesSeeder
+MallModerationReasonsSeeder
+MallDemoBusinessListingsSeeder
+MallDemoServiceListingsSeeder
+MallDemoProductListingsSeeder
+MallDemoReviewsSeeder
+29. Testing Requirements
+User cannot publish listing without permission.
+Listing cannot be published without active consent.
+Private product fields are not copied to Mall mirror.
+Portable sync payload rejects private fields.
+Moderation suspended listing is hidden even if source sends published.
+Review requires moderation when flagged.
+Featured listing expires automatically.
+Search index updates after listing publish/update.
+Inquiry creates notification and can be converted to lead later.
+Mall sync source token can be revoked.
+30. Build Order
+mall_publication_consents + basic permissions.
+mall_sync_sources + mall_sync_events foundation.
+mall_mirror_businesses/services/products/talent.
+mall_listings unified index.
+categories + category assignments.
+public listing pages and filters.
+reviews basic + review responses.
+reports + moderation cases/actions.
+inquiries/contact actions.
+featured listings foundation.
+search index and ranking signals.
+sync from Portable/Dedicated via Mall Sync API.
+31. Release Gate
+Business يمكن أن يظهر في Mall بعد consent وmoderation.
+Service/Product يمكن نشرهما كبيانات عامة بدون كشف بيانات خاصة.
+Mall public pages تعمل: /mall, /mall/businesses, /mall/services, /mall/products, /mall/talent.
+Search/filter basic يعمل بالتصنيف والدولة والمدينة والنوع.
+Review basic يعمل مع moderation/reporting.
+Featured listing يظهر مع label واضح ولا يخلط مع verification.
+Portable/Dedicated sync لا يتجاوز moderation.
+No critical privacy leak في Mall mirror أو listing payloads.
+Activity/Audit logs موجودة لكل إجراء حساس.
+Permissions وfeature flags تغلق كل أجزاء Mall عند الحاجة.
+32. ملخص القرار
+Kabeeri Mall يجب أن يبنى كطبقة عامة مستقلة تعتمد على Mall Mirror وPublication Consent، وليس كنافذة مباشرة على بيانات العميل. هذا التصميم يسمح بأن يبدأ العميل Cloud، ثم ينتقل إلى Frontend Anywhere أو Portable أو Dedicated بدون فقد ظهوره العام، مع الحفاظ على الخصوصية والثقة والحوكمة.
+في V4، الهدف هو Mall V1: businesses، services، products basic، reviews basic، contact/request actions، featured listings foundation، moderation queue، reports/flags. أما commissions وmulti-vendor checkout وadvanced disputes فتنتقل إلى V5/V6.
+KABEERI Database File 11 — Kabeeri Mall & Public Marketplace Database

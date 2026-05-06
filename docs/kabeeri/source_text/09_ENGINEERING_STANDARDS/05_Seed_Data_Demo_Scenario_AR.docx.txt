@@ -1,0 +1,37 @@
+KABEERI / powered by ADMIT
+KABEERI Seed Data & Demo Scenario
+بيانات تجريبية رسمية لتشغيل V1 فورًا
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. الهدف
+Seed data الرسمي يجعل V1 قابلًا للتجربة فورًا ويمنع بناء demo عشوائي. يجب أن يعكس قصة Kabeeri: شركة صغيرة تبدأ بتطبيق موقع، فريق، صلاحيات، محتوى، بروفايل بزنس، وثيم رسمي.
+2. Demo Scenario
+العنصر
+القيمة
+Demo Organization
+ADMIT Demo Organization
+Demo Company
+Kabeeri Clinic Demo
+App/Site
+clinic-demo
+Theme
+Kabeeri Starter Clinic
+Users
+Owner, Admin, Editor, Media Manager
+Pages
+Home, About, Services, Doctors, Contact, Blog
+Media
+10 صور placeholder
+Business Profile
+Draft public-ready
+Permissions
+Owner full, Editor content, Media Manager media
+Activity Logs
+إنشاء منظمة، تطبيق، صفحة، نشر، رفع ميديا
+3. Seeders المطلوبة
+CountriesSeederCurrenciesSeederPermissionsSeederRolesSeederFeatureFlagsSeederDefaultThemesSeederDefaultPackagesSeederDemoOrganizationSeederDemoCmsSeederDemoMediaSeeder
+4. Demo Content Rules
+• كل النصوص عربية/إنجليزية قابلة للتبديل لاحقًا.
+• لا تستخدم صور عليها حقوق غير واضحة؛ استخدم placeholders أو أصول مرخصة.
+• كل صفحة demo لها slug وSEO title وdescription.
+• كل seed يجب أن يكون idempotent ويعمل أكثر من مرة بدون تكرار.

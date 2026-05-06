@@ -1,0 +1,147 @@
+KABEERI 300 Launch Themes Strategy & Taxonomy
+استراتيجية إطلاق 300 ثيم حسب أنواع المشروعات مع الفلاتر والـ App Recipes
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. الهدف
+إطلاق Kabeeri يجب أن يظهر كمنصة جاهزة لكل نوع مشروع. لذلك يتم التخطيط لـ 300 ثيم Launch-ready عبر 30 نوع مشروع × 10 ثيمات لكل نوع.
+30 Project Categories × 10 Themes = 300 Launch Themes
+• الثيمات ليست 300 شكل عشوائي.
+• كل ثيم له App Recipe يحدد البلجنات المطلوبة والمقترحة.
+• كل ثيم عربي/RTL-ready قدر الإمكان.
+• يتم إنتاجها عبر Theme Families وIndustry Presets لتقليل التكرار.
+2. 30 نوع مشروع
+#
+نوع المشروع
+عدد الثيمات
+1
+شركات وخدمات عامة
+10
+2
+عيادات ومراكز صحية
+10
+3
+تجميل وسبا وWellness
+10
+4
+مطاعم وكافيهات وأغذية
+10
+5
+متاجر إلكترونية عامة
+10
+6
+أزياء وموضة وإكسسوارات
+10
+7
+إلكترونيات وموبايلات وأجهزة
+10
+8
+أثاث ومنزل وديكور
+10
+9
+عقارات وتطوير عقاري
+10
+10
+مقاولات وتشطيبات ومعمار
+10
+11
+تعليم ومدارس وحضانات
+10
+12
+أكاديميات وكورسات وLMS
+10
+13
+محاماة ومحاسبة واستشارات
+10
+14
+وكالات تسويق وتصميم وبرمجة
+10
+15
+SaaS وتكنولوجيا وتطبيقات
+10
+16
+لوجستيات وشحن ونقل
+10
+17
+فنادق وسياحة وحجوزات
+10
+18
+صيانة وخدمات منزلية ومحلية
+10
+19
+سيارات ومعارض وورش
+10
+20
+بورتفوليو وأفراد ومهنيين
+10
+21
+مجلات ومدونات وأخبار
+10
+22
+منظمات وجمعيات وتبرعات
+10
+23
+فعاليات ومؤتمرات وحفلات
+10
+24
+Fitness / Gym / Sports
+10
+25
+زراعة وحيوانات وبيطرة
+10
+26
+ماركت بليس ودليل أعمال
+10
+27
+صفحات هبوط وحملات
+10
+28
+شركاء ومسوقين بالعمولة
+10
+29
+Kabeeri Work Network / Agency Kits
+10
+30
+Enterprise / Industry / B2B Portals
+10
+3. Free / Freemium / Pro / Premium Split
+النوع
+العدد
+الغرض
+Free Official
+75
+انتشار سريع وتجربة مجانية
+Freemium
+90
+مجاني مع Blocks/Features Pro
+Pro
+100
+دخل مباشر للمنصة والمبدعين
+Premium / Agency Kits
+35
+مشاريع عالية الجودة ووكالات
+الإجمالي
+300
+مكتبة إطلاق قوية
+4. فلترة متجر الثيمات
+• Industry: عيادات، متاجر، عقارات، تعليم، سياحة، إلخ.
+• App Type: Website, Store, Service, Portfolio, Directory, Landing, Partner Storefront, Agency, Portal.
+• Feature Flags: Commerce-ready, Booking-ready, LMS-ready, Donations-ready, Rabet-ready, Mall-ready, Affiliate-ready.
+• Price: Free, Freemium, Pro, Premium.
+• Complexity: Simple, Business, Advanced.
+• Recommended for: self-build, App Builder, Agency.
+5. Theme App Recipe
+Theme → Project Type → Required Packages → Recommended Packages → Optional Packages → Demo Data → Setup Steps → QA Checklist
+الثيم لا يحتوي البلجنات داخله، بل يعلن Recipe. المنصة تعرض البلجنات والصلاحيات قبل التثبيت.
+6. Production Plan
+المرحلة
+الناتج
+Alpha
+30 ثيم لاختبار النظام
+Beta
+100 ثيم لإثبات التنوع
+Launch
+200 ثيم للتسويق القوي
+Launch + 60 days
+300 ثيم مكتمل
+After Creators
+500+ عبر مجتمع المبدعين
+KABEERI — Confidential Product Architecture

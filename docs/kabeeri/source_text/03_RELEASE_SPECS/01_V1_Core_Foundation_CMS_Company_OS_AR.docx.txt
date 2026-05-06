@@ -1,0 +1,697 @@
+KABEERI V1 — Core Foundation for CMS + Company OS
+الإصدار الأول من منصة KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف هو أول ملف تنفيذي حقيقي بعد الملف الرئيسي والملاحق التأسيسية.
+V1 ليس الهدف منه بناء كل Kabeeri.
+V1 هدفه بناء الأساس الذي لا يمكن أن تقوم المنصة بدونه:
+CMS قوي+ Organizations+ Sites+ Company foundation+ Permissions+ Media+ Themes+ Plugins basic+ Activity Log+ Business Profile draft+ Verification foundation+ Notifications basic+ Feature Flags+ Onboarding basic
+الرسالة التنفيذية لـ V1:
+Kabeeri V1 هو CMS جديد للشركات، مبني من البداية ليتحول لاحقًا إلى Rabet وCommerce وERP وKabeeri Mall، وليس مجرد WordPress clone.
+1. هدف V1
+1.1 الهدف التقني
+بناء نواة Laravel مستقرة يمكن استخدامها لإدارة موقع شركة بسيط، مع بنية بيانات وصلاحيات تسمح بإضافة Rabet وCommerce وERP وKabeeri Mall لاحقًا بدون إعادة بناء جذرية.
+1.2 الهدف التجاري
+إطلاق نسخة يمكن عرضها كبديل حديث لـ WordPress للشركات الصغيرة والوكالات، مع رسالة واضحة:
+ابدأ بموقع، ثم كبر إلى شركة رقمية متكاملة.
+1.3 الهدف التجريبي
+في نهاية V1 يجب أن نستطيع بناء Demo لشركة خدمات صغيرة تحتوي على:
+موقع رسمي.
+صفحات.
+مقالات.
+ميديا.
+SEO.
+ثيم.
+أعضاء فريق.
+صلاحيات.
+Activity Log.
+Business Profile draft.
+Verification foundation.
+2. ما هو V1؟
+V1 هو:
+Core Foundation for CMS + Company OS
+يعني:
+المستخدم يرى CMS بسيط ومنظم.
+المطور يرى بنية Core جاهزة للتوسع.
+المستثمر يرى بداية منصة أكبر.
+العميل يرى موقعًا قابلًا للنمو.
+3. ما ليس V1؟
+V1 ليس:
+ERP كامل.
+Commerce كامل.
+Shopify competitor كامل.
+Kabeeri Mall كامل.
+Talent Marketplace.
+Legal Partner Portal.
+AI Co-builder كامل.
+Cloud كامل.
+Developer Marketplace عام.
+Visual Builder كامل.
+Accounting.
+Payroll.
+Multi-vendor marketplace.
+أي محاولة لإدخال هذه الأجزاء في V1 ستشتت المشروع وتؤخر الإطلاق.
+4. Stack التقني المقترح لـ V1
+4.1 Backend
+PHP 8.3+Laravel 11/12 حسب وقت التنفيذMySQL 8+Redis-ready لكن ليس إلزاميًا في البدايةQueue system جاهز
+4.2 Admin UI
+التوصية للبناء الفردي بالـ AI:
+Laravel Blade + Livewire
+أو:
+Filament Admin
+القرار المقترح
+استخدم:
+Laravel + Filament في البداية
+لأن Filament يوفر بسرعة:
+CRUD.
+Tables.
+Forms.
+Permissions integration.
+Admin panels.
+Relation managers.
+Widgets.
+ثم لاحقًا يمكن بناء UI مخصص.
+4.3 Frontend للمواقع العامة
+Blade themesTailwind CSSAlpine.js عند الحاجة
+لا نبدأ بـ React للواجهة العامة في V1.
+4.4 Build Tools
+ViteTailwind CSSLaravel PintPest أو PHPUnit
+5. مبادئ V1 الحاكمة
+5.1 لا User تابع لشركة واحدة
+خطأ ممنوع:
+users.company_id
+الصحيح:
+usersorganization_membershipscompany_memberships
+5.2 Organization هي الـ Workspace
+كل شيء تقريبًا يبدأ من Organization.
+5.3 Site هو الواجهة الرقمية
+Site ليس Company.
+5.4 Company هو الكيان التجاري
+Company قد يكون غير موثق في V1، لكن يجب وجود foundation.
+5.5 Business Profile هو الظهور العام
+في V1 يكون draft، ولا نحتاج Kabeeri Mall كامل.
+5.6 الصلاحيات من البداية
+RBAC يجب أن يدخل V1.
+5.7 Activity Log من البداية
+كل حدث مهم يسجل.
+5.8 Visibility من البداية
+أي محتوى أو بروفايل يحتاج visibility.
+5.9 Feature Flags من البداية
+حتى لو بسيطة.
+5.10 Modules بدون فوضى
+نجهز package foundation، لكن لا نفتح Marketplace.
+6. V1 Modules
+6.1 Core Module
+يشمل:
+Users.
+Auth.
+User profiles.
+Organizations.
+Memberships.
+Roles.
+Permissions.
+Settings.
+Feature Flags.
+Activity Logs.
+Notifications basic.
+6.2 Site Module
+يشمل:
+Sites.
+Domains/subdomains foundation.
+Site settings.
+Site language.
+Site timezone.
+Theme association.
+6.3 CMS Module
+يشمل:
+Content Types.
+Pages.
+Posts.
+Content entries.
+Revisions.
+Categories.
+Tags.
+SEO fields.
+Sitemap basic.
+Robots.txt basic.
+6.4 Media Module
+يشمل:
+Media upload.
+Media library.
+Alt text.
+Captions.
+File metadata.
+Public/private visibility foundation.
+6.5 Theme Module
+يشمل:
+Theme registration.
+Theme activation.
+Default theme.
+Theme settings basic.
+Blade templates.
+6.6 Package Foundation
+يشمل:
+Installed packages.
+Package status.
+Plugin activation/deactivation basic.
+Package manifest concept.
+6.7 Rabet Foundation
+يشمل:
+Companies table.
+Company membership basic.
+Business Profile draft.
+Verification request foundation.
+Verification documents foundation.
+6.8 Operating Foundation
+يشمل:
+Notifications basic.
+Import/export jobs foundation.
+Feature flags.
+Settings.
+System status.
+Backup foundation.
+7. V1 User Stories
+7.1 صاحب شركة يريد إنشاء موقع
+As a business ownerI want to register and create an organization and siteSo I can publish my company website
+7.2 محرر يريد إنشاء صفحة
+As an editorI want to create and publish pagesSo visitors can see company content
+7.3 صاحب موقع يريد رفع صور
+As a site adminI want to upload mediaSo I can use images in pages and posts
+7.4 صاحب شركة يريد تجهيز بروفايل بزنس
+As a business ownerI want to create a business profile draftSo I can later appear in Kabeeri Mall
+7.5 صاحب شركة يريد دعوة عضو فريق
+As an organization ownerI want to invite a team memberSo they can help manage the site
+7.6 المدير يريد رؤية النشاط
+As an adminI want to see activity logsSo I know who changed what
+8. Roles الأساسية في V1
+8.1 Platform Super Admin
+صلاحيات كاملة لإدارة المنصة في بيئة التطوير أو التشغيل.
+8.2 Organization Owner
+مالك الـ Organization.
+يمكنه:
+إدارة Organization.
+إنشاء Sites.
+دعوة أعضاء.
+إدارة roles.
+إدارة settings.
+8.3 Organization Admin
+مدير على Organization.
+8.4 Site Admin
+يدير موقعًا محددًا.
+8.5 Editor
+ينشئ ويعدل وينشر المحتوى حسب الصلاحيات.
+8.6 Author
+ينشئ محتوى، لكن قد لا ينشر.
+8.7 Viewer
+يرى فقط.
+8.8 Company Admin basic
+يدير Company foundation وBusiness Profile draft.
+9. Permissions الأساسية في V1
+9.1 Organization Permissions
+organization.vieworganization.manageorganization.settings.manageorganization.members.inviteorganization.members.removeorganization.roles.manage
+9.2 Site Permissions
+site.view_adminsite.createsite.managesite.settings.manage
+9.3 Content Permissions
+content.createcontent.editcontent.publishcontent.archivecontent.deletecontent.restorecontent.seo.manage
+9.4 Media Permissions
+media.viewmedia.uploadmedia.editmedia.delete
+9.5 Theme Permissions
+theme.viewtheme.activatetheme.manage
+9.6 Package Permissions
+plugin.viewplugin.activateplugin.deactivatepackage.manage
+9.7 Company/Rabet Foundation Permissions
+company.viewcompany.createcompany.managebusiness_profile.viewbusiness_profile.manageverification.submitverification.documents.upload
+9.8 System Permissions
+activity_log.viewsettings.managefeature_flags.managesystem_status.view
+10. قاعدة بيانات V1
+هذا القسم يحدد الجداول الأساسية التي يجب بناؤها في V1.
+10.1 users
+idnameemailemail_verified_atphone nullablephone_verified_at nullablepasswordavatar_path nullablelocale default artimezone default Africa/Cairostatus default activelast_login_at nullableremember_tokencreated_atupdated_atdeleted_at nullable
+ملاحظات
+لا يوجد company_id.
+لا يوجد role ثابت.
+user مستقل.
+10.2 user_profiles
+iduser_idbio nullablecountry nullablecity nullablewebsite_url nullablesocial_links json nullablevisibility default privatecreated_atupdated_at
+10.3 organizations
+idnameslugowner_user_idstatus default activeplan default freebilling_status nullablecountry nullabletimezone default Africa/Cairolocale default arsettings json nullablecreated_atupdated_atdeleted_at nullable
+10.4 organization_memberships
+idorganization_iduser_idrole_id nullablejob_title nullablemembership_type default owner/status specificstatus default activestart_date nullableend_date nullableinvited_by nullableinvited_at nullableaccepted_at nullablevisibility default organization_onlymetadata json nullablecreated_atupdated_atdeleted_at nullable
+membership_type values
+owneradminemployee_full_timeemployee_part_timefreelancercontractorconsultantexternal_collaborator
+10.5 roles
+idorganization_id nullablecompany_id nullablesite_id nullablenameslugscopeis_system default falsecreated_atupdated_at
+scope values
+platformorganizationcompanysitemodule
+10.6 permissions
+idnamesluggroupdescription nullablecreated_atupdated_at
+10.7 role_permission
+role_idpermission_idcreated_at
+10.8 membership_permission_overrides
+idmembership_typemembership_idpermission_ideffectreason nullablecreated_by nullablecreated_at
+effect values
+allowdeny
+10.9 sites
+idorganization_idcompany_id nullablenameslugdomain nullablesubdomain nullablesite_type default websitestatus default activelanguage default artimezone default Africa/Cairotheme_id nullablesettings json nullablecreated_atupdated_atdeleted_at nullable
+site_type values
+websiteblogstoreportallandinginternal_portal
+10.10 settings
+idscope_typescope_id nullablekeyvalue json nullabletype default stringis_encrypted default falsecreated_atupdated_at
+10.11 feature_flags
+idkeydescription nullabledefault_value booleanstatus default activecreated_atupdated_at
+10.12 feature_flag_overrides
+idfeature_flag_idscope_typescope_idvalue booleancreated_atupdated_at
+10.13 activity_logs
+idorganization_id nullablecompany_id nullablesite_id nullableactor_user_id nullableactionsubject_type nullablesubject_id nullabledescription nullableip_address nullableuser_agent nullablemetadata json nullablecreated_at
+10.14 content_types
+idsite_idnameslugis_system default falsesupports_seo default truesupports_revisions default truesupports_categories default falsesupports_tags default falsesettings json nullablecreated_atupdated_at
+Default content types
+pagepost
+10.15 content_entries
+idsite_idcontent_type_idauthor_user_id nullabletitleslugexcerpt nullablecontent longtext nullablestatus default draftvisibility default publicpublished_at nullablescheduled_at nullablefeatured_media_id nullableseo_title nullableseo_description nullablecanonical_url nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+status values
+draftreviewpublishedscheduledarchivedtrashed
+visibility values
+publicprivateunlistedorganization_onlymembers_only
+10.16 content_revisions
+idcontent_entry_iduser_id nullabletitlecontent longtext nullablemetadata json nullablecreated_at
+10.17 taxonomies
+idsite_idnameslugtypehierarchical default falsesettings json nullablecreated_atupdated_at
+10.18 taxonomy_terms
+idtaxonomy_idparent_id nullablenameslugdescription nullableseo_title nullableseo_description nullablecreated_atupdated_at
+10.19 content_term
+content_entry_idterm_idcreated_at
+10.20 media_assets
+idorganization_idsite_id nullablecompany_id nullableuploaded_by nullablediskpathfilenameoriginal_filenamemime_typesizewidth nullableheight nullablealt_text nullablecaption nullablevisibility default publicmetadata json nullablecreated_atupdated_atdeleted_at nullable
+10.21 media_usages
+idmedia_asset_idusable_typeusable_idfield_name nullablecreated_at
+10.22 themes
+idnameslugversionpublisher nullabledescription nullablescreenshot_path nullablestatus default activesupports json nullablesettings_schema json nullablecreated_atupdated_at
+10.23 installed_packages
+idorganization_id nullablesite_id nullablepackage_typenameslugversionstatussource default localpublisher nullablemanifest json nullablepermissions json nullableinstalled_by nullableinstalled_at nullableactivated_at nullablecreated_atupdated_at
+package_type values
+pluginthememodulesuiteconnectorai_skilltemplateindustry_solution
+10.24 package_events
+idinstalled_package_ideventstatusmessage nullablemetadata json nullablecreated_at
+10.25 companies
+idorganization_idlegal_name nullabletrade_nameslugcountry nullablecity nullablelegal_type nullableregistration_number nullabletax_number nullableindustry nullablecompany_size nullablestatus default draftverification_status default not_submittedverified_at nullableverification_expires_at nullabletrust_score nullablecreated_atupdated_atdeleted_at nullable
+10.26 company_memberships
+idcompany_iduser_idorganization_membership_id nullablerole_id nullablejob_title nullabledepartment_id nullablemanager_user_id nullablecontract_type nullableemployment_type nullablestatus default activestart_date nullableend_date nullablepublic_work_history default falsecreated_atupdated_atdeleted_at nullable
+10.27 business_profiles
+idcompany_id nullableorganization_idsite_id nullablenameslugdescription nullableshort_description nullableindustry nullablecategory_id nullablecountry nullablecity nullableaddress nullableservice_areas json nullablephone nullableemail nullablewebsite_url nullablelogo_media_id nullablecover_media_id nullablestatus default draftvisibility default privateverification_badge_status default nonerating_average nullablerating_count default 0created_atupdated_at
+status values
+draftpending_reviewpublishedsuspendedarchived
+10.28 verification_requests
+idcompany_idrequested_by nullablecountry nullableverification_level default basicstatus default not_submittedassigned_partner_id nullablesubmitted_at nullablereviewed_at nullableverified_at nullableexpires_at nullablerejection_reason nullablenotes nullablecreated_atupdated_at
+10.29 verification_documents
+idverification_request_id nullablecompany_iduploaded_by nullabledocument_typefile_media_iddocument_number nullableissued_at nullableexpires_at nullablestatus default pendingreview_notes nullablecreated_atupdated_at
+10.30 notifications
+idrecipient_user_idorganization_id nullablecompany_id nullabletypetitlebody nullableaction_url nullableread_at nullablepriority default normalmetadata json nullablecreated_atupdated_at
+10.31 import_jobs
+idorganization_id nullablesite_id nullablecompany_id nullableimport_typesource_system nullablestatus default pendingsource_file_media_id nullablestarted_by nullablestarted_at nullablecompleted_at nullablesummary json nullableerrors json nullablemetadata json nullablecreated_atupdated_at
+10.32 export_jobs
+idorganization_id nullablesite_id nullablecompany_id nullableexport_typestatus default pendingfile_media_id nullablerequested_by nullablestarted_at nullablecompleted_at nullablesummary json nullablecreated_atupdated_at
+10.33 countries
+idiso2iso3 nullablenamenative_name nullabledefault_currency nullabledefault_language nullablephone_code nullablestatus default activecreated_atupdated_at
+10.34 currencies
+idcodenamesymbol nullabledecimal_places default 2status default activecreated_atupdated_at
+11. Indexes مهمة في V1
+يجب إضافة indexes على:
+users.emailorganizations.slugorganization_memberships.organization_idorganization_memberships.user_idsites.organization_idsites.slugsites.domainsites.subdomaincontent_entries.site_idcontent_entries.content_type_idcontent_entries.slugcontent_entries.statuscontent_entries.published_atmedia_assets.organization_idmedia_assets.site_idcompanies.organization_idcompanies.slugbusiness_profiles.slugactivity_logs.organization_idactivity_logs.site_idactivity_logs.company_idactivity_logs.actor_user_idactivity_logs.created_atnotifications.recipient_user_idnotifications.read_at
+Composite indexes:
+unique(sites.organization_id, sites.slug)unique(content_entries.site_id, content_entries.slug)unique(content_types.site_id, content_types.slug)unique(taxonomies.site_id, taxonomies.slug)unique(taxonomy_terms.taxonomy_id, taxonomy_terms.slug)
+12. Laravel Folder Structure لـ V1
+app/  Core/    Auth/      Models/      Actions/      Policies/    Organizations/      Models/      Actions/      Policies/      Events/    Permissions/      Models/      Services/      Policies/    Sites/      Models/      Actions/      Policies/    Settings/      Models/      Services/    FeatureFlags/      Models/      Services/    Activity/      Models/      Actions/      Listeners/    Media/      Models/      Actions/      Policies/    Notifications/      Models/      Actions/    Packages/      Models/      Actions/      Services/    Localization/      Models/      Seeders/  CMS/    Content/      Models/      Actions/      Policies/      Events/      Listeners/      Http/    Taxonomies/      Models/      Actions/    SEO/      Services/    Themes/      Models/      Services/      Actions/  Rabet/    Companies/      Models/      Actions/      Policies/    BusinessProfiles/      Models/      Actions/      Policies/    Verification/      Models/      Actions/      Policies/  Support/    Enums/    Traits/    ValueObjects/    Helpers/
+13. Core Models في V1
+13.1 User
+مسار مقترح:
+app/Core/Auth/Models/User.php
+العلاقات:
+profileorganizationMembershipscompanyMembershipsownedOrganizationscontentEntriesmediaAssetsnotificationsactivityLogs
+13.2 Organization
+app/Core/Organizations/Models/Organization.php
+العلاقات:
+ownermembershipsusers through membershipssitescompaniessettingsactivityLogs
+13.3 Site
+app/Core/Sites/Models/Site.php
+العلاقات:
+organizationcompanycontentTypescontentEntriesmediaAssetsthemesettings
+13.4 ContentEntry
+app/CMS/Content/Models/ContentEntry.php
+العلاقات:
+sitecontentTypeauthorfeaturedMediatermsrevisions
+13.5 MediaAsset
+app/Core/Media/Models/MediaAsset.php
+العلاقات:
+organizationsitecompanyuploadedByusages
+13.6 Company
+app/Rabet/Companies/Models/Company.php
+العلاقات:
+organizationmembershipsbusinessProfileverificationRequests
+13.7 BusinessProfile
+app/Rabet/BusinessProfiles/Models/BusinessProfile.php
+العلاقات:
+organizationcompanysitelogocover
+14. Policies المطلوبة في V1
+يجب وجود Policies لـ:
+OrganizationPolicySitePolicyContentEntryPolicyMediaAssetPolicyThemePolicyInstalledPackagePolicyCompanyPolicyBusinessProfilePolicyVerificationRequestPolicyVerificationDocumentPolicyActivityLogPolicyFeatureFlagPolicy
+15. Actions الأساسية في V1
+بدل وضع business logic داخل controllers، نستخدم Actions.
+15.1 Core Actions
+CreateOrganizationInviteOrganizationMemberAcceptOrganizationInvitationAssignRoleToMembershipCreateSiteUpdateSiteSettings
+15.2 CMS Actions
+CreateContentEntryUpdateContentEntryPublishContentEntryArchiveContentEntryCreateContentRevisionAttachTermToContent
+15.3 Media Actions
+UploadMediaAssetUpdateMediaMetadataDeleteMediaAssetTrackMediaUsage
+15.4 Theme/Package Actions
+RegisterThemeActivateThemeInstallPackageActivatePackageDeactivatePackage
+15.5 Rabet Foundation Actions
+CreateCompanyCreateBusinessProfileDraftUpdateBusinessProfileSubmitVerificationRequestUploadVerificationDocument
+15.6 Activity Actions
+LogActivity
+16. Events في V1
+16.1 Core Events
+UserRegisteredOrganizationCreatedMemberInvitedMemberJoinedSiteCreatedSettingChanged
+16.2 CMS Events
+ContentCreatedContentUpdatedContentPublishedContentArchivedMediaUploadedThemeActivated
+16.3 Package Events
+PackageInstalledPackageActivatedPackageDeactivated
+16.4 Rabet Foundation Events
+CompanyCreatedBusinessProfileDraftCreatedVerificationRequestCreatedVerificationDocumentUploaded
+17. Listeners في V1
+LogUserRegistrationLogOrganizationCreatedCreateDefaultOrganizationRolesCreateDefaultSiteContentTypesCreateDefaultPagesLogSiteCreatedCreateContentRevisionLogContentPublishedUpdateSitemapClearPageCacheLogMediaUploadedLogThemeActivatedLogPackageActivatedLogBusinessProfileUpdatedCreateNotificationForMemberInvitation
+18. Admin UI Scope في V1
+18.1 Login/Register
+تسجيل حساب.
+تسجيل دخول.
+نسيان كلمة المرور.
+Email verification optional.
+18.2 Setup Wizard
+بعد التسجيل:
+Step 1: Create OrganizationStep 2: Create SiteStep 3: Choose ThemeStep 4: Create first pageStep 5: Optional Business Profile DraftStep 6: Optional Invite Team Member
+18.3 Organization Dashboard
+يعرض:
+Sites count.
+Members count.
+Recent activity.
+Quick actions.
+18.4 Site Dashboard
+يعرض:
+Pages count.
+Posts count.
+Media count.
+Published content.
+Drafts.
+18.5 Content UI
+Screens:
+Pages listCreate pageEdit pagePublish pagePosts listCreate postEdit postCategoriesTags
+18.6 Media Library UI
+Upload file.
+List media.
+Edit alt/caption.
+Copy URL.
+Delete.
+18.7 Appearance UI
+Themes list.
+Activate theme.
+Theme details.
+18.8 Plugins UI basic
+Installed packages list.
+Activate/deactivate.
+Status.
+18.9 Business UI
+Business Profile DraftVerification FoundationUpload Verification Document
+18.10 Team UI
+Members listInvite memberRoles basic
+18.11 System UI
+Activity LogSettingsFeature Flags basicSystem StatusImport/Export Jobs placeholder
+19. V1 Navigation
+DashboardContent  Pages  Posts  Categories  TagsMediaAppearance  ThemesPluginsBusiness  Business Profile  VerificationTeam  Members  RolesSystem  Activity Log  Settings  System Status
+ممنوع في V1 إظهار قوائم ERP كاملة أو Commerce كامل حتى لا يتشتت المنتج.
+20. Public Site Rendering
+20.1 المطلوب
+Render homepage.
+Render page by slug.
+Render posts archive.
+Render single post.
+Render categories/tags basic.
+404 page.
+SEO meta.
+Sitemap.
+20.2 Theme Templates
+Default theme يجب أن يحتوي:
+layout.blade.phphome.blade.phppage.blade.phppost.blade.phparchive.blade.php404.blade.phppartials/header.blade.phppartials/footer.blade.php
+21. Default Theme في V1
+21.1 اسم مقترح
+Kabeeri Starter
+21.2 يحتوي على
+Header.
+Footer.
+Hero section.
+Page layout.
+Blog layout.
+Responsive layout.
+RTL support.
+Basic colors.
+Business-friendly design.
+21.3 لا يحتاج
+Visual builder.
+Complex animations.
+Theme marketplace.
+22. SEO في V1
+22.1 Fields
+كل ContentEntry يحتوي على:
+seo_titleseo_descriptioncanonical_urlslugpublished_at
+22.2 Features
+Meta title.
+Meta description.
+Canonical.
+Sitemap basic.
+Robots.txt basic.
+OpenGraph basic optional.
+22.3 لا يدخل في V1
+Advanced schema.
+SEO scoring.
+Keyword tracking.
+AI SEO كامل.
+23. Media في V1
+23.1 Supported uploads
+jpgjpegpngwebpsvg بحذرpdf
+23.2 Security
+Validate mime type.
+Validate size.
+Store safely.
+Prevent executable uploads.
+23.3 Metadata
+filename.
+original filename.
+size.
+mime.
+width/height.
+alt text.
+caption.
+24. Activity Log في V1
+24.1 Events يجب تسجيلها
+user_registeredorganization_createdsite_createdmember_invitedrole_assignedpage_createdpage_updatedpage_publishedpost_createdpost_publishedmedia_uploadedtheme_activatedplugin_activatedbusiness_profile_updatedverification_document_uploadedsetting_changed
+24.2 UI
+Activity Log screen تعرض:
+action.
+actor.
+subject.
+date.
+organization/site/company.
+25. Notifications في V1
+25.1 In-app فقط كبداية
+Notifications basic:
+Member invited.
+Content submitted for review optional.
+Verification document uploaded.
+System alert.
+25.2 لا يدخل في V1
+SMS.
+WhatsApp.
+Push notifications.
+Advanced preferences.
+26. Feature Flags في V1
+26.1 Flags مبدئية
+enable_business_profileenable_verification_foundationenable_pluginsenable_themesenable_import_exportenable_notificationsenable_system_status
+26.2 الهدف
+تشغيل/إيقاف أجزاء أثناء التطوير.
+تجهيز الخطط المستقبلية.
+تقليل خطر features غير مكتملة.
+27. Settings في V1
+27.1 Organization Settings
+namecountrylanguagetimezone
+27.2 Site Settings
+site_namesite_descriptionlanguagetimezonehomepage_idposts_page_idseo_defaults
+27.3 System Settings
+app_namemaintenance_mode optionalupload_limits
+28. Import/Export Foundation في V1
+28.1 المطلوب
+import_jobs table.
+export_jobs table.
+UI placeholder.
+status tracking.
+28.2 لا يدخل
+WordPress importer كامل.
+WooCommerce importer.
+Shopify importer.
+لكن V1 يجب أن يكون جاهزًا لـ V2.
+29. Backup Foundation في V1
+29.1 المطلوب
+Backup command basic.
+Export database optional.
+Export media optional لاحقًا.
+System Status يظهر backup readiness.
+29.2 لا يدخل
+Cloud backup.
+Scheduled backups advanced.
+One-click restore كامل.
+30. System Status في V1
+Screen تعرض:
+App versionPHP versionLaravel versionDatabase statusStorage statusQueue statusCache statusUpload max sizeDisk free space optional
+31. Localization في V1
+31.1 مطلوب
+Arabic UI ready.
+English UI ready.
+RTL support.
+locale على users/sites.
+timezone.
+countries seed.
+currencies seed.
+31.2 Default
+locale: arcountry: EG optionaltimezone: Africa/Cairocurrency: EGP optional
+32. Security في V1
+32.1 Must-have
+Password hashing.
+CSRF protection.
+Request validation.
+RBAC.
+Policies.
+File validation.
+SQL injection protection via ORM.
+XSS awareness في content rendering.
+Activity logs.
+32.2 Should-have
+MFA foundation.
+Private file storage support.
+Sensitive access logs table optional.
+33. Performance في V1
+33.1 Must-have
+Pagination.
+Indexes.
+Cache-ready config.
+Queue-ready config.
+Avoid N+1 queries.
+Public page render efficient.
+33.2 لا يدخل
+CDN كامل.
+Search engine خارجي.
+Multi-server scaling.
+34. Testing في V1
+34.1 Must-have tests
+Auth testsOrganization creation testMembership testPermission testSite creation testPage creation testPage publishing testMedia upload testBusiness profile draft testActivity log testFeature flag test
+34.2 Should-have tests
+Theme activation testPlugin activation testVerification document upload testNotification creation test
+35. Seeders في V1
+يجب توفير seeders لـ:
+PermissionsSeederRolesSeederCountriesSeederCurrenciesSeederDefaultThemeSeederDefaultContentTypesSeederDemoOrganizationSeeder optionalDemoSiteSeeder optionalDemoBusinessProfileSeeder optional
+36. Installer في V1
+36.1 الهدف
+تمكين self-hosted installation.
+36.2 خطوات installer
+Check requirementsDatabase configurationRun migrationsCreate admin userCreate default organizationCreate default siteChoose languageFinish setup
+36.3 لا يدخل
+Marketplace install.
+Cloud provisioning.
+Multi-tenant automation.
+37. CLI Commands في V1
+Commands مقترحة:
+php artisan kabeeri:installphp artisan kabeeri:create-adminphp artisan kabeeri:seed-defaultsphp artisan kabeeri:system-statusphp artisan kabeeri:backupphp artisan kabeeri:theme:registerphp artisan kabeeri:package:validate
+38. V1 Build Order — ترتيب البناء العملي
+لو هتبني لوحدك بالـ AI، اتبع هذا الترتيب بالضبط.
+المرحلة 1 — Laravel Base
+Create Laravel projectConfigure databaseInstall auth starterInstall Filament/LivewireConfigure Tailwind/RTLSetup testingSetup Pint/Pest
+المرحلة 2 — Core Identity
+UsersUserProfileOrganizationsOrganizationMembershipsRolesPermissionsPoliciesDefault roles/permissions seeders
+المرحلة 3 — Sites
+Sites tableSite modelCreate site actionSite settingsSite dashboardDomain/subdomain fields
+المرحلة 4 — CMS
+ContentTypesContentEntriesPagesPostsTaxonomiesTermsRevisionsPublish workflowSEO fieldsPublic rendering
+المرحلة 5 — Media
+MediaAssetsUploadMetadataMedia library UIFeatured image relation
+المرحلة 6 — Themes
+Themes tableDefault themeTheme activationBlade templatesPublic site theme rendering
+المرحلة 7 — Activity Log
+Activity logs tableLogActivity actionListenersActivity screen
+المرحلة 8 — Business Foundation
+CompaniesCompany memberships basicBusiness profiles draftVerification requests basicVerification documents basic
+المرحلة 9 — Operating Foundation
+Feature flagsNotifications basicSettingsImport/export jobs foundationSystem statusBackup command
+المرحلة 10 — Polish & Demo
+Onboarding wizardDemo seed dataV1 demo siteTestingDocumentationBug fixing
+39. AI Build Prompts مقترحة
+39.1 للـ migrations
+ابني Laravel migration لجدول organizations حسب schema التالي، مع indexes وsoft deletes، بدون أي business logic.
+39.2 للـ model
+ابني Model Organization مع العلاقات التالية فقط، واستخدم casts للـ settings JSON.
+39.3 للـ policy
+ابني OrganizationPolicy تعتمد على PermissionService، ولا تضع الصلاحيات hardcoded إلا عبر permission slugs.
+39.4 للـ tests
+اكتب Feature Test يتأكد أن Organization Owner يستطيع إنشاء Site، وأن Viewer لا يستطيع.
+39.5 للـ UI
+ابني Filament Resource لإدارة Pages يدعم title, slug, status, visibility, seo_title, seo_description.
+40. Definition of Done لـ V1
+V1 يعتبر مكتملًا فقط إذا:
+يمكن تثبيت النظام من الصفريمكن إنشاء adminيمكن إنشاء Organizationيمكن إنشاء Siteيمكن اختيار Themeيمكن إنشاء Page ونشرهايمكن إنشاء Post ونشرهيمكن رفع Mediaيمكن ضبط SEO basicيمكن رؤية الموقع العاميمكن دعوة memberتعمل الصلاحيات الأساسيةتعمل Activity Logsيمكن إنشاء Business Profile draftيمكن رفع Verification Document basicتعمل Feature Flags basicتوجد System Status pageتوجد tests أساسيةيوجد Demo لشركة خدمات صغيرة
+41. V1 Demo النهائي
+41.1 اسم الديمو
+Kabeeri Demo — Digital Marketing Agency
+41.2 يحتوي على
+Public Website
+Home.
+About.
+Services.
+Blog.
+Contact.
+Admin
+Organization.
+Site.
+Pages.
+Posts.
+Media.
+Theme.
+Business Profile draft.
+Team member.
+Activity log.
+Rabet foundation
+Company draft.
+Verification request draft.
+Uploaded document sample.
+42. V1 Documentation المطلوبة
+يجب كتابة Docs مختصرة:
+Installation GuideAdmin GuideContent Management GuideTheme BasicsRoles & Permissions GuideBusiness Profile Draft GuideDeveloper Notes
+43. V1 Release Gate
+لا ننتقل إلى V2 إلا إذا:
+CMS stableSites stableMedia stableSEO basic worksActivity Log worksOrganization/Site/Company separation worksBusiness Profile draft worksImport/export foundation existsPermissions basic worksDemo completeCritical bugs fixed
+44. ما يمهد له V1 في V2
+V1 يمهد لـ V2 عبر:
+Content model → WordPress MigrationMedia model → Media importSEO fields → SEO migrationImport jobs → WordPress importerSite structure → Multiple sitesBusiness profile → Business directoryPackage foundation → Official pluginsTheme system → Better themes
+45. أخطاء ممنوعة في V1
+45.1 لا تبني ERP في V1
+45.2 لا تبني Commerce كامل في V1
+45.3 لا تجعل User تابعًا لشركة واحدة
+45.4 لا تؤجل الصلاحيات
+45.5 لا تؤجل Activity Log
+45.6 لا تبدأ بـ Visual Builder ضخم
+45.7 لا تخلط Site مع Company
+45.8 لا تفتح Marketplace للمطورين
+45.9 لا تبني AI Co-builder كامل
+45.10 لا تعرض كل الموديولات في UI
+46. ملخص V1 التنفيذي
+V1 يجب أن ينجز التالي:
+بناء CMS فعليمع Organization وSite وCompany foundationوصلاحيات وActivity Logوثيم وميديا وSEOوبروفايل بزنس مبدئيوتوثيق مبدئيجاهز للهجرة من WordPress في V2وجاهز للتوسع إلى Commerce/Rabet/ERP لاحقًا
+القاعدة النهائية:
+V1 لا يبني Kabeeri كله، لكنه يبني الأساس الذي يجعل Kabeeri كله ممكنًا.
+47. الخطوة التالية بعد اعتماد V1
+بعد اعتماد هذا الملف، يتم إنشاء الملف التالي فقط عند القرار:
+KABEERI V2 — WordPress Migration + Commerce Foundation
+لكن لا نبدأ V2 إلا بعد تنفيذ V1 أو اعتماد خطة تنفيذه بالكامل.

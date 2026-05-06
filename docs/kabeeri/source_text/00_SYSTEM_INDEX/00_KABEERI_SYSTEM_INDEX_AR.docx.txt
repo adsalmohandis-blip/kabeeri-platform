@@ -1,0 +1,41 @@
+KABEERI System Index
+فهرس نظام المعرفة المعتمد — v1.1.0
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. ملخص الإصدار
+هذا الفهرس يوضح البنية المعتمدة لحزمة KABEERI Professional Knowledge System بعد إضافة طبقات Work Network و300 Themes وPlugin/Marketing Ecosystem.
+المجلد
+المحتوى
+01_STRATEGY_AND_BUSINESS
+الرؤية، التموضع، التسعير
+02_FOUNDATION_ARCHITECTURE
+الملاحق التأسيسية والحاكمة
+03_RELEASE_SPECS
+مواصفات V1–V6
+04_DATABASE_ARCHITECTURE
+ملفات قواعد البيانات والفهارس والـ ERD
+05_EXECUTION_LARAVEL
+خطة التنفيذ في Laravel
+06_WORDPRESS_MIGRATION_CENTER
+الهجرة والتوافق مع WordPress
+08_DEVELOPER_ECONOMY
+اقتصاد المطورين والثيمات والإضافات
+10_PEOPLE_PARTNER_WORK_NETWORK
+المستخدمون، المواهب، الأكاديمية، الوكالات، الشركاء
+11_THEME_PLUGIN_MARKETING_ECOSYSTEM
+300 ثيم، البلجنات، التسويق الإلكتروني
+99_ARCHIVE_SUPERSEDED
+ملفات محفوظة للأثر فقط
+2. إحصاءات الحزمة
+البند
+القيمة
+Version
+v1.1.0
+Release date
+2026-05-05
+Canonical/reference files
+98
+Archived files
+3
+Total files
+101
+KABEERI — Confidential Product Architecture

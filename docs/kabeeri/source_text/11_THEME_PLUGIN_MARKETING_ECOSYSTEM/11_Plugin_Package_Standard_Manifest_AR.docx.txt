@@ -1,0 +1,26 @@
+11 — معيار حزمة البلجن وملفات Manifest
+يوضح القواعد التي يلتزم بها أي Plugin / Module / Connector / AI Skill داخل Kabeeri Marketplace.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+الملفات القياسية داخل أي Plugin Package
+plugin.manifest.json — الاسم، النوع، الناشر، الإصدار، التوافق.
+permissions.json — الصلاحيات المطلوبة وسببها.
+dependencies.json — الحزم التي يعتمد عليها البلجن أو يتعارض معها.
+api.routes.json — endpoints التي يضيفها أو يستهلكها البلجن.
+events.json — الأحداث التي يطلقها أو يستمع لها.
+frontend.components.json — مكونات React التي يضيفها للويب.
+mobile.extensions.json — إضافات أو شاشات موبايل اختيارية.
+install.md / uninstall.md — قواعد التثبيت والإلغاء الآمن.
+تصنيف المخاطر
+Risk Level
+أمثلة
+مراجعة مطلوبة
+Low
+FAQ, Testimonials, Social Share
+مراجعة آلية + basic QA
+Medium
+Forms, CRM Leads, Booking
+Security + Permissions review
+High
+Payments, ERP, Payroll, Legal Verification
+Manual review + audit + signing

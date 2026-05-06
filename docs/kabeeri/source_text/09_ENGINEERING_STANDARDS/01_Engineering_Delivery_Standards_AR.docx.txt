@@ -1,0 +1,222 @@
+KABEERI
+Engineering Delivery Standards
+معايير الهندسة والتنفيذ والجودة — KABEERI
+هذا الملف يضع المعايير التنفيذية التي تمنع الفوضى عند تحويل معمارية Kabeeri إلى كود Laravel حقيقي. الهدف هو أن يلتزم كل migration وmodel وAPI وpolicy وtest وrelease بنفس القواعد.
+1. القاعدة الحاكمة
+Build small, testable, observable, rollback-ready pieces.
+لا يدخل main إلا كود يعمل، عليه tests أساسية، ولا يكسر migrations أو صلاحيات.
+أي Feature جديدة يجب أن تحدد: context, permissions, logs, tests, rollback behavior, feature flag.
+أي كود مولد بالـ AI يجب أن يمر بمراجعة بشرية واختبارات قبل الدمج.
+2. Git وBranching
+main  - stable only  - deployabledev  - integration branchfeature/{module}-{feature}fix/{bug-name}chore/{task-name}
+نوع commit
+مثال
+feat
+feat: add organizations migration
+fix
+fix: correct site slug uniqueness
+test
+test: add organization policy tests
+refactor
+refactor: move publish logic to action
+chore
+chore: configure pint and pest
+3. Laravel Naming Standards
+العنصر
+القاعدة
+مثال
+Table
+plural snake_case
+organization_memberships
+Model
+singular PascalCase
+OrganizationMembership
+Migration
+create/update + table name
+create_organizations_table
+Policy
+ModelPolicy
+OrganizationPolicy
+Action
+Verb + Object
+CreateOrganizationAction
+Service
+Domain + Service
+PermissionResolverService
+Event
+Past tense
+ContentPublished
+Listener
+Verb + effect
+UpdateSitemapAfterContentPublished
+Job
+Verb + Object + Job
+ImportWordPressMediaJob
+Permission
+context.action
+organization.manage
+4. Database Standards
+كل كيان مهم يحتوي id داخلي وuuid/ulid عام عند الحاجة.
+كل بيانات العميل يجب أن تكون tenant-scoped عبر organization_id أو علاقة واضحة تصل إليه.
+لا نضع company_id أو role أو organization_id داخل users.
+JSON يستخدم للmetadata المرنة، وليس للعلاقات الأساسية.
+كل جدول حساس يحتاج activity/audit log عند العمليات المهمة.
+id bigint unsigned primary keyuuid char(26/36) uniqueorganization_id indexed nullable where neededcompany_id indexed nullable where neededsite_id indexed nullable where neededstatus indexedvisibility nullablemetadata json nullablecreated_by nullableupdated_by nullablecreated_at / updated_at / deleted_at nullable
+5. API Design Standards
+حتى لو بدأ V1 بواجهة Filament، يجب تجهيز APIs بنفس نمط ثابت حتى لا تتضارب الموديولات لاحقًا.
+GET    /api/v1/organizationsPOST   /api/v1/organizationsGET    /api/v1/organizations/{uuid}PATCH  /api/v1/organizations/{uuid}DELETE /api/v1/organizations/{uuid}
+العنصر
+القاعدة
+IDs
+في APIs نستخدم uuid/ulid وليس id الداخلي.
+Pagination
+page/per_page أو cursor لاحقًا.
+Errors
+code, message, details, request_id.
+Auth
+Sanctum/API tokens مع scopes.
+Rate Limits
+حسب user/org/token/endpoint.
+Filtering
+filter[field]=value أو query params موحدة.
+Sorting
+sort=-created_at,name.
+6. Standard API Response
+{  "data": {},  "meta": {    "request_id": "req_xxx",    "pagination": {}  }}
+{  "error": {    "code": "permission_denied",    "message": "You do not have permission to perform this action.",    "details": {},    "request_id": "req_xxx"  }}
+7. Permissions Matrix Standards
+أي صلاحية يجب أن تعبر عن Context واضح. لا توجد صلاحية عامة مطلقة إلا للـ Platform Super Admin.
+Permission
+Context
+Risk
+Examples
+organization.manage
+organization
+high
+settings, members, roles
+site.create
+organization
+medium
+create new Kabeeri App
+content.publish
+site
+medium
+publish page/post
+media.upload
+site/company
+low
+upload media
+billing.manage
+organization
+high
+plans, invoices, payment method
+plugin.install
+site/organization
+high
+install package
+ai.apply_sensitive_change
+context-specific
+critical
+AI writes to system
+Deny overrides allow.
+كل sensitive permission يجب أن تكون منفصلة لا ضمن role عام.
+Policy tests مطلوبة لأي permission عالية المخاطر.
+8. Feature Flags Matrix Standards
+الحقل
+الوصف
+key
+اسم flag مثل enable_wordpress_import.
+default_value
+القيمة الافتراضية.
+scope
+platform / organization / company / site / module.
+release
+V1/V2/V3...
+owner_module
+الموديول المسؤول.
+risk
+low/medium/high/critical.
+rollout_policy
+all / beta / allowlist / internal only.
+enable_wordpress_importrelease: V2scope: siteowner_module: migrationrisk: mediumrollout_policy: beta_then_public
+9. Logging & Error Handling
+Activity log للأحداث العامة التي تهم المستخدم.
+Audit log للأحداث الحساسة: صلاحيات، فوترة، توثيق، AI apply، package install، export.
+Security event للأحداث الأمنية: login failed, token revoked, MFA changed.
+كل exception مهم يجب أن يكون له request_id وربط بسياق organization/site/company عند الإمكان.
+نوع الرسالة
+للمستخدم
+للمطور
+Validation
+رسالة واضحة قابلة للفهم
+field, rule, input summary
+Permission
+لا تملك الصلاحية
+permission, context, actor
+System
+حدث خطأ، حاول لاحقًا
+stack trace في logs فقط
+Integration
+فشل الاتصال بالمزود
+provider, response, retry status
+10. Testing Standards
+نوع الاختبار
+متى يكون مطلوبًا
+Unit
+حسابات، resolvers، validators، mappers.
+Feature
+أي flow كامل: create organization/site/page.
+Policy
+أي صلاحية جديدة أو حساسة.
+Migration
+أي migration يغير بنية بيانات مهمة.
+Security
+access control, uploads, tokens, sensitive logs.
+AI Safety
+plan قبل apply، approval، rollback، logs.
+Package
+install/activate/update/deactivate/uninstall.
+php artisan test --testsuite=Corephp artisan test --filter=OrganizationPolicyTest./vendor/bin/pint --test
+11. Seed Data & Demo Standards
+أي Demo رسمي يجب أن يكون قابلًا لإعادة البناء من seeders وليس manual setup.
+Seeder
+الغرض
+CountriesSeeder
+الدول والعملات الأساسية.
+PermissionsSeeder
+الصلاحيات الأساسية.
+RolesSeeder
+الأدوار الافتراضية.
+FeatureFlagsSeeder
+flags الرسمية.
+DemoOrganizationSeeder
+منظمة تجريبية.
+DemoSiteSeeder
+تطبيق/موقع تجريبي.
+DemoCMSSeeder
+صفحات ومقالات وميديا.
+DemoRabetSeeder
+شركة وبروفايل بزنس.
+12. Review Checklist قبل الدمج
+هل migration لها rollback أو strategy واضحة؟
+هل الجداول tenant-scoped؟
+هل الصلاحيات معرفة ومختبرة؟
+هل action/service يسجل activity/audit عند الحاجة؟
+هل feature flag موجودة للميزة الكبيرة؟
+هل توجد tests مناسبة؟
+هل توجد seed/demo data إذا كانت feature مرئية؟
+هل يوجد impact على Portable/Dedicated/Frontend Anywhere؟
+هل يوجد أثر على Migration Center أو Marketplace؟
+هل الكود المولد بالـ AI تمت مراجعته؟
+13. Definition of Done
+الميزة تعتبر منتهية فقط عندما:
+الكود يعمل محليًا.
+المستخدم يستطيع تنفيذ السيناريو الأساسي من الواجهة أو API.
+Policy tests تمر.
+Feature tests تمر.
+لا توجد migrations مكسورة.
+activity/audit logs تعمل عند الحاجة.
+لا توجد صلاحيات واسعة غير مبررة.
+التجربة موثقة في notes أو README صغير داخل الموديول.
+تم اختبارها يدويًا مرة واحدة على الأقل.
+KABEERI — Engineering Delivery Standards

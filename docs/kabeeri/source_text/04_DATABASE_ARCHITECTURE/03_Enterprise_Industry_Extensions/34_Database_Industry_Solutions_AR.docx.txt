@@ -1,0 +1,1106 @@
+KABEERI Database File 34
+Kabeeri Industry Solutions Database
+قاعدة بيانات الحلول الصناعية القابلة للتفعيل
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يصف طبقة قاعدة البيانات الخاصة بحلول القطاعات داخل Kabeeri، بحيث يمكن تثبيت حل صناعي جاهز فوق النواة والـ ERP والـ CMS والـ Commerce والـ BI والـ Workflows، بدون كسر Core أو تحويل النظام إلى مشروع مخصص غير قابل للترقية.
+1. تعريف Industry Solutions
+Industry Solution هو Package/Suite موجه لصناعة معينة، يجمع Modules وTemplates وWorkflows وDashboards وReports وPermissions وFields وSeeders وDemo Data في حزمة قابلة للتثبيت والإزالة والتحديث.
+• ليس مجرد قالب صفحة أو Theme.
+• ليس Module منفصل فقط.
+• ليس تعديل مخصص داخل Core.
+• هو طبقة تركيب منظمة فوق الموديولات الموجودة.
+• يجب أن يمر عبر Package governance وpermission disclosure وcompatibility checks.
+2. لماذا نحتاج Database مستقلة للحلول الصناعية؟
+• لأن قطاعات مثل Real Estate وConstruction وHealthcare وEducation وRetail تحتاج قوالب وحقول وعمليات مختلفة.
+• لأن الحل الصناعي قد يفعّل عدة Modules في وقت واحد مثل CRM وProjects وContracts وInventory وBI.
+• لأن التخصيص يجب أن يكون قابلًا للتتبع والتصدير والتحديث وليس مجرد كود مخصص.
+• لأن Cloud وPortable وDedicated يحتاجون معرفة ما الذي تم تثبيته وما الذي تغير.
+• لأن Marketplace يحتاج نشر هذه الحلول كحزم آمنة قابلة للمراجعة والبيع.
+3. الفرق بين Solution و Package و Module و Template
+المفهوم
+التعريف
+مثال
+Package
+وحدة قابلة للتثبيت تحتوي manifest وإصدار وصلاحيات.
+paymob-payments / crm-module
+Module
+وظيفة تشغيلية كبيرة داخل النظام.
+CRM / Inventory / Helpdesk
+Template
+قالب جاهز لصفحة أو Workflow أو Dashboard أو Form.
+Real Estate Landing Page
+Suite
+مجموعة Modules مترابطة.
+Finance Suite / HCM Suite
+Industry Solution
+حزمة قطاعية تجمع Modules + Templates + Workflows + Dashboards + Permissions.
+Construction Solution
+4. المبادئ الحاكمة
+• لا يتم تعديل Core مباشرة عند تركيب Solution.
+• كل Solution له manifest وإصدار ومراجعة وتوقيع.
+• كل Solution يعلن الصلاحيات والبيانات التي يحتاجها قبل التثبيت.
+• كل Solution يجب أن يكون tenant-scoped عبر organization_id/company_id/site_id عند الحاجة.
+• أي بيانات حساسة مثل المرضى أو الطلاب أو الرواتب تخضع لصلاحيات وخصوصية وAudit.
+• يجب دعم install / upgrade / rollback / uninstall مع logs.
+• أي Solution يظهر للعميل فقط إذا كان plan يسمح وfeature flag مفعل وmodule installed وpermissions موجودة.
+5. يعتمد على ماذا؟
+الطبقة
+سبب الاعتماد
+Core Kernel
+الهوية، المؤسسات، الشركات، المواقع، الصلاحيات، الإعدادات، Activity Logs.
+Internal Marketplace / Packages
+تسجيل الحل كحزمة، المراجعة، التوقيع، التثبيت، التحديث.
+Billing / Entitlements
+معرفة هل الخطة تسمح بتفعيل الحل الصناعي أم لا.
+Modules
+تفعيل CRM/Projects/Inventory/Contracts/BI حسب كل قطاع.
+Workflows
+إنشاء workflows sector-specific مثل approval أو site progress أو patient intake.
+BI / Analytics
+إنشاء dashboards وKPIs وتقارير القطاع.
+Localization / Country Packs
+قواعد الدولة والضرائب والخصوصية والفواتير والامتثال حسب البلد.
+Security / Compliance
+السيطرة على البيانات الحساسة، audit، privacy، access control.
+6. ما هو داخل النطاق؟
+• Solution registry.
+• Solution versions.
+• Solution package links.
+• Required modules and entitlements.
+• Template bundles.
+• Workflow bundles.
+• Dashboard/report bundles.
+• Industry-specific fields.
+• Permissions and roles mapping.
+• Installations and upgrade logs.
+• Demo data and seeders.
+• Customizations tracking.
+• Industry-specific foundation tables لبعض القطاعات.
+7. ما ليس داخل النطاق؟
+• بناء كل صناعة بنسبة 100% في V6.
+• تخزين كل بيانات الصناعة داخل جدول واحد عام.
+• تحويل كل حل إلى fork من Kabeeri.
+• تجاوز قواعد Marketplace review/signing.
+• تجاوز Country Packs في الضرائب أو الخصوصية أو e-invoicing.
+• إدخال بيانات حساسة إلى Mall Mirror بدون consent وقواعد visibility.
+8. Data Domains
+Domain
+الجداول الرئيسية
+Solution Registry
+industry_solutions, industry_solution_versions, industry_solution_categories
+Composition
+industry_solution_modules, industry_solution_templates, industry_solution_workflows
+Activation
+industry_solution_installations, installation_steps, applied_items
+Governance
+requirements, permissions, feature_flags, compatibility_checks
+Customization
+industry_solution_customizations, settings, overrides
+Lifecycle
+upgrade_plans, upgrade_logs, uninstall_plans, audit_logs
+Demo & Seeders
+demo_data_sets, demo_runs, seeders
+Industry Tables
+real estate / construction / healthcare / education / retail / logistics foundations
+9. الجداول العامة للحلول الصناعية
+industry_solution_categories
+الحقل
+الوصف / الملاحظات
+id
+Primary key
+parent_id nullable
+تصنيف أب إن وجد
+name
+اسم التصنيف
+slug
+slug فريد
+description nullable
+وصف
+sort_order default 0
+ترتيب
+status default active
+active / hidden / deprecated
+created_at / updated_at
+industry_solutions
+الحقل
+الوصف / الملاحظات
+id
+Primary key
+uuid
+للتصدير والـ API
+category_id nullable
+التصنيف
+package_id nullable
+الرابط مع marketplace package
+name
+اسم الحل
+slug
+فريد
+industry_key
+real_estate / construction / healthcare ...
+description nullable
+solution_type
+official / partner / private / enterprise
+status default draft
+draft / published / suspended / deprecated
+risk_level default medium
+low / medium / sensitive / regulated
+publisher_type
+official / partner / developer / enterprise
+publisher_id nullable
+publisher أو organization
+requires_review default true
+metadata json nullable
+created_at / updated_at
+• industry_key يجب أن يكون مستقرًا لأنه يستخدم في feature flags وseeders وtemplates.
+industry_solution_versions
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_id
+version
+1.0.0
+release_status
+draft / beta / stable / deprecated
+kabeeri_min_version
+kabeeri_max_version nullable
+requires json
+modules/packages/country_packs
+manifest json
+نسخة manifest كاملة
+changelog longtext nullable
+released_at nullable
+created_at / updated_at
+industry_solution_requirements
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+requirement_type
+module / package / entitlement / country_pack / permission / plan
+requirement_key
+مثال: enable_crm_pro
+operator default required
+required / optional / one_of
+min_version nullable
+metadata json nullable
+created_at / updated_at
+industry_solution_modules
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+module_key
+crm / projects / contracts / inventory / bi
+module_id nullable
+activation_mode default required
+required / optional / recommended
+settings json nullable
+إعدادات module عند التفعيل
+created_at / updated_at
+industry_solution_templates
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+template_type
+page / form / workflow / dashboard / report / email / contract
+name
+slug
+description nullable
+source_package_id nullable
+payload json
+القالب نفسه أو مرجع له
+status default active
+created_at / updated_at
+industry_solution_template_items
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_template_id
+item_type
+field / block / section / widget / rule
+item_key
+payload json
+sort_order default 0
+created_at / updated_at
+industry_solution_workflows
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+workflow_definition_id nullable
+يرتبط بمحرك Workflows
+name
+slug
+trigger_event nullable
+payload json
+workflow blueprint
+risk_level default medium
+requires_approval default false
+created_at / updated_at
+industry_solution_dashboards
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+dashboard_definition_id nullable
+يرتبط بـ BI
+name
+slug
+target_role nullable
+manager / owner / operator
+payload json
+dashboard blueprint
+created_at / updated_at
+industry_solution_reports
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+report_definition_id nullable
+name
+slug
+report_type
+operational / financial / compliance / kpi
+payload json
+created_at / updated_at
+industry_solution_permissions
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+permission_slug
+default_role_slug nullable
+risk_level default low
+description nullable
+created_at / updated_at
+industry_solution_feature_flags
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+feature_flag_key
+default_value boolean
+description nullable
+created_at / updated_at
+industry_solution_country_rules
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+country_id nullable
+country_pack_key nullable
+rule_type
+privacy / tax / invoice / document / workflow / naming
+payload json
+created_at / updated_at
+industry_solution_ai_skills
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+ai_skill_package_id nullable
+skill_key
+risk_level
+low / medium / sensitive
+allowed_actions json
+guardrails json nullable
+created_at / updated_at
+10. جداول التثبيت والتفعيل
+industry_solution_installations
+الحقل
+الوصف / الملاحظات
+id
+uuid
+organization_id
+company_id nullable
+site_id nullable
+industry_solution_id
+industry_solution_version_id
+installed_by nullable
+installation_status default pending
+pending / installing / active / failed / suspended / uninstalling / removed
+environment default production
+production / staging / sandbox
+installed_at nullable
+last_upgraded_at nullable
+metadata json nullable
+created_at / updated_at
+industry_solution_installation_steps
+الحقل
+الوصف / الملاحظات
+id
+installation_id
+step_key
+check_requirements / install_modules / apply_templates
+step_order integer
+status default pending
+pending / running / completed / failed / skipped
+started_at nullable
+completed_at nullable
+message nullable
+metadata json nullable
+created_at / updated_at
+industry_solution_applied_items
+الحقل
+الوصف / الملاحظات
+id
+installation_id
+item_type
+module / template / workflow / dashboard / report / permission / flag / seeder
+source_id nullable
+ID داخل tables الخاصة بالحل
+applied_subject_type nullable
+الموديل الذي تم إنشاؤه
+applied_subject_id nullable
+status default active
+active / replaced / removed / failed
+metadata json nullable
+created_at / updated_at
+industry_solution_settings
+الحقل
+الوصف / الملاحظات
+id
+installation_id
+key
+value json nullable
+value_type default string
+is_encrypted default false
+created_at / updated_at
+industry_solution_seeders
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+seeder_key
+description nullable
+payload json
+تعريف البيانات الافتراضية
+is_demo default false
+created_at / updated_at
+industry_solution_demo_data_sets
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_id
+name
+slug
+description nullable
+payload_ref nullable
+مسار أو media asset
+status default active
+created_at / updated_at
+industry_solution_demo_runs
+الحقل
+الوصف / الملاحظات
+id
+installation_id
+demo_data_set_id
+status default pending
+started_by nullable
+started_at nullable
+completed_at nullable
+created_records_count integer default 0
+metadata json nullable
+created_at / updated_at
+industry_solution_upgrade_plans
+الحقل
+الوصف / الملاحظات
+id
+installation_id
+from_version_id
+to_version_id
+status default draft
+draft / ready / approved / running / completed / failed / rolled_back
+diff_summary json nullable
+risk_level default medium
+requires_backup default true
+created_by nullable
+approved_by nullable
+created_at / updated_at
+industry_solution_upgrade_logs
+الحقل
+الوصف / الملاحظات
+id
+upgrade_plan_id
+step_key
+status
+message nullable
+started_at nullable
+completed_at nullable
+metadata json nullable
+created_at / updated_at
+industry_solution_uninstall_plans
+الحقل
+الوصف / الملاحظات
+id
+installation_id
+status default draft
+remove_created_data default false
+archive_data default true
+affected_items json nullable
+risk_level default high
+created_by nullable
+approved_by nullable
+created_at / updated_at
+• إزالة الحل لا تعني حذف بيانات العميل تلقائيًا. الافتراضي هو archive/deactivate وليس hard delete.
+industry_solution_audit_logs
+الحقل
+الوصف / الملاحظات
+id
+installation_id nullable
+organization_id
+company_id nullable
+actor_user_id nullable
+action
+installed / upgraded / customized / uninstalled / seeder_run
+subject_type nullable
+subject_id nullable
+before json nullable
+after json nullable
+created_at
+industry_solution_usage_metrics
+الحقل
+الوصف / الملاحظات
+id
+installation_id
+metric_key
+active_users / records_created / workflows_run
+quantity decimal(15,3)
+period_start
+period_end
+metadata json nullable
+created_at
+industry_solution_customizations
+الحقل
+الوصف / الملاحظات
+id
+installation_id
+customization_type
+field_override / workflow_override / dashboard_override / template_override
+subject_type
+subject_id nullable
+customized_by nullable
+payload json
+status default active
+created_at / updated_at
+industry_solution_compatibility_checks
+الحقل
+الوصف / الملاحظات
+id
+industry_solution_version_id
+organization_id nullable
+company_id nullable
+check_type
+module / version / country_pack / permission / data_conflict
+status
+passed / warning / failed
+message nullable
+metadata json nullable
+checked_at
+created_at
+industry_solution_activation_requests
+الحقل
+الوصف / الملاحظات
+id
+uuid
+organization_id
+company_id nullable
+industry_solution_id
+requested_by nullable
+status default pending
+pending / approved / rejected / installed / cancelled
+review_notes nullable
+approved_by nullable
+approved_at nullable
+created_at / updated_at
+11. Industry Blueprint Tables
+الجداول التالية اختيارية لكل صناعة. لا يجب تفعيلها إلا عند تثبيت Solution مناسب، ويجب أن تلتزم بالـ organization_id/company_id والـ permissions الخاصة بها.
+11.1 Real Estate Foundation
+real_estate_properties
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+property_number
+title
+property_type
+apartment / villa / office / land
+status default draft
+draft / available / reserved / sold / rented / archived
+country_id nullable
+city nullable
+address json nullable
+area_value decimal(15,2) nullable
+area_unit default sqm
+bedrooms nullable
+bathrooms nullable
+price decimal(15,2) nullable
+currency_code nullable
+owner_contact_id nullable
+CRM contact
+metadata json nullable
+created_at / updated_at
+real_estate_listings
+الحقل
+الوصف / الملاحظات
+id
+property_id
+site_id nullable
+business_profile_id nullable
+listing_type
+sale / rent / short_term
+publication_status default draft
+draft / pending_review / published / hidden
+public_url nullable
+published_at nullable
+created_at / updated_at
+real_estate_viewings
+الحقل
+الوصف / الملاحظات
+id
+property_id
+lead_id nullable
+scheduled_at
+assigned_to nullable
+status default scheduled
+scheduled / completed / cancelled / no_show
+notes nullable
+created_at / updated_at
+11.2 Construction Foundation
+construction_projects
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+project_id nullable
+ربط اختياري مع ERP Projects
+contract_id nullable
+name
+site_location json nullable
+status default planning
+planning / active / paused / completed / cancelled
+start_date nullable
+planned_end_date nullable
+budget_amount decimal(15,2) nullable
+currency_code nullable
+created_at / updated_at
+construction_subcontractors
+الحقل
+الوصف / الملاحظات
+id
+construction_project_id
+supplier_id nullable
+company_name
+scope_of_work nullable
+contract_id nullable
+status default active
+created_at / updated_at
+construction_progress_billings
+الحقل
+الوصف / الملاحظات
+id
+construction_project_id
+invoice_id nullable
+billing_number
+progress_percentage decimal(5,2)
+amount decimal(15,2)
+status default draft
+draft / submitted / approved / invoiced / paid
+approved_by nullable
+approved_at nullable
+created_at / updated_at
+construction_site_tasks
+الحقل
+الوصف / الملاحظات
+id
+construction_project_id
+task_id nullable
+يربط بـ tasks
+trade nullable
+civil / electrical / plumbing
+area_or_zone nullable
+status default open
+created_at / updated_at
+construction_material_requests
+الحقل
+الوصف / الملاحظات
+id
+construction_project_id
+product_id nullable
+requested_quantity decimal(15,3)
+approved_quantity decimal(15,3) nullable
+status default pending
+required_at nullable
+created_at / updated_at
+11.3 Healthcare / Clinics Foundation
+clinic_locations
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+name
+address json nullable
+phone nullable
+status default active
+created_at / updated_at
+clinic_practitioners
+الحقل
+الوصف / الملاحظات
+id
+clinic_location_id nullable
+user_id nullable
+employee_record_id nullable
+specialty nullable
+license_number nullable
+status default active
+created_at / updated_at
+clinic_patients_foundation
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+customer_id nullable
+يربط بـ Customer بدون كشف زائد
+patient_code
+name_masked nullable
+للخصوصية في logs/reports
+birth_date nullable
+gender nullable
+privacy_level default sensitive
+status default active
+created_at / updated_at
+• لا يتم تخزين سجل طبي كامل في هذه النسخة. هذه Foundation فقط وتحتاج امتثال خاص قبل التوسع.
+clinic_appointments
+الحقل
+الوصف / الملاحظات
+id
+clinic_location_id
+patient_foundation_id nullable
+practitioner_id nullable
+service_id nullable
+scheduled_at
+status default scheduled
+scheduled / checked_in / completed / cancelled / no_show
+notes_private nullable
+created_at / updated_at
+clinic_privacy_consents
+الحقل
+الوصف / الملاحظات
+id
+patient_foundation_id
+consent_type
+communication / data_processing / reminders
+status default active
+granted_at nullable
+revoked_at nullable
+metadata json nullable
+created_at / updated_at
+11.4 Education / Schools Foundation
+education_students
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+student_number
+name
+guardian_customer_id nullable
+status default active
+metadata json nullable
+created_at / updated_at
+education_courses
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+course_code nullable
+name
+description nullable
+status default active
+created_at / updated_at
+education_enrollments
+الحقل
+الوصف / الملاحظات
+id
+student_id
+course_id
+status default enrolled
+enrolled_at nullable
+completed_at nullable
+created_at / updated_at
+education_attendance_records
+الحقل
+الوصف / الملاحظات
+id
+student_id
+course_id nullable
+attendance_date
+status
+present / absent / late / excused
+recorded_by nullable
+created_at / updated_at
+education_fees_foundation
+الحقل
+الوصف / الملاحظات
+id
+student_id
+invoice_id nullable
+fee_type
+amount decimal(15,2)
+currency_code nullable
+due_date nullable
+status default pending
+created_at / updated_at
+11.5 Hospitality Foundation
+hospitality_properties
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+name
+property_type
+hotel / resort / apartments / venue
+address json nullable
+status default active
+created_at / updated_at
+hospitality_units
+الحقل
+الوصف / الملاحظات
+id
+hospitality_property_id
+unit_number
+unit_type nullable
+room / suite / hall
+capacity integer nullable
+status default available
+created_at / updated_at
+hospitality_reservations
+الحقل
+الوصف / الملاحظات
+id
+hospitality_unit_id nullable
+customer_id nullable
+reservation_number
+check_in_date
+check_out_date
+status default pending
+total_amount decimal(15,2) nullable
+currency_code nullable
+created_at / updated_at
+11.6 Retail / Omnichannel Foundation
+retail_stores
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+warehouse_id nullable
+name
+store_code nullable
+address json nullable
+status default active
+created_at / updated_at
+retail_loyalty_programs
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+name
+points_rule json nullable
+status default active
+created_at / updated_at
+retail_loyalty_accounts
+الحقل
+الوصف / الملاحظات
+id
+loyalty_program_id
+customer_id
+points_balance integer default 0
+tier nullable
+status default active
+created_at / updated_at
+11.7 Logistics / Freight Foundation
+logistics_freight_orders
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+customer_id nullable
+freight_order_number
+origin json nullable
+destination json nullable
+status default draft
+scheduled_pickup_at nullable
+scheduled_delivery_at nullable
+created_at / updated_at
+logistics_shipments
+الحقل
+الوصف / الملاحظات
+id
+freight_order_id nullable
+delivery_id nullable
+tracking_number nullable
+carrier_name nullable
+status default pending
+current_location json nullable
+created_at / updated_at
+logistics_route_stops
+الحقل
+الوصف / الملاحظات
+id
+shipment_id
+stop_order integer
+location json
+planned_at nullable
+actual_at nullable
+status default pending
+created_at / updated_at
+11.8 Professional Services Foundation
+professional_service_engagements
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+customer_id nullable
+contract_id nullable
+name
+engagement_type
+project / retainer / advisory / audit
+status default active
+start_date nullable
+end_date nullable
+created_at / updated_at
+professional_service_timesheets
+الحقل
+الوصف / الملاحظات
+id
+engagement_id
+user_id
+work_date
+hours decimal(8,2)
+billable default true
+status default draft
+approved_by nullable
+created_at / updated_at
+11.9 Food & Beverage Traceability Foundation
+food_traceability_batches
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+product_id nullable
+batch_number
+lot_number nullable
+production_date nullable
+expiry_date nullable
+source_supplier_id nullable
+status default active
+created_at / updated_at
+food_traceability_events
+الحقل
+الوصف / الملاحظات
+id
+batch_id
+event_type
+received / produced / moved / inspected / shipped / recalled
+event_at
+location nullable
+quantity decimal(15,3) nullable
+metadata json nullable
+created_at
+11.10 Pharma Serialization Foundation
+pharma_serialized_items
+الحقل
+الوصف / الملاحظات
+id
+organization_id
+company_id nullable
+product_id nullable
+serial_number
+batch_number nullable
+expiry_date nullable
+status default active
+active / shipped / returned / recalled / destroyed
+metadata json nullable
+created_at / updated_at
+pharma_serialization_events
+الحقل
+الوصف / الملاحظات
+id
+serialized_item_id
+event_type
+created / packed / shipped / returned / recalled / destroyed
+event_at
+performed_by nullable
+metadata json nullable
+created_at
+12. Installation Flow
+Admin selects Industry Solution
+→ EntitlementService checks plan
+→ Compatibility check runs
+→ Required modules checked/installed
+→ Permissions disclosed
+→ Backup point created if high risk
+→ Templates/workflows/dashboards applied
+→ Seeders optional
+→ Activity/Audit logs recorded
+→ Solution status becomes active
+13. Upgrade Flow
+New solution version available
+→ Diff generated
+→ Compatibility check
+→ Risk level calculated
+→ Backup required if medium/high
+→ Admin approves upgrade
+→ Upgrade steps run queued
+→ Applied items updated
+→ Customization conflicts reported
+→ Rollback available if failure
+14. Uninstall Flow
+Admin requests uninstall
+→ Affected items calculated
+→ Data removal policy selected
+→ Default: deactivate/archive generated objects
+→ High-risk approval required
+→ Workflows disabled
+→ Dashboards hidden
+→ Templates retained as copied customer assets if used
+→ Audit log created
+15. ERD مختصر
+INDUSTRY_SOLUTIONS ||--o{ INDUSTRY_SOLUTION_VERSIONS : has
+INDUSTRY_SOLUTION_VERSIONS ||--o{ INDUSTRY_SOLUTION_REQUIREMENTS : requires
+INDUSTRY_SOLUTION_VERSIONS ||--o{ INDUSTRY_SOLUTION_MODULES : activates
+INDUSTRY_SOLUTION_VERSIONS ||--o{ INDUSTRY_SOLUTION_TEMPLATES : provides
+INDUSTRY_SOLUTION_VERSIONS ||--o{ INDUSTRY_SOLUTION_WORKFLOWS : installs
+INDUSTRY_SOLUTION_VERSIONS ||--o{ INDUSTRY_SOLUTION_DASHBOARDS : adds
+INDUSTRY_SOLUTIONS ||--o{ INDUSTRY_SOLUTION_INSTALLATIONS : installed_as
+INDUSTRY_SOLUTION_INSTALLATIONS ||--o{ INDUSTRY_SOLUTION_APPLIED_ITEMS : creates
+INDUSTRY_SOLUTION_INSTALLATIONS ||--o{ INDUSTRY_SOLUTION_CUSTOMIZATIONS : overrides
+INDUSTRY_SOLUTION_INSTALLATIONS ||--o{ INDUSTRY_SOLUTION_AUDIT_LOGS : records
+16. Feature Flags المقترحة
+• enable_industry_solutions
+• enable_industry_solution_marketplace
+• enable_industry_solution_install
+• enable_industry_solution_upgrade
+• enable_industry_solution_demo_data
+• enable_real_estate_solution
+• enable_construction_solution
+• enable_clinic_solution
+• enable_education_solution
+• enable_retail_solution
+• enable_logistics_solution
+• enable_professional_services_solution
+• enable_food_traceability_foundation
+• enable_pharma_serialization_foundation
+17. Permissions المقترحة
+المجموعة
+الصلاحيات
+Industry Admin
+industry_solution.view, industry_solution.install, industry_solution.upgrade, industry_solution.uninstall
+Customization
+industry_solution.customize, industry_solution.override_template, industry_solution.override_workflow
+Real Estate
+real_estate.property.view/manage, real_estate.listing.publish, real_estate.viewing.manage
+Construction
+construction.project.manage, construction.progress_billing.manage, construction.material_request.approve
+Healthcare
+clinic.appointment.manage, clinic.patient_foundation.view, clinic.privacy_consent.manage
+Education
+education.student.manage, education.course.manage, education.attendance.manage, education.fee.manage
+Retail
+retail.store.manage, retail.loyalty.manage
+Logistics
+logistics.freight_order.manage, logistics.shipment.manage
+Traceability
+food.traceability.manage, pharma.serialization.manage
+18. Portable / Dedicated / Frontend Anywhere Rules
+النمط
+القواعد
+Cloud
+كل بيانات solution داخل Cloud DB مع إمكانية تصدير tenant data لاحقًا.
+Frontend Anywhere
+الواجهة يمكن أن تعرض بيانات عامة فقط عبر APIs/snapshots، ولا تصل لبيانات industry الحساسة.
+Portable
+يجب تسجيل solution في export registry وتصدير applied_items وsettings وtemplates مع الحفاظ على UUIDs.
+Dedicated
+نفس schema داخل dedicated DB، مع registry مركزي محدود للتراخيص والتحديثات.
+Mall
+لا يعرض بيانات industry إلا عبر Mall Mirror وpublication consent. بيانات المرضى/الطلاب/العقود الخاصة لا تنشر.
+19. Security & Compliance Rules
+• أي حل Healthcare أو Education أو Pharma يعتبر sensitive أو regulated افتراضًا.
+• أي وصول لبيانات المرضى أو الطلاب أو payroll أو finance يجب أن يسجل في sensitive access logs.
+• AI Skills داخل Industry Solution لا تنفذ write actions خطيرة بدون preview/approval/rollback.
+• Country Pack قد يفرض حقولًا أو workflows إضافية حسب الدولة.
+• Demo Data لا يجب أن يحتوي بيانات شخصية حقيقية.
+• Marketplace review يجب أن يشمل security/business/legal review للقطاعات المنظمة.
+20. Acceptance Criteria
+• يمكن تسجيل Solution وإصدار وmanifest.
+• يمكن تشغيل compatibility check قبل التثبيت.
+• يمكن تثبيت الحل على Organization/Company محددة.
+• يتم إنشاء applied_items لكل عنصر تم إنشاؤه.
+• يتم تسجيل Activity/Audit logs لكل install/upgrade/uninstall.
+• يمكن تطبيق templates/workflows/dashboards بدون تعديل Core.
+• يمكن تصدير الحل ضمن Portable export.
+• يمكن تشغيل demo data safely في sandbox فقط أو بموافقة واضحة.
+• لا تظهر بيانات حساسة في Mall أو Search العام.
+21. Build Order المقترح
+المرحلة
+النتيجة
+1
+solution registry + versions + requirements
+2
+installation flow + compatibility checks
+3
+templates/workflows/dashboards binding
+4
+applied_items + customizations tracking
+5
+upgrade/uninstall flow
+6
+Real Estate + Construction demo foundations
+7
+Healthcare/Education foundations with privacy guardrails
+8
+Retail/Logistics/Professional Services foundations
+9
+Traceability/Pharma foundations
+10
+Marketplace listing + certification + docs
+22. أمثلة Manifests
+{
+"name": "admit/construction-solution",
+"display_name": "Construction Solution",
+"type": "industry_solution",
+"version": "1.0.0",
+"publisher": "ADMIT",
+"requires": {
+"kabeeri": ">=6.0.0",
+"modules": ["projects", "contracts", "purchasing", "inventory", "bi"],
+"feature_flags": ["enable_industry_solutions", "enable_construction_solution"]
+},
+"permissions": [
+"construction.project.manage",
+"construction.progress_billing.manage",
+"construction.material_request.approve"
+],
+"templates": true,
+"workflows": true,
+"dashboards": true,
+"risk_level": "sensitive"
+}
+23. ملخص تنفيذي
+Industry Solutions Database تجعل Kabeeri قادرة على تقديم حلول قطاعية جاهزة دون كسر بنية المنصة. الحل الصناعي ليس كودًا مخصصًا عشوائيًا، بل Package/Suite رسمي له manifest، صلاحيات، متطلبات، templates، workflows، dashboards، reports، lifecycle، وقواعد أمن وتصدير. بهذه الطريقة يمكن تثبيت Construction Solution أو Real Estate Solution أو Clinic Solution أو School Solution فوق نفس Core وERP وMarketplace وBI مع الحفاظ على قابلية التحديث والرقابة والتوسع.
+KABEERI Database File 34 — Industry Solutions Database
+powered by ADMIT

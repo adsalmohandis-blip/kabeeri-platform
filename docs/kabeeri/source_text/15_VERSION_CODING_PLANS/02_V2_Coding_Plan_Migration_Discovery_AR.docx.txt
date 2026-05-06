@@ -1,0 +1,37 @@
+KABEERI V2 Coding Plan — Migration & Discovery Foundation
+خطة تكويد منفصلة لهذا الإصدار، مهيأة للتحويل إلى Sprint Backlog داخل أداة إدارة المشروع.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. هدف الإصدار
+هذا الملف يحدد ما يتم تكويده في هذا الإصدار فقط، مع منع إدخال ميزات من إصدارات لاحقة إلا كـ feature flags مغلقة أو foundations واضحة.
+2. السبرنتات المقترحة
+السبرنت
+النطاق
+أهم الجداول/الموديولات
+مخرج قابل للاختبار
+Sprint 1
+WordPress XML Import
+import jobs, records, mappings, media import
+Import pages/posts/categories/media
+Sprint 2
+SEO/Redirect Migration
+seo mapping, redirect map, report
+Preserve slugs and redirects
+Sprint 3
+Forms/Redirects/Menus
+forms, submissions, menus, redirects
+Build contact form and menu
+Sprint 4
+Commerce Foundation
+products, cart basic, orders, customers, coupons
+Create product and order
+Sprint 5
+Mall Discovery Basic
+business/products/services mirror, consents
+Publish business/service/product to Mall mirror
+Sprint 6
+Talent + External Source Registry
+professional profiles, external_sync_sources
+Public profiles and external listing registry
+3. Release Gate
+لا يعتبر الإصدار جاهزًا إلا بعد نجاح unit/feature/policy tests، ومراجعة الصلاحيات، وتحديث seed data، وتشغيل demo scenario بدون أخطاء.

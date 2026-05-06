@@ -1,0 +1,605 @@
+KABEERI — ملحق 18: التموضع التسويقي وخطة دخول السوق
+Product Positioning & Go-To-Market Strategy
+هذا الملحق يحدد كيف سيتم تقديم Kabeeri للسوق، ومن هو الجمهور الأول، وما الرسالة التي تجعل جمهور WordPress وShopify وERP يحب المنصة، وما ترتيب الدخول للسوق بدون تشتيت.
+الهدف:
+تحويل Kabeeri من فكرة ومنصة تقنية ضخمة إلى منتج مفهوم، قابل للبيع، وله رسالة واضحة في السوق.
+1. القاعدة الرئيسية
+Kabeeri لا يجب أن يقدم نفسه في البداية كأنه:
+CMS + ERP + Marketplace + AI + Rabet + Commerce + Teams + Developer Platform
+لأن هذه رسالة ضخمة ومربكة.
+بدلًا من ذلك، يجب أن يقدم نفسه تدريجيًا:
+ابدأ كموقع أقوى من WordPressثم متجر أسهل من WooCommerceثم شركة موثقة عبر Rabetثم تشغيل وERP تدريجيثم سوق عام Kabeeri Mallثم منصة كاملة للنمو
+القاعدة:
+لا تبيع كل المنصة دفعة واحدة. بع أول ألم واضح للعميل، ثم افتح له مسار النمو.
+2. تعريف Kabeeri التسويقي
+2.1 التعريف المختصر
+Kabeeri هي منصة عربية/عالمية لبناء المواقع والمتاجر وتشغيل الشركات، تجمع CMS وCommerce وRabet Company OS وERP وAI في نظام واحد قابل للتوسع.
+2.2 التعريف الأبسط للجمهور
+Kabeeri يبدأ كموقع أو متجر، ثم يكبر معك ليصبح نظام تشغيل كامل لشركتك.
+2.3 التعريف ضد WordPress
+Kabeeri يعطيك سهولة WordPress، لكن بدون فوضى البلجنز، ومع أساس أقوى للشركات، الصلاحيات، التوثيق، التجارة، والـ ERP.
+2.4 التعريف ضد Shopify
+Kabeeri يعطيك متجرًا قابلًا للنمو، لكن لا يحصرك داخل متجر فقط؛ بل يربط البيع بالمحتوى، الفريق، العملاء، الفواتير، المخزون، والـ ERP.
+2.5 التعريف ضد ERP فقط
+Kabeeri لا يبدأ كنظام ERP ثقيل؛ بل يبدأ من موقعك ومتجرك، ثم يضيف التشغيل والـ ERP حسب نمو الشركة.
+3. الرسالة المركزية
+3.1 الرسالة العربية
+Kabeeri يحوّل موقعك من واجهة إلكترونية إلى شركة رقمية متكاملة: موقع، متجر، فريق، توثيق، عملاء، فواتير، مخزون، خدمات، ومكان ظهور داخل Kabeeri Mall.
+3.2 الرسالة الإنجليزية
+Kabeeri turns your website into a complete digital company: CMS, commerce, team operations, verification, customers, invoices, inventory, services, and marketplace visibility.
+3.3 الرسالة القصيرة جدًا
+From Website to Company OS.
+بالعربي:
+من موقع إلى نظام تشغيل شركة.
+4. المشكلة التي يحلها Kabeeri
+4.1 مشكلة WordPress
+كثير من المستخدمين يحبون WordPress لأنه:
+سهل.
+معروف.
+به إضافات كثيرة.
+مناسب للمواقع.
+يمكن استضافته ذاتيًا.
+لكنهم يعانون من:
+فوضى البلجنز.
+تضارب الإضافات.
+مشاكل الأداء.
+مشاكل الأمان.
+صعوبة بناء نظام شركة حقيقي.
+ضعف الصلاحيات المعقدة.
+صعوبة الربط بين الموقع، المتجر، الفريق، والفواتير.
+الاعتماد على إضافات كثيرة من أطراف مختلفة.
+Kabeeri يجب أن يعالج هذه المشاكل بدون أن يخيف جمهور WordPress.
+4.2 مشكلة Shopify
+Shopify قوي للتجارة، لكن بعض الشركات تحتاج:
+تحكم أكبر.
+ربط أعمق مع المحتوى.
+ربط ERP.
+تشغيل داخلي.
+مرونة self-hosted أو cloud.
+marketplace أوسع من متجر واحد.
+توسع إلى B2B وخدمات وفريق.
+Kabeeri لا ينافس Shopify فقط كمتجر، بل ينافسه عندما يحتاج البزنس إلى تشغيل كامل حول المتجر.
+4.3 مشكلة ERP التقليدي
+أنظمة ERP غالبًا:
+ثقيلة.
+مكلفة.
+صعبة الإعداد.
+تبدأ من الداخل ولا تهتم بالموقع والتسويق.
+تحتاج تنفيذ طويل.
+لا تناسب الشركات الصغيرة في بدايتها.
+Kabeeri يبدأ من حيث يبدأ البزنس فعليًا:
+موقع → متجر → عملاء → فريق → فواتير → مخزون → ERP
+4.4 مشكلة الأدوات المتفرقة
+شركة صغيرة قد تستخدم:
+WordPress للموقع.
+WooCommerce أو Shopify للبيع.
+WhatsApp للتواصل.
+Trello للمهام.
+Google Sheets للبيانات.
+QuickBooks أو Daftra للفواتير.
+Slack للفريق.
+أدوات منفصلة للتوظيف.
+Kabeeri يقدم مسارًا لتجميع هذا تدريجيًا في نظام واحد.
+5. وعد Kabeeri
+5.1 الوعد الأساسي
+ابدأ بسيطًا، ثم كبر بدون تغيير النظام.
+5.2 الوعد العملي
+ابنِ موقعك.
+أضف متجرًا.
+فعّل بروفايل بزنس.
+وثّق شركتك عبر Rabet.
+أضف فريقك.
+ابدأ استقبال طلبات.
+أدر العملاء والفواتير.
+أضف ERP عند الحاجة.
+اظهر في Kabeeri Mall.
+6. الجمهور المستهدف
+6.1 الجمهور الأول — WordPress Users
+السبب:
+يفهمون CMS.
+لديهم ألم واضح من البلجنز والأمان والأداء.
+يحتاجون بديل مألوف.
+يمكن جذبهم بميزة migration.
+الرسالة لهم
+كل ما تحبه في WordPress، لكن بأساس أنظف، صلاحيات أقوى، أداء أفضل، ومسار نمو لشركتك.
+6.2 الجمهور الثاني — Agencies
+الوكالات مهمة جدًا لأنها تدير مواقع كثيرة.
+احتياجاتهم
+إدارة مواقع العملاء.
+تحديثات آمنة.
+قوالب جاهزة.
+إعادة استخدام components.
+White label.
+تقارير للعملاء.
+دخل شهري recurring.
+الرسالة لهم
+ابنِ وأدر مواقع ومتاجر عملائك من منصة واحدة، ثم بع لهم Rabet وCommerce وERP كترقيات.
+6.3 الجمهور الثالث — SMBs
+الشركات الصغيرة والمتوسطة.
+احتياجاتهم
+موقع.
+خدمات.
+متجر.
+فريق.
+عملاء.
+فواتير.
+مهام.
+توثيق.
+ظهور في السوق.
+الرسالة لهم
+ابدأ بموقع، ثم حوّله تدريجيًا إلى نظام تشغيل لشركتك.
+6.4 الجمهور الرابع — Service Businesses
+شركات الخدمات هي أفضل بداية لـ Rabet وKabeeri Mall.
+أمثلة:
+وكالات تسويق.
+شركات برمجة.
+مكاتب محاماة.
+مكاتب محاسبة.
+شركات تصميم.
+شركات مقاولات صغيرة.
+شركات عقارية.
+مراكز تدريب.
+لماذا؟
+لأنها تحتاج:
+موقع.
+بروفايل بزنس.
+خدمات.
+طلبات عملاء.
+فريق.
+مهام.
+عروض أسعار.
+توثيق.
+سمعة.
+6.5 الجمهور الخامس — E-commerce Sellers
+ليس البداية الأولى، لكنه مهم.
+الرسالة لهم
+Kabeeri ليس متجرًا فقط؛ هو متجر مرتبط بالمحتوى، العملاء، المخزون، الفريق، والفواتير.
+6.6 الجمهور السادس — Verified Professionals
+لاحقًا عبر Talent Marketplace.
+الرسالة لهم
+ابنِ ملفًا مهنيًا موثقًا داخل شبكة شركات حقيقية، واحصل على فرص عمل وتعاون.
+7. ترتيب دخول السوق
+7.1 لا نبدأ بكل الجمهور
+الترتيب المقترح:
+1. WordPress users2. Agencies3. Service businesses4. Small commerce businesses5. Verified companies via Rabet6. ERP-ready SMBs7. Developers/Partners8. Enterprise
+7.2 السوق الأول المقترح
+أفضل بداية:
+شركات خدمات صغيرة + وكالات + مستخدمي WordPress
+لأن V1 وV2 يخدمونهم مباشرة.
+8. التموضع ضد المنافسين
+8.1 ضد WordPress
+لا نقول
+WordPress سيئ ونحن أفضل في كل شيء.
+نقول
+WordPress رائع كبداية، لكن عندما يكبر البزنس تحتاج أساسًا أقوى. Kabeeri يعطيك البداية السهلة ومسار النمو التشغيلي.
+نقاط التفوق
+Foundation للشركات من البداية.
+Organization/Site/Company separation.
+صلاحيات أقوى.
+Rabet verification.
+Kabeeri Mall.
+ERP path.
+AI guarded builder.
+Marketplace محكوم.
+8.2 ضد Shopify
+لا نقول
+نحن Shopify killer من اليوم الأول.
+نقول
+Shopify ممتاز للبيع، لكن Kabeeri مناسب لمن يريد أن يربط البيع بالموقع، الفريق، العملاء، الفواتير، المخزون، والعمليات.
+نقاط التفوق المستهدفة
+Content + Commerce.
+Services + Products.
+B2B + Rabet.
+ERP integration.
+Self-hosted + Cloud options.
+Kabeeri Mall.
+8.3 ضد Odoo / ERP Systems
+لا نقول
+نحن ERP أكبر من Odoo من البداية.
+نقول
+Kabeeri يبدأ من الواجهة الرقمية للبزنس، ثم يضيف التشغيل والـ ERP تدريجيًا، بدل أن يبدأ كنظام ثقيل من اليوم الأول.
+نقاط التفوق المستهدفة
+أسهل للشركات الصغيرة.
+CMS قوي من البداية.
+Commerce وموقع ومحتوى.
+Rabet trust layer.
+Marketplace visibility.
+AI setup.
+8.4 ضد Airtable/Notion-style builders
+Kabeeri لا يجب أن يظهر كـ no-code database فقط.
+الرسالة:
+Kabeeri يجمع سهولة البناء مع تشغيل حقيقي للشركات، وليس مجرد جداول أو صفحات.
+9. Positioning Statement
+9.1 صيغة رسمية
+For small and growing businesses that start with a website but need to become operationally mature, Kabeeri is a CMS-to-Company-OS platform that combines website building, commerce, verification, team operations, marketplace visibility, and ERP expansion in one modular system.
+9.2 بالعربي
+للشركات الصغيرة والنامية التي تبدأ بموقع وتحتاج أن تتحول إلى كيان تشغيلي منظم، Kabeeri هي منصة من CMS إلى Company OS تجمع بناء المواقع، التجارة، التوثيق، إدارة الفريق، الظهور في السوق، والتوسع إلى ERP في نظام واحد Modular.
+10. Taglines مقترحة
+10.1 عربي
+من موقع إلى شركة رقمية.
+ابنِ موقعك. شغّل شركتك. كَبّر أعمالك.
+ليس CMS فقط. إنه نظام نمو لشركتك.
+كل ما يحتاجه بزنسك من أول موقع إلى ERP.
+ابدأ بسيطًا، وكبر بلا حدود.
+10.2 English
+From Website to Company OS.
+Build your site. Run your company. Grow your business.
+Not just a CMS. A growth operating system.
+Start simple. Scale without switching.
+11. Product Narrative
+11.1 القصة المختصرة
+الناس تبدأ بموقع.
+ثم تحتاج متجرًا.
+ثم تحتاج فريقًا.
+ثم تحتاج عملاء وفواتير ومخزونًا.
+ثم تحتاج توثيقًا وثقة.
+ثم تحتاج ظهورًا في السوق.
+ثم تحتاج ERP.
+Kabeeri يبني هذا المسار داخل منصة واحدة.
+11.2 القصة التسويقية
+في العادة تبدأ شركتك بموقع على WordPress.ثم تضيف بلجنز.ثم متجر.ثم أدوات مهام.ثم CRM خارجي.ثم فواتير.ثم ERP.ثم تجد نفسك تدير 10 أدوات منفصلة.Kabeeri يغير المسار:ابدأ بموقع، ثم أضف كل طبقة عندما تحتاجها، بدون تغيير النظام.
+12. أول Use Case تسويقي
+12.1 Use Case: شركة خدمات صغيرة
+الشركة تحتاج:
+موقع.
+صفحات خدمات.
+محتوى.
+نموذج تواصل.
+بروفايل بزنس.
+فريق.
+مهام.
+طلبات عملاء.
+عروض أسعار لاحقًا.
+توثيق لاحقًا.
+12.2 لماذا هذا use case مناسب؟
+لأنه يثبت:
+CMS.
+Rabet foundation.
+Kabeeri Mall future.
+Tasks/team.
+CRM future.
+Sales/invoicing future.
+13. MVP التسويقي
+13.1 لا نبيع ERP في V1
+نبيع:
+CMS قوي للشركات، مبني على أساس Company OS.
+13.2 وعد V1
+ابنِ موقع شركة منظم، مع أساس يسمح بالترقية إلى Rabet وCommerce وERP لاحقًا.
+13.3 رسالة V1
+Kabeeri V1: CMS جديد للشركات، مبني من البداية للمواقع، الفرق، التوثيق، والتوسع.
+14. Go-To-Market Phases
+Phase 1 — Private Build
+الهدف:
+بناء V1.
+اختبار داخلي.
+بناء demo قوي.
+تجهيز موقع Kabeeri.
+الجمهور:
+المؤسس.
+فريق صغير.
+2-3 عملاء تجريبيين.
+Phase 2 — Private Beta
+الهدف:
+تجربة V1 مع مواقع حقيقية.
+اكتشاف مشاكل CMS.
+تحسين onboarding.
+اختبار migration لاحقًا.
+الجمهور:
+وكالات صغيرة.
+شركات خدمات.
+أصحاب مواقع WordPress.
+Phase 3 — WordPress Alternative Launch
+الهدف:
+تقديم Kabeeri كبديل حديث لـ WordPress للشركات.
+التركيز على CMS + Performance + Security + Growth Path.
+الرسالة:
+لو WordPress بقى مرهقًا، Kabeeri هو الانتقال الطبيعي.
+Phase 4 — Commerce & Services Launch
+الهدف:
+تقديم Commerce foundation.
+تقديم service listings.
+تجهيز Kabeeri Mall basic.
+Phase 5 — Rabet Verified Company Launch
+الهدف:
+إطلاق Rabet verification.
+تفعيل مكاتب المحاماة.
+بناء trust layer.
+الرسالة:
+حوّل موقعك إلى شركة موثقة.
+Phase 6 — Kabeeri Mall Launch
+الهدف:
+إطلاق كبيري مول للجمهور.
+شركات.
+خدمات.
+منتجات.
+مواهب.
+Phase 7 — ERP Expansion
+الهدف:
+بيع ERP Essentials للشركات التي بدأت بالفعل داخل Kabeeri.
+15. قنوات الوصول للسوق
+15.1 Content Marketing
+موضوعات:
+مشاكل WordPress الشائعة.
+كيف تنقل موقعك بأمان.
+لماذا البلجنز الكثيرة خطر.
+من موقع إلى شركة رقمية.
+مقارنة CMS vs Company OS.
+كيف توثق شركتك رقميًا.
+15.2 Agency Partnerships
+الوكالات قناة قوية.
+نقدم لهم:
+Agency dashboard.
+White label لاحقًا.
+عمولة أو reseller margin.
+migration tools.
+client reports.
+15.3 Legal Partner Network
+مكاتب المحاماة ليست فقط توثيق، بل قناة بيع.
+يمكنهم ترشيح Kabeeri للشركات التي تحتاج حضورًا رقميًا موثقًا.
+15.4 Developer Community
+لاحقًا:
+SDK.
+Marketplace.
+Theme builders.
+Module developers.
+Connectors.
+15.5 Direct Sales للشركات
+مناسب لـ:
+Rabet.
+ERP.
+Enterprise.
+Agencies.
+16. Landing Page الأولى لـ Kabeeri
+16.1 Headline مقترح
+من موقع إلى شركة رقمية متكاملة
+16.2 Subheadline
+Kabeeri منصة لبناء المواقع والمتاجر وتشغيل الشركات، تبدأ كـ CMS سهل وتكبر معك إلى Rabet Company OS وCommerce وERP وKabeeri Mall.
+16.3 CTA
+ابدأ بناء موقعك
+أو:
+انضم للنسخة التجريبية
+17. صفحة المقارنة مع WordPress
+العنوان
+عندما يكبر موقعك عن WordPress
+الرسالة
+WordPress ممتاز كبداية. لكن إذا احتجت موقعًا مرتبطًا بفريق، توثيق، متجر، عملاء، فواتير، وعمليات، فأنت تحتاج Kabeeri.
+محاور المقارنة
+Architecture.
+Permissions.
+Plugins governance.
+Company model.
+Marketplace.
+Rabet verification.
+ERP path.
+AI guarded changes.
+18. صفحة المقارنة مع Shopify
+العنوان
+ليس متجرًا فقط، بل نظام نمو للبزنس
+الرسالة
+Shopify يساعدك على البيع. Kabeeri يساعدك على البيع وتشغيل الشركة حول البيع.
+محاور المقارنة
+Content + Commerce.
+Services + Products.
+B2B.
+Team.
+ERP.
+Marketplace.
+Self-hosted/Cloud options.
+19. صفحة Rabet
+العنوان
+حوّل موقعك إلى شركة موثقة
+الرسالة
+مع Rabet، يتحول موقعك إلى كيان موثق له بروفايل بزنس، فريق، مهام، سجل ثقة، ووجود في Kabeeri Mall.
+20. صفحة Kabeeri Mall
+العنوان
+اكتشف شركات، خدمات، منتجات، ومواهب موثوقة
+الرسالة
+Kabeeri Mall هو السوق العام داخل Kabeeri، حيث تظهر الشركات والخدمات والمنتجات والمواهب، مع طبقات توثيق وثقة عبر Rabet.
+21. Demo Strategy
+21.1 أول Demo
+شركة خدمات صغيرة
+يظهر:
+موقع.
+خدمات.
+بروفايل بزنس.
+أعضاء فريق.
+مهام.
+Activity log.
+Verification draft.
+21.2 ثاني Demo
+متجر بسيط
+يظهر لاحقًا:
+منتجات.
+سلة.
+طلب.
+عميل.
+فاتورة.
+21.3 ثالث Demo
+شركة موثقة عبر Rabet
+يظهر لاحقًا:
+verification.
+legal partner.
+badge.
+trust record.
+Kabeeri Mall listing.
+22. Pricing Positioning
+22.1 لا تبدأ برسالة السعر الأرخص
+لا تجعل الرسالة:
+نحن أرخص من Shopify.
+بل:
+نحن نعطيك تحكمًا ونموًا وتشغيلًا أكثر.
+22.2 التسعير التدريجي
+Free/CommunityProBusinessAgencyEnterprise
+ثم:
+Rabet add-on.
+Commerce add-on.
+ERP modules.
+AI credits.
+Mall featured listings.
+23. Branding Rules
+23.1 الاسم
+KABEERIKabeerikabeeripowered by ADMIT
+23.2 الاستخدام
+KABEERI للعلامة الرسمية الكبيرة.
+Kabeeri في النصوص العادية.
+kabeeri في الدومينات أو التقنية.
+powered by ADMIT كاعتماد مؤسسي.
+24. Product Architecture Message
+لا نشرح كل الموديولات للمستخدم العادي.
+نشرحها كرحلة:
+BuildSellOperateVerifyDiscoverScale
+24.1 Build
+CMS + themes + pages.
+24.2 Sell
+Commerce + services + products.
+24.3 Operate
+Team + tasks + CRM + ERP.
+24.4 Verify
+Rabet + legal verification.
+24.5 Discover
+Kabeeri Mall.
+24.6 Scale
+ERP + integrations + AI + marketplace.
+25. محتوى الإطلاق المقترح
+25.1 مقالات
+لماذا تحتاج الشركات إلى أكثر من CMS؟
+WordPress أم Kabeeri؟
+كيف تتحول من موقع إلى شركة رقمية؟
+ما هو Company OS؟
+لماذا التوثيق مهم في B2B؟
+كيف يساعد Kabeeri Mall الشركات الصغيرة؟
+25.2 فيديوهات
+بناء موقع شركة في 10 دقائق.
+إنشاء Business Profile.
+دعوة فريق.
+إنشاء خدمات.
+الفرق بين Kabeeri وWordPress.
+رحلة موقع إلى شركة موثقة.
+25.3 صفحات مهمة
+Home.
+For WordPress Users.
+For Agencies.
+For Service Businesses.
+Kabeeri vs WordPress.
+Kabeeri vs Shopify.
+Rabet.
+Kabeeri Mall.
+Pricing.
+Roadmap.
+26. Early Access Program
+26.1 الهدف
+الحصول على مستخدمين مبكرين بدون ضغط إطلاق عام.
+26.2 من ندعو؟
+5 وكالات.
+10 شركات خدمات.
+5 متاجر صغيرة.
+3 مكاتب محاماة.
+5 مطورين Laravel/PHP.
+26.3 ماذا نعطيهم؟
+خصم مؤسس.
+ظهور مبكر في Kabeeri Mall لاحقًا.
+دعم مباشر.
+تأثير على roadmap.
+27. Partner Strategy
+27.1 Agencies
+شركاء بناء وتشغيل.
+27.2 Legal Partners
+شركاء توثيق وثقة.
+27.3 Developers
+شركاء توسعة.
+27.4 ERP/Accounting Consultants
+شركاء تنفيذ للشركات الأكبر.
+27.5 Payment/Shipping Partners
+شركاء التجارة.
+28. Sales Narrative
+28.1 لعميل WordPress
+لن نجبرك أن تترك طريقة تفكيرك. Kabeeri قريب من WordPress، لكنه يبني لك أساسًا أقوى للشركة من البداية.
+28.2 لوكالة
+Kabeeri يجعلك لا تبيع موقعًا مرة واحدة فقط، بل تبيع رحلة نمو مستمرة: موقع، متجر، توثيق، تشغيل، ERP.
+28.3 لشركة خدمات
+موقعك ليس كافيًا. تحتاج بروفايل موثوق، فريق، مهام، طلبات، عروض أسعار، وظهور في سوق. Kabeeri يجمع ذلك تدريجيًا.
+28.4 لمتجر
+Kabeeri يربط المتجر بالمحتوى والعملاء والمخزون والفواتير بدل أن يبقى متجرًا منفصلًا.
+29. ما لا يجب قوله مبكرًا
+29.1 لا تقل
+سنقتل WordPress.
+قل:
+نقدم مسارًا أحدث لمن كبر عن WordPress.
+29.2 لا تقل
+نحن أفضل من Shopify في كل شيء.
+قل:
+نحن مناسبون للشركات التي تحتاج أكثر من متجر.
+29.3 لا تقل
+ERP كامل من أول نسخة.
+قل:
+أساس قابل للتوسع إلى ERP تدريجيًا.
+29.4 لا تعرض 200 Module للعميل الأول
+اعرض له المشكلة التي تحلها الآن.
+30. Product-Led Growth داخل Kabeeri
+Kabeeri يمكن أن ينتشر من داخل الاستخدام نفسه:
+Business Profile عام يجلب زوار.
+Kabeeri Mall يجلب عملاء.
+Talent profiles تجلب مهنيين.
+Legal partners تجلب شركات.
+Agencies تجلب مواقع.
+Developers يجلبون extensions.
+كل مستخدم يمكن أن يجلب مستخدمين آخرين.
+31. North Star Metric
+المؤشر الأساسي المقترح:
+Active Verified Businesses operating on Kabeeri
+لكن في V1، المؤشر المبكر:
+Active Sites Published
+ثم V2:
+Migrated Sites + Active Commerce Orders
+ثم V3/V4:
+Verified Businesses + Service Requests + Active Teams
+32. KPIs حسب المرحلة
+V1 KPIs
+Sites createdPages publishedBusiness profiles draftedTeam members invitedTime to first published site
+V2 KPIs
+WordPress imports completedProducts createdOrders createdService requests submitted
+V3 KPIs
+Leads createdInvoices issuedTasks completedVerification requests submitted
+V4 KPIs
+Verified businessesMall listings publishedSubscriptions paidLegal partner reviews completedAI plans applied
+33. Roadmap Communication
+لا تعرض roadmap كله للجمهور كوعود ضخمة.
+استخدم:
+NowNextLater
+مثال
+Now
+CMS للشركات.
+Next
+Migration + Commerce + Business Profiles.
+Later
+Rabet + Kabeeri Mall + ERP + AI.
+34. V1 Marketing Scope
+Must-have
+Clear homepage messageDemo siteWordPress alternative pageAgency pageService business use caseRoadmap simplifiedEarly access form
+Should-have
+Short product videoComparison tableFounder storyPricing waitlist
+Not required
+Full pricing calculatorFull ERP marketingFull developer marketplace launchFull Kabeeri Mall public launch
+35. أخطاء ممنوعة
+35.1 لا تبيع كل شيء للجميع
+هذا يضعف الرسالة.
+35.2 لا تبدأ بـ Enterprise فقط
+المنتج يحتاج traction من SMB/Agencies أولًا.
+35.3 لا تهاجم WordPress بعنف
+جمهوره هو جمهورك الأول.
+35.4 لا تعد بـ ERP كامل قبل أن يوجد
+الثقة أهم من الضجة.
+35.5 لا تطلق Kabeeri Mall بدون محتوى كافٍ
+السوق الفارغ يضعف الانطباع.
+35.6 لا تجعل AI هو الرسالة الوحيدة
+AI ميزة قوية، لكن المنتج ليس AI فقط.
+36. الخلاصة التنفيذية
+Kabeeri يجب أن يدخل السوق كالتالي:
+1. بديل حديث لـ WordPress للشركات2. ثم بديل تدريجي لـ WooCommerce/Shopify للشركات التي تحتاج تشغيلًا أعمق3. ثم Rabet لتحويل المواقع إلى شركات موثقة4. ثم Kabeeri Mall لاكتشاف الشركات والخدمات والمنتجات والمواهب5. ثم ERP/AI/Integrations للتوسع
+القاعدة النهائية:
+Kabeeri لا يبدأ ببيع كل شيء؛ Kabeeri يبدأ بحل ألم واضح، ثم يفتح طريقًا طبيعيًا من موقع إلى شركة رقمية متكاملة.
+37. الخطوة التالية
+بعد هذا الملحق، يمكن البدء في:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+ويجب أن يكون V1 مبنيًا على رسالة بسيطة:
+CMS جديد للشركات، جاهز للنمو إلى Rabet وCommerce وERP.

@@ -1,0 +1,578 @@
+KABEERI Database File 39
+Kabeeri PLM / R&D / Engineering Database
+قاعدة بيانات إدارة دورة حياة المنتج، البحث والتطوير، والهندسة
+نسخة معمارية تفصيلية مكملة لملفات Database السابقة
+هذا الملف لا يدخل في V1 أو V2 أو V3. هو Suite اختيارية على مستوى Enterprise/Industry، وتظهر فائدتها في الشركات التي لديها منتجات هندسية، تصنيع، تصميمات، BOM، تغييرات هندسية، اختبارات، نماذج أولية، واعتمادات فنية قبل التصنيع أو النشر التجاري.
+البند
+القيمة
+رقم الملف
+39
+النطاق
+PLM / R&D / Engineering
+المرحلة المناسبة
+V6 وما بعدها / Enterprise / Industry Solutions
+يعتمد على
+Core Kernel, Documents, Workflows, GRC, BI/Data Platform, Manufacturing Foundation, Inventory, Quality
+لا يستبدل
+Manufacturing Execution أو CAD/PDM كامل من البداية
+الهدف
+إدارة تعريف المنتج، نسخه، مستنداته، BOM الهندسي، تغييرات التصميم، التجارب، والاعتماد قبل التسليم للتصنيع أو التجارة
+1. تعريف PLM / R&D / Engineering داخل Kabeeri
+PLM اختصار Product Lifecycle Management. داخل Kabeeri هو طبقة Enterprise اختيارية لإدارة دورة حياة المنتج من الفكرة إلى التصميم، النسخة، الاختبار، التغيير الهندسي، الاعتماد، ثم التسليم إلى التصنيع أو التجارة أو حلول القطاعات.
+R&D هو مساحة البحث والتطوير التي تسجل المشاريع التجريبية، الفرضيات، التجارب، النتائج، النماذج الأولية، وقرارات الانتقال إلى منتج فعلي.
+Engineering هو الجزء الذي يدير المتطلبات، المواصفات، الرسومات، الإصدارات، BOM الهندسي، ECO/ECR، اختبارات التصميم، وارتباط المنتج بالمستندات الفنية.
+2. لماذا هذا الملف مهم؟
+Kabeeri في V6 يحتوي Manufacturing / SCM / EAM foundations، وهذه الطبقات تحتاج مصدرًا منظمًا لتعريف المنتج قبل التنفيذ التصنيعي.
+المنتج الهندسي لا يساوي Product التجاري في Commerce، ولا يساوي Item المخزني فقط. المنتج له مواصفات، نسخ، رسومات، BOM، اختبارات، وقرارات تغيير.
+بدون PLM، سيتم خلط التصميمات والـ BOM والوثائق داخل Media أو Inventory أو Manufacturing بشكل عشوائي.
+هذا الملف يحمي التصنيع والجودة والامتثال من تغييرات غير موثقة في مواصفات المنتج.
+يسمح لاحقًا ببناء Industry Solutions لقطاعات مثل التصنيع، الأغذية، الأدوية، المقاولات، الأجهزة، والمنتجات المخصصة.
+3. ما ليس ضمن هذا الملف
+ليس CAD system كامل.
+ليس PDM متقدم لإدارة ملفات CAD الضخمة من البداية.
+ليس MES كامل لتشغيل خطوط الإنتاج لحظة بلحظة.
+ليس QMS كامل، لكنه يتكامل مع Quality Checks وGRC/Evidence.
+ليس Manufacturing BOM النهائي وحده؛ بل يدير Engineering BOM ونسخ المنتج قبل تسليمها للتصنيع.
+لا يدخل في V1-V5 إلا كـ placeholders أو روابط مستقبلية.
+4. المبادئ الحاكمة
+المبدأ
+التفسير
+Product ≠ Commerce Product
+المنتج الهندسي قد يتحول لاحقًا إلى product للبيع، لكنه في PLM يبدأ كمفهوم، تصميم، نسخة، مواصفات، أو مكون.
+Engineering BOM ≠ Manufacturing BOM
+EBOM يصف التصميم الهندسي، بينما MBOM يصف طريقة التصنيع والتنفيذ.
+Revision controlled
+أي تغيير في مواصفة أو BOM أو رسم يجب أن يمر بإصدار أو Change Order.
+Approval before release
+لا يصبح أي item أو BOM أو specification released إلا بعد موافقات محددة.
+Documents are linked, not duplicated
+الملفات الفنية تحفظ في Media/Documents ويتم ربطها بالكيانات بدل نسخها داخل PLM.
+Traceability by default
+يجب معرفة: من غير؟ ماذا تغير؟ لماذا؟ ما العناصر المتأثرة؟ ومن وافق؟
+Tenant scoped
+كل كيان يجب أن يكون organization_id/company_id scoped.
+Portable/Dedicated ready
+يجب أن تكون البيانات قابلة للتصدير للعميل أو التشغيل في Dedicated بدون كسر العلاقات.
+5. علاقة PLM بباقي أنظمة Kabeeri
+النظام
+العلاقة
+Core Kernel
+الهوية، الشركات، الصلاحيات، الـ tenant scope، الـ modules.
+Documents / Media
+الرسومات، المواصفات، ملفات CAD، تقارير الاختبار، الأدلة.
+Workflows
+موافقات التصميم، Change Orders، Release workflow.
+GRC
+الامتثال، الأدلة، الاعتمادات، المخاطر الفنية.
+BI / Data Platform
+تحليلات تكلفة التطوير، زمن الاعتماد، جودة المنتج، معدل التغييرات.
+Inventory
+تحويل المواد والمكونات إلى items قابلة للتخزين.
+Manufacturing
+تحويل EBOM إلى MBOM وProduction Orders.
+Commerce
+تحويل المنتج المعتمد إلى Product قابل للبيع عند الحاجة.
+Industry Solutions
+حلول قطاعات تعتمد على قوالب PLM جاهزة.
+AI Co-builder
+اقتراح مواصفات، تحليل أثر التغيير، تلخيص مراجعات التصميم، اقتراح BOM مبدئي مع موافقة.
+6. Data Domains
+Product Master & Item Engineering
+Product Versions & Revisions
+Requirements & Specifications
+Engineering Documents & Drawings
+Engineering BOM / Product Structure
+R&D Projects & Experiments
+Prototype Builds
+Testing & Validation
+Engineering Change Requests / Orders
+Design Reviews & Approvals
+Cost & Supplier Engineering Links
+Release to Manufacturing / Commerce
+Traceability, Events, Audit, and Analytics
+7. الجداول الأساسية
+المجموعة
+الجداول
+Product Master
+plm_product_families, plm_items, plm_item_versions, plm_item_attributes, plm_item_relations
+Requirements & Specs
+plm_requirements, plm_requirement_links, plm_specifications, plm_specification_versions
+Documents & Drawings
+engineering_documents, engineering_document_versions, engineering_drawings, engineering_drawing_revisions
+BOM
+engineering_boms, engineering_bom_lines, engineering_bom_alternates, engineering_bom_effectivity
+R&D
+rd_projects, rd_project_members, rd_experiments, rd_experiment_results
+Prototype & Testing
+prototype_builds, prototype_build_items, test_protocols, engineering_test_runs, engineering_test_results
+Change Management
+engineering_change_requests, engineering_change_orders, engineering_change_impacts, engineering_change_approvals
+Release & Handoff
+plm_release_packages, plm_release_items, plm_manufacturing_handoffs, plm_commerce_handoffs
+Analytics & AI
+plm_cost_estimates, plm_supplier_material_links, plm_quality_links, plm_ai_suggestions, plm_events
+8. plm_product_families
+يمثل عائلة منتجات أو خط تصميم هندسي، مثل: أجهزة كهربائية، وحدات عقارية، منتجات غذائية، قطع غيار، أو باقة هندسية مخصصة.
+الحقل
+النوع / الملاحظة
+id
+bigint primary key
+uuid
+unique
+organization_id
+indexed
+company_id
+nullable indexed
+name
+اسم العائلة
+slug
+unique داخل الشركة
+description
+nullable
+industry_key
+nullable مثل manufacturing/food/pharma/construction
+status
+draft, active, archived
+owner_user_id
+nullable
+metadata
+json nullable
+created_at / updated_at / deleted_at
+timestamps
+9. plm_items
+يمثل أي عنصر هندسي: منتج نهائي، جزء، مادة، تجميع فرعي، تصميم، خدمة هندسية، قالب، أو مكون غير قابل للبيع مباشرة.
+الحقل
+النوع / الملاحظة
+id
+bigint primary key
+uuid
+unique
+organization_id
+indexed
+company_id
+nullable indexed
+product_family_id
+nullable
+item_number
+كود هندسي unique داخل الشركة
+name
+اسم العنصر
+item_type
+finished_good, component, raw_material, assembly, design, service, document_set
+lifecycle_status
+concept, design, prototype, validation, released, obsolete, archived
+current_version_id
+nullable
+uom
+وحدة القياس
+owner_user_id
+nullable
+visibility
+private/internal/released/public_reference
+metadata
+json
+created_by
+nullable
+created_at / updated_at / deleted_at
+timestamps
+10. plm_item_versions
+أي item يجب أن يكون له إصدار أو revision. لا يتم تعديل الإصدار المعتمد مباشرة؛ بل يتم إنشاء نسخة جديدة.
+الحقل
+النوع / الملاحظة
+id
+bigint primary key
+uuid
+unique
+plm_item_id
+indexed
+version_code
+A, B, C أو 1.0.0
+revision_reason
+سبب الإصدار
+status
+draft, in_review, approved, released, superseded, rejected
+effective_from
+nullable
+effective_to
+nullable
+released_by
+nullable
+released_at
+nullable
+change_order_id
+nullable
+metadata
+json nullable
+created_at / updated_at
+timestamps
+11. plm_item_attributes
+خصائص مرنة للعنصر مثل الوزن، اللون، درجة الحرارة، الأبعاد، الخامة، القدرة، أو متطلبات القطاع. لا تستخدم JSON بدل العلاقات الأساسية، لكن يمكن استخدام attributes للخصائص المتغيرة.
+الحقل
+النوع / الملاحظة
+id
+bigint primary key
+plm_item_id
+indexed
+item_version_id
+nullable
+attribute_key
+indexed
+attribute_name
+اسم مقروء
+value
+json أو نص
+value_type
+string, number, boolean, date, enum, json
+unit
+nullable
+is_required
+boolean
+created_at / updated_at
+timestamps
+12. plm_requirements
+المتطلبات تسبق التصميم. يمكن أن تكون متطلبات سوق، عميل، تنظيمية، جودة، سلامة، أداء، أو تصنيع.
+الحقل
+النوع / الملاحظة
+id
+bigint primary key
+uuid
+unique
+organization_id
+indexed
+company_id
+nullable
+product_family_id
+nullable
+plm_item_id
+nullable
+requirement_code
+unique داخل النطاق
+title
+العنوان
+description
+longtext
+requirement_type
+customer, market, regulatory, safety, quality, performance, manufacturing
+priority
+low, medium, high, critical
+status
+draft, approved, implemented, verified, rejected
+source_type/source_id
+nullable polymorphic
+created_at / updated_at
+timestamps
+13. plm_specifications / specification_versions
+المواصفات هي النسخة المنظمة من متطلبات المنتج: حدود الأداء، الأبعاد، المواد، الاختبارات المطلوبة، شروط القبول، ومعايير الجودة.
+الجدول
+الحقول الأساسية
+plm_specifications
+id, uuid, organization_id, company_id, plm_item_id, specification_code, title, spec_type, status, owner_user_id, metadata, timestamps
+plm_specification_versions
+id, specification_id, version_code, status, content_json, document_media_id, change_summary, approved_by, approved_at, timestamps
+plm_requirement_links
+id, requirement_id, linked_type, linked_id, relation_type, created_at
+14. Engineering Documents & Drawings
+لا تحفظ ملفات CAD أو PDF أو الصور داخل جداول PLM مباشرة. يتم حفظها في Media/Documents ثم ربطها هنا بإصدار فني، مراجعة، أو Change Order.
+الجدول
+الحقول الأساسية
+engineering_documents
+id, uuid, organization_id, company_id, plm_item_id, document_type, title, status, current_version_id, visibility, metadata, timestamps
+engineering_document_versions
+id, engineering_document_id, version_code, media_asset_id, checksum, status, uploaded_by, approved_by, approved_at, timestamps
+engineering_drawings
+id, uuid, plm_item_id, drawing_number, title, drawing_type, current_revision_id, status, timestamps
+engineering_drawing_revisions
+id, engineering_drawing_id, revision_code, media_asset_id, change_summary, status, approved_by, approved_at, timestamps
+15. Engineering BOM
+Engineering BOM أو EBOM يصف مكونات التصميم. لا يساوي Manufacturing BOM بالضرورة، لكنه يمكن أن يتحول إليه عبر handoff مضبوط.
+الجدول
+الحقول الأساسية
+engineering_boms
+id, uuid, organization_id, company_id, parent_item_id, parent_item_version_id, bom_number, bom_type, status, effective_from, approved_by, approved_at, metadata, timestamps
+engineering_bom_lines
+id, engineering_bom_id, line_number, component_item_id, component_item_version_id nullable, quantity, uom, scrap_factor nullable, is_optional, notes, timestamps
+engineering_bom_alternates
+id, bom_line_id, alternate_component_item_id, priority, reason, status, timestamps
+engineering_bom_effectivity
+id, engineering_bom_id, effectivity_type, from_serial, to_serial, from_date, to_date, country_id nullable, customer_id nullable, metadata, timestamps
+16. R&D Projects
+مشاريع البحث والتطوير قد تبدأ قبل وجود item رسمي. يمكن ربطها لاحقًا بـ product family أو item أو industry solution.
+الجدول
+الحقول الأساسية
+rd_projects
+id, uuid, organization_id, company_id, name, code, objective, project_type, status, start_date, end_date, owner_user_id, budget_id nullable, metadata, timestamps
+rd_project_members
+id, rd_project_id, user_id, role, access_level, joined_at, left_at nullable
+rd_experiments
+id, uuid, rd_project_id, hypothesis, method, status, planned_at, performed_at, responsible_user_id, metadata, timestamps
+rd_experiment_results
+id, rd_experiment_id, result_summary, result_data json, conclusion, attachment_media_id nullable, approved_by nullable, timestamps
+17. Prototype Builds
+النموذج الأولي هو تنفيذ تجريبي قبل الاعتماد. يمكن أن يستخدم EBOM مؤقتًا، مكونات غير معتمدة، أو بدائل اختبارية.
+الجدول
+الحقول الأساسية
+prototype_builds
+id, uuid, organization_id, company_id, rd_project_id nullable, plm_item_id nullable, build_number, build_type, status, planned_date, built_at, responsible_user_id, notes, metadata, timestamps
+prototype_build_items
+id, prototype_build_id, plm_item_id nullable, inventory_item_id nullable, description, quantity, uom, source_type, notes, timestamps
+18. Testing & Validation
+اختبارات الهندسة تتحقق من أن التصميم يحقق المتطلبات والمواصفات قبل release. هي غير QA Testing الخاص بالكود، لكنها قد ترتبط بـ Quality/GRC.
+الجدول
+الحقول الأساسية
+test_protocols
+id, uuid, organization_id, company_id, protocol_code, title, test_type, acceptance_criteria json, status, owner_user_id, timestamps
+engineering_test_runs
+id, uuid, test_protocol_id, plm_item_id nullable, item_version_id nullable, prototype_build_id nullable, status, started_at, completed_at, performed_by, environment json, timestamps
+engineering_test_results
+id, engineering_test_run_id, requirement_id nullable, result_status, measured_value nullable, expected_value nullable, unit nullable, evidence_media_id nullable, notes, timestamps
+19. Design Reviews
+مراجعة التصميم تجمع الأطراف قبل اعتماد نسخة أو Change Order. يمكن أن تنتج findings وactions وربطها بـ Workflows.
+الجدول
+الحقول الأساسية
+design_reviews
+id, uuid, organization_id, company_id, review_code, subject_type, subject_id, review_type, status, scheduled_at, completed_at, chair_user_id, decision, timestamps
+design_review_participants
+id, design_review_id, user_id, role, attendance_status, decision, comment, timestamps
+design_review_findings
+id, design_review_id, severity, finding_type, description, assigned_to, due_date, status, resolved_at, timestamps
+20. Engineering Change Management
+أي تغيير مهم في item, spec, drawing, BOM أو released package يجب أن يمر عبر ECR/ECO. ECR يطلب التغيير، وECO ينفذ التغيير بعد الموافقة.
+الجدول
+الحقول الأساسية
+engineering_change_requests
+id, uuid, organization_id, company_id, ecr_number, title, reason, priority, status, requested_by, requested_at, risk_level, metadata, timestamps
+engineering_change_orders
+id, uuid, organization_id, company_id, eco_number, ecr_id nullable, title, change_summary, status, planned_effective_date, approved_by, approved_at, implemented_at, timestamps
+engineering_change_impacts
+id, change_type, change_id, impacted_type, impacted_id, impact_level, impact_summary, requires_retest, requires_customer_notice, created_at
+engineering_change_approvals
+id, eco_id, approval_step, approver_user_id, decision, comment, decided_at, created_at
+21. Release Packages
+Release Package يجمع item versions وBOM وdrawings وspecifications وtest evidence في حزمة اعتماد واحدة قبل التسليم للتصنيع أو التجارة.
+الجدول
+الحقول الأساسية
+plm_release_packages
+id, uuid, organization_id, company_id, release_number, title, release_type, status, released_by, released_at, metadata, timestamps
+plm_release_items
+id, release_package_id, released_type, released_id, version_id nullable, status, notes, timestamps
+plm_manufacturing_handoffs
+id, release_package_id, target_company_id nullable, manufacturing_bom_id nullable, status, handed_off_by, handed_off_at, accepted_by, accepted_at, notes
+plm_commerce_handoffs
+id, release_package_id, commerce_product_id nullable, status, handed_off_by, handed_off_at, notes
+22. Cost, Supplier, Quality Links
+الجدول
+الغرض
+plm_cost_estimates
+تقدير تكلفة التصميم أو BOM قبل التصنيع: material cost, labor estimate, overhead estimate, confidence.
+plm_supplier_material_links
+ربط مكون هندسي بمورد أو مادة معتمدة أو بديلة.
+plm_quality_links
+ربط item/spec/BOM باختبارات جودة أو nonconformance أو quality checks.
+plm_compliance_links
+ربط المنتج بمتطلبات امتثال أو country pack أو evidence داخل GRC.
+23. Status Models
+الكيان
+الحالات المقترحة
+Item lifecycle
+concept, design, prototype, validation, released, obsolete, archived
+Version status
+draft, in_review, approved, released, superseded, rejected
+BOM status
+draft, in_review, approved, released, obsolete
+ECR status
+draft, submitted, triage, accepted, rejected, converted_to_eco, closed
+ECO status
+draft, impact_analysis, approval_pending, approved, implementation, implemented, cancelled, rolled_back
+Test run status
+planned, running, passed, failed, blocked, cancelled
+Release package status
+draft, review, approved, released, superseded, withdrawn
+24. Permissions
+الصلاحية
+الوصف
+plm.item.view
+عرض العناصر الهندسية
+plm.item.manage
+إنشاء وتعديل العناصر
+plm.item.release
+اعتماد إصدار item
+plm.spec.view
+عرض المواصفات
+plm.spec.manage
+إدارة المواصفات
+plm.bom.view
+عرض EBOM
+plm.bom.manage
+تعديل EBOM
+plm.bom.release
+إصدار EBOM
+plm.ecr.create
+إنشاء طلب تغيير
+plm.eco.manage
+إدارة أمر تغيير
+plm.eco.approve
+الموافقة على ECO
+plm.test.manage
+إدارة اختبارات هندسية
+plm.prototype.manage
+إدارة النماذج الأولية
+plm.release.manage
+إدارة Release Packages
+plm.handoff.manufacturing
+تسليم التصميم للتصنيع
+plm.handoff.commerce
+تسليم المنتج للتجارة
+plm.ai.suggest
+استخدام اقتراحات AI للـ PLM
+25. Roles
+الدور
+الوصف
+Product Manager
+يدير product families وroadmap وrelease packages.
+Engineering Manager
+يدير item versions وBOM وdesign reviews.
+Design Engineer
+ينشئ/يعدل المواصفات والرسومات داخل صلاحياته.
+R&D Lead
+يدير مشاريع البحث والتجارب والنماذج الأولية.
+Quality Engineer
+يراجع test protocols/results وquality links.
+Manufacturing Engineer
+يستقبل handoff ويحول EBOM إلى MBOM.
+Compliance Reviewer
+يراجع متطلبات الامتثال والأدلة المرتبطة.
+PLM Admin
+يدير الإعدادات والقوالب والصلاحيات.
+26. Events
+PlmItemCreated
+PlmItemVersionSubmitted
+PlmItemVersionReleased
+EngineeringBomReleased
+EngineeringChangeRequestSubmitted
+EngineeringChangeOrderApproved
+EngineeringChangeOrderImplemented
+DesignReviewCompleted
+PrototypeBuildCompleted
+EngineeringTestRunCompleted
+PlmReleasePackageReleased
+ManufacturingHandoffCreated
+CommerceHandoffCreated
+27. Workflows
+Workflow
+الخطوات
+New Product Concept
+Create product family → define requirements → create item → attach specs → design review → approve concept
+Item Revision
+Create new version → edit specs/BOM → submit review → approve → release → supersede old version
+ECR/ECO
+Submit ECR → triage → impact analysis → create ECO → approvals → implement → verify → close
+Prototype Validation
+Plan prototype → reserve materials optional → build prototype → run test protocol → record results → decision
+Release to Manufacturing
+Create release package → validate specs/BOM/tests → approve → create manufacturing handoff → convert to MBOM
+Release to Commerce
+Approve product public readiness → create commerce handoff → create product draft → publish after business approval
+28. Source of Truth Rules
+البيانات
+Source of Truth
+Product design identity
+PLM
+Engineering BOM
+PLM
+Manufacturing BOM
+Manufacturing module بعد handoff
+Inventory quantities
+Inventory module
+Sellable product data
+Commerce بعد handoff
+Documents/files
+Media/Documents
+Approvals
+Workflow/Approvals
+Compliance evidence
+GRC/Documents
+Analytics snapshots
+BI/Data Platform
+29. Portable / Dedicated / Cloud Rules
+Cloud: PLM data داخل قاعدة Kabeeri Cloud مع tenant scoping.
+Frontend Anywhere: لا تعرض PLM مباشرة للواجهة العامة إلا public product specs المصرح بها، وغالبًا لا تحتاجه الواجهة.
+Portable: يتم تصدير PLM data مع documents linked إذا سمح العميل، مع الحفاظ على UUIDs للـ items/versions.
+Dedicated: يفضل للـ PLM في الشركات الحساسة، خاصة إذا كانت بيانات التصميم سرية أو تخضع لقيود قطاعية.
+Mall Sync: لا يرسل PLM إلى Mall إلا بيانات عامة مشتقة بعد Commerce/Rabet approval، وليس EBOM أو رسومات خاصة.
+Data residency: يمكن ربط PLM بـ Country Packs أو Dedicated إذا كانت الوثائق الفنية لا يجوز خروجها من دولة معينة.
+30. Security & Privacy
+رسومات CAD والمواصفات الفنية تعتبر sensitive by default.
+كل تحميل أو فتح لمستند هندسي حساس يجب تسجيله في sensitive access logs.
+ECO approval يحتاج صلاحيات منفصلة ولا يكفي plm.item.manage.
+منع حذف versions released؛ يمكن فقط obsolete/supersede.
+AI لا يغير BOM أو يطلق release بدون approval.
+Export يحتاج approval إذا شمل drawings أو confidential specifications.
+ربط الموردين أو المواد البديلة يجب أن يسجل source وapproval.
+31. AI Co-builder داخل PLM
+AI في PLM دوره مساعد اقتراح وتحليل، وليس مصدر قرار نهائي. كل ما يمس BOM أو release أو ECO يجب أن يمر عبر Preview + Approval + Audit + Rollback حيث يمكن.
+AI Use Case
+القيد
+اقتراح متطلبات مبدئية
+يظل draft حتى يراجعه Product/Engineering Manager.
+تحليل أثر ECO
+يعرض impacted items/BOM/docs/tests ولا يطبق وحده.
+اقتراح BOM مبدئي
+draft فقط، لا يؤثر على inventory أو manufacturing.
+تلخيص Design Review
+يحفظ summary مع مراجعة بشرية.
+اقتراح Test Protocol
+يحتاج اعتماد Quality/Engineering.
+كشف تناقضات specs
+ينشئ finding أو suggestion فقط.
+32. Indexes & Constraints
+unique(plm_items.company_id, item_number)unique(plm_item_versions.plm_item_id, version_code)unique(plm_product_families.organization_id, slug)unique(engineering_boms.company_id, bom_number)unique(engineering_change_requests.company_id, ecr_number)unique(engineering_change_orders.company_id, eco_number)unique(plm_release_packages.company_id, release_number)index(plm_items.organization_id, lifecycle_status)index(plm_item_versions.status)index(engineering_bom_lines.component_item_id)index(engineering_change_impacts.impacted_type, impacted_id)index(engineering_test_runs.status)
+33. ERD مختصر
+erDiagram ORGANIZATIONS ||--o{ PLM_PRODUCT_FAMILIES : owns COMPANIES ||--o{ PLM_ITEMS : designs PLM_PRODUCT_FAMILIES ||--o{ PLM_ITEMS : groups PLM_ITEMS ||--o{ PLM_ITEM_VERSIONS : versions PLM_ITEMS ||--o{ PLM_ITEM_ATTRIBUTES : has PLM_ITEMS ||--o{ ENGINEERING_BOMS : parent ENGINEERING_BOMS ||--o{ ENGINEERING_BOM_LINES : contains PLM_ITEMS ||--o{ PLM_REQUIREMENTS : satisfies PLM_SPECIFICATIONS ||--o{ PLM_SPECIFICATION_VERSIONS : versions ENGINEERING_DOCUMENTS ||--o{ ENGINEERING_DOCUMENT_VERSIONS : versions RD_PROJECTS ||--o{ RD_EXPERIMENTS : runs PROTOTYPE_BUILDS ||--o{ ENGINEERING_TEST_RUNS : tested_by ENGINEERING_CHANGE_REQUESTS ||--o{ ENGINEERING_CHANGE_ORDERS : converts_to ENGINEERING_CHANGE_ORDERS ||--o{ ENGINEERING_CHANGE_IMPACTS : impacts PLM_RELEASE_PACKAGES ||--o{ PLM_RELEASE_ITEMS : includes PLM_RELEASE_PACKAGES ||--o{ PLM_MANUFACTURING_HANDOFFS : hands_off
+34. Build Order المقترح
+1. Product families + items + item versions.
+2. Documents/drawings links فقط، بدون CAD viewer.
+3. Requirements + specifications.
+4. Engineering BOM.
+5. Design reviews + approvals.
+6. ECR/ECO foundation.
+7. Prototype + testing foundation.
+8. Release package + manufacturing handoff.
+9. Cost/supplier/quality links.
+10. AI suggestions + analytics.
+35. CLI Commands
+php artisan kabeeri:plm:create-item {companyId}php artisan kabeeri:plm:release-version {itemVersionId}php artisan kabeeri:plm:bom:validate {bomId}php artisan kabeeri:plm:eco:impact-analysis {ecoId}php artisan kabeeri:plm:release-package {releasePackageId}php artisan kabeeri:plm:handoff:manufacturing {releasePackageId}php artisan kabeeri:plm:ai:analyze-change {ecoId}
+36. Tests
+Create PLM item test.
+Create item version test.
+Released version cannot be edited directly test.
+Create engineering BOM test.
+BOM line component scope test.
+Submit ECR test.
+Approve ECO test.
+ECO impact analysis test.
+Design review decision test.
+Prototype test run result test.
+Release package requires approved specs/BOM/tests test.
+Manufacturing handoff creates target mapping test.
+Unauthorized user cannot view confidential drawing test.
+AI cannot apply BOM change without approval test.
+Portable export preserves item UUIDs test.
+37. Seeders
+PLMPermissionsSeederPLMRolesSeederDefaultPLMStatusesSeederDefaultRequirementTypesSeederDefaultSpecificationTypesSeederDefaultEngineeringDocumentTypesSeederDefaultChangeReasonsSeederDefaultTestProtocolTemplatesSeederDemoPLMProductFamilySeeder optionalDemoEngineeringBOMSeeder optional
+38. Definition of Done
+يمكن إنشاء product family وitem وversion.
+يمكن ربط مستندات ورسومات بإصدارات هندسية.
+يمكن إنشاء requirements/specifications وربطها بالـ item.
+يمكن إنشاء EBOM وإصدارها بعد approval.
+يمكن فتح ECR وتحويله إلى ECO مع impact analysis.
+لا يمكن تعديل released item version مباشرة.
+يمكن تسجيل prototype build وtest results.
+يمكن إنشاء release package وتسليمه للتصنيع.
+تعمل الصلاحيات والعزل بين organizations/companies.
+تظهر logs وaudit events للأفعال الحساسة.
+تعمل قواعد Portable/Dedicated export للـ PLM data.
+توجد tests أساسية وdocumentation واضحة.
+39. ملخص تنفيذي
+Kabeeri PLM / R&D / Engineering Database هو امتداد Enterprise اختياري يسمح للمنصة بإدارة المنتجات الهندسية قبل أن تصبح منتجات تصنيع أو منتجات بيع. قوته في الفصل بين التصميم والتصنيع والتجارة، وفي فرض التحكم في الإصدارات والتغييرات والموافقات والأدلة. لا يجب بناؤه مبكرًا، لكنه مهم جدًا إذا كانت Kabeeri ستخدم قطاعات التصنيع، الأغذية، الأدوية، المقاولات، الهندسة، أو المنتجات المعقدة.
+KABEERI Database File 39 — PLM / R&D / Engineering Database
+KABEERI / Kabeeri / kabeeri — powered by ADMIT

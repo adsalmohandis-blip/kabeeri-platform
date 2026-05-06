@@ -1,0 +1,11 @@
+# KABEERI v1.6.6 — Automated Task Tracking Ready
+
+## Added
+- `24_kabeeri_task_tracking` folder.
+- JSON task trackers for V1–V8 and extension packs.
+- PHP CLI script `kbr-task.php` for automatic Codex updates.
+- VS Code commands table and tracking architecture documents.
+- Tracking automation rule injected into Codex prompt packs.
+
+## Important
+Copy `24_kabeeri_task_tracking` to the Laravel project root `kabeeri-platform`. Codex should mark tasks as `codex_done`; the owner may mark them as `verified`.

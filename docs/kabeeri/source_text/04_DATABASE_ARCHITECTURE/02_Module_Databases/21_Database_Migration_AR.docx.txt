@@ -1,0 +1,1283 @@
+KABEERI Database File 21
+Kabeeri Migration Database
+قاعدة بيانات الهجرة والاستيراد
+WordPress / WooCommerce / Shopify / ERP / CSV / Legacy Systems
+هذا الملف يصف تصميم قاعدة البيانات الخاصة بنقل العملاء والبيانات إلى Kabeeri، مع منع فقدان SEO أو المحتوى أو العلاقات التشغيلية، ومع دعم Preview وValidation وRedirect وRollback وMonitor.
+powered by ADMIT
+0. موقع هذا الملف داخل سلسلة ملفات الداتابيز
+هذا الملف يأتي بعد ملفات Core وCloud وFrontend Anywhere وPortable وDedicated وIntegration، وبعد ملفات CMS وMedia وRabet وCommerce وMall وTalent وERP وIntegration Hub وAI وWorkflows وSecurity وPackages وLocalization.
+وظيفته ليست فقط بناء importer، بل بناء نظام Migration Center كامل يربط مصادر خارجية بجداول Kabeeri بطريقة قابلة للمراجعة والتراجع والمزامنة.
+البند
+التوضيح
+يعتمد على
+Core Kernel، CMS، Media، Commerce، ERP، Integration Hub، Security، Events، Portable Export Registry
+يخدم
+WordPress migration، WooCommerce migration، Shopify migration، ERP/CRM migration، CSV/Excel imports، Legacy systems
+أهم وعد
+الانتقال إلى Kabeeri بدون خسارة محتوى أو SEO أو بيانات تشغيلية مهمة
+أهم قاعدة
+Analyze → Map → Import → Validate → Preview → Fix → Redirect → Go Live → Monitor
+1. تعريف Kabeeri Migration Database
+Kabeeri Migration Database هي طبقة الجداول التي تسجل وتدير كل عمليات نقل البيانات من الأنظمة الخارجية إلى Kabeeri، سواء كانت الهجرة مرة واحدة أو مزامنة مرحلية أو import متكرر.
+• تدير مصادر البيانات الخارجية مثل WordPress وWooCommerce وShopify وOdoo وZoho وQuickBooks وXero وDaftra وCSV/Excel.
+• تسجل ملفات الاستيراد، mapping، التحويلات، أخطاء التحقق، preview، نتائج التنفيذ، redirects، وrollback.
+• تدعم فكرة أن الهجرة ليست import فقط، بل دورة كاملة تبدأ بالتحليل وتنتهي بالمراقبة بعد Go Live.
+• تمنع إدخال بيانات خطرة أو حساسة مثل payment tokens/cards.
+• تربط كل سجل مستورد بالكيان الأصلي عبر external_id أو source_reference للحفاظ على idempotency ومنع التكرار.
+2. أهداف النظام
+1. تقليل خوف العملاء من الانتقال إلى Kabeeri.
+2. الحفاظ على SEO عبر slugs وredirect maps وmetadata.
+3. نقل المحتوى والوسائط والتصنيفات والمنتجات والعملاء والطلبات والمخزون والعملاء المحتملين.
+4. توفير preview قبل تنفيذ import نهائي، خصوصا للمتاجر وERP.
+5. توفير تقارير واضحة: ما تم استيراده، ما فشل، وما يحتاج مراجعة.
+6. دعم rollback أو partial rollback قدر الإمكان.
+7. دعم imports كبيرة عبر queue jobs قابلة للاستئناف.
+8. تسجيل activity/audit/security logs للعمليات الحساسة.
+3. نطاق الهجرة
+نوع الهجرة
+ما يشمله
+Content Migration
+Pages, posts, categories, tags, media, authors, menus, SEO metadata
+Commerce Migration
+Products, categories, variants, SKUs, prices, inventory, customers, orders, coupons, reviews, shipping/tax settings
+Business Migration
+Company data, business profile, services, team, customers, suppliers, leads, invoices
+ERP Migration
+Chart of accounts, items, inventory, invoices, payments, employees, projects
+Integration Migration
+ربط النظام القديم بدل النقل الكامل، أو مزامنة مرحلية عبر Integration Hub
+SEO Migration
+Slugs, canonical URLs, meta titles/descriptions, redirects, sitemap changes
+4. مبادئ التصميم
+• كل import يجب أن يكون scoped بـ organization_id، وعند الحاجة site_id وcompany_id.
+• لا يتم import نهائي قبل validation وpreview، إلا في imports بسيطة ومنخفضة المخاطر.
+• كل عملية import كبيرة يجب أن تعمل عبر queue job وتسجل progress وتدعم resume.
+• أي import قد يغير بيانات إنتاجية مهمة يجب أن يسبقه backup أو rollback point.
+• كل مصدر خارجي يجب أن يملك external identifiers لتجنب التكرار عند إعادة التشغيل.
+• لا يتم خلط فواتير منصة Kabeeri مع فواتير العميل المستوردة.
+• الـ mapping يجب أن يكون قابلا للحفظ وإعادة الاستخدام كـ template.
+• لا يتم استيراد payment tokens أو card data أو secrets.
+5. Migration Data Domains
+المجال
+الغرض
+Source Management
+تعريف مصدر الهجرة والاتصال والملفات
+Job Orchestration
+jobs، steps، batches، progress، scheduling
+Mapping
+entity maps، field maps، value maps، author/taxonomy maps
+Validation & Preview
+rules، results، preview items، warnings، errors
+Execution
+import batches، imported records، links، conflicts
+SEO & Redirects
+redirect maps، slug conflicts، SEO mapping
+Media Handling
+download/import media، checksums، retries
+Rollback
+rollback points، rollback items، undo actions
+Reports
+migration reports، reconciliation، go-live checks
+AI Assistance
+suggested mappings، rebuild suggestions، risk notes
+6. الجداول الأساسية
+• migration_sources
+• migration_source_credentials
+• migration_projects
+• migration_jobs
+• migration_job_steps
+• migration_uploaded_files
+• migration_import_batches
+• migration_entity_maps
+• migration_field_maps
+• migration_value_maps
+• migration_transform_rules
+• migration_validation_rules
+• migration_validation_results
+• migration_preview_items
+• migration_errors
+• migration_warnings
+• migration_external_links
+• migration_media_items
+• migration_redirect_maps
+• migration_seo_maps
+• migration_author_maps
+• migration_taxonomy_maps
+• migration_content_maps
+• migration_product_maps
+• migration_customer_maps
+• migration_order_maps
+• migration_inventory_maps
+• migration_finance_maps
+• migration_crm_maps
+• migration_conflicts
+• migration_conflict_resolutions
+• migration_rollback_points
+• migration_rollback_items
+• migration_reports
+• migration_reconciliation_reports
+• migration_ai_suggestions
+• csv_import_profiles
+• migration_templates
+• migration_schedules
+7. migration_sources
+يمثل النظام أو الملف أو الاتصال الخارجي الذي تأتي منه البيانات.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف داخلي ومعرف عام آمن
+organization_id
+العميل مالك عملية الهجرة
+site_id nullable
+الموقع المستهدف لو كانت هجرة CMS
+company_id nullable
+الشركة المستهدفة لو كانت هجرة بزنس/ERP
+source_type
+wordpress, woocommerce, shopify, odoo, zoho, quickbooks, xero, daftra, csv_excel, legacy_api, manual
+source_name
+اسم واضح للمصدر
+source_url nullable
+رابط الموقع أو النظام الخارجي
+status
+draft, connected, disconnected, failed, archived
+last_checked_at nullable
+آخر فحص اتصال
+settings json
+إعدادات غير حساسة
+created_by
+من أنشأ المصدر
+created_at / updated_at
+تواريخ
+ملاحظات:
+• لا تحفظ كلمات مرور أو API keys هنا. استخدم migration_source_credentials أو Credential Vault reference.
+8. migration_source_credentials
+يربط مصدر الهجرة بمرجع آمن للسر أو التوكن بدون تخزينه كنص واضح.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_source_id
+المصدر
+credential_type
+api_key, oauth, basic_auth, private_app_token, file_password
+vault_ref nullable
+مرجع إلى vault أو secret manager
+key_hash nullable
+hash لو كان token محلي مؤقت
+status
+active, expired, revoked, failed
+last_used_at nullable
+آخر استخدام
+expires_at nullable
+انتهاء الصلاحية
+created_at / updated_at
+تواريخ
+ملاحظات:
+• ممنوع حفظ credential plain text في قاعدة البيانات.
+• كل استخدام للسر يجب أن يسجل في security/audit عند الحاجة.
+9. migration_projects
+مشروع هجرة قابل لأن يحتوي أكثر من job وsource وmapping.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+organization_id
+العميل
+site_id nullable
+الموقع المستهدف
+company_id nullable
+الشركة المستهدفة
+name
+اسم المشروع مثل WordPress to Kabeeri
+migration_goal
+content, commerce, business, erp, full_site, seo_only
+source_mode
+file_upload, api_connection, connector_sync, manual_mapping
+status
+planning, mapping, validating, preview_ready, importing, completed, failed, archived
+risk_level
+low, medium, high, critical
+go_live_at nullable
+موعد الإطلاق المخطط
+metadata json
+تفاصيل إضافية
+created_by
+صاحب المشروع
+created_at / updated_at
+تواريخ
+ملاحظات:
+• يسمح بتقسيم الهجرة إلى مراحل: content أولا، ثم commerce، ثم ERP.
+10. migration_jobs
+عملية تنفيذ محددة داخل مشروع هجرة.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+migration_source_id nullable
+المصدر
+job_type
+analyze, map, validate, preview, import, redirect_build, reconcile, rollback, monitor
+status
+pending, queued, running, paused, completed, failed, cancelled, rolled_back
+mode
+dry_run, preview, production
+priority
+low, normal, high
+total_items / processed_items / failed_items
+عدادات
+started_at / completed_at / failed_at
+تواريخ التنفيذ
+error_message nullable
+آخر خطأ عام
+metadata json
+إعدادات job
+created_by
+من أطلقها
+created_at / updated_at
+تواريخ
+ملاحظات:
+• أي job من نوع production_import يجب أن يراجع entitlement والـ permissions والـ backup policy.
+11. migration_job_steps
+تفصيل خطوات job لتسهيل المتابعة والاستئناف.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_job_id
+job
+step_key
+download_file, parse_xml, map_authors, validate_media, import_pages, build_redirects
+step_order
+ترتيب
+status
+pending, running, completed, failed, skipped
+started_at / completed_at
+تواريخ
+message nullable
+رسالة للواجهة
+metadata json
+تفاصيل
+ملاحظات:
+• تستخدم في UI progress bar وفي resume عند فشل import كبير.
+12. migration_uploaded_files
+ملفات الاستيراد المرفوعة مثل WordPress XML أو CSV أو ZIP.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+migration_source_id nullable
+المصدر
+media_asset_id nullable
+ملف محفوظ في Media layer
+file_type
+wordpress_xml, csv, excel, json, zip, media_archive, sql_dump
+original_filename
+اسم الملف الأصلي
+status
+uploaded, parsed, invalid, archived
+checksum nullable
+لمنع إعادة رفع نفس الملف
+detected_rows nullable
+عدد السجلات المكتشفة
+metadata json
+تفاصيل parser
+created_at / updated_at
+تواريخ
+ملاحظات:
+• لا يتم التعامل مع الملف كموثوق قبل الفحص والتحقق.
+13. migration_import_batches
+دفعات تنفيذ import، مفيدة للعمليات الكبيرة والـ rollback الجزئي.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_job_id
+job
+entity_type
+page, post, media, product, customer, order, lead, invoice, stock_item
+batch_number
+رقم الدفعة
+status
+pending, running, completed, failed, rolled_back
+total_items / success_items / failed_items
+عدادات
+started_at / completed_at
+تواريخ
+metadata json
+تفاصيل
+ملاحظات:
+• الـ batches تسمح بالتدرج وتجنب timeout.
+14. migration_entity_maps
+خريطة تحويل الكيانات بين النظام الخارجي وجداول Kabeeri.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+source_entity
+wp_post, wc_product, shopify_order, odoo_contact
+target_entity
+content_entries, products, orders, contacts
+target_module
+cms, media, commerce, crm, inventory, accounting
+mapping_status
+draft, reviewed, approved, rejected
+confidence_score nullable
+درجة ثقة AI أو auto-mapper
+created_by nullable
+من أنشأ mapping
+metadata json
+تفاصيل
+created_at / updated_at
+تواريخ
+ملاحظات:
+• لا يتم production import لكيان عالي المخاطر إلا إذا كان mapping approved.
+15. migration_field_maps
+خريطة الحقول بين المصدر والهدف.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_entity_map_id
+خريطة الكيان
+source_field
+مثال: post_title
+target_field
+مثال: title
+target_required default false
+هل الحقل مطلوب
+transform_rule_id nullable
+قاعدة تحويل
+default_value json nullable
+قيمة افتراضية
+status
+draft, approved, ignored
+notes nullable
+ملاحظات
+created_at / updated_at
+تواريخ
+16. migration_value_maps
+خريطة تحويل قيم ثابتة مثل statuses أو payment methods أو tax classes.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+entity_type
+content, product, order, customer, invoice
+field_name
+اسم الحقل
+source_value
+القيمة الخارجية
+target_value
+القيمة في Kabeeri
+status
+draft, approved, ignored
+metadata json
+تفاصيل
+ملاحظات:
+• مثال: publish → published، draft → draft، cancelled → cancelled.
+17. migration_transform_rules
+قواعد تحويل قبل الحفظ.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+name
+اسم القاعدة
+rule_type
+trim, slugify, html_clean, shortcode_warn, currency_convert, date_parse, json_extract, custom_action
+config json
+إعدادات القاعدة
+risk_level
+low, medium, high
+status
+active, disabled
+created_at / updated_at
+تواريخ
+ملاحظات:
+• custom_action يحتاج مراجعة كود واختبار.
+18. migration_validation_rules
+قواعد التحقق قبل preview/import.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+entity_type
+page, product, order, customer, invoice
+rule_key
+required_title, unique_slug, valid_price, media_exists, tax_code_supported
+severity
+info, warning, error, blocking
+config json
+تفاصيل القاعدة
+status
+active, disabled
+created_at / updated_at
+تواريخ
+ملاحظات:
+• blocking يمنع import النهائي.
+19. migration_validation_results
+نتائج التحقق لكل عنصر أو دفعة.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_job_id
+job
+validation_rule_id nullable
+القاعدة
+entity_type
+نوع العنصر
+external_id nullable
+معرف المصدر
+status
+passed, warning, failed, blocked
+message
+الرسالة
+field_name nullable
+الحقل المتأثر
+payload json nullable
+لقطة بيانات
+created_at
+تاريخ
+20. migration_preview_items
+عناصر المعاينة قبل التنفيذ.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_job_id
+job
+entity_type
+page, post, product, customer, order
+external_id nullable
+معرف خارجي
+action
+create, update, skip, merge, delete_not_allowed
+target_type nullable
+Model مستهدف
+target_id nullable
+لو update
+before json nullable
+بيانات حالية
+after json nullable
+بيانات مقترحة
+status
+pending_review, approved, rejected, imported, skipped
+created_at / updated_at
+تواريخ
+ملاحظات:
+• Preview هو خط الدفاع الأساسي ضد imports خطيرة.
+21. migration_errors
+أخطاء الهجرة القابلة للمتابعة.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_job_id nullable
+job
+migration_import_batch_id nullable
+دفعة
+severity
+warning, error, critical
+error_code
+كود ثابت
+entity_type nullable
+نوع العنصر
+external_id nullable
+معرف خارجي
+message
+شرح الخطأ
+payload json nullable
+تفاصيل
+resolved_by nullable
+من عالج الخطأ
+resolved_at nullable
+وقت الحل
+created_at
+تاريخ
+22. migration_external_links
+يربط السجل الخارجي بالسجل الداخلي بعد import.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+source_type
+wordpress, shopify, odoo, csv
+external_entity_type
+wp_post, product, customer
+external_id
+معرف المصدر
+external_uuid nullable
+معرف بديل
+target_type
+Model داخلي
+target_id
+ID داخلي
+target_uuid nullable
+UUID داخلي
+import_action
+created, updated, merged, skipped
+last_synced_at nullable
+آخر مزامنة
+created_at / updated_at
+تواريخ
+ملاحظات:
+• هذا الجدول مهم للـ idempotency ومنع التكرار في إعادة التشغيل.
+23. migration_media_items
+تتبع وسائط خارجية يتم تنزيلها أو ربطها.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+source_url nullable
+رابط الملف الخارجي
+source_path nullable
+مسار داخل zip
+external_id nullable
+معرف media خارجي
+target_media_asset_id nullable
+ملف داخل Kabeeri
+status
+pending, downloading, imported, failed, skipped
+checksum nullable
+لمنع التكرار
+mime_type nullable
+نوع الملف
+error_message nullable
+خطأ
+created_at / updated_at
+تواريخ
+ملاحظات:
+• يجب احترام private/public visibility عند نقل media.
+24. migration_redirect_maps
+خريطة redirects لحماية SEO بعد الهجرة.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+site_id
+الموقع
+old_url
+الرابط القديم
+new_url
+الرابط الجديد
+status_code default 301
+301 أو 302
+source_entity_type nullable
+page/post/product
+source_external_id nullable
+معرف خارجي
+target_type nullable
+Model داخلي
+target_id nullable
+معرف داخلي
+status
+draft, active, conflict, disabled
+created_at / updated_at
+تواريخ
+ملاحظات:
+• إهمال redirects قد يدمر SEO، لذلك يجب أن يكون redirect report جزءا من go-live.
+25. migration_seo_maps
+تحويل بيانات SEO.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+entity_type
+page, post, product, category
+external_id
+معرف المصدر
+target_type nullable
+الموديل المستهدف
+target_id nullable
+السجل المستهدف
+old_slug nullable
+slug القديم
+new_slug nullable
+slug الجديد
+meta_title nullable
+عنوان SEO
+meta_description nullable
+وصف SEO
+canonical_url nullable
+canonical
+robots_directive nullable
+index/noindex
+status
+draft, applied, conflict
+26. migration_author_maps
+يربط مؤلفين خارجيين بمستخدمين أو أسماء داخل Kabeeri.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+external_author_id nullable
+معرف خارجي
+external_author_name
+اسم خارجي
+target_user_id nullable
+مستخدم داخلي
+fallback_display_name nullable
+اسم بديل
+action
+map_to_user, create_user, keep_display_name, ignore
+status
+draft, approved, applied
+27. migration_taxonomy_maps
+خرائط التصنيفات والوسوم.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+source_taxonomy
+category, tag, product_cat
+source_term_id nullable
+معرف خارجي
+source_name
+اسم خارجي
+target_taxonomy_id nullable
+التصنيف الداخلي
+target_term_id nullable
+term داخلي
+action
+create, map, merge, ignore
+status
+draft, approved, applied
+28. migration_content_maps
+خرائط تفصيلية للمحتوى.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+external_content_id
+معرف خارجي
+source_content_type
+page, post, custom_post_type
+target_content_type_id nullable
+Content Type داخلي
+target_content_entry_id nullable
+Content Entry
+slug_status
+same, changed, conflict
+shortcode_status
+none, warnings, unsupported
+block_mapping_status
+mapped, partial, unsupported
+status
+draft, previewed, imported, failed
+ملاحظات:
+• يجب تسجيل unknown shortcodes كتحذيرات، لا إسقاطها بصمت.
+29. migration_product_maps
+خرائط المنتجات من WooCommerce/Shopify/ERP.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+external_product_id
+معرف المنتج الخارجي
+source_product_type
+simple, variable, grouped, subscription, digital
+target_product_id nullable
+منتج Kabeeri
+sku nullable
+SKU
+variant_strategy
+single_product, variants, split_products
+price_status
+valid, missing, conflict
+stock_status
+imported, skipped, external_source
+status
+draft, previewed, imported, failed
+30. migration_customer_maps
+خرائط العملاء.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+external_customer_id
+معرف خارجي
+email_hash nullable
+hash لاكتشاف التكرار
+target_customer_id nullable
+Customer داخلي
+target_contact_id nullable
+CRM Contact
+merge_strategy
+create, update_existing, merge_by_email, skip
+status
+draft, imported, duplicate, failed
+ملاحظات:
+• لا تستورد passwords من الأنظمة الخارجية. استخدم invite/reset flow.
+31. migration_order_maps
+خرائط الطلبات الخارجية.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+external_order_id
+معرف خارجي
+target_order_id nullable
+Order داخلي
+order_number nullable
+رقم الطلب
+order_date nullable
+تاريخ
+payment_status
+paid, unpaid, refunded, unknown
+fulfillment_status nullable
+حالة التنفيذ
+import_financials default true
+هل يتم نقل totals
+status
+draft, previewed, imported, failed
+ملاحظات:
+• ممنوع استيراد payment tokens أو card data. يمكن استيراد status وprovider_reference الآمن فقط.
+32. migration_inventory_maps
+خرائط المخزون والأصناف.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+external_item_id
+معرف خارجي
+target_product_id nullable
+منتج داخلي
+target_inventory_item_id nullable
+عنصر مخزون
+warehouse_strategy
+default_warehouse, map_warehouse, skip_stock
+quantity decimal nullable
+كمية
+status
+draft, imported, conflict, failed
+33. migration_finance_maps
+خرائط مالية أولية عند نقل ERP/Accounting.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+external_account_id nullable
+حساب خارجي
+target_account_id nullable
+حساب داخلي
+external_invoice_id nullable
+فاتورة خارجية
+target_invoice_id nullable
+فاتورة داخلية
+mapping_type
+chart_account, invoice, payment, tax_code
+status
+draft, approved, imported, failed
+ملاحظات:
+• أي finance import يجب أن يمر بموافقة وpreview، وقد يحتاج reconciliation report.
+34. migration_crm_maps
+خرائط CRM والـ Leads.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_project_id
+المشروع
+external_record_id
+معرف خارجي
+source_record_type
+lead, contact, company, deal
+target_type
+lead, contact, customer, company
+target_id nullable
+السجل المستهدف
+pipeline_map_status
+mapped, defaulted, missing
+status
+draft, imported, failed
+35. migration_conflicts
+تعارضات تحتاج قرار.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+entity_type
+page, product, customer, account
+external_id nullable
+معرف خارجي
+conflict_type
+duplicate_slug, duplicate_email, sku_exists, missing_required, currency_mismatch, tax_rule_missing
+severity
+warning, blocking
+status
+open, resolved, ignored, escalated
+details json
+تفاصيل
+created_at / updated_at
+تواريخ
+36. migration_conflict_resolutions
+قرارات حل التعارض.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_conflict_id
+التعارض
+resolution_type
+rename, merge, skip, overwrite, create_new, manual_fix
+resolution_payload json nullable
+تفاصيل القرار
+resolved_by
+المستخدم
+resolved_at
+وقت الحل
+notes nullable
+ملاحظات
+37. migration_rollback_points
+نقطة رجوع قبل تنفيذ import خطر.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+migration_job_id nullable
+job
+organization_id
+العميل
+rollback_type
+snapshot, per_record, backup_reference, logical_delete
+backup_id nullable
+cloud_backup أو dedicated_backup
+status
+available, used, expired, failed
+expires_at nullable
+انتهاء
+created_by
+المستخدم
+created_at
+تاريخ
+ملاحظات:
+• عمليات bulk import وERP import وCommerce import تحتاج rollback point أو backup.
+38. migration_rollback_items
+عناصر يمكن التراجع عنها.
+الحقل
+الوصف / القيم المقترحة
+id
+معرف
+migration_rollback_point_id
+نقطة الرجوع
+target_type
+Model
+target_id nullable
+ID
+action_to_rollback
+delete_created, restore_before, revert_update, detach_relation
+before json nullable
+قبل
+after json nullable
+بعد
+status
+pending, rolled_back, failed, skipped
+created_at / updated_at
+تواريخ
+39. migration_reports
+تقرير تنفيذي قابل للعرض للعميل أو الوكالة.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+migration_job_id nullable
+job
+report_type
+analysis, preview, import_summary, seo_redirects, errors, go_live, monitor
+status
+draft, ready, archived
+summary json
+ملخص أرقام
+file_media_id nullable
+PDF/HTML report
+created_by nullable
+من أنشأ
+created_at / updated_at
+تواريخ
+40. migration_reconciliation_reports
+تقارير مطابقة بعد النقل.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+scope
+content, commerce, inventory, finance, crm
+source_count
+عدد المصدر
+target_count
+عدد الهدف
+matched_count
+مطابق
+missing_count
+ناقص
+mismatch_count
+غير مطابق
+status
+passed, warnings, failed
+details json nullable
+تفاصيل
+ملاحظات:
+• مطلوب خاصة في WooCommerce/ERP/Finance migrations.
+41. migration_ai_suggestions
+اقتراحات AI للهجرة أو إعادة البناء.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+suggestion_type
+field_mapping, content_cleanup, shortcode_rebuild, seo_fix, product_cleanup, workflow_suggestion
+risk_level
+low, medium, high
+status
+suggested, accepted, rejected, applied
+input_summary json nullable
+ملخص المدخلات
+suggestion_payload json
+الاقتراح
+reviewed_by nullable
+من راجع
+created_at / updated_at
+تواريخ
+ملاحظات:
+• AI لا يطبق تغييرات مباشرة؛ يمر عبر preview/approval حسب قواعد AI Co-builder.
+42. csv_import_profiles
+ملفات تعريف لاستيراد CSV/Excel متكرر.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+organization_id
+العميل
+name
+اسم profile
+target_entity
+products, customers, inventory, leads
+delimiter nullable
+الفاصل
+has_header default true
+هل الملف له header
+encoding nullable
+الترميز
+field_map json
+خريطة الحقول
+validation_config json
+قواعد التحقق
+status
+active, archived
+created_by
+المستخدم
+created_at / updated_at
+تواريخ
+43. migration_templates
+قوالب mapping جاهزة حسب المصدر.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+name
+اسم القالب
+source_type
+wordpress, woocommerce, shopify, odoo, csv_excel
+target_scope
+cms, commerce, crm, erp
+template_version
+نسخة
+mapping_payload json
+الخرائط
+status
+draft, active, deprecated
+created_at / updated_at
+تواريخ
+ملاحظات:
+• يفيد الوكالات وتكرار migrations.
+44. migration_schedules
+جدولة imports أو sync مرحلي.
+الحقل
+الوصف / القيم المقترحة
+id / uuid
+معرف
+migration_project_id
+المشروع
+schedule_type
+one_time, recurring, delta_sync
+cron_expression nullable
+للمتكرر
+status
+active, paused, completed, cancelled
+last_run_at nullable
+آخر تشغيل
+next_run_at nullable
+التالي
+created_at / updated_at
+تواريخ
+ملاحظات:
+• مفيد للانتقال المرحلي قبل قطع النظام القديم.
+45. Migration ERD
+erDiagram ORGANIZATIONS ||--o{ MIGRATION_PROJECTS : owns MIGRATION_PROJECTS ||--o{ MIGRATION_SOURCES : uses MIGRATION_PROJECTS ||--o{ MIGRATION_JOBS : runs MIGRATION_JOBS ||--o{ MIGRATION_JOB_STEPS : contains MIGRATION_JOBS ||--o{ MIGRATION_IMPORT_BATCHES : batches MIGRATION_PROJECTS ||--o{ MIGRATION_ENTITY_MAPS : maps MIGRATION_ENTITY_MAPS ||--o{ MIGRATION_FIELD_MAPS : has MIGRATION_PROJECTS ||--o{ MIGRATION_VALUE_MAPS : converts MIGRATION_PROJECTS ||--o{ MIGRATION_VALIDATION_RULES : validates MIGRATION_JOBS ||--o{ MIGRATION_VALIDATION_RESULTS : produces MIGRATION_JOBS ||--o{ MIGRATION_PREVIEW_ITEMS : previews MIGRATION_PROJECTS ||--o{ MIGRATION_EXTERNAL_LINKS : links MIGRATION_PROJECTS ||--o{ MIGRATION_MEDIA_ITEMS : imports MIGRATION_PROJECTS ||--o{ MIGRATION_REDIRECT_MAPS : protects_seo MIGRATION_PROJECTS ||--o{ MIGRATION_ROLLBACK_POINTS : creates MIGRATION_ROLLBACK_POINTS ||--o{ MIGRATION_ROLLBACK_ITEMS : reverts MIGRATION_PROJECTS ||--o{ MIGRATION_REPORTS : reports MIGRATION_PROJECTS ||--o{ MIGRATION_RECONCILIATION_REPORTS : reconciles
+46. WordPress Migration Flow
+1. إنشاء migration_project بنطاق site_id.
+2. رفع WordPress XML في migration_uploaded_files.
+3. تشغيل analyze job لاكتشاف pages/posts/authors/taxonomies/media/SEO.
+4. إنشاء author/taxonomy/content/media maps.
+5. تشغيل validation لاكتشاف slugs conflicts وmissing media وunknown shortcodes.
+6. إنشاء preview_items للصفحات والمقالات والوسائط والـ redirects.
+7. مراجعة التقرير والموافقة.
+8. إنشاء rollback point أو backup قبل production import.
+9. تنفيذ import على batches.
+10. تفعيل redirect maps وتحديث sitemap.
+11. تشغيل reconciliation وgo-live report.
+47. WooCommerce Migration Flow
+1. ربط WooCommerce API أو رفع export files.
+2. تحليل products/variants/SKUs/customers/orders/coupons/reviews/shipping/tax.
+3. إنشاء product maps وcustomer maps وorder maps وinventory maps.
+4. مراجعة price/currency/tax/shipping mapping.
+5. تشغيل preview مع إظهار المنتجات التي ستنشأ والطلبات التي ستستورد.
+6. منع import لأي payment sensitive data.
+7. استيراد المنتجات أولا، ثم العملاء، ثم الطلبات، ثم المخزون، ثم التقارير.
+8. مطابقة source_count وtarget_count عبر reconciliation report.
+48. Shopify Migration Flow
+1. ربط Shopify API عبر Integration Hub أو رفع CSV exports.
+2. تحليل products/collections/customers/orders/discounts.
+3. mapping للـ variants والـ options والـ images.
+4. تحويل collections إلى product categories أو taxonomies.
+5. preview للمنتجات والطلبات والعملاء قبل import.
+6. تسجيل external_links لمنع duplication عند delta imports.
+7. تجهيز redirect maps من روابط Shopify القديمة إلى Kabeeri.
+49. ERP / CRM Migration Flow
+1. استخدام Connector من Integration Hub عندما يكون النظام مدعوما.
+2. تحليل الحسابات والعملاء والموردين والفواتير والمدفوعات والمخزون والموظفين.
+3. تجهيز finance/inventory/crm maps.
+4. فرض approvals على أي import مالي أو محاسبي.
+5. تشغيل dry run وreconciliation قبل production.
+6. بدء sync مرحلي لو كان الاستبدال الكامل غير مناسب.
+50. Status Values
+الحقل
+القيم
+migration_project.status
+planning, mapping, validating, preview_ready, importing, completed, failed, archived
+migration_job.status
+pending, queued, running, paused, completed, failed, cancelled, rolled_back
+preview_item.action
+create, update, skip, merge, delete_not_allowed
+validation_result.status
+passed, warning, failed, blocked
+conflict.status
+open, resolved, ignored, escalated
+rollback_point.status
+available, used, expired, failed
+51. Permissions
+الصلاحية
+الغرض
+migration.view
+عرض مشاريع الهجرة
+migration.source.manage
+إدارة مصادر الهجرة
+migration.file.upload
+رفع ملفات الاستيراد
+migration.analyze
+تشغيل analyze
+migration.mapping.manage
+تعديل mapping
+migration.validate
+تشغيل validation
+migration.preview.view
+عرض preview
+migration.preview.approve
+اعتماد preview
+migration.import.run
+تشغيل import
+migration.rollback
+تنفيذ rollback
+migration.report.view
+عرض التقارير
+migration.redirect.manage
+إدارة redirects
+migration.finance.import
+استيراد بيانات مالية
+migration.erp.import
+استيراد ERP
+migration.ai.suggest
+استخدام AI suggestions
+52. Feature Flags
+• enable_migration_center
+• enable_wordpress_import
+• enable_wordpress_xml_import
+• enable_csv_import
+• enable_woocommerce_import
+• enable_shopify_import
+• enable_erp_migration
+• enable_connector_based_migration
+• enable_migration_preview
+• enable_migration_rollback
+• enable_redirect_map_basic
+• enable_ai_migration_suggestions
+• enable_advanced_migration_reconciliation
+• enable_agency_bulk_migration_tools
+53. Integration With Existing Kabeeri Modules
+الموديول
+نقطة التكامل
+Core Kernel
+organization/site/company scoping، users، permissions، activity logs
+CMS Database
+content_entries، content_types، taxonomies، menus، SEO، redirects
+Media Database
+media_assets، media import، private/public visibility
+Commerce Database
+products، customers، carts/orders، coupons، payments safe references
+ERP Essentials/Pro
+CRM، inventory، invoices، accounting starter/pro
+Integration Hub
+connectors، credentials vault، sync jobs، external object links
+Security
+audit، sensitive access، credential handling، import logs
+Events & Workflows
+events after import، approvals، webhooks، notifications
+AI Co-builder
+mapping suggestions، content rebuild suggestions، guarded apply
+Portable/Dedicated
+tenant export/import، transitions، external sources، Mall sync continuity
+54. Security Rules
+• لا يتم حفظ API keys أو passwords كنص واضح.
+• لا يتم استيراد payment tokens أو card data أو secrets من أي نظام.
+• أي import مالي أو ERP يجب أن يتطلب permission خاص وapproval وpreview.
+• أي bulk import يجب أن يسجل audit event.
+• أي import إلى production يجب أن يتحقق من entitlement ومن صحة operating mode.
+• يجب تسجيل source file checksum وparser version لتتبع النتائج.
+• يجب عزل ملفات الاستيراد الخاصة بالعميل داخل storage scope آمن.
+• يجب وضع rate limits عند استخدام APIs خارجية.
+55. Events
+• MigrationProjectCreated
+• MigrationSourceConnected
+• MigrationFileUploaded
+• MigrationAnalysisCompleted
+• MigrationMappingApproved
+• MigrationValidationCompleted
+• MigrationPreviewApproved
+• MigrationImportStarted
+• MigrationBatchImported
+• MigrationImportFailed
+• MigrationRedirectMapCreated
+• MigrationRollbackPointCreated
+• MigrationRollbackCompleted
+• MigrationReconciliationCompleted
+• MigrationGoLiveCompleted
+56. Audit Events
+• migration_source_credential_added
+• migration_preview_approved
+• migration_import_started
+• migration_finance_import_started
+• migration_rollback_requested
+• migration_redirects_activated
+• migration_sensitive_data_blocked
+• migration_ai_suggestion_applied
+57. Backup & Rollback Policy
+العملية
+السياسة
+Content only import
+rollback point per record أو backup اختياري حسب الحجم
+Media import كبير
+checksum + batch rollback + storage cleanup
+Commerce import
+backup قبل production import + rollback point
+ERP/Finance import
+mandatory backup + approval + reconciliation
+Bulk delete/update
+mandatory backup + dry run
+Redirect activation
+versioned redirect map + rollback to previous map
+58. Frontend Anywhere / Portable / Dedicated Considerations
+• في Cloud وFrontend Anywhere مصدر البيانات داخل Kabeeri DB، لذلك import يعمل داخل المنصة مباشرة.
+• في Portable قد يكون import داخل self-hosted installation، ثم يرسل Mall public data عبر sync فقط عند الموافقة.
+• في Dedicated يتم تنفيذ import داخل Dedicated DB أو عبر managed migration window.
+• عند الانتقال بين modes، يجب تسجيل tenant_transition وربط import/export بالـ business_passport.
+• Mall Mirror لا يعتمد على source DB مباشرة، بل على public sync أو internal events بعد الموافقة.
+59. API Endpoints مقترحة
+POST /api/migrations/projectsGET /api/migrations/projects/{id}POST /api/migrations/projects/{id}/sourcesPOST /api/migrations/projects/{id}/filesPOST /api/migrations/jobs/{id}/analyzePOST /api/migrations/jobs/{id}/validateGET /api/migrations/jobs/{id}/previewPOST /api/migrations/preview-items/{id}/approvePOST /api/migrations/jobs/{id}/importPOST /api/migrations/jobs/{id}/rollbackGET /api/migrations/projects/{id}/reportsGET /api/migrations/projects/{id}/redirects
+60. Roadmap عبر الإصدارات
+الإصدار
+النطاق
+V1
+Import/export foundation، content/media model migration-ready، redirect concept، activity log for imports
+V2
+WordPress XML importer، media import، SEO meta mapping، redirect map، migration report، CSV basic
+V3
+WooCommerce basic import، products/customers/orders، CRM lead/customer import، inventory import
+V4
+Migration assistant UI، agency tools، bulk jobs، AI suggestions basic
+V5
+Shopify import، ERP connector-based migration، Odoo/QuickBooks/Zoho sync import، reconciliation
+V6
+Advanced migration center، Elementor/Gutenberg partial mapping، ERP toolkit، AI rebuild assistant
+61. Acceptance Criteria
+• يمكن إنشاء migration_project وربطه بـ organization/site/company.
+• يمكن رفع WordPress XML أو CSV وربطه بـ migration_uploaded_files.
+• يمكن تشغيل analyze ثم validation ثم preview قبل import.
+• يمكن حفظ mapping للكيانات والحقول والقيم.
+• يمكن إنشاء redirect maps للروابط القديمة.
+• يتم تسجيل external_links لكل سجل مستورد.
+• يمكن إنشاء migration_report واضح للعميل.
+• لا يتم استيراد بيانات دفع حساسة.
+• تعمل rollback policy على الأقل للـ records التي تم إنشاؤها في import.
+• كل العمليات المهمة تسجل activity/audit events.
+62. أخطاء ممنوعة
+• استيراد production بدون preview.
+• تجاهل redirects أو slugs conflicts.
+• إسقاط unknown shortcodes أو unsupported blocks بدون warning.
+• حفظ API keys أو كلمات مرور المصدر كنص واضح.
+• استيراد card data أو payment tokens.
+• تشغيل import مالي بدون approval وreconciliation.
+• عدم تسجيل external_id مما يسبب duplication عند إعادة التشغيل.
+• خلط بيانات منصة Kabeeri المالية مع فواتير العميل المستوردة.
+• تشغيل imports كبيرة داخل request عادي بدل queue job.
+63. الخلاصة التنفيذية
+Kabeeri Migration Database يجب أن تجعل الانتقال إلى Kabeeri منتجا موثوقا، وليس أداة import عشوائية. التصميم الصحيح هو Migration Center كامل يحلل البيانات، يرسم خرائطها، يتحقق منها، يعرض preview، يسمح بالإصلاح، ينفذ على دفعات، يحمي SEO، ويسجل كل شيء مع إمكانية rollback والمراقبة.
+القاعدة النهائية:
+No production migration without mapping, validation, preview, redirects, audit, and recovery path.
+KABEERI Database File 21 — Migration Database — powered by ADMIT

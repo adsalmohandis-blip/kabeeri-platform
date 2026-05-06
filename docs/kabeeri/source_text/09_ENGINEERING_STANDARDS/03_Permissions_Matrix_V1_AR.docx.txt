@@ -1,0 +1,146 @@
+KABEERI / powered by ADMIT
+KABEERI Permissions Matrix V1
+مصفوفة أدوار وصلاحيات تنفيذية للإصدار الأول
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. الهدف
+هذا الملف يحول الصلاحيات إلى مصفوفة تنفيذية قابلة للتحويل إلى seeders وpolicies.
+2. Roles الأساسية في V1
+Role
+الوصف
+Platform Super Admin
+دور تشغيلي داخل Kabeeri
+Organization Owner
+دور تشغيلي داخل Kabeeri
+Organization Admin
+دور تشغيلي داخل Kabeeri
+App Admin
+دور تشغيلي داخل Kabeeri
+Editor
+دور تشغيلي داخل Kabeeri
+Media Manager
+دور تشغيلي داخل Kabeeri
+Theme Manager
+دور تشغيلي داخل Kabeeri
+Package Manager
+دور تشغيلي داخل Kabeeri
+Professional User
+دور تشغيلي داخل Kabeeri
+App Builder
+دور تشغيلي داخل Kabeeri
+Agency Admin
+دور تشغيلي داخل Kabeeri
+Support Viewer
+دور تشغيلي داخل Kabeeri
+3. Permission Matrix
+Permission
+Scope
+Risk
+Allowed Roles
+Release
+organization.view
+organization
+low
+Owner/Admin/Support Viewer
+V1
+organization.manage
+organization
+high
+Owner/Admin
+V1
+member.invite
+organization
+medium
+Owner/Admin
+V1
+role.manage
+organization
+high
+Owner
+V1
+site.create
+organization
+medium
+Owner/Admin
+V1
+site.view
+site
+low
+App Admin/Editor
+V1
+site.settings.manage
+site
+high
+App Admin
+V1
+content.view
+site
+low
+Editor
+V1
+content.create
+site
+low
+Editor
+V1
+content.publish
+site
+medium
+App Admin/Editor if granted
+V1
+media.upload
+site
+low
+Editor/Media Manager
+V1
+media.delete
+site
+medium
+Media Manager/App Admin
+V1
+theme.activate
+site
+high
+Theme Manager/App Admin
+V1
+package.install
+organization/site
+critical
+Package Manager/Owner
+V1 foundation
+activity_log.view
+organization/site
+medium
+Owner/Admin
+V1
+audit_log.view
+organization
+high
+Owner/Super Admin
+V1
+import.run
+site
+high
+App Admin/Migration Specialist later
+V2
+capability.manage_own
+user
+low
+Professional User
+V1 foundation
+agency.access.request
+site
+high
+Agency Admin later
+V4
+billing.manage
+organization
+critical
+Owner only
+V2+
+4. قواعد Policies
+• لا تعتمد على role فقط؛ افحص permission + membership + scope.
+• أي action critical يحتاج audit log.
+• أي action يثبت package أو يغير permissions يحتاج confirmation وربما backup.
+• Agency/App Builder access يكون مؤقتًا ومحددًا بالـ scope.
+• Deny override يتغلب على allow.

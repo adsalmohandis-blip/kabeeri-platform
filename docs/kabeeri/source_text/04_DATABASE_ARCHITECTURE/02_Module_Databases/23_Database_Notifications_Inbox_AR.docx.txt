@@ -1,0 +1,66 @@
+KABEERI Database File — Notification Center & Unified Inbox Database
+قاعدة بيانات الإشعارات والرسائل الموحدة
+KABEERI / Kabeeri — powered by ADMIT
+الحالة: Canonical Draft 1.0 | اللغة: العربية | قابل للتنفيذ داخل Laravel Modular Monolith
+1. الهدف
+Notification Center وUnified Inbox هما طبقتان مركزيتان تخدمان CMS وRabet وCommerce وERP وMall وAI وSecurity. لا يجوز لكل module أن يبني نظام إشعارات منفصل.
+2. Notification Tables
+الجدول
+الدور
+notification_templates
+قوالب الرسائل حسب النوع والقناة واللغة
+notification_preferences
+تفضيلات المستخدم والقنوات
+notifications
+الإشعار الداخلي الأساسي
+notification_deliveries
+تسليم الإشعار لقناة محددة
+notification_delivery_attempts
+محاولات الإرسال والفشل
+notification_routing_rules
+قواعد التوجيه حسب الدور/السياق
+notification_digest_jobs
+التجميع اليومي/الأسبوعي
+notification_suppression_rules
+منع الإزعاج أو التكرار
+3. Unified Inbox Tables
+الجدول
+الدور
+inbox_conversations
+محادثة مرتبطة بسياق أو كيان
+inbox_participants
+المشاركون وصلاحياتهم
+inbox_messages
+الرسائل
+inbox_message_attachments
+مرفقات الرسائل عبر media/documents
+inbox_mentions
+mentions للمستخدمين أو الفرق
+inbox_read_receipts
+قراءة الرسائل
+inbox_conversation_links
+ربط المحادثة بـ order/lead/dispute/verification
+inbox_access_logs
+تتبع الوصول للرسائل الحساسة
+inbox_retention_policies
+سياسات الاحتفاظ
+4. Conversation Types
+• service_request
+• mall_inquiry
+• order_support
+• verification_review
+• legal_partner_review
+• dispute_case
+• team_internal
+• system_alert
+• ai_assisted_thread
+5. Flows
+• Service request → conversation created → business notified → optional CRM lead.
+• Verification request assigned → legal partner sees only assigned conversation and documents.
+• Dispute opened → dispute conversation locks participants and evidence access.
+• AI suggests reply → preview → user approves before sending.
+6. Privacy Rules
+• Inbox is context-first and permission-aware.
+• Private employee evaluations do not appear in public/talent inbox.
+• Legal documents require sensitive access logs.
+• Portable export includes only tenant conversations allowed by retention policy.

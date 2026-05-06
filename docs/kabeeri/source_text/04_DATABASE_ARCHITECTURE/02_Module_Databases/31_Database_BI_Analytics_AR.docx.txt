@@ -1,0 +1,382 @@
+KABEERI Database File 31
+Advanced Reporting / BI / Analytics Database
+قاعدة بيانات التقارير المتقدمة والتحليلات ولوحات البيانات
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يصف طبقة التقارير والتحليلات التي تجمع بيانات Kabeeri من CMS وCommerce وERP وMall وRabet وBilling وTeams وIntegrations وتحوّلها إلى تقارير، مؤشرات أداء، لوحات تنفيذية، ومخرجات قابلة للتصدير، مع احترام الصلاحيات والخصوصية والعزل بين العملاء.
+1. تعريف Advanced Reporting / BI / Analytics
+نظام Advanced Reporting / BI / Analytics هو طبقة قراءة وتحليل فوق بيانات المنصة، وليس بديلاً عن جداول التشغيل الأصلية. هو لا يملك الحقيقة التشغيلية، بل يبني نماذج عرض وتحليل مشتقة من مصادر الحقيقة داخل الموديولات المختلفة.
+في V5 يبدأ النظام كـ Advanced Reporting Foundation: تعريفات تقارير، فلاتر محفوظة، تقارير مجدولة، تصدير، وDashboard widgets.
+في V6 يتوسع إلى BI / Analytics / Data Platform: Executive dashboards، Operational dashboards، KPI management، Data warehouse foundation، Data marts by domain، Data dictionary، Data quality، وScheduled analytics jobs.
+أي تقرير يجب أن يكون tenant-scoped وpermission-aware وvisibility-aware.
+التقارير الثقيلة لا تعمل داخل request مباشر، بل عبر queue jobs وsnapshots وcache.
+2. أهداف النظام
+إعطاء الإدارة رؤية تنفيذية على الشركات والمواقع والمتاجر والعمليات.
+تحويل بيانات ERP وCommerce وRabet وMall إلى KPIs قابلة للمتابعة.
+توفير Report Builder يمكن التحكم فيه بالصلاحيات بدون كشف بيانات حساسة.
+دعم Scheduled Reports وتصدير PDF/Excel/CSV لاحقاً.
+تأسيس Data Warehouse / Data Mart تدريجي بدون تعقيد مبكر.
+دعم AI Report Explainer بدون السماح للذكاء الاصطناعي بتعديل البيانات التشغيلية.
+3. ما يدخل في V5 وما يدخل في V6
+3.1 V5 — Advanced Reporting Foundation
+report_definitions.
+saved_filters.
+scheduled_report_jobs foundation.
+export_reports.
+dashboard_widgets.
+AI report explainer كقراءة وتفسير فقط.
+3.2 V6 — BI / Analytics / Data Platform
+executive_dashboards.
+operational_dashboards.
+kpi_definitions وkpi_values.
+report_builder advanced.
+data_warehouse foundation.
+data_marts by domain.
+data_dictionary / business glossary.
+data_quality_rules.
+scheduled analytics jobs.
+export to external BI tools.
+4. القواعد الحاكمة
+لا يوجد report يقرأ كل شيء بدون Scope واضح.
+لا يمكن لتقرير أن يتجاوز صلاحيات المستخدم أو membership context.
+البيانات الحساسة مثل payroll، bank accounts، legal documents، identity documents تحتاج permissions صريحة وaudit log.
+أي dashboard عام يجب أن يستخدم public/aggregated data فقط.
+الـ KPI نتيجة مشتقة، ويمكن إعادة حسابه من مصادر الحقيقة.
+أي report ثقيل يجب أن يعمل queue/scheduled job وليس داخل HTTP request مباشر.
+أي export يجب أن يسجل في activity/audit logs ويخضع لسياسة retention.
+5. Data Domains
+CMS Analytics: pages, posts, content publishing, SEO, redirects.
+Commerce Analytics: products, carts, orders, customers, payments, coupons.
+ERP Analytics: CRM, sales, inventory, purchasing, accounting, HR, helpdesk, contracts.
+Mall Analytics: listings, inquiries, reviews, rankings, featured placements.
+Rabet / Trust Analytics: verification status, trust score, legal partner performance.
+Billing Analytics: subscriptions, invoices platform, usage, entitlements, churn.
+Integration Analytics: sync jobs, errors, connector usage, mapping failures.
+Security / Compliance Analytics: sensitive access, audit events, incidents, policy reports.
+6. الجداول الأساسية
+report_sources
+report_datasets
+report_definitions
+report_fields
+report_filters
+report_saved_views
+report_runs
+report_exports
+report_schedules
+dashboard_definitions
+dashboard_widgets
+dashboard_widget_data_snapshots
+kpi_definitions
+kpi_values
+kpi_targets
+analytics_events
+analytics_event_properties
+data_marts
+data_mart_tables
+warehouse_jobs
+warehouse_job_runs
+data_dictionary_terms
+data_dictionary_fields
+data_quality_rules
+data_quality_results
+analytics_permissions
+external_bi_exports
+report_sources
+يمثل مصدر بيانات يمكن أن يعتمد عليه تقرير أو Dataset.
+iduuidorganization_id nullablesource_keysource_namesource_typemodule_key nullableconnection_type default internalstatus default activedescription nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة:
+internal_table
+query_view
+materialized_snapshot
+data_mart
+external_connection
+api_source
+فهارس مقترحة:
+unique(source_key)index(organization_id)index(module_key)index(status)
+ملاحظات:
+لا يخزن credentials هنا؛ أي مصدر خارجي يستخدم Integration Hub connection reference.
+report_datasets
+يمثل Dataset قابل للاستخدام في Report Builder أو Dashboard.
+iduuidorganization_id nullablecompany_id nullablesite_id nullablereport_source_iddataset_keynamedescription nullablescope_typesubject_areastatus default activerefresh_mode default livecache_ttl_seconds nullabledefinition jsonmetadata json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+القيم المقترحة:
+subject_area: cms, commerce, crm, sales, inventory, purchasing, accounting, hr, mall, billing, security, integration, custom
+refresh_mode: live, cached, scheduled_snapshot, warehouse
+فهارس مقترحة:
+unique(organization_id, dataset_key)index(company_id)index(site_id)index(subject_area)index(status)
+ملاحظات:
+definition قد يحتوي select fields/joins/filters المسموحة، وليس SQL خام مفتوح للمستخدم النهائي.
+report_definitions
+تعريف تقرير قابل للتشغيل أو الجدولة أو التصدير.
+iduuidorganization_idcompany_id nullablesite_id nullabledataset_idnameslugdescription nullablereport_typevisibility default privatestatus default draftlayout json nullabledefault_filters json nullablecolumns json nullablesorts json nullablegrouping json nullablecreated_by nullableupdated_by nullablecreated_atupdated_atdeleted_at nullable
+القيم المقترحة:
+report_type: table, summary, chart, pivot, kpi_card, compliance, financial, operational
+visibility: private, team, organization, company, public_aggregated
+فهارس مقترحة:
+unique(organization_id, slug)index(company_id)index(site_id)index(dataset_id)index(report_type)index(status)
+ملاحظات:
+التقرير لا يمنح صلاحية قراءة؛ الصلاحية تأتي من analytics_permissions + permissions الأصلية للكيانات.
+report_fields
+الحقول المتاحة داخل تقرير، مع نوع البيانات والحساسية.
+idreport_definition_idfield_keylabeldata_typesource_expression nullableaggregation nullableis_dimension default falseis_measure default falseis_sensitive default falsesensitivity_level nullableformat json nullablesort_order default 0created_atupdated_at
+القيم المقترحة:
+data_type: string, text, integer, decimal, money, date, datetime, boolean, json, enum
+aggregation: count, sum, avg, min, max, distinct_count, none
+sensitivity_level: public, internal, confidential, restricted, secret
+فهارس مقترحة:
+index(report_definition_id)index(field_key)index(is_sensitive)
+ملاحظات:
+أي field حساس يحتاج permission صريحة ويفضل audit عند export.
+report_filters
+فلاتر التقرير الأساسية أو القابلة للتعديل.
+idreport_definition_idfilter_keylabeloperatorvalue_typedefault_value json nullableallowed_values json nullableis_required default falseis_user_editable default truecreated_atupdated_at
+القيم المقترحة:
+operator: equals, not_equals, contains, between, greater_than, less_than, in, not_in, is_null, is_not_null
+فهارس مقترحة:
+index(report_definition_id)index(filter_key)
+report_saved_views
+فلاتر وترتيبات محفوظة لمستخدم أو فريق.
+iduuidreport_definition_idorganization_idcompany_id nullableuser_id nullablenamevisibility default privatefilters json nullablecolumns json nullablesorts json nullablegrouping json nullablecreated_atupdated_at
+القيم المقترحة:
+visibility: private, team, company, organization
+فهارس مقترحة:
+index(report_definition_id)index(user_id)index(organization_id, visibility)
+report_runs
+كل تشغيل لتقرير، خصوصاً التقارير الثقيلة أو المجدولة.
+iduuidreport_definition_idorganization_idcompany_id nullablesite_id nullablerequested_by nullablerun_typestatus default pendingfilters json nullablestarted_at nullablecompleted_at nullablefailed_at nullablerow_count integer nullableduration_ms integer nullablecache_key nullableerror_message nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة:
+run_type: manual, scheduled, api, dashboard_refresh, export, ai_explainer
+status: pending, running, completed, failed, cancelled, expired
+فهارس مقترحة:
+index(report_definition_id)index(organization_id, created_at)index(company_id, created_at)index(status)index(run_type)
+ملاحظات:
+لا تحفظ كل النتائج الضخمة داخل DB؛ يمكن حفظ summary أو file_media_id في report_exports.
+report_exports
+تصدير تقرير إلى ملف أو رابط خارجي.
+iduuidreport_run_idorganization_idcompany_id nullableexport_typestatus default pendingfile_media_id nullablestorage_path nullableformatrequested_by nullableexpires_at nullabledownload_count default 0created_atupdated_at
+القيم المقترحة:
+format: csv, xlsx, pdf, json
+status: pending, running, completed, failed, expired, deleted
+فهارس مقترحة:
+index(report_run_id)index(organization_id)index(format)index(status)
+ملاحظات:
+أي export حساس يجب أن يدخل audit_logs.
+report_schedules
+جدولة تقرير لإرساله أو تحديثه دورياً.
+iduuidreport_definition_idorganization_idcompany_id nullablenamecron_expressiontimezone default Africa/Cairodelivery_channels json nullablerecipients json nullablestatus default activelast_run_at nullablenext_run_at nullablecreated_by nullablecreated_atupdated_at
+القيم المقترحة:
+delivery_channels: in_app, email, webhook, file_export
+فهارس مقترحة:
+index(report_definition_id)index(next_run_at)index(status)
+ملاحظات:
+يجب فحص الصلاحيات وقت التنفيذ، وليس فقط وقت إنشاء الجدولة.
+dashboard_definitions
+تعريف Dashboard تنفيذي أو تشغيلي.
+iduuidorganization_idcompany_id nullablesite_id nullablenameslugdashboard_typevisibility default privatestatus default activelayout json nullablerefresh_mode default manualcreated_by nullablecreated_atupdated_atdeleted_at nullable
+القيم المقترحة:
+dashboard_type: executive, operational, financial, sales, inventory, mall, billing, security, custom
+refresh_mode: manual, auto, scheduled, cached
+فهارس مقترحة:
+unique(organization_id, slug)index(company_id)index(site_id)index(dashboard_type)index(status)
+dashboard_widgets
+Widget داخل dashboard.
+iduuiddashboard_definition_idwidget_typetitledataset_id nullablereport_definition_id nullablekpi_definition_id nullableposition jsonconfig json nullablerefresh_interval_seconds nullablestatus default activecreated_atupdated_at
+القيم المقترحة:
+widget_type: kpi_card, line_chart, bar_chart, pie_chart, table, funnel, heatmap, list, custom_html
+فهارس مقترحة:
+index(dashboard_definition_id)index(widget_type)index(status)
+ملاحظات:
+يفضل ألا يسمح custom_html إلا للـ trusted/admin لتجنب XSS.
+dashboard_widget_data_snapshots
+كاش لنتائج Widgets لتسريع لوحات البيانات.
+iduuiddashboard_widget_idorganization_idcompany_id nullablesnapshot_keypayload jsoncalculated_atexpires_at nullablecreated_at
+فهارس مقترحة:
+index(dashboard_widget_id)index(organization_id)index(expires_at)
+ملاحظات:
+Snapshot مشتق ويمكن حذفه وإعادة بنائه.
+kpi_definitions
+تعريف مؤشر أداء قابل للحساب.
+iduuidorganization_id nullablecompany_id nullablekpi_keynamedescription nullablesubject_areacalculation_methodformula json nullableunit nullabledirection default higher_is_betterfrequency default dailystatus default activecreated_by nullablecreated_atupdated_at
+القيم المقترحة:
+subject_area: sales, finance, inventory, crm, support, mall, billing, security, custom
+calculation_method: query, formula, aggregate, manual, external
+direction: higher_is_better, lower_is_better, target_range
+فهارس مقترحة:
+unique(organization_id, company_id, kpi_key)index(subject_area)index(status)
+kpi_values
+القيم المحسوبة أو المدخلة لمؤشرات الأداء.
+idkpi_definition_idorganization_idcompany_id nullablesite_id nullableperiod_startperiod_endvalue decimal(20,6)target_value decimal(20,6) nullablestatus default calculatedcalculated_at nullablesource_run_id nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة:
+status: calculated, manual, estimated, stale, failed
+فهارس مقترحة:
+index(kpi_definition_id, period_start, period_end)index(organization_id, period_start)index(company_id, period_start)index(status)
+kpi_targets
+أهداف المؤشرات حسب فترة أو فريق أو شركة.
+iduuidkpi_definition_idorganization_idcompany_id nullabletarget_scope_type nullabletarget_scope_id nullableperiod_startperiod_endtarget_value decimal(20,6)threshold_warning decimal(20,6) nullablethreshold_critical decimal(20,6) nullablecreated_by nullablecreated_atupdated_at
+فهارس مقترحة:
+index(kpi_definition_id)index(organization_id, period_start)index(target_scope_type, target_scope_id)
+analytics_events
+أحداث تحليلية اختيارية من النظام أو الواجهة.
+iduuidorganization_id nullablecompany_id nullablesite_id nullableuser_id nullablesession_id nullableevent_nameevent_category nullablesubject_type nullablesubject_id nullableoccurred_atsource default backendmetadata json nullablecreated_at
+القيم المقترحة:
+source: backend, admin_ui, public_site, frontend_anywhere, api, integration
+فهارس مقترحة:
+index(organization_id, occurred_at)index(site_id, occurred_at)index(event_name)index(subject_type, subject_id)
+ملاحظات:
+لا تستخدم analytics_events لتخزين بيانات شخصية حساسة إلا بعد consent واضح.
+analytics_event_properties
+خصائص مفهرسة لأحداث analytics عند الحاجة.
+idanalytics_event_idproperty_keyproperty_value_string nullableproperty_value_number decimal(20,6) nullableproperty_value_datetime nullablecreated_at
+فهارس مقترحة:
+index(analytics_event_id)index(property_key)index(property_value_string)
+data_marts
+تعريف Data Mart حسب domain.
+iduuidorganization_id nullablecompany_id nullablemart_keynamedomainstatus default activerefresh_frequency nullablelast_refreshed_at nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة:
+domain: commerce, finance, sales, inventory, mall, billing, security, all
+فهارس مقترحة:
+unique(organization_id, company_id, mart_key)index(domain)index(status)
+ملاحظات:
+V6 foundation فقط، وليس Lakehouse كامل.
+data_mart_tables
+الجداول أو snapshots المادية داخل Data Mart.
+iddata_mart_idtable_keytable_namesource_dataset_id nullablestorage_type default database_tablestatus default activeschema json nullablelast_built_at nullablerow_count nullablecreated_atupdated_at
+القيم المقترحة:
+storage_type: database_table, materialized_view, file_snapshot, external_warehouse
+فهارس مقترحة:
+index(data_mart_id)index(table_key)index(status)
+warehouse_jobs
+تعريف job لبناء warehouse أو mart.
+iduuidorganization_id nullablecompany_id nullablejob_keynamejob_typeschedule nullablestatus default activeconfig json nullablecreated_atupdated_at
+القيم المقترحة:
+job_type: extract, transform, load, aggregate, kpi_calculation, data_quality_check
+فهارس مقترحة:
+unique(organization_id, company_id, job_key)index(job_type)index(status)
+warehouse_job_runs
+كل تشغيل فعلي لـ warehouse job.
+iduuidwarehouse_job_idstatus default pendingstarted_at nullablecompleted_at nullablefailed_at nullablerecords_read integer default 0records_written integer default 0error_message nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة:
+status: pending, running, completed, failed, cancelled, partial
+فهارس مقترحة:
+index(warehouse_job_id, created_at)index(status)index(started_at)
+data_dictionary_terms
+قاموس مصطلحات الأعمال.
+iduuidorganization_id nullableterm_keynamedefinition longtext nullabledomain nullableowner_user_id nullablestatus default draftcreated_by nullablecreated_atupdated_at
+القيم المقترحة:
+status: draft, approved, deprecated
+فهارس مقترحة:
+unique(organization_id, term_key)index(domain)index(status)
+ملاحظات:
+يستخدم لتوحيد معنى مصطلحات مثل Customer, Lead, Revenue, Gross Margin.
+data_dictionary_fields
+توثيق حقول البيانات والتقارير.
+iduuidorganization_id nullabledataset_id nullabletable_name nullablefield_namebusiness_name nullabledescription nullabledata_type nullableclassification default internalowner_user_id nullablestatus default activecreated_atupdated_at
+القيم المقترحة:
+classification: public, internal, confidential, restricted, secret
+فهارس مقترحة:
+index(organization_id)index(dataset_id)index(table_name, field_name)index(classification)
+data_quality_rules
+قواعد جودة البيانات.
+iduuidorganization_id nullablecompany_id nullablerule_keynamedomainseverity default mediumdataset_id nullablerule_typecondition jsonstatus default activecreated_by nullablecreated_atupdated_at
+القيم المقترحة:
+rule_type: not_null, unique, range, reference_exists, stale_data, format, custom_query
+severity: low, medium, high, critical
+فهارس مقترحة:
+unique(organization_id, company_id, rule_key)index(domain)index(severity)index(status)
+data_quality_results
+نتائج تشغيل قواعد جودة البيانات.
+iduuiddata_quality_rule_idwarehouse_job_run_id nullablestatuschecked_atrecords_checked integer default 0records_failed integer default 0sample_failures json nullablemessage nullablecreated_at
+القيم المقترحة:
+status: passed, warning, failed, skipped
+فهارس مقترحة:
+index(data_quality_rule_id, checked_at)index(status)
+analytics_permissions
+صلاحيات تحليلية إضافية بجانب RBAC الأصلي.
+idorganization_idsubject_typesubject_idpermission_keyscope_type nullablescope_id nullableeffect default allowcreated_by nullablecreated_at
+القيم المقترحة:
+permission_key: analytics.dashboard.view, analytics.report.run, analytics.report.export, analytics.kpi.manage, analytics.data_dictionary.manage, analytics.warehouse.manage
+فهارس مقترحة:
+index(organization_id)index(subject_type, subject_id)index(permission_key)index(scope_type, scope_id)
+ملاحظات:
+Deny overrides allow يجب أن يظل مبدأ حاكم.
+external_bi_exports
+إعداد تصدير أو مشاركة بيانات مع أدوات BI خارجية.
+iduuidorganization_idcompany_id nullablenameexport_typedestination_typestatus default draftdataset_id nullabledata_mart_id nullableconnection_ref nullableschedule nullablelast_export_at nullablecreated_by nullablecreated_atupdated_at
+القيم المقترحة:
+export_type: dataset, report, data_mart_snapshot, kpi_values
+destination_type: csv_url, s3, google_sheets, power_bi, looker, webhook, custom
+فهارس مقترحة:
+index(organization_id)index(company_id)index(export_type)index(destination_type)index(status)
+ملاحظات:
+لا يتم تفعيل external export قبل approval وaudit في البيانات الحساسة.
+7. ERD مبسط
+erDiagram ORGANIZATIONS ||--o{ REPORT_DATASETS : owns REPORT_SOURCES ||--o{ REPORT_DATASETS : feeds REPORT_DATASETS ||--o{ REPORT_DEFINITIONS : powers REPORT_DEFINITIONS ||--o{ REPORT_FIELDS : defines REPORT_DEFINITIONS ||--o{ REPORT_FILTERS : filters REPORT_DEFINITIONS ||--o{ REPORT_SAVED_VIEWS : saves REPORT_DEFINITIONS ||--o{ REPORT_RUNS : runs REPORT_RUNS ||--o{ REPORT_EXPORTS : exports DASHBOARD_DEFINITIONS ||--o{ DASHBOARD_WIDGETS : contains DASHBOARD_WIDGETS ||--o{ DASHBOARD_WIDGET_DATA_SNAPSHOTS : caches KPI_DEFINITIONS ||--o{ KPI_VALUES : calculates KPI_DEFINITIONS ||--o{ KPI_TARGETS : targets DATA_MARTS ||--o{ DATA_MART_TABLES : includes WAREHOUSE_JOBS ||--o{ WAREHOUSE_JOB_RUNS : runs DATA_QUALITY_RULES ||--o{ DATA_QUALITY_RESULTS : checks REPORT_DATASETS ||--o{ DATA_DICTIONARY_FIELDS : documents
+8. Report Builder Flow
+Admin opens report builder→ choose dataset→ select allowed fields→ add filters/grouping/sorts→ permission check→ preview sample rows→ save report_definition→ run report_run→ cache or export if needed→ activity/audit log created
+9. Dashboard Flow
+Create dashboard_definition→ add widgets→ each widget uses report/kpi/dataset→ widget permission check→ run lightweight queries or cached snapshot→ dashboard_widget_data_snapshots updated→ user sees dashboard according to role/context
+10. KPI Calculation Flow
+Scheduled KPI job starts→ load kpi_definitions→ resolve organization/company scope→ read source dataset or data mart→ calculate value→ compare against kpi_targets→ store kpi_values→ notify if threshold warning/critical→ dashboard widgets refresh
+11. Data Warehouse / Data Mart Flow
+warehouse_job scheduled→ extract from source modules→ transform into domain mart→ aggregate metrics→ run data_quality_rules→ publish data_mart_tables→ mark stale dashboards for refresh
+12. Security & Privacy Rules
+كل report_run يجب أن يعرف organization_id وcontext المستخدم.
+لا يسمح بتصدير بيانات حساسة إلا بصلاحية analytics.report.export_sensitive أو صلاحية domain محددة.
+Payroll وbanking وlegal documents وidentity documents وsecurity events لا تظهر في BI العام.
+Dashboard public لا يعرض إلا aggregated/anonymized data.
+External BI export يحتاج approval وaudit log وexpiration/revocation.
+Query builder لا يسمح بكتابة SQL خام من المستخدم النهائي في V5/V6 المبكر.
+أي AI report explainer يقرأ summary آمن ولا يحصل على raw sensitive rows إلا بإذن صريح.
+13. Permissions المقترحة
+analytics.dashboard.viewanalytics.dashboard.manageanalytics.report.viewanalytics.report.createanalytics.report.editanalytics.report.runanalytics.report.exportanalytics.report.export_sensitiveanalytics.kpi.viewanalytics.kpi.manageanalytics.data_dictionary.viewanalytics.data_dictionary.manageanalytics.data_quality.viewanalytics.data_quality.manageanalytics.warehouse.viewanalytics.warehouse.manageanalytics.external_export.manageanalytics.admin
+14. Feature Flags
+enable_advanced_reports_foundationenable_report_builderenable_saved_report_viewsenable_scheduled_reportsenable_dashboard_widgetsenable_kpi_managementenable_bi_analyticsenable_data_warehouse_foundationenable_data_martsenable_data_dictionaryenable_data_quality_rulesenable_external_bi_exportsenable_ai_report_explainer
+15. Frontend Anywhere / Portable / Dedicated
+15.1 Frontend Anywhere
+الواجهة الخارجية لا ترى تقارير admin أو raw analytics.
+يمكن توفير public analytics محدودة مثل page views أو catalog stats إذا كان scope يسمح.
+أي Dashboard إداري يبقى داخل Control Panel في Kabeeri Cloud.
+15.2 Portable
+عند تصدير العميل، يمكن تضمين report_definitions وdashboard_definitions وkpi_definitions الخاصة به.
+لا تصدر platform-wide benchmark data أو بيانات عملاء آخرين.
+يجب إعادة بناء snapshots وdata marts داخل النسخة self-hosted بعد restore.
+15.3 Dedicated
+Dedicated يمكنه تشغيل warehouse jobs داخل بيئة العميل.
+Central Kabeeri يستقبل فقط usage summaries أو mall analytics العامة حسب الاتفاق.
+يمكن تفعيل external BI exports بشكل منفصل لكل dedicated environment.
+16. Indexing & Performance
+استخدم snapshots للوحات التنفيذية المتكررة.
+استخدم queued report_runs للتقارير الثقيلة.
+استخدم data marts للـ joins الثقيلة بين ERP domains.
+استخدم read replicas أو reporting database في المراحل المتقدمة.
+احتفظ بـ query logs وduration_ms لتحديد التقارير البطيئة.
+لا تسمح بتقارير مفتوحة بدون date range افتراضي.
+17. AI Report Explainer
+AI يشرح التقرير ولا يعدل التقرير أو البيانات الأصلية بدون approval.
+AI يحصل على metadata وaggregated results قدر الإمكان بدلاً من raw rows.
+أي تفسير AI يحفظ في ai tool calls أو analytics_ai_explanations إذا تم توسيع النظام.
+يمكن ربط report_runs بـ ai_sessions عند طلب explanation.
+AI Report Explainer FlowUser opens report→ permission check→ report summary generated→ sensitive fields removed or masked→ AI explains trend/anomaly→ explanation logged→ optional suggested actions require approval workflow
+18. Suggested Laravel Structure
+app/  Analytics/    Reports/      Models/      Actions/      Services/      Jobs/      Policies/      Exports/    Dashboards/    KPIs/    Warehouse/    DataDictionary/    DataQuality/    ExternalBI/    AI/      ReportExplainer/
+19. Build Order
+Phase 1: report_sources + report_datasets + report_definitions.
+Phase 2: report_fields + report_filters + report_runs.
+Phase 3: report_exports + report_schedules.
+Phase 4: dashboard_definitions + dashboard_widgets + snapshots.
+Phase 5: kpi_definitions + kpi_values + targets.
+Phase 6: data_dictionary_terms + fields.
+Phase 7: warehouse_jobs + data_marts + data_quality_rules.
+Phase 8: external_bi_exports + AI report explainer.
+20. Definition of Done
+يمكن إنشاء تقرير من Dataset آمن وتشغيله.
+يمكن حفظ filters وviews.
+يمكن تصدير تقرير بصلاحية واضحة وسجل audit.
+Dashboard يعرض widgets من reports/KPIs.
+KPI calculation job يعمل ويخزن values.
+التقارير الثقيلة تعمل queue ولا تكسر request.
+الـ permission-aware analytics يمنع رؤية بيانات غير مسموحة.
+Data dictionary يشرح أهم المصطلحات والحقول.
+Data quality rule واحدة على الأقل تعمل وتخزن result.
+Portable/Dedicated لا يكسر report definitions بعد النقل.
+21. ملخص تنفيذي
+هذا الملف يحول التقارير من صفحات عشوائية داخل كل موديول إلى طبقة Analytics مركزية منظمة. البداية في V5 تكون Report Definitions وSaved Filters وScheduled Reports وDashboard Widgets. في V6 تتحول إلى BI/Data Platform يدعم KPIs وData Dictionary وData Quality وData Warehouse Foundation. القاعدة النهائية: التقارير تقرأ وتلخص وتشرح، لكنها لا تكسر صلاحيات النظام ولا تصبح مصدراً للحقيقة بدلاً من الموديولات الأصلية.
+KABEERI Database File 31 — Advanced Reporting / BI / Analytics Database

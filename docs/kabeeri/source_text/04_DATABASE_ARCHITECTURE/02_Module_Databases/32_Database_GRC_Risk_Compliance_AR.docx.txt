@@ -1,0 +1,1836 @@
+KABEERI Database File 32
+GRC / Risk / Compliance Database
+قاعدة بيانات الحوكمة والمخاطر والامتثال — KABEERI
+هذا الملف يصف تصميم قاعدة البيانات الخاص بطبقة GRC داخل Kabeeri، وهي طبقة Enterprise لا تبدأ قبل استقرار Core وRBAC وAudit وSecurity Center وERP Pro وIntegration Hub وBI Foundation.
+الغرض من هذا الملف هو تحويل الحوكمة والامتثال من تقارير يدوية إلى نظام تشغيلي قابل للتتبع: سياسات، التزامات، مخاطر، ضوابط، اختبارات، أدلة، تدقيق داخلي، DOA، SoD، وخطط تصحيح.
+1. هدف GRC Database
+طبقة GRC تجعل المؤسسة قادرة على إدارة المخاطر والامتثال والسياسات والصلاحيات المؤسسية بطريقة قابلة للتدقيق، وليس فقط عبر ملفات خارجية أو جداول Excel.
+توحيد السياسات وربطها بالموافقات والمراجعات الدورية.
+تسجيل الالتزامات حسب الدولة أو اللائحة أو العقد أو المجال التشغيلي.
+إدارة سجل مخاطر مركزي مع likelihood وimpact وmitigation وowner.
+ربط الضوابط بالمخاطر والالتزامات والسياسات.
+تشغيل اختبارات ضوابط دورية وتسجيل النتائج والأدلة.
+إدارة خطط التدقيق الداخلي والنتائج والإجراءات التصحيحية.
+تطبيق Delegation of Authority — DOA ومنع تضارب الصلاحيات — SoD.
+إنتاج تقارير امتثال وتصديرات audit-ready بدون كشف بيانات غير مصرح بها.
+2. موقع GRC داخل معمارية Kabeeri
+GRC لا يستبدل Security أو BI أو ERP. هو طبقة حوكمة فوقهم: يأخذ إشارات من audit logs وsecurity events وERP approvals وbilling وcountry packs، ثم يحولها إلى obligations وrisks وcontrols وevidence وfindings.
+النظام
+دوره في GRC
+Core Kernel
+المصدر الأساسي للهوية، الشركات، المواقع، الصلاحيات، العضويات، activity/audit logs.
+Security & Compliance
+مصدر التصنيف، sensitive access، incidents، privacy requests، retention، SIEM exports.
+ERP Pro
+مصدر العمليات المالية والتعاقدية والمخزون والموافقات التي تخضع للضوابط.
+BI / Analytics
+يعرض مؤشرات المخاطر، اختبارات الضوابط، dashboard، compliance snapshots.
+Country Packs
+تحدد التزامات محلية مثل الضرائب، الفواتير الإلكترونية، payroll، data residency.
+AI Co-builder
+يمكنه اقتراح ضوابط أو تلخيص findings، لكنه لا يغير سياسات أو يغلق مخاطر بدون موافقة.
+3. مبادئ التصميم
+لا يوجد GRC بدون RBAC وAudit Logs؛ أي تغيير في سياسة أو خطر أو ضابط يجب تسجيله.
+كل كيان GRC يجب أن يكون scoped بـ organization_id، وعند الحاجة company_id أو site_id.
+السياسات والضوابط لها versioning؛ لا نعدل النسخ المعتمدة مباشرة.
+الأدلة Evidence قد تكون ملفًا، رابطًا، لقطة تقرير، سجل Audit، أو نتيجة اختبار.
+SoD وDOA قواعد قابلة للفحص آليًا، وليست ملاحظات نصية فقط.
+GRC في V6 foundation وليس بديلًا كاملًا لمنصات GRC المتخصصة من اليوم الأول.
+البيانات الحساسة داخل الأدلة يجب أن تستخدم Document/Media security وsensitive access logs.
+كل تقارير GRC يجب أن تكون permission-aware وexport-logged.
+4. الحدود بين GRC والأنظمة القريبة
+المفهوم
+مكانه الصحيح
+ملاحظات
+Audit Log
+Core/Security
+GRC يستخدمه كدليل أو إشارة، لكنه لا يصبح مصدر الحقيقة الوحيد.
+Incident Report
+Security
+قد ينشئ risk أو finding داخل GRC.
+Approval Request
+Workflow/ERP
+DOA داخل GRC يحدد threshold والقواعد، والتنفيذ في Workflow.
+Financial Control
+GRC + ERP
+تعريف الضابط داخل GRC، والبيانات التشغيلية داخل ERP.
+Compliance Report
+BI + GRC
+GRC يحدد النطاق والأدلة، BI يعرض dashboards/snapshots.
+Privacy Request
+Security/Compliance
+قد تربط كالتزام امتثال داخل GRC.
+Country Regulation
+Country Packs
+تتحول إلى obligations داخل GRC حسب الدولة والقطاع.
+5. الجداول الأساسية
+الجداول مقسمة إلى 9 مجموعات: Policies، Obligations، Risks، Controls، Evidence، Internal Audit، Corrective Actions، DOA/SoD، وExports/Snapshots.
+المجموعة
+الجداول
+Policy Management
+grc_policy_categories, grc_policies, grc_policy_versions, grc_policy_approvals, grc_policy_acknowledgements
+Compliance Obligations
+grc_compliance_frameworks, grc_compliance_obligations, grc_obligation_requirements, grc_obligation_evidence_requirements
+Risk Register
+grc_risk_categories, grc_risks, grc_risk_assessments, grc_risk_treatments
+Controls
+grc_controls, grc_control_mappings, grc_control_tests, grc_control_test_results
+Evidence
+grc_evidence_items, grc_evidence_links, grc_evidence_access_logs
+Internal Audit
+grc_audit_plans, grc_audit_engagements, grc_audit_scope_items, grc_audit_findings
+Remediation
+grc_corrective_actions, grc_corrective_action_updates
+DOA / SoD
+grc_doa_rules, grc_doa_requests, grc_sod_rules, grc_sod_conflicts, grc_sod_conflict_resolutions
+Monitoring & Export
+grc_compliance_calendar_events, grc_register_snapshots, grc_export_logs
+6. grc_policy_categories
+تصنيف السياسات حسب المجال مثل Security, Finance, HR, Privacy, AI, Marketplace.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام للتصدير والربط.
+organization_id
+bigint nullable indexed
+فارغ للسياسات العامة أو مملوء لسياسات العميل.
+company_id
+bigint nullable indexed
+للشركة إذا كانت السياسة خاصة بها.
+name
+varchar(150)
+اسم التصنيف.
+slug
+varchar(150)
+معرف مقروء.
+description
+text nullable
+وصف التصنيف.
+status
+varchar(50)
+active/archived.
+created_at/updated_at
+timestamps
+تواريخ الإنشاء والتحديث.
+الفهارس المقترحة:
+unique(organization_id, company_id, slug)
+index(status)
+7. grc_policies
+يمثل السياسة ككيان مستمر، أما النص المعتمد فيوجد داخل grc_policy_versions.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل المالك.
+company_id
+bigint nullable indexed
+الشركة المعنية.
+category_id
+bigint nullable FK
+تصنيف السياسة.
+policy_code
+varchar(80)
+كود مثل SEC-POL-001.
+title
+varchar(255)
+عنوان السياسة.
+owner_user_id
+bigint nullable
+مالك السياسة.
+status
+varchar(50)
+draft/under_review/approved/active/retired.
+effective_from
+date nullable
+تاريخ السريان.
+review_frequency
+varchar(50) nullable
+quarterly/semi_annual/annual/custom.
+next_review_at
+date nullable
+موعد المراجعة القادمة.
+metadata
+json nullable
+بيانات إضافية.
+created_by
+bigint nullable
+من أنشأ السياسة.
+created_at/updated_at/deleted_at
+timestamps
+دعم soft delete عند الحاجة.
+القيم/الحالات المقترحة:
+draft
+under_review
+approved
+active
+retired
+archived
+الفهارس المقترحة:
+unique(organization_id, policy_code)
+index(owner_user_id)
+index(status)
+index(next_review_at)
+8. grc_policy_versions
+نسخ السياسة. لا يتم تعديل النسخة المعتمدة مباشرة؛ يتم إنشاء نسخة جديدة.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+policy_id
+bigint FK
+السياسة الأصلية.
+version_number
+varchar(30)
+مثال 1.0 أو 1.1.
+content
+longtext
+نص السياسة.
+summary
+text nullable
+ملخص تنفيذي.
+change_reason
+text nullable
+سبب التعديل.
+status
+varchar(50)
+draft/pending_approval/approved/rejected/superseded.
+approved_by
+bigint nullable
+الموافق النهائي.
+approved_at
+timestamp nullable
+وقت الاعتماد.
+effective_from
+date nullable
+بداية السريان.
+effective_to
+date nullable
+نهاية السريان.
+created_by
+bigint nullable
+المنشئ.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+unique(policy_id, version_number)
+index(status)
+index(effective_from)
+9. grc_policy_approvals
+سجل موافقات السياسات قبل نشرها.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+policy_version_id
+bigint FK
+نسخة السياسة.
+approver_user_id
+bigint
+الموافق.
+approval_role
+varchar(100) nullable
+Legal/Compliance/Security/CFO.
+decision
+varchar(50)
+pending/approved/rejected/changes_requested.
+comment
+text nullable
+تعليق المراجع.
+decided_at
+timestamp nullable
+وقت القرار.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(policy_version_id, decision)
+index(approver_user_id)
+10. grc_policy_acknowledgements
+إقرار المستخدمين أو الموظفين بقراءة سياسة معينة.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+policy_version_id
+bigint FK
+نسخة السياسة.
+user_id
+bigint
+المستخدم.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable
+الشركة.
+status
+varchar(50)
+required/acknowledged/overdue/exempted.
+acknowledged_at
+timestamp nullable
+وقت الإقرار.
+ip_address
+varchar(64) nullable
+IP.
+user_agent
+text nullable
+المتصفح.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+unique(policy_version_id, user_id)
+index(organization_id, status)
+11. grc_compliance_frameworks
+الأطر أو اللوائح: قانون دولة، ISO، سياسة داخلية، متطلبات عقد، أو Country Pack.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint nullable indexed
+فارغ لو إطار عام.
+country_id
+bigint nullable
+الدولة.
+framework_code
+varchar(80)
+مثال EG-TAX أو ISO27001.
+name
+varchar(255)
+اسم الإطار.
+framework_type
+varchar(50)
+regulation/standard/internal/contract/country_pack.
+authority
+varchar(255) nullable
+الجهة أو المصدر.
+status
+varchar(50)
+active/draft/retired.
+effective_from
+date nullable
+بداية السريان.
+metadata
+json nullable
+تفاصيل إضافية.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+unique(organization_id, framework_code)
+index(country_id)
+index(framework_type)
+12. grc_compliance_obligations
+التزام محدد يجب تنفيذه ومراقبته.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+framework_id
+bigint nullable FK
+الإطار المرتبط.
+obligation_code
+varchar(100)
+كود الالتزام.
+title
+varchar(255)
+عنوان الالتزام.
+description
+text nullable
+الوصف.
+owner_user_id
+bigint nullable
+المسؤول.
+due_date
+date nullable
+تاريخ الاستحقاق.
+frequency
+varchar(50) nullable
+one_time/monthly/quarterly/annual/event_based.
+risk_level
+varchar(50)
+low/medium/high/critical.
+status
+varchar(50)
+not_started/in_progress/compliant/non_compliant/waived.
+last_checked_at
+timestamp nullable
+آخر فحص.
+next_check_at
+timestamp nullable
+الفحص القادم.
+metadata
+json nullable
+بيانات إضافية.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(organization_id, status)
+index(owner_user_id)
+index(due_date)
+index(risk_level)
+13. grc_obligation_requirements
+تفصيل متطلبات الالتزام الواحد إلى عناصر قابلة للفحص.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+obligation_id
+bigint FK
+الالتزام.
+requirement_code
+varchar(100)
+كود المتطلب.
+title
+varchar(255)
+العنوان.
+description
+text nullable
+الوصف.
+control_expected
+boolean default false
+هل يحتاج ضابط؟
+evidence_expected
+boolean default true
+هل يحتاج دليل؟
+status
+varchar(50)
+active/inactive.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(obligation_id)
+unique(obligation_id, requirement_code)
+14. grc_obligation_evidence_requirements
+أنواع الأدلة المطلوبة لكل التزام أو متطلب.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+obligation_id
+bigint FK
+الالتزام.
+requirement_id
+bigint nullable FK
+متطلب محدد.
+evidence_type
+varchar(80)
+policy/document/report/audit_log/screenshot/export.
+description
+text nullable
+وصف الدليل المطلوب.
+required_frequency
+varchar(50) nullable
+monthly/quarterly/annual/on_demand.
+status
+varchar(50)
+active/inactive.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(obligation_id)
+index(evidence_type)
+15. grc_risk_categories
+تصنيفات المخاطر مثل Security, Finance, Legal, Operational, AI, Marketplace.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint nullable indexed
+فارغ لقوالب عامة.
+name
+varchar(150)
+اسم التصنيف.
+slug
+varchar(150)
+معرف مقروء.
+description
+text nullable
+وصف.
+status
+varchar(50)
+active/archived.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+unique(organization_id, slug)
+16. grc_risks
+سجل المخاطر المؤسسي.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+category_id
+bigint nullable FK
+تصنيف الخطر.
+risk_code
+varchar(100)
+كود الخطر.
+title
+varchar(255)
+عنوان الخطر.
+description
+text nullable
+الوصف.
+owner_user_id
+bigint nullable
+مالك الخطر.
+source_type
+varchar(100) nullable
+incident/audit/finding/manual/ai_suggestion.
+source_id
+bigint nullable
+معرف المصدر.
+inherent_likelihood
+tinyint nullable
+احتمال قبل الضوابط 1-5.
+inherent_impact
+tinyint nullable
+الأثر قبل الضوابط 1-5.
+residual_likelihood
+tinyint nullable
+الاحتمال بعد الضوابط.
+residual_impact
+tinyint nullable
+الأثر بعد الضوابط.
+risk_score
+decimal(8,2) nullable
+الناتج المحسوب.
+status
+varchar(50)
+identified/assessed/mitigating/accepted/closed.
+review_due_at
+date nullable
+موعد مراجعة الخطر.
+metadata
+json nullable
+تفاصيل إضافية.
+created_at/updated_at/deleted_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+unique(organization_id, risk_code)
+index(status)
+index(risk_score)
+index(owner_user_id)
+index(review_due_at)
+17. grc_risk_assessments
+تاريخ تقييمات الخطر عبر الزمن.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+risk_id
+bigint FK
+الخطر.
+assessment_type
+varchar(50)
+initial/periodic/post_incident/post_control_test.
+likelihood
+tinyint
+1-5.
+impact
+tinyint
+1-5.
+score
+decimal(8,2)
+الدرجة.
+rationale
+text nullable
+سبب التقييم.
+assessed_by
+bigint nullable
+المقيم.
+assessed_at
+timestamp
+وقت التقييم.
+created_at
+timestamp
+وقت الإنشاء.
+الفهارس المقترحة:
+index(risk_id, assessed_at)
+index(score)
+18. grc_risk_treatments
+خطة التعامل مع الخطر.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+risk_id
+bigint FK
+الخطر.
+treatment_strategy
+varchar(50)
+avoid/mitigate/transfer/accept.
+description
+text nullable
+الخطة.
+owner_user_id
+bigint nullable
+المسؤول.
+target_date
+date nullable
+تاريخ مستهدف.
+status
+varchar(50)
+planned/in_progress/completed/overdue/cancelled.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(risk_id)
+index(owner_user_id)
+index(status)
+index(target_date)
+19. grc_controls
+تعريف الضوابط الرقابية.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+control_code
+varchar(100)
+كود الضابط.
+name
+varchar(255)
+اسم الضابط.
+description
+text nullable
+الوصف.
+control_type
+varchar(50)
+preventive/detective/corrective/directive.
+automation_level
+varchar(50)
+manual/semi_automated/automated.
+owner_user_id
+bigint nullable
+مالك الضابط.
+test_frequency
+varchar(50)
+monthly/quarterly/annual/on_change.
+last_tested_at
+timestamp nullable
+آخر اختبار.
+next_test_at
+timestamp nullable
+الاختبار القادم.
+effectiveness_status
+varchar(50)
+unknown/effective/ineffective/partially_effective.
+status
+varchar(50)
+draft/active/retired.
+metadata
+json nullable
+بيانات إضافية.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+unique(organization_id, control_code)
+index(owner_user_id)
+index(status)
+index(next_test_at)
+index(effectiveness_status)
+20. grc_control_mappings
+ربط الضابط بمخاطر أو التزامات أو سياسات أو عمليات.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+control_id
+bigint FK
+الضابط.
+mappable_type
+varchar(100)
+risk/obligation/policy/process/module.
+mappable_id
+bigint
+معرف الكيان.
+mapping_reason
+text nullable
+سبب الربط.
+created_by
+bigint nullable
+من أنشأ الربط.
+created_at
+timestamp
+وقت الإنشاء.
+الفهارس المقترحة:
+index(control_id)
+index(mappable_type, mappable_id)
+21. grc_control_tests
+خطط اختبار الضوابط.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+control_id
+bigint FK
+الضابط.
+test_name
+varchar(255)
+اسم الاختبار.
+test_method
+varchar(80)
+inquiry/inspection/reperformance/automated_query.
+sample_size
+integer nullable
+حجم العينة.
+frequency
+varchar(50)
+monthly/quarterly/annual/on_demand.
+owner_user_id
+bigint nullable
+المسؤول.
+status
+varchar(50)
+active/inactive.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(control_id)
+index(owner_user_id)
+index(frequency)
+22. grc_control_test_results
+نتيجة تنفيذ اختبار ضابط.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+control_test_id
+bigint FK
+الاختبار.
+control_id
+bigint FK
+الضابط.
+performed_by
+bigint nullable
+من نفذ.
+performed_at
+timestamp
+وقت التنفيذ.
+result
+varchar(50)
+pass/fail/partial/not_applicable.
+score
+decimal(8,2) nullable
+درجة إن وجدت.
+summary
+text nullable
+ملخص النتيجة.
+finding_created
+boolean default false
+هل تم إنشاء finding؟
+metadata
+json nullable
+تفاصيل الاختبار.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(control_id, performed_at)
+index(result)
+ملاحظات:
+إذا result = fail يمكن إنشاء grc_audit_findings أو corrective_action آليًا حسب الإعدادات.
+23. grc_evidence_items
+عنصر دليل يمكن استخدامه في التزامات أو ضوابط أو تدقيق.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+evidence_type
+varchar(80)
+file/report/audit_log/export/url/manual_note/system_snapshot.
+title
+varchar(255)
+عنوان الدليل.
+description
+text nullable
+وصف.
+media_asset_id
+bigint nullable
+ملف محفوظ داخل Media/Documents.
+source_type
+varchar(100) nullable
+audit_log/report/security_event/manual.
+source_id
+bigint nullable
+معرف المصدر.
+confidentiality_level
+varchar(50)
+public/internal/confidential/restricted.
+valid_from
+date nullable
+بداية الصلاحية.
+valid_until
+date nullable
+نهاية الصلاحية.
+owner_user_id
+bigint nullable
+مالك الدليل.
+status
+varchar(50)
+draft/approved/expired/revoked.
+metadata
+json nullable
+بيانات إضافية.
+created_at/updated_at/deleted_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(organization_id, status)
+index(confidentiality_level)
+index(valid_until)
+index(source_type, source_id)
+24. grc_evidence_links
+ربط الأدلة بالكيانات المختلفة.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+evidence_id
+bigint FK
+الدليل.
+linkable_type
+varchar(100)
+obligation/control/control_test_result/audit_finding/corrective_action/policy.
+linkable_id
+bigint
+الكيان.
+relationship_type
+varchar(80)
+supports/proves/explains/remediates.
+created_by
+bigint nullable
+من ربط الدليل.
+created_at
+timestamp
+وقت الربط.
+الفهارس المقترحة:
+index(evidence_id)
+index(linkable_type, linkable_id)
+25. grc_evidence_access_logs
+تسجيل الوصول للأدلة الحساسة.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+evidence_id
+bigint FK
+الدليل.
+user_id
+bigint
+المستخدم.
+action
+varchar(80)
+view/download/export/link.
+reason
+text nullable
+سبب الوصول.
+ip_address
+varchar(64) nullable
+IP.
+user_agent
+text nullable
+المتصفح.
+created_at
+timestamp
+وقت الوصول.
+الفهارس المقترحة:
+index(evidence_id, created_at)
+index(user_id, created_at)
+26. grc_audit_plans
+خطة تدقيق داخلي سنوية أو ربع سنوية.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+name
+varchar(255)
+اسم الخطة.
+period_start
+date
+بداية الفترة.
+period_end
+date
+نهاية الفترة.
+owner_user_id
+bigint nullable
+مالك الخطة.
+status
+varchar(50)
+draft/approved/in_progress/completed/archived.
+approved_by
+bigint nullable
+الموافق.
+approved_at
+timestamp nullable
+وقت الموافقة.
+metadata
+json nullable
+بيانات إضافية.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(organization_id, status)
+index(period_start, period_end)
+27. grc_audit_engagements
+مهمة تدقيق محددة داخل خطة.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+audit_plan_id
+bigint FK
+الخطة.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+title
+varchar(255)
+عنوان المهمة.
+scope_summary
+text nullable
+ملخص النطاق.
+lead_auditor_user_id
+bigint nullable
+قائد التدقيق.
+planned_start
+date nullable
+بداية مخططة.
+planned_end
+date nullable
+نهاية مخططة.
+actual_start
+date nullable
+بداية فعلية.
+actual_end
+date nullable
+نهاية فعلية.
+status
+varchar(50)
+planned/in_progress/reporting/completed/cancelled.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(audit_plan_id)
+index(status)
+index(lead_auditor_user_id)
+28. grc_audit_scope_items
+عناصر نطاق مهمة التدقيق.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+audit_engagement_id
+bigint FK
+مهمة التدقيق.
+scope_type
+varchar(100)
+risk/control/obligation/process/module/site/company.
+scope_id
+bigint nullable
+معرف الكيان.
+description
+text nullable
+وصف العنصر.
+created_at
+timestamp
+وقت الإنشاء.
+الفهارس المقترحة:
+index(audit_engagement_id)
+index(scope_type, scope_id)
+29. grc_audit_findings
+نتائج التدقيق أو فشل الضوابط.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+audit_engagement_id
+bigint nullable FK
+مهمة التدقيق.
+control_id
+bigint nullable FK
+ضابط مرتبط.
+risk_id
+bigint nullable FK
+خطر مرتبط.
+finding_code
+varchar(100)
+كود النتيجة.
+title
+varchar(255)
+العنوان.
+description
+text nullable
+الوصف.
+severity
+varchar(50)
+low/medium/high/critical.
+root_cause
+text nullable
+السبب الجذري.
+recommendation
+text nullable
+التوصية.
+owner_user_id
+bigint nullable
+مسؤول العلاج.
+due_date
+date nullable
+تاريخ الاستحقاق.
+status
+varchar(50)
+open/in_remediation/verified/closed/accepted_risk.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+unique(organization_id, finding_code)
+index(status)
+index(severity)
+index(owner_user_id)
+index(due_date)
+30. grc_corrective_actions
+إجراءات تصحيحية لمعالجة findings أو risks.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+source_type
+varchar(100)
+audit_finding/risk/control_test/incident/manual.
+source_id
+bigint nullable
+المصدر.
+title
+varchar(255)
+العنوان.
+description
+text nullable
+الوصف.
+owner_user_id
+bigint nullable
+المسؤول.
+priority
+varchar(50)
+low/medium/high/critical.
+due_date
+date nullable
+تاريخ الاستحقاق.
+status
+varchar(50)
+open/in_progress/waiting_evidence/verified/closed/overdue.
+verified_by
+bigint nullable
+من تحقق.
+verified_at
+timestamp nullable
+وقت التحقق.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(source_type, source_id)
+index(status)
+index(owner_user_id)
+index(due_date)
+31. grc_corrective_action_updates
+تحديثات وتعليقات على الإجراء التصحيحي.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+corrective_action_id
+bigint FK
+الإجراء.
+user_id
+bigint nullable
+كاتب التحديث.
+status_from
+varchar(50) nullable
+الحالة السابقة.
+status_to
+varchar(50) nullable
+الحالة الجديدة.
+body
+text nullable
+نص التحديث.
+created_at
+timestamp
+وقت التحديث.
+الفهارس المقترحة:
+index(corrective_action_id, created_at)
+32. grc_doa_rules
+Delegation of Authority: من يوافق على ماذا حسب المبلغ/النوع/الشركة/الدور.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+rule_code
+varchar(100)
+كود القاعدة.
+subject_type
+varchar(100)
+purchase_order/invoice/payment/contract/budget/discount.
+min_amount
+decimal(15,2) nullable
+حد أدنى.
+max_amount
+decimal(15,2) nullable
+حد أقصى.
+currency_code
+char(3) nullable
+العملة.
+required_role_slug
+varchar(150) nullable
+الدور المطلوب.
+required_permission_slug
+varchar(150) nullable
+الصلاحية المطلوبة.
+approval_steps
+json
+خطوات الموافقة.
+status
+varchar(50)
+active/inactive/draft.
+effective_from
+date nullable
+بداية السريان.
+effective_to
+date nullable
+نهاية السريان.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(organization_id, subject_type)
+index(company_id)
+index(status)
+33. grc_doa_requests
+طلب تقييم قاعدة DOA لعملية معينة.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+doa_rule_id
+bigint nullable FK
+القاعدة التي انطبقت.
+subject_type
+varchar(100)
+نوع العملية.
+subject_id
+bigint nullable
+معرف العملية.
+amount
+decimal(15,2) nullable
+القيمة.
+currency_code
+char(3) nullable
+العملة.
+requester_user_id
+bigint nullable
+طالب الإجراء.
+status
+varchar(50)
+pending/in_workflow/approved/rejected/cancelled.
+workflow_run_id
+bigint nullable
+Workflow المرتبط.
+decision_summary
+text nullable
+ملخص القرار.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(subject_type, subject_id)
+index(status)
+index(requester_user_id)
+34. grc_sod_rules
+Segregation of Duties: قواعد منع تضارب الصلاحيات.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+rule_code
+varchar(100)
+كود القاعدة.
+name
+varchar(255)
+اسم القاعدة.
+description
+text nullable
+الوصف.
+conflict_type
+varchar(80)
+role_role/permission_permission/role_permission/process.
+left_condition
+json
+الطرف الأول.
+right_condition
+json
+الطرف الثاني.
+severity
+varchar(50)
+low/medium/high/critical.
+status
+varchar(50)
+active/inactive/draft.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+unique(organization_id, rule_code)
+index(status)
+index(severity)
+35. grc_sod_conflicts
+نتيجة كشف تضارب صلاحيات لمستخدم أو عضوية.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+sod_rule_id
+bigint FK
+قاعدة SoD.
+user_id
+bigint nullable
+المستخدم المتأثر.
+membership_type
+varchar(80) nullable
+organization_membership/company_membership.
+membership_id
+bigint nullable
+معرف العضوية.
+conflict_payload
+json
+تفاصيل التضارب.
+severity
+varchar(50)
+خطورة التضارب.
+status
+varchar(50)
+open/mitigated/accepted/resolved/false_positive.
+detected_at
+timestamp
+وقت الكشف.
+resolved_at
+timestamp nullable
+وقت الإغلاق.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(organization_id, status)
+index(user_id)
+index(sod_rule_id)
+index(severity)
+36. grc_sod_conflict_resolutions
+حل أو قبول أو تبرير تضارب SoD.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+sod_conflict_id
+bigint FK
+التضارب.
+resolution_type
+varchar(80)
+remove_role/remove_permission/compensating_control/accept_risk/false_positive.
+description
+text nullable
+الوصف.
+approved_by
+bigint nullable
+الموافق.
+approved_at
+timestamp nullable
+وقت الموافقة.
+expires_at
+timestamp nullable
+انتهاء قبول الاستثناء.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(sod_conflict_id)
+index(expires_at)
+37. grc_exception_requests
+طلبات استثناء من سياسة أو ضابط أو SoD أو التزام.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+exception_type
+varchar(80)
+policy/control/sod/obligation/security.
+subject_type
+varchar(100)
+نوع الكيان.
+subject_id
+bigint nullable
+معرف الكيان.
+requested_by
+bigint nullable
+طالب الاستثناء.
+justification
+text
+السبب.
+risk_acceptance
+text nullable
+قبول المخاطر.
+status
+varchar(50)
+pending/approved/rejected/expired/revoked.
+approved_by
+bigint nullable
+الموافق.
+approved_at
+timestamp nullable
+وقت الموافقة.
+expires_at
+timestamp nullable
+وقت انتهاء الاستثناء.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(exception_type, subject_type)
+index(status)
+index(expires_at)
+38. grc_compliance_calendar_events
+تقويم الامتثال: مراجعات، اختبارات، تجديدات، تقديم تقارير.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+event_type
+varchar(80)
+policy_review/control_test/obligation_due/audit_due/evidence_expiry.
+subject_type
+varchar(100)
+الكيان المرتبط.
+subject_id
+bigint nullable
+معرف الكيان.
+title
+varchar(255)
+العنوان.
+due_at
+timestamp
+تاريخ الاستحقاق.
+owner_user_id
+bigint nullable
+المسؤول.
+status
+varchar(50)
+pending/completed/overdue/cancelled.
+completed_at
+timestamp nullable
+وقت الإكمال.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(organization_id, due_at)
+index(owner_user_id)
+index(status)
+39. grc_register_snapshots
+لقطات دورية لسجل المخاطر والضوابط والامتثال للتقارير.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+snapshot_type
+varchar(80)
+risk_register/control_status/compliance_status/audit_summary.
+period_start
+date nullable
+بداية الفترة.
+period_end
+date nullable
+نهاية الفترة.
+payload
+json
+بيانات اللقطة.
+created_by_job_id
+bigint nullable
+Job أنشأ اللقطة.
+created_at
+timestamp
+وقت الإنشاء.
+الفهارس المقترحة:
+index(organization_id, snapshot_type)
+index(period_start, period_end)
+40. grc_export_logs
+تسجيل تصدير تقارير أو أدلة GRC.
+الحقل
+النوع المقترح
+الوصف
+id
+bigint unsigned PK
+المعرف الداخلي.
+uuid
+char(26/36) unique
+معرف عام.
+organization_id
+bigint indexed
+العميل.
+company_id
+bigint nullable indexed
+الشركة.
+export_type
+varchar(80)
+audit_pack/risk_register/evidence_pack/policy_pack/compliance_report.
+requested_by
+bigint nullable
+طالب التصدير.
+status
+varchar(50)
+pending/running/completed/failed/expired.
+file_media_id
+bigint nullable
+ملف التصدير.
+filters
+json nullable
+الفلاتر.
+contains_restricted_data
+boolean default false
+هل يحتوي بيانات restricted؟
+started_at/completed_at/expires_at
+timestamps nullable
+تواريخ التنفيذ والصلاحية.
+created_at/updated_at
+timestamps
+تواريخ.
+الفهارس المقترحة:
+index(organization_id, export_type)
+index(status)
+index(requested_by)
+41. ERD المقترح
+erDiagram  ORGANIZATIONS ||--o{ GRC_POLICIES : owns  GRC_POLICIES ||--o{ GRC_POLICY_VERSIONS : versions  GRC_POLICY_VERSIONS ||--o{ GRC_POLICY_APPROVALS : approved_by  GRC_POLICY_VERSIONS ||--o{ GRC_POLICY_ACKNOWLEDGEMENTS : acknowledged_by  GRC_COMPLIANCE_FRAMEWORKS ||--o{ GRC_COMPLIANCE_OBLIGATIONS : defines  GRC_COMPLIANCE_OBLIGATIONS ||--o{ GRC_OBLIGATION_REQUIREMENTS : breaks_down  GRC_RISK_CATEGORIES ||--o{ GRC_RISKS : classifies  GRC_RISKS ||--o{ GRC_RISK_ASSESSMENTS : assessed_as  GRC_RISKS ||--o{ GRC_RISK_TREATMENTS : treated_by  GRC_CONTROLS ||--o{ GRC_CONTROL_MAPPINGS : maps_to  GRC_CONTROLS ||--o{ GRC_CONTROL_TESTS : tested_by  GRC_CONTROL_TESTS ||--o{ GRC_CONTROL_TEST_RESULTS : produces  GRC_EVIDENCE_ITEMS ||--o{ GRC_EVIDENCE_LINKS : supports  GRC_AUDIT_PLANS ||--o{ GRC_AUDIT_ENGAGEMENTS : contains  GRC_AUDIT_ENGAGEMENTS ||--o{ GRC_AUDIT_FINDINGS : finds  GRC_AUDIT_FINDINGS ||--o{ GRC_CORRECTIVE_ACTIONS : remediated_by  GRC_SOD_RULES ||--o{ GRC_SOD_CONFLICTS : detects  GRC_SOD_CONFLICTS ||--o{ GRC_SOD_CONFLICT_RESOLUTIONS : resolved_by
+42. Policy Lifecycle Flow
+Create policy draft→ create policy version→ assign reviewers→ approvals collected→ version approved→ policy becomes active→ acknowledgements assigned→ review date scheduled→ evidence/report links generated→ audit log recorded
+43. Obligation Lifecycle Flow
+Country Pack / Regulation / Contract creates obligation→ owner assigned→ requirements defined→ evidence requirements defined→ controls linked→ due dates generated in compliance calendar→ evidence collected→ compliance status checked→ report snapshot created
+44. Risk Register Flow
+Risk identified from manual entry, incident, audit finding, AI suggestion, or failed control test→ risk category selected→ inherent likelihood/impact assessed→ controls mapped→ residual score calculated→ treatment plan created→ review date scheduled→ BI dashboard updated
+45. Control Testing Flow
+Control test due→ owner notified→ evidence collected→ test performed manually or by job→ result recorded→ if fail: finding/corrective action created→ risk reassessment triggered→ snapshot/dashboard updated
+46. Internal Audit Flow
+Audit plan created→ engagements defined→ scope items selected→ evidence requested→ fieldwork performed→ findings created→ corrective actions assigned→ verification evidence collected→ findings closed or risk accepted
+47. DOA Flow
+ERP/Workflow action requests approval→ DOA service checks subject type + amount + company + currency→ matching grc_doa_rule selected→ workflow approval steps generated→ decisions logged→ action allowed or blocked→ audit log created
+48. SoD Detection Flow
+Role or permission changes→ SoD detection job runs→ rules compare role/permission combinations→ conflict created if matched→ owner notified→ remove access / compensating control / accept risk / false positive→ resolution logged
+49. الصلاحيات المقترحة
+المجموعة
+Permissions
+Policies
+grc.policy.view, grc.policy.manage, grc.policy.approve, grc.policy.acknowledge
+Obligations
+grc.obligation.view, grc.obligation.manage, grc.obligation.check
+Risks
+grc.risk.view, grc.risk.manage, grc.risk.assess, grc.risk.accept
+Controls
+grc.control.view, grc.control.manage, grc.control.test
+Evidence
+grc.evidence.view, grc.evidence.manage, grc.evidence.export
+Audit
+grc.audit.view, grc.audit.manage, grc.finding.manage
+DOA/SoD
+grc.doa.manage, grc.sod.manage, grc.sod.resolve
+Export
+grc.export.create, grc.export.download, grc.export.restricted
+50. الأدوار المقترحة
+الدور
+الوصف
+Compliance Manager
+يدير السياسات والالتزامات والأدلة وحالة الامتثال.
+Risk Manager
+يدير سجل المخاطر والتقييمات وخطط المعالجة.
+Control Owner
+يمتلك ضوابط محددة وينفذ الاختبارات الدورية.
+Internal Auditor
+يدير audit plans وengagements وfindings.
+Evidence Owner
+يرفع الأدلة ويحدثها ويضمن صلاحيتها.
+Enterprise Admin
+يدير إعدادات GRC العامة والتكاملات والصلاحيات.
+Read-only Auditor
+يرى تقارير وأدلة محددة بدون تعديل.
+DOA Approver
+يوافق على قرارات مالية أو تشغيلية حسب DOA rules.
+51. Events
+GRCPolicyCreated
+GRCPolicyVersionApproved
+GRCPolicyAcknowledgementOverdue
+ComplianceObligationDue
+ComplianceObligationNonCompliant
+GRCRiskCreated
+GRCRiskScoreChanged
+GRCControlTestDue
+GRCControlTestFailed
+GRCAuditFindingCreated
+GRCCorrectiveActionOverdue
+GRCDOAApprovalRequired
+GRCSODConflictDetected
+GRCEvidenceUploaded
+GRCExportGenerated
+52. تكامل GRC مع AI
+AI يمكن أن يساعد في تلخيص مخاطر، اقتراح ضوابط، شرح findings، أو تجهيز policy draft. لكنه لا يعتمد سياسة، لا يقبل خطرًا، لا يغلق finding، ولا يمنح استثناء SoD بدون موافقة بشرية وصلاحية واضحة.
+AI Action
+الحد الأقصى المسموح
+تلخيص policy أو finding
+Read-only / low risk.
+اقتراح risk treatment
+Draft suggestion فقط.
+إنشاء policy draft
+Draft فقط، يحتاج approval.
+إغلاق corrective action
+ممنوع بدون evidence + approver.
+قبول SoD conflict
+ممنوع إلا workflow approval.
+تغيير DOA rules
+High-risk، approval مشدد + audit log.
+53. تكامل GRC مع BI / Analytics
+لوحات Risk Heatmap حسب category/company/owner.
+مؤشرات overdue obligations وcontrol tests وcorrective actions.
+اتجاهات risk score عبر الزمن.
+نسبة فعالية الضوابط حسب المجال.
+تقرير audit findings حسب severity/status.
+تصدير compliance pack للمدققين الخارجيين.
+يجب أن تعتمد التقارير على snapshots/jobs وليس queries ثقيلة مباشرة.
+54. Cloud / Frontend Anywhere / Portable / Dedicated
+الوضع
+قواعد GRC
+Cloud
+GRC tables داخل Cloud DB scoped by organization/company، مع exports وسجلات وصول.
+Frontend Anywhere
+لا يخرج GRC للواجهة العامة. يمكن عرض dashboards داخل Admin فقط.
+Portable
+يصدر GRC tenant data حسب الخطة والسياسات، لكن platform relationship records قد تبقى في Central.
+Dedicated
+GRC operational data داخل Dedicated DB، مع summaries أو compliance exports اختيارية للـ Central حسب العقد.
+Mall Sync
+لا يرسل GRC private evidence إلى Mall. يمكن إرسال trust/compliance badge public فقط بموافقة.
+55. Data Classification
+نوع البيانات
+التصنيف الافتراضي
+ملاحظات
+Policy published title/summary
+internal أو public حسب السياسة
+قد تكون عامة داخل المؤسسة فقط.
+Risk register
+confidential
+لا يظهر للعامة.
+Evidence items
+confidential/restricted
+يعتمد على محتوى الدليل.
+Audit findings
+confidential
+قد تحتوي ملاحظات حساسة.
+SoD conflicts
+restricted
+يكشف بنية صلاحيات حساسة.
+DOA rules
+confidential
+قد تكشف حدود الموافقات المالية.
+Compliance exports
+confidential/restricted
+تحتاج export log وصلاحيات.
+Public trust badge
+public
+يصدر من Trust/Rabet/Mall وليس من الأدلة الخاصة مباشرة.
+56. Performance & Indexing
+index على organization_id وcompany_id في كل الجداول الرئيسية.
+index على status وdue_date وowner_user_id للالتزامات والإجراءات والتقويم.
+snapshot tables للتقارير بدل حساب كل شيء لحظيًا.
+jobs دورية لكشف SoD وoverdue obligations وcontrol tests.
+عدم تحميل الأدلة أو الملفات داخل قوائم GRC؛ استخدم metadata وروابط signed.
+57. Testing
+الاختبار
+الهدف
+Policy approval test
+لا تصبح policy active بدون approvals المطلوبة.
+Risk scoring test
+likelihood × impact يحسب score ويحدث status/snapshot.
+Control test failure test
+فشل الضابط ينشئ finding أو corrective action حسب الإعداد.
+SoD conflict detection test
+إسناد دورين متضاربين ينشئ conflict.
+DOA approval threshold test
+طلب يتجاوز الحد يولد workflow approval.
+Evidence restricted access test
+الأدلة restricted تحتاج صلاحية وتسجل access log.
+Compliance export test
+التصدير ينشئ grc_export_logs ويمنع غير المخولين.
+Portable export test
+بيانات GRC تصدر حسب scope ولا تكشف platform secrets.
+58. Seeders
+GRCPermissionsSeeder
+DefaultPolicyCategoriesSeeder
+DefaultRiskCategoriesSeeder
+DefaultControlsSeeder
+DefaultSODRulesSeeder
+DefaultDOARulesSeeder
+DefaultComplianceFrameworksSeeder
+DemoGRCSeeder
+59. CLI Commands
+php artisan kabeeri:grc:detect-sod-conflicts {organizationId}php artisan kabeeri:grc:check-obligations {organizationId}php artisan kabeeri:grc:schedule-control-tests {organizationId}php artisan kabeeri:grc:calculate-risk-scores {organizationId}php artisan kabeeri:grc:create-snapshots {organizationId}php artisan kabeeri:grc:export-audit-pack {organizationId}php artisan kabeeri:grc:expire-exceptions {organizationId}php artisan kabeeri:grc:notify-overdue-actions {organizationId}
+60. Build Order
+المرحلة 1: Policy Management + Policy Versions + Approvals.
+المرحلة 2: Compliance Frameworks + Obligations + Evidence Requirements.
+المرحلة 3: Risk Register + Risk Assessments + Treatments.
+المرحلة 4: Controls + Mappings + Control Tests.
+المرحلة 5: Evidence Items + Evidence Links + Access Logs.
+المرحلة 6: Internal Audit + Findings + Corrective Actions.
+المرحلة 7: DOA Rules + DOA Requests integration with Workflows.
+المرحلة 8: SoD Rules + Detection Jobs + Conflict Resolution.
+المرحلة 9: Snapshots + BI dashboards + Compliance exports.
+المرحلة 10: AI assistance + Country Pack obligation templates.
+61. أخطاء ممنوعة
+لا تبني GRC قبل استقرار RBAC وAudit Logs.
+لا تجعل risk register عامًا أو قابلًا للعرض في Mall.
+لا تسمح بتعديل policy version المعتمدة مباشرة.
+لا تحفظ evidence restricted بدون access logging.
+لا تجعل AI يغلق findings أو يقبل risks بدون موافقة.
+لا تخلط Compliance reports مع BI dashboards العامة بدون صلاحيات.
+لا تجعل SoD مجرد تقرير؛ يجب أن ينتج conflicts قابلة للعلاج.
+لا تجعل DOA نصًا حرًا فقط؛ يجب أن يتحول إلى قواعد قابلة للتنفيذ.
+لا تصدر audit pack بدون export log وسبب وصلاحية.
+62. الخلاصة التنفيذية
+GRC في Kabeeri هو طبقة Enterprise تجعل الحوكمة جزءًا من التشغيل اليومي: السياسات مرتبطة بموافقات، الالتزامات مرتبطة بأدلة، المخاطر مرتبطة بضوابط، والضوابط مرتبطة باختبارات وتدقيق وإجراءات تصحيحية. بدون هذه الطبقة، تصبح Enterprise مجرد ميزات كثيرة بدون رقابة مؤسسية.
+KABEERI — GRC / Risk / Compliance Database

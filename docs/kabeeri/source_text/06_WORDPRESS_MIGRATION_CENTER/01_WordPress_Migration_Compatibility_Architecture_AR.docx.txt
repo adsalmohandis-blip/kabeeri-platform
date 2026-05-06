@@ -1,0 +1,101 @@
+KABEERI WordPress Migration & Compatibility Architecture
+حفظ البيانات والمظهر والروابط والـ SEO عند الانتقال من WordPress إلى Kabeeri
+KABEERI / Kabeeri — powered by ADMIT
+الحالة: Canonical Draft 1.0 | اللغة: العربية | قابل للتنفيذ داخل Laravel Modular Monolith
+1. الهدف
+هدف Migration Center ليس استيراد بيانات فقط، بل نقل الموقع كأصل تجاري للعميل: المحتوى، الميديا، الروابط، الهوية البصرية، إعدادات SEO، وتجربة الانتقال الآمن إلى Kabeeri.
+2. وعد المنتج
+انقل موقعك من WordPress إلى Kabeeri بدون خسارة موقعك، ثم احصل على نسخة أسرع وأنظف وأكثر أمانًا وقابلة للنمو إلى Commerce وRabet وCompany OS.
+3. ملفات ومدخلات WordPress المدعومة
+المدخل
+المرحلة
+الغرض
+WordPress XML Export
+المدخل الأساسي في V2
+صفحات، مقالات، تصنيفات، وسوم، مؤلفين، تواريخ نشر، Slugs، محتوى HTML
+Media URLs
+أساسي
+استيراد الصور والملفات العامة إلى Media Library مع alt/caption قدر الإمكان
+REST API Connection
+اختياري لاحقًا
+سحب بيانات أوسع عند توفر صلاحيات إدارية
+Helper Plugin Export
+V3/V4
+تجميع custom fields وplugin settings وtheme info والـ SEO metadata بدقة أعلى
+Database Dump
+Enterprise/Agency فقط
+لا يستخدم للمستخدم العام إلا عبر مراجعة وأدوات آمنة
+4. خط سير الهجرة
+• Upload / Connect WordPress site.
+• Create migration_job and source snapshot.
+• Analyze content, media, links, SEO, plugins, theme, and risk.
+• Generate Migration Readiness Score.
+• Import into staging, not production.
+• Run visual comparison and SEO checks.
+• Generate redirect map and warnings.
+• User reviews and approves.
+• Go Live with monitoring and rollback point.
+5. Migration Quality Score
+المؤشر
+المعنى
+Content
+نسبة الصفحات والمقالات والعناصر التي يمكن نقلها
+Media
+مدى إمكانية جلب الصور والملفات وربطها بالمحتوى
+SEO
+حفظ العناوين والوصف والـ slugs والـ canonical والـ redirects
+Design
+مدى قرب الشكل الجديد من القديم أو تحسينه
+Plugins
+نسبة البلجنات التي لها بدائل أو adapters
+Commerce
+جاهزية WooCommerce أو المتجر للهجرة
+Risk
+مخاطر shortcodes، builders، custom DB tables، أو dependencies
+6. حفظ المظهر Visual Preservation
+• Preserve Look: استخراج الشعار، الألوان، الخطوط، القوائم، الهيدر والفوتر، ومحاولة توليد Kabeeri Theme Draft.
+• Improve Look: نقل المحتوى مع تطبيق Kabeeri Theme حديث يحافظ على الهوية ويحسن الأداء.
+• AI Rebuild: إعادة بناء الصفحة بنفس المحتوى لكن بتقسيم أفضل، CTA أوضح، وتحسين SEO بعد موافقة المستخدم.
+7. حفظ SEO والروابط
+• Preserve slugs where possible.
+• Create redirects for changed URLs.
+• Import SEO title and description from known SEO plugins when possible.
+• Detect broken internal links after import.
+• Generate migration report before Go Live.
+• Keep old URL to new URL mapping forever unless removed deliberately.
+8. جداول قاعدة البيانات المقترحة
+• migration_jobs
+• migration_sources
+• migration_source_files
+• migration_analysis_reports
+• migration_readiness_scores
+• migration_mappings
+• migration_records
+• migration_warnings
+• migration_errors
+• migration_visual_comparisons
+• migration_redirect_maps
+• migration_go_live_checks
+• migration_rollback_points
+9. Laravel Services
+• WordPressXmlParser
+• WordPressMediaImporter
+• WordPressContentMapper
+• WordPressSeoMapper
+• RedirectMapGenerator
+• MigrationReadinessScorer
+• MigrationPreviewBuilder
+• VisualComparisonService
+• MigrationReportBuilder
+• GoLiveChecklistService
+10. Roadmap
+المرحلة
+النطاق
+V1
+Import/export foundation، media-ready، redirect concept، activity log، backup قبل import
+V2
+WordPress XML Importer رسمي، SEO basic، media import، redirect map، migration report
+V3/V4
+Helper Plugin، WooCommerce basic، Agency bulk migration، AI suggestions
+V5/V6
+Advanced builder mapping، AI rebuild، compatibility marketplace، deep migration adapters

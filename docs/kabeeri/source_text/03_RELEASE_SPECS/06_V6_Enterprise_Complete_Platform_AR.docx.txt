@@ -1,0 +1,1010 @@
+KABEERI V6 — Enterprise Complete Platform
+الإصدار السادس من منصة KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يشرح V6 بالتفصيل بعد بناء V1 وV2 وV3 وV4 وV5.
+V6 هو الإصدار الذي يحوّل Kabeeri من منصة أعمال قوية إلى منصة Enterprise كاملة:
+Enterprise ERP+ Advanced BI / Analytics+ GRC / Risk / Compliance+ Enterprise Security+ Public Developer Marketplace+ Advanced AI Co-builder+ Advanced Kabeeri Mall+ Multi-vendor Commerce+ Industry Solutions+ Manufacturing / SCM / EAM Foundations+ Data Platform+ Enterprise Integration / iPaaS
+الرسالة التنفيذية لـ V6:
+Kabeeri V6 هو الإصدار المكتمل الذي يجعل Kabeeri منصة تشغيل ونمو وحوكمة للشركات الصغيرة والمتوسطة والكبيرة، مع قابلية توسع Enterprise وشبكة سوق ومطورين وتكاملات وذكاء اصطناعي آمن.
+1. هدف V6
+1.1 الهدف التقني
+إكمال طبقات Enterprise فوق الأساسات السابقة:
+ERP أوسع.
+BI وتحليلات متقدمة.
+GRC ومخاطر وامتثال.
+أمن مؤسسي.
+Public Developer Marketplace.
+AI Co-builder متقدم.
+Data Warehouse / Lakehouse foundation.
+Industry-specific solutions.
+Advanced integrations.
+Advanced Marketplace / Mall.
+1.2 الهدف التجاري
+V6 يسمح لـ Kabeeri أن ينافس على أكثر من مستوى:
+WordPress / Webflow / Wix من ناحية CMSShopify / WooCommerce من ناحية CommerceOdoo / Zoho / ERPNext من ناحية ERPAirtable / Notion builders من ناحية AI/low-codeSlack / ClickUp / Monday من ناحية team/workMarketplace platforms من ناحية Kabeeri Mall
+لكن بطريقة تدريجية مبنية على رحلة:
+Website → Store → Company OS → ERP → Marketplace → Enterprise Platform
+1.3 هدف المنتج
+V6 يجب أن يثبت 10 وعود:
+1. Kabeeri يصلح للشركات الكبيرة متعددة الفروع والشركات.2. ERP أصبح أوسع وأكثر حوكمة.3. البيانات يمكن تحليلها عبر BI/Dashboards/Data Platform.4. المخاطر والامتثال والسياسات والصلاحيات يمكن إدارتها مؤسسيًا.5. الأمن يدعم Enterprise controls مثل SSO/SAML/SIEM foundation.6. Marketplace الداخلي يصبح عامًا للمطورين بعد review/signing.7. Kabeeri Mall يصبح سوقًا متقدمًا للشركات والخدمات والمنتجات والمواهب.8. AI Co-builder يصبح مساعدًا حقيقيًا للبناء والتحليل والتشغيل مع guardrails.9. يمكن تقديم حلول صناعية جاهزة حسب القطاع.10. المنصة تصبح قابلة للتوسع عالميًا عبر Country Packs وIntegrations وEnterprise deployment.
+2. V6 يعتمد على ماذا؟
+V6 يعتمد على استقرار كامل للإصدارات السابقة:
+V1: Core CMS + Company foundationV2: WordPress migration + Commerce foundationV3: Business Foundation + ERP EssentialsV4: Cloud + Marketplace + Rabet + Mall + AI V1V5: ERP Pro + Integration Hub
+لا يبدأ V6 إذا كانت هذه الأجزاء غير مستقرة:
+Multi-tenancy.
+RBAC/Permissions.
+Audit logs.
+Billing/Entitlements.
+ERP Pro.
+Integration Hub.
+Marketplace governance.
+Security Center.
+AI plan/approval/rollback.
+Kabeeri Mall moderation.
+3. ما هو V6؟
+V6 هو:
+Enterprise Complete Platform Release
+يشمل:
+Enterprise ERP Complete Foundation.
+Advanced Finance/EPM.
+Advanced SCM.
+Manufacturing foundation.
+EAM / Maintenance foundation.
+Advanced CRM & Customer Service.
+Advanced HR/HCM foundation.
+BI / Analytics / Data Warehouse foundation.
+GRC / Risk / Compliance.
+Enterprise Security.
+Public Developer Marketplace.
+Advanced AI Co-builder.
+Advanced Kabeeri Mall.
+Multi-vendor Commerce foundation.
+Advanced Talent Marketplace.
+Industry Solutions.
+Enterprise Architecture / App Portfolio.
+Advanced Localization / Country Packs.
+4. ما ليس V6؟
+V6 رغم كونه الإصدار المكتمل في الخطة، لا يعني أن كل صناعة وكل دولة وكل تكامل أصبح مكتملًا 100%.
+V6 ليس نهاية التطوير.
+V6 يعني:
+المنصة وصلت إلى شكل كامل قابل للتوسع والتخصيص Enterprise-ready.
+لكن بعد V6 سيكون هناك:
+تحسينات قطاعية.
+Country Packs إضافية.
+Connectors إضافية.
+AI Skills أكثر.
+Advanced BI أكبر.
+حلول صناعية متخصصة.
+5. رسالة V6 التسويقية
+5.1 للشركات الكبيرة
+Kabeeri V6 منصة موحدة لبناء الواجهة الرقمية وتشغيل الشركة وتحليل البيانات وإدارة المخاطر والتكاملات والحوكمة من مكان واحد.
+5.2 للشركات المتوسطة النامية
+ابدأ من موقعك ومتجرك، ثم كبر تدريجيًا إلى ERP وBI وGRC وEnterprise Operations بدون تغيير المنصة.
+5.3 للشركاء والمطورين
+ابنِ ثيمات وموديولات وConnectors وAI Skills على منصة Enterprise آمنة، وانشرها في Kabeeri Marketplace.
+5.4 للسوق العام
+Kabeeri Mall يصبح شبكة اكتشاف وتجارة وتوظيف وتعاون بين شركات موثقة وخدمات ومنتجات ومهنيين.
+6. نطاق V6 الرئيسي
+6.1 Enterprise ERP Complete Foundation
+Multi-company advanced.
+Multi-branch advanced.
+Multi-currency advanced.
+Advanced chart of accounts.
+Cost centers.
+Profit centers.
+Budgeting foundation.
+Budget control.
+Financial statements.
+AR/AP advanced.
+Bank reconciliation foundation.
+Fixed assets foundation.
+Tax packs integration.
+E-invoicing connectors foundation.
+6.2 Advanced SCM
+Demand forecasting foundation.
+Supply planning foundation.
+S&OP foundation.
+Supplier scorecards.
+Advanced purchasing workflows.
+Logistics / delivery management foundation.
+Fleet foundation.
+Reverse logistics foundation.
+6.3 Manufacturing Foundation
+Bill of Materials — BOM.
+Routing / Operations.
+Production orders.
+MRP foundation.
+Work centers.
+Shop floor status foundation.
+Product costing foundation.
+Quality checks foundation.
+6.4 EAM / Maintenance Foundation
+Enterprise assets.
+Asset hierarchy.
+Preventive maintenance schedules.
+Corrective maintenance.
+Work orders.
+Spare parts link to inventory.
+Maintenance costs.
+6.5 Advanced CRM & Customer Service
+Customer 360.
+Advanced segmentation.
+Campaigns foundation.
+Loyalty foundation.
+Customer service portal.
+SLA advanced.
+Contact center foundation.
+6.6 HCM / HR Advanced Foundation
+Recruitment / ATS foundation.
+Attendance foundation.
+Leave management foundation.
+Training / LMS foundation.
+Talent management foundation.
+Employee self-service portal.
+Payroll foundation by country packs.
+6.7 BI / Analytics / Data Platform
+Executive dashboards.
+Operational dashboards.
+KPI management.
+Report builder advanced.
+Data warehouse foundation.
+Data marts by domain.
+Data dictionary / business glossary.
+Data quality rules.
+Scheduled analytics jobs.
+Export to external BI tools.
+6.8 GRC / Risk / Compliance
+Policy management.
+Compliance obligations.
+Enterprise risk register.
+Internal audit foundation.
+Delegation of Authority — DOA.
+Segregation of Duties — SoD.
+Control testing.
+Audit plans.
+Evidence management.
+6.9 Enterprise Security
+SSO/SAML foundation.
+OAuth enterprise apps.
+MFA enforced policies.
+Session policies.
+Device/session controls.
+API gateway foundation.
+SIEM/SOC integration foundation.
+Data Loss Prevention foundation.
+Advanced audit logs.
+Privileged access foundation.
+6.10 Public Developer Marketplace
+Public publisher onboarding.
+Developer verification.
+Package review pipeline.
+Package signing.
+Revenue share.
+Package subscriptions.
+Certification badges.
+Public docs.
+Developer analytics.
+Private enterprise marketplace.
+6.11 Advanced AI Co-builder
+AI agents by domain.
+AI workflow builder.
+AI ERP assistant.
+AI report builder.
+AI migration assistant advanced.
+AI data quality assistant.
+AI integration assistant.
+AI marketplace package assistant.
+AI guarded write actions.
+AI simulation before apply.
+6.12 Advanced Kabeeri Mall
+Multi-vendor commerce foundation.
+B2B RFQs advanced.
+Service booking foundation.
+Product marketplace cart foundation.
+Seller dashboards.
+Disputes.
+Reviews advanced.
+Trust/reputation advanced.
+Commission automation.
+Featured/sponsored placements.
+Mall analytics.
+6.13 Advanced Talent Marketplace
+Talent search advanced.
+Hiring pipelines.
+Verified work history.
+Skill endorsements.
+Availability calendar.
+Contract offers.
+Workforce marketplace foundation.
+Professional reputation.
+6.14 Industry Solutions
+V6 يجهز حلولًا صناعية قابلة للتفعيل:
+Real EstateConstructionClinics / Healthcare foundationEducation / Schools foundationHospitalityRetailLogistics / FreightProfessional ServicesFood & Beverage traceability foundationPharma serialization foundation
+6.15 Enterprise Architecture & App Portfolio
+Application portfolio.
+System catalog.
+Integration map.
+Business capability map.
+Data ownership map.
+Change impact analysis foundation.
+7. V6 Feature Flags
+enable_enterprise_erpenable_multi_company_advancedenable_multi_currency_advancedenable_budgetingenable_fixed_assetsenable_bank_reconciliationenable_tax_pack_integrationenable_e_invoicing_foundationenable_scm_advancedenable_manufacturing_foundationenable_eam_foundationenable_hcm_advancedenable_bi_analyticsenable_data_warehouse_foundationenable_data_dictionaryenable_grc_foundationenable_policy_managementenable_risk_registerenable_internal_auditenable_doa_sodenable_enterprise_securityenable_sso_samlenable_siem_integrationenable_public_developer_marketplaceenable_advanced_ai_cobuilderenable_multi_vendor_mallenable_advanced_talent_marketplaceenable_industry_solutionsenable_enterprise_architecture
+8. V6 User Stories
+8.1 CFO يريد ميزانية ورقابة
+As a CFOI want budgeting and budget controlSo departments cannot overspend without approval.
+8.2 مدير سلسلة الإمداد يريد تخطيط توريد
+As a supply chain managerI want demand and supply planningSo purchasing and inventory can prepare for future demand.
+8.3 مدير مصنع يريد BOM وأمر إنتاج
+As a production managerI want to define BOM and create production ordersSo finished goods can be manufactured from raw materials.
+8.4 مدير صيانة يريد صيانة وقائية
+As a maintenance managerI want preventive maintenance schedulesSo equipment failures can be reduced.
+8.5 مسؤول امتثال يريد سجل مخاطر
+As a compliance managerI want a risk register and controlsSo risks and obligations are tracked and audited.
+8.6 مدير أمن يريد SSO وSIEM
+As a security adminI want SSO and SIEM integrationSo access and incidents can be monitored centrally.
+8.7 مطور يريد نشر Package
+As a developerI want to submit a package to Kabeeri MarketplaceSo customers can install it after review and signing.
+8.8 مدير بيانات يريد قاموس بيانات
+As a data managerI want a business glossary and data dictionarySo teams understand fields, reports, and ownership.
+8.9 صاحب سوق يريد بيع متعدد البائعين
+As a marketplace sellerI want to sell products and services through Kabeeri MallSo I can reach customers beyond my own website.
+8.10 AI يقترح Workflow آمن
+As an operations managerI want AI to suggest and simulate workflowsSo I can automate repetitive approvals safely.
+9. Roles الجديدة أو الموسعة في V6
+9.1 Enterprise Admin
+يدير إعدادات المؤسسة الكبيرة، الشركات، الفروع، السياسات، والتكاملات.
+9.2 CFO / Finance Director
+يدير finance advanced، budgeting، financial statements، approvals المالية.
+9.3 Controller / Chief Accountant
+يدير accounting controls، periods، reconciliations، audit readiness.
+9.4 Supply Chain Manager
+يدير SCM، planning، suppliers، logistics.
+9.5 Production Manager
+يدير BOM، production orders، work centers.
+9.6 Quality Manager
+يدير inspections، quality checks، nonconformance foundation.
+9.7 Maintenance Manager
+يدير assets، maintenance schedules، work orders.
+9.8 HR Director
+يدير HCM، recruitment، leave، attendance، training، payroll foundation.
+9.9 Compliance Manager
+يدير policies، obligations، controls، evidence.
+9.10 Risk Manager
+يدير risk register، risk scoring، mitigation plans.
+9.11 Internal Auditor
+يدير audit plans، findings، evidence، corrective actions.
+9.12 Data Manager
+يدير data dictionary، data quality، KPIs.
+9.13 BI Manager
+يدير dashboards، reports، scheduled analytics.
+9.14 Security Officer
+يدير SSO، SIEM، MFA policies، privileged access.
+9.15 Developer Publisher
+ينشر packages في Marketplace العام.
+9.16 Marketplace Operator
+يدير sellers، disputes، commissions، sponsored placements.
+9.17 Industry Solution Manager
+يدير حلول قطاعات محددة.
+10. Permissions الجديدة في V6
+10.1 Enterprise Finance
+finance.budget.viewfinance.budget.managefinance.budget.approvefinance.budget_control.managefinance.fixed_asset.viewfinance.fixed_asset.managefinance.bank_reconciliation.viewfinance.bank_reconciliation.managefinance.financial_statement.viewfinance.period.closefinance.period.reopen
+10.2 SCM
+scm.demand_forecast.viewscm.demand_forecast.managescm.supply_plan.viewscm.supply_plan.managescm.sop.viewscm.sop.managelogistics.delivery.viewlogistics.delivery.managefleet.viewfleet.managereverse_logistics.manage
+10.3 Manufacturing
+manufacturing.bom.viewmanufacturing.bom.managemanufacturing.routing.viewmanufacturing.routing.managemanufacturing.production_order.viewmanufacturing.production_order.managemanufacturing.work_center.managemanufacturing.mrp.runmanufacturing.quality_check.manage
+10.4 EAM / Maintenance
+eam.asset.vieweam.asset.manageeam.maintenance_schedule.manageeam.work_order.vieweam.work_order.manageeam.spare_parts.manageeam.maintenance_cost.view
+10.5 HCM Advanced
+hcm.recruitment.viewhcm.recruitment.managehcm.attendance.viewhcm.attendance.managehcm.leave.viewhcm.leave.managehcm.training.viewhcm.training.managehcm.payroll_foundation.viewhcm.payroll_foundation.manageemployee_self_service.use
+10.6 BI / Data
+bi.dashboard.viewbi.dashboard.managebi.kpi.viewbi.kpi.managebi.report_builder.usedata_warehouse.viewdata_dictionary.viewdata_dictionary.managedata_quality.viewdata_quality.manage
+10.7 GRC
+grc.policy.viewgrc.policy.managegrc.obligation.viewgrc.obligation.managegrc.risk.viewgrc.risk.managegrc.control.viewgrc.control.managegrc.audit.viewgrc.audit.managegrc.evidence.managegrc.doa.managegrc.sod.manage
+10.8 Enterprise Security
+security.sso.managesecurity.saml.managesecurity.mfa_policy.managesecurity.siem.managesecurity.dlp.viewsecurity.dlp.managesecurity.privileged_access.managesecurity.audit_exportsecurity.session_policy.manage
+10.9 Developer Marketplace
+developer.publisher.createdeveloper.package.submitdeveloper.package.manage_owndeveloper.package.analytics.viewdeveloper.payout.viewmarketplace.review.packagemarketplace.certify.packagemarketplace.suspend.package
+10.10 Advanced Mall
+mall.checkout.managemall.seller_dashboard.viewmall.seller_dashboard.managemall.dispute.viewmall.dispute.managemall.sponsored.managemall.commission.viewmall.commission.manage
+10.11 Advanced AI
+ai.agent.useai.agent.configureai.workflow.simulateai.erp.suggest_actionsai.bi.generate_reportai.data_quality.suggestai.integration.fix_suggestai.marketplace.package_assistai.high_risk_action.request
+11. قاعدة بيانات V6
+هذا القسم يضيف الجداول الأساسية على V1-V5.
+11.1 Enterprise Finance Tables
+cost_centers
+idorganization_idcompany_id nullableparent_id nullablecodenamemanager_user_id nullablestatus default activecreated_atupdated_at
+profit_centers
+idorganization_idcompany_id nullableparent_id nullablecodenamemanager_user_id nullablestatus default activecreated_atupdated_at
+budgets
+idorganization_idcompany_id nullablenamebudget_year integercurrency default EGPstatus default draftcreated_by nullableapproved_by nullableapproved_at nullablecreated_atupdated_at
+budget_lines
+idbudget_idaccount_id nullablecost_center_id nullableprofit_center_id nullableperiod_startperiod_endamount decimal(15,2)spent_amount decimal(15,2) default 0committed_amount decimal(15,2) default 0created_atupdated_at
+fixed_assets
+idorganization_idcompany_id nullableasset_numbernameasset_category nullablepurchase_date nullablepurchase_cost decimal(15,2) nullablecurrency default EGPlocation nullableassigned_to nullablestatus default activedepreciation_method nullableuseful_life_months nullableaccumulated_depreciation decimal(15,2) default 0created_atupdated_at
+bank_reconciliations
+idorganization_idcompany_id nullablebank_account_idperiod_startperiod_endstatus default draftstatement_balance decimal(15,2) nullablesystem_balance decimal(15,2) nullabledifference decimal(15,2) nullablereconciled_by nullablereconciled_at nullablecreated_atupdated_at
+11.2 SCM Tables
+demand_forecasts
+idorganization_idcompany_id nullableproduct_id nullableforecast_period_startforecast_period_endforecast_quantity decimal(15,3)source default manualconfidence_score decimal(5,2) nullablemetadata json nullablecreated_atupdated_at
+supply_plans
+idorganization_idcompany_id nullablenameperiod_startperiod_endstatus default draftcreated_by nullableapproved_by nullableapproved_at nullablecreated_atupdated_at
+supply_plan_lines
+idsupply_plan_idproduct_idrequired_quantity decimal(15,3)available_quantity decimal(15,3) default 0planned_purchase_quantity decimal(15,3) default 0planned_production_quantity decimal(15,3) default 0created_atupdated_at
+deliveries
+idorganization_idcompany_id nullableorder_id nullablewarehouse_id nullabledelivery_numberstatus default pendingcarrier_name nullabletracking_number nullablescheduled_at nullabledelivered_at nullableaddress json nullablecreated_atupdated_at
+fleet_vehicles
+idorganization_idcompany_id nullablevehicle_numbervehicle_type nullableplate_number nullablestatus default activeassigned_driver_id nullablemetadata json nullablecreated_atupdated_at
+11.3 Manufacturing Tables
+bill_of_materials
+idorganization_idcompany_id nullableproduct_idbom_numbernameversion default 1status default draftcreated_by nullableapproved_by nullableapproved_at nullablecreated_atupdated_at
+bom_lines
+idbill_of_material_idcomponent_product_idquantity decimal(15,3)waste_percentage decimal(5,2) default 0created_atupdated_at
+work_centers
+idorganization_idcompany_id nullablenamecode nullablecapacity_per_day decimal(15,3) nullablestatus default activecreated_atupdated_at
+routings
+idorganization_idcompany_id nullableproduct_idnameversion default 1status default draftcreated_atupdated_at
+routing_operations
+idrouting_idwork_center_id nullableoperation_namesequence integersetup_time_minutes integer nullablerun_time_minutes integer nullablecreated_atupdated_at
+production_orders
+idorganization_idcompany_id nullableproduction_order_numberproduct_idbill_of_material_id nullablerouting_id nullablewarehouse_id nullablequantity decimal(15,3)status default draftplanned_start_at nullableplanned_end_at nullablestarted_at nullablecompleted_at nullablecreated_by nullablecreated_atupdated_at
+production_consumptions
+idproduction_order_idcomponent_product_idplanned_quantity decimal(15,3)consumed_quantity decimal(15,3) default 0created_atupdated_at
+quality_checks
+idorganization_idcompany_id nullablesubject_typesubject_idcheck_typestatus default pendingresult nullableinspected_by nullableinspected_at nullablenotes nullablemetadata json nullablecreated_atupdated_at
+11.4 EAM / Maintenance Tables
+enterprise_assets
+idorganization_idcompany_id nullableparent_id nullableasset_numbernameasset_type nullablelocation nullablestatus default activepurchase_date nullablewarranty_expires_at nullablemetadata json nullablecreated_atupdated_at
+maintenance_schedules
+identerprise_asset_idschedule_typefrequency_rule jsonnext_due_at nullablestatus default activecreated_atupdated_at
+maintenance_work_orders
+idorganization_idcompany_id nullableenterprise_asset_id nullablework_order_numberwork_order_typestatus default openpriority default normalassigned_to nullablescheduled_at nullablecompleted_at nullablecost_estimate decimal(15,2) nullableactual_cost decimal(15,2) nullablenotes nullablecreated_atupdated_at
+maintenance_parts
+idmaintenance_work_order_idproduct_idquantity decimal(15,3)created_atupdated_at
+11.5 HCM Advanced Tables
+job_requisitions
+idcompany_iddepartment_id nullabletitlestatus default draftheadcount integer default 1created_by nullableapproved_by nullableapproved_at nullablecreated_atupdated_at
+job_applications
+idjob_requisition_id nullableprofessional_profile_id nullablecandidate_namecandidate_email nullablestatus default newsource nullableresume_media_id nullablemetadata json nullablecreated_atupdated_at
+attendance_records
+idcompany_idemployee_record_idwork_datecheck_in_at nullablecheck_out_at nullablestatus default presentmetadata json nullablecreated_atupdated_at
+leave_requests
+idcompany_idemployee_record_idleave_typestart_dateend_datestatus default pendingrequested_by nullableapproved_by nullableapproved_at nullablereason nullablecreated_atupdated_at
+training_courses
+idcompany_idnamedescription nullablestatus default activecreated_atupdated_at
+employee_training_enrollments
+idtraining_course_idemployee_record_idstatus default enrolledcompleted_at nullablescore nullablecreated_atupdated_at
+payroll_runs
+idcompany_idcountry nullableperiod_startperiod_endstatus default draftcurrency default EGPcreated_by nullableapproved_by nullableapproved_at nullablemetadata json nullablecreated_atupdated_at
+payroll_items
+idpayroll_run_idemployee_record_idgross_pay decimal(15,2) default 0deductions decimal(15,2) default 0net_pay decimal(15,2) default 0metadata json nullablecreated_atupdated_at
+11.6 BI / Data Platform Tables
+kpis
+idorganization_id nullablecompany_id nullablenameslugdescription nullablecalculation_typecalculation_config jsonunit nullabletarget_value decimal(15,2) nullablestatus default activecreated_atupdated_at
+kpi_values
+idkpi_idperiod_startperiod_endvalue decimal(15,4)source nullablecalculated_at nullablecreated_atupdated_at
+data_dictionary_terms
+idorganization_id nullabletermslugdefinition longtextowner_user_id nullabledomain nullablestatus default activecreated_atupdated_at
+data_quality_rules
+idorganization_id nullablecompany_id nullablenameentity_typerule_config jsonseverity default mediumstatus default activecreated_atupdated_at
+data_quality_results
+iddata_quality_rule_identity_typeentity_id nullablestatusmessage nullabledetected_atcreated_at
+data_warehouse_jobs
+idorganization_id nullablecompany_id nullablejob_typestatus default pendingstarted_at nullablecompleted_at nullablesummary json nullablecreated_atupdated_at
+11.7 GRC Tables
+policies
+idorganization_idcompany_id nullablepolicy_number nullabletitlebody longtext nullablestatus default draftowner_user_id nullableeffective_from nullablereview_due_at nullableapproved_by nullableapproved_at nullablecreated_atupdated_at
+compliance_obligations
+idorganization_idcompany_id nullablecountry nullableregulation_nameobligation_titledescription longtext nullableowner_user_id nullablestatus default activereview_due_at nullablecreated_atupdated_at
+risk_registers
+idorganization_idcompany_id nullablerisk_code nullabletitledescription longtext nullablerisk_category nullablelikelihood integer nullableimpact integer nullablerisk_score integer nullableowner_user_id nullablestatus default openmitigation_plan longtext nullablecreated_atupdated_at
+controls
+idorganization_idcompany_id nullablecontrol_code nullabletitledescription longtext nullablecontrol_type nullableowner_user_id nullablefrequency nullablestatus default activecreated_atupdated_at
+control_tests
+idcontrol_idtested_by nullabletest_date nullableresult nullablenotes longtext nullableevidence_media_id nullablecreated_atupdated_at
+internal_audit_plans
+idorganization_idcompany_id nullablenameperiod_startperiod_endstatus default draftowner_user_id nullablecreated_atupdated_at
+audit_findings
+idinternal_audit_plan_id nullablecontrol_id nullabletitledescription longtext nullableseverity default mediumstatus default openowner_user_id nullabledue_date nullablecreated_atupdated_at
+delegation_of_authority_rules
+idorganization_idcompany_id nullablerule_namesubject_typeactionthreshold_amount decimal(15,2) nullablecurrency default EGPrequired_role_id nullablerequired_user_id nullablestatus default activecreated_atupdated_at
+segregation_of_duties_rules
+idorganization_idcompany_id nullablenameconflicting_permissions jsonseverity default highstatus default activecreated_atupdated_at
+11.8 Enterprise Security Tables
+sso_providers
+idorganization_idprovider_typenamestatus default inactiveconfig_encrypted text nullablemetadata json nullablecreated_atupdated_at
+sso_identities
+idsso_provider_iduser_idexternal_idemail nullablemetadata json nullablecreated_atupdated_at
+security_policies
+idorganization_id nullablecompany_id nullablepolicy_typenamesettings jsonstatus default activecreated_atupdated_at
+siem_integrations
+idorganization_idproviderendpoint_url nullablestatus default inactivesettings_encrypted text nullablecreated_atupdated_at
+privileged_access_requests
+idorganization_id nullablecompany_id nullablerequested_bypermission_slugreason longtext nullablestatus default pendingapproved_by nullableapproved_at nullableexpires_at nullablecreated_atupdated_at
+11.9 Public Developer Marketplace Tables
+developer_publishers
+idorganization_id nullableuser_id nullablepublisher_typenameslugstatus default pendingverification_status default unverifiedsupport_email nullablewebsite_url nullablerating_average nullablerating_count default 0created_atupdated_at
+package_submissions
+iddeveloper_publisher_idmarketplace_package_id nullablepackage_namepackage_typeversionmanifest jsonstatus default draftsubmitted_at nullablereviewed_by nullablereviewed_at nullablereview_notes nullablecreated_atupdated_at
+package_certifications
+idmarketplace_package_idcertification_typestatus default activeissued_by nullableissued_at nullableexpires_at nullablecreated_atupdated_at
+developer_payouts
+iddeveloper_publisher_idamount decimal(15,2)currency default EGPstatus default pendingpaid_at nullablereference nullablemetadata json nullablecreated_atupdated_at
+11.10 Advanced Mall Tables
+mall_carts
+idbuyer_user_id nullablesession_id nullablestatus default activecurrency default EGPmetadata json nullablecreated_atupdated_at
+mall_cart_items
+idmall_cart_idlisting_idseller_company_id nullablequantity decimal(15,3) default 1unit_price decimal(15,2)total decimal(15,2)created_atupdated_at
+mall_orders
+idbuyer_user_id nullableorder_numberstatus default pendingpayment_status default unpaidcurrency default EGPtotal decimal(15,2) default 0metadata json nullablecreated_atupdated_at
+mall_order_items
+idmall_order_idlisting_idseller_company_id nullablequantity decimal(15,3)unit_price decimal(15,2)total decimal(15,2)status default pendingcreated_atupdated_at
+disputes
+idorganization_id nullablecompany_id nullablesource_typesource_idopened_by nullableagainst_type nullableagainst_id nullablestatus default openreason nullabledescription longtext nullableresolved_by nullableresolved_at nullableresolution_notes nullablecreated_atupdated_at
+11.11 Industry Solutions Tables
+industry_solutions
+idnameslugindustry_code nullabledescription longtext nullablestatus default activepackage_id nullablesettings json nullablecreated_atupdated_at
+industry_solution_installations
+idindustry_solution_idorganization_idcompany_id nullablestatus default activeinstalled_by nullableinstalled_at nullablesettings json nullablecreated_atupdated_at
+12. Indexes مهمة في V6
+cost_centers.company_id + codeprofit_centers.company_id + codebudgets.company_id + budget_yearbudget_lines.budget_idfixed_assets.company_id + asset_numberbank_reconciliations.bank_account_idbill_of_materials.product_idproduction_orders.company_id + production_order_numberstock_movements.source_type + source_identerprise_assets.company_id + asset_numbermaintenance_work_orders.enterprise_asset_idjob_applications.job_requisition_idattendance_records.employee_record_id + work_dateleave_requests.employee_record_idpayroll_runs.company_id + period_start + period_endkpis.company_iddata_dictionary_terms.organization_id + slugrisk_registers.company_idcontrols.company_idpolicies.organization_idsso_providers.organization_idprivileged_access_requests.requested_bypackage_submissions.developer_publisher_iddeveloper_publishers.slugmall_orders.order_numberdisputes.source_type + source_idindustry_solutions.slug
+Composite unique:
+unique(cost_centers.company_id, code)unique(profit_centers.company_id, code)unique(fixed_assets.company_id, asset_number)unique(production_orders.company_id, production_order_number)unique(enterprise_assets.company_id, asset_number)unique(data_dictionary_terms.organization_id, slug)unique(developer_publishers.slug)unique(mall_orders.order_number)
+13. Laravel Structure المضافة في V6
+app/  Enterprise/    Finance/      Budgeting/      CostCenters/      ProfitCenters/      FixedAssets/      BankReconciliation/      FinancialStatements/    SCM/      DemandForecasting/      SupplyPlanning/      Logistics/      Fleet/    Manufacturing/      BOM/      Routing/      ProductionOrders/      WorkCenters/      Quality/    EAM/      Assets/      MaintenanceSchedules/      WorkOrders/      SpareParts/    HCM/      Recruitment/      Attendance/      Leave/      Training/      PayrollFoundation/  BI/    Dashboards/    KPIs/    DataWarehouse/    DataDictionary/    DataQuality/    ReportBuilder/  GRC/    Policies/    Obligations/    Risks/    Controls/    InternalAudit/    DOA/    SOD/    Evidence/  EnterpriseSecurity/    SSO/    SAML/    SecurityPolicies/    SIEM/    DLP/    PrivilegedAccess/  DeveloperMarketplace/    Publishers/    Submissions/    Certifications/    RevenueShare/    PublicDocs/  AdvancedMall/    MultiVendor/    MallCheckout/    Disputes/    SellerDashboards/    SponsoredListings/  IndustrySolutions/    Registry/    Installations/    Templates/  EnterpriseArchitecture/    ApplicationPortfolio/    SystemCatalog/    IntegrationMap/    CapabilityMap/
+14. Enterprise Finance في V6
+14.1 Budgeting
+يدعم:
+Budgets by year.
+Budget lines by account/cost center.
+Approval workflow.
+Budget consumption.
+Budget warnings.
+14.2 Cost Centers / Profit Centers
+تستخدم في:
+Expenses.
+Invoices.
+Purchase orders.
+Journal entries.
+Reports.
+14.3 Fixed Assets
+Foundation لإدارة:
+أصل.
+تكلفة شراء.
+عمر إنتاجي.
+إهلاك.
+موقع.
+مسؤول.
+14.4 Bank Reconciliation Foundation
+يسمح بمطابقة:
+bank statement.
+system payments.
+differences.
+14.5 Tax / E-invoicing Foundation
+يعتمد على Country Packs.
+V6 يجهز connectors ولا يعد بأن كل دولة مكتملة.
+15. SCM في V6
+15.1 Demand Forecasting Foundation
+ليس AI forecasting كامل من البداية، بل:
+Historical sales.
+Manual forecast.
+AI suggestion optional.
+Confidence score.
+15.2 Supply Planning
+يربط:
+demand.
+current stock.
+purchase orders.
+production orders.
+15.3 Logistics / Delivery
+Delivery records.
+Carrier/tracking.
+Delivery status.
+15.4 Fleet Foundation
+Vehicles.
+Drivers.
+assignment.
+status.
+16. Manufacturing في V6
+16.1 BOM
+Bill of Materials يحدد مكونات المنتج.
+16.2 Routing
+Routing يحدد خطوات التشغيل.
+16.3 Production Order
+Flow:
+Create production order→ reserve components→ consume materials→ produce finished goods→ quality check→ update stock
+16.4 MRP Foundation
+MRP في V6 foundation فقط:
+calculate required materials.
+compare stock.
+suggest purchase/production.
+16.5 Quality Checks
+تدعم:
+Incoming.
+In-process.
+Final.
+17. EAM / Maintenance في V6
+17.1 Asset Hierarchy
+الأصل يمكن أن يحتوي أصول فرعية.
+17.2 Preventive Maintenance
+جدولة صيانة دورية.
+17.3 Corrective Maintenance
+Work order عند حدوث مشكلة.
+17.4 Spare Parts
+قطع الغيار مرتبطة بالمخزون.
+18. HCM Advanced في V6
+18.1 Recruitment / ATS Foundation
+Job requisitions.
+Applications.
+Candidate status.
+18.2 Attendance
+Check-in/out.
+Attendance status.
+18.3 Leave Management
+Leave requests.
+Approval.
+Balances foundation لاحقًا.
+18.4 Training / LMS Foundation
+Courses.
+Employee enrollments.
+Completion tracking.
+18.5 Payroll Foundation
+Payroll مرتبط بـ Country Packs.
+ممنوع إطلاق Payroll في دولة بدون مراجعة قانونية/ضريبية.
+19. BI / Analytics في V6
+19.1 Dashboards
+Executive dashboards.
+Department dashboards.
+Operational dashboards.
+19.2 KPI Management
+كل KPI له:
+definition.
+calculation.
+target.
+owner.
+period.
+19.3 Data Dictionary
+يوحد تعريف الحقول والمصطلحات.
+19.4 Data Quality
+يرصد:
+missing required fields.
+duplicate customers.
+invalid emails.
+inconsistent SKU.
+unmapped accounts.
+19.5 Data Warehouse Foundation
+ليس Lakehouse كامل، لكنه foundation لـ:
+domain snapshots.
+reporting tables.
+scheduled aggregation.
+20. GRC في V6
+20.1 Policy Management
+policies.
+approvals.
+review dates.
+acknowledgement لاحقًا.
+20.2 Compliance Obligations
+obligations by country/regulation.
+owner.
+due date.
+evidence.
+20.3 Risk Register
+risk category.
+likelihood.
+impact.
+mitigation.
+owner.
+20.4 Controls
+controls linked to risks/obligations.
+test frequency.
+evidence.
+20.5 Internal Audit
+audit plans.
+findings.
+corrective actions.
+20.6 DOA / SoD
+DOA يحدد من يوافق على ماذا.
+SoD يمنع تضارب الصلاحيات.
+21. Enterprise Security في V6
+21.1 SSO/SAML Foundation
+SSO providers.
+External identities.
+SSO login.
+Just-in-time provisioning foundation.
+21.2 Security Policies
+MFA policy.
+Session timeout.
+IP restrictions foundation.
+Password policy.
+21.3 SIEM Integration Foundation
+export security events.
+webhook/syslog foundation.
+21.4 Privileged Access
+request temporary permission.
+approval.
+expiration.
+audit.
+22. Public Developer Marketplace في V6
+22.1 Publisher Onboarding
+Flow:
+Developer creates publisher profile→ Verification→ Submit package→ Automated validation→ Security review→ Functional review→ Certification optional→ Publish
+22.2 Revenue Share
+Package sale.
+Subscription.
+Developer payout.
+Platform commission.
+22.3 Certification
+Badges:
+Security ReviewedEnterprise ReadyRTL ReadyERP SafeAI SafeOfficial Partner
+22.4 Private Enterprise Marketplace
+Enterprise يمكنه تثبيت packages داخلية فقط.
+23. Advanced AI Co-builder في V6
+23.1 AI Agents by Domain
+CMS AgentCommerce AgentERP AgentFinance AgentInventory AgentHR AgentBI AgentGRC AgentIntegration AgentMarketplace Agent
+23.2 AI Simulation
+قبل تنفيذ workflow أو bulk change:
+AI proposes→ simulate impact→ show affected records→ risk score→ approval→ apply→ rollback option
+23.3 AI Guardrails
+لا تزال القاعدة:
+AI لا يتجاوز صلاحيات المستخدمAI لا يطبق تغييرات حساسة بدون approvalAI يسجل كل شيءAI يدعم rollback حيث يمكن
+23.4 AI Marketplace Skills
+المطورون يمكنهم نشر AI Skills بعد review.
+24. Advanced Kabeeri Mall في V6
+24.1 Multi-vendor Foundation
+يدعم:
+Mall cart.
+Mall order.
+Seller split.
+Commission.
+Disputes.
+24.2 B2B RFQ Advanced
+Buyer sends RFQ.
+Multiple suppliers respond.
+Compare offers.
+Convert to quotation/order.
+24.3 Disputes
+open dispute.
+evidence.
+moderation.
+resolution.
+24.4 Seller Dashboard
+listings.
+inquiries.
+orders.
+commissions.
+reviews.
+analytics.
+25. Advanced Talent Marketplace في V6
+25.1 Hiring Pipelines
+Job offers.
+Candidate stages.
+Interviews.
+Offers.
+25.2 Verified Work History
+Work history يمكن أن يرتبط بـ CompanyMembership أو EmployeeRecord.
+25.3 Skill Endorsements
+endorsement from companies.
+verification state.
+25.4 Professional Reputation
+public reviews.
+private evaluations not exposed.
+verified engagements.
+26. Industry Solutions في V6
+26.1 فكرة الحل الصناعي
+Industry Solution هو Package/Suite يفعّل:
+modules.
+templates.
+workflows.
+dashboards.
+fields.
+reports.
+permissions.
+26.2 أمثلة
+Real Estate
+Properties.
+Listings.
+Agents.
+Leads.
+Contracts.
+Construction
+Projects.
+Subcontractors.
+Progress billing.
+Site tasks.
+Materials.
+Healthcare Foundation
+Clinics.
+Appointments.
+Patients foundation.
+Privacy controls.
+Education Foundation
+Students.
+Courses.
+Attendance.
+Fees foundation.
+Retail
+POS.
+Inventory.
+Loyalty foundation.
+27. Enterprise Architecture في V6
+27.1 Application Portfolio
+يسجل الأنظمة المستخدمة داخل المؤسسة.
+27.2 System Catalog
+system name.
+owner.
+integrations.
+criticality.
+27.3 Integration Map
+يوضح اتصال Kabeeri بالأنظمة الخارجية.
+27.4 Business Capability Map
+يربط الموديولات بقدرات العمل.
+28. Events في V6
+28.1 Finance Events
+BudgetApprovedBudgetExceededFixedAssetCreatedAccountingPeriodClosedBankReconciliationCompleted
+28.2 SCM Events
+DemandForecastCreatedSupplyPlanApprovedDeliveryScheduledDeliveryCompleted
+28.3 Manufacturing Events
+BomApprovedProductionOrderCreatedProductionOrderStartedProductionOrderCompletedQualityCheckFailed
+28.4 EAM Events
+MaintenanceScheduleDueMaintenanceWorkOrderCreatedMaintenanceWorkOrderCompleted
+28.5 HCM Events
+JobRequisitionApprovedJobApplicationReceivedLeaveRequestedLeaveApprovedPayrollRunCreated
+28.6 BI/Data Events
+KpiCalculatedDataQualityIssueDetectedDataWarehouseJobCompleted
+28.7 GRC Events
+PolicyApprovedRiskCreatedControlTestFailedAuditFindingCreatedSodConflictDetected
+28.8 Security Events
+SsoProviderEnabledPrivilegedAccessRequestedPrivilegedAccessApprovedSecurityPolicyUpdatedSiemEventExported
+28.9 Developer Marketplace Events
+PublisherVerifiedPackageSubmittedPackageReviewCompletedPackageCertifiedDeveloperPayoutCreated
+28.10 Advanced Mall Events
+MallOrderCreatedMallDisputeOpenedMallDisputeResolvedSellerPayoutCalculated
+28.11 AI Events
+AIAgentConfiguredAIWorkflowSimulatedAIHighRiskActionRequestedAIRecommendationAcceptedAIRecommendationRejected
+29. Listeners في V6
+CheckBudgetBeforePurchaseNotifyBudgetOwnerOnExceededCreateDepreciationScheduleForFixedAssetCreatePurchaseSuggestionsFromSupplyPlanReserveMaterialsForProductionOrderCreateFinishedGoodsStockMovementCreateMaintenanceWorkOrderFromScheduleNotifyManagerOnLeaveRequestDetectDataQualityIssuesCalculateKPIsScheduledDetectSodConflictOnRoleChangeCreateAuditFindingFromControlFailureExportSecurityEventToSiemCreateRollbackPointForHighRiskAIActionCreateCommissionFromMallOrderCreateDeveloperPayoutFromPackageSale
+30. Admin UI Scope في V6
+30.1 Enterprise Finance
+Finance  Budgets  Cost Centers  Profit Centers  Fixed Assets  Bank Reconciliation  Financial Statements  Periods
+30.2 SCM
+Supply Chain  Demand Forecasts  Supply Plans  Deliveries  Fleet  Reverse Logistics
+30.3 Manufacturing
+Manufacturing  BOM  Routings  Work Centers  Production Orders  Quality Checks
+30.4 Maintenance
+Assets & Maintenance  Assets  Maintenance Schedules  Work Orders  Spare Parts
+30.5 HCM
+HCM  Recruitment  Attendance  Leave  Training  Payroll Foundation  Employee Self-Service
+30.6 BI / Data
+Analytics  Executive Dashboards  Operational Dashboards  KPIs  Report Builder  Data Dictionary  Data Quality  Data Warehouse Jobs
+30.7 GRC
+GRC  Policies  Obligations  Risk Register  Controls  Internal Audit  DOA  SoD  Evidence
+30.8 Enterprise Security
+Enterprise Security  SSO/SAML  Security Policies  SIEM  Privileged Access  Audit Exports
+30.9 Developer Marketplace
+Developer Marketplace  Publishers  Submissions  Reviews  Certifications  Revenue Share  Payouts
+30.10 Advanced Mall
+Kabeeri Mall Pro  Seller Dashboard  Mall Orders  RFQs  Disputes  Sponsored Listings  Analytics
+30.11 Industry Solutions
+Industry Solutions  Available Solutions  Installed Solutions  Templates  Workflows
+31. V6 Navigation المقترح
+Executive DashboardOperations DashboardFinanceSupply ChainManufacturingAssets & MaintenanceHCMCRM & Customer ServiceCommerce & MallTalentProjectsContractsHelpdeskIntegrationsiPaaS / API ManagementAnalyticsGRCEnterprise SecurityDeveloper MarketplaceIndustry SolutionsAI Command CenterEnterprise ArchitectureSystem
+القوائم يجب أن تكون role-aware وmodule-aware.
+32. AI Command Center في V6
+32.1 الهدف
+تجميع كل AI operations في مركز واحد.
+32.2 يحتوي على
+Active AI agents.
+Pending AI plans.
+High-risk requests.
+AI usage.
+AI cost.
+AI rollback history.
+AI skills installed.
+AI policy settings.
+32.3 AI Policy
+يمكن للمؤسسة تحديد:
+AI allowed modulesAI allowed data classesAI approval thresholdsAI external provider rulesAI retention rules
+33. Enterprise Deployment Options
+33.1 Cloud Multi-tenant
+للعملاء العاديين والمتوسطين.
+33.2 Dedicated Cloud
+للشركات الكبيرة.
+33.3 Private Cloud / On-prem Foundation
+للجهات الحساسة.
+33.4 Data Residency
+حسب Country Packs وEnterprise contracts.
+34. Security في V6
+34.1 Must-have Enterprise Controls
+SSO/SAML.
+MFA policy.
+Advanced audit logs.
+Sensitive access logs.
+Privileged access requests.
+SIEM export.
+SoD detection.
+API token scopes.
+Encryption for secrets.
+34.2 AI Security
+Domain-specific permissions.
+High-risk action approval.
+AI simulation.
+AI audit logs.
+AI data minimization.
+34.3 Marketplace Security
+Package signing.
+Review pipeline.
+Publisher verification.
+Security certification.
+Kill-switch for malicious packages.
+34.4 Data Security
+data classification.
+retention rules.
+export controls.
+privacy requests.
+DLP foundation.
+35. Performance في V6
+35.1 Enterprise Scale
+Queue separation by domain.
+Report jobs.
+Data warehouse jobs.
+Search service.
+Read replicas optional.
+Tenant isolation options.
+CDN/object storage.
+Monitoring/observability.
+35.2 Data Platform
+Aggregations scheduled.
+KPI calculation jobs.
+Heavy reports queued.
+Dashboard caching.
+35.3 Mall Scale
+Search indexing.
+Ranking precomputation.
+Seller dashboard pagination.
+Dispute/report queues.
+35.4 AI Scale
+AI job queues.
+Usage limits.
+Cost controls.
+Caching non-sensitive outputs.
+36. Testing في V6
+36.1 Enterprise Finance Tests
+Budget approval testBudget exceeded testCost center posting testFixed asset creation testBank reconciliation test
+36.2 Manufacturing Tests
+BOM create/approve testProduction order consumes components testProduction order creates finished goods testQuality check fail test
+36.3 EAM Tests
+Create asset testPreventive maintenance schedule due testWork order completion testSpare part deduction test
+36.4 HCM Tests
+Job requisition approval testApplication status testAttendance record testLeave approval testPayroll run permissions test
+36.5 BI/Data Tests
+KPI calculation testData quality rule detection testData dictionary permission testDashboard cache test
+36.6 GRC Tests
+Policy approval testRisk scoring testControl test failure creates finding testSoD conflict detection testDOA approval threshold test
+36.7 Security Tests
+SSO provider config testPrivileged access approval testSIEM export event testMFA policy enforcement test
+36.8 Developer Marketplace Tests
+Publisher onboarding testPackage submission testReview pipeline testPackage signing required testPackage certification testDeveloper payout test
+36.9 Advanced Mall Tests
+Mall cart testMall order split by seller testCommission from mall order testDispute open/resolve test
+36.10 AI Tests
+AI workflow simulation testHigh-risk AI action requires approval testAI agent respects permissions testAI rollback testAI usage limit test
+37. Seeders في V6
+EnterpriseFinancePermissionsSeederSCMPermissionsSeederManufacturingPermissionsSeederEAMPermissionsSeederHCMAdvancedPermissionsSeederBIPermissionsSeederGRCPermissionsSeederEnterpriseSecurityPermissionsSeederDeveloperMarketplacePermissionsSeederAdvancedMallPermissionsSeederIndustrySolutionsSeederDefaultKPISeederDefaultPoliciesSeederDefaultRiskCategoriesSeederDefaultControlsSeederDefaultSODRulesSeederDefaultDOARulesSeederDemoManufacturingSeederDemoGRCSeederDemoBISeederDemoIndustrySolutionsSeeder
+38. CLI Commands في V6
+php artisan kabeeri:bi:calculate-kpis {companyId}php artisan kabeeri:data-quality:run {companyId}php artisan kabeeri:warehouse:run-job {companyId}php artisan kabeeri:grc:detect-sod-conflicts {companyId}php artisan kabeeri:grc:check-obligations {companyId}php artisan kabeeri:manufacturing:mrp {companyId}php artisan kabeeri:maintenance:generate-work-ordersphp artisan kabeeri:security:export-siem-events {organizationId}php artisan kabeeri:marketplace:review-package {submissionId}php artisan kabeeri:ai:simulate-workflow {workflowId}php artisan kabeeri:mall:recalculate-rankingsphp artisan kabeeri:industry:install {solutionSlug} {companyId}
+39. Build Order العملي لـ V6
+المرحلة 1 — Enterprise Security First
+SSO/SAML foundationsecurity policiesprivileged accessSIEM exportadvanced audit exports
+المرحلة 2 — BI / Data Foundation
+KPIsdata dictionarydata quality rulesdata warehouse jobsadvanced dashboards
+المرحلة 3 — Enterprise Finance
+cost centersprofit centersbudgetingfixed assetsbank reconciliation foundationfinancial statements
+المرحلة 4 — GRC Foundation
+policiesobligationsrisk registercontrolscontrol testsinternal auditDOASoD
+المرحلة 5 — SCM Advanced
+demand forecastssupply plansdeliveriesfleet foundationreverse logistics foundation
+المرحلة 6 — Manufacturing Foundation
+BOMroutingwork centersproduction ordersmaterial consumptionquality checksMRP foundation
+المرحلة 7 — EAM / Maintenance
+enterprise assetsmaintenance scheduleswork ordersspare partsmaintenance costs
+المرحلة 8 — HCM Advanced
+recruitmentattendanceleavetrainingemployee self-servicepayroll foundation by country pack
+المرحلة 9 — Public Developer Marketplace
+publisherspackage submissionsreview pipelinecertificationsrevenue sharedeveloper payoutspublic docs
+المرحلة 10 — Advanced AI Co-builder
+AI agentsAI simulationAI command centerAI skills marketplacehigh-risk approvalsAI policy settings
+المرحلة 11 — Advanced Kabeeri Mall
+multi-vendor cart/ordersseller dashboarddisputesadvanced RFQssponsored listingsmall analytics
+المرحلة 12 — Industry Solutions
+solution registrysolution packagestemplatesworkflowsdashboardsindustry demos
+المرحلة 13 — Enterprise Architecture
+application portfoliosystem catalogintegration mapbusiness capability mapchange impact analysis foundation
+المرحلة 14 — Final Hardening
+load testingsecurity testingpermissions auditenterprise demosdocumentationrelease notessupport runbooks
+40. AI Build Prompts لـ V6
+40.1 KPI Engine
+ابني KPIEngine في Laravel يأخذ kpi calculation_config ويحسب kpi_values بشكل queued، مع tests لحساب KPI من invoices/orders.
+40.2 SoD Detection
+ابني DetectSodConflictsAction يفحص roles والpermissions مقابل segregation_of_duties_rules وينشئ findings أو security events.
+40.3 BOM / Production
+ابني ProductionOrderService ينشئ production_order من BOM ويحسب component requirements وينشئ planned consumptions بدون خصم المخزون إلا عند start/consume action.
+40.4 SSO Provider
+ابني SsoProvider model وconfig encrypted fields وواجهة إعدادات foundation، بدون تنفيذ SAML كامل الآن، مع tests للتشفير والصلاحيات.
+40.5 Developer Package Review
+ابني PackageSubmission workflow: draft, submitted, automated_validation, security_review, approved, rejected, published، مع policy للreviewers.
+40.6 AI Simulation
+ابني AIWorkflowSimulationService يأخذ workflow_definition ويعرض affected entities وrisk_score وexpected actions بدون تنفيذ أي تغيير.
+40.7 Mall Order Split
+ابني MallCheckoutService ينشئ mall_order وmall_order_items ويجمع items حسب seller_company_id ويحسب commissions لكل seller.
+41. Definition of Done لـ V6
+V6 يعتبر مكتملًا فقط إذا:
+Enterprise security foundation يعملSSO/SAML foundation موجودSecurity policies وprivileged access تعملBI dashboards وKPIs تعملData dictionary وdata quality تعملBudgeting وcost/profit centers تعملFixed assets foundation يعملGRC policies/risks/controls/audit تعملDOA/SoD foundation يعملSCM planning foundation يعملManufacturing BOM/production orders تعملEAM maintenance schedules/work orders تعملHCM recruitment/attendance/leave/training foundation تعملPayroll foundation محكوم بالcountry packsPublic Developer Marketplace يعمل مع review/signingAdvanced AI Co-builder يعمل مع simulation/approval/rollbackAdvanced Kabeeri Mall يعمل مع multi-vendor foundation/disputesTalent Marketplace advanced foundation يعملIndustry Solutions قابلة للتثبيتEnterprise Architecture foundation يعملSecurity/Audit/Performance tests موجودةEnterprise demos مكتملةDocumentation كاملةNo critical security/finance/data isolation bugs
+42. V6 Demo النهائي
+42.1 Demo — Enterprise Finance + BI
+Budget approved→ Purchase order consumes budget→ Budget warning appears→ KPI dashboard updates→ CFO sees financial dashboard
+42.2 Demo — Manufacturing Flow
+BOM created→ Production order planned→ Materials reserved/consumed→ Finished goods added to stock→ Quality check recorded
+42.3 Demo — GRC Flow
+Risk created→ Control assigned→ Control test fails→ Audit finding created→ Corrective action assigned→ SoD conflict detected
+42.4 Demo — Enterprise Security
+SSO provider configured→ MFA policy enforced→ privileged access requested→ approval granted temporarily→ audit exported to SIEM
+42.5 Demo — Developer Marketplace
+Developer submits package→ automated validation→ security review→ certification→ package published→ customer installs→ revenue share recorded
+42.6 Demo — Advanced Mall
+Buyer adds products from multiple sellers→ Mall order created→ items split by seller→ commissions calculated→ dispute can be opened and resolved
+42.7 Demo — AI Command Center
+AI suggests workflow→ simulation shows affected records→ risk score displayed→ manager approves→ workflow applied→ rollback available
+42.8 Demo — Industry Solution
+Company installs Construction Solution→ projects/templates/workflows/reports appear→ permissions applied→ dashboard ready
+43. Documentation المطلوبة لـ V6
+Enterprise ERP GuideEnterprise Finance GuideBudgeting GuideFixed Assets GuideSCM GuideManufacturing GuideEAM GuideHCM Advanced GuideBI & Analytics GuideData Dictionary GuideData Quality GuideGRC GuideRisk & Controls GuideInternal Audit GuideDOA / SoD GuideEnterprise Security GuideSSO/SAML Setup GuideSIEM Integration GuideDeveloper Marketplace GuidePackage Review GuideAI Command Center GuideAdvanced Mall GuideMulti-vendor Commerce GuideIndustry Solutions GuideEnterprise Deployment GuideEnterprise Admin Guide
+44. V6 Release Gate
+V6 لا يعتبر مكتملًا إلا إذا:
+Enterprise controls تعملData isolation مؤكدHigh-risk permissions محكومةGRC foundation يعملBI foundation يعملERP advanced modules تعمل بدون كسر V1-V5Developer Marketplace آمنAI advanced لا يتجاوز guardrailsMall advanced لديه disputes/moderation/commissionsIndustry Solutions قابلة للتثبيت بدون كسر CorePerformance مقبول تحت load testsSecurity tests ناجحةDocumentation كاملةEnterprise demos جاهزة
+45. ما بعد V6
+بعد V6، التطوير لا يتوقف.
+لكن ما بعد V6 يكون على محاور:
+More country packsMore industry solutionsMore connectorsMore AI skillsMore marketplace packagesMore enterprise complianceMore BI/data productsMore automation templatesMore partner programs
+أي تحديث بعد V6 يمكن تسميته:
+V6.xEnterprise EditionsIndustry EditionsCountry EditionsAI EditionsMarketplace Editions
+46. أخطاء ممنوعة في V6
+46.1 لا تبني Enterprise features بدون Security/Audit
+46.2 لا تطلق Payroll بدون Country Pack ومراجعة محلية
+46.3 لا تفتح Public Developer Marketplace بدون review/signing
+46.4 لا تجعل AI يطبق high-risk actions بدون simulation وapproval
+46.5 لا تبني BI فوق بيانات غير موثقة أو غير موحدة
+46.6 لا تبني Manufacturing بدون Inventory قوي
+46.7 لا تبني Multi-vendor Mall بدون disputes/commissions/moderation
+46.8 لا تجعل SoD مجرد تقرير شكلي
+يجب أن يؤثر على الموافقات أو يظهر تحذيرات واضحة.
+46.9 لا تعرض كل Enterprise modules لكل عميل
+كل شيء يجب أن يظهر حسب plan/entitlements/modules.
+46.10 لا تحول Kabeeri إلى نظام معقد من الخارج
+القوة داخلية، والواجهة يجب أن تبقى context-aware.
+47. ملخص V6 التنفيذي
+V6 ينجز التالي:
+يكمل Kabeeri كمنصة Enterpriseيوسع ERP إلى Finance/SCM/Manufacturing/EAM/HCMيبني BI/Data Platformيبني GRC/Risk/Complianceيبني Enterprise Securityيفتح Public Developer Marketplaceيطور AI Co-builder إلى AI Command Centerيطور Kabeeri Mall إلى سوق متقدم متعدد البائعينيطور Talent Marketplaceيفتح Industry Solutionsويجهز Kabeeri للانتشار الدولي والقطاعي والمؤسسي
+القاعدة النهائية:
+V6 هو الإصدار الذي يجعل Kabeeri منصة Enterprise كاملة: تبني الواجهة، وتشغل الشركة، وتربط السوق، وتحكم المخاطر، وتحلل البيانات، وتسمح بالتوسع الآمن.
+48. ختام خطة الإصدارات الستة
+بهذا تصبح خطة Kabeeri على 6 إصدارات:
+V1 — Core Foundation for CMS + Company OSV2 — WordPress Migration + Commerce FoundationV3 — Business Foundation + ERP EssentialsV4 — Cloud + Marketplace + Rabet Company OS + Kabeeri MallV5 — ERP Pro + Integration HubV6 — Enterprise Complete Platform
+المعادلة النهائية:
+Kabeeri = CMS + Commerce + Company OS + ERP + Mall + Marketplace + AI + BI + GRC + Integrations + Industry Solutions
+لكن التنفيذ يجب أن يبقى تدريجيًا:
+ابدأ صغيرًااثبت القيمةابنِ الأساس صحوسع بدون كسرلا تتجاوز الحوكمةلا تفتح السوق قبل الثقةلا تطلق Enterprise قبل الأمن
+49. الخطوة التالية بعد اعتماد V6
+بعد اكتمال ملفات V1 إلى V6، الخطوة العملية التالية ليست إنشاء ملحق جديد.
+الخطوة التالية هي:
+KABEERI — Master Execution Plan for Solo Builder with AI
+وهذا الملف سيحوّل كل ما سبق إلى خطة تنفيذ يومية/أسبوعية:
+ماذا تبني أولًا.
+ترتيب migrations.
+ترتيب models.
+ترتيب UI.
+prompts جاهزة للـ AI.
+milestones.
+checkpoints.
+Git strategy.
+testing gates.
+release gates.
+القاعدة:
+بعد التخطيط الاستراتيجي، نحتاج خطة بناء عملية لا تسمح للمشروع أن يتوه.

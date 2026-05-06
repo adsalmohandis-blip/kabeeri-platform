@@ -1,0 +1,827 @@
+KABEERI V4 — Cloud + Marketplace + Rabet Company OS + Kabeeri Mall
+الإصدار الرابع من منصة KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يشرح V4 بالتفصيل بعد بناء V1 وV2 وV3.
+V4 هو الإصدار الذي ينقل Kabeeri من منصة يمكن استخدامها داخليًا أو self-hosted إلى منتج تجاري قابل للبيع والتوسع:
+Kabeeri Cloud+ Billing+ Internal Marketplace+ Rabet Company OS V1+ Legal Partner Network V1+ Kabeeri Mall V1+ Talent Marketplace V1+ Agency Platform+ Teams V1+ AI Co-builder V1+ Security Center
+الرسالة التنفيذية لـ V4:
+Kabeeri V4 يحوّل المنصة إلى Business Ecosystem قابل للبيع: استضافة، اشتراكات، توثيق، سوق داخلي، سوق عام، شركاء قانونيون، وكالات، فرق، وAI آمن للبناء.
+1. هدف V4
+1.1 الهدف التقني
+بناء طبقات التشغيل التجاري للمنصة:
+Cloud provisioning.
+Billing subscriptions.
+Package installation governance.
+Marketplace داخلي.
+Kabeeri Mall عام.
+Legal Partner Portal.
+Rabet Company OS V1.
+Teams V1.
+AI Co-builder V1.
+Security Center.
+1.2 الهدف التجاري
+V4 هو أول إصدار يمكن بيعه كمنتج SaaS/Cloud بشكل جاد.
+يجب أن يفتح مصادر دخل مثل:
+Cloud subscriptionsRabet verification feesFeatured listingsInternal Marketplace packagesAgency plansAI credits لاحقًاLegal Partner review fees
+1.3 هدف المنتج
+V4 يجب أن يثبت 7 وعود:
+1. يمكن إنشاء موقع Kabeeri Cloud.2. يمكن الاشتراك في خطة ودفع أو إدارة billing.3. يمكن تثبيت Package رسمي من Marketplace داخلي.4. يمكن شركة أن تتوثق عبر Legal Partner.5. يمكن Business أن يظهر في Kabeeri Mall.6. يمكن Professional أن يظهر في Talent Marketplace.7. يمكن AI أن يبني صفحات/forms/dashboards بعد Plan + Preview + Approval.
+2. V4 يعتمد على ماذا؟
+V4 يعتمد على استقرار V1-V3:
+Core RBACOrganizationsSitesCompaniesBusiness ProfilesCMSCommerce foundationCRM LiteInvoicing basicInventory basicTasksVerification foundationPackage foundationWorkflows/Approvals basicActivity/Audit logsFeature flagsSettings
+لا يبدأ V4 إذا:
+الصلاحيات غير مستقرة.
+Business Profiles غير واضحة.
+Verification foundation غير جاهزة.
+Package foundation غير موجودة.
+Billing foundation غير موجودة.
+Activity logs ضعيفة.
+3. ما هو V4؟
+V4 هو:
+Commercial Platform Release
+أي أنه لا يضيف فقط Features، بل يضيف Business Infrastructure.
+يشمل:
+تشغيل Cloud.
+بيع Plans.
+حوكمة Packages.
+تفعيل Rabet كمنتج.
+إطلاق Kabeeri Mall V1.
+إطلاق Legal Partner Network.
+إطلاق Talent Marketplace V1.
+إطلاق Agency Dashboard.
+إطلاق Teams V1.
+إطلاق AI Co-builder V1.
+4. ما ليس V4؟
+V4 ليس:
+ERP Pro كامل.
+Integration Hub كامل.
+Public developer marketplace مفتوح.
+Full multi-vendor checkout.
+Full Talent recruiting suite.
+Full payroll.
+Full manufacturing.
+Enterprise SSO كامل.
+Full BI.
+AI multi-agent كامل.
+Shopify killer كامل.
+Odoo replacement كامل.
+V4 يفتح السوق، لكنه لا يكمل كل السوق.
+5. رسالة V4 التسويقية
+5.1 للشركات
+Kabeeri V4 لا يبني موقعك فقط؛ بل يستضيفه، يوثّق شركتك، يظهرها في Kabeeri Mall، ويدير فريقك وطلباتك من منصة واحدة.
+5.2 للوكالات
+أدر مواقع عملائك، اشتراكاتهم، تحديثاتهم، وظهورهم التجاري من Agency Dashboard واحد.
+5.3 للشركات التي تحتاج ثقة
+مع Rabet، يمكن لشركتك أن تحصل على توثيق قانوني عبر مكاتب محاماة معتمدة وتظهر ككيان موثوق.
+5.4 للمستخدمين النهائيين
+اكتشف شركات وخدمات ومنتجات ومواهب داخل Kabeeri Mall، مع طبقات توثيق وثقة.
+6. نطاق V4 الرئيسي
+6.1 Kabeeri Cloud V1
+Cloud site provisioning.
+Managed site creation.
+Subdomain support.
+Custom domain support foundation.
+SSL status foundation.
+Backups basic.
+Staging basic optional.
+Site health.
+Domain-to-site routing cache.
+6.2 Billing & Subscriptions V1
+Plans.
+Subscriptions.
+Billing accounts.
+Invoices.
+Payments foundation.
+Usage records.
+Entitlements.
+Plan limits.
+Upgrade/downgrade foundation.
+6.3 Internal Marketplace V1
+Official packages only.
+Official plugins.
+Official themes.
+Official modules.
+AI skills private/official.
+Package details page.
+Install from dashboard.
+Permission disclosure.
+Compatibility checks.
+Package signing foundation.
+Update logs.
+6.4 Rabet Company OS V1
+Verified Company profile.
+Digital Office V1.
+Team dashboard.
+Tasks/approvals integration.
+Trust record display.
+B2B readiness.
+RFQ foundation.
+Company status page.
+6.5 Legal Partner Network V1
+Legal Partner profiles.
+Legal Partner users.
+Assign verification request to partner.
+Partner review portal.
+Request more information.
+Review result.
+Legal review notes.
+Legal partner billing foundation.
+6.6 Kabeeri Mall V1
+Public Mall home.
+Business listings.
+Service listings.
+Product listings basic.
+Search/filter basic.
+Categories.
+Reviews basic.
+Contact/request actions.
+Featured listings foundation.
+Moderation queue.
+Reports/flags.
+6.7 Talent Marketplace V1
+Professional profiles public/private.
+Skills.
+Work history public controls.
+Open to offers.
+Job offer basic.
+Company-to-professional messaging foundation.
+Professional visibility settings.
+6.8 Agency Platform V1
+Agency account type.
+Agency dashboard.
+Manage client organizations/sites.
+Client access.
+Bulk status overview.
+Maintenance notes.
+White-label foundation.
+6.9 Kabeeri Teams V1
+Channels.
+Direct messages.
+Threads basic.
+Mentions.
+Files basic.
+Task from message.
+System alert channels.
+Approvals notifications.
+6.10 AI Co-builder V1
+AI assistant panel.
+AI change plans.
+AI preview.
+AI approval.
+AI apply low-risk changes.
+AI rollback foundation.
+AI logs.
+Build pages/forms/content types/dashboards basic.
+6.11 Security Center V1
+MFA foundation.
+Session/device list.
+API tokens basic.
+Security events.
+Sensitive access logs.
+Package security status.
+Backup status.
+Admin action logs.
+7. V4 Feature Flags
+enable_cloud_v1enable_cloud_domainsenable_cloud_backupsenable_billing_v1enable_subscriptionsenable_entitlementsenable_internal_marketplaceenable_package_signing_foundationenable_rabet_company_os_v1enable_legal_partner_networkenable_kabeeri_mall_v1enable_mall_reviews_basicenable_mall_moderationenable_talent_marketplace_v1enable_agency_platformenable_teams_v1enable_ai_cobuilder_v1enable_security_center
+8. V4 User Stories
+8.1 إنشاء موقع Cloud
+As a business ownerI want to create a Kabeeri Cloud siteSo I can launch without managing hosting.
+8.2 إدارة اشتراك
+As an organization ownerI want to subscribe to a planSo I can unlock cloud, commerce, Rabet, or marketplace features.
+8.3 تثبيت Package رسمي
+As a site adminI want to install an official plugin or themeSo I can extend my site safely.
+8.4 مراجعة صلاحيات Package
+As an adminI want to see package permissions before installingSo I know what data it can access.
+8.5 توثيق شركة عبر مكتب محاماة
+As a company ownerI want my verification request reviewed by an accredited legal partnerSo my company can become verified.
+8.6 مكتب محاماة يراجع طلب توثيق
+As a legal partner userI want to view assigned verification requests onlySo I can review documents securely.
+8.7 الظهور في Kabeeri Mall
+As a verified or approved businessI want to publish my business and services in Kabeeri MallSo customers can discover and contact me.
+8.8 Professional يستقبل عرض عمل
+As a professionalI want to publish my profile with privacy controlsSo verified companies can send me job offers.
+8.9 وكالة تدير مواقع عملائها
+As an agencyI want a dashboard for all client sitesSo I can manage updates, status, and support from one place.
+8.10 فريق يتواصل داخل Kabeeri
+As a team memberI want channels and direct messagesSo I can collaborate without leaving Kabeeri.
+8.11 AI يبني صفحة بعد موافقة
+As a site adminI want AI to create a page draft and show a previewSo I can approve before publishing.
+9. Roles الجديدة أو الموسعة في V4
+9.1 Cloud Owner
+يدير cloud sites والdomains والbackups.
+9.2 Billing Manager
+يدير الاشتراك والفواتير والمدفوعات.
+9.3 Marketplace Package Manager
+يدير تثبيت/تحديث packages الرسمية.
+9.4 Rabet Company Owner
+يدير Company OS، التوثيق، trust، والظهور العام.
+9.5 Legal Partner Admin
+يدير مكتب المحاماة ومستخدميه.
+9.6 Legal Reviewer
+يراجع طلبات التوثيق المسندة له فقط.
+9.7 Mall Seller / Business Publisher
+يدير ظهور البزنس والخدمات والمنتجات داخل Kabeeri Mall.
+9.8 Mall Moderator
+يراجع البلاغات والمحتوى العام.
+9.9 Professional
+يدير ملفه المهني وظهوره وعروض العمل.
+9.10 Agency Owner
+يدير عملاء الوكالة ومواقعهم.
+9.11 Team Member / Channel Admin
+يدير أو يشارك في قنوات Teams.
+9.12 AI Approver
+يوافق على خطط AI حسب الصلاحية.
+9.13 Security Admin
+يرى Security Center والإعدادات الحساسة.
+10. Permissions الجديدة في V4
+10.1 Cloud
+cloud.site.viewcloud.site.createcloud.site.managecloud.domain.managecloud.backup.viewcloud.backup.createcloud.backup.restorecloud.staging.managecloud.health.view
+10.2 Billing
+billing.account.viewbilling.account.managebilling.plan.viewbilling.subscription.createbilling.subscription.managebilling.invoice.viewbilling.payment.managebilling.usage.viewentitlement.viewentitlement.manage
+10.3 Internal Marketplace
+marketplace.package.viewmarketplace.package.installmarketplace.package.updatemarketplace.package.activatemarketplace.package.deactivatemarketplace.package.permissions.viewmarketplace.package.review_official
+10.4 Rabet Company OS
+rabet.office.viewrabet.office.managerabet.rfq.createrabet.rfq.respondrabet.trust.publishrabet.verified_badge.manage
+10.5 Legal Partner Network
+legal_partner.viewlegal_partner.managelegal_partner.users.managelegal_review.view_assignedlegal_review.request_infolegal_review.completelegal_review.approve_recommendationlegal_review.reject_recommendation
+10.6 Kabeeri Mall
+mall.view_consolemall.business.publishmall.business.managemall.service.publishmall.service.managemall.product.publishmall.product.managemall.review.respondmall.listing.featuremall.report.createmall.moderation.viewmall.moderation.manage
+10.7 Talent Marketplace
+professional_profile.viewprofessional_profile.manageprofessional_profile.publishprofessional_profile.privacy.managejob_offer.sendjob_offer.viewjob_offer.acceptjob_offer.rejectjob_offer.negotiate
+10.8 Agency Platform
+agency.dashboard.viewagency.clients.manageagency.client_sites.viewagency.client_sites.manageagency.white_label.manageagency.reports.view
+10.9 Teams
+team.channel.viewteam.channel.createteam.channel.manageteam.message.sendteam.message.edit_ownteam.message.delete_ownteam.message.delete_anyteam.files.uploadteam.mentions.use
+10.10 AI Co-builder
+ai.assistant.useai.plan.createai.plan.viewai.plan.approveai.change.applyai.change.rollbackai.content.generateai.form.createai.dashboard.createai.workflow.suggest
+10.11 Security Center
+security.center.viewsecurity.mfa.managesecurity.sessions.managesecurity.api_tokens.managesecurity.events.viewsecurity.sensitive_logs.viewsecurity.admin_actions.view
+11. قاعدة بيانات V4
+هذا القسم يضيف الجداول الأساسية على V1-V3.
+11.1 Cloud Tables
+cloud_sites
+idorganization_idsite_idcloud_status default provisioningregion nullableplan_id nullableprimary_domain nullablesubdomain nullablestorage_quota_mb nullablebandwidth_quota_mb nullablelast_health_check_at nullablemetadata json nullablecreated_atupdated_at
+cloud_status values
+provisioningactivesuspendedfailedarchived
+cloud_domains
+idcloud_site_idsite_iddomainis_primary default falseverification_status default pendingssl_status default pendingdns_records json nullableverified_at nullablessl_issued_at nullablecreated_atupdated_at
+cloud_backups
+idorganization_idsite_id nullablecompany_id nullablebackup_typediskpath nullablestatus default pendingsize_bytes nullablestarted_by nullablestarted_at nullablecompleted_at nullableexpires_at nullablemetadata json nullablecreated_atupdated_at
+11.2 Billing Tables
+billing_accounts
+idorganization_id nullablecompany_id nullableuser_id nullablebilling_type default organizationlegal_name nullablebilling_emailcountry nullablecurrency default EGPtax_number nullablestatus default activemetadata json nullablecreated_atupdated_at
+plans
+idnameslugplan_typeprice decimal(15,2) default 0currency default EGPbilling_cycle default monthlytrial_days integer default 0features json nullablelimits json nullablestatus default activecreated_atupdated_at
+subscriptions
+idbilling_account_idplan_idstatus default activestarted_at nullabletrial_ends_at nullablecurrent_period_start nullablecurrent_period_end nullablecancelled_at nullablerenewal_status default autometadata json nullablecreated_atupdated_at
+subscription_items
+idsubscription_iditem_typeitem_id nullablequantity integer default 1unit_price decimal(15,2) default 0metadata json nullablecreated_atupdated_at
+usage_records
+idorganization_id nullablecompany_id nullableuser_id nullableusage_typequantity decimal(15,3)unitsource_type nullablesource_id nullablemetadata json nullablerecorded_atcreated_at
+entitlements
+idkeydescription nullablevalue_type default booleancreated_atupdated_at
+account_entitlements
+idbilling_account_identitlement_keyvalue jsonsource_type nullablesource_id nullableexpires_at nullablecreated_atupdated_at
+11.3 Internal Marketplace Tables
+marketplace_packages
+idnameslugdisplay_namepackage_typepublisher_id nullableversion_latest nullablesummary nullabledescription longtext nullablestatus default draftrisk_level default lowis_official default falseis_featured default falsepricing_model default freeprice decimal(15,2) nullablecurrency default EGPmetadata json nullablecreated_atupdated_at
+package_versions
+idmarketplace_package_idversionmanifest jsonchangelog longtext nullablerequired_kabeeri_version nullablerequired_php_version nullablesignature_hash nullablestatus default draftpublished_at nullablecreated_atupdated_at
+package_permissions
+idmarketplace_package_idpermission_slugdescription nullablerisk_level default lowcreated_atupdated_at
+package_security_scans
+idmarketplace_package_idpackage_version_id nullablescan_typestatussummary json nullableissues json nullablescanned_at nullablecreated_atupdated_at
+package_installations
+idorganization_id nullablesite_id nullablecompany_id nullablemarketplace_package_idpackage_version_idstatus default installedinstalled_by nullableinstalled_at nullableactivated_at nullablemetadata json nullablecreated_atupdated_at
+package_update_logs
+idpackage_installation_idfrom_version nullableto_versionstatusmessage nullablemetadata json nullablecreated_atupdated_at
+11.4 Legal Partner Tables
+legal_partners
+idorganization_id nullablenameslugcountrycity nullablelicense_number nullablecontact_email nullablecontact_phone nullablestatus default pendingverification_status default unverifiedrating_average nullablerating_count default 0metadata json nullablecreated_atupdated_at
+legal_partner_users
+idlegal_partner_iduser_idrolestatus default activecreated_atupdated_at
+verification_partner_assignments
+idverification_request_idlegal_partner_idassigned_by nullableassigned_atstatus default assignedcompleted_at nullablemetadata json nullablecreated_atupdated_at
+legal_review_notes
+idverification_request_idlegal_partner_id nullableauthor_user_id nullablenote_type default internalbody longtextvisibility default legal_partner_onlycreated_atupdated_at
+legal_partner_payouts
+idlegal_partner_idamount decimal(15,2)currency default EGPstatus default pendingsource_type nullablesource_id nullablepaid_at nullablemetadata json nullablecreated_atupdated_at
+11.5 Kabeeri Mall Tables
+mall_listings
+idlisting_typeorganization_id nullablecompany_id nullablebusiness_profile_id nullablesubject_typesubject_idnameslugdescription nullablecountry nullablecity nullablecategory_id nullablestatus default draftvisibility default publicverification_level default unverifiedis_featured default falseranking_score decimal(10,2) default 0published_at nullablemetadata json nullablecreated_atupdated_at
+listing_type values
+businessserviceproducttalent
+mall_categories
+idparent_id nullablenamesluglisting_type nullablestatus default activecreated_atupdated_at
+listing_reviews
+idlisting_idreviewer_user_id nullablerating integerbody longtext nullablestatus default pendingsource_type nullablesource_id nullablecreated_atupdated_at
+listing_reports
+idlisting_id nullablereporter_user_id nullablereport_typereason nullablestatus default openreviewed_by nullablereviewed_at nullablemetadata json nullablecreated_atupdated_at
+featured_listings
+idlisting_idplacementstarts_atends_atstatus default activebilling_source_type nullablebilling_source_id nullablecreated_atupdated_at
+marketplace_transactions
+idorganization_id nullablebuyer_user_id nullableseller_company_id nullablesource_typesource_idtransaction_typeamount decimal(15,2)currency default EGPstatus default pendingmetadata json nullablecreated_atupdated_at
+11.6 Talent Marketplace Tables
+professional_profiles
+iduser_idheadline nullablesummary longtext nullablecountry nullablecity nullableavailability_status default hiddenvisibility default privateopen_to_offers default falsecurrent_title nullablerating_average nullablerating_count default 0metadata json nullablecreated_atupdated_at
+professional_skills
+idprofessional_profile_idskill_namelevel nullableyears_experience nullablecreated_atupdated_at
+professional_work_history
+idprofessional_profile_idcompany_id nullablecompany_name nullablejob_titlestart_date nullableend_date nullableis_current default falsevisibility default privatedescription nullablecreated_atupdated_at
+job_offers
+idcompany_idprofessional_profile_idsent_by nullabletitlemessage longtext nullableoffer_type default employmentstatus default draftvisibility default privatesent_at nullableaccepted_at nullablerejected_at nullablemetadata json nullablecreated_atupdated_at
+11.7 Agency Tables
+agency_profiles
+idorganization_idnameslugwebsite_url nullablecountry nullablecity nullablestatus default activewhite_label_enabled default falsemetadata json nullablecreated_atupdated_at
+agency_clients
+idagency_profile_idclient_organization_id nullableclient_company_id nullableclient_namestatus default activenotes nullablecreated_atupdated_at
+agency_client_sites
+idagency_client_idsite_idstatus default activemaintenance_status nullablelast_reviewed_at nullablecreated_atupdated_at
+11.8 Teams Tables
+team_channels
+idorganization_idcompany_id nullableproject_id nullablenameslugchannel_type default publicdescription nullablecreated_by nullablestatus default activecreated_atupdated_at
+team_channel_members
+idteam_channel_iduser_idrole default memberlast_read_at nullablecreated_atupdated_at
+conversations
+idorganization_id nullablecompany_id nullableconversation_typesubject nullablestatus default activecreated_by nullablemetadata json nullablecreated_atupdated_at
+conversation_participants
+idconversation_iduser_idrole default participantlast_read_at nullablecreated_atupdated_at
+messages
+idconversation_id nullableteam_channel_id nullableuser_id nullableparent_message_id nullablebody longtext nullablemessage_type default textmetadata json nullableedited_at nullabledeleted_at nullablecreated_atupdated_at
+message_attachments
+idmessage_idmedia_asset_idcreated_at
+11.9 AI Tables
+ai_change_plans
+iduser_idorganization_id nullablecompany_id nullablesite_id nullableprompt longtextsummary longtext nullablerisk_level integer default 1status default draftrequired_permissions json nullableaffected_objects json nullableplan jsoncreated_atupdated_at
+ai_change_approvals
+idai_change_plan_idapproved_by nullablestatus default pendingcomment nullableapproved_at nullablecreated_atupdated_at
+ai_change_logs
+idai_change_plan_iduser_id nullableactionobject_type nullableobject_id nullablebefore json nullableafter json nullablecreated_at
+ai_rollback_points
+idai_change_plan_idsnapshot_typesnapshot jsonstatus default availablecreated_atrolled_back_at nullable
+ai_usage_records
+iduser_id nullableorganization_id nullablecompany_id nullablefeatureprovider nullableinput_tokens integer nullableoutput_tokens integer nullablecost_estimate decimal(15,6) nullablemetadata json nullablecreated_at
+11.10 Security Center Tables
+security_events
+idorganization_id nullablecompany_id nullableuser_id nullableevent_typerisk_level default lowip_address nullableuser_agent nullablemetadata json nullablecreated_at
+sensitive_access_logs
+iduser_idorganization_id nullablecompany_id nullablesubject_typesubject_idactionreason nullableip_address nullableuser_agent nullablecreated_at
+api_tokens
+iduser_id nullableorganization_id nullablenametoken_hashscopes json nullablelast_used_at nullableexpires_at nullablerevoked_at nullablecreated_atupdated_at
+user_sessions
+iduser_idsession_id_haship_address nullableuser_agent nullablelast_active_at nullablecreated_atupdated_at
+12. Indexes مهمة في V4
+cloud_sites.organization_idcloud_sites.site_idcloud_domains.domainbilling_accounts.organization_idsubscriptions.billing_account_idsubscriptions.statususage_records.organization_id + usage_typemarketplace_packages.slugpackage_versions.marketplace_package_idpackage_installations.organization_idlegal_partners.countryverification_partner_assignments.verification_request_idverification_partner_assignments.legal_partner_idmall_listings.listing_typemall_listings.slugmall_listings.country + citymall_listings.status + visibilitylisting_reviews.listing_idlisting_reports.statusprofessional_profiles.user_idprofessional_profiles.visibilityjob_offers.company_idjob_offers.professional_profile_idagency_profiles.organization_idagency_clients.agency_profile_idteam_channels.organization_idmessages.team_channel_idmessages.conversation_idai_change_plans.user_idai_change_plans.organization_idsecurity_events.user_idsensitive_access_logs.subject_type + subject_id
+Composite unique:
+unique(cloud_domains.domain)unique(mall_listings.listing_type, slug)unique(professional_profiles.user_id)unique(agency_profiles.organization_id)
+13. Laravel Structure المضافة في V4
+app/  Cloud/    Sites/    Domains/    Backups/    Provisioning/    Health/  Billing/    Accounts/    Plans/    Subscriptions/    Invoices/    Payments/    Entitlements/    Usage/  Marketplace/    Packages/    Versions/    Permissions/    Security/    Installations/    Reviews/  Rabet/    CompanyOS/    LegalPartners/    VerificationAssignments/    Trust/    RFQ/  Mall/    Listings/    Categories/    Reviews/    Reports/    Moderation/    Featured/    Search/  Talent/    Profiles/    Skills/    WorkHistory/    JobOffers/    Privacy/  Agency/    Profiles/    Clients/    ClientSites/    WhiteLabel/  Teams/    Channels/    Conversations/    Messages/    Mentions/    Files/  AI/    Assistant/    ChangePlans/    Approvals/    Rollback/    Usage/    Providers/  SecurityCenter/    MFA/    Sessions/    ApiTokens/    Events/    SensitiveAccess/
+14. Kabeeri Cloud V1
+14.1 Cloud Provisioning Flow
+User chooses plan→ Create billing account/subscription→ Create organization/site→ Create cloud_site record→ Reserve subdomain→ Apply default theme→ Create default pages→ Run health check→ Site becomes active
+14.2 Domain Flow
+Add custom domain→ Show DNS instructions→ Verify DNS→ Issue SSL or mark pending→ Set primary domain→ Cache domain → site_id
+14.3 Backup Flow
+Create backup request→ Queue backup job→ Backup database/site files→ Store record→ Notify user
+14.4 لا يدخل في V4
+Auto-scaling full.
+Multi-region.
+Enterprise DR.
+Complex Kubernetes.
+15. Billing & Entitlements V1
+15.1 Plans مبدئية
+Cloud StarterCloud BusinessCloud StoreRabet VerifiedAgencyEnterprise Contact Sales
+15.2 Entitlements examples
+max_sitesmax_team_membersmax_storage_mbenable_commerceenable_rabet_verifiedenable_kabeeri_mall_listingenable_ai_cobuildermax_ai_actionsmax_service_listings
+15.3 Billing Flow
+Select plan→ Create subscription→ Generate platform invoice→ Record payment or mark trial→ Apply entitlements
+15.4 V4 Payment Reality
+يمكن البدء بـ manual payment أو integration بسيط حسب البلد.
+لا يجب تأخير V4 بسبب payment automation الكامل.
+16. Internal Marketplace V1
+16.1 البداية
+V4 يفتح Marketplace داخلي لكن:
+Official packages only
+لا نفتح للمطورين العامة بعد.
+16.2 Package Page
+تعرض:
+الاسم.
+النوع.
+الوصف.
+الإصدار.
+الناشر.
+الصلاحيات.
+Risk level.
+Compatibility.
+Changelog.
+Install button.
+16.3 Install Flow
+Open package page→ Check compatibility→ Show permissions→ Confirm install→ Install/activate→ Log activity→ Show status
+16.4 Package Signing Foundation
+ليس لازم توقيع كامل معقد، لكن يجب وجود:
+signature_hash field.
+checksum validation concept.
+trusted publisher flag.
+17. Rabet Company OS V1
+17.1 Company OS Dashboard
+يعرض:
+Verification badge/status.
+Trust records.
+Team.
+Tasks.
+Approvals.
+Leads.
+Service requests.
+Invoices.
+Mall visibility.
+17.2 Verified Badge
+حالات:
+UnverifiedBasic VerifiedLegal Review PendingLegal VerifiedSuspendedExpired
+17.3 B2B Foundation
+V4 يضيف RFQ foundation فقط:
+Request for quotation.
+Business receives RFQ.
+Respond with quotation link.
+التوسع الكامل في V5/V6.
+18. Legal Partner Network V1
+18.1 Legal Partner Portal
+يعرض للمكتب:
+Assigned verification requests.
+Documents.
+Checklist.
+Request info.
+Submit review.
+Notes.
+18.2 Access Rule
+مكتب المحاماة لا يرى:
+ERP.
+Teams.
+Payroll.
+Finance.
+Customers.
+يرى فقط طلبات التوثيق المسندة إليه.
+18.3 Verification Flow
+Company submits verification→ Platform assigns legal partner→ Legal partner reviews→ Request info / recommend approve / recommend reject→ Platform finalizes or auto-finalizes حسب policy→ Badge issued→ Trust record created
+19. Kabeeri Mall V1
+19.1 Public Mall
+أقسام:
+BusinessesServicesProductsTalent
+19.2 V1 Mall Features
+Public listing pages.
+Category filters.
+Country/city filters.
+Search basic.
+Verification badge.
+Contact/request action.
+Reviews basic.
+Report listing.
+Featured listing foundation.
+19.3 Products في Mall
+V4 لا يحتاج unified cart.
+يدعم:
+Product listingProduct inquiryRedirect to business store أو request
+19.4 Moderation
+أي listing أو review يمكن أن يكون:
+pending_reviewpublishedhiddensuspendedrejected
+20. Talent Marketplace V1
+20.1 Professional Profile
+يحتوي على:
+headline.
+summary.
+skills.
+work history.
+availability.
+visibility.
+open to offers.
+20.2 Visibility Options
+publicverified_companies_onlyanonymoushidden
+20.3 Job Offer Flow
+Company finds professional→ Sends job offer→ Professional receives notification→ Accept / reject / negotiate→ Conversation created
+20.4 لا يدخل في V4
+Full ATS.
+Contracts automation الكامل.
+Payroll onboarding.
+Advanced matching.
+21. Agency Platform V1
+21.1 Agency Dashboard
+يعرض:
+Client organizations.
+Client sites.
+Site statuses.
+Plans.
+Maintenance notes.
+Recent updates.
+21.2 Client Access
+الوكالة يمكنها دعوة العميل بصلاحيات محددة.
+21.3 White-label Foundation
+V4 يجهز:
+agency branding fields.
+client portal name.
+logo.
+لكن white-label كامل لاحقًا.
+22. Kabeeri Teams V1
+22.1 الهدف
+إدخال collaboration داخل Kabeeri بدون بناء Slack كامل في V4.
+22.2 Features
+Channels.
+DMs.
+Threads basic.
+Mentions.
+File attachments.
+Task from message.
+System alert channels.
+22.3 System Alert Channels
+أمثلة:
+#orders#verification#billing#security#support
+22.4 لا يدخل في V4
+Voice/video.
+Full Slack replacement.
+Advanced search.
+Apps داخل Teams.
+23. AI Co-builder V1
+23.1 AI Scope في V4
+AI يستطيع:
+إنشاء page draft.
+تحسين SEO.
+إنشاء form.
+إنشاء content type basic.
+إنشاء dashboard basic.
+اقتراح workflow.
+تلخيص report.
+23.2 AI Safety Flow
+Prompt→ Permission check→ AI Change Plan→ Risk classification→ Preview→ User approval→ Apply→ Activity/Audit log→ Rollback point
+23.3 Risk Levels في V4
+يدعم:
+Level 0: Read-onlyLevel 1: Draft creationLevel 2: Low-risk applyLevel 3: Sensitive change with approval
+Level 4/5 تظهر كـ blocked أو require manual admin workflow.
+23.4 ممنوع على AI في V4
+تعديل accounting posted entries.
+إصدار payroll.
+اعتماد legal verification وحده.
+حذف بيانات bulk.
+تغيير payment gateway.
+تثبيت package بدون موافقة admin.
+24. Security Center V1
+24.1 Dashboard
+يعرض:
+MFA status.
+Active sessions.
+API tokens.
+Recent security events.
+Sensitive access logs.
+Package risk summary.
+Backup status.
+24.2 MFA Foundation
+Enable/disable MFA.
+Recovery codes optional.
+Required for platform/legal/security roles.
+24.3 API Tokens
+Create token.
+Scopes.
+Revoke.
+Last used.
+25. Events في V4
+25.1 Cloud Events
+CloudSiteProvisioningStartedCloudSiteProvisionedCloudDomainAddedCloudDomainVerifiedCloudBackupCreatedCloudHealthCheckFailed
+25.2 Billing Events
+BillingAccountCreatedSubscriptionCreatedSubscriptionUpdatedSubscriptionCancelledInvoiceGeneratedPaymentRecordedUsageLimitReachedEntitlementGrantedEntitlementRevoked
+25.3 Marketplace Events
+MarketplacePackagePublishedPackageInstalledFromMarketplacePackageUpdatedPackagePermissionChangedPackageSecurityScanCompleted
+25.4 Legal Partner Events
+LegalPartnerCreatedVerificationAssignedToPartnerLegalPartnerRequestedInfoLegalReviewCompletedLegalReviewApprovedRecommendationLegalReviewRejectedRecommendation
+25.5 Mall Events
+MallListingPublishedMallListingReportedMallListingSuspendedReviewSubmittedFeaturedListingActivatedProductInquiryCreated
+25.6 Talent Events
+ProfessionalProfilePublishedJobOfferSentJobOfferAcceptedJobOfferRejected
+25.7 Teams Events
+TeamChannelCreatedTeamMessageSentUserMentionedTaskCreatedFromMessage
+25.8 AI Events
+AIPlanCreatedAIPlanApprovedAIChangeAppliedAIActionBlockedAIChangeRolledBack
+25.9 Security Events
+MFAEnabledMFADisabledApiTokenCreatedApiTokenRevokedSensitiveDataViewedSecurityEventDetected
+26. Listeners في V4
+ApplyEntitlementsOnSubscriptionCreatedNotifyBillingOwnerOnPaymentFailureProvisionCloudSiteVerifyCloudDomainCreateBackupJobShowPackagePermissionsBeforeInstallLogPackageInstallNotifyCompanyOnLegalReviewRequestInfoIssueVerifiedBadgeFromLegalReviewCreateTrustRecordFromLegalVerificationIndexMallListingNotifyBusinessOnProductInquiryQueueReviewModerationNotifyProfessionalOnJobOfferCreateConversationForJobOfferNotifyMentionedUsersCreateTaskFromMessageCreateRollbackPointBeforeAIApplyLogAIChangeLogSensitiveDataAccess
+27. Admin UI Scope في V4
+27.1 Cloud Console
+Cloud  Sites  Domains  Backups  Health  Staging optional
+27.2 Billing Console
+Billing  Plan  Subscription  Usage  Invoices  Payments  Entitlements
+27.3 Internal Marketplace
+Marketplace  Browse Packages  Installed Packages  Updates  Package Permissions
+27.4 Rabet
+Rabet  Company OS  Verification  Trust Records  RFQs  Verified Badge
+27.5 Legal Partner Portal
+Legal Partner  Assigned Reviews  Documents  Requests for Info  Completed Reviews  Payouts optional
+27.6 Kabeeri Mall Console
+Kabeeri Mall  Business Listing  Services  Products  Reviews  Inquiries  Featured Listings  Reports
+27.7 Talent Console
+Talent  Professional Profile  Skills  Work History  Job Offers  Privacy
+27.8 Agency Console
+Agency  Clients  Client Sites  Maintenance  Reports  Branding
+27.9 Teams
+Teams  Channels  Direct Messages  Mentions  Files
+27.10 AI Panel
+AI Assistant  Plans  Previews  Approvals  History  Rollback
+27.11 Security Center
+Security  Overview  MFA  Sessions  API Tokens  Security Events  Sensitive Access Logs
+28. V4 Navigation المقترح
+DashboardSitesCloud  Sites  Domains  BackupsBilling  Plan  Usage  InvoicesMarketplace  Browse  Installed  UpdatesRabet  Company OS  Verification  Trust RecordKabeeri Mall  Listings  Services  Products  Reviews  ReportsTalent  Professional Profile  Job OffersTeams  Channels  MessagesAgency  Clients  Client SitesAI  Assistant  Plans  HistorySecurity  Security CenterSystem  Activity Log  Settings  System Health
+القوائم يجب أن تظهر حسب الصلاحيات والـ feature flags فقط.
+29. Public UI في V4
+29.1 Kabeeri Mall Public
+صفحات:
+/mall/mall/businesses/mall/services/mall/products/mall/talent/mall/businesses/{slug}/mall/services/{slug}/mall/products/{slug}/mall/talent/{slug}
+29.2 Public Business Profile
+يعرض:
+الاسم.
+الشعار.
+الوصف.
+الدولة/المدينة.
+Verification badge.
+Services.
+Products basic.
+Reviews basic.
+Contact/request buttons.
+29.3 Public Talent Profile
+حسب visibility:
+headline.
+skills.
+work history حسب privacy.
+open to offers.
+contact/job offer button للشركات المصرح لها.
+30. Search في V4
+30.1 Basic Search
+يمكن أن يبدأ database search مع indexes.
+30.2 Searchable objects
+BusinessesServicesProductsTalentPackages
+30.3 Filters
+categorycountrycityverification levelratingstatus
+30.4 لاحقًا
+V5/V6 يمكن إدخال Meilisearch/Typesense/OpenSearch.
+31. Security في V4
+31.1 Cloud Security
+Domain verification.
+Site isolation by organization/site scopes.
+Backup access restricted.
+Health checks.
+31.2 Billing Security
+Billing permissions.
+Payment actions logged.
+Invoice visibility restricted.
+31.3 Marketplace Security
+Official packages only.
+Permissions disclosure.
+Compatibility check.
+Activity log on install/update.
+31.4 Legal Partner Security
+Assigned requests only.
+Sensitive access logs for legal documents.
+No ERP access.
+31.5 Mall Security
+Moderation queue.
+Report listing/review.
+Suspensions.
+Anti-spam basic.
+31.6 AI Security
+AI works under user permissions.
+Plan/preview/approval.
+Logs and rollback.
+Sensitive actions blocked.
+31.7 Teams Security
+Channel membership.
+Company/organization scope.
+Message delete rules.
+32. Performance في V4
+32.1 Cloud
+Domain lookup cache.
+Public page cache.
+Queue provisioning.
+32.2 Mall
+Paginated listings.
+Indexed category/country/status.
+Cache popular pages.
+Precompute ranking_score.
+32.3 Teams
+Paginated messages.
+Last read tracking.
+Avoid loading entire channel history.
+32.4 AI
+AI actions in queues for long tasks.
+Usage tracking.
+No AI calls on every page load.
+32.5 Marketplace
+Cache package list.
+Package installs in queue if migrations/scans needed.
+33. Testing في V4
+33.1 Cloud Tests
+Create cloud site testAdd domain testVerify domain status testCreate backup testCloud health check test
+33.2 Billing Tests
+Create billing account testSubscribe to plan testApply entitlement testUsage limit reached testBilling manager permission test
+33.3 Marketplace Tests
+Browse package testInstall official package testPermission disclosure required testActivate package testPackage compatibility fail test
+33.4 Legal Partner Tests
+Assign verification to legal partner testLegal reviewer sees assigned request only testRequest more info testComplete legal review testSensitive document access logged test
+33.5 Mall Tests
+Publish business listing testPublish service listing testSubmit review testReport listing testModerator suspends listing testSearch/filter listing test
+33.6 Talent Tests
+Create professional profile testVisibility verified companies only testSend job offer testAccept/reject job offer test
+33.7 Teams Tests
+Create channel testSend message testMention user testCreate task from message testPrivate channel access test
+33.8 AI Tests
+Create AI plan testAI plan requires permissions testApprove AI plan testApply low-risk change testRollback AI change testBlock critical AI action test
+33.9 Security Center Tests
+Enable MFA testCreate API token testRevoke API token testSensitive access log testSecurity event test
+34. Seeders في V4
+CloudPlansSeederBillingEntitlementsSeederMarketplaceOfficialPackagesSeederLegalPartnerRolesSeederMallCategoriesSeederTalentPermissionsSeederAgencyRolesSeederTeamsDefaultChannelsSeederAISamplePromptTemplatesSeederSecurityPermissionsSeederDemoMallListingsSeederDemoLegalPartnerSeeder
+35. CLI Commands في V4
+php artisan kabeeri:cloud:provision-site {siteId}php artisan kabeeri:cloud:verify-domain {domainId}php artisan kabeeri:cloud:backup {siteId}php artisan kabeeri:billing:apply-entitlements {subscriptionId}php artisan kabeeri:marketplace:validate-package {packageId}php artisan kabeeri:marketplace:install {packageId} {organizationId}php artisan kabeeri:mall:index-listingsphp artisan kabeeri:legal:assign-review {verificationRequestId} {legalPartnerId}php artisan kabeeri:teams:create-default-channels {companyId}php artisan kabeeri:ai:usage-report {organizationId}php artisan kabeeri:security:cleanup-sessions
+36. Build Order العملي لـ V4
+المرحلة 1 — Billing & Entitlements
+billing_accountsplanssubscriptionsusage_recordsentitlementsaccount_entitlementsplan UIsubscription UIusage UI
+المرحلة 2 — Cloud Foundation
+cloud_sitescloud_domainscloud_backupssite provisioning servicesubdomain supportdomain verification foundationhealth checks
+المرحلة 3 — Internal Marketplace V1
+marketplace_packagespackage_versionspackage_permissionspackage_installationspackage details UIpermission disclosureofficial install flow
+المرحلة 4 — Rabet Company OS V1
+company OS dashboardverified badge statestrust record displayRFQ foundationcompany status page
+المرحلة 5 — Legal Partner Network
+legal_partnerslegal_partner_usersassignment flowlegal review portalrequest infocomplete reviewsensitive access logs
+المرحلة 6 — Kabeeri Mall V1
+mall_listingsmall_categoriespublic mall pagesbusiness/service/product listingsreviews basicreports/moderationfeatured listings foundation
+المرحلة 7 — Talent Marketplace V1
+professional_profilesskillswork historyvisibility settingsjob offersprofessional public pages
+المرحلة 8 — Agency Platform
+agency_profilesagency_clientsagency_client_sitesagency dashboardclient site overview
+المرحلة 9 — Teams V1
+channelsmembersconversationsmessagesmentionsfilestask from messagesystem alert channels
+المرحلة 10 — AI Co-builder V1
+AI provider abstractionai_change_planspreview UIapproval UIapply low-risk changesrollback foundationusage tracking
+المرحلة 11 — Security Center
+MFA foundationsessionsapi tokenssecurity eventssensitive access logssecurity dashboard
+المرحلة 12 — Polish + Commercial Demo
+testspermissions auditdemo cloud sitedemo legal verificationdemo mall listingsdemo AI plandemo agency dashboardrelease notes
+37. AI Build Prompts لـ V4
+37.1 Billing Entitlements
+ابني EntitlementService في Laravel يقرأ account_entitlements ويحدد هل organization لديها entitlement معين، مع tests للخطط والlimits.
+37.2 Cloud Domain
+ابني CloudDomain model وVerifyCloudDomainAction يحدّث verification_status بناءً على DNS verification placeholder، بدون تنفيذ DNS حقيقي الآن.
+37.3 Marketplace Package
+ابني MarketplacePackage Filament Resource يعرض name,type,version,status,risk_level,permissions ويمنع install قبل عرض permission disclosure.
+37.4 Legal Review
+ابني LegalPartnerReview flow بحيث legal reviewer يرى verification_requests المسندة إليه فقط، ويستطيع request info أو complete review، مع sensitive access logging.
+37.5 Mall Listing
+ابني MallListing model polymorphic يدعم business/service/product/talent، مع public search filters حسب country/category/verification_level.
+37.6 AI Plan
+ابني AIChangePlan flow: create plan, classify risk, preview affected objects, approve, apply low-risk changes, create rollback point, log activity.
+37.7 Teams
+ابني TeamChannel وMessage models مع private channel policy وmentions detection وCreateTaskFromMessageAction.
+38. Definition of Done لـ V4
+V4 يعتبر مكتملًا فقط إذا:
+يمكن إنشاء cloud siteيمكن ربط domain foundationيمكن إنشاء backup basicيمكن إنشاء billing accountيمكن إنشاء subscriptionentitlements تعملusage records تعمليمكن عرض packages رسميةيمكن تثبيت package رسمي مع permission disclosureRabet Company OS dashboard يعملLegal partner portal يعملverification assignment يعملlegal reviewer يرى assigned requests فقطKabeeri Mall public يعملbusiness/service/product listings تعملreviews basic تعملmoderation reports تعملprofessional profile يعملjob offer basic يعملagency dashboard يعملTeams channels/messages تعملAI plan/preview/approval/apply يعمل للـ low-risk changesAI rollback foundation يعملSecurity Center basic يعملMFA/API token/session foundation يعملsensitive access logs تعملtests الأساسية موجودةcommercial demo مكتمل
+39. V4 Demo النهائي
+39.1 Demo — Kabeeri Cloud
+عميل ينشئ موقع Cloud→ يحصل على subdomain→ يربط domain→ يرى health/backups→ يشترك في خطة
+39.2 Demo — Legal Verification
+شركة ترفع مستندات→ منصة تسندها لمكتب محاماة→ المكتب يطلب معلومة إضافية→ الشركة ترفعها→ المكتب يوصي بالموافقة→ الشركة تحصل على badge
+39.3 Demo — Kabeeri Mall
+شركة موثقة تظهر في Kabeeri Mall→ تعرض خدمات ومنتجات→ عميل يرسل inquiry/request→ يظهر في dashboard
+39.4 Demo — Talent
+Professional ينشئ profile→ يجعله visible to verified companies→ شركة ترسل job offer→ professional يرد
+39.5 Demo — Agency
+Agency تدير 5 مواقع عملاء→ ترى الحالة والتحديثات والbackups→ تدخل لموقع عميل بصلاحية
+39.6 Demo — AI Co-builder
+Admin يطلب من AI بناء landing page→ AI ينشئ plan→ يعرض preview→ admin يوافق→ الصفحة تنشأ كـ draft→ يمكن rollback
+40. Documentation المطلوبة لـ V4
+Kabeeri Cloud GuideBilling & Plans GuideEntitlements GuideInternal Marketplace GuidePackage Permissions GuideRabet Company OS GuideLegal Partner Portal GuideKabeeri Mall Seller GuideKabeeri Mall Moderation GuideTalent Marketplace GuideAgency Dashboard GuideTeams V1 GuideAI Co-builder V1 GuideSecurity Center Guide
+41. V4 Release Gate
+لا ننتقل إلى V5 إلا إذا:
+Cloud V1 stableBilling worksEntitlements enforce limitsOfficial package install/update worksPackage permission disclosure worksRabet Company OS V1 worksLegal Partner Network V1 worksKabeeri Mall V1 worksTalent Marketplace V1 worksAgency Dashboard worksTeams V1 worksAI Co-builder V1 has safe plan/preview/approval/rollbackSecurity Center worksSensitive access logs workCommercial demos completeNo critical security bugs
+42. ما يمهد له V4 في V5
+V4 يمهد لـ V5 عبر:
+Cloud + Billing → SaaS growthInternal Marketplace → Connector/ERP marketplaceLegal Partner Network → regulated verification and complianceKabeeri Mall → commissions and seller dashboardsTalent V1 → workforce/reputation advancedTeams V1 → approvals from chat and collaborationAI Co-builder V1 → ERP AI assistantsSecurity Center → enterprise controlsEntitlements → module monetization
+43. أخطاء ممنوعة في V4
+43.1 لا تفتح Marketplace للمطورين العامة
+Official فقط في V4.
+43.2 لا تطلق Kabeeri Mall بدون moderation
+أي سوق عام يحتاج report/suspend/review.
+43.3 لا تجعل Legal Partner يرى بيانات الشركة كلها
+يرى طلبات التوثيق المسندة فقط.
+43.4 لا تجعل AI يطبق تغييرات خطيرة
+Level 4/5 blocked أو approval مشدد.
+43.5 لا تبني multi-vendor checkout كامل
+V4 يدعم listing/inquiry/redirect فقط.
+43.6 لا تبني Cloud بدون billing/entitlements
+Cloud بدون limits سيكلف المنصة.
+43.7 لا تجعل Teams بديل Slack كامل
+V4 Teams V1 فقط.
+43.8 لا تهمل Security Center
+V4 تجاري، والأمن أصبح جزءًا من البيع.
+44. ملخص V4 التنفيذي
+V4 ينجز التالي:
+يحول Kabeeri إلى منتج SaaS/Cloud قابل للبيعيفتح billing والاشتراكات والentitlementsيفتح Marketplace داخلي رسمي وآمنيطلق Rabet Company OS كمنتجيطلق Legal Partner Network للتوثيقيطلق Kabeeri Mall للجمهوريطلق Talent Marketplace V1يطلق Agency Platformيدخل Teams V1يدخل AI Co-builder V1 بأمانويضع Security Center كبنية ثقة للمنصة
+القاعدة النهائية:
+V4 هو الإصدار الذي يجعل Kabeeri منصة تجارية حقيقية، وليس مجرد نظام قابل للاستخدام.
+45. الخطوة التالية بعد اعتماد V4
+بعد تنفيذ أو اعتماد V4، ننتقل إلى:
+KABEERI V5 — ERP Pro + Integration Hub
+وفيه تبدأ:
+ERP ProAdvanced CRM/Sales/Inventory/Purchasing/AccountingContractsHelpdeskPOS basicIntegration HubConnectors: Odoo, Zoho, QuickBooks, Xero, Shopify, WooCommerceAdvanced approvalsAI ERP AssistantsCommission EnginePartner payouts

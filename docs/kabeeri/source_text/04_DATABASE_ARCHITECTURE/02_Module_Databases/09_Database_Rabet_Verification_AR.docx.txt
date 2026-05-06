@@ -1,0 +1,1122 @@
+KABEERI Database File 09
+Kabeeri Rabet & Verification Database
+نظام Rabet Company OS + Legal Verification + Trust Records
+هذا الملف يصف تصميم قاعدة البيانات الخاص بطبقة Rabet داخل Kabeeri: تحويل الموقع أو البزنس من واجهة رقمية إلى شركة موثقة لها بروفايل عام، مستندات توثيق، مراجعة قانونية، سجل ثقة، وشارة تحقق يمكن استخدامها لاحقًا داخل Kabeeri Mall وERP وB2B.
+الملف لا يصف Kabeeri Mall بالكامل، ولا نظام Commerce، ولا ERP؛ بل يصف طبقة الثقة والهوية والتوثيق التي ستعتمد عليها هذه الأنظمة لاحقًا.
+1. هدف ملف Rabet & Verification Database
+هدف هذا الملف هو تثبيت جداول طبقة Rabet قبل التوسع في Kabeeri Mall أو ERP أو Legal Partner Network الكامل، حتى لا تختلط الشركة القانونية بالموقع، ولا يختلط البروفايل العام ببيانات التوثيق الخاصة.
+تحديد كيف تتحول Company إلى Verified Company.
+تحديد الفرق بين Company وBusiness Profile وVerification Request وTrust Record.
+تحديد دورة رفع المستندات ومراجعتها واعتمادها أو رفضها.
+تحديد كيف تدخل Legal Partners في المراجعة بدون كشف بيانات غير لازمة.
+تحديد مصدر شارة التحقق ودرجة الثقة التي ستظهر في Mall لاحقًا.
+تجهيز البيانات لتعمل في Cloud وPortable وDedicated بنفس القواعد.
+2. حدود هذا الملف
+داخل هذا الملف
+خارج هذا الملف
+Companies verification lifecycle
+Full Kabeeri Mall listings and marketplace cart
+Business profiles foundation
+Commerce products/orders/payments
+Verification requests and documents
+Full ERP finance/accounting
+Legal partner review assignments
+Full disputes system
+Trust records and badges
+Advanced reputation/reviews engine
+Rabet office foundation
+Full Teams/Chat database
+Company departments foundation
+Full HR/payroll
+3. المفاهيم الأساسية
+المفهوم
+التعريف
+ملاحظات
+Company
+الكيان التجاري داخل Organization.
+قد يكون غير موثق أو موثق جزئيًا أو موثق قانونيًا.
+Business Profile
+الواجهة العامة للبزنس التي يمكن أن تظهر في Mall.
+لا يساوي الشركة نفسها، بل هو نسخة عامة قابلة للنشر.
+Verification Request
+طلب توثيق شركة أو بزنس.
+يمر بمراحل مراجعة داخلية أو قانونية.
+Verification Document
+مستند مرفوع للتوثيق.
+يعتمد على Media/Documents ولا يحفظ الملف داخل جدول التوثيق نفسه.
+Legal Partner
+مكتب محاماة أو جهة قانونية معتمدة للمراجعة.
+لا يرى إلا الطلبات المسندة إليه.
+Trust Record
+سجل أحداث ثقة يؤثر على السمعة والشارة.
+يُبنى من التوثيق، المراجعات، النزاعات، ونشاط الشركة.
+Verified Badge
+شارة تظهر في Business Profile وMall.
+تصدر من نتيجة توثيق صالحة وغير منتهية.
+4. العلاقة مع Core Kernel
+يعتمد Rabet على Core Kernel ولا يستبدله. لذلك لا نعيد تعريف users أو organizations أو sites أو companies هنا، بل نضيف فوقها جداول التوثيق والثقة والظهور العام.
+كل جدول تشغيلي يجب أن يحتوي organization_id عند الإمكان.
+أي توثيق حقيقي يجب أن يرتبط بـ company_id.
+Business Profile قد يرتبط بـ company_id وsite_id لكنه لا يساوي أيًا منهما.
+الصلاحيات تعتمد على Memberships وRoles وPermissions من Core.
+الملفات تعتمد على Media & Documents Database.
+5. Rabet Maturity Levels
+المستوى
+الاسم
+المعنى
+ماذا يُفعّل؟
+Level 0
+Normal Website
+موقع أو متجر عادي بلا طبقة Rabet.
+Site + CMS فقط.
+Level 1
+Business Profile
+بروفايل عام للبزنس بدون توثيق قانوني كامل.
+business_profiles + public visibility.
+Level 2
+Verified Business
+شركة رفعت مستندات وتمت مراجعتها.
+verification_requests + verified badge.
+Level 3
+Rabet Office
+شركة موثقة لها فريق وهيكل داخلي.
+departments + members + tasks foundation.
+Level 4
+B2B Ready
+شركة جاهزة للتعامل التجاري داخل الشبكة.
+trust score + RFQ foundation + Mall readiness.
+6. Data Domains
+Business Identity: بيانات الشركة والبروفايل العام.
+Verification: الطلبات والمستندات وقوائم الفحص والمراجعات.
+Legal Partner Network: مكاتب المحاماة، المستخدمون، المناطق، والتكليفات.
+Trust & Badges: سجلات الثقة، نقاط الثقة، الشارات، وتاريخ الحالة.
+Rabet Office Foundation: الهيكل الإداري الأساسي والملفات العامة للشركة.
+Mall Readiness: حالة السماح بالظهور العام، بدون الدخول في جداول Mall نفسها.
+7. الجداول الأساسية
+المجموعة
+الجداول
+Business Identity
+business_profiles, business_profile_contacts, business_profile_locations, business_profile_status_history
+Verification
+verification_requests, verification_documents, verification_checklists, verification_checklist_items, verification_reviews, verification_review_notes, verification_status_history
+Legal Partners
+legal_partners, legal_partner_users, legal_partner_service_countries, legal_review_assignments
+Trust
+trust_records, trust_score_events, trust_score_snapshots, verified_badges
+Rabet Office
+rabet_offices, company_departments, company_public_settings
+Readiness / Publication
+rabet_publication_settings, rabet_mall_readiness_checks
+8. business_profiles
+يمثل الواجهة العامة للبزنس. هو قابل للنشر في الدليل أو Mall، لكنه لا يحتوي المستندات القانونية الخاصة ولا بيانات التشغيل الداخلية.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف عام مستقر للتكامل والتصدير
+organization_id
+مالك البروفايل
+company_id nullable
+يرتبط بشركة عند وجودها
+site_id nullable
+الموقع المرتبط إن وجد
+name
+اسم البزنس الظاهر للعامة
+slug
+رابط عام داخل Kabeeri
+short_description nullable
+وصف مختصر
+description nullable
+وصف كامل
+industry nullable
+مجال العمل
+category_id nullable
+تصنيف عام لاحقًا
+logo_media_id nullable
+الشعار
+cover_media_id nullable
+صورة الغلاف
+website_url nullable
+رابط الموقع
+status default draft
+حالة البروفايل
+visibility default private
+من يرى البروفايل
+verification_status default unverified
+حالة التوثيق الظاهرة
+verified_badge_id nullable
+الشارة الحالية إن وجدت
+trust_score nullable
+نقطة ثقة مشتقة
+published_at nullable
+وقت النشر العام
+created_by nullable
+من أنشأه
+metadata json nullable
+بيانات مرنة غير أساسية
+created_at / updated_at / deleted_at
+تواريخ قياسية
+القيم المقترحة للحالة
+draft
+pending_review
+public
+hidden
+suspended
+archived
+فهارس مقترحة
+index(organization_id)
+index(company_id)
+unique(organization_id, slug)
+index(status)
+index(visibility)
+index(verification_status)
+ملاحظات
+لا نخزن legal documents هنا.
+لا نعتبره بديلًا عن companies.
+أي ظهور في Mall يجب أن يمر لاحقًا عبر consent وmoderation.
+9. business_profile_contacts
+وسائل التواصل العامة التي يمكن عرضها للزوار أو استخدامها في Mall.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+business_profile_id
+البروفايل
+contact_type
+phone/email/whatsapp/website/social
+label nullable
+اسم العرض
+value
+القيمة
+is_public default true
+هل تظهر للعامة؟
+is_primary default false
+وسيلة أساسية؟
+verification_status default unverified
+هل تم التحقق من الوسيلة؟
+metadata json nullable
+بيانات إضافية
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+unverified
+pending
+verified
+failed
+فهارس مقترحة
+index(business_profile_id)
+index(contact_type)
+index(is_public)
+10. business_profile_locations
+العناوين أو الفروع العامة للبزنس. لا تحتوي بيانات خاصة مثل عقود إيجار أو مستندات إثبات العنوان؛ هذه في documents.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+business_profile_id
+البروفايل
+country_id nullable
+الدولة
+city nullable
+المدينة
+area nullable
+المنطقة
+address_line nullable
+عنوان عام
+latitude nullable
+إحداثي
+longitude nullable
+إحداثي
+is_primary default false
+الفرع الرئيسي
+visibility default public
+مستوى الظهور
+metadata json nullable
+تفاصيل مرنة
+created_at / updated_at
+تواريخ
+فهارس مقترحة
+index(business_profile_id)
+index(country_id)
+index(city)
+index(visibility)
+11. business_profile_status_history
+تاريخ تغيير حالة البروفايل العام.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+business_profile_id
+البروفايل
+from_status nullable
+الحالة السابقة
+to_status
+الحالة الجديدة
+changed_by nullable
+المستخدم
+reason nullable
+سبب التغيير
+metadata json nullable
+تفاصيل
+created_at
+وقت التغيير
+فهارس مقترحة
+index(business_profile_id, created_at)
+index(to_status)
+Verification Tables
+12. verification_requests
+طلب توثيق شركة أو بروفايل بزنس. الطلب هو مركز دورة التوثيق.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف عام
+organization_id
+العميل
+company_id
+الشركة المطلوب توثيقها
+business_profile_id nullable
+البروفايل المرتبط
+request_type
+نوع التوثيق
+country_id nullable
+الدولة الخاضعة لقواعد التوثيق
+status default draft
+حالة الطلب
+priority default normal
+أولوية
+submitted_by nullable
+من أرسل الطلب
+submitted_at nullable
+وقت الإرسال
+assigned_to_user_id nullable
+مراجع داخلي إن وجد
+assigned_legal_partner_id nullable
+مكتب قانوني إن وجد
+current_review_id nullable
+آخر مراجعة نشطة
+expires_at nullable
+تاريخ انتهاء صلاحية التوثيق أو الطلب
+decision_at nullable
+وقت القرار
+decision_by nullable
+من اتخذ القرار
+decision_reason nullable
+سبب القرار
+metadata json nullable
+بيانات مرنة
+created_at / updated_at / deleted_at
+تواريخ
+القيم المقترحة للحالة
+draft
+submitted
+pending_review
+need_more_information
+under_legal_review
+approved
+verified
+rejected
+expired
+suspended
+revoked
+cancelled
+فهارس مقترحة
+index(organization_id)
+index(company_id)
+index(business_profile_id)
+index(status)
+index(assigned_legal_partner_id)
+index(country_id)
+ملاحظات
+approved تعني تمت الموافقة على الطلب، verified تعني تم تفعيل أثر التوثيق على الشركة/البروفايل.
+لا يُعتبر الطلب موثقًا إلا بعد إصدار verified_badge أو تحديث companies.verification_status.
+13. verification_documents
+يربط طلب التوثيق بالمستندات المطلوبة. الملف نفسه موجود في Media/Documents، وهذا الجدول يصف استخدامه في التوثيق.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف عام
+verification_request_id
+طلب التوثيق
+organization_id
+العميل
+company_id
+الشركة
+document_type
+نوع المستند
+document_asset_id nullable
+مرجع إلى document/media asset
+media_asset_id nullable
+مرجع للملف إن كان عبر media مباشرة
+status default uploaded
+حالة المستند
+version_number default 1
+رقم النسخة
+uploaded_by nullable
+من رفع الملف
+reviewed_by nullable
+من راجعه
+reviewed_at nullable
+وقت المراجعة
+expires_at nullable
+انتهاء صلاحية المستند
+rejection_reason nullable
+سبب الرفض
+metadata json nullable
+بيانات إضافية
+created_at / updated_at / deleted_at
+تواريخ
+القيم المقترحة للحالة
+uploaded
+pending_review
+accepted
+rejected
+expired
+replaced
+removed
+فهارس مقترحة
+index(verification_request_id)
+index(company_id)
+index(document_type)
+index(status)
+index(expires_at)
+ملاحظات
+يجب تسجيل أي مشاهدة لمستند حساس في sensitive access logs أو audit logs.
+لا يجب إتاحة هذه المستندات للواجهة العامة أو Frontend Anywhere.
+14. verification_checklists
+قائمة فحص مرتبطة بنوع توثيق أو دولة أو باقة. يمكن أن تأتي لاحقًا من Country Pack.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف
+country_id nullable
+الدولة
+request_type
+نوع التوثيق
+name
+اسم قائمة الفحص
+version
+الإصدار
+status default active
+الحالة
+rules json nullable
+قواعد مرنة
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+active
+inactive
+deprecated
+فهارس مقترحة
+index(country_id)
+index(request_type)
+index(status)
+15. verification_checklist_items
+بنود الفحص المطلوبة داخل قائمة التوثيق.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+verification_checklist_id
+قائمة الفحص
+item_key
+مفتاح ثابت للبند
+label
+اسم البند
+required_document_type nullable
+نوع المستند المطلوب
+is_required default true
+إجباري؟
+sort_order default 0
+ترتيب
+rules json nullable
+قواعد قبول
+created_at / updated_at
+تواريخ
+فهارس مقترحة
+index(verification_checklist_id)
+unique(verification_checklist_id, item_key)
+16. verification_reviews
+جلسة مراجعة داخلية أو قانونية لطلب توثيق.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف
+verification_request_id
+طلب التوثيق
+review_type
+internal/legal_partner/platform_moderation
+reviewer_user_id nullable
+المراجع
+legal_partner_id nullable
+مكتب قانوني
+status default pending
+حالة المراجعة
+recommendation nullable
+توصية المراجع
+started_at nullable
+بداية المراجعة
+completed_at nullable
+نهاية المراجعة
+sla_due_at nullable
+وقت SLA
+summary nullable
+ملخص المراجعة
+metadata json nullable
+بيانات
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+pending
+in_progress
+need_more_information
+completed
+cancelled
+فهارس مقترحة
+index(verification_request_id)
+index(legal_partner_id)
+index(reviewer_user_id)
+index(status)
+index(sla_due_at)
+ملاحظات
+المراجعة لا تنشر النتيجة وحدها؛ القرار النهائي يحدث في verification_requests أو عبر workflow approval.
+17. verification_review_notes
+ملاحظات المراجعة، مع فصل الملاحظات الداخلية عن الملاحظات الظاهرة للعميل.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+verification_review_id
+المراجعة
+author_user_id nullable
+كاتب الملاحظة
+note_type
+internal/customer_visible/legal_private
+body longtext
+نص الملاحظة
+visibility default internal
+مستوى الرؤية
+created_at / updated_at / deleted_at
+تواريخ
+فهارس مقترحة
+index(verification_review_id)
+index(note_type)
+index(visibility)
+18. verification_status_history
+تاريخ حالة طلب التوثيق وحالة الشركة/البروفايل الناتجة عنه.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+verification_request_id
+طلب التوثيق
+organization_id
+العميل
+company_id
+الشركة
+from_status nullable
+الحالة السابقة
+to_status
+الحالة الجديدة
+changed_by nullable
+المستخدم
+reason nullable
+سبب التغيير
+metadata json nullable
+تفاصيل
+created_at
+وقت التغيير
+فهارس مقترحة
+index(verification_request_id, created_at)
+index(company_id, created_at)
+index(to_status)
+Legal Partner Network Tables
+19. legal_partners
+مكتب محاماة أو جهة قانونية معتمدة للمراجعة داخل Kabeeri.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف عام
+organization_id nullable
+قد يكون له Organization داخل Kabeeri
+name
+اسم المكتب
+slug
+رابط داخلي
+country_id nullable
+الدولة الأساسية
+license_number nullable
+رقم الترخيص المهني
+status default pending
+الحالة
+verification_status default unverified
+توثيق المكتب نفسه
+rating nullable
+تقييم عام لاحقًا
+support_email nullable
+بريد التواصل
+metadata json nullable
+بيانات
+created_at / updated_at / deleted_at
+تواريخ
+القيم المقترحة للحالة
+pending
+active
+suspended
+rejected
+archived
+فهارس مقترحة
+unique(slug)
+index(country_id)
+index(status)
+index(verification_status)
+ملاحظات
+Legal Partner نفسه يحتاج توثيقًا داخليًا قبل مراجعة طلبات عملاء آخرين.
+20. legal_partner_users
+ربط المستخدمين بمكتب قانوني وصلاحياتهم داخله.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+legal_partner_id
+المكتب
+user_id
+المستخدم
+role
+admin/reviewer/billing/contact
+status default active
+الحالة
+joined_at nullable
+تاريخ الانضمام
+metadata json nullable
+بيانات
+created_at / updated_at / deleted_at
+تواريخ
+فهارس مقترحة
+unique(legal_partner_id, user_id)
+index(user_id)
+index(status)
+index(role)
+21. legal_partner_service_countries
+الدول والخدمات التي يستطيع المكتب مراجعتها.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+legal_partner_id
+المكتب
+country_id
+الدولة
+service_type
+نوع خدمة التوثيق
+status default active
+الحالة
+metadata json nullable
+بيانات
+created_at / updated_at
+تواريخ
+فهارس مقترحة
+index(legal_partner_id)
+index(country_id)
+unique(legal_partner_id, country_id, service_type)
+22. legal_review_assignments
+إسناد طلب توثيق إلى مكتب أو مراجع محدد.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف
+verification_request_id
+طلب التوثيق
+legal_partner_id
+المكتب
+assigned_reviewer_user_id nullable
+المراجع
+assigned_by nullable
+من أسند
+status default assigned
+حالة الإسناد
+assigned_at
+وقت الإسناد
+accepted_at nullable
+وقت قبول المكتب
+completed_at nullable
+وقت الانتهاء
+cancelled_at nullable
+وقت الإلغاء
+metadata json nullable
+بيانات
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+assigned
+accepted
+in_progress
+completed
+cancelled
+expired
+فهارس مقترحة
+index(verification_request_id)
+index(legal_partner_id)
+index(assigned_reviewer_user_id)
+index(status)
+ملاحظات
+يجب أن تمنع الصلاحيات legal partner من رؤية أي طلب غير مسند إليه.
+Trust & Badge Tables
+23. trust_records
+سجل أحداث ثقة مرتبطة بالشركة أو البروفايل. يستخدم لاحقًا في Trust Score وMall ranking.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف
+organization_id
+العميل
+company_id nullable
+الشركة
+business_profile_id nullable
+البروفايل
+record_type
+نوع الحدث
+source_type nullable
+مصدر الحدث
+source_id nullable
+رقم المصدر
+title
+عنوان مختصر
+description nullable
+شرح
+impact_score default 0
+تأثير على الثقة
+visibility default internal
+هل يظهر للعامة؟
+status default active
+الحالة
+occurred_at
+وقت الحدث
+metadata json nullable
+بيانات
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+active
+hidden
+disputed
+invalidated
+فهارس مقترحة
+index(company_id, occurred_at)
+index(business_profile_id, occurred_at)
+index(record_type)
+index(visibility)
+index(status)
+ملاحظات
+أمثلة record_type: legal_verified, document_expired, dispute_opened, dispute_resolved, review_milestone, badge_issued.
+24. trust_score_events
+أحداث رقمية تؤثر على حساب Trust Score.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+organization_id
+العميل
+company_id nullable
+الشركة
+business_profile_id nullable
+البروفايل
+event_key
+مفتاح الحدث
+score_delta decimal(8,2)
+التأثير
+source_type nullable
+مصدر الحدث
+source_id nullable
+رقم المصدر
+reason nullable
+سبب التأثير
+created_at
+وقت التسجيل
+فهارس مقترحة
+index(company_id, created_at)
+index(business_profile_id, created_at)
+index(event_key)
+25. trust_score_snapshots
+لقطات دورية أو عند التغيير لقيمة الثقة النهائية.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+organization_id
+العميل
+company_id nullable
+الشركة
+business_profile_id nullable
+البروفايل
+score decimal(8,2)
+القيمة
+level nullable
+مستوى الثقة
+calculated_at
+وقت الحساب
+factors json nullable
+عوامل الحساب
+created_at
+تاريخ
+فهارس مقترحة
+index(company_id, calculated_at)
+index(business_profile_id, calculated_at)
+index(level)
+26. verified_badges
+الشارات الصالحة التي يمكن عرضها على Business Profile وMall.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف عام
+organization_id
+العميل
+company_id
+الشركة
+business_profile_id nullable
+البروفايل
+verification_request_id nullable
+طلب التوثيق المصدر
+badge_type
+نوع الشارة
+badge_level
+مستوى الشارة
+status default active
+الحالة
+issued_by nullable
+من أصدرها
+issued_at
+تاريخ الإصدار
+expires_at nullable
+تاريخ الانتهاء
+revoked_at nullable
+تاريخ السحب
+revoked_by nullable
+من سحب
+revocation_reason nullable
+سبب السحب
+metadata json nullable
+بيانات
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+active
+expired
+revoked
+suspended
+فهارس مقترحة
+index(company_id)
+index(business_profile_id)
+index(status)
+index(expires_at)
+unique(company_id, badge_type, status)
+ملاحظات
+عند انتهاء الشارة يجب تحديث business_profiles.verification_status وMall mirror لاحقًا.
+Rabet Office Foundation Tables
+27. rabet_offices
+تمثيل المكتب الرقمي للشركة داخل Rabet. لا يساوي Teams الكامل لكنه نقطة ربط للفريق والمهام والموافقات.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف
+organization_id
+العميل
+company_id
+الشركة
+name
+اسم المكتب
+status default active
+الحالة
+office_level default basic
+مستوى المكتب
+activated_at nullable
+وقت التفعيل
+settings json nullable
+إعدادات
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+active
+paused
+suspended
+archived
+فهارس مقترحة
+unique(company_id)
+index(organization_id)
+index(status)
+index(office_level)
+28. company_departments
+الأقسام الأساسية داخل الشركة. يستخدمها Rabet وERP وHR لاحقًا.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+uuid
+معرّف
+organization_id
+العميل
+company_id
+الشركة
+parent_department_id nullable
+قسم أب
+name
+اسم القسم
+slug
+مفتاح
+manager_user_id nullable
+مدير القسم
+status default active
+الحالة
+sort_order default 0
+ترتيب
+metadata json nullable
+بيانات
+created_at / updated_at / deleted_at
+تواريخ
+فهارس مقترحة
+index(company_id)
+unique(company_id, slug)
+index(parent_department_id)
+index(status)
+29. company_public_settings
+إعدادات ما يظهر من الشركة للعامة قبل Mall الكامل.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+company_id
+الشركة
+business_profile_id nullable
+البروفايل
+show_verified_badge default true
+إظهار الشارة
+show_trust_score default false
+إظهار درجة الثقة
+show_team_size default false
+إظهار حجم الفريق
+show_response_rate default false
+إظهار معدل الرد
+show_documents_verified default false
+إظهار تحقق المستندات إجمالًا
+settings json nullable
+إعدادات إضافية
+created_at / updated_at
+تواريخ
+فهارس مقترحة
+unique(company_id)
+index(business_profile_id)
+30. rabet_publication_settings
+إعدادات جاهزية النشر العام وربط Rabet بـ Mall بدون تخزين Mall listings هنا.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+organization_id
+العميل
+company_id
+الشركة
+business_profile_id
+البروفايل
+mall_publication_allowed default false
+هل مسموح نشره في Mall؟
+services_publication_allowed default false
+هل الخدمات مسموحة؟
+products_publication_allowed default false
+هل المنتجات مسموحة؟
+trust_badge_publication_allowed default false
+هل الشارة مسموح ظهورها؟
+consent_id nullable
+موافقة النشر من integration/mall consent
+status default draft
+الحالة
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+draft
+ready
+published
+suspended
+revoked
+فهارس مقترحة
+index(company_id)
+index(business_profile_id)
+index(status)
+31. rabet_mall_readiness_checks
+نتائج فحص جاهزية الشركة للظهور العام قبل إرسالها إلى Mall mirror.
+الحقل
+المعنى / الملاحظات
+id
+Primary key
+business_profile_id
+البروفايل
+check_key
+اسم الفحص
+status
+نتيجة الفحص
+message nullable
+رسالة توضيحية
+checked_at
+وقت الفحص
+metadata json nullable
+بيانات
+created_at / updated_at
+تواريخ
+القيم المقترحة للحالة
+passed
+warning
+failed
+skipped
+فهارس مقترحة
+index(business_profile_id)
+index(check_key)
+index(status)
+32. ERD مختصر
+erDiagram ORGANIZATIONS ||--o{ COMPANIES : owns ORGANIZATIONS ||--o{ BUSINESS_PROFILES : owns COMPANIES ||--o{ BUSINESS_PROFILES : may_have BUSINESS_PROFILES ||--o{ BUSINESS_PROFILE_CONTACTS : has BUSINESS_PROFILES ||--o{ BUSINESS_PROFILE_LOCATIONS : has COMPANIES ||--o{ VERIFICATION_REQUESTS : requests BUSINESS_PROFILES ||--o{ VERIFICATION_REQUESTS : supports VERIFICATION_REQUESTS ||--o{ VERIFICATION_DOCUMENTS : includes VERIFICATION_REQUESTS ||--o{ VERIFICATION_REVIEWS : reviewed_by VERIFICATION_REVIEWS ||--o{ VERIFICATION_REVIEW_NOTES : has LEGAL_PARTNERS ||--o{ LEGAL_PARTNER_USERS : has LEGAL_PARTNERS ||--o{ LEGAL_REVIEW_ASSIGNMENTS : receives VERIFICATION_REQUESTS ||--o{ LEGAL_REVIEW_ASSIGNMENTS : assigned_as COMPANIES ||--o{ TRUST_RECORDS : earns BUSINESS_PROFILES ||--o{ TRUST_RECORDS : displays COMPANIES ||--o{ VERIFIED_BADGES : receives COMPANIES ||--o{ RABET_OFFICES : activates COMPANIES ||--o{ COMPANY_DEPARTMENTS : structures BUSINESS_PROFILES ||--o{ RABET_PUBLICATION_SETTINGS : controls
+33. Verification Flow
+Company exists→ Business Profile draft exists→ User starts verification request→ checklist selected by country/request type→ required documents uploaded→ request submitted→ internal review starts→ optional legal partner assignment→ reviewer requests more info or completes review→ platform/workflow approves or rejects→ company.verification_status updated→ verified_badge issued if approved→ trust_records and trust_score_events created→ business_profile verification status updated→ Mall readiness check runs
+34. Legal Partner Review Flow
+Verification request requires legal review→ legal_review_assignment created→ legal partner user sees assigned request only→ sensitive document access is logged→ partner requests more information or completes review→ recommendation stored in verification_reviews→ platform decision issued→ partner billing/payout handled later in Billing/Commission system
+35. Trust Score Rules
+Trust Score لا يُكتب يدويًا كقيمة نهائية فقط؛ يجب أن يبنى من trust_score_events أو trust_records.
+أحداث إيجابية: legal_verified, tax_verified, documents_current, reviews_good, completed_projects.
+أحداث سلبية: document_expired, dispute_unresolved, verification_rejected, badge_revoked.
+يمكن تخزين snapshot للعرض السريع، لكن يمكن إعادة الحساب من الأحداث.
+Moderation أو Platform Admin يمكنه إخفاء أثر عام بدون حذف السجل الداخلي.
+36. Permissions المقترحة
+المجموعة
+الصلاحيات
+Business Profile
+business_profile.view, business_profile.create, business_profile.edit, business_profile.publish, business_profile.suspend
+Verification
+verification.view, verification.submit, verification.document.upload, verification.review, verification.approve, verification.reject, verification.revoke
+Legal Partner
+legal_partner.view, legal_partner.manage, legal_partner.users.manage, legal_review.view_assigned, legal_review.request_info, legal_review.complete
+Trust
+rabet.trust.view, rabet.trust.publish, rabet.trust.override, rabet.verified_badge.manage
+Rabet Office
+rabet.office.view, rabet.office.manage, company.department.manage
+37. Events المقترحة
+Event
+الغرض
+BusinessProfilePublished
+تشغيل فحص الجاهزية أو إرسال تحديث للـ Mall mirror لاحقًا.
+VerificationRequestSubmitted
+إشعار المراجعين وإنشاء checklist status.
+VerificationDocumentUploaded
+تسجيل activity وإعلام المراجع.
+VerificationAssignedToPartner
+إشعار مكتب المحاماة.
+LegalPartnerRequestedInfo
+إشعار الشركة بالمطلوب.
+LegalReviewCompleted
+إرسال التوصية للمنصة.
+VerificationApproved
+تحديث الشركة وإصدار الشارة.
+VerificationRejected
+تحديث الحالة وإنشاء Trust event سلبي عند الحاجة.
+VerifiedBadgeIssued
+تحديث البروفايل والـ Mall mirror لاحقًا.
+VerifiedBadgeRevoked
+إخفاء الشارة وتسجيل audit.
+38. Audit & Security Requirements
+أي مشاهدة لمستند توثيق حساس يجب أن تسجل في audit_logs أو sensitive access logs.
+Legal Partner لا يرى إلا verification_requests المسندة إليه.
+لا تخزن مفاتيح أو مستندات حساسة كنص خام داخل JSON.
+رفض أو اعتماد التوثيق يحتاج صلاحية صريحة وليس role عام فقط.
+سحب الشارة أو تعليق شركة يجب أن يسجل before/after وreason.
+المستندات المنتهية الصلاحية يجب أن تنتج تنبيهًا وتؤثر على Trust Score.
+39. Cloud / Frontend Anywhere / Portable / Dedicated
+الوضع
+مصدر بيانات Rabet
+ملاحظات
+Kabeeri Cloud
+Cloud DB
+أفضل وضع للتوثيق والمراجعة المركزية.
+Frontend Anywhere
+Cloud DB
+الواجهة الخارجية لا ترى مستندات التوثيق، فقط الحالة العامة والشارة.
+Kabeeri Portable
+Customer DB + Central Trust optional
+البيانات التشغيلية قد تخرج، لكن الشارة والثقة العامة تحتاج Sync/Passport.
+Kabeeri Dedicated
+Dedicated DB + Central Bridge
+التوثيق قد يتم داخل البيئة المخصصة مع إرسال public status للمنصة المركزية.
+40. Portable Export Rules
+business_profiles تصدر ضمن بيانات العميل.
+verification_requests تصدر إذا سمحت سياسة التصدير والعميل يملكها.
+verification_documents الخاصة تصدر فقط إذا include_private_files مسموح.
+legal_partner private notes قد لا تصدر إذا كانت ملكًا لشريك قانوني أو للمنصة.
+trust_records العامة يمكن أن تبقى في Kabeeri Central إذا وافق العميل على Mall/Trust continuity.
+verified_badges تحتاج إعادة تحقق أو sync source عند تشغيل Portable.
+41. Dedicated Rules
+Dedicated يمكن أن يستخدم نفس الجداول داخل قاعدة بيانات العميل.
+يظل organization_id موجودًا حتى لو العميل الوحيد داخل البيئة لتوحيد الكود.
+Central Kabeeri يحتفظ فقط بسجلات علاقة: business_passport, public trust, sync source, billing/license.
+دخول دعم Kabeeri لمستندات التوثيق داخل Dedicated يجب أن يمر عبر support access approval.
+42. Frontend Anywhere Public API
+مسموح للواجهة العامة
+ممنوع للواجهة العامة
+business profile public fields
+verification documents
+verified badge status
+legal partner notes
+trust score public snapshot if enabled
+internal trust events
+public contact methods
+private company files
+public service/category data لاحقًا
+review workflow internals
+43. Validation Rules
+لا يمكن تقديم verification_request بدون company_id.
+لا يمكن إصدار verified_badge بدون approved/verified request.
+لا يمكن نشر Business Profile عام بدون visibility/status مناسبين.
+لا يمكن Legal Partner مراجعة طلب خارج service country أو خارج assignment.
+لا يمكن اعتبار document accepted إذا كان expired.
+عند revocation يجب تحديث company.verification_status وbusiness_profile.verification_status.
+44. Minimum V1 / V3 / V4 Split
+المرحلة
+المطلوب
+V1 Foundation
+companies.verification_status, business profile draft, verification request foundation, document upload foundation.
+V3 Business Foundation
+Verification workflow V1, internal review, trust record basic, Rabet company dashboard.
+V4 Commercial Platform
+Legal Partner Network V1, partner portal, verified badge display, trust record display, paid verification foundation.
+V5+
+Advanced verification, contracts review, partner payouts, country-specific rules.
+45. Migration Notes
+لو العميل بدأ من WordPress فقط، يمكن إنشاء business_profile draft من بيانات الموقع.
+لو العميل لديه سجل تجاري وبيانات قانونية، يتم إنشاء company ثم verification_request.
+يجب الحفاظ على UUIDs للبروفايل والشركة والشارة لأجل Mall Sync.
+أي تغيير في slug أو اسم البزنس يجب أن يترك status history وredirect لاحقًا في CMS/Mall.
+46. أخطاء ممنوعة
+لا تجعل Site هو مصدر التوثيق؛ التوثيق يتبع Company.
+لا تخزن مستندات قانونية داخل business_profiles.
+لا تجعل verified badge مجرد boolean في البروفايل بدون سجل طلب وتاريخ صلاحية.
+لا تسمح لمكتب قانوني برؤية كل الطلبات.
+لا تجعل Trust Score رقمًا يدويًا بلا events.
+لا تفتح Mall public publishing قبل moderation/consent/readiness checks.
+47. مصادر الاعتماد داخل ملفات Kabeeri
+Data Model Master Dictionary: تعريف VerificationRequest وVerificationDocument وLegalPartner وBusinessProfile.
+Dependencies Map: اعتماد Rabet Verification على Company وBusiness Profile وDocuments/Media وActivity Log وNotifications.
+V4 Cloud + Marketplace + Rabet + Mall: Legal Partner Network V1 وRabet Company OS V1 وVerified Badge وTrust Record display.
+Platform Master Summary: Rabet يحول الموقع إلى Verified Company + Digital Office + Trust Record + Marketplace presence.
+KABEERI — Rabet & Verification Database — powered by ADMIT

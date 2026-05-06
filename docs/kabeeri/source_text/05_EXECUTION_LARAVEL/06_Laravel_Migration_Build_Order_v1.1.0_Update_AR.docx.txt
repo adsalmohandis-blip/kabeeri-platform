@@ -1,0 +1,68 @@
+KABEERI / powered by ADMIT
+KABEERI Laravel Migration Build Order v1.1.0 Update
+إدخال جداول Work Network وAcademy وPartner وMarketing في ترتيب المايجريشن
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. الهدف
+هذا الملف يضع جداول v1.1.0 داخل ترتيب Laravel migrations بطريقة لا تكسر Core Kernel ولا V1. لا يتم بناء كل الجداول في أول Sprint، لكن يتم تحديد مكانها المنطقي داخل waves.
+2. Build Waves النهائية
+Wave
+الهدف
+الجداول/الموديولات
+Wave 0
+Laravel base
+users password reset sessions cache jobs failed_jobs
+Wave 1
+Core identity
+user_profiles countries currencies organizations organization_memberships roles permissions
+Wave 2
+Ownership core
+companies company_memberships sites settings feature_flags activity_logs audit_logs
+Wave 3
+Media + CMS
+media_assets media_usages content_types content_entries taxonomies menus redirects seo
+Wave 4
+Themes + packages foundation
+themes theme_versions packages package_versions module_installations
+Wave 5
+Professional profile foundation
+professional_profiles talent_skills portfolio_items visibility_preferences
+Wave 6
+Capability foundation
+capability_definitions capability_levels user_capabilities professional_badges
+Wave 7
+Academy foundation
+academy_courses academy_learning_paths academy_enrollments academy_assessments academy_certifications
+Wave 8
+WordPress migration foundation
+import_jobs import_records migration_mappings migration_reports redirect_suggestions
+Wave 9
+Onboarding + demo
+onboarding_flows onboarding_sessions onboarding_progress demo_scenarios
+Wave 10
+Marketing foundation
+marketing_campaigns marketing_contacts marketing_events marketing_conversions
+Wave 11
+Partner/Affiliate foundation
+affiliate_programs affiliate_links attribution_events partner_agreements
+Wave 12
+Agency/Work Network advanced
+agency_accreditations agency_managed_apps implementation_projects
+Wave 13
+Theme recipes + plugin bundles
+theme_app_recipes plugin_bundles theme_plugin_bundle_matrix
+Wave 14
+Legal partner operations
+legal_partner_accreditations legal_partner_country_scopes verification_review_assignments
+3. أولويات V1 الفعلية
+• Wave 0 إلى Wave 4 مطلوبة فعليًا لبدء V1.
+• Wave 5 وWave 6 تدخل كـ foundation فقط بدون Marketplace كامل.
+• Wave 7 تدخل كـ placeholder بسيط إن كان الوقت يسمح.
+• Wave 10 وما بعدها لا تدخل في Sprint 1 إلا كـ migrations مؤجلة أو feature flags مغلقة.
+4. قواعد أسماء migration files
+2026_05_05_000001_create_organizations_table.php2026_05_05_000002_create_organization_memberships_table.php2026_05_05_000101_create_content_types_table.php2026_05_05_000201_create_capability_definitions_table.php
+5. Foreign Key Strategy
+• Core tables تستخدم foreign keys حقيقية مع cascade/restrict محسوبة.
+• Activity/Audit logs تستخدم nullable polymorphic references لتجنب كسر السجل عند حذف الكيان.
+• جداول الحزم والـ recipes تستخدم soft references عبر package_key/version عند الحاجة.
+• لا يتم عمل cascade delete لأي بيانات مالية أو توثيق أو اعتماد.

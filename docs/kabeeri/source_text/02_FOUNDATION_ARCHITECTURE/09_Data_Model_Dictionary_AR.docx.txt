@@ -1,0 +1,742 @@
+KABEERI — ملحق 9: قاموس نموذج البيانات الرئيسي
+Data Model Master Dictionary
+هذا الملحق يحدد أسماء الكيانات والجداول والمفاهيم الأساسية داخل Kabeeri، حتى لا يحدث تضارب بين أجزاء المنصة أثناء التنفيذ.
+الهدف:
+توحيد لغة النظام قبل بناء V1، بحيث يعرف كل مطور أو AI Assistant أو Module معنى كل كيان، أين يستخدم، وما علاقته بباقي الكيانات.
+1. لماذا نحتاج قاموس بيانات؟
+Kabeeri تحتوي على أجزاء كثيرة:
+CMSCommerceERPRabetKabeeri MallTalent MarketplaceTeamsAI Co-builderLegal VerificationBillingMarketplace
+لو لم نثبت أسماء الكيانات مبكرًا، سيظهر تضارب مثل:
+Company أم Organization؟Business Profile أم Company Profile؟Employee أم User؟Customer أم User؟Product في Commerce أم Product في ERP؟Service في Mall أم Service في ERP؟Marketplace هل هو الداخلي أم Kabeeri Mall؟
+هذا الملف يمنع هذا التضارب.
+2. قواعد التسمية العامة
+2.1 أسماء الجداول
+تستخدم صيغة الجمع.
+تستخدم snake_case.
+واضحة وغير مختصرة قدر الإمكان.
+أمثلة:
+usersorganizationssitescompaniesbusiness_profilesprofessional_profilesorganization_membershipscompany_membershipscontent_entriesmedia_assetsverification_requests
+2.2 أسماء الموديلات
+تستخدم صيغة المفرد.
+PascalCase.
+أمثلة:
+UserOrganizationSiteCompanyBusinessProfileProfessionalProfileOrganizationMembershipCompanyMembershipContentEntryMediaAssetVerificationRequest
+2.3 أسماء المفاتيح الأجنبية
+صيغة:
+entity_id
+أمثلة:
+user_idorganization_idsite_idcompany_idbusiness_profile_idprofessional_profile_id
+2.4 الأعمدة المشتركة
+الجداول المهمة تحتوي غالبًا على:
+idstatusvisibilitymetadata jsoncreated_atupdated_atdeleted_at optional
+2.5 JSON fields
+نستخدم JSON فقط عندما تكون البيانات:
+إعدادات مرنة.
+metadata غير أساسية للبحث.
+rules قابلة للتغير.
+provider-specific data.
+لا نستخدم JSON بدل العلاقات الأساسية.
+خطأ:
+users.companies json
+الصحيح:
+company_memberships
+3. Core Identity Dictionary
+3.1 User
+الجدول
+users
+التعريف
+يمثل الشخص الحقيقي داخل Kabeeri.
+قد يكون:
+صاحب شركة.
+موظف.
+محترف.
+عميل.
+مطور.
+ممثل مكتب محاماة.
+مدير منصة.
+لا يمثل
+شركة.
+موقع.
+موظف داخل شركة بعينها.
+علاقات مهمة
+User has many OrganizationMembershipsUser has many CompanyMembershipsUser has one UserProfileUser may have one ProfessionalProfileUser may create ContentEntriesUser may own Organizations
+قاعدة مهمة
+لا نضع company_id داخل users.
+3.2 UserProfile
+الجدول
+user_profiles
+التعريف
+بيانات شخصية عامة للمستخدم.
+يستخدم في
+الحساب الشخصي.
+الإعدادات العامة.
+اللغة والمنطقة.
+لا يستخدم في
+Talent Marketplace مباشرة.
+HR employee record.
+3.3 ProfessionalProfile
+الجدول
+professional_profiles
+التعريف
+الملف المهني للمستخدم داخل Talent Marketplace.
+يستخدم في
+ظهور الفرد كمحترف.
+استقبال عروض وظائف.
+عرض المهارات.
+تقييمات مهنية عامة.
+سجل عمل موثق.
+علاقات مهمة
+ProfessionalProfile belongs to UserProfessionalProfile has many SkillsProfessionalProfile has many Reviews/EvaluationsProfessionalProfile can receive JobOffers
+قاعدة مهمة
+ProfessionalProfile اختياري، وليس كل User يظهر كمحترف.
+4. Organization / Company / Site Dictionary
+4.1 Organization
+الجدول
+organizations
+التعريف
+مساحة الإدارة الرئيسية داخل Kabeeri.
+هي workspace إدارية وليست بالضرورة شركة قانونية.
+أمثلة
+ADMIT WorkspaceClient Agency WorkspacePersonal Workspace
+يحتوي على
+Sites.
+Companies.
+Members.
+Billing.
+Settings.
+Enabled modules.
+علاقات مهمة
+Organization has many SitesOrganization has many CompaniesOrganization has many OrganizationMembershipsOrganization has one BillingAccount optional
+قاعدة مهمة
+Organization هي أعلى scope لمعظم موارد النظام.
+4.2 Site
+الجدول
+sites
+التعريف
+واجهة رقمية داخل Kabeeri.
+قد تكون:
+موقع شركة.
+Blog.
+متجر.
+Landing page.
+Portal.
+لا يمثل
+شركة قانونية.
+Organization.
+Team.
+علاقات مهمة
+Site belongs to OrganizationSite may belong to CompanySite has many ContentEntriesSite has ThemeSite has Settings
+قاعدة مهمة
+Site هو الواجهة، وليس الكيان التجاري.
+4.3 Company
+الجدول
+companies
+التعريف
+كيان تجاري داخل Rabet/Kabeeri.
+يمكن أن يكون:
+غير موثق.
+موثق جزئيًا.
+موثق قانونيًا.
+شركة B2B نشطة.
+يستخدم في
+Rabet Company OS.
+ERP.
+Legal Verification.
+Team management.
+B2B Marketplace.
+Business Profile.
+علاقات مهمة
+Company belongs to OrganizationCompany may have many SitesCompany has many CompanyMembershipsCompany has one BusinessProfileCompany has many VerificationRequestsCompany has ERP modules
+قاعدة مهمة
+ERP يتبع Company وليس Site.
+4.4 BusinessProfile
+الجدول
+business_profiles
+التعريف
+واجهة عامة للبزنس داخل Kabeeri Mall.
+يستخدم في
+Business Marketplace.
+Services Marketplace.
+Public discovery.
+Trust badge.
+Reviews.
+Contact requests.
+علاقات مهمة
+BusinessProfile belongs to OrganizationBusinessProfile may belong to CompanyBusinessProfile may belong to SiteBusinessProfile has many ServiceListingsBusinessProfile has many Reviews
+قاعدة مهمة
+BusinessProfile هو الظهور العام، وليس الشركة نفسها.
+5. Membership Dictionary
+5.1 OrganizationMembership
+الجدول
+organization_memberships
+التعريف
+العلاقة بين User وOrganization.
+يستخدم في
+تحديد وصول المستخدم للـ workspace.
+إدارة الفريق على مستوى Organization.
+صلاحيات عامة للمواقع والشركات داخل الـ Organization.
+يحتوي على
+organization_iduser_idrole_idmembership_typestatusjob_titlestart_dateend_date
+5.2 CompanyMembership
+الجدول
+company_memberships
+التعريف
+العلاقة بين User وCompany.
+يستخدم في
+الموظفين.
+المستقلين.
+المتعاقدين.
+الإدارة الداخلية.
+HR.
+Payroll لاحقًا.
+Work history.
+يحتوي على
+company_iduser_idorganization_membership_id optionalrole_idjob_titledepartment_idmanager_user_idemployment_typecontract_typestatuspublic_work_history
+قاعدة مهمة
+أي User يمكن أن يكون له أكثر من CompanyMembership.
+5.3 Role
+الجدول
+roles
+التعريف
+مجموعة صلاحيات داخل scope معين.
+Scope
+platformorganizationcompanysitemodule
+أمثلة
+Organization OwnerCompany AdminSite EditorFinance ManagerLegal Reviewer
+5.4 Permission
+الجدول
+permissions
+التعريف
+فعل محدد يمكن السماح به أو منعه.
+naming
+resource.action
+أمثلة:
+content.publishcompany.manageverification.reviewfinance.invoice.approveai.change.apply
+6. CMS Dictionary
+6.1 ContentType
+الجدول
+content_types
+التعريف
+نوع محتوى داخل Site.
+أمثلة:
+PagePostPropertyService ArticleCase Study
+علاقات
+ContentType belongs to SiteContentType has many ContentEntries
+6.2 ContentEntry
+الجدول
+content_entries
+التعريف
+وحدة محتوى فعلية.
+قد تكون:
+صفحة.
+مقال.
+عنصر من content type مخصص.
+يحتوي على
+site_idcontent_type_idauthor_user_idtitleslugcontentstatusvisibilityseo_titleseo_descriptionpublished_at
+6.3 Taxonomy
+الجدول
+taxonomies
+التعريف
+تصنيف منطقي للمحتوى.
+أمثلة:
+CategoriesTagsProperty TypesService Categories
+6.4 TaxonomyTerm
+الجدول
+taxonomy_terms
+التعريف
+قيمة داخل Taxonomy.
+مثال:
+Taxonomy: CategoryTerm: News
+6.5 MediaAsset
+الجدول
+media_assets
+التعريف
+ملف مرفوع داخل Kabeeri.
+قد يكون:
+صورة.
+PDF.
+فيديو.
+ملف مستند.
+يستخدم في
+CMS.
+Business Profiles.
+Products.
+Verification documents.
+Contracts.
+ملاحظة
+MediaAsset ليس Document كامل. Document له layer إضافية لاحقًا.
+7. Rabet Dictionary
+7.1 VerificationRequest
+الجدول
+verification_requests
+التعريف
+طلب توثيق شركة أو بزنس.
+يستخدم في
+Legal verification.
+Rabet.
+Verified badge.
+Trust score.
+status values
+not_submittedpending_reviewneed_more_informationunder_legal_reviewverifiedrejectedexpiredsuspendedrevoked
+7.2 VerificationDocument
+الجدول
+verification_documents
+التعريف
+مستند مرفوع لأغراض التوثيق.
+أمثلة
+commercial_registrationtax_cardauthorized_signatoryaddress_prooflicense
+7.3 LegalPartner
+الجدول
+legal_partners
+التعريف
+مكتب محاماة أو جهة قانونية معتمدة للمراجعة.
+يستخدم في
+Legal Verification Partner Network.
+مراجعة مستندات الشركات.
+اعتماد أو رفض التوثيق.
+7.4 TrustRecord
+الجدول المقترح
+trust_records
+التعريف
+سجل أحداث تؤثر على الثقة.
+أمثلة
+توثيق قانوني مكتمل.
+نزاع محلول.
+مستند منتهي.
+تقييمات إيجابية.
+تأخير متكرر.
+8. Kabeeri Mall Dictionary
+8.1 KabeeriMall
+التعريف
+الاسم العام للأسواق الخارجية في Kabeeri.
+يشمل:
+Business MarketplaceServices MarketplaceProducts MarketplaceTalent Marketplace
+ملاحظة
+لا يخلط مع Kabeeri Marketplace الداخلي.
+8.2 MallListing
+الجدول المقترح
+mall_listings
+التعريف
+تمثيل عام لأي عنصر يظهر في Kabeeri Mall.
+قد يكون:
+Business.
+Service.
+Product.
+Talent.
+لماذا مهم؟
+يسهل البحث والتصفية والـ moderation والـ featured listings.
+8.3 ServiceListing
+الجدول
+service_listings
+أو:
+services
+التعريف
+خدمة يقدمها Business أو Professional داخل Kabeeri Mall.
+يستخدم في
+Service requests.
+RFQ.
+B2B exchange.
+CRM leads.
+8.4 ProductListing
+الجدول المقترح
+product_listings
+التعريف
+ظهور منتج داخل Kabeeri Mall.
+قد يرتبط بـ Product داخل Commerce.
+8.5 TalentListing
+الجدول المقترح
+talent_listings
+التعريف
+ظهور Professional Profile داخل Kabeeri Mall / Talent Marketplace.
+9. Commerce Dictionary
+9.1 Product
+الجدول
+products
+التعريف
+منتج داخل Commerce.
+يستخدم في
+Store.
+Orders.
+Inventory.
+Products Marketplace.
+Sales.
+Purchasing.
+9.2 SKU
+الجدول المقترح
+product_skus
+التعريف
+وحدة بيع أو مخزون محددة.
+مثال:
+Product: T-shirtSKU: TSHIRT-BLACK-L
+9.3 Cart
+الجدول
+carts
+التعريف
+سلة شراء مؤقتة.
+9.4 Order
+الجدول
+orders
+التعريف
+طلب شراء.
+يستخدم في
+Commerce.
+Inventory.
+Invoicing.
+Accounting.
+CRM timeline.
+9.5 Customer
+الجدول
+customers
+التعريف
+شخص أو جهة تتعامل مع Company أو Store كعميل.
+ملاحظة مهمة
+Customer قد يرتبط بـ User، لكنه ليس دائمًا User.
+مثال:
+زائر اشترى كضيف.
+شركة عميلة.
+عميل CRM.
+9.6 Payment
+الجدول
+payments
+التعريف
+عملية دفع مرتبطة بفاتورة أو طلب أو اشتراك.
+10. ERP Dictionary
+10.1 Lead
+الجدول
+leads
+التعريف
+فرصة أولية أو اهتمام من عميل محتمل.
+مصادر
+Service request.
+Contact form.
+Manual entry.
+Kabeeri Mall.
+Import.
+10.2 Deal
+الجدول
+deals
+التعريف
+فرصة بيع داخل pipeline.
+10.3 Quotation
+الجدول
+quotations
+التعريف
+عرض سعر مقدم لعميل.
+10.4 SalesOrder
+الجدول
+sales_orders
+التعريف
+أمر بيع بعد قبول عرض أو إنشاء طلب.
+10.5 Invoice
+الجدول
+invoices
+التعريف
+فاتورة مالية.
+تستخدم في
+Commerce.
+Sales.
+Accounting.
+Billing.
+ملاحظة
+يجب التمييز بين:
+Platform invoice = فاتورة اشتراك KabeeriBusiness invoice = فاتورة شركة لعميلها
+يمكن استخدام نفس model مع type أو فصلها لاحقًا حسب الحاجة.
+10.6 Supplier
+الجدول
+suppliers
+التعريف
+مورد للشركة.
+10.7 PurchaseOrder
+الجدول
+purchase_orders
+التعريف
+أمر شراء من الشركة إلى مورد.
+10.8 Warehouse
+الجدول
+warehouses
+التعريف
+مخزن أو موقع تخزين.
+10.9 StockMovement
+الجدول
+stock_movements
+التعريف
+حركة مخزون.
+أمثلة:
+purchase receipt.
+sale reservation.
+adjustment.
+transfer.
+10.10 EmployeeRecord
+الجدول المقترح
+employee_records
+التعريف
+سجل موظف داخل Company.
+ملاحظة
+لا يساوي User.
+يرتبط بـ CompanyMembership.
+11. Team / Work Dictionary
+11.1 Project
+الجدول
+projects
+التعريف
+مشروع داخل Organization أو Company.
+11.2 Task
+الجدول
+tasks
+التعريف
+مهمة قابلة للتعيين والمتابعة.
+قد ترتبط بـ
+Project.
+Order.
+Customer.
+Invoice.
+Content Entry.
+Verification Request.
+11.3 Department
+الجدول
+departments
+التعريف
+قسم داخل Company.
+11.4 Evaluation
+الجدول
+evaluations
+التعريف
+تقييم داخلي أو عام لشخص أو عمل.
+يجب التمييز بين
+Private EvaluationPublic ReviewPlatform Moderation Record
+12. Communication Dictionary
+12.1 Conversation
+الجدول
+conversations
+التعريف
+محادثة خارجية أو داخلية منظمة.
+يستخدم في
+Inbox.
+Service requests.
+Job offers.
+Disputes.
+Legal verification messages.
+12.2 Message
+الجدول
+messages
+التعريف
+رسالة داخل Conversation.
+12.3 TeamChannel
+الجدول المقترح
+team_channels
+التعريف
+قناة داخل Kabeeri Teams.
+13. Governance Dictionary
+13.1 Review
+الجدول
+reviews
+التعريف
+تقييم عام أو شبه عام لشيء قابل للتقييم.
+reviewable entities
+BusinessProfile.
+ServiceListing.
+Product.
+ProfessionalProfile.
+LegalPartner.
+Package.
+13.2 ReputationScore
+الجدول
+reputation_scores
+التعريف
+درجة مركبة يتم حسابها من عوامل متعددة.
+13.3 Dispute
+الجدول
+disputes
+التعريف
+نزاع بين أطراف داخل المنصة.
+13.4 ModerationReport
+الجدول
+moderation_reports
+التعريف
+بلاغ على محتوى أو مستخدم أو listing.
+13.5 ApprovalRequest
+الجدول
+approval_requests
+التعريف
+طلب موافقة على إجراء معين.
+14. Billing Dictionary
+14.1 BillingAccount
+الجدول
+billing_accounts
+التعريف
+حساب فوترة مرتبط بـ Organization أو Company أو User.
+14.2 Plan
+الجدول
+plans
+التعريف
+خطة اشتراك.
+14.3 Subscription
+الجدول
+subscriptions
+التعريف
+اشتراك فعلي في plan أو module أو service.
+14.4 Commission
+الجدول
+commissions
+التعريف
+عمولة منصة من بيع أو lead أو service booking.
+15. Package / Marketplace Dictionary
+15.1 Package
+الجدول المقترح
+marketplace_packages
+التعريف
+عنصر قابل للنشر في Kabeeri Marketplace الداخلي.
+أنواع:
+pluginthememodulesuiteconnectorai_skilltemplateindustry_solution
+15.2 InstalledPackage
+الجدول
+installed_packages
+التعريف
+Package مثبت داخل Organization أو Site.
+15.3 PublisherProfile
+الجدول
+publisher_profiles
+التعريف
+ملف ناشر للحزم داخل Kabeeri Marketplace.
+16. AI Dictionary
+16.1 AIChangePlan
+الجدول
+ai_change_plans
+التعريف
+خطة يقترحها AI قبل التنفيذ.
+16.2 AIChangeLog
+الجدول
+ai_change_logs
+التعريف
+سجل ما نفذه AI بالفعل.
+16.3 AIRollbackPoint
+الجدول
+ai_rollback_points
+التعريف
+نقطة رجوع قبل تطبيق تغيير AI.
+16.4 AISkill
+النوع
+Package type داخل Marketplace.
+التعريف
+قدرة AI قابلة للتثبيت أو التفعيل.
+17. Events / Workflow Dictionary
+17.1 Event
+التعريف
+شيء حدث بالفعل داخل النظام.
+أمثلة:
+ContentPublishedOrderCreatedCompanyVerifiedInvoicePaid
+17.2 WorkflowDefinition
+الجدول
+workflow_definitions
+التعريف
+تعريف سير عمل قابل للتنفيذ.
+17.3 WorkflowRun
+الجدول
+workflow_runs
+التعريف
+تشغيل فعلي لـ Workflow على كيان معين.
+17.4 AutomationRule
+الجدول
+automation_rules
+التعريف
+قاعدة آلية بسيطة:
+When X → If Y → Do Z
+18. Status Dictionary
+18.1 General Status
+draftpending_reviewpublishedarchivedsuspendedrejecteddeleted
+18.2 Membership Status
+invitedactivepausedendedrevokedrejected
+18.3 Verification Status
+not_submittedpending_reviewneed_more_informationunder_legal_reviewverifiedrejectedexpiredsuspendedrevoked
+18.4 Order Status
+pendingconfirmedpaidprocessingshippeddeliveredcancelledrefunded
+18.5 Task Status
+backlogtodoin_progressblockedreviewdonecancelled
+18.6 Subscription Status
+trialingactivepast_duecancelledexpiredpaused
+19. Visibility Dictionary
+القيم المعتمدة:
+publicprivateunlistedorganization_onlycompany_onlyteam_onlymembers_onlyverified_companies_onlylegal_partner_onlyplatform_admin_onlycustom
+20. Type Dictionary
+20.1 Membership Types
+owneremployee_full_timeemployee_part_timefreelancercontractorconsultantinternexternal_collaboratorlegal_partner_userdeveloper
+20.2 Site Types
+websiteblogstoreportallandingmarketplace_profileinternal_portal
+20.3 Package Types
+pluginthememodulesuiteconnectorai_skilltemplateindustry_solutiondeveloper_tool
+20.4 Listing Types
+businessserviceproducttalent
+20.5 Conversation Types
+contact_requestservice_requestproduct_inquiryjob_offersupportlegal_verificationdisputeb2b_rfq
+21. Relationship Rules
+21.1 User vs Customer
+User هو حساب.
+Customer هو دور تجاري أو سجل عميل.
+قد يكون Customer مرتبطًا بـ User أو لا.
+21.2 User vs Employee
+User هو الشخص.
+EmployeeRecord أو CompanyMembership يمثل عمله داخل شركة.
+21.3 Company vs BusinessProfile
+Company كيان تجاري داخلي.
+BusinessProfile ظهوره العام في Kabeeri Mall.
+21.4 Site vs BusinessProfile
+Site هو موقع.
+BusinessProfile صفحة/بروفايل عام في Mall.
+قد يرتبطان لكنهما ليسا نفس الشيء.
+21.5 Product vs ProductListing
+Product هو المنتج داخل Commerce.
+ProductListing هو ظهوره داخل Kabeeri Mall.
+21.6 Service vs ServiceListing
+Service هو تعريف خدمة.
+ServiceListing هو ظهورها للبيع أو الطلب داخل Mall.
+22. Naming Conflicts ممنوعة
+22.1 لا تستخدم Marketplace وحدها
+حدد دائمًا:
+Kabeeri Marketplace
+أو:
+Kabeeri Mall
+22.2 لا تستخدم Profile بدون نوع
+حدد:
+UserProfileBusinessProfileProfessionalProfilePublisherProfile
+22.3 لا تستخدم Member بدون scope
+حدد:
+OrganizationMembershipCompanyMembershipTeamMember
+22.4 لا تستخدم Order بدون domain عند الالتباس
+حدد:
+CommerceOrderSalesOrderPurchaseOrder
+22.5 لا تستخدم Invoice بدون type عند الحاجة
+حدد:
+PlatformInvoiceCustomerInvoiceSupplierBill
+23. V1 Minimum Dictionary
+في V1 يجب الالتزام بهذه الكيانات على الأقل:
+UserUserProfileOrganizationOrganizationMembershipRolePermissionSiteContentTypeContentEntryTaxonomyTaxonomyTermMediaAssetCompanyCompanyMembership basicBusinessProfile draftVerificationRequest basicVerificationDocument basicInstalledPackageActivityLogFeatureFlagNotificationImportJobExportJob
+24. V1 ممنوع يستخدم أسماء بديلة
+ممنوع في V1 إنشاء كيانات بأسماء مختلفة لنفس المعنى مثل:
+Workspace بدل OrganizationWebsite بدل Site داخل databaseBusiness بدل Company داخل databaseMember بدل Membership بدون scopeProfile بدل BusinessProfile أو ProfessionalProfile
+يمكن استخدام أسماء تسويقية في الواجهة، لكن قاعدة البيانات والكود يجب أن يلتزما بالقاموس.
+25. Laravel Namespace Dictionary
+Core
+app/Core/Authapp/Core/Organizationsapp/Core/Sitesapp/Core/Permissionsapp/Core/Settingsapp/Core/Activityapp/Core/Mediaapp/Core/Notificationsapp/Core/FeatureFlags
+CMS
+app/CMS/Contentapp/CMS/Taxonomiesapp/CMS/SEOapp/CMS/Themes
+Rabet
+app/Rabet/Companiesapp/Rabet/BusinessProfilesapp/Rabet/Verificationapp/Rabet/Teamsapp/Rabet/Trust
+Mall
+app/Mall/Businessesapp/Mall/Servicesapp/Mall/Productsapp/Mall/Talentapp/Mall/Reviewsapp/Mall/Moderation
+Commerce
+app/Commerce/Productsapp/Commerce/Cartapp/Commerce/Ordersapp/Commerce/Payments
+ERP
+app/ERP/CRMapp/ERP/Salesapp/ERP/Inventoryapp/ERP/Accountingapp/ERP/HRapp/ERP/Purchasing
+26. API Naming Dictionary
+أمثلة routes معتمدة:
+/api/v1/organizations/api/v1/organizations/{organization}/sites/api/v1/sites/{site}/content/api/v1/organizations/{organization}/companies/api/v1/companies/{company}/business-profile/api/v1/companies/{company}/verification/api/v1/professionals/{professionalProfile}/api/v1/mall/businesses/api/v1/mall/services/api/v1/mall/products/api/v1/mall/talent
+27. الخلاصة التنفيذية
+هذا القاموس يعتمد القرارات التالية:
+User = الشخصOrganization = مساحة الإدارةSite = الواجهة الرقميةCompany = الكيان التجاريBusinessProfile = الظهور العام للشركة أو البزنسProfessionalProfile = الظهور المهني للفردMembership = علاقة الفرد بكيانKabeeri Marketplace = السوق الداخلي للتوسعاتKabeeri Mall = السوق الخارجي للجمهورProduct = كيان تجاري داخل CommerceProductListing = ظهور المنتج في MallServiceListing = خدمة معروضة في MallInvoice قد تكون PlatformInvoice أو CustomerInvoice أو SupplierBill حسب السياق
+هذا القاموس يجب أن يكون مرجعًا ثابتًا لكل ملفات V1 إلى V6.
+28. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق اختياري إضافي:
+ملحق 10 — Monetization & Pricing Architecture
+إذا أردنا تثبيت نموذج الإيرادات والأسعار قبل V1.

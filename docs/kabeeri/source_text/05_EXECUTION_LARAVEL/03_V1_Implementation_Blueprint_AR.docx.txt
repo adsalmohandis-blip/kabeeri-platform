@@ -1,0 +1,654 @@
+KABEERI V1 — Implementation Blueprint
+خطة تنفيذ الإصدار الأول: Core Foundation for CMS + Company OS
+powered by ADMIT
+نوع الملف: Implementation Blueprint / خطة تنفيذ عملية قبل كتابة الكود
+الإصدار المستهدف: V1 — Core Foundation for CMS + Company OS
+الغرض: تحويل كل ملفات التخطيط المعماري والداتابيز إلى مسار بناء يومي واضح لمؤسس واحد يستخدم Laravel + Filament + AI.
+————————————————————————————
+0. ملخص تنفيذي
+هذا الملف هو نقطة الانتقال من الوثائق المعمارية إلى التنفيذ الفعلي. الهدف ليس بناء Kabeeri كاملًا، بل بناء أصغر نواة مستقرة يمكن استخدامها كموقع شركة بسيط، وفي نفس الوقت تكون جاهزة للتوسع لاحقًا إلى Commerce وRabet وMall وERP وCloud وAI.
+• ابدأ بنواة صغيرة مستقرة، لا بمنصة كاملة.
+• كل Feature تمر من Schema إلى Migration إلى Model إلى Policy إلى Action إلى UI/API إلى Tests.
+• أي جدول أو كود لا يخدم V1 أو يمهد مباشرة لتوسّع مؤكد يتم تأجيله.
+• كل تغيير مهم يجب أن يظهر في Activity Log أو Audit Log حسب الحساسية.
+• V1 يجب أن ينتج Demo حقيقي: Organization + Site + Pages + Media + Theme + Business Profile Draft + Verification Foundation.
+1. تعريف V1
+البند
+التعريف
+اسم الإصدار
+KABEERI V1 — Core Foundation for CMS + Company OS
+الهدف التقني
+بناء Laravel modular monolith مستقر يحتوي Core Identity، Organizations، Sites، CMS، Media، RBAC، Activity Logs، Settings، Feature Flags، Rabet Foundation.
+الهدف التجاري
+إطلاق نسخة يمكن عرضها كبديل حديث لـ WordPress للشركات الصغيرة والوكاﻻت: ابدأ بموقع ثم كبر إلى شركة رقمية.
+المخرج العملي
+Demo قابل للتجربة لشركة خدمات صغيرة: موقع، صفحات، مقالات، ميديا، SEO basic، فريق، صلاحيات، Business Profile draft، Verification foundation.
+قاعدة القرار
+V1 ليس CMS فقط، لكنه Core Foundation for CMS + Company OS.
+2. ما يدخل وما لا يدخل في V1
+يدخل في V1
+لا يدخل في V1
+Users / Auth / User Profiles
+ERP كامل أو Accounting كامل
+Organizations / Memberships
+Commerce كامل أو Shopify competitor
+Roles / Permissions / Policies
+Kabeeri Mall كامل أو Talent Marketplace
+Sites / Domains foundation / Settings
+Legal Partner Portal كامل
+CMS: Content Types, Pages, Posts, Taxonomies, Revisions
+Cloud كامل أو Billing production
+Media Library foundation
+AI Co-builder كامل
+Themes basic + Package foundation
+Visual Builder كامل
+Companies + Business Profile draft + Verification foundation
+Developer Marketplace عام
+Activity Logs / Notifications basic / Feature Flags / Onboarding basic
+Payroll / Manufacturing / Multi-vendor marketplace
+3. الافتراضات التقنية
+الجزء
+القرار العملي في V1
+Backend
+PHP 8.3+ / Laravel 11 أو 12 حسب وقت التنفيذ.
+Database
+MySQL 8+ مع shared database + tenant scoping.
+Admin UI
+Filament كبداية لتسريع CRUD ولوحات التحكم.
+Public Frontend
+Blade themes + Tailwind CSS + Alpine.js عند الحاجة.
+Queue
+Database Queue في البداية مع Redis-ready لاحقًا.
+Cache
+File/database cache في البداية، وRedis-ready لاحقًا.
+Testing
+Pest أو PHPUnit مع Feature/Policy tests.
+Code Quality
+Laravel Pint من البداية، Larastan لاحقًا.
+Version Control
+main / dev / feature branches وcommits صغيرة.
+4. مبادئ التنفيذ الحاكمة
+المبدأ
+التطبيق في الكود
+Context-first
+أي عملية تسأل: داخل أي Organization؟ أي Site؟ أي Company؟
+User لا يتبع شركة واحدة
+ممنوع users.company_id أو users.role العالمي. الصلاحيات تأتي من memberships.
+Organization هو Customer Account
+كل بيانات العميل الأساسية تبدأ من organization_id.
+Site ليس Company
+Site واجهة رقمية، وCompany كيان تجاري.
+Business Profile هو الظهور العام
+لا نربط Mall مباشرة بجداول التشغيل الخاصة.
+Audit by default
+الأحداث الحساسة تذهب إلى audit_logs، والأحداث العامة إلى activity_logs.
+Export-ready
+كل جدول Tenant مهم يجب أن يحمل organization_id أو يرتبط بجدول يحمله.
+Feature Flags
+أي موديول أو قدرة غير مستقرة يتم التحكم فيها بـ flag.
+No direct module chaos
+الموديولات تتكلم عبر Events/Contracts/Actions وليس تعديل جداول بعضها عشوائيًا.
+5. Build Waves — خطة البناء العملية
+الموجة
+النطاق
+المخرج
+Wave 0
+Project Bootstrap
+إنشاء Laravel project، ضبط Pint/Pest، إعداد Filament، إعداد Git، إعداد env/database، إنشاء base namespaces.
+Wave 1
+Global Reference Tables
+countries, currencies, modules, permissions, feature_flags.
+Wave 2
+Identity & Organizations
+users, user_profiles, organizations, organization_memberships.
+Wave 3
+Companies & Sites
+companies, company_memberships, sites, settings.
+Wave 4
+RBAC & Access Control
+roles, role_permission, membership_role_assignments, permission_overrides, policies.
+Wave 5
+Activity / Audit / Notifications
+activity_logs, audit_logs, notifications، listeners الأساسية.
+Wave 6
+Media Foundation
+media_assets, media_usages، upload action، visibility foundation.
+Wave 7
+CMS Core
+content_types, content_entries, revisions, taxonomies, terms, SEO fields.
+Wave 8
+Themes & Packages Foundation
+themes, theme_settings, installed_packages, package manifest concept.
+Wave 9
+Rabet Foundation
+business_profiles, verification_requests, verification_documents foundation.
+Wave 10
+Onboarding + Demo
+setup wizard، seed demo، manual QA، tests، release gate.
+6. أول 40 Migration مقترحة
+#
+Migration
+Module
+ملاحظة
+001
+create_countries_table
+Global
+قبل organizations/sites.
+002
+create_currencies_table
+Global
+قبل billing/localization لاحقًا.
+003
+create_modules_table
+Core
+Registry للموديولات.
+004
+create_permissions_table
+RBAC
+Seed مبكر للصلاحيات.
+005
+create_feature_flags_table
+Core
+Flags العامة.
+006
+create_users_table
+Identity
+Laravel auth + uuid + locale/timezone.
+007
+create_user_profiles_table
+Identity
+ملف المستخدم.
+008
+create_organizations_table
+Tenant
+Customer Account.
+009
+create_organization_memberships_table
+Tenant
+ربط user بالـ organization.
+010
+create_companies_table
+Rabet/Core
+Business Account داخل Organization.
+011
+create_company_memberships_table
+Rabet/Core
+ربط user بالشركة.
+012
+create_sites_table
+Site
+واجهة رقمية/موقع/بوابة.
+013
+create_roles_table
+RBAC
+Roles scoped.
+014
+create_role_permission_table
+RBAC
+pivot.
+015
+create_membership_role_assignments_table
+RBAC
+إسناد أدوار لعضوية.
+016
+create_membership_permission_overrides_table
+RBAC
+allow/deny overrides.
+017
+create_settings_table
+Core
+إعدادات scope-aware.
+018
+create_feature_flag_overrides_table
+Core
+Overrides حسب org/site/module.
+019
+create_activity_logs_table
+Operating
+أحداث عامة.
+020
+create_audit_logs_table
+Security
+أحداث حساسة.
+021
+create_notifications_table
+Operating
+إشعارات أساسية.
+022
+create_media_assets_table
+Media
+metadata فقط للملفات.
+023
+create_media_usages_table
+Media
+ربط الملفات بالكيانات.
+024
+create_content_types_table
+CMS
+Typed content.
+025
+create_content_fields_table
+CMS
+تعريف حقول الـ content type.
+026
+create_content_entries_table
+CMS
+Pages/Posts وغيرها.
+027
+create_content_entry_values_table
+CMS
+قيم الحقول typed.
+028
+create_content_revisions_table
+CMS
+تاريخ التعديلات.
+029
+create_taxonomies_table
+CMS
+Categories/Tags custom.
+030
+create_taxonomy_terms_table
+CMS
+terms.
+031
+create_content_term_table
+CMS
+pivot.
+032
+create_menus_table
+CMS
+Menus foundation.
+033
+create_menu_items_table
+CMS
+Navigation items.
+034
+create_seo_metadata_table
+CMS
+SEO polymorphic.
+035
+create_themes_table
+Theme
+Theme registry.
+036
+create_theme_settings_table
+Theme
+settings per site.
+037
+create_installed_packages_table
+Packages
+Package foundation.
+038
+create_business_profiles_table
+Rabet
+Draft public profile.
+039
+create_verification_requests_table
+Rabet
+Verification foundation.
+040
+create_verification_documents_table
+Rabet
+Documents metadata link.
+7. Models الأولى وعلاقاتها
+Model
+العلاقات الأساسية
+ملاحظة تنفيذية
+User
+hasOne UserProfile; hasMany OrganizationMembership; hasMany CompanyMembership; morphMany ActivityLog as actor
+بدون organization_id أو company_id.
+Organization
+belongsTo owner User; hasMany Memberships; hasMany Companies; hasMany Sites; hasMany Settings
+Tenant root.
+OrganizationMembership
+belongsTo Organization; belongsTo User; morphMany RoleAssignments
+مصدر صلاحيات organization.
+Company
+belongsTo Organization; hasMany CompanyMemberships; hasOne BusinessProfile; hasMany VerificationRequests
+Business Account.
+Site
+belongsTo Organization; belongsTo Company nullable; hasMany ContentEntries; hasMany MediaAssets
+واجهة رقمية.
+Role
+belongsToMany Permission; scoped by platform/org/company/site
+لا يوجد role global للمستخدم.
+MediaAsset
+belongsTo Organization; morphMany MediaUsage
+لا يخزن URL كامل.
+ContentType
+belongsTo Site nullable; hasMany ContentFields; hasMany ContentEntries
+typed content.
+ContentEntry
+belongsTo Organization/Site; belongsTo ContentType; hasMany Revisions; morphOne SeoMetadata
+pages/posts.
+BusinessProfile
+belongsTo Organization/Company; hasMany media usages; visibility/status
+draft في V1.
+VerificationRequest
+belongsTo Company; hasMany VerificationDocuments
+foundation فقط.
+8. Policies وPermissions في V1
+Permission
+الغرض
+قاعدة مهمة
+organization.view
+رؤية مساحة العمل
+Organization scope
+organization.manage
+إدارة المؤسسة والإعدادات
+High risk
+organization.member.invite
+دعوة أعضاء
+Audit log
+organization.role.assign
+إسناد أدوار
+Sensitive audit
+site.view
+رؤية موقع
+Site scope
+site.create
+إنشاء موقع
+Organization owner/admin
+site.manage
+إدارة موقع
+Site admin
+content.view
+رؤية المحتوى داخل admin
+Visibility-aware
+content.create
+إنشاء محتوى
+Editor+
+content.edit
+تعديل محتوى
+Author/Editor حسب الملكية
+content.publish
+نشر محتوى
+Sensitive CMS action
+media.upload
+رفع ملفات
+quota/visibility check
+media.manage
+إدارة مكتبة الميديا
+Site/Org scope
+company.manage
+إدارة الشركة
+Company scope
+business_profile.manage
+إدارة بروفايل البزنس draft
+Company owner/admin
+verification.submit
+إرسال طلب توثيق
+Company owner/admin
+feature_flags.manage
+إدارة flags
+Platform/Org admin
+9. Actions / Services الأولى
+Action / Service
+المسؤولية
+Module
+CreateOrganizationAction
+إنشاء organization + owner membership + default roles.
+Core
+InviteOrganizationMemberAction
+إرسال دعوة وإسناد عضوية pending.
+Core
+CreateSiteAction
+إنشاء site + default settings + default theme.
+Site
+CreateCompanyAction
+إنشاء company داخل organization.
+Rabet
+CreateBusinessProfileDraftAction
+إنشاء بروفايل عام draft مرتبط بالشركة.
+Rabet
+SubmitVerificationRequestAction
+إنشاء طلب توثيق foundation بدون legal partner portal.
+Rabet
+UploadMediaAssetAction
+رفع ملف مع visibility/checksum/metadata.
+Media
+CreateContentTypeAction
+تعريف type schema بسيط.
+CMS
+CreateContentEntryAction
+إنشاء page/post draft.
+CMS
+PublishContentEntryAction
+نشر محتوى + revision + activity + sitemap event.
+CMS
+AssignRoleToMembershipAction
+إسناد role مع audit.
+RBAC
+CheckPermissionService
+context-aware permission resolution.
+RBAC
+FeatureFlagService
+قراءة flag default + override.
+Core
+ActivityLogger
+تسجيل الأحداث العامة.
+Operating
+AuditLogger
+تسجيل الأحداث الحساسة.
+Security
+10. Events / Listeners / Jobs الأولى
+Event
+Listeners / Jobs المقترحة
+UserRegistered
+StartOnboarding, SendWelcomeNotification, LogActivity
+OrganizationCreated
+CreateDefaultRoles, LogActivity
+SiteCreated
+CreateDefaultSettings, ApplyDefaultTheme, LogActivity
+ContentPublished
+CreateRevision, UpdateSitemap, ClearCache, LogActivity
+MediaUploaded
+GenerateThumbnailJob, LogActivity
+BusinessProfileUpdated
+LogActivity, PrepareMallMirrorLater
+VerificationRequestSubmitted
+NotifyAdmins, AuditLog
+RoleAssigned
+AuditLog, NotifyMember
+FeatureFlagChanged
+AuditLog, ClearConfigCache
+11. Filament Resources الأولى
+Filament Resource
+Panel / Space
+المهمة
+OrganizationResource
+Platform/Admin
+List/Create/Edit organizations، members relation manager.
+UserResource
+Platform/Admin
+إدارة المستخدمين في بيئة التطوير/المنصة.
+SiteResource
+Organization Workspace
+مواقع المؤسسة وإعداداتها.
+CompanyResource
+Organization/Company Admin
+شركات المؤسسة.
+RoleResource
+Organization Settings
+الأدوار والصلاحيات.
+MediaAssetResource
+Site Admin
+مكتبة الوسائط.
+ContentTypeResource
+Site Admin
+أنواع المحتوى.
+ContentEntryResource
+Site Admin
+Pages/Posts.
+TaxonomyResource
+Site Admin
+Categories/Tags.
+BusinessProfileResource
+Company Admin
+Business Profile draft.
+VerificationRequestResource
+Company Admin/Internal Admin
+Foundation review status.
+ActivityLogResource
+Organization Workspace
+Read-only.
+FeatureFlagResource
+Platform/Admin
+إدارة flags.
+12. Test Plan في V1
+Test Suite
+أمثلة Tests
+Core/Auth
+user_can_register, user_can_login, inactive_user_cannot_login
+Organizations
+owner_can_create_organization, non_member_cannot_view_organization
+Memberships
+owner_can_invite_member, member_accepts_invitation
+RBAC
+editor_can_edit_content_not_billing, deny_override_blocks_allow
+Sites
+owner_can_create_site, site_slug_unique_per_organization
+Media
+authorized_user_can_upload_media, private_media_not_public
+CMS
+editor_can_create_page, publisher_can_publish_page, author_cannot_publish_without_permission
+Activity/Audit
+important_actions_are_logged, role_assignment_goes_to_audit
+Rabet Foundation
+company_owner_can_create_business_profile_draft, verification_request_requires_documents
+Feature Flags
+disabled_feature_hides_navigation, override_enables_for_org
+Migration Safety
+fresh_migrate_runs, migrate_refresh_runs, seed_demo_runs
+13. Seeders وDemo Data
+Seeder
+المحتوى
+ReferenceSeeder
+countries, currencies, modules.
+PermissionSeeder
+كل permissions الأساسية في V1.
+RoleSeeder
+Platform Super Admin, Organization Owner, Organization Admin, Site Admin, Editor, Author, Media Manager, Company Owner.
+DemoOrganizationSeeder
+Organization باسم ADMIT Demo Workspace.
+DemoSiteSeeder
+Site باسم admit-demo مع default theme.
+DemoCompanySeeder
+Company + Business Profile draft.
+DemoCmsSeeder
+Home/About/Services/Contact pages + blog posts + categories/tags.
+DemoMediaSeeder
+صور placeholder ومرفقات عامة.
+14. Demo النهائي المطلوب في نهاية V1
+• مستخدم يسجل ويدخل لوحة التحكم.
+• ينشئ Organization ويصبح Owner.
+• ينشئ Site ويختار Theme افتراضي.
+• ينشئ صفحات: Home, About, Services, Contact.
+• يرفع صور في Media Library ويستخدمها في صفحة.
+• يدعو محرر ويعطيه Role يسمح بالكتابة ولا يسمح بالنشر.
+• ينشئ Company داخل Organization.
+• ينشئ Business Profile draft مرتبط بالشركة.
+• يرفع مستند توثيق مبدئي ويبدأ Verification Request foundation.
+• يرى Activity Log يوضح من فعل ماذا ومتى.
+• يجرب Public Site rendering لصفحات منشورة فقط.
+15. خطة تنفيذ 6 أسابيع
+الفترة
+النطاق العملي
+الأسبوع 1
+Project bootstrap + global tables + users/orgs/memberships + first policies + tests.
+الأسبوع 2
+companies/sites/settings/feature flags + Filament shell + navigation حسب السياق.
+الأسبوع 3
+RBAC كامل V1 + activity/audit logs + notifications basic.
+الأسبوع 4
+Media foundation + CMS content types/pages/posts/taxonomies/revisions.
+الأسبوع 5
+Themes basic + package foundation + public rendering + SEO basic.
+الأسبوع 6
+Rabet foundation + onboarding wizard basic + demo seeders + release gate + cleanup/tests.
+16. Git وAI Workflow
+الجزء
+القاعدة
+Branches
+main / dev / feature/{feature-name} / fix/{bug-name}.
+Commit size
+كل commit صغير: migration + model + test، وليس feature ضخمة.
+Commit format
+feat: add organizations table / test: add organization creation tests / fix: correct site slug uniqueness.
+AI usage
+AI يساعد في scaffold وtests وreview، لكنه لا يدمج كود بدون مراجعة بشرية.
+AI review prompt
+اسأل AI: ما المخاطر الأمنية؟ هل يوجد tenant leak؟ هل policy تغطي السياق؟ هل migration قابلة للتصدير؟
+Merge gate
+لا يدخل main إلا بعد tests وmanual check وmigrations سليمة.
+17. Release Gate لنهاية V1
+المجال
+شرط القبول
+Database
+كل migrations الأساسية تعمل fresh/refresh، ولا توجد علاقات مكسورة.
+Permissions
+RBAC context-aware ويمنع الوصول بين Organizations/Sites.
+CMS
+إنشاء ونشر صفحات ومقالات يعملان مع revisions وSEO basic.
+Media
+رفع الميديا واستخدامها في المحتوى يعمل مع visibility.
+Rabet Foundation
+Company + Business Profile draft + Verification Request foundation موجودة.
+Activity/Audit
+الأفعال المهمة مسجلة.
+Admin UI
+Filament Resources الأساسية قابلة للاستخدام.
+Public Site
+الصفحات المنشورة فقط تظهر للعامة.
+Tests
+Core/CMS/RBAC/Media/Rabet tests الأساسية ناجحة.
+Demo
+Demo شركة خدمات صغيرة يمكن عرضه بدون تدخل يدوي كبير.
+18. Anti-patterns ممنوعة في V1
+• إضافة company_id أو role داخل users.
+• بناء Commerce أو ERP قبل استقرار Core/CMS/RBAC.
+• جعل Business Profile هو Company أو Site.
+• نشر أي شيء في Mall مباشرة من جداول العميل بدون mirror/consent لاحقًا.
+• تخزين URL كامل للملفات بدل relative path.
+• استخدام JSON بدل العلاقات الأساسية.
+• تجاوز policies في Filament Resources.
+• إضافة AI write actions قبل approval/rollback foundation.
+• بناء Visual Builder قبل CMS typed content.
+• دمج migration ضخمة تحتوي عشرات الجداول بلا tests.
+19. أول Sprint عملي مقترح
+اليوم
+المخرج
+اليوم 1
+Install Laravel + Filament + Pest + Pint، إعداد git branches، إنشاء Modules folders.
+اليوم 2
+countries/currencies/modules/permissions/feature_flags migrations + seeders.
+اليوم 3
+users/user_profiles + auth smoke test.
+اليوم 4
+organizations + organization_memberships + CreateOrganizationAction.
+اليوم 5
+roles/permissions assignment foundation + first policy tests.
+اليوم 6
+Filament OrganizationResource + manual create organization flow.
+اليوم 7
+Review + cleanup + commit + short demo recording/checklist.
+20. الملفات التي يعتمد عليها هذا Blueprint
+الملف
+سبب الاعتماد
+Kabeeri V1 Core Foundation CMS Company OS
+مصدر نطاق V1، الموديولات، User Stories، Roles، وما لا يدخل.
+Kabeeri Master Execution Plan Solo Builder AI
+مصدر منهج التنفيذ الصغير، Git strategy، واستخدام AI.
+Kabeeri Database Master Index
+مصدر فهرس ملفات الداتابيز وBuild Waves.
+Kabeeri Master ERD / Relationship Map
+مصدر علاقات الكيانات الكبرى وSource of Truth.
+Kabeeri Laravel Migration Build Order
+مصدر ترتيب migrations الأولي.
+Kabeeri Laravel Module Architecture
+مصدر تقسيم modules, models, policies, services, Filament.
+Kabeeri Testing QA DevOps Appendix
+مصدر فلسفة الاختبار، rollback-ready، وAI-assisted but human-reviewed.
+نهاية الملف — هذا المستند يجب أن يكون آخر خطوة قبل فتح IDE وكتابة أول migration.
+KABEERI V1 Implementation Blueprint — powered by ADMIT
+Core Foundation for CMS + Company OS

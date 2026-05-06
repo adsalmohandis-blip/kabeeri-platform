@@ -1,0 +1,364 @@
+KABEERI — ملحق 16: التوطين وحزم الدول
+Localization & Country Packs Architecture
+هذا الملحق يحدد كيف ستدعم Kabeeri الدول المختلفة من حيث اللغة، العملة، الضرائب، الفواتير، التوثيق القانوني، الرواتب، الخصوصية، تنسيقات التاريخ، طرق الدفع، وتكاملات الجهات المحلية.
+الهدف:
+جعل Kabeeri منصة قابلة للعمل في دول متعددة بدون إعادة بناء النظام لكل دولة.
+1. لماذا Localization & Country Packs مهمة؟
+Kabeeri ليست منصة موقع فقط.
+Kabeeri تحتوي على:
+CMSCommerceERPRabet Legal VerificationKabeeri MallTalent MarketplaceBillingPayrollTaxE-invoicingPaymentsShippingLegal Partner Network
+وهذه الأجزاء تختلف جذريًا من دولة إلى دولة.
+مثال:
+مصر ≠ السعودية ≠ الإمارات ≠ قطر ≠ الكويت ≠ الأردن
+الاختلاف قد يكون في:
+اللغة.
+العملة.
+الضرائب.
+الفاتورة الإلكترونية.
+السجل التجاري.
+البطاقة الضريبية.
+ضريبة القيمة المضافة.
+Payroll.
+عقود العمل.
+بوابات الدفع.
+شركات الشحن.
+تنسيقات العنوان.
+قوانين الخصوصية.
+2. القاعدة الرئيسية
+لا نكتب قواعد الدول داخل Core مباشرة.
+بدلًا من ذلك نستخدم:
+Country Packs
+يعني:
+Kabeeri Core+ Egypt Pack+ Saudi Arabia Pack+ UAE Pack+ Qatar Pack+ Kuwait Pack+ Jordan Pack
+كل Pack يحتوي إعدادات وقواعد وتكاملات الدولة.
+3. ما هو Country Pack؟
+Country Pack هو حزمة قواعد وتكوينات لدولة معينة.
+تشمل:
+Language defaultsCurrencyTax rulesInvoice rulesE-invoicing requirementsLegal verification requirementsCompany typesAddress formatPhone formatPayment gatewaysShipping providersPayroll rulesEmployment rulesPrivacy rulesDocument templatesTranslation terms
+4. Country Pack كـ Package
+Country Pack يمكن أن يكون نوع خاص من Packages داخل Kabeeri.
+package_type = country_pack
+أو ضمن:
+Localization Suite
+مثال
+kabeeri/egypt-packkabeeri/saudi-packkabeeri/uae-pack
+5. Country Pack Manifest
+كل Country Pack يجب أن يحتوي manifest.
+مثال
+{  "name": "kabeeri/egypt-pack",  "display_name": "Egypt Country Pack",  "type": "country_pack",  "country": "EG",  "version": "1.0.0",  "publisher": "ADMIT",  "supports": {    "languages": ["ar", "en"],    "currency": "EGP",    "tax": true,    "e_invoicing": true,    "payroll": false,    "legal_verification": true  },  "requires": {    "kabeeri": ">=1.0.0"  }}
+6. مكونات Country Pack
+6.1 Language Pack
+الترجمات.
+المصطلحات المحلية.
+RTL/LTR.
+أسماء الحقول.
+صيغ الرسائل.
+مثال
+Invoice = فاتورةReceipt = إيصالTax ID = رقم ضريبيCommercial Registration = سجل تجاري
+6.2 Currency Pack
+العملة الافتراضية.
+رمز العملة.
+عدد المنازل العشرية.
+طريقة عرض السعر.
+أمثلة:
+EGPSARAEDQARKWDJODUSDEUR
+6.3 Tax Pack
+قواعد الضرائب.
+يشمل:
+أنواع الضرائب.
+نسب الضرائب.
+tax registration fields.
+exemptions.
+tax reports.
+tax invoice requirements.
+ملاحظة مهمة:
+القواعد الضريبية تتغير، لذلك يجب أن تكون Country Packs قابلة للتحديث منفصلًا عن Core.
+6.4 E-invoicing Pack
+قواعد الفاتورة الإلكترونية أو الإيصال الإلكتروني.
+يشمل:
+صيغة الفاتورة.
+الحقول المطلوبة.
+QR code requirements.
+API integration مع جهة الضرائب إن وجدت.
+digital signature requirements.
+invoice submission status.
+rejection handling.
+6.5 Legal Verification Pack
+قواعد التوثيق القانوني للشركات.
+يشمل:
+أنواع الشركات.
+المستندات المطلوبة.
+الحقول القانونية.
+مدة صلاحية المستندات.
+متطلبات المفوض بالتوقيع.
+مكاتب المحاماة المعتمدة.
+regulated activities.
+6.6 Payroll Pack
+قواعد الرواتب حسب الدولة.
+يشمل لاحقًا:
+tax/social insurance rules.
+allowances.
+deductions.
+overtime rules.
+leave rules.
+end-of-service rules.
+payslip format.
+مهم:
+Payroll لا يدخل مبكرًا إلا بعد مراجعة قانونية محلية.
+6.7 Address Format Pack
+تنسيق العنوان يختلف حسب الدولة.
+يشمل:
+country.
+city.
+governorate/region.
+district.
+street.
+building.
+postal code.
+national address fields إن وجدت.
+6.8 Phone Format Pack
+country code.
+mobile pattern.
+landline pattern.
+validation.
+display format.
+6.9 Payment Gateway Pack
+بوابات الدفع المحلية.
+أمثلة عامة:
+Paymob.
+Fawry.
+PayTabs.
+Tap.
+Moyasar.
+Telr.
+Stripe حسب الدولة.
+لا يجب تفعيل بوابة دفع في دولة غير مدعومة.
+6.10 Shipping Pack
+شركات الشحن والتوصيل المحلية.
+يشمل:
+providers.
+zones.
+cash on delivery support.
+shipping labels.
+tracking.
+6.11 Document Templates
+قوالب مستندات حسب الدولة.
+أمثلة:
+invoice template.
+receipt template.
+quotation template.
+contract template.
+job offer template.
+verification checklist.
+6.12 Compliance Pack
+قواعد الخصوصية والاحتفاظ بالسجلات.
+يشمل:
+data retention rules.
+consent requirements.
+data export/delete rules.
+audit retention.
+legal record keeping.
+7. Multi-language Architecture
+7.1 اللغات الأساسية
+Kabeeri يجب أن تدعم من البداية:
+ArabicEnglish
+مع دعم RTL من البداية.
+7.2 أنواع الترجمة
+Interface translationsContent translationsField labelsSystem messagesEmail templatesInvoice templatesLegal document labelsAI prompt language
+7.3 Content Translation
+في CMS، المحتوى قد يكون:
+Single languageMulti-languageTranslated entries
+نماذج ممكنة
+Model 1 — translation group
+content_entriestranslation_group_idlocale
+Model 2 — translations table
+content_entry_translationscontent_entry_idlocaletitlecontentseo_titleseo_description
+التوصية
+في V1 لا نعقد الموضوع.
+نبدأ بـ:
+site default languagecontent locale field
+ثم نضيف multi-language كامل لاحقًا.
+8. Multi-currency Architecture
+8.1 أين تستخدم العملات؟
+Commerce.
+ERP.
+Billing.
+Kabeeri Mall.
+Services.
+Products.
+Payroll.
+Accounting.
+8.2 V1
+عملة واحدة لكل Organization أو Site.
+8.3 لاحقًا
+Multi-currency pricing.
+Exchange rates.
+Currency conversion.
+Accounting currency.
+Reporting currency.
+9. Country-specific Verification
+9.1 لماذا؟
+Rabet يعتمد على التوثيق القانوني، وكل دولة لها مستندات مختلفة.
+9.2 Verification Pack Fields
+countrycompany_typesrequired_documentsoptional_documentsregulated_activitiesreview_checklistrenewal_ruleslegal_partner_requirements
+9.3 Company Types
+أمثلة عامة:
+Sole proprietorshipLimited liability companyJoint stock companyBranchFreelancer / professional licenseNon-profit
+الأسماء الحقيقية تختلف حسب الدولة.
+10. Country Pack Database Design
+10.1 countries
+idiso2iso3namenative_namedefault_currencydefault_languagephone_codestatuscreated_atupdated_at
+10.2 country_packs
+idcountry_idnameslugversionpublisherstatussupports jsonsettings jsoneffective_fromeffective_to nullablecreated_atupdated_at
+10.3 country_pack_rules
+idcountry_pack_idrule_typerule_keyrules jsonstatuscreated_atupdated_at
+rule_type examples
+taxinvoiceverificationpayrolladdressphoneprivacyshippingpayment
+10.4 translations
+idlocalegroupkeyvaluecreated_atupdated_at
+10.5 currencies
+idcodenamesymboldecimal_placesstatuscreated_atupdated_at
+10.6 exchange_rates لاحقًا
+idbase_currencytarget_currencyratesourcevalid_atcreated_atupdated_at
+11. Localization Settings
+11.1 Organization settings
+default_countrydefault_languagedefault_currencytimezonedate_formatnumber_format
+11.2 Site settings
+site_languagesupported_languagesrtl_enableddefault_currency
+11.3 Company settings
+registered_countrytax_countrylegal_countrypayroll_countryreporting_currency
+12. Country Pack Updates
+Country Packs يجب أن تتحدث منفصلًا.
+12.1 لماذا؟
+تغير قوانين الضرائب.
+تغير متطلبات التوثيق.
+تغير APIs الحكومية.
+تغير بوابات الدفع.
+تغير قواعد payroll.
+12.2 Update Process
+New pack version→ Review changes→ Show impacted modules→ Apply update→ Log activity→ Validate affected settings
+13. Legal Review for Country Packs
+أي Country Pack يحتوي:
+Tax.
+Payroll.
+Legal verification.
+E-invoicing.
+يجب أن يراجع بواسطة:
+Local legal/tax expertsAccredited law officesAccounting consultantsPlatform compliance team
+14. AI & Localization
+AI يجب أن يحترم اللغة والدولة.
+14.1 AI Context
+يجب أن يعرف:
+لغة المستخدم.
+دولة الشركة.
+العملة.
+المجال.
+نوع المستند.
+country pack active.
+14.2 أمثلة
+اكتب عرض سعر بصيغة مناسبة لشركة في مصر.
+جهز checklist لتوثيق شركة في السعودية.
+AI لا يفتي قانونيًا، بل يستخدم country pack كمرجع داخلي ويطلب مراجعة قانونية عند الحاجة.
+15. Kabeeri Mall Localization
+Kabeeri Mall يحتاج دعم:
+البحث حسب الدولة/المدينة.
+الخدمات حسب المنطقة.
+المنتجات حسب الدولة.
+بوابات دفع محلية.
+عملات محلية.
+لغات محلية.
+verification badges حسب الدولة.
+16. ERP Localization
+ERP أكثر جزء يحتاج localization.
+16.1 Finance
+chart of accounts templates.
+tax rules.
+invoice formats.
+financial reports.
+16.2 Payroll
+deductions.
+social insurance.
+tax rules.
+payslip.
+leave.
+16.3 Procurement
+tax invoices.
+supplier tax data.
+16.4 Accounting
+لا يجب إطلاق Accounting/Payroll في دولة بدون local pack موثوق.
+17. Country Pack Roadmap
+Phase 1 — Arabic Core
+Arabic UIEnglish UIRTLBasic currenciesBasic countriesTimezone support
+Phase 2 — Egypt Pack Basic
+EGPArabic/English labelsBusiness verification fieldsBasic tax fieldsInvoice template basicPayment gateway candidates
+Phase 3 — GCC Packs Basic
+Saudi ArabiaUAEQatarKuwaitBahrain/Oman لاحقًا
+Phase 4 — ERP Country Packs
+Tax.
+E-invoicing.
+Payroll.
+Accounting templates.
+Phase 5 — Advanced Compliance
+Government integrations.
+Country-specific reporting.
+Regulated industries.
+18. V1 Requirements من هذا الملحق
+Must-have في V1
+Arabic + English readyRTL supportlocale field for users/sitescountry field for organizations/companiescurrency field basictimezone supporttranslatable UI foundationcountry/currency seeders
+Should-have في V1
+countries tablecurrencies tabletranslations tablebasic country pack conceptEgypt basic pack draft
+Not required in V1
+Full tax engineFull e-invoicingFull payroll localizationGovernment integrationsMulti-currency accountingAdvanced country compliance
+19. Roadmap عبر الإصدارات
+V1
+Arabic/English UI foundation.
+RTL.
+Countries/currencies.
+Basic locale settings.
+V2
+WordPress import respects language.
+Commerce basic currency.
+Business directory filters by country/city.
+V3
+Company verification fields by country.
+Basic tax fields.
+Basic invoice templates by country.
+V4
+Legal Partner Network by country.
+Paid verification by country.
+Country pack updates.
+Local payment gateways.
+V5
+Tax packs.
+ERP localization.
+E-invoicing connectors initial.
+Payroll foundation by country.
+V6
+Full localization platform.
+Multi-country enterprise.
+Government integrations.
+Advanced payroll/tax/e-invoicing.
+Data residency options.
+20. أخطاء ممنوعة
+20.1 لا تكتب قواعد دولة داخل Core
+يجب أن تكون في Country Pack.
+20.2 لا تطلق Payroll بدون مراجعة محلية
+Payroll حساس قانونيًا.
+20.3 لا تفترض أن كل الدول لها نفس address format
+20.4 لا تفترض أن نفس tax logic ينفع لكل الدول
+20.5 لا تجعل الترجمة لاحقة بالكامل
+RTL والعربية يجب أن يكونا من البداية.
+20.6 لا تجعل AI يقدم قرار قانوني نهائي
+AI يساعد، لكنه لا يعتمد توثيق أو فتوى قانونية.
+21. الخلاصة التنفيذية
+Localization في Kabeeri ليست ترجمة فقط.
+هي تشمل:
+LanguageCurrencyTaxE-invoicingPayrollLegal verificationPaymentsShippingPrivacyDocumentsGovernment integrations
+القاعدة النهائية:
+لا توسع دولي بدون Country Packs، ولا ERP محلي بدون مراجعة قانونية وضريبية محلية.
+22. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق اختياري إضافي:
+ملحق 17 — Performance & Scalability Architecture
+إذا أردنا تثبيت الأداء والتوسع والكاش قبل V1.

@@ -1,0 +1,291 @@
+KABEERI Database File 06 — Integration Between Core, Cloud, Frontend Anywhere, Portable, and Dedicated
+ملف التكامل بين الأنظمة الخمسة
+هذا الملف يشرح كيف تتكامل الأنظمة الخمسة في Kabeeri:
+1. Core Kernel2. Kabeeri Cloud3. Kabeeri Frontend Anywhere4. Kabeeri Portable5. Kabeeri Dedicated
+والهدف هو ضمان أن العميل يستطيع الانتقال بين الأوضاع المختلفة بدون فقد بيانات، وأن Kabeeri Mall يظل قادرًا على استقبال البيانات العامة بإذن العميل.
+1. الهدف من ملف التكامل
+هذا الملف يجيب على:
+ما هو النظام الأساسي؟
+كيف ينتقل العميل من Cloud إلى Frontend Anywhere؟
+كيف ينتقل من Cloud إلى Portable؟
+كيف ينتقل من Cloud إلى Dedicated؟
+كيف يستمر Kabeeri Mall بعد خروج العميل؟
+ما الذي يبقى مركزيًا؟
+ما الذي ينتقل للعميل؟
+ما هي الجداول المشتركة؟
+ما هي جداول الربط؟
+كيف نمنع تضارب البيانات؟
+2. القاعدة الأعلى
+كل الأنظمة تعتمد على Core Kernel.
+Core Kernel = مصدر الهوية والملكية والعلاقات الأساسية
+لكن مصدر البيانات التشغيلية قد يكون:
+Cloud DBأو Dedicated DBأو Portable self-hosted DB
+ومصدر البيانات العامة للـ Mall يجب أن يكون:
+Mall Mirror داخل Kabeeri Central
+3. الأنظمة الخمسة باختصار
+3.1 Core Kernel
+هوية وملكية وصلاحيات.
+3.2 Kabeeri Cloud
+كل شيء داخل Kabeeri.
+3.3 Frontend Anywhere
+الواجهة فقط خارج Kabeeri، والداتا داخل Kabeeri.
+3.4 Portable
+كل النظام والداتا عند العميل، مع Sync اختياري للـ Mall.
+3.5 Dedicated
+بيئة مخصصة، غالبًا مُدارة، مع Bridge مركزي.
+4. الخريطة العليا للتكامل
+flowchart TD    A[Core Kernel] --> B[Kabeeri Cloud]    A --> C[Frontend Anywhere]    A --> D[Kabeeri Portable]    A --> E[Kabeeri Dedicated]    B --> F[Mall Mirror]    C --> F    D --> G[Mall Sync API]    E --> G    G --> F    F --> H[Kabeeri Mall Public]    A --> I[Billing / Entitlements]    I --> B    I --> C    I --> D    I --> E
+5. Unified Customer State
+يجب أن يكون لكل Organization حالة تشغيل عامة.
+جدول مقترح:
+organization_operating_modes
+idorganization_idcurrent_modeprevious_mode nullablestatusstarted_atended_at nullablemetadata json nullablecreated_atupdated_at
+current_mode
+cloud_managedfrontend_anywhereportable_self_hosteddedicated_manageddedicated_customer_cloudarchivedterminated
+status
+activetransitioningsuspendedexportingsync_onlyarchived
+6. Unified Business Passport
+حتى لو العميل خرج، يبقى هناك ملف علاقة اختياري مع Kabeeri.
+business_passports
+iduuidorganization_idcompany_id nullablebusiness_profile_id nullablepassport_status default activecurrent_modemall_participation_status default inactiveverification_status nullabletrust_status nullableprimary_source_typeprimary_source_id nullablelast_sync_at nullablemetadata json nullablecreated_atupdated_at
+passport_status
+activeinactivesuspendedarchivedrevoked
+mall_participation_status
+inactivependingactivestaledisconnectedsuspended
+7. Source of Truth Matrix
+نوع البيانات
+Cloud
+Frontend Anywhere
+Portable
+Dedicated
+Users/Auth
+Kabeeri DB
+Kabeeri DB
+Customer DB
+Dedicated DB
+CMS Private
+Kabeeri DB
+Kabeeri DB
+Customer DB
+Dedicated DB
+Public Frontend
+Kabeeri
+External
+Customer
+Dedicated/External
+ERP
+Kabeeri DB
+Kabeeri DB
+Customer DB
+Dedicated DB
+Mall Public Mirror
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+Billing Relationship
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+Verification Public Status
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+8. أهم مبدأ في التكامل
+لا يعتمد Kabeeri Mall مباشرة على قاعدة بيانات العميل.
+دائمًا يعتمد على:
+Mall Mirror Tables
+والـ Mirror يتم تحديثه من:
+Cloud internal eventsأو Frontend Anywhere internal dataأو Portable Sync APIأو Dedicated Sync API
+9. جداول Mall Mirror المشتركة
+mall_sync_sourcesmall_sync_eventsmall_sync_errorsmall_mirror_businessesmall_mirror_servicesmall_mirror_productsmall_mirror_talentmall_mirror_statusesmall_publication_consents
+10. mall_publication_consents
+موافقة العميل على نشر بيانات عامة في Mall.
+idorganization_idcompany_id nullablebusiness_profile_id nullableconsent_typestatus default activegranted_by nullablegranted_at nullablerevoked_by nullablerevoked_at nullableterms_version nullablemetadata json nullablecreated_atupdated_at
+consent_type
+business_profile_publicationservices_publicationproducts_publicationtalent_publicationreviews_publicationtrust_badge_publication
+11. mall_sync_sources
+مصدر البيانات العامة.
+iduuidorganization_id nullablecompany_id nullablebusiness_profile_id nullablesource_typesource_namesource_modeexternal_base_url nullableapi_key_hash nullablestatus default activelast_sync_at nullablelast_error_at nullablesettings json nullablecreated_atupdated_at
+source_type
+kabeeri_cloudfrontend_anywherekabeeri_portablekabeeri_dedicatedexternal_erpmanual
+source_mode
+internal_eventapi_pushapi_pullmanual_updatecsv_upload
+12. mall_sync_events
+iduuidmall_sync_source_idevent_typeentity_typeexternal_id nullablelocal_subject_type nullablelocal_subject_id nullablestatus default pendingpayload_hash nullablepayload json nullablereceived_at nullableprocessed_at nullableerrors json nullablecreated_atupdated_at
+event_type
+createdupdateddeletedpublishedunpublishedbulk_syncheartbeat
+entity_type
+businessserviceproducttalentavailabilitymedia
+13. mall_sync_errors
+idmall_sync_source_id nullablemall_sync_event_id nullableseverityerror_codemessagepayload json nullableresolved_by nullableresolved_at nullablecreated_atupdated_at
+14. mall_mirror_businesses
+نسخة عامة من بيانات البزنس.
+iduuidorganization_id nullablecompany_id nullablebusiness_profile_id nullablemall_sync_source_id nullableexternal_id nullablenameslugdescription nullableindustry nullablecategory_id nullablecountry_id nullablecity nullablelogo_url nullablecover_url nullablewebsite_url nullablephone_public nullableemail_public nullableverification_level default unverifiedtrust_score nullablesource_status default activepublication_status default draftlast_synced_at nullablemetadata json nullablecreated_atupdated_at
+15. mall_mirror_services
+iduuidmall_mirror_business_id nullablemall_sync_source_id nullableexternal_id nullablenameslugshort_description nullabledescription nullablecategory_id nullablepricing_type nullableprice_from decimal(15,2) nullableprice_to decimal(15,2) nullablecurrency_code nullablepublic_url nullableimage_url nullablesource_status default activepublication_status default draftlast_synced_at nullablemetadata json nullablecreated_atupdated_at
+16. mall_mirror_products
+iduuidmall_mirror_business_id nullablemall_sync_source_id nullableexternal_id nullablenameslugdescription nullablecategory_id nullableprice decimal(15,2) nullablecurrency_code nullableavailability nullablepublic_url nullableimage_url nullablesource_status default activepublication_status default draftlast_synced_at nullablemetadata json nullablecreated_atupdated_at
+17. mall_mirror_talent
+iduuiduser_id nullableprofessional_profile_id nullablemall_sync_source_id nullableexternal_id nullableheadline nullablesummary nullableskills json nullablecountry_id nullablecity nullableavailability_status nullablevisibility default hiddensource_status default activepublication_status default draftlast_synced_at nullablemetadata json nullablecreated_atupdated_at
+18. mall_mirror_statuses
+حالة كل Mirror Entity.
+idmirror_typemirror_idstatusreason nullablechanged_by nullablechanged_atmetadata json nullablecreated_atupdated_at
+status
+draftpending_reviewpublishedhiddensuspendedrejectedstaledisconnected
+19. الانتقال من Cloud إلى Frontend Anywhere
+مصدر البيانات لا يتغير
+يبقى:
+Kabeeri Cloud DB
+ما يتغير
+يتم إنشاء:
+frontend_projectfrontend_api_keyfrontend_domainfrontend_webhook
+Flow
+Cloud site active→ enable Frontend Anywhere entitlement→ create frontend project→ generate scoped API key→ connect external frontend→ keep Mall Sync internal
+20. الانتقال من Cloud إلى Portable
+مصدر البيانات يتغير
+من:
+Kabeeri Cloud DB
+إلى:
+Customer Self-hosted DB
+ما يبقى في Kabeeri Central
+business_passportmall mirrorbilling relationshipportable licenseself_hosted_installationsync sourcetrust records العامة
+Flow
+request export→ create export_job→ generate portable bundle→ customer restores externally→ self_hosted_installation registers→ mall_sync_source switches to kabeeri_portable→ cloud operational data archived/deleted by policy
+21. الانتقال من Cloud إلى Dedicated
+مصدر البيانات يتغير
+من:
+Shared Cloud DB
+إلى:
+Dedicated DB
+Flow
+create dedicated_tenant→ create dedicated_environment→ backup cloud data→ export/import data→ verify→ switch routing/domain→ mall_sync_source switches to kabeeri_dedicated→ cloud status migrated_to_dedicated
+22. الانتقال من Dedicated إلى Portable
+dedicated export→ portable bundle→ self_hosted_installation registers→ dedicated status migration_out→ mall sync source switches
+23. الانتقال من Portable إلى Cloud مرة أخرى
+يجب دعمه لاحقًا.
+portable instance exports data→ cloud import job→ conflict check→ import into organization→ switch operating mode to cloud_managed→ mall sync source internal again
+هذا ليس V1، لكنه يجب أن يكون قابلًا معماريًا.
+24. Unified Transition Tables
+نحتاج جداول عامة للانتقالات.
+tenant_transitions
+iduuidorganization_idfrom_modeto_modestatus default pendingrequested_by nullableapproved_by nullablestarted_at nullablecompleted_at nullablefailed_at nullableerror_message nullablemetadata json nullablecreated_atupdated_at
+tenant_transition_steps
+idtenant_transition_idstep_keystep_orderstatus default pendingstarted_at nullablecompleted_at nullablemessage nullablemetadata json nullablecreated_atupdated_at
+25. Transition Statuses
+pendingapprovedrunningcompletedfailedcancelledrolled_back
+26. Transition Steps Examples
+Cloud to Portable
+validate_entitlementcreate_backupfreeze_changes_optionalexport_databaseexport_filesgenerate_manifestcreate_packagecustomer_downloadregister_self_hostedswitch_mall_sync_sourceapply_retention_policycomplete
+Cloud to Dedicated
+provision_environmentcreate_backupexport_dataimport_to_dedicatedverify_countsrun_health_checksswitch_domainswitch_mall_sync_sourcecomplete
+27. Conflict Rules
+27.1 Mall لا يسمح بتجاوز Moderation
+حتى لو أرسل العميل تحديثًا من Portable، لا ينشر تلقائيًا إذا كان محتوى حساسًا.
+27.2 UUID مهم
+الـ UUID يستخدم للمطابقة عبر الأنظمة.
+27.3 Source Priority
+إذا كان هناك أكثر من مصدر:
+cloud_internal أعلى عند Cloudportable_api أعلى عند Portablemanual_admin يمكن أن يتجاوز مؤقتًاmoderation أعلى من الجميع في حالة الإيقاف
+28. Data Retention بعد الانتقال
+Operational Data
+تُحذف أو تؤرشف حسب الاتفاق.
+Platform Relationship Data
+تبقى:
+billinglicenseexport logssupport records
+Mall Mirror Data
+تبقى إذا وافق العميل.
+Legal/Trust Data
+تبقى حسب الشروط القانونية وسياسة الثقة.
+29. Unified Consent Model
+لا Sync ولا نشر في Mall بدون Consent.
+يجب فحص:
+mall_publication_consents
+قبل:
+نشر بروفايل.
+نشر خدمات.
+نشر منتجات.
+عرض شارة تحقق.
+30. Unified Auth for External Sync
+Portable وDedicated يحتاجون Auth مشترك.
+token لا يكفي وحده
+استخدم:
+API key hashHMAC signaturetimestampnonceinstallation_uuidsource_uuid
+31. Unified Sync API
+POST /api/mall-sync/v1/businessPOST /api/mall-sync/v1/servicesPOST /api/mall-sync/v1/productsPOST /api/mall-sync/v1/talentPOST /api/mall-sync/v1/bulkPOST /api/mall-sync/v1/heartbeat
+32. Pull APIs لاحقًا
+GET /api/mall-sync/v1/reviewsGET /api/mall-sync/v1/inquiriesGET /api/mall-sync/v1/rfqs
+33. Unified Mode Matrix
+Mode
+DB Source
+Admin
+Frontend
+Mall Sync
+Export
+Cloud
+Kabeeri Central
+Kabeeri
+Kabeeri
+Internal
+Available
+Frontend Anywhere
+Kabeeri Central
+Kabeeri
+External
+Internal
+Frontend/Full optional
+Portable
+Customer DB
+Customer
+Customer
+API Push
+Already exported
+Dedicated
+Dedicated DB
+Dedicated/Kabeeri
+Dedicated
+API/Internal Bridge
+Available
+34. Unified Billing Matrix
+Mode
+Billing Model
+Cloud
+subscription + usage
+Frontend Anywhere
+subscription + API/build usage
+Portable
+license + support + mall sync optional
+Dedicated
+enterprise contract + support + infrastructure
+35. Unified Entitlements
+Entitlements يجب أن تتحكم في:
+enable_cloudenable_frontend_anywhereenable_portable_exportenable_dedicatedenable_mall_syncenable_self_hosted_updatesenable_support_diagnostics
+36. Unified Audit Events
+يجب تسجيل:
+operating_mode_changedfrontend_project_createdportable_export_requestedportable_export_downloadedself_hosted_registereddedicated_tenant_createdmall_sync_source_changedmall_publication_consent_grantedmall_publication_consent_revokedretention_policy_applied
+37. النظام الأمثل للتنفيذ على الإصدارات
+V1
+Core Kernelorganization/site/companyoperating mode foundationexport_jobs foundation
+V2
+basic export registryfrontend/public API foundation
+V3
+business passportpublic business data contracts
+V4
+Frontend Anywhere V1Portable Export V1Dedicated registry V1Mall Sync V1
+V5
+Integration Hub strengthens syncupdate channelsadvanced logs
+V6
+enterprise migrationstwo-way sync carefullyadvanced mall commerceindustry sync
+38. أهم الجداول المشتركة بين الأنظمة
+organizationscompaniessitesbusiness_profilesbusiness_passportsorganization_operating_modestenant_transitionstenant_transition_stepsmall_publication_consentsmall_sync_sourcesmall_sync_eventsmall_sync_errors
+39. أهم قاعدة تصميم
+لا تجعل أي نظام من الخمسة جزيرة منفصلة.
+كل نظام يجب أن يعرف:
+organization_idcurrent_modebusiness_passportmall_sync_sourcebilling relationshipconsent state
+40. الخلاصة النهائية
+التكامل بين الأنظمة الخمسة يجب أن يعتمد على:
+Core Kernel as identity and ownership baseOperating Mode as current runtime stateBusiness Passport as continuing relationshipMall Mirror as public data layerTenant Transitions as controlled migration pathEntitlements as commercial controlAudit Logs as trust layer
+القاعدة النهائية:
+Kabeeri should let the customer move hosting modes without losing identity, trust, Mall visibility, or data ownership clarity.

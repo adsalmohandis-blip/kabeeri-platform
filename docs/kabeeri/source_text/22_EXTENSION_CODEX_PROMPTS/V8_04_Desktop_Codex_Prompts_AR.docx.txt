@@ -1,0 +1,26 @@
+TASK TRACKING AUTOMATION — MANDATORYBefore starting any task from this prompt pack, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php start V8 TXXAfter implementation and tests pass, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php done V8 TXX --prompt=XX --tests="php artisan test" --commit=pending --notes="short summary"If blocked, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php block V8 TXX --notes="reason"Codex must not mark tasks as verified. Only the project owner can run:php 24_kabeeri_task_tracking/scripts/kbr-task.php verify V8 TXX --notes="reviewed"Replace TXX and XX with the current task/prompt number. This rule is mandatory and comes before all implementation instructions.
+KABEERI V8 Desktop Offline Client — Codex Prompt Pack
+كل Prompt يبدأ في صفحة جديدة. استخدم Prompt واحد فقط في كل مرة مع Codex.
+KABEERI Professional Knowledge System — v1.6.2
+طريقة الاستخدام
+نفذ Prompt واحد فقط في كل مرة، ثم شغل الاختبارات وراجع التغييرات قبل الانتقال للـ Prompt التالي. لا تعدل النسخ المجمدة إلا بتعليمات صريحة.
+Prompt 00 — V8 Rules and Boundaries
+You are working on KABEERI V8 Desktop Offline Client only.Do not edit V1 directly. Do not break V7/mobile APIs. Desktop uses Electron + React + TypeScript + SQLite.All sync features must be additive and safe.
+Prompt 01 — V8 Readiness Check
+Check API availability, auth, OpenAPI, app/site data, permissions, and whether sync-safe entity versioning exists. Do not add features. Produce readiness report.
+Prompt 02 — Desktop Client Registry
+Implement server-side desktop_clients table/model/API to register desktop installations. Add status, user, organization, device fingerprint hash, last_seen_at. Add tests.
+Prompt 03 — Sync Session Foundation
+Implement desktop_sync_sessions and desktop_sync_operations tables. Do not implement full sync yet. Store operation summaries and statuses. Add tests.
+Prompt 04 — Pull API
+Create /api/v1/desktop/sync/pull endpoint for allowed scoped data. Do not include private/admin data. Add tests for tenant isolation and pagination.
+Prompt 05 — Push API Dry Run
+Create push dry-run endpoint that validates operations without applying them. Return validation errors/conflicts. Add tests. Do not write business records yet.
+Prompt 06 — Outbox Operation Contract
+Define operation contract for local_outbox: create/update/delete, entity_type, entity_id, base_version, payload. Add docs/OpenAPI examples. No Electron code yet.
+Prompt 07 — Conflict Detection
+Implement server-side conflict detection based on base_version/updated_at where available. Conflicts return structured response; no auto merge. Add tests.
+Prompt 08 — File Queue API
+Implement desktop file upload queue API endpoints in safe mode. Store metadata and pending status. Do not process heavy files synchronously. Add tests.
+Prompt 09 — V8 Release Candidate Check
+Run tests, confirm desktop APIs are safe, additive, and documented. Confirm no sensitive data leaks and no destructive sync. Produce V8 readiness report.

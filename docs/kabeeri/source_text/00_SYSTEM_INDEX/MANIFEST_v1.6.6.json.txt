@@ -1,0 +1,902 @@
+[
+  {
+    "path": "00_SYSTEM_INDEX/00_KABEERI_SYSTEM_INDEX_AR.docx",
+    "size_bytes": 38586
+  },
+  {
+    "path": "00_SYSTEM_INDEX/01_System_Features_Catalog_AR.docx",
+    "size_bytes": 55200
+  },
+  {
+    "path": "00_SYSTEM_INDEX/02_System_Features_Catalog_v1.3.0_Addendum_AR.docx",
+    "size_bytes": 37914
+  },
+  {
+    "path": "00_SYSTEM_INDEX/03_Project_Folder_Map_Architecture_AR.docx",
+    "size_bytes": 39229
+  },
+  {
+    "path": "00_SYSTEM_INDEX/04_Solo_AI_Builder_File_Map_Addendum_AR.docx",
+    "size_bytes": 37800
+  },
+  {
+    "path": "00_SYSTEM_INDEX/05_Task_Tracking_File_Map_Addendum_AR.docx",
+    "size_bytes": 37488
+  },
+  {
+    "path": "00_SYSTEM_INDEX/BUILD_SEQUENCE.md",
+    "size_bytes": 850
+  },
+  {
+    "path": "00_SYSTEM_INDEX/CODING_START_HERE.md",
+    "size_bytes": 539
+  },
+  {
+    "path": "00_SYSTEM_INDEX/CURRENT_VERSION.md",
+    "size_bytes": 98
+  },
+  {
+    "path": "00_SYSTEM_INDEX/FINAL_CHANGELOG.md",
+    "size_bytes": 1671
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST.csv",
+    "size_bytes": 16127
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST.json",
+    "size_bytes": 27304
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST_v1.6.2.csv",
+    "size_bytes": 11474
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST_v1.6.2.json",
+    "size_bytes": 12481
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST_v1.6.3.csv",
+    "size_bytes": 13835
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST_v1.6.3.json",
+    "size_bytes": 20161
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST_v1.6.4.csv",
+    "size_bytes": 14565
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST_v1.6.4.json",
+    "size_bytes": 21203
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST_v1.6.5.csv",
+    "size_bytes": 16127
+  },
+  {
+    "path": "00_SYSTEM_INDEX/MANIFEST_v1.6.5.json",
+    "size_bytes": 27304
+  },
+  {
+    "path": "00_SYSTEM_INDEX/OPTIONAL_BACKLOG.md",
+    "size_bytes": 619
+  },
+  {
+    "path": "00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.3.md",
+    "size_bytes": 205
+  },
+  {
+    "path": "00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.4.md",
+    "size_bytes": 72
+  },
+  {
+    "path": "00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.5.md",
+    "size_bytes": 315
+  },
+  {
+    "path": "00_SYSTEM_INDEX/README.md",
+    "size_bytes": 3066
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.1.0.md",
+    "size_bytes": 1325
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.2.0.md",
+    "size_bytes": 947
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.2.1.md",
+    "size_bytes": 1476
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.3.0.md",
+    "size_bytes": 544
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.2.md",
+    "size_bytes": 464
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.3.md",
+    "size_bytes": 826
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.4.md",
+    "size_bytes": 701
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.5.md",
+    "size_bytes": 580
+  },
+  {
+    "path": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.6.md",
+    "size_bytes": 510
+  },
+  {
+    "path": "00_SYSTEM_INDEX/VERSIONING.md",
+    "size_bytes": 558
+  },
+  {
+    "path": "01_STRATEGY_AND_BUSINESS/01_Kabeeri_Platform_Master_Summary_AR.docx",
+    "size_bytes": 39912
+  },
+  {
+    "path": "01_STRATEGY_AND_BUSINESS/02_Product_Positioning_GTM_AR.docx",
+    "size_bytes": 25227
+  },
+  {
+    "path": "01_STRATEGY_AND_BUSINESS/03_Monetization_Pricing_AR.docx",
+    "size_bytes": 22648
+  },
+  {
+    "path": "01_STRATEGY_AND_BUSINESS/04_Freemium_Plans_Entitlements_Architecture_AR.docx",
+    "size_bytes": 39274
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/00_CMS_Foundation_Blueprint_AR.docx",
+    "size_bytes": 31453
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/01_Foundation_Architecture_AR.docx",
+    "size_bytes": 26455
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/02_Operating_Layers_AR.docx",
+    "size_bytes": 23086
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/03_Dependencies_Map_AR.docx",
+    "size_bytes": 27278
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/04_Release_Gates_AR.docx",
+    "size_bytes": 24362
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/05_Permissions_Privacy_AR.docx",
+    "size_bytes": 24563
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/06_Event_Workflow_AR.docx",
+    "size_bytes": 23792
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/07_AI_Cobuilder_Guardrails_AR.docx",
+    "size_bytes": 22892
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/08_Marketplace_Governance_AR.docx",
+    "size_bytes": 22563
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/09_Data_Model_Dictionary_AR.docx",
+    "size_bytes": 26063
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/11_Security_Compliance_AR.docx",
+    "size_bytes": 23051
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/12_Developer_Platform_SDK_AR.docx",
+    "size_bytes": 22103
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/13_Testing_QA_DevOps_AR.docx",
+    "size_bytes": 21846
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/14_UI_UX_Admin_Navigation_AR.docx",
+    "size_bytes": 21938
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/15_Migration_Strategy_AR.docx",
+    "size_bytes": 20702
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/16_Localization_Country_Packs_AR.docx",
+    "size_bytes": 19835
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/17_Performance_Scalability_AR.docx",
+    "size_bytes": 21434
+  },
+  {
+    "path": "02_FOUNDATION_ARCHITECTURE/18_Data_Ownership_Hosting_Sync_Decision_AR.docx",
+    "size_bytes": 31790
+  },
+  {
+    "path": "03_RELEASE_SPECS/01_V1_Core_Foundation_CMS_Company_OS_AR.docx",
+    "size_bytes": 29757
+  },
+  {
+    "path": "03_RELEASE_SPECS/02_V2_WordPress_Migration_Commerce_Foundation_AR.docx",
+    "size_bytes": 29616
+  },
+  {
+    "path": "03_RELEASE_SPECS/03_V3_Business_Foundation_ERP_Essentials_AR.docx",
+    "size_bytes": 31573
+  },
+  {
+    "path": "03_RELEASE_SPECS/04_V4_Cloud_Marketplace_Rabet_Mall_AR.docx",
+    "size_bytes": 36239
+  },
+  {
+    "path": "03_RELEASE_SPECS/05_V5_ERP_Pro_Integration_Hub_AR.docx",
+    "size_bytes": 37430
+  },
+  {
+    "path": "03_RELEASE_SPECS/06_V6_Enterprise_Complete_Platform_AR.docx",
+    "size_bytes": 41276
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/00_APPROVED_DATABASE_NAMES_AR.docx",
+    "size_bytes": 37147
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/00_APPROVED_PLAN_ENTITLEMENTS_AND_LIMITS_AR.docx",
+    "size_bytes": 38481
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/01_Database_Core_Kernel_AR.docx",
+    "size_bytes": 19595
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/02_Database_Cloud_AR.docx",
+    "size_bytes": 17715
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/03_Database_Frontend_Anywhere_AR.docx",
+    "size_bytes": 17866
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/04_Database_Portable_AR.docx",
+    "size_bytes": 18309
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/05_Database_Dedicated_AR.docx",
+    "size_bytes": 17473
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/06_Database_Five_Systems_Integration_AR.docx",
+    "size_bytes": 19314
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/07_Database_CMS_AR.docx",
+    "size_bytes": 52176
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/08_Database_Media_Files_AR.docx",
+    "size_bytes": 46781
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/09_Database_Rabet_Verification_AR.docx",
+    "size_bytes": 53982
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/10_Database_Commerce_AR.docx",
+    "size_bytes": 54009
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/11_Database_Mall_Public_Marketplace_AR.docx",
+    "size_bytes": 57550
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/12_Database_Talent_Marketplace_AR.docx",
+    "size_bytes": 50913
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/13_Database_ERP_Essentials_AR.docx",
+    "size_bytes": 60588
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/14_Database_ERP_Pro_AR.docx",
+    "size_bytes": 65568
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/15_Database_Integration_Hub_AR.docx",
+    "size_bytes": 58909
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/16_Database_AI_Cobuilder_AR.docx",
+    "size_bytes": 63548
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/17_Database_Events_Workflows_AR.docx",
+    "size_bytes": 38581
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/18_Database_Security_Compliance_AR.docx",
+    "size_bytes": 60101
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/19_Database_Internal_Marketplace_Packages_AR.docx",
+    "size_bytes": 52374
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/20_Database_Localization_Country_Packs_AR.docx",
+    "size_bytes": 56516
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/21_Database_Migration_AR.docx",
+    "size_bytes": 60327
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/22_Database_Billing_Subscriptions_AR.docx",
+    "size_bytes": 63642
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/23_Database_Notifications_Inbox_AR.docx",
+    "size_bytes": 38439
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/24_Database_Reviews_Reputation_AR.docx",
+    "size_bytes": 51890
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/25_Database_Dispute_Resolution_AR.docx",
+    "size_bytes": 54810
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/26_Database_Search_Engine_AR.docx",
+    "size_bytes": 55939
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/27_Database_Moderation_System_AR.docx",
+    "size_bytes": 49348
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/28_Database_Teams_Collaboration_AR.docx",
+    "size_bytes": 51860
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/29_Database_Agency_Platform_AR.docx",
+    "size_bytes": 50729
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/30_Database_Onboarding_Wizard_AR.docx",
+    "size_bytes": 54258
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/31_Database_BI_Analytics_AR.docx",
+    "size_bytes": 49492
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/32_Database_GRC_Risk_Compliance_AR.docx",
+    "size_bytes": 60073
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/02_Module_Databases/33_Database_Developer_Console_SDK_AR.docx",
+    "size_bytes": 56055
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/34_Database_Industry_Solutions_AR.docx",
+    "size_bytes": 53961
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/35_Database_Enterprise_Architecture_App_Portfolio_AR.docx",
+    "size_bytes": 57114
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/36_Database_Testing_QA_DevOps_AR.docx",
+    "size_bytes": 58815
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/37_Database_Data_Warehouse_Platform_AR.docx",
+    "size_bytes": 51537
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/38_Database_ESG_EHS_Sustainability_AR.docx",
+    "size_bytes": 56800
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/39_Database_PLM_RD_Engineering_AR.docx",
+    "size_bytes": 52433
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/00_Database_Master_Index_AR.docx",
+    "size_bytes": 54796
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/01_Master_ERD_Relationship_Map_AR.docx",
+    "size_bytes": 47661
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/05_Database_v1.1.0_Addendum_AR.docx",
+    "size_bytes": 40943
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/06_Database_v1.2.1_Mall_Multi_Catalog_Addendum_AR.docx",
+    "size_bytes": 40977
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/08_Database_v1.3.0_Addendum_External_Sync_Universal_Mall_AR.docx",
+    "size_bytes": 39067
+  },
+  {
+    "path": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/09_Database_v1.6.4_Freemium_Entitlements_Addendum_AR.docx",
+    "size_bytes": 38306
+  },
+  {
+    "path": "05_EXECUTION_LARAVEL/00_Master_Execution_Plan_Solo_Builder_AI_AR.docx",
+    "size_bytes": 27854
+  },
+  {
+    "path": "05_EXECUTION_LARAVEL/01_Laravel_Migration_Build_Order_AR.docx",
+    "size_bytes": 50502
+  },
+  {
+    "path": "05_EXECUTION_LARAVEL/02_Laravel_Module_Architecture_AR.docx",
+    "size_bytes": 48335
+  },
+  {
+    "path": "05_EXECUTION_LARAVEL/03_V1_Implementation_Blueprint_AR.docx",
+    "size_bytes": 50151
+  },
+  {
+    "path": "05_EXECUTION_LARAVEL/04_V1_Sprint_1_Coding_Plan_AR.docx",
+    "size_bytes": 38600
+  },
+  {
+    "path": "05_EXECUTION_LARAVEL/06_Laravel_Migration_Build_Order_v1.1.0_Update_AR.docx",
+    "size_bytes": 38953
+  },
+  {
+    "path": "05_EXECUTION_LARAVEL/07_V1_Scope_Freeze_AR.docx",
+    "size_bytes": 38639
+  },
+  {
+    "path": "05_EXECUTION_LARAVEL/08_V1_Sprint_1_Coding_Plan_FINAL_AR.docx",
+    "size_bytes": 38403
+  },
+  {
+    "path": "06_WORDPRESS_MIGRATION_CENTER/01_WordPress_Migration_Compatibility_Architecture_AR.docx",
+    "size_bytes": 39550
+  },
+  {
+    "path": "06_WORDPRESS_MIGRATION_CENTER/02_WordPress_Plugin_Theme_Migration_Architecture_AR.docx",
+    "size_bytes": 39247
+  },
+  {
+    "path": "07_COMPETITIVE_PRODUCT_MOATS/01_Competitive_Differentiation_Product_Moats_AR.docx",
+    "size_bytes": 38638
+  },
+  {
+    "path": "08_DEVELOPER_ECONOMY/01_Theme_Plugin_Developer_Economy_Architecture_AR.docx",
+    "size_bytes": 48563
+  },
+  {
+    "path": "09_ENGINEERING_STANDARDS/01_Engineering_Delivery_Standards_AR.docx",
+    "size_bytes": 42714
+  },
+  {
+    "path": "09_ENGINEERING_STANDARDS/02_API_Design_Standards_AR.docx",
+    "size_bytes": 38274
+  },
+  {
+    "path": "09_ENGINEERING_STANDARDS/03_Permissions_Matrix_V1_AR.docx",
+    "size_bytes": 38498
+  },
+  {
+    "path": "09_ENGINEERING_STANDARDS/04_Feature_Flags_Matrix_V1_AR.docx",
+    "size_bytes": 38273
+  },
+  {
+    "path": "09_ENGINEERING_STANDARDS/05_Seed_Data_Demo_Scenario_AR.docx",
+    "size_bytes": 38116
+  },
+  {
+    "path": "10_PEOPLE_PARTNER_WORK_NETWORK/01_User_Partner_Work_Network_Architecture_AR.docx",
+    "size_bytes": 41066
+  },
+  {
+    "path": "10_PEOPLE_PARTNER_WORK_NETWORK/02_Talent_Marketplace_Public_Professionals_AR.docx",
+    "size_bytes": 39372
+  },
+  {
+    "path": "10_PEOPLE_PARTNER_WORK_NETWORK/03_Academy_Certification_Architecture_AR.docx",
+    "size_bytes": 39232
+  },
+  {
+    "path": "10_PEOPLE_PARTNER_WORK_NETWORK/04_Agency_Partner_Operations_AR.docx",
+    "size_bytes": 39127
+  },
+  {
+    "path": "10_PEOPLE_PARTNER_WORK_NETWORK/05_Legal_Partner_Network_Rabet_Verification_Operations_AR.docx",
+    "size_bytes": 38826
+  },
+  {
+    "path": "10_PEOPLE_PARTNER_WORK_NETWORK/06_Partner_Affiliate_Dropshipping_Commerce_AR.docx",
+    "size_bytes": 39177
+  },
+  {
+    "path": "10_PEOPLE_PARTNER_WORK_NETWORK/07_Work_Network_Roles_Capabilities_Matrix_AR.docx",
+    "size_bytes": 39206
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/01_300_Launch_Themes_Strategy_Taxonomy_AR.docx",
+    "size_bytes": 40157
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/02_Plugin_Module_App_Ecosystem_Architecture_AR.docx",
+    "size_bytes": 39822
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/03_Digital_Marketing_Plugin_Suite_AR.docx",
+    "size_bytes": 39471
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/04_Theme_Plugin_Bundle_Matrix_Overview_AR.docx",
+    "size_bytes": 39929
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/05_300_Themes_Master_Catalog_AR.docx",
+    "size_bytes": 43962
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/06_300_Themes_App_Recipes_AR.docx",
+    "size_bytes": 41129
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/07_Plugin_Master_Catalog_AR.docx",
+    "size_bytes": 40136
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/08_Plugin_Bundles_By_Project_Type_AR.docx",
+    "size_bytes": 40150
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/09_Theme_Plugin_Mobile_Profile_Matrix_AR.docx",
+    "size_bytes": 39359
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/10_Theme_Package_Standard_Manifest_AR.docx",
+    "size_bytes": 37622
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/11_Plugin_Package_Standard_Manifest_AR.docx",
+    "size_bytes": 37812
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/12_Design_System_UI_Components_Library_AR.docx",
+    "size_bytes": 37964
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/13_Demo_Data_Demo_Importer_Specification_AR.docx",
+    "size_bytes": 37485
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/14_Theme_QA_Publishing_Checklist_AR.docx",
+    "size_bytes": 37648
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/15_Plugin_QA_Security_Permission_Checklist_AR.docx",
+    "size_bytes": 37644
+  },
+  {
+    "path": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/16_Marketplace_Licensing_Pricing_Revenue_Share_AR.docx",
+    "size_bytes": 38006
+  },
+  {
+    "path": "12_EXTERNAL_REFERENCES/Rabet_B2B_Strategic_Management_Semi_Project.pdf",
+    "size_bytes": 1086057
+  },
+  {
+    "path": "13_CODING_READY_EXECUTION/00_Coding_Readiness_Final_Index_AR.docx",
+    "size_bytes": 37989
+  },
+  {
+    "path": "13_CODING_READY_EXECUTION/01_Coding_Ready_Acceptance_Checklist_AR.docx",
+    "size_bytes": 38148
+  },
+  {
+    "path": "13_CODING_READY_EXECUTION/02_V1_to_V6_Coding_Roadmap_AR.docx",
+    "size_bytes": 38685
+  },
+  {
+    "path": "13_CODING_READY_EXECUTION/10_Solo_AI_Builder_Execution_System_AR.docx",
+    "size_bytes": 39354
+  },
+  {
+    "path": "13_CODING_READY_EXECUTION/11_V1_Flexible_Task_Cards_Board_AR.docx",
+    "size_bytes": 40604
+  },
+  {
+    "path": "13_CODING_READY_EXECUTION/12_Worklog_Session_Templates_AR.docx",
+    "size_bytes": 38202
+  },
+  {
+    "path": "13_CODING_READY_EXECUTION/13_Codex_Solo_Risk_Control_Checklists_AR.docx",
+    "size_bytes": 38143
+  },
+  {
+    "path": "13_CODING_READY_EXECUTION/WORKLOG_TEMPLATE.md",
+    "size_bytes": 748
+  },
+  {
+    "path": "14_MALL_MARKETPLACE_NETWORK/01_Mall_Multi_Catalog_Network_Architecture_AR.docx",
+    "size_bytes": 41005
+  },
+  {
+    "path": "14_MALL_MARKETPLACE_NETWORK/02_Universal_Mall_Discovery_Network_AR.docx",
+    "size_bytes": 39419
+  },
+  {
+    "path": "14_MALL_MARKETPLACE_NETWORK/03_External_Systems_Sync_Connector_Marketplace_AR.docx",
+    "size_bytes": 39173
+  },
+  {
+    "path": "14_MALL_MARKETPLACE_NETWORK/04_Backoffice_Anywhere_Admin_For_Existing_Websites_AR.docx",
+    "size_bytes": 38248
+  },
+  {
+    "path": "14_MALL_MARKETPLACE_NETWORK/05_Travel_Tourism_Mall_AR.docx",
+    "size_bytes": 38434
+  },
+  {
+    "path": "15_VERSION_CODING_PLANS/01_V1_Coding_Plan_Core_MVP_AR.docx",
+    "size_bytes": 38126
+  },
+  {
+    "path": "15_VERSION_CODING_PLANS/02_V2_Coding_Plan_Migration_Discovery_AR.docx",
+    "size_bytes": 38111
+  },
+  {
+    "path": "15_VERSION_CODING_PLANS/03_V3_Coding_Plan_Business_Operations_AR.docx",
+    "size_bytes": 38077
+  },
+  {
+    "path": "15_VERSION_CODING_PLANS/04_V4_Coding_Plan_Marketplace_Work_Network_AR.docx",
+    "size_bytes": 38125
+  },
+  {
+    "path": "15_VERSION_CODING_PLANS/05_V5_Coding_Plan_ERP_Pro_Integration_AR.docx",
+    "size_bytes": 38097
+  },
+  {
+    "path": "15_VERSION_CODING_PLANS/06_V6_Coding_Plan_Enterprise_Platform_AR.docx",
+    "size_bytes": 38092
+  },
+  {
+    "path": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v1_codex_prompt_pack_ar.docx",
+    "size_bytes": 55999
+  },
+  {
+    "path": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v2_codex_prompt_pack_ar.docx",
+    "size_bytes": 53859
+  },
+  {
+    "path": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v3_codex_prompt_pack_ar.docx",
+    "size_bytes": 49718
+  },
+  {
+    "path": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v4_codex_prompt_pack_ar.docx",
+    "size_bytes": 48055
+  },
+  {
+    "path": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v5_codex_prompt_pack_ar.docx",
+    "size_bytes": 52075
+  },
+  {
+    "path": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v6_codex_prompt_pack_ar.docx",
+    "size_bytes": 47505
+  },
+  {
+    "path": "17_EXTENSION_GOVERNANCE/01_Extension_Development_Governance_AR.docx",
+    "size_bytes": 37815
+  },
+  {
+    "path": "17_EXTENSION_GOVERNANCE/02_Extension_Registry_AR.docx",
+    "size_bytes": 37368
+  },
+  {
+    "path": "17_EXTENSION_GOVERNANCE/03_File_Folder_Architecture_Rules_AR.docx",
+    "size_bytes": 37455
+  },
+  {
+    "path": "17_EXTENSION_GOVERNANCE/04_New_Feature_File_Pack_Template_AR.docx",
+    "size_bytes": 37492
+  },
+  {
+    "path": "17_EXTENSION_GOVERNANCE/05_Progressive_Version_Freeze_Policy_AR.docx",
+    "size_bytes": 37406
+  },
+  {
+    "path": "17_EXTENSION_GOVERNANCE/06_Extension_Codex_Prompt_Rules_AR.docx",
+    "size_bytes": 38318
+  },
+  {
+    "path": "17_EXTENSION_GOVERNANCE/07_Update_File_Pack_Codex_Workflow_AR.docx",
+    "size_bytes": 37993
+  },
+  {
+    "path": "17_EXTENSION_GOVERNANCE/README_EXTENSION_GOVERNANCE.md",
+    "size_bytes": 188
+  },
+  {
+    "path": "18_TECHNOLOGY_GOVERNANCE/01_Technology_Stack_Governance_Decision_Records_AR.docx",
+    "size_bytes": 38003
+  },
+  {
+    "path": "18_TECHNOLOGY_GOVERNANCE/02_Frontend_Backend_Separation_Architecture_AR.docx",
+    "size_bytes": 37341
+  },
+  {
+    "path": "18_TECHNOLOGY_GOVERNANCE/README_TECHNOLOGY_GOVERNANCE.md",
+    "size_bytes": 163
+  },
+  {
+    "path": "19_EXTENSION_BUSINESS_ARCHITECTURE/V7_01_Mobile_Business_AR.docx",
+    "size_bytes": 37519
+  },
+  {
+    "path": "19_EXTENSION_BUSINESS_ARCHITECTURE/V8_01_Desktop_Business_AR.docx",
+    "size_bytes": 37406
+  },
+  {
+    "path": "20_EXTENSION_TECHNICAL_ARCHITECTURE/00_Freemium_Technical_Entitlement_Enforcement_AR.docx",
+    "size_bytes": 38506
+  },
+  {
+    "path": "20_EXTENSION_TECHNICAL_ARCHITECTURE/V7_02_Mobile_Technical_AR.docx",
+    "size_bytes": 37198
+  },
+  {
+    "path": "20_EXTENSION_TECHNICAL_ARCHITECTURE/V8_02_Desktop_Technical_AR.docx",
+    "size_bytes": 37275
+  },
+  {
+    "path": "21_EXTENSION_DATABASE_API_ADDENDUM/V7_03_Mobile_DB_API_AR.docx",
+    "size_bytes": 37481
+  },
+  {
+    "path": "21_EXTENSION_DATABASE_API_ADDENDUM/V8_03_Desktop_DB_API_AR.docx",
+    "size_bytes": 37509
+  },
+  {
+    "path": "22_EXTENSION_CODEX_PROMPTS/00_Extension_Update_Codex_Prompt_Pack_AR.docx",
+    "size_bytes": 38507
+  },
+  {
+    "path": "22_EXTENSION_CODEX_PROMPTS/01_Freemium_Plans_Entitlements_Codex_Prompt_Pack_AR.docx",
+    "size_bytes": 39606
+  },
+  {
+    "path": "22_EXTENSION_CODEX_PROMPTS/README_CODEX_PROMPTS_EXTENSIONS.md",
+    "size_bytes": 178
+  },
+  {
+    "path": "22_EXTENSION_CODEX_PROMPTS/V7_04_Mobile_Codex_Prompts_AR.docx",
+    "size_bytes": 38440
+  },
+  {
+    "path": "22_EXTENSION_CODEX_PROMPTS/V8_04_Desktop_Codex_Prompts_AR.docx",
+    "size_bytes": 38408
+  },
+  {
+    "path": "23_EXTENSION_ACCEPTANCE_CHECKLISTS/00_Freemium_Plans_Entitlements_Acceptance_AR.docx",
+    "size_bytes": 37738
+  },
+  {
+    "path": "23_EXTENSION_ACCEPTANCE_CHECKLISTS/V7_05_Mobile_Acceptance_AR.docx",
+    "size_bytes": 37088
+  },
+  {
+    "path": "23_EXTENSION_ACCEPTANCE_CHECKLISTS/V8_05_Desktop_Acceptance_AR.docx",
+    "size_bytes": 37179
+  },
+  {
+    "path": "24_kabeeri_task_tracking/00_Task_Tracking_START_HERE_AR.docx",
+    "size_bytes": 37157
+  },
+  {
+    "path": "24_kabeeri_task_tracking/01_Task_Tracking_System_Architecture_AR.docx",
+    "size_bytes": 37108
+  },
+  {
+    "path": "24_kabeeri_task_tracking/02_VS_Code_Commands_Table_AR.docx",
+    "size_bytes": 37473
+  },
+  {
+    "path": "24_kabeeri_task_tracking/03_Codex_Auto_Update_Rules_AR.docx",
+    "size_bytes": 37042
+  },
+  {
+    "path": "24_kabeeri_task_tracking/README_TASK_TRACKING.md",
+    "size_bytes": 1009
+  },
+  {
+    "path": "24_kabeeri_task_tracking/TASK_TRACKER_QUICK_PROMPT.md",
+    "size_bytes": 632
+  },
+  {
+    "path": "24_kabeeri_task_tracking/logs/.gitkeep",
+    "size_bytes": 0
+  },
+  {
+    "path": "24_kabeeri_task_tracking/reports/.gitkeep",
+    "size_bytes": 0
+  },
+  {
+    "path": "24_kabeeri_task_tracking/scripts/kbr-task.php",
+    "size_bytes": 5831
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/ext_update.tasks.json",
+    "size_bytes": 3475
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/freemium.tasks.json",
+    "size_bytes": 5334
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/v1.tasks.json",
+    "size_bytes": 18672
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/v2.tasks.json",
+    "size_bytes": 22653
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/v3.tasks.json",
+    "size_bytes": 22316
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/v4.tasks.json",
+    "size_bytes": 23683
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/v5.tasks.json",
+    "size_bytes": 20947
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/v6.tasks.json",
+    "size_bytes": 23573
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/v7.tasks.json",
+    "size_bytes": 4624
+  },
+  {
+    "path": "24_kabeeri_task_tracking/tasks/v8.tasks.json",
+    "size_bytes": 4625
+  },
+  {
+    "path": "24_kabeeri_task_tracking/vscode/tasks.example.json",
+    "size_bytes": 584
+  },
+  {
+    "path": "99_ARCHIVE_SUPERSEDED/Kabeeri_Database_Laravel_Migration_Roadmap_AR_SUPERSEDED.docx",
+    "size_bytes": 26005
+  },
+  {
+    "path": "99_ARCHIVE_SUPERSEDED/Kabeeri_Database_Master_ERD_Module_Blueprint_AR_SUPERSEDED.docx",
+    "size_bytes": 25340
+  },
+  {
+    "path": "99_ARCHIVE_SUPERSEDED/Kabeeri_Database_V1_Exact_Migration_Pack_AR_SUPERSEDED.docx",
+    "size_bytes": 29161
+  }
+]

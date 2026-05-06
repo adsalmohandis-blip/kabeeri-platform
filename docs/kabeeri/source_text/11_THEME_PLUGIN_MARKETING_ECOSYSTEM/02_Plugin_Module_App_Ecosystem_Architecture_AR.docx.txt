@@ -1,0 +1,101 @@
+KABEERI Plugin, Module & App Ecosystem Architecture
+مخطط شامل للبلجنات والموديولات والحزم التي تخدم 300 ثيم وكل أنواع المشروعات
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. الفلسفة
+لا يتم التعامل مع كل شيء كـ Plugin. Kabeeri تحتاج نظام Packages متعدد الأنواع يحمي المنصة من فوضى WordPress، ويجعل كل ثيم يقترح App Recipe مناسبًا للمشروع.
+النوع
+الدور
+Plugin
+ميزة صغيرة مثل FAQ أو WhatsApp
+Theme
+واجهة وتجربة وديمو
+Module
+وظيفة كبيرة مثل CRM أو Booking
+ERP Module
+جزء عملياتي حساس مثل Accounting/Inventory
+Commerce App
+دفع، شحن، checkout، cart
+Connector
+تكامل خارجي
+AI Skill
+قدرة AI قابلة للتفعيل
+Template
+قالب صفحة/تقرير/workflow
+Industry Solution
+حزمة متكاملة لصناعة
+2. 12 عائلة Package
+• Core Utility Plugins
+• CMS & Content Plugins
+• Design & Theme Builder Plugins
+• Marketing & Growth Plugins
+• Forms, Leads & CRM Plugins
+• Booking & Service Operations Plugins
+• Commerce Apps
+• ERP Suites & Modules
+• Industry Solution Packs
+• Connectors & Integrations
+• AI Skills
+• Developer / Agency / Operations Plugins
+3. Launch Official Packages
+لإطلاق 300 ثيم لا نحتاج 300 بلجن. نحتاج حوالي 80 حزمة رسمية تغطي كل الوصفات.
+العائلة
+عدد تقريبي
+أمثلة
+Core/CMS
+20
+SEO, Forms, Redirects, Analytics, WhatsApp, Reviews, Blog Pro
+Commerce
+15
+Products, Cart, Orders, Coupons, Variants, Paymob, Fawry
+Booking/Services
+10
+Booking Lite, Table Reservation, Tour Booking, Room Request
+Industry
+15
+Property Listings, LMS Lite, Donations, Menu Builder, Affiliate Storefront
+ERP Essentials
+10
+CRM Lite, Quotations, Invoicing, Inventory, Tasks
+Integrations/AI
+10
+WordPress Importer, WooCommerce Importer, AI SEO, AI Page Builder
+4. Theme × Package Bundles
+نوع المشروع
+Required
+Recommended
+Optional
+Clinic
+Services, Booking, Forms
+Reviews, WhatsApp, Rabet Badge
+Payments, CRM, Reminders
+Ecommerce
+Products, Cart, Orders
+Coupons, Shipping, Reviews
+Abandoned Cart, Feeds, Affiliate
+Academy/LMS
+Courses, Enrollment
+Certificates, Payments, Reviews
+Quizzes, Drip Lessons
+NGO
+Donations, Campaigns
+Volunteer Forms, Events
+Recurring Donations, CRM
+Tourism
+Rooms/Tours, Booking Request
+Calendar, Reviews, Payments
+Multi-language, Coupons
+Affiliate
+Partner Storefront, Tracking
+Commission, Catalog Sharing
+Payouts, Fraud Checks
+Agency
+Portfolio, Service Packages
+Client Intake, Reviews
+Agency Dashboard, Reports
+5. Package Manifest Rules
+name, slug, type, version, publisher, dependencies, permissions, data scopes, events, hooks, compatibility, pricing, review_status, signature
+• كل حزمة تعلن required/recommends/conflicts/extends/provides.
+• كل حزمة تعرض صلاحياتها قبل التثبيت.
+• ERP Modules تحتاج مراجعة أعلى من Plugins العادية.
+• أي حزمة لها migrations تحتاج backup وrollback plan.
+KABEERI — Confidential Product Architecture

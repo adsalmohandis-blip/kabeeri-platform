@@ -1,0 +1,62 @@
+KABEERI Database File — Events & Workflows Database
+قاعدة بيانات الأحداث والـ Workflows والـ Automations
+KABEERI / Kabeeri — powered by ADMIT
+الحالة: Canonical Draft 1.0 | اللغة: العربية | قابل للتنفيذ داخل Laravel Modular Monolith
+1. الهدف
+الهدف هو بناء Event-driven Modular Monolith بحيث تتكامل الموديولات عبر Events وListeners وWorkflows وWebhooks بدل الاستدعاءات المباشرة العشوائية.
+2. Core Tables
+الجدول
+الدور
+event_definitions
+تعريف أنواع الأحداث الرسمية
+event_dispatch_logs
+كل حدث تم إطلاقه فعليًا
+event_listener_registry
+المستمعون المسجلون لكل حدث
+event_listener_runs
+نتائج تشغيل كل listener
+workflow_definitions
+تعريف workflow منطقي
+workflow_versions
+نسخ workflows للحفاظ على التاريخ
+workflow_runs
+تشغيل workflow على كيان محدد
+workflow_step_runs
+تشغيل كل خطوة
+approval_requests
+طلبات الموافقة
+approval_decisions
+قرارات الموافقة/الرفض
+automation_rules
+قواعد when/if/do البسيطة
+webhook_endpoints
+نقاط webhook خارجية
+webhook_deliveries
+محاولات إرسال webhooks
+workflow_retry_queue
+إعادة المحاولة
+workflow_failure_logs
+الأخطاء والتحقيقات
+3. Event Shape
+• event_key مثل ContentPublished أو OrderPaid.
+• organization_id / company_id / site_id عند الحاجة.
+• actor_user_id إن وجد.
+• subject_type وsubject_id.
+• payload_hash لتتبع التغييرات بدون الاعتماد على payload كبير.
+• risk_level لتوجيه audit/approval.
+4. Workflows
+Workflow يملك definition وversion، وكل تشغيل workflow_run يرتبط بكيان مثل quotation أو purchase request أو verification request أو AI change plan.
+5. Approval Rules
+• أي approval له requester، approver، status، SLA، comments، وaudit log.
+• deny أو rejection يسجل السبب ولا يحذف الطلب.
+• AI sensitive changes يجب أن تستخدم approval_requests قبل apply.
+6. Flows
+• ContentPublished → clear cache → update sitemap → notify editors → log activity.
+• OrderPaid → create invoice → reserve/deduct stock → notify customer → trigger accounting later.
+• CompanyVerified → update trust record → update Mall mirror → notify owner.
+• AIPlanApproved → create rollback point → apply changes → audit log.
+7. قواعد الأمان
+• No listener may bypass permissions.
+• No workflow applies sensitive action without explicit approval.
+• Failed listeners do not lose event history.
+• Webhooks use signed payloads and retry limits.

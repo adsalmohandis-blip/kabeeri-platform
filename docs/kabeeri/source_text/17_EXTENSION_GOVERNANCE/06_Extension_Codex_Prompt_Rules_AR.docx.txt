@@ -1,0 +1,43 @@
+06 — قواعد كتابة برومبتات Codex للتحديثات والإضافات
+هذا الملف يحكم كيف نكتب برومبتات Codex لأي تحديث جديد داخل Kabeeri Knowledge System أو داخل الكود لاحقًا.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+الهيكل القياسي لكل تحديث
+Business Architecture: لماذا التحديث مهم تجاريًا ولمن يخدم؟
+Technical Architecture: كيف سيعمل تقنيًا وما حدوده؟
+Database/API Addendum: الجداول وAPIs والـ feature flags والصلاحيات.
+Codex Prompt Pack: برومبتات صغيرة آمنة للتنفيذ.
+Acceptance Checklist: شروط القبول والاختبارات وعدم كسر القديم.
+أجزاء كل Prompt إلزامية
+Title واضح وScope محدد.
+Read docs list: الملفات التي يجب على Codex قراءتها.
+Hard rules: ممنوعات صريحة، خصوصًا عدم تعديل النسخ المجمّدة.
+Tasks: خطوات صغيرة قابلة للتنفيذ.
+Acceptance Criteria: كيف نعرف أن المهمة انتهت.
+Do Not Implement: ما لا يجب عمله في هذا prompt.
+Output format: Summary, files changed, commands, tests, risks.
+قواعد منع المخاطر
+One prompt = one branch = one feature = tests = review = commit.
+أي تعديل على نسخة Frozen يتم عبر Addendum وليس تعديل مباشر.
+أي migration يجب أن يكون additive ما لم يوافق صاحب المشروع صراحة.
+أي API جديد يجب أن يكون موثقًا أو قابلًا للتوثيق في OpenAPI.
+أي صلاحية أو وصول لبيانات يجب أن يظهر في permissions/manifest.
+أنواع برومبتات التحديث حسب نوع الملف
+نوع الملف
+غرض البرومبت
+مخرجات Codex المطلوبة
+Business
+تلخيص/إنشاء مبرر تجاري
+ملف DOCX + قائمة قرارات
+Technical
+شرح المعمارية والتكامل
+ملف DOCX + diagrams نصية
+Database/API
+اقتراح الجداول والـ endpoints
+Addendum + migration notes
+Codex Prompt Pack
+تقسيم التنفيذ إلى prompts
+Prompt per page in DOCX
+Acceptance Checklist
+شروط القبول والاختبار
+Checklist + release gate

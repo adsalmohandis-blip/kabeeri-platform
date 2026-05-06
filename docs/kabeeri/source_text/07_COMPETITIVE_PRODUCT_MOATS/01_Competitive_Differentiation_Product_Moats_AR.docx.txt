@@ -1,0 +1,44 @@
+KABEERI Competitive Differentiation & Product Moats
+ميزات التنافس والدفاع الاستراتيجي للمنصة
+KABEERI / Kabeeri — powered by ADMIT
+الحالة: Canonical Draft 1.0 | اللغة: العربية | قابل للتنفيذ داخل Laravel Modular Monolith
+1. الفكرة
+Kabeeri لا تنافس بكونها تجمع ميزات كثيرة فقط، بل بوجود مسار انتقال ونمو لا يقدمه المنافسون بنفس الترابط: هجرة WordPress، حفظ الشكل، Trust Layer، Company OS، AI guarded builder، وحرية Cloud/Portable/Dedicated.
+2. الرسالة التنافسية
+Kabeeri ينقل موقعك الحالي ويحافظ على شغلك، ثم يحوله إلى نظام تشغيل كامل لشركتك.
+3. Product Moats
+الميزة الدفاعية
+لماذا مهمة
+Migration Center
+يجذب مستخدمي WordPress/WooCommerce بدل البدء من الصفر
+Plugin/Theme Compatibility Layer
+يفهم الموقع القديم ويقترح بدائل وتحويلات آمنة
+AI Rebuild Assistant
+يحسن الموقع المستورد بدل مجرد نسخه
+Rabet Trust Layer
+تحويل الموقع إلى شركة موثقة قابلة للثقة والظهور
+Business Passport
+هوية العميل/الشركة تستمر عبر Cloud/Portable/Dedicated/Mall
+Agency Command Center
+قناة نمو B2B عبر الوكالات
+Kabeeri Mall Network
+قناة اكتشاف وتجارة وثقة وليست مجرد موقع
+Ownership Freedom
+Cloud + Frontend Anywhere + Portable + Dedicated ضد lock-in
+Guarded AI Co-builder
+AI يخطط ويعرض ويطلب موافقة ويسجل rollback
+Arabic/MENA Local-first
+RTL، بوابات دفع محلية، Country Packs، e-invoicing readiness
+4. الأولويات
+• أول سنة: WordPress Migration Center + Visual/SEO preservation + Agency Command Center.
+• بعد V2/V3: WooCommerce migration + Business Kits + Rabet Upgrade Path.
+• بعد Commercial Launch: Public Developer Marketplace + Advanced AI + Mall network growth.
+• Enterprise لاحقًا: Dedicated, GRC, BI, Data Platform, Industry Solutions.
+5. ما لا نفعله مبكرًا
+• لا نبني ERP كامل قبل Company/Permissions/Workflows.
+• لا نفتح Public Marketplace قبل signing/review/security.
+• لا نعد بتحويل كل WordPress plugin/theme 100% تلقائيًا.
+• لا نجعل AI يطبق تغييرات حساسة بدون preview/approval/rollback.
+• لا نطلق Mall عام بدون moderation/reviews/disputes/consent.
+6. Winning Narrative
+ابدأ من موقعك الحالي، لا تخسره. انقله إلى Kabeeri، حسنه بالذكاء الاصطناعي، وثّق شركتك عبر Rabet، شغّل تجارتك وعملياتك، واظهر داخل Kabeeri Mall عندما تكون جاهزًا.

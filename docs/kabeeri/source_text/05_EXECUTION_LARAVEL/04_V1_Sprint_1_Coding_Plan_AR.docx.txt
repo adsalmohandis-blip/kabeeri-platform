@@ -1,0 +1,91 @@
+KABEERI V1 Sprint 1 Coding Plan
+خطة أول Sprint تنفيذية لبناء نواة Kabeeri على Laravel + Filament
+KABEERI / Kabeeri — powered by ADMIT
+الحالة: Canonical Draft 1.0 | اللغة: العربية | قابل للتنفيذ داخل Laravel Modular Monolith
+1. هدف Sprint 1
+الخروج بنواة Laravel قابلة للتشغيل تحتوي Auth، Users، Organizations، Memberships، Roles/Permissions، Sites، Activity Log، Feature Flags، وأول Filament navigation بسيط.
+2. المخرجات النهائية
+• Laravel app يعمل محليًا.
+• Filament admin مثبت ومؤمن.
+• أول migrations الأساسية تعمل.
+• Models وعلاقاتها الأساسية موجودة.
+• Policies مبدئية لـ Organization/Site.
+• Seeders لأدوار وصلاحيات V1.
+• Filament Resources لـ Organizations, Sites, Users, Activity Logs.
+• Feature tests تمر بنجاح.
+• Git history صغير ومنظم.
+3. ترتيب الأيام
+اليوم
+المهمة
+Day 1
+Setup Laravel, env, DB, Pint, Pest/PHPUnit, Filament
+Day 2
+Create users/user_profiles/countries/currencies base migrations
+Day 3
+organizations + organization_memberships + seed owner/admin roles
+Day 4
+roles/permissions/role_permission/assignments/overrides
+Day 5
+sites + settings + feature_flags + feature_flag_overrides
+Day 6
+activity_logs + audit_logs + notifications basic
+Day 7
+Filament Resources: Organization, Site, User, ActivityLog
+Day 8
+Policies and permission middleware/context checks
+Day 9
+Tests: auth, org creation, site creation, permissions, logs
+Day 10
+Manual QA, cleanup, README dev setup, release tag sprint-1
+4. أول migrations
+• create_countries_table
+• create_currencies_table
+• create_users_table
+• create_user_profiles_table
+• create_organizations_table
+• create_organization_memberships_table
+• create_roles_table
+• create_permissions_table
+• create_role_permission_table
+• create_membership_role_assignments_table
+• create_membership_permission_overrides_table
+• create_sites_table
+• create_settings_table
+• create_feature_flags_table
+• create_feature_flag_overrides_table
+• create_activity_logs_table
+• create_audit_logs_table
+• create_notifications_table
+5. أول Models
+• User
+• UserProfile
+• Organization
+• OrganizationMembership
+• Role
+• Permission
+• Site
+• Setting
+• FeatureFlag
+• ActivityLog
+• AuditLog
+• Notification
+6. أول Policies
+• OrganizationPolicy: view, update, inviteMember, manageRoles.
+• SitePolicy: view, create, update, delete, manageSettings.
+• RolePolicy: assign only with users.role.assign permission.
+• AuditLogPolicy: sensitive logs only for authorized admins.
+7. Git Commit Plan
+• chore: bootstrap laravel filament project
+• feat: add identity and organization migrations
+• feat: add roles permissions and membership assignments
+• feat: add sites settings and feature flags
+• feat: add activity audit logs and notifications foundation
+• feat: add initial filament resources
+• test: add core identity and permissions tests
+8. Acceptance Criteria
+• User can login to Filament.
+• Organization owner can create organization and site.
+• Unauthorized user cannot manage another organization.
+• Important actions create activity logs.
+• Feature flags can be created and overridden.
+• Tests pass and migrations refresh cleanly.

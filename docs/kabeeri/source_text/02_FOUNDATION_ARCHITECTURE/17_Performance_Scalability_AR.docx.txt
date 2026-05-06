@@ -1,0 +1,428 @@
+KABEERI — ملحق 17: معمارية الأداء والتوسع
+Performance & Scalability Architecture
+هذا الملحق يحدد كيف يجب أن تُبنى Kabeeri لتكون سريعة وقابلة للتوسع، مع الحفاظ على الاستقرار عند زيادة عدد:
+المواقع.
+الشركات.
+المستخدمين.
+المنتجات.
+الطلبات.
+ملفات الميديا.
+موديولات ERP.
+الرسائل.
+الأحداث.
+الـ workflows.
+الـ AI actions.
+التكاملات الخارجية.
+الهدف:
+بناء Kabeeri بطريقة لا تنهار عند النجاح.
+1. لماذا الأداء والتوسع مهمان؟
+Kabeeri ليست موقعًا واحدًا.
+Kabeeri قد تصبح منصة تحتوي على:
+آلاف المواقعآلاف الشركاتملايين الصفحاتملايين المنتجاتملايين الطلباتملفات كثيرةمستخدمين من شركات مختلفةERP data ضخمةKabeeri Mall public trafficAI actionsIntegration sync jobs
+لذلك الأداء يجب أن يكون جزءًا من التصميم من البداية، وليس إصلاحًا لاحقًا.
+2. القاعدة الرئيسية
+الأداء في Kabeeri يعتمد على 7 قواعد:
+1. Scope data correctly2. Cache aggressively but safely3. Queue heavy work4. Index searchable data5. Optimize database queries6. Separate public traffic from admin work where needed7. Monitor before scaling blindly
+3. مراحل التوسع
+3.1 المرحلة الأولى — Single Server / Small Deployment
+مناسبة لـ V1 وV2.
+Laravel AppMySQLLocal/Cloud storageBasic cacheBasic queue
+الهدف:
+بساطة التطوير.
+سهولة التثبيت.
+تقليل التعقيد.
+3.2 المرحلة الثانية — Optimized Monolith
+مناسبة لـ V3 وV4.
+Laravel AppMySQL optimizedRedis cache/queuesObject storageQueue workersSchedulerSearch engine basic
+الهدف:
+تحسين الأداء.
+دعم Cloud أولي.
+دعم Kabeeri Mall وRabet وCommerce.
+3.3 المرحلة الثالثة — Scalable Modular Monolith
+مناسبة لـ V4 وV5.
+Multiple app serversLoad balancerManaged databaseRedisObject storage/CDNDedicated queue workersSearch serviceMonitoring
+الهدف:
+دعم مستخدمين أكثر.
+فصل الأحمال الثقيلة.
+تشغيل sync jobs وAI jobs بشكل آمن.
+3.4 المرحلة الرابعة — Enterprise Scale
+مناسبة لـ V6 وما بعدها.
+Horizontal scalingRead replicasDedicated queues per domainDedicated search clustersEvent streaming optionalTenant isolation optionsRegional deployments optional
+الهدف:
+دعم Enterprise.
+دعم multi-region لاحقًا.
+دعم large tenants.
+4. Multi-tenancy Strategy
+4.1 V1 التوصية
+لا نبدأ بتعقيد قواعد بيانات منفصلة لكل عميل.
+التوصية:
+Shared databaseorganization_id في الجداول المهمةcompany_id عند الحاجةsite_id عند الحاجة
+4.2 لماذا Shared Database أولًا؟
+لأنها:
+أسهل في التطوير.
+أسهل في الاختبار.
+أسهل في بناء V1.
+مناسبة للبداية.
+تقلل تعقيد migrations.
+4.3 مخاطر Shared Database
+تسريب بيانات بين tenants لو scoping خطأ.
+queries أبطأ مع نمو البيانات.
+صعوبة عزل عملاء Enterprise.
+لذلك يجب من البداية الالتزام بـ:
+Tenant scopingPoliciesIndexesTesting permissions
+4.4 Enterprise Isolation لاحقًا
+لاحقًا يمكن دعم:
+Shared database for normal customersDedicated database for enterprise tenantDedicated storage bucketDedicated queueDedicated AI mode
+5. Tenant Scoping Rules
+أي جدول مهم يجب أن يعرف سياقه.
+5.1 أمثلة scope
+organization_idcompany_idsite_iduser_id
+5.2 قواعد
+المحتوى يتبع Site.
+الشركة تتبع Organization.
+ERP يتبع Company.
+Business Profile يتبع Organization/Company.
+Professional Profile يتبع User.
+Billing غالبًا يتبع Organization أو BillingAccount.
+6. Database Performance
+6.1 Indexes أساسية من V1
+يجب إضافة indexes على:
+organization_idcompany_idsite_iduser_idstatusvisibilityslugcreated_atupdated_atpublished_at
+6.2 Composite Indexes
+أمثلة مهمة:
+site_id + slugsite_id + status + published_atorganization_id + statuscompany_id + statusbusiness_profile_id + statususer_id + status
+6.3 Slug Uniqueness
+Slug لا يكون عالميًا دائمًا.
+أمثلة:
+content_entries: unique(site_id, slug)business_profiles: unique(slug) أو unique(country, slug) حسب strategyproducts: unique(site_id, slug) أو unique(company_id, sku)
+6.4 Avoid N+1 Queries
+Kabeeri سيكون فيه علاقات كثيرة.
+يجب استخدام:
+eager loading.
+pagination.
+query scopes.
+resource transformers.
+6.5 Pagination Always
+أي قائمة كبيرة يجب أن تكون paginated.
+أمثلة:
+Pages.
+Posts.
+Media.
+Users.
+Orders.
+Products.
+Tasks.
+Activity logs.
+Audit logs.
+Kabeeri Mall listings.
+6.6 Archiving Strategy
+بعض الجداول ستكبر جدًا:
+activity_logsaudit_logsnotificationsmessagesorderssync_logsai_logs
+لاحقًا نحتاج:
+retention policies.
+archival tables.
+cold storage.
+export before archive.
+7. Caching Strategy
+7.1 أنواع الكاش
+Config cacheRoute cacheView cacheQuery cachePage cacheFragment cacheMenu cacheSEO cachePermission cacheFeature flag cacheTheme cache
+7.2 Public Page Cache
+المواقع العامة يجب أن تكون سريعة جدًا.
+يمكن استخدام:
+full page cache.
+static HTML cache لاحقًا.
+CDN.
+cache per site.
+7.3 Cache Invalidation
+أهم من الكاش نفسه.
+أمثلة:
+ContentPublished → clear page cacheContentUpdated → clear affected page cacheMenuUpdated → clear menu cacheThemeActivated → clear theme cacheProductUpdated → clear product cacheBusinessProfileUpdated → clear Mall listing cache
+7.4 Permission Cache
+الصلاحيات قد تكون معقدة.
+يمكن caching لـ:
+user permissions per organizationuser permissions per companyuser permissions per site
+لكن يجب مسحها عند:
+role changed.
+permission changed.
+membership changed.
+deny override changed.
+7.5 Feature Flag Cache
+Feature flags يجب أن تكون سريعة.
+Cache حسب:
+platformorganizationcompanysiteplan
+7.6 Search Result Cache
+Kabeeri Mall قد يحتاج cache لنتائج البحث الشائعة.
+لكن يجب الحذر مع:
+filters.
+personalization.
+visibility.
+verified-only results.
+8. Queue Strategy
+8.1 ما الذي يجب أن يعمل في Queues؟
+EmailsNotifications deliveryMedia processingThumbnail generationImportsExportsBackupsSearch indexingSitemap generationAI actionsWebhook deliveryIntegration sync jobsInvoice PDF generationReport generationPackage scans
+8.2 Queue Priorities
+نحتاج queues متعددة لاحقًا:
+defaultemailsmediaimportsexportssearchbillingintegrationsaireportslow_priority
+8.3 V1 Queue
+في V1 يمكن البدء بـ:
+default queueemails/media/imports jobs basic
+8.4 Failed Jobs
+أي failed job يجب أن يكون مرئيًا.
+Admin يحتاج شاشة:
+Failed Jobs
+تعرض:
+job type.
+error.
+retries.
+related organization.
+retry button.
+لاحقًا في System Health.
+9. Media & File Scalability
+9.1 Storage Modes
+Local storageObject storage S3-compatibleCloud storagePrivate storage for sensitive documentsCDN for public media
+9.2 Media Processing
+يجب أن يتم عبر queue:
+thumbnails.
+image optimization.
+metadata extraction.
+video processing لاحقًا.
+9.3 File Organization
+تجنب وضع كل الملفات في مجلد واحد.
+اقتراح:
+organizations/{organization_id}/sites/{site_id}/media/yyyy/mm/fileorganizations/{organization_id}/companies/{company_id}/documents/yyyy/mm/file
+9.4 Public vs Private Media
+public media يمكن تقديمه عبر CDN.
+private documents يجب أن تستخدم signed URLs.
+sensitive file access يجب أن يسجل.
+10. Search Scalability
+10.1 V1 Search
+في البداية:
+Database searchbasic title/content search
+10.2 V2/V3 Search
+يمكن استخدام:
+MeilisearchTypesense
+مناسب لـ:
+CMS.
+Products.
+Business directory.
+Talent search.
+10.3 V6 / Enterprise Search
+لاحقًا:
+OpenSearch / Elasticsearch
+مناسب لـ:
+Enterprise search.
+logs.
+ERP search.
+documents.
+10.4 Search Indexing Events
+ContentPublished → index contentProductPublished → index productBusinessProfilePublished → index businessProfessionalProfilePublished → index talent
+11. Kabeeri Mall Performance
+Kabeeri Mall سيكون public-facing وقد يحصل على traffic كبير.
+11.1 يجب تحسين
+business search.
+service search.
+product search.
+talent search.
+category pages.
+featured listings.
+listing pages.
+11.2 يجب استخدام
+search index.
+cached category pages.
+CDN للصور.
+pagination/infinite scroll بحذر.
+filters optimized.
+11.3 Ranking Performance
+Trust score وreviews وverification لا يجب حسابها كل مرة live.
+يجب استخدام:
+precomputed ranking signalsreputation_scores tablescheduled recalculation
+12. ERP Performance
+ERP data تنمو بسرعة.
+12.1 Finance
+journal entries كثيرة.
+invoices كثيرة.
+reports قد تكون ثقيلة.
+يجب استخدام:
+indexes.
+date filters.
+period closing.
+precomputed reports لاحقًا.
+12.2 Inventory
+stock movements لا تحذف.
+الحسابات اللحظية قد تكون ثقيلة.
+نحتاج لاحقًا:
+stock_balances tablestock_movements as ledger
+12.3 Reports
+التقارير الكبيرة يجب أن تعمل في queue.
+13. AI Performance & Cost Control
+AI قد يكون بطيئًا ومكلفًا.
+13.1 قواعد
+لا تستخدم AI في كل request.
+استخدمه عند طلب المستخدم أو jobs محددة.
+cache نتائج التحليل غير الحساسة.
+سجل usage.
+حدد limits.
+استخدم background jobs للمهام الطويلة.
+13.2 AI Tasks في Queue
+أمثلة:
+analyze migration.
+generate long report.
+build workflow.
+rebuild page.
+summarize ERP report.
+14. API Scalability
+14.1 Rate Limiting
+كل API يحتاج rate limits.
+خاصة:
+auth.
+public forms.
+Kabeeri Mall search.
+webhooks.
+AI endpoints.
+import/export.
+14.2 Pagination
+أي API list يجب أن يكون paginated.
+14.3 API Response Optimization
+لا ترجع relations غير مطلوبة.
+استخدم sparse fields لاحقًا.
+استخدم resources/transformers.
+15. Webhook Scalability
+Webhook delivery يجب أن يكون queued.
+15.1 قواعد
+retries.
+exponential backoff.
+delivery logs.
+signature.
+disable endpoint بعد فشل متكرر.
+16. Import/Export Scalability
+Imports قد تكون ضخمة.
+16.1 قواعد
+chunk processing.
+queue jobs.
+progress tracking.
+error reporting.
+resumable imports لاحقًا.
+rollback batch.
+16.2 Exports
+Exports الكبيرة يجب أن تعمل كـ job.
+لا يتم توليد ملف ضخم في request مباشر.
+17. Notifications Scalability
+Notifications قد تصبح كثيرة.
+17.1 قواعد
+in-app notifications in DB.
+email delivery queued.
+digest notifications لاحقًا.
+notification preferences.
+archive old notifications.
+18. Activity Log Scalability
+Activity logs ستكبر بسرعة.
+18.1 قواعد
+indexes على scope/date/action.
+retention policies.
+archive old logs.
+no heavy metadata unless needed.
+separate audit logs for sensitive events.
+19. Cloud Scalability
+في Cloud، لدينا تحديات إضافية.
+19.1 Site Provisioning
+إنشاء موقع جديد يجب أن يكون automated:
+create tenant records.
+create default site.
+configure domain.
+SSL.
+storage.
+default theme.
+19.2 Domain Routing
+يجب دعم:
+subdomains.
+custom domains.
+SSL.
+tenant/site lookup cache.
+19.3 Site Lookup Performance
+عند كل request عام، النظام يحتاج معرفة site من domain.
+يجب cache:
+domain → site_id
+20. CDN Strategy
+20.1 أين نستخدم CDN؟
+public media.
+theme assets.
+compiled CSS/JS.
+product images.
+Kabeeri Mall images.
+20.2 لا تستخدم CDN للملفات الخاصة
+المستندات الحساسة لا تكون public CDN بدون signed access.
+21. Performance Monitoring
+21.1 ما الذي نقيسه؟
+Response timeSlow queriesQueue lengthFailed jobsCache hit rateMemory usageCPU usageStorage usageSearch latencyImport durationAI latencyWebhook failures
+21.2 V1 System Status
+في V1 نحتاج صفحة بسيطة:
+System Status
+تعرض:
+database status.
+storage status.
+queue status.
+cache status.
+app version.
+disk usage.
+22. Load Testing
+22.1 متى؟
+ليس ضروريًا في V1 بشكل كامل.
+لكن قبل Cloud وKabeeri Mall يجب اختبار:
+public page traffic.
+search.
+checkout.
+login.
+media upload.
+23. Performance Budgets
+23.1 V1 targets
+Admin page load: acceptable under normal local/server conditionsPublic page render: fast with cacheMedia upload: queued processingDashboard queries: limited
+23.2 لاحقًا
+نضع أرقام واضحة:
+Public page TTFBAdmin response timeSearch response timeCheckout success latency
+24. Scaling Roadmap
+V1
+Single appMySQLBasic cacheBasic queueLocal/object storage readySystem statusIndexes من البداية
+V2
+Import jobsMedia processing queuesRedirect/cache improvementsBasic search optimization
+V3
+ERP indexesReport jobsTask/workflow queuesSearch engine optional
+V4
+Cloud scalingRedisObject storageCDNQueue workersMonitoringDomain lookup cache
+V5
+Integration queuesDedicated sync workersSearch serviceReport workersRead replicas optional
+V6
+Enterprise scalingTenant isolation optionsAdvanced cachingDedicated databases optionalMulti-region optionalObservability full
+25. V1 Requirements من هذا الملحق
+Must-have في V1
+Database indexes for core tablesPagination for listsBasic cache supportBasic queue supportMedia processing architectureSystem status pageDomain/site lookup designActivity log indexesFeature flag cache concept
+Should-have في V1
+Redis-ready configurationQueue worker docsStorage abstractionCache invalidation eventsSlow query awarenessImport/export job structure
+Not required in V1
+Multi-server deploymentCDN fullSearch engine fullRead replicasDedicated tenant databasesAuto-scalingMulti-regionAdvanced observability
+26. أخطاء ممنوعة
+26.1 لا تبني بدون indexes
+خصوصًا على organization_id وsite_id وcompany_id.
+26.2 لا تحمل كل البيانات مرة واحدة
+أي list يجب أن يكون paginated.
+26.3 لا تنفذ imports في request مباشر
+استخدم jobs.
+26.4 لا تعالج الصور الثقيلة في request مباشر
+استخدم queue.
+26.5 لا تحسب Trust Score في كل page view
+استخدم precomputed scores.
+26.6 لا ترسل AI tasks الطويلة في request مباشر
+استخدم queue.
+26.7 لا تخلط الملفات العامة والخاصة
+الأمان والأداء يتأثران.
+27. الخلاصة التنفيذية
+Kabeeri يجب أن تبدأ بسيطة، لكن مصممة للتوسع.
+القاعدة النهائية:
+Start as a modular monolithScope data correctlyIndex earlyCache safelyQueue heavy workMonitor continuouslyScale only when evidence says so
+بالعربي:
+ابدأ بسيطًا، لكن لا تبني بطريقة تمنعك من التوسع عند النجاح.
+28. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق إضافي اختياري:
+ملحق 18 — Product Positioning & Go-To-Market Strategy
+إذا أردنا تثبيت الرسالة التسويقية والجمهور الأول قبل V1.

@@ -1,0 +1,132 @@
+{
+  "00_SYSTEM_INDEX": {
+    "files": 39,
+    "words": 17827,
+    "chars": 297980
+  },
+  "01_STRATEGY_AND_BUSINESS": {
+    "files": 4,
+    "words": 10271,
+    "chars": 71971
+  },
+  "02_FOUNDATION_ARCHITECTURE": {
+    "files": 18,
+    "words": 36267,
+    "chars": 297470
+  },
+  "03_RELEASE_SPECS": {
+    "files": 6,
+    "words": 22263,
+    "chars": 230379
+  },
+  "04_DATABASE_ARCHITECTURE": {
+    "files": 47,
+    "words": 118655,
+    "chars": 1033732
+  },
+  "05_EXECUTION_LARAVEL": {
+    "files": 8,
+    "words": 10056,
+    "chars": 80910
+  },
+  "06_WORDPRESS_MIGRATION_CENTER": {
+    "files": 2,
+    "words": 944,
+    "chars": 6775
+  },
+  "07_COMPETITIVE_PRODUCT_MOATS": {
+    "files": 1,
+    "words": 309,
+    "chars": 2108
+  },
+  "08_DEVELOPER_ECONOMY": {
+    "files": 1,
+    "words": 2151,
+    "chars": 16034
+  },
+  "09_ENGINEERING_STANDARDS": {
+    "files": 5,
+    "words": 1671,
+    "chars": 12701
+  },
+  "10_PEOPLE_PARTNER_WORK_NETWORK": {
+    "files": 7,
+    "words": 2384,
+    "chars": 16714
+  },
+  "11_THEME_PLUGIN_MARKETING_ECOSYSTEM": {
+    "files": 16,
+    "words": 10900,
+    "chars": 83074
+  },
+  "12_EXTERNAL_REFERENCES": {
+    "files": 1,
+    "words": 7,
+    "chars": 44
+  },
+  "13_CODING_READY_EXECUTION": {
+    "files": 8,
+    "words": 2397,
+    "chars": 15004
+  },
+  "14_MALL_MARKETPLACE_NETWORK": {
+    "files": 5,
+    "words": 2091,
+    "chars": 13989
+  },
+  "15_VERSION_CODING_PLANS": {
+    "files": 6,
+    "words": 1116,
+    "chars": 7708
+  },
+  "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX": {
+    "files": 6,
+    "words": 26861,
+    "chars": 207121
+  },
+  "17_EXTENSION_GOVERNANCE": {
+    "files": 8,
+    "words": 1066,
+    "chars": 7199
+  },
+  "18_TECHNOLOGY_GOVERNANCE": {
+    "files": 3,
+    "words": 299,
+    "chars": 2157
+  },
+  "19_EXTENSION_BUSINESS_ARCHITECTURE": {
+    "files": 2,
+    "words": 177,
+    "chars": 1142
+  },
+  "20_EXTENSION_TECHNICAL_ARCHITECTURE": {
+    "files": 3,
+    "words": 443,
+    "chars": 3115
+  },
+  "21_EXTENSION_DATABASE_API_ADDENDUM": {
+    "files": 2,
+    "words": 137,
+    "chars": 1497
+  },
+  "22_EXTENSION_CODEX_PROMPTS": {
+    "files": 5,
+    "words": 1944,
+    "chars": 15044
+  },
+  "23_EXTENSION_ACCEPTANCE_CHECKLISTS": {
+    "files": 3,
+    "words": 302,
+    "chars": 1933
+  },
+  "24_kabeeri_task_tracking": {
+    "files": 18,
+    "words": 11540,
+    "chars": 159861
+  },
+  "99_ARCHIVE_SUPERSEDED": {
+    "files": 3,
+    "words": 6220,
+    "chars": 99623
+  }
+}

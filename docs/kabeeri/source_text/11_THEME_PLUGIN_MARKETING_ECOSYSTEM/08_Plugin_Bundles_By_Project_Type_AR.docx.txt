@@ -1,0 +1,159 @@
+08 — حزم البلجنات حسب نوع المشروع
+بدل عرض عشرات البلجنات على المستخدم، هذا الملف يحدد Bundles جاهزة لكل نوع مشروع.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+نوع المشروع
+Bundle
+Required
+Recommended
+Optional
+شركات وخدمات عامة
+Business Starter Bundle
+seo-basic, forms-pro, services-catalog, analytics, whatsapp-contact
+reviews, newsletter, campaign-manager-lite, rabet-trust-badge
+ai-assistant, advanced-reports, mobile-profile-v7
+عيادات ومراكز صحية
+Clinic Bundle
+seo-basic, forms-pro, services-catalog, booking-lite, doctors-profiles
+appointment-reminders, whatsapp-reminders, reviews, rabet-trust-badge
+ai-assistant, advanced-reports, mobile-profile-v7
+تجميل وسبا وWellness
+Beauty Wellness Bundle
+seo-basic, forms-pro, booking-lite, before-after-gallery, reviews
+offers, whatsapp-campaigns, service-packages, social-proof
+ai-assistant, advanced-reports, mobile-profile-v7
+مطاعم وكافيهات وأغذية
+Restaurant Bundle
+seo-basic, menu-builder, table-reservation, qr-menu, whatsapp-contact
+offers, local-delivery, coupons-basic, reviews
+ai-assistant, advanced-reports, mobile-profile-v7
+متاجر إلكترونية عامة
+Commerce Starter Bundle
+seo-basic, products, product-categories, cart, orders, coupons-basic
+product-reviews, abandoned-cart-lite, product-feed-basic, meta-pixel
+ai-assistant, advanced-reports, mobile-profile-v7
+أزياء وموضة وإكسسوارات
+Fashion Commerce Bundle
+products, variants-basic, size-guide, lookbook, product-reviews
+wishlist, abandoned-cart-lite, instagram-feed, gift-cards
+ai-assistant, advanced-reports, mobile-profile-v7
+إلكترونيات وموبايلات وأجهزة
+Electronics Commerce Bundle
+products, variants-basic, warranty-info, product-comparison, inventory-basic
+reviews, returns-basic, shipping-rules, installment-request
+ai-assistant, advanced-reports, mobile-profile-v7
+أثاث ومنزل وديكور
+Home Furniture Bundle
+products, collections, gallery, quote-request, delivery-rules
+room-inspiration, booking-consultation, reviews, coupons-basic
+ai-assistant, advanced-reports, mobile-profile-v7
+عقارات وتطوير عقاري
+Real Estate Bundle
+property-listings, property-filters, map-listings, lead-capture, crm-lite
+whatsapp-contact, campaign-manager-lite, property-landing-pages, reviews
+ai-assistant, advanced-reports, mobile-profile-v7
+مقاولات وتشطيبات ومعمار
+Construction Bundle
+projects-portfolio, services-catalog, quote-request, case-studies, rabet-trust-badge
+document-upload, crm-leads, reviews, project-inquiry-form
+ai-assistant, advanced-reports, mobile-profile-v7
+تعليم ومدارس وحضانات
+Education Bundle
+programs-catalog, trainers-profiles, enrollment-forms, events-basic, newsletter
+class-booking, payments-placeholder, reviews, whatsapp-reminders
+ai-assistant, advanced-reports, mobile-profile-v7
+أكاديميات وكورسات وLMS
+LMS Bundle
+courses-catalog, lessons-basic, enrollment-forms, certificates-basic, payments-placeholder
+quizzes-basic, drip-lessons, course-reviews, student-inquiry-crm
+ai-assistant, advanced-reports, mobile-profile-v7
+محاماة ومحاسبة واستشارات
+Professional Services Bundle
+services-catalog, consultation-request, secure-file-upload, crm-lite, reviews
+booking-lite, rabet-trust-badge, document-checklist, invoicing-basic
+ai-assistant, advanced-reports, mobile-profile-v7
+وكالات تسويق وتصميم وبرمجة
+Agency Bundle
+portfolio, case-studies, quote-request, service-packages, crm-lite
+client-intake, project-requests, agency-badge, reviews
+ai-assistant, advanced-reports, mobile-profile-v7
+SaaS وتكنولوجيا وتطبيقات
+SaaS Bundle
+feature-blocks, pricing-tables, demo-request, knowledge-base-lite, analytics
+newsletter, integrations-showcase, crm-leads, ai-copy-assistant
+ai-assistant, advanced-reports, mobile-profile-v7
+لوجستيات وشحن ونقل
+Logistics Bundle
+services-catalog, quote-request, tracking-placeholder, branches, crm-lite
+whatsapp-contact, route-areas, reviews, customer-portal-lite
+ai-assistant, advanced-reports, mobile-profile-v7
+فنادق وسياحة وحجوزات
+Hospitality Bundle
+rooms-tours-catalog, booking-request, packages, availability-calendar, reviews
+payments-placeholder, whatsapp-booking, trip-itinerary, map
+ai-assistant, advanced-reports, mobile-profile-v7
+صيانة وخدمات منزلية ومحلية
+Local Services Bundle
+services-catalog, booking-lite, service-areas, emergency-cta, reviews
+whatsapp-contact, quote-request, staff-scheduling-lite, invoicing-basic
+ai-assistant, advanced-reports, mobile-profile-v7
+سيارات ومعارض وورش
+Automotive Bundle
+vehicle-listings, vehicle-filters, booking-lite, quote-request, crm-lite
+whatsapp-contact, service-packages, inventory-basic, reviews
+ai-assistant, advanced-reports, mobile-profile-v7
+بورتفوليو وأفراد ومهنيين
+Professional Portfolio Bundle
+portfolio, services-catalog, testimonials, contact-forms, talent-profile-link
+booking-lite, service-packages, professional-badge, reviews
+ai-assistant, advanced-reports, mobile-profile-v7
+مجلات ومدونات وأخبار
+Magazine Blog Bundle
+blog-pro, authors-pro, categories, related-posts, newsletter
+comments, ads-slots-lite, table-of-contents, internal-linking
+ai-assistant, advanced-reports, mobile-profile-v7
+منظمات وجمعيات وتبرعات
+NGO Donations Bundle
+donations-lite, campaigns, volunteer-forms, events-basic, impact-stats
+recurring-donations-later, donor-crm, transparency-reports, newsletter
+ai-assistant, advanced-reports, mobile-profile-v7
+فعاليات ومؤتمرات وحفلات
+Events Bundle
+event-listings, ticketing-lite, schedule, speakers, sponsors
+qr-checkin-later, payments-placeholder, event-reminders, reviews
+ai-assistant, advanced-reports, mobile-profile-v7
+Fitness / Gym / Sports
+Fitness Bundle
+class-booking, trainers-profiles, membership-plans, schedule, reviews
+payments-placeholder, progress-forms, whatsapp-reminders, reviews
+ai-assistant, advanced-reports, mobile-profile-v7
+زراعة وحيوانات وبيطرة
+Agriculture Pets Bundle
+services-catalog, products, booking-lite, delivery-rules, reviews
+appointment-reminders, product-reviews, service-areas, whatsapp-contact
+ai-assistant, advanced-reports, mobile-profile-v7
+ماركت بليس ودليل أعمال
+Directory Marketplace Bundle
+directory-listings, categories, search, filters, reviews
+claim-listing, featured-listings, moderation, reports-flags
+ai-assistant, advanced-reports, mobile-profile-v7
+صفحات هبوط وحملات
+Landing Campaign Bundle
+landing-builder, forms-pro, utm-tracker, analytics, thank-you-page
+countdown, popups, meta-pixel, ab-testing-lite
+ai-assistant, advanced-reports, mobile-profile-v7
+شركاء ومسوقين بالعمولة
+Affiliate Partner Bundle
+affiliate-links, partner-storefront, catalog-sharing, commission-events, analytics
+affiliate-coupons, payout-hold-status, fraud-checks-later, product-feed-basic
+ai-assistant, advanced-reports, mobile-profile-v7
+Kabeeri Work Network / Agency Kits
+Work Network Bundle
+professional-profile, badges, service-packages, request-service, reviews
+academy-badges, project-intake, app-builder-profile, migration-badge
+ai-assistant, advanced-reports, mobile-profile-v7
+Enterprise / Industry / B2B Portals
+Enterprise Portal Bundle
+client-portal, document-upload, service-requests, approvals-basic, access-control
+notifications-basic, audit-logs, roles-permissions, reports-basic
+ai-assistant, advanced-reports, mobile-profile-v7

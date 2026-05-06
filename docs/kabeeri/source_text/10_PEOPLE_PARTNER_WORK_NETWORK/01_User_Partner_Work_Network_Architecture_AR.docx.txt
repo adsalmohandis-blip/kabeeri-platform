@@ -1,0 +1,136 @@
+KABEERI User, Partner & Work Network Architecture
+معمارية المستخدمين، الشركاء، القدرات المهنية، وشبكة عمل كبيري
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. الهدف من الملف
+هذا الملف يثبت نموذج الأشخاص داخل Kabeeri بحيث لا تصبح المنصة مجرد CMS أو Marketplace، بل منظومة تخلق فرص عمل حرة ومسارات دخل للشباب والشركات والوكالات.
+• User واحد يمكن أن يمتلك أكثر من ملف وقدرة مهنية.
+• الشخص قد يكون مستخدمًا عاديًا، محترفًا، مسوقًا، باني تطبيقات، مبدعًا، أو عضوًا في وكالة.
+• كل قدرة مهنية تفتح بعد تعلم واختبار واعتماد من Kabeeri Academy.
+• Talent Marketplace عام، أما Work Network فهو شبكة وظائف مرتبطة ببيئة Kabeeri نفسها.
+2. النموذج الأعلى للمستخدم
+لا يتم إنشاء حسابات منفصلة لكل دور. يتم بناء النظام حول User واحد وله Profiles وCapabilities متعددة.
+User → Personal Profile → Professional Profile → Capabilities → Badges → Levels → Public Visibility
+المفهوم
+المعنى
+ملاحظات
+User
+الشخص الحقيقي الذي يسجل في المنصة
+لا يحتوي company_id أو role ثابت
+Professional Profile
+ملف مهني عام أو خاص
+يظهر في Talent Marketplace حسب الخصوصية
+Capability
+إمكانية عمل معتمدة
+مثل App Builder أو Growth Partner
+Badge
+شارة تعلم/اعتماد
+تفتح بعد اختبار أو مراجعة
+Level
+مستوى داخل القدرة
+يؤثر على الظهور والصلاحيات والترشيحات
+3. التصنيف الرسمي للأشخاص والشركاء
+المجموعة
+الأدوار
+الغرض
+Public Users
+Visitor, Free Personal Account
+تصفح وتسجيل عادي
+Customers
+Organization Owner, Company Owner, App Owner
+امتلاك التطبيقات والشركات والمتاجر
+Talent Marketplace
+Freelancer, Professional, Service Provider
+عرض المهارات والمؤهلات والخدمات بدون عمولة تنفيذ
+Kabeeri Work Network
+Growth Partner, App Builder, Migration Specialist, Support Specialist
+تشغيل وتنمية منظومة Kabeeri
+Creator Network
+Theme Creator, Plugin Creator, AI Skill Creator
+بناء أصول قابلة للبيع داخل المتجر
+Agency Partners
+Agency Owner, Team Members
+إدارة عملاء وتطبيقات متعددة
+Legal Partners
+Rabet Legal Partner
+مراجعة أوراق الشركات والتوثيق المدفوع
+Platform Team
+Admin, Reviewer, Support, Developer Relations
+حوكمة وتشغيل المنصة
+4. Capabilities الأساسية
+القدرات ليست مجرد titles. كل قدرة لها تعليم، اختبار، صلاحيات، مستوى، ظهور، ومراجعة.
+Capability
+الوصف
+الاعتماد المطلوب
+Kabeeri Growth Partner
+تسويق المنصة والعملاء وربط الإحالات والعمولات
+دورة Growth Partner + قواعد منع الاحتيال
+Kabeeri App Builder
+بناء تطبيقات/مواقع/متاجر للعملاء باستخدام الثيمات والإضافات
+اختبار عملي لبناء تطبيق وتسليمه
+Kabeeri Creator
+تطوير ثيمات/إضافات/قوالب/AI Skills
+Developer docs + package review
+Kabeeri Migration Specialist
+هجرة WordPress/WooCommerce وتحسين ما بعد النقل
+Migration lab + SEO/redirects test
+Kabeeri Support Specialist
+دعم العملاء والتدريب والإعدادات
+Support policy + troubleshooting test
+Kabeeri Commerce Builder
+تجهيز المتاجر والدفع والشحن والمنتجات
+Commerce setup exam
+Kabeeri SEO & Content Specialist
+إعداد المحتوى والسيو والصفحات
+SEO/content practical test
+Kabeeri Automation Builder
+بناء workflows وautomations
+Workflows exam
+Kabeeri Integration Specialist
+ربط أنظمة خارجية وsync jobs
+Integration Hub certification
+5. Levels والترقيات
+المستوى
+الوصف
+ما يفتحه
+Level 0 — Learner
+يتعلم داخل Academy
+لا يظهر كمعتمد
+Level 1 — Approved
+اجتاز أساسيات الدور
+يظهر في النتائج الأساسية
+Level 2 — Verified
+نفذ اختبارات أو مشاريع بسيطة
+ترشيحات أكثر وصلاحيات أعلى
+Level 3 — Certified
+نفذ مشاريع ناجحة بتقييمات
+إمكانية إدارة مشاريع أكبر
+Level 4 — Expert
+خبرة مثبتة وتخصص واضح
+أولوية في الترشيحات
+Level 5 — Official Partner
+اعتماد رسمي أو وكالة/شريك قوي
+ظهور مميز وفرص شراكة
+6. العلاقة مع Mall وRabet
+كل ملف مهني يمكن أن يظهر في Talent Marketplace أو Work Network حسب القواعد. الملفات المرتبطة بالخدمات المهنية تظهر للعامة، أما الصلاحيات التشغيلية لا تفتح إلا بعد الاعتماد.
+• Professional Profile هو الأصل العام.
+• Work Network Capabilities تضيف شارات ومسارات عمل داخل Kabeeri.
+• Agency Partner يجب أن يكون له Organization/Company وBusiness Profile.
+• Legal Partner يدار تحت Rabet وليس Talent أو Work Network العام.
+7. Roadmap
+الإصدار
+النطاق
+V1
+User profile + professional profile foundation + capability flags
+V2
+Talent public browsing + Academy first paths + Growth Partner basic
+V3
+App Builder projects + Migration/Support badges
+V4
+Agency Partner dashboard + Legal Partner Portal + advanced work matching
+V5
+Payouts, partner analytics, advanced commissions
+V6
+Full Work Network marketplace + enterprise partner programs
+ملحق تنفيذي
+قاعدة الحوكمة: لا يفتح أي title حساس إلا بعد مسار تعليمي واختبار ومراجعة، مع سجل activity/audit لكل تفويض أو خدمة أو مشروع.
+KABEERI — Confidential Product Architecture

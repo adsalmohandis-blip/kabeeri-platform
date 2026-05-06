@@ -1,0 +1,43 @@
+KABEERI V1 to V6 Coding Roadmap — Final Split
+تقسيم التكويد من V1 إلى آخر نسخة مخططة مع أهداف كل إصدار ومخرجاته واختبارات قبوله.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. قاعدة التنفيذ
+لا يتم تكويد كل شيء مرة واحدة. كل إصدار له scope مغلق ومخرجات قابلة للتجربة، وما بعده يدخل في backlog للنسخة التالية.
+الإصدار
+الاسم التنفيذي
+ما يتم تكويده
+مخرج قابل للتسليم
+اختبارات القبول
+V1
+Core Coding MVP
+Laravel + Filament، users، organizations، apps/sites، CMS، media، permissions، themes basic، package foundation، onboarding basic
+أول demo يعمل: إنشاء منظمة، تطبيق، صفحات، ميديا، ثيم، أدوار، Activity Log
+Core tests + permission tests + UI smoke
+V2
+Migration + Public Discovery Foundation
+WordPress migration، forms/redirects/menus، commerce foundation، business/service directory، Talent basic، external source registry
+عميل يهاجر WordPress أو ينشر بزنس/منتجات/خدمات عامة
+Migration report + redirects + mall consent tests
+V3
+Business Operating Platform
+CRM Lite، booking، courses/LMS basic، travel packages، invoices، inventory، app builder projects
+تحويل site إلى Company OS وبدء عمل App Builders
+ERP essentials tests + workflow tests
+V4
+Marketplace + Work Network + Legal/Rabet
+Agency dashboard، Work Network، Academy، Legal Partners، internal marketplace، moderation، Mall catalogs advanced
+تشغيل اقتصاد المنصة: شركاء، مطورين، وكالات، توثيق مدفوع
+Marketplace review + moderation + legal workflow tests
+V5
+ERP Pro + Integration Hub
+ERP Pro، advanced marketing، affiliate/dropshipping commerce، external connectors، partner storefronts
+تكامل خارجي جاد وعمولات وقنوات بيع متعددة
+sync tests + payout tests + ERP pro tests
+V6
+Enterprise Complete Platform
+BI/Data Platform، GRC، Industry Solutions، Developer Marketplace public، AI advanced، connector SDK
+منصة Enterprise متعددة الصناعات والمطورين
+performance, security, DR, enterprise acceptance
+2. شرط عدم التوسع قبل انتهاء V1
+يمنع البدء في Commerce متقدم أو Mall عام أو Work Network كامل قبل ثبات Core: RBAC، Organization، App/Site، CMS، Media، Theme basic، Activity Logs، Feature Flags، Tests.

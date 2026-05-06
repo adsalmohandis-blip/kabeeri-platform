@@ -1,0 +1,197 @@
+KABEERI Database File 05 — Kabeeri Dedicated Database
+نظام Kabeeri Dedicated
+هذا الملف يصف تصميم قاعدة البيانات الخاص بوضع:
+Kabeeri Dedicated
+وهو وضع مخصص للعملاء الكبار أو الجهات الحساسة التي تريد بيئة منفصلة، لكن مع استمرار إدارة Kabeeri أو تكاملها مع المنصة الرئيسية وKabeeri Mall.
+1. تعريف Kabeeri Dedicated
+Kabeeri Dedicated يعني أن العميل يحصل على بيئة مخصصة:
+Dedicated Application+ Dedicated Database+ Dedicated Storage+ Dedicated Queue/Cache optional+ Dedicated Domain+ Optional Dedicated AI/Integration settings
+لكنها ليست بالضرورة Self-hosted عند العميل.
+قد تكون:
+Managed by Kabeeri
+أو:
+Hosted in customer private cloud with Kabeeri support
+2. الفرق بين Dedicated و Portable
+Dedicated
+Kabeeri غالبًا تدير النسخة أو تشرف عليها.
+Portable
+العميل يأخذ نسخة ويصبح هو المسؤول الأساسي عن تشغيلها.
+3. متى نستخدم Dedicated؟
+مناسب لـ:
+Enterprise customers.
+شركات كبيرة.
+جهات حكومية.
+قطاعات منظمة.
+عملاء يحتاجون Data Residency.
+عملاء يريدون performance isolation.
+عملاء لديهم حجم بيانات كبير.
+4. أهداف Dedicated Database
+يجب أن يدعم:
+بيئة منفصلة للعميل.
+بيانات معزولة في DB منفصلة.
+ربط اختياري مع المنصة الرئيسية.
+Mall Sync آمن.
+تحديثات مُدارة.
+Backups مخصصة.
+Monitoring.
+Security policies أعلى.
+إمكانية التحول من Cloud إلى Dedicated.
+إمكانية التحول من Dedicated إلى Portable إذا لزم.
+5. Dedicated Deployment Models
+5.1 Kabeeri Managed Dedicated
+Kabeeri hosts and manages everything
+5.2 Customer Cloud Dedicated
+Customer provides cloud/serverKabeeri deploys/supports
+5.3 Hybrid Dedicated
+Core app dedicatedMall/verification/billing remain connected to Kabeeri Central
+6. Central Registry vs Dedicated Tenant DB
+حتى لو للعميل DB منفصلة، يجب أن تبقى في Kabeeri Central سجلات تعريفية محدودة:
+dedicated_tenantsdedicated_environmentsdedicated_connectionsdedicated_update_logsmall_sync_sourcesbilling relationshipverification/trust public records
+أما بيانات التشغيل الكاملة فتكون في Dedicated DB.
+7. الجداول المركزية لنظام Dedicated
+هذه الجداول موجودة في Kabeeri Central، وليست داخل DB العميل فقط:
+dedicated_tenantsdedicated_environmentsdedicated_databasesdedicated_storage_bucketsdedicated_domainsdedicated_access_keysdedicated_update_windowsdedicated_update_logsdedicated_backup_policiesdedicated_backup_recordsdedicated_health_checksdedicated_support_access_requestsdedicated_sync_status
+8. dedicated_tenants
+يمثل العميل الذي لديه بيئة Dedicated.
+iduuidorganization_idcompany_id nullabletenant_nameslugdedicated_typestatus default provisioningdata_residency_country_id nullablesupport_level default standardbilling_account_id nullablecreated_atupdated_at
+dedicated_type
+managed_dedicatedcustomer_cloudprivate_cloudon_prem_supportedhybrid
+status
+provisioningactivemaintenancesuspendedmigration_inmigration_outarchivedfailed
+فهارس
+unique(organization_id)unique(slug)index(status)index(dedicated_type)
+9. dedicated_environments
+بيئات العميل.
+iduuiddedicated_tenant_idenvironment_typestatus default provisioningapp_versionbase_url nullableregion nullablelast_seen_at nullablemetadata json nullablecreated_atupdated_at
+environment_type
+productionstagingsandboxtrainingdevelopment
+10. dedicated_databases
+تعريف قاعدة البيانات المخصصة بدون حفظ أسرار واضحة.
+iduuiddedicated_environment_iddatabase_engine default mysqldatabase_version nullableconnection_ref nullabledatabase_name_masked nullablehost_masked nullablestatus default activelast_migration_at nullablemetadata json nullablecreated_atupdated_at
+ملاحظة أمنية
+لا تحفظ password plain text.
+استخدم:
+connection_ref
+يشير إلى Vault أو encrypted secret.
+11. dedicated_storage_buckets
+iduuiddedicated_environment_idstorage_typedisk_namebucket_name_masked nullableregion nullablestatus default activelast_checked_at nullablemetadata json nullablecreated_atupdated_at
+storage_type
+locals3_compatibleprivate_s3customer_storage
+12. dedicated_domains
+iduuiddedicated_environment_iddomainis_primary default falseverification_status default pendingssl_status default pendingverified_at nullablessl_issued_at nullablecreated_atupdated_at
+13. dedicated_access_keys
+مفاتيح وصول بين Dedicated instance وKabeeri Central.
+iduuiddedicated_tenant_iddedicated_environment_id nullablekey_namekey_hashscopes jsonstatus default activelast_used_at nullableexpires_at nullablecreated_atupdated_atrevoked_at nullable
+scopes
+mall_synclicense_checkupdate_checkhealth_reportsupport_diagnosticsbilling_usage_report
+14. dedicated_update_windows
+مواعيد التحديث المسموحة.
+iddedicated_tenant_idday_of_week nullablestart_timeend_timetimezone default Africa/Cairostatus default activecreated_atupdated_at
+15. dedicated_update_logs
+iduuiddedicated_environment_idfrom_version nullableto_versionstatusstarted_at nullablecompleted_at nullableperformed_by nullablemessage nullablemetadata json nullablecreated_atupdated_at
+status
+scheduledrunningcompletedfailedrolled_backcancelled
+16. dedicated_backup_policies
+iddedicated_tenant_idenvironment_typebackup_frequencyretention_days integerinclude_files default trueinclude_database default trueencryption_required default truestatus default activecreated_atupdated_at
+backup_frequency
+hourlydailyweeklymanual
+17. dedicated_backup_records
+iduuiddedicated_environment_idbackup_typestatussize_bytes nullablechecksum nullablestorage_ref nullablestarted_at nullablecompleted_at nullableexpires_at nullablecreated_atupdated_at
+18. dedicated_health_checks
+iddedicated_environment_idcheck_typestatusresponse_time_ms nullablemessage nullablechecked_atmetadata json nullablecreated_at
+check_type
+appdatabasequeuecachestoragesslmall_synclicense
+19. dedicated_support_access_requests
+طلبات دخول دعم Kabeeri إلى بيئة العميل.
+iduuiddedicated_tenant_idrequested_by nullableapproved_by nullableaccess_reason longtextstatus default pendingscopes jsonstarts_at nullableexpires_at nullableapproved_at nullablerevoked_at nullablecreated_atupdated_at
+status
+pendingapprovedactiveexpiredrevokedrejected
+20. dedicated_sync_status
+حالة اتصال Dedicated بالمنصة المركزية.
+iddedicated_tenant_iddedicated_environment_id nullablesync_typestatuslast_success_at nullablelast_failure_at nullablelast_error_message nullablemetadata json nullablecreated_atupdated_at
+sync_type
+mall_syncbilling_usagelicense_checkupdate_checkhealth_reportsecurity_report
+21. Dedicated ERD
+erDiagram    ORGANIZATIONS ||--o{ DEDICATED_TENANTS : owns    DEDICATED_TENANTS ||--o{ DEDICATED_ENVIRONMENTS : has    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_DATABASES : uses    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_STORAGE_BUCKETS : stores    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_DOMAINS : exposes    DEDICATED_TENANTS ||--o{ DEDICATED_ACCESS_KEYS : authenticates    DEDICATED_TENANTS ||--o{ DEDICATED_UPDATE_WINDOWS : schedules    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_UPDATE_LOGS : updated_by    DEDICATED_TENANTS ||--o{ DEDICATED_BACKUP_POLICIES : defines    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_BACKUP_RECORDS : creates    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_HEALTH_CHECKS : checked_by    DEDICATED_TENANTS ||--o{ DEDICATED_SUPPORT_ACCESS_REQUESTS : grants    DEDICATED_TENANTS ||--o{ DEDICATED_SYNC_STATUS : syncs
+22. Dedicated Provisioning Flow
+Enterprise customer signs plan→ organization exists or created→ dedicated_tenant created→ dedicated_environment production created→ database provisioned→ storage provisioned→ domain configured→ access key issued→ migration/import from Cloud optional→ health checks pass→ tenant status active
+23. Migration from Cloud to Dedicated
+Cloud organization selected→ freeze or schedule migration window→ backup Cloud data→ export tenant data→ import into Dedicated DB→ verify counts/checksums→ switch domain/routing→ enable dedicated sync→ update cloud status to migrated_to_dedicated
+24. Dedicated Database داخليًا
+داخل قاعدة بيانات العميل المخصصة، يمكن استخدام نفس Schema الخاص بـ Core وModules.
+الفرق:
+قد تبقى organization_id موجودة حتى لو هناك عميل واحد
+لماذا؟
+لتوحيد الكود.
+لتسهيل الرجوع إلى Cloud.
+لدعم multi-company داخل Dedicated.
+لدعم agency/enterprise structures.
+25. Dedicated و Kabeeri Mall
+Dedicated لا يتصل مباشرة بجداول Mall، بل عبر Sync.
+Dedicated Instance→ Dedicated Access Key→ Mall Sync API→ Mall Mirror→ Public Kabeeri Mall
+26. Dedicated و Billing
+Billing قد يبقى في Central Kabeeri.
+Dedicated instance قد يرسل usage summaries فقط:
+users_countsites_countstorage_usageai_usagesync_events
+ولا يرسل بيانات خاصة.
+27. Dedicated و Security
+Dedicated يجب أن يدعم:
+privileged support access.
+temporary access approval.
+audit logs.
+encrypted credentials.
+isolated backups.
+health reports.
+SIEM integration for enterprise.
+28. Dedicated Support Access Flow
+Kabeeri support requests access→ customer admin approves→ temporary token issued→ support actions logged→ access expires automatically
+29. Dedicated Updates
+التحديثات لا تتم عشوائيًا.
+يجب أن تمر عبر:
+update windowbackup before updatecompatibility checkrun migrationshealth checkrollback if failed
+30. Dedicated Backup Strategy
+لكل Dedicated tenant:
+backup policy.
+retention.
+encryption.
+restore test.
+before-update backups.
+31. Dedicated Indexes
+dedicated_tenants.organization_iddedicated_tenants.statusdedicated_environments.dedicated_tenant_iddedicated_databases.dedicated_environment_iddedicated_domains.domaindedicated_access_keys.dedicated_tenant_iddedicated_update_logs.dedicated_environment_iddedicated_backup_records.dedicated_environment_iddedicated_health_checks.dedicated_environment_iddedicated_sync_status.dedicated_tenant_id
+32. Dedicated vs Cloud Operational Differences
+الجانب
+Cloud
+Dedicated
+قاعدة البيانات
+مشتركة scoped
+منفصلة غالبًا
+التشغيل
+Kabeeri
+Kabeeri أو العميل
+التحديثات
+موحدة
+مجدولة
+الدعم
+أسهل
+أعلى تكلفة
+العزل
+منطقي
+منطقي + فيزيائي
+Mall Sync
+داخلي
+API Sync
+التكلفة
+أقل
+أعلى
+33. Dedicated و Portable
+Dedicated يمكن أن يتحول إلى Portable لو العميل يريد السيطرة الكاملة.
+Flow:
+Dedicated export→ portable bundle→ revoke managed access optional→ self_hosted_installation registered
+34. Dedicated Release Requirements
+Dedicated يعتبر جاهزًا عندما:
+dedicated tenant can be createdenvironments can be registereddedicated database metadata stored safelyaccess keys issued and revokedhealth checks workbackup policies workupdate logs worksupport access request worksmall sync works via dedicated access keycloud to dedicated migration path documented
+35. الخلاصة
+Kabeeri Dedicated هو خيار Enterprise قوي.
+يعطي العميل عزلًا أعلى دون فقدان العلاقة مع Kabeeri.
+القاعدة النهائية:
+Dedicated isolates the customer’s runtime, while keeping a controlled bridge to Kabeeri Central for Mall, billing, updates, support, and trust.

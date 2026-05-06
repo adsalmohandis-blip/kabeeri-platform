@@ -1,0 +1,891 @@
+KABEERI Database File 24
+Reviews, Ratings & Reputation Database
+نظام التقييمات والمراجعات والسمعة — KABEERI
+هذا الملف يصف تصميم قاعدة البيانات الخاصة بمحرك التقييمات والسمعة في Kabeeri، وهو محرك مركزي يخدم Kabeeri Mall وRabet وTalent Marketplace وInternal Marketplace وLegal Partner Network وCommerce لاحقًا.
+الهدف هو بناء طبقة ثقة موحدة لا تخلط بين التقييم العام، السمعة المركبة، التوثيق القانوني، الشكاوى، النزاعات، أو الظهور المدفوع.
+1. تعريف النظام
+Reviews, Ratings & Reputation Engine هو نظام مركزي لتسجيل آراء المستخدمين، تقييماتهم، ردود الجهات، بلاغات المراجعات، وحساب درجات السمعة والثقة عبر أجزاء Kabeeri المختلفة.
+النظام لا يخص Kabeeri Mall فقط؛ بل يخدم Business Profiles وServices وProducts وProfessionals وLegal Partners وDevelopers وPlugins/Modules وSellers والعملاء لاحقًا.
+2. الفرق بين المفاهيم
+المفهوم
+التعريف
+أمثلة
+Rating
+رقم تقييم مختصر غالبًا من 1 إلى 5.
+تقييم خدمة 4.5/5
+Review
+تعليق مكتوب مرتبط بتقييم وسياق.
+تجربة عميل مع خدمة أو منتج
+Review Response
+رد رسمي من صاحب الكيان أو البائع أو المحترف.
+رد الشركة على مراجعة
+Reputation
+نتيجة مركبة من التقييمات والسلوك والاستجابة والنزاعات.
+سمعة محترف أو بائع
+Trust Score
+درجة ثقة خاصة بالشركات والتوثيق والسجلات العامة.
+شركة موثقة ومستنداتها سارية
+Moderation
+مراجعة محتوى التقييمات والبلاغات لمنع الإساءة أو الاحتيال.
+إخفاء مراجعة مزيفة
+Dispute Link
+رابط بين تقييم ونزاع أو شكوى موثقة.
+عميل يفتح نزاعًا بعد تقييم سلبي
+3. القواعد الرئيسية
+• لا يتم نشر Review عام إلا إذا كانت visibility وstatus تسمح بذلك.
+• Rating وحده لا يكفي لبناء Trust Score؛ يجب دمجه مع التوثيق والاستجابة والنزاعات والسلوك.
+• Featured أو Sponsored لا تؤثر مباشرة على السمعة أو الثقة، حتى لا تختلط الإعلانات بالتوثيق.
+• Moderation يغلب أي Source خارجي أو Sync قادم من Portable/Dedicated.
+• البيانات الخاصة مثل invoices وpayroll وinternal messages وemployee evaluations لا تدخل في المراجعات العامة.
+• المراجعات التي تؤثر على الثقة أو السمعة يجب أن تكون قابلة للتدقيق عبر audit/activity logs.
+• السمعة العامة شيء، والتقييمات الداخلية داخل HR أو ERP شيء آخر لا يظهر للعامة افتراضيًا.
+4. أين يستخدم النظام؟
+المجال
+الاستخدام
+Kabeeri Mall
+تقييم Businesses وServices وProducts وSellers.
+Talent Marketplace
+تقييم Professionals وسمعتهم المهنية العامة.
+Rabet
+دعم Trust Record وVerified Business Network.
+Legal Partner Network
+تقييم مكاتب المحاماة وتجربة التوثيق ضمن ضوابط.
+Internal Marketplace
+تقييم Plugins وThemes وConnectors وAI Skills.
+Commerce
+تقييم المنتجات وتجربة الشراء لاحقًا.
+ERP/Projects
+يمكن الربط بسجل أداء أو نزاع، لكن لا ينشر تقييمات داخلية للعامة.
+5. الاعتماديات
+يعتمد على
+سبب الاعتماد
+Core Kernel
+Users, Organizations, Companies, Permissions, Activity Logs.
+Rabet & Verification
+verification_level وtrust records وverified badge.
+Kabeeri Mall
+listings والظهور العام وmoderation queue.
+Talent Marketplace
+professional profiles وprivacy/visibility.
+Internal Marketplace
+package reviews وpublisher trust.
+Events & Workflows
+review submitted, report created, score recalculated.
+Security & Compliance
+abuse prevention, audit, data retention.
+Disputes لاحقًا
+ربط review بسجل نزاع أو قرار وساطة.
+6. Data Domains
+• Reviews & Ratings Domain.
+• Review Responses Domain.
+• Review Votes & Helpfulness Domain.
+• Review Reports & Moderation Domain.
+• Reputation Scores Domain.
+• Trust Score Signals Domain.
+• Score Calculation Runs Domain.
+• Subject Summary Aggregates Domain.
+• Dispute Links Domain.
+• Sync & External Source Domain.
+7. الجداول الأساسية
+• reviews
+• review_ratings
+• review_responses
+• review_votes
+• review_reports
+• review_moderation_cases
+• review_moderation_actions
+• review_subject_summaries
+• reputation_scores
+• reputation_score_factors
+• reputation_calculation_runs
+• trust_score_signals
+• trust_score_snapshots
+• review_dispute_links
+• review_import_sources
+• review_sync_events
+• review_visibility_overrides
+8. reviews
+يمثل المراجعة المكتوبة الأساسية، ويمكن أن ترتبط بأي كيان قابل للمراجعة عبر polymorphic relation.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي.
+uuid
+ulid/uuid unique
+معرف آمن للـ API والتصدير.
+organization_id
+fk nullable
+المنظمة المالكة للسياق إن وجدت.
+company_id
+fk nullable
+الشركة المرتبطة إن وجدت.
+site_id
+fk nullable
+الموقع المرتبط إن وجد.
+reviewer_user_id
+fk users nullable
+المستخدم صاحب المراجعة.
+reviewer_display_name
+varchar nullable
+اسم عرض آمن عند الحاجة.
+reviewable_type
+varchar(80)
+business|service|product|professional|legal_partner|package|seller|order|project.
+reviewable_id
+bigint
+معرف الكيان المراجع.
+source_type
+varchar nullable
+mall|commerce|talent|rabet|marketplace|external_import.
+source_id
+bigint nullable
+سجل المصدر.
+context_type
+varchar nullable
+order|service_request|job_offer|verification_request|package_installation.
+context_id
+bigint nullable
+معرف السياق.
+rating_overall
+decimal(3,2)
+التقييم العام.
+title
+varchar nullable
+عنوان المراجعة.
+body
+longtext nullable
+نص المراجعة.
+status
+draft|pending|published|hidden|rejected|removed|archived
+حالة المراجعة.
+visibility
+public|limited|private|internal
+من يرى المراجعة.
+is_verified_context
+boolean default false
+هل المراجعة مرتبطة بتعامل موثق.
+moderation_status
+clean|flagged|under_review|actioned
+حالة المراجعة رقابيًا.
+language
+varchar nullable
+لغة المراجعة.
+metadata
+json nullable
+تفاصيل إضافية.
+created_at / updated_at / deleted_at
+timestamps
+تواريخ الإنشاء والتحديث والحذف الناعم.
+9. review_ratings
+تفصيل التقييمات الفرعية عندما لا يكفي rating_overall.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+review_id
+fk reviews
+المراجعة.
+rating_key
+varchar(80)
+quality|communication|delivery|value|professionalism|support|accuracy.
+rating_value
+decimal(3,2)
+القيمة من 1 إلى 5 أو حسب القاعدة.
+weight
+decimal nullable
+وزن اختياري في الحساب.
+created_at / updated_at
+timestamps
+تواريخ.
+10. review_responses
+رد رسمي من صاحب الكيان أو الممثل المصرح له.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+uuid
+ulid/uuid unique
+معرف آمن.
+review_id
+fk reviews
+المراجعة.
+responder_user_id
+fk users
+الرد بواسطة.
+responder_role
+owner|admin|support|professional|legal_partner|developer
+صفة الرد.
+body
+longtext
+نص الرد.
+status
+pending|published|hidden|removed
+حالة الرد.
+moderation_status
+clean|flagged|under_review|actioned
+حالة المراجعة.
+created_at / updated_at / deleted_at
+timestamps
+تواريخ.
+11. review_votes
+تصويت المستخدمين على فائدة المراجعة أو الإبلاغ غير المباشر عن جودتها.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+review_id
+fk reviews
+المراجعة.
+user_id
+fk users
+المستخدم.
+vote_type
+helpful|not_helpful|agree|disagree
+نوع التصويت.
+created_at
+timestamp
+وقت التصويت.
+12. review_reports
+بلاغات المستخدمين أو أصحاب الكيانات عن مراجعة مخالفة أو مزيفة.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+uuid
+ulid/uuid unique
+معرف.
+review_id
+fk reviews
+المراجعة.
+reported_by
+fk users nullable
+صاحب البلاغ.
+reason
+spam|fake|abusive|conflict_of_interest|private_data|legal_issue|other
+سبب البلاغ.
+details
+text nullable
+تفاصيل.
+status
+open|under_review|resolved|rejected|escalated
+حالة البلاغ.
+priority
+low|normal|high|urgent
+الأولوية.
+moderator_id
+fk users nullable
+المشرف.
+resolved_at
+timestamp nullable
+وقت الحل.
+metadata
+json nullable
+تفاصيل إضافية.
+created_at / updated_at
+timestamps
+تواريخ.
+13. review_moderation_cases
+ملف رقابي يجمع البلاغات والإجراءات حول مراجعة أو مجموعة مراجعات.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+uuid
+ulid/uuid unique
+معرف.
+review_id
+fk reviews nullable
+المراجعة.
+case_type
+fake_review|abuse|privacy_leak|legal_risk|rating_manipulation|spam
+نوع الحالة.
+status
+open|investigating|actioned|closed|appealed
+حالة الحالة.
+assigned_to
+fk users nullable
+المشرف المسؤول.
+severity
+low|medium|high|critical
+خطورة الحالة.
+opened_at
+timestamp
+وقت الفتح.
+closed_at
+timestamp nullable
+وقت الإغلاق.
+metadata
+json nullable
+تفاصيل.
+created_at / updated_at
+timestamps
+تواريخ.
+14. review_moderation_actions
+كل إجراء رقابي يجب أن يسجل بوضوح لأن المراجعات تؤثر على السمعة.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+moderation_case_id
+fk review_moderation_cases
+الحالة.
+review_id
+fk reviews nullable
+المراجعة.
+action_type
+publish|hide|reject|remove|edit_request|restore|mark_verified|mark_fake|escalate
+الإجراء.
+performed_by
+fk users
+من نفذ.
+reason
+text nullable
+سبب الإجراء.
+before_status
+varchar nullable
+الحالة السابقة.
+after_status
+varchar nullable
+الحالة الجديدة.
+created_at
+timestamp
+وقت الإجراء.
+15. review_subject_summaries
+جدول مشتق لتسريع عرض متوسطات التقييم وعدد المراجعات لكل كيان.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+subject_type
+varchar(80)
+business|service|product|professional|package|legal_partner|seller.
+subject_id
+bigint
+معرف الكيان.
+reviews_count
+integer default 0
+عدد المراجعات المنشورة.
+ratings_count
+integer default 0
+عدد التقييمات.
+average_rating
+decimal(3,2) nullable
+متوسط التقييم العام.
+verified_reviews_count
+integer default 0
+عدد المراجعات من سياقات موثقة.
+hidden_reviews_count
+integer default 0
+مراجعات مخفية.
+reports_count
+integer default 0
+عدد البلاغات.
+last_review_at
+timestamp nullable
+آخر مراجعة.
+calculated_at
+timestamp nullable
+وقت إعادة الحساب.
+created_at / updated_at
+timestamps
+تواريخ.
+16. reputation_scores
+درجة سمعة مركبة يمكن أن تكون للشركة أو المحترف أو البائع أو المطور أو الحزمة.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+subject_type
+varchar(80)
+business|professional|seller|developer|legal_partner|package.
+subject_id
+bigint
+معرف الكيان.
+score_type
+overall|service|delivery|trust|professional|developer|support
+نوع النتيجة.
+score
+decimal(6,2)
+الدرجة النهائية.
+score_band
+poor|fair|good|great|excellent|trusted|at_risk
+تصنيف مبسط.
+visibility
+public|internal|private
+هل تظهر الدرجة.
+factors_hash
+varchar nullable
+بصمة العوامل.
+calculated_at
+timestamp
+وقت الحساب.
+expires_at
+timestamp nullable
+صلاحية النتيجة.
+metadata
+json nullable
+تفاصيل إضافية.
+created_at / updated_at
+timestamps
+تواريخ.
+17. reputation_score_factors
+تفاصيل العوامل التي دخلت في حساب السمعة لتفسيرها وللتدقيق.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+reputation_score_id
+fk reputation_scores
+النتيجة.
+factor_key
+varchar(100)
+avg_rating|verified_reviews|response_rate|disputes|verification|completion_rate.
+factor_value
+decimal nullable
+قيمة العامل.
+weight
+decimal nullable
+وزن العامل.
+impact
+positive|negative|neutral
+تأثير العامل.
+metadata
+json nullable
+تفاصيل.
+created_at
+timestamp
+وقت التسجيل.
+18. reputation_calculation_runs
+تشغيلات إعادة حساب السمعة والثقة، سواء بشكل دوري أو بعد حدث مهم.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+uuid
+ulid/uuid unique
+معرف.
+run_type
+scheduled|event_triggered|manual|backfill
+نوع التشغيل.
+status
+pending|running|completed|failed|cancelled
+الحالة.
+subject_type
+varchar nullable
+كيان محدد أو null للتشغيل العام.
+subject_id
+bigint nullable
+معرف الكيان.
+records_processed
+integer default 0
+عدد السجلات.
+started_at / completed_at / failed_at
+timestamps nullable
+أوقات التشغيل.
+error_message
+text nullable
+رسالة الخطأ.
+metadata
+json nullable
+تفاصيل.
+created_at / updated_at
+timestamps
+تواريخ.
+19. trust_score_signals
+إشارات منفصلة تدخل في Trust Score، خصوصًا للشركات وRabet.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+organization_id
+fk nullable
+المنظمة.
+company_id
+fk nullable
+الشركة.
+subject_type
+business|legal_partner|seller|professional
+نوع الكيان.
+subject_id
+bigint
+معرف الكيان.
+signal_key
+varchar(100)
+verified_documents|expired_documents|unresolved_dispute|response_rate|rejected_verification.
+signal_value
+decimal nullable
+قيمة رقمية إن وجدت.
+signal_status
+active|expired|ignored|resolved
+حالة الإشارة.
+weight
+decimal nullable
+وزن الإشارة.
+source_type
+verification|review|dispute|mall|manual|system
+مصدر الإشارة.
+source_id
+bigint nullable
+معرف المصدر.
+metadata
+json nullable
+تفاصيل.
+created_at / updated_at
+timestamps
+تواريخ.
+20. trust_score_snapshots
+لقطات تاريخية من Trust Score حتى لا يتغير الماضي عند تغيير خوارزمية الحساب.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+subject_type
+varchar(80)
+business|legal_partner|seller|professional.
+subject_id
+bigint
+معرف الكيان.
+trust_score
+decimal(6,2)
+درجة الثقة.
+trust_level
+unverified|basic|verified|trusted|high_risk|suspended
+مستوى الثقة.
+verification_level
+varchar nullable
+مستوى التوثيق إن وجد.
+factors
+json nullable
+العوامل.
+calculated_at
+timestamp
+وقت الحساب.
+created_at
+timestamp
+وقت الإنشاء.
+21. review_dispute_links
+يربط المراجعة بنزاع أو شكوى بدون تحويل كل مراجعة إلى نزاع.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+review_id
+fk reviews
+المراجعة.
+dispute_type
+mall_dispute|commerce_dispute|service_dispute|talent_dispute|legal_dispute
+نوع النزاع.
+dispute_id
+bigint
+معرف النزاع.
+link_reason
+review_after_dispute|dispute_from_review|evidence|appeal
+سبب الربط.
+visibility
+public|internal|private
+ظهور الربط.
+created_by
+fk users nullable
+من أنشأ الربط.
+created_at
+timestamp
+وقت الربط.
+22. review_import_sources
+مصادر خارجية أو مزامنة مراجعات، ويجب استخدامها بحذر شديد.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+uuid
+ulid/uuid unique
+معرف.
+organization_id
+fk nullable
+المنظمة.
+source_type
+portable|dedicated|external_platform|csv|manual
+نوع المصدر.
+source_name
+varchar
+اسم المصدر.
+status
+active|paused|revoked|archived
+الحالة.
+trust_level
+low|medium|high|verified
+ثقة المصدر.
+settings
+json nullable
+إعدادات.
+created_at / updated_at
+timestamps
+تواريخ.
+23. review_sync_events
+أحداث مزامنة reviews من مصدر خارجي إلى Kabeeri، مع منع أي نشر تلقائي بدون قواعد moderation.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+review_import_source_id
+fk review_import_sources
+المصدر.
+event_type
+created|updated|deleted|bulk_sync|heartbeat
+نوع الحدث.
+external_id
+varchar nullable
+معرف خارجي.
+status
+pending|processed|failed|ignored|needs_review
+الحالة.
+payload_hash
+varchar nullable
+بصمة payload.
+payload
+json nullable
+البيانات المرسلة.
+processed_review_id
+fk reviews nullable
+المراجعة المنشأة أو المحدثة.
+errors
+json nullable
+الأخطاء.
+received_at / processed_at
+timestamps nullable
+الأوقات.
+created_at / updated_at
+timestamps
+تواريخ.
+24. review_visibility_overrides
+تجاوزات ظهور خاصة لحالات قانونية أو خصوصية أو moderation.
+الحقل
+النوع / القيم
+الوصف
+id
+bigint pk
+المعرف.
+review_id
+fk reviews
+المراجعة.
+override_type
+hide_from_public|show_verified_only|internal_only|legal_hold|country_restriction
+نوع التجاوز.
+status
+active|expired|revoked
+الحالة.
+reason
+text nullable
+السبب.
+created_by
+fk users
+من أنشأه.
+expires_at
+timestamp nullable
+انتهاء التجاوز.
+created_at / updated_at
+timestamps
+تواريخ.
+25. ERD
+erDiagram  USERS ||--o{ REVIEWS : writes  REVIEWS ||--o{ REVIEW_RATINGS : has  REVIEWS ||--o{ REVIEW_RESPONSES : receives  REVIEWS ||--o{ REVIEW_VOTES : voted_on  REVIEWS ||--o{ REVIEW_REPORTS : reported_by  REVIEWS ||--o{ REVIEW_MODERATION_CASES : may_open  REVIEW_MODERATION_CASES ||--o{ REVIEW_MODERATION_ACTIONS : applies  REVIEWS ||--o{ REVIEW_DISPUTE_LINKS : links  REVIEW_IMPORT_SOURCES ||--o{ REVIEW_SYNC_EVENTS : receives  REVIEWS ||--o{ REVIEW_VISIBILITY_OVERRIDES : controlled_by  REPUTATION_SCORES ||--o{ REPUTATION_SCORE_FACTORS : explains  REPUTATION_CALCULATION_RUNS ||--o{ REPUTATION_SCORES : recalculates  TRUST_SCORE_SIGNALS ||--o{ TRUST_SCORE_SNAPSHOTS : contributes
+26. Review Submission Flow
+User submits review→ validate context and permission→ check duplicate/spam rules→ create review status=pending→ calculate risk/moderation hints→ if clean and policy allows, publish→ update review_subject_summaries→ trigger reputation recalculation→ notify reviewed subject→ log activity/audit if sensitive
+27. Review Report Flow
+User reports review→ create review_report→ if severity high, open moderation case→ moderator reviews evidence→ action: keep / hide / remove / request edit / escalate→ recalculate summaries and reputation→ notify relevant parties→ log moderation action
+28. Reputation Calculation Flow
+ReviewPublished or DisputeResolved or VerificationChanged→ queue reputation calculation→ collect ratings, verified reviews, reports, disputes, response rate, verification signals→ calculate score and band→ store factors→ update reputation_scores→ create trust_score_snapshot where applicable→ update Mall ranking signals if public
+29. Trust Score قواعد حساب أولية
+لا يجب تثبيت خوارزمية نهائية في V1/V2، لكن يجب أن تكون البيانات جاهزة للحساب التدريجي.
+العامل
+التأثير المقترح
+ملاحظات
+Legal documents verified
+positive
+يزيد Trust Score للشركات.
+Tax information verified
+positive
+إشارة Rabet مهمة.
+Authorized signer verified
+positive
+مهم للتعاملات B2B.
+Expired documents
+negative
+يخفض الثقة حتى التجديد.
+Unresolved dispute
+negative
+لا يعني إدانة نهائية لكن يؤثر مؤقتًا.
+Repeated rejected verification
+negative
+إشارة خطر.
+Verified reviews
+positive
+أقوى من مراجعات غير موثقة.
+Fake review detected
+negative
+يؤثر على reviewer أو subject حسب الحالة.
+30. Mall Integration
+• Mall يعرض average_rating وreviews_count وtrust_score عندما تكون visibility تسمح.
+• Mall لا يعتمد على reviews من قاعدة عميل Portable/Dedicated مباشرة، بل عبر Sync/API وMirror أو مراجعات مركزية.
+• Reviews/Ratings جزء من trust layer داخل Kabeeri ويمكن أن تبقى في Central بعد خروج العميل إذا وافق على Mall participation.
+• Moderation في Kabeeri Central يمكنها إخفاء مراجعة أو منع ظهورها حتى لو مصدر خارجي أرسلها.
+31. Talent Integration
+• Professional reputation لا يساوي employee evaluation.
+• تقييمات العملاء أو الشركات للمحترف تظهر فقط حسب consent وvisibility.
+• التقييمات الداخلية HR لا تُنسخ إلى Talent Marketplace.
+• يمكن ربط review بسياق job_offer أو contract_offer أو service delivery.
+32. Internal Marketplace Integration
+• Package reviews تقيم plugin/theme/module/connector/AI skill.
+• Developer reputation لا يعتمد فقط على rating؛ يعتمد على security reviews وsupport response وcompatibility history.
+• مراجعات packages يجب أن ترتبط بإصدار version عند الحاجة.
+33. Privacy & Data Rules
+• لا يسمح بنشر بيانات خاصة داخل review body مثل أرقام هوية أو مستندات قانونية أو بيانات موظفين.
+• review body يجب أن يمر على moderation أو automated sensitive data detection عند الحاجة.
+• يمكن anonymize reviewer_display_name حسب سياسة البلد أو السياق.
+• Deletion قد لا يكون فوريًا إذا ارتبطت المراجعة بنزاع أو سجل قانوني أو audit requirement.
+• Legal hold يمنع حذف أو تعديل بعض المراجعات حتى انتهاء القضية.
+34. Portable / Dedicated Rules
+• إذا خرج العميل Portable، يمكن استمرار reviews العامة كجزء من Kabeeri Mall trust layer.
+• Portable يمكنه إرسال public review events فقط عبر signed API، وليس له وصول مباشر لجداول Central.
+• Dedicated يرسل usage/trust summaries أو review sync events حسب الاتفاق.
+• المراجعات الخاصة أو internal evaluations لا تدخل في أي sync عام.
+35. Permissions
+Permission
+الوصف
+review.create
+إنشاء مراجعة.
+review.edit_own
+تعديل مراجعة المستخدم قبل النشر أو حسب السياسة.
+review.delete_own
+حذف/طلب حذف مراجعة المستخدم حسب السياسة.
+review.respond
+الرد على مراجعة تخص كيان يملكه المستخدم.
+review.report
+الإبلاغ عن مراجعة.
+review.moderation.view
+عرض طابور مراجعة التقييمات.
+review.moderation.manage
+اتخاذ إجراءات رقابية.
+reputation.view_public
+عرض السمعة العامة.
+reputation.view_internal
+عرض تفاصيل داخلية.
+reputation.recalculate
+إعادة حساب السمعة.
+trust_score.view
+عرض Trust Score.
+trust_score.manage_signals
+إدارة إشارات الثقة يدويًا.
+36. Feature Flags
+• enable_reviews_basic
+• enable_review_responses
+• enable_review_reports
+• enable_review_moderation
+• enable_reputation_scores
+• enable_trust_score_signals
+• enable_verified_reviews
+• enable_talent_reputation
+• enable_package_reviews
+• enable_review_sync_api
+• enable_review_dispute_links
+37. Indexes مهمة
+• reviews: index(reviewable_type, reviewable_id, status, visibility)
+• reviews: index(reviewer_user_id, created_at)
+• reviews: index(source_type, source_id)
+• review_ratings: index(review_id, rating_key)
+• review_reports: index(status, priority, created_at)
+• review_moderation_cases: index(status, severity, opened_at)
+• review_subject_summaries: unique(subject_type, subject_id)
+• reputation_scores: unique(subject_type, subject_id, score_type)
+• trust_score_signals: index(subject_type, subject_id, signal_key, signal_status)
+• review_sync_events: index(review_import_source_id, status, created_at)
+38. Events
+• ReviewSubmitted
+• ReviewPublished
+• ReviewHidden
+• ReviewReported
+• ReviewResponsePublished
+• ReviewModerationActionApplied
+• ReviewVerifiedContextAttached
+• ReputationScoreRecalculated
+• TrustScoreSignalAdded
+• TrustScoreSnapshotCreated
+• ReviewDisputeLinked
+39. CLI Commands
+php artisan kabeeri:reviews:moderation-queuephp artisan kabeeri:reviews:recalculate-summary {subjectType?} {subjectId?}php artisan kabeeri:reputation:recalculate {subjectType?} {subjectId?}php artisan kabeeri:trust-score:recalculate {companyId?}php artisan kabeeri:reviews:detect-abusephp artisan kabeeri:reviews:sync-source {sourceId}php artisan kabeeri:reviews:expire-overridesphp artisan kabeeri:reviews:anonymize --policy={policy}
+40. Seeders
+• ReviewPermissionsSeeder
+• ReviewFeatureFlagsSeeder
+• ReviewModerationReasonsSeeder
+• ReputationScoreTypesSeeder
+• TrustScoreSignalTypesSeeder
+• DemoBusinessReviewsSeeder
+• DemoTalentReviewsSeeder
+• DemoPackageReviewsSeeder
+41. Testing Requirements
+• User cannot review private/inaccessible subject.
+• User cannot review the same verified context twice unless policy allows.
+• Review with private data is flagged or blocked.
+• Review report opens moderation case when severity is high.
+• Hidden review does not affect public average rating.
+• Verified context review receives stronger reputation weight.
+• Featured listing does not modify rating or trust score.
+• Employee evaluation does not appear in Talent reputation.
+• Portable sync cannot publish review without moderation rules.
+• Trust score changes when verification expires or dispute remains unresolved.
+42. Build Order
+1. reviews + review_ratings foundation.
+2. review_responses.
+3. review_subject_summaries.
+4. review_reports + moderation cases/actions.
+5. basic reputation_scores.
+6. trust_score_signals + snapshots for Rabet.
+7. Mall review integration and display.
+8. Talent reputation integration.
+9. Package reviews for Internal Marketplace.
+10. review_dispute_links.
+11. review sync API for Portable/Dedicated.
+12. advanced scoring/recalculation jobs.
+43. Release Gate
+• يمكن إضافة review وربطه بكيان صحيح مع permission/context check.
+• average_rating وreviews_count يعملان بدون احتساب hidden/rejected reviews.
+• review response يعمل بصلاحيات واضحة.
+• review report وmoderation action يعملان مع audit/activity logs.
+• reputation score يعاد حسابه بعد review publish أو dispute/verification change.
+• Trust Score لا يخلط بين paid featured وverified trust.
+• Talent reputation لا يسرّب employee evaluations.
+• Portable/Dedicated sync لا يتجاوز moderation أو privacy rules.
+44. ملخص القرار
+يجب أن يبنى Reviews, Ratings & Reputation كطبقة ثقة مركزية، لا كجداول صغيرة داخل Mall فقط. التقييمات تخدم السوق العام، المواهب، Rabet، الحزم، والشركاء القانونيين، لكنها تحتاج فصلًا واضحًا بين الرأي العام والبيانات الداخلية والسمعة المركبة والتوثيق القانوني.
+الهدف في البداية هو reviews basic + responses + reports + summaries، ثم يتم توسيع reputation/trust scoring تدريجيًا مع V3/V4/V5، ومع V6 يمكن الوصول إلى advanced trust and moderation مع disputes وGRC وenterprise governance.
+KABEERI — Reviews, Ratings & Reputation Database

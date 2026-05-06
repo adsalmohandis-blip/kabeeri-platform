@@ -1,0 +1,37 @@
+# KABEERI WORKLOG
+
+استخدم هذا الملف داخل مشروع Laravel `kabeeri-platform` لتسجيل كل جلسة عمل.
+
+---
+
+## Session Template
+
+Date:
+Time Available:
+Version / Scope: V1
+Prompt Used:
+Branch:
+Task Goal:
+Files Changed:
+Commands Run:
+Tests Result:
+Commit:
+Next Task:
+Risks / Notes:
+
+---
+
+## Example
+
+Date: 2026-05-05
+Time Available: 1 hour
+Version / Scope: V1
+Prompt Used: Prompt 07 — Organizations Foundation
+Branch: feature/v1-organizations
+Task Goal: Build organizations migration/model/tests
+Files Changed: migrations, Organization.php, tests
+Commands Run: php artisan test
+Tests Result: Passed
+Commit: feat(core): add organizations foundation
+Next Task: Prompt 08 — Organization Memberships
+Risks / Notes: none

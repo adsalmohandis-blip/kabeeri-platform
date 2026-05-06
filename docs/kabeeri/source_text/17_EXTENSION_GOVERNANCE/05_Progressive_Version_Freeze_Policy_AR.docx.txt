@@ -1,0 +1,31 @@
+KABEERI Progressive Version Freeze Policy
+سياسة تجميد النسخ تدريجيًا أثناء التكويد.
+KABEERI Professional Knowledge System — v1.6.2
+Version
+Current Status
+Modification Rule
+V1
+Frozen / In Coding
+لا يعدل مباشرة؛ أي تغيير يكون Addendum أو Hotfix.
+V2
+Planned / Editable
+قابل للتعديل حتى يبدأ التكويد.
+V3
+Planned / Editable
+قابل للتعديل حتى يبدأ التكويد.
+V4
+Planned / Editable
+قابل للتعديل حتى يبدأ التكويد.
+V5
+Planned / Editable
+قابل للتعديل حتى يبدأ التكويد.
+V6
+Planned / Editable
+قابل للتعديل حتى يبدأ التكويد.
+V7
+Extension Planned
+Mobile App Enablement.
+V8
+Extension Planned
+Desktop Offline Client.
+عند بدء تنفيذ V2 يتم إعلان: V2 is now frozen. وبعدها تعامل مثل V1.

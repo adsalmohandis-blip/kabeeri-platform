@@ -1,0 +1,397 @@
+KABEERI Database File 12
+Kabeeri Talent Marketplace Database
+نظام سوق المواهب والملفات المهنية داخل KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يصف تصميم قاعدة البيانات الخاص بـ Talent Marketplace، وهو الجزء الذي يسمح للأفراد بإنشاء ملفات مهنية عامة أو خاصة، وإدارة المهارات والخبرات والتوفر، واستقبال عروض عمل أو تعاون من الشركات، مع حماية الخصوصية وفصل بيانات الموارد البشرية الداخلية عن الظهور العام.
+الهدف ليس بناء منصة freelancing عشوائية، بل بناء طبقة Workforce Network موثوقة داخل Kabeeri، مرتبطة بـ Users وCompanies وMemberships وRabet وMall وTeams وContracts لاحقًا.
+1. تعريف Talent Marketplace
+Talent Marketplace هو سوق مواهب داخل Kabeeri Mall يسمح بظهور المستخدم كمحترف مستقل أو موظف سابق/حالي له ملف مهني قابل للتحكم في خصوصيته. الملف المهني ليس هو حساب المستخدم، وليس سجل الموظف الداخلي، وليس عضوية الشركة، بل واجهة مهنية اختيارية قابلة للنشر أو الإخفاء.
+User = الشخص الحقيقي الذي يدخل النظام.
+Professional Profile = الواجهة المهنية الاختيارية لهذا الشخص.
+Company Membership = علاقة المستخدم بشركة معينة كموظف أو متعاقد أو مستشار.
+Employee Profile = ملف HR داخلي داخل الشركة، لا يظهر في السوق العام.
+Talent Listing = نسخة عامة أو مفهرسة من Professional Profile داخل Mall/Talent Search.
+2. هدف النظام
+تمكين المستخدم من عرض نفسه كمحترف مع تحكم كامل في visibility.
+تمكين الشركات الموثقة أو المصرح لها من إرسال عروض عمل أو تعاون.
+ربط المهارات والخبرات وسجل العمل بعلاقات Kabeeri الداخلية بدون كشف بيانات حساسة.
+دعم privacy-first public profile بحيث لا تظهر التقييمات أو البيانات الداخلية إلا بموافقة واضحة.
+التمهيد لـ V5/V6: reputation scoring، contracts، HR integration، AI talent matching، وworkforce analytics.
+3. حدود النظام — ما هو وما ليس
+3.1 ما هو Talent Marketplace
+ملفات مهنية عامة/خاصة.
+مهارات وخبرات ومحفظة أعمال.
+إعدادات ظهور وتوفر واستقبال عروض.
+عروض عمل أو تعاون basic.
+مراسلة company-to-professional foundation.
+سمعة وتقييمات مهنية عامة بحذر.
+ربط لاحق بالعقود والعضويات والمهام.
+3.2 ما ليس Talent Marketplace في V4
+ليس HR كاملًا.
+ليس Payroll.
+ليس recruiting suite كاملًا.
+ليس freelance escrow platform.
+ليس تقييم أداء داخلي عام.
+ليس بديلًا عن Contracts/CLM في V5.
+ليس AI matching كاملًا قبل V6.
+4. الاعتماديات الأساسية
+لا يبدأ Talent Marketplace قبل وجود Core وMemberships وPrivacy وModeration foundation، لأن البيانات المهنية حساسة ويمكن أن ترتبط بشركات متعددة وسجل عمل وتقييمات.
+يعتمد على
+لماذا؟
+users
+كل Professional Profile يتبع مستخدمًا حقيقيًا.
+user_profiles
+بيانات الحساب العامة والإعدادات الشخصية.
+organizations / companies
+الشركات ترسل عروضًا أو تتحقق من سجل عمل.
+organization_memberships / company_memberships
+إثبات علاقات العمل وسجل العضويات.
+roles / permissions
+إرسال العروض والبحث المتقدم والرسائل تحتاج صلاحيات.
+visibility/privacy foundation
+منع تسريب بيانات مهنية أو تقييمات خاصة.
+media/documents
+صور شخصية، portfolio، شهادات، مستندات تحقق اختيارية.
+notifications/inbox
+إشعارات العروض والرسائل.
+moderation/reports
+أي محتوى عام يحتاج بلاغات ومراجعة.
+Mall mirror
+الظهور العام يتم عبر نسخة مفهرسة لا تكشف private data.
+5. Data Domains
+Professional Identity: الملف المهني، العنوان، النبذة، الصورة، الحالة.
+Skills Graph: المهارات، مستوياتها، سنوات الخبرة، endorsements.
+Work History: تاريخ عمل موثق أو غير موثق مع تحكم في الظهور.
+Portfolio: أعمال عامة أو روابط أو ملفات مختارة.
+Availability & Preferences: التوفر، نوع العمل المطلوب، الموقع، الراتب المتوقع اختياريًا.
+Job Offers: عروض العمل والتفاوض والقبول/الرفض.
+Reputation: تقييمات عامة، endorsements، trust signals، وليس تقييمات HR الخاصة.
+Privacy & Consent: الموافقات، visibility، opt-in/out، logs.
+Moderation: بلاغات، إخفاء، تعليق، review queue.
+Mall Mirror: نسخة عامة للبحث والاكتشاف.
+6. الجداول الأساسية
+professional_profiles
+professional_profile_visibility_settings
+talent_skills
+professional_profile_skills
+professional_work_history
+work_history_verifications
+professional_portfolio_items
+professional_availability_windows
+professional_preferences
+job_offers
+job_offer_terms
+job_offer_status_history
+professional_inquiries
+talent_saved_profiles
+talent_searches
+skill_endorsements
+professional_reviews
+professional_reputation_scores
+talent_publication_consents
+talent_moderation_cases
+talent_reports
+talent_privacy_events
+7. professional_profiles
+يمثل الملف المهني الاختياري للمستخدم داخل Talent Marketplace.
+الحقول
+iduuiduser_idheadline nullablesummary longtext nullableprofessional_title nullableprimary_category_id nullablecountry_id nullablecity nullableprofile_photo_media_id nullablecover_media_id nullablepublic_slugvisibility default privatestatus default draftopen_to_offers boolean default falseopen_to_contracts boolean default falseopen_to_remote boolean default falseavailability_status default unavailableyears_of_experience nullablehourly_rate_min decimal(15,2) nullablehourly_rate_max decimal(15,2) nullablecurrency_code nullablepublic_contact_enabled boolean default falseverified_identity_status default not_verifiedverified_work_history_status default not_verifiedlast_published_at nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم المقترحة للحالات
+visibility: private, limited, public, hiddenstatus: draft, pending_review, published, suspended, archivedavailability_status: unavailable, available_now, available_soon, open_to_offers, busyverified_identity_status: not_verified, pending, verified, rejected, expiredverified_work_history_status: not_verified, partial, verified
+فهارس وقواعد
+unique(user_id)unique(public_slug)index(status)index(visibility)index(open_to_offers)index(country_id, city)index(primary_category_id)index(availability_status)
+ملاحظات
+ProfessionalProfile اختياري؛ ليس كل User يجب أن يملك ملفًا مهنيًا.
+لا نضع company_id هنا لأن المستخدم قد يعمل مع أكثر من شركة.
+أي نشر عام يجب أن يمر عبر consent وmoderation عند الحاجة.
+8. professional_profile_visibility_settings
+إعدادات تفصيلية لما يظهر وما يخفى في الملف المهني.
+الحقول
+idprofessional_profile_idshow_full_name boolean default trueshow_city boolean default trueshow_country boolean default trueshow_current_company boolean default falseshow_work_history boolean default falseshow_rates boolean default falseshow_reviews boolean default trueshow_contact_button boolean default falseallow_company_messages boolean default trueallow_job_offers boolean default trueallow_profile_indexing boolean default trueallow_mall_visibility boolean default falsesettings json nullablecreated_atupdated_at
+فهارس وقواعد
+unique(professional_profile_id)
+ملاحظات
+هذا الجدول يحمي من نشر سجل العمل أو الشركة الحالية بدون موافقة صريحة.
+9. talent_skills
+قاموس المهارات الموحد داخل المنصة.
+الحقول
+iduuidnameslugskill_type default hard_skillcategory_id nullabledescription nullablestatus default activemetadata json nullablecreated_atupdated_at
+القيم المقترحة للحالات
+skill_type: hard_skill, soft_skill, tool, language, certification, industrystatus: active, merged, deprecated, hidden
+فهارس وقواعد
+unique(slug)index(skill_type)index(category_id)index(status)
+ملاحظات
+يجب استخدام جدول مستقل للمهارات بدل JSON داخل profile حتى يمكن البحث والمطابقة.
+10. professional_profile_skills
+ربط الملف المهني بالمهارات.
+الحقول
+idprofessional_profile_idskill_idlevel default beginneryears_experience nullableis_primary boolean default falseis_verified boolean default falseverified_by_type nullableverified_by_id nullableevidence_url nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة للحالات
+level: beginner, intermediate, advanced, expert
+فهارس وقواعد
+unique(professional_profile_id, skill_id)index(skill_id)index(level)index(is_primary)index(is_verified)
+ملاحظات
+التحقق من المهارة قد يأتي من شركة، شهادة، اختبار، أو مراجعة منصة في V6.
+11. professional_work_history
+سجل العمل المهني الذي يختار المستخدم إظهاره أو إخفاءه.
+الحقول
+iduuidprofessional_profile_iduser_idcompany_id nullablecompany_membership_id nullableexternal_company_name nullablerole_titleemployment_type nullablestart_date nullableend_date nullableis_current boolean default falsedescription longtext nullablevisibility default privateverification_status default unverifiedsource_type default manualmetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم المقترحة للحالات
+employment_type: full_time, part_time, contract, freelance, internship, consultant, volunteervisibility: private, profile_only, publicverification_status: unverified, pending, company_confirmed, platform_verified, rejectedsource_type: manual, company_membership, imported, verified_contract
+فهارس وقواعد
+index(professional_profile_id)index(user_id)index(company_id)index(company_membership_id)index(visibility)index(verification_status)
+ملاحظات
+لا يتم إظهار company_membership مباشرة. يتم إنشاء work_history قابل للتحكم في ظهوره.
+تقييمات الأداء الداخلية لا تنتقل تلقائيًا إلى هذا الجدول.
+12. work_history_verifications
+طلبات أو سجلات التحقق من خبرة عمل محددة.
+الحقول
+iduuidprofessional_work_history_idrequested_by_user_id nullablecompany_id nullablereviewed_by_user_id nullableverification_methodstatus default pendingevidence_document_id nullablereview_notes nullableverified_at nullablerejected_at nullableexpires_at nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة للحالات
+verification_method: company_confirmation, document_upload, platform_review, contract_match, imported_membershipstatus: pending, need_more_info, verified, rejected, expired
+فهارس وقواعد
+index(professional_work_history_id)index(company_id)index(status)index(verification_method)
+13. professional_portfolio_items
+أعمال المستخدم العامة أو المختارة.
+الحقول
+iduuidprofessional_profile_idtitleslug nullabledescription longtext nullableportfolio_typemedia_asset_id nullableexternal_url nullableclient_name nullablecompany_id nullableproject_date nullablevisibility default privatestatus default draftsort_order default 0metadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم المقترحة للحالات
+portfolio_type: image, pdf, link, case_study, video, project, documentvisibility: private, profile_only, publicstatus: draft, published, hidden, removed
+فهارس وقواعد
+index(professional_profile_id)index(status)index(visibility)index(sort_order)
+14. professional_availability_windows
+فترات التوفر أو الانشغال.
+الحقول
+idprofessional_profile_idavailability_typestarts_at nullableends_at nullabletimezone default Africa/Cairoweekly_schedule json nullablecapacity_percent nullablenotes nullablestatus default activecreated_atupdated_at
+القيم المقترحة للحالات
+availability_type: immediate, date_range, weekly_schedule, unavailable, busy_untilstatus: active, inactive, expired
+فهارس وقواعد
+index(professional_profile_id)index(availability_type)index(status)index(starts_at, ends_at)
+15. professional_preferences
+تفضيلات العمل واستقبال العروض.
+الحقول
+idprofessional_profile_idpreferred_work_types json nullablepreferred_locations json nullableremote_preference default flexiblemin_monthly_salary decimal(15,2) nullablemin_hourly_rate decimal(15,2) nullablecurrency_code nullablenotice_period_days nullableindustries json nullablecompany_sizes json nullablecontract_preferences json nullablecreated_atupdated_at
+القيم المقترحة للحالات
+remote_preference: onsite, hybrid, remote, flexible
+فهارس وقواعد
+unique(professional_profile_id)
+ملاحظات
+هذه التفضيلات ليست كلها عامة؛ تظهر للشركات حسب privacy settings.
+16. job_offers
+عرض عمل أو تعاون ترسله شركة إلى محترف.
+الحقول
+iduuidorganization_idcompany_idprofessional_profile_idsender_user_idrecipient_user_idoffer_typetitlemessage longtext nullablestatus default draftvisibility default privateexpires_at nullablesent_at nullableresponded_at nullableaccepted_at nullablerejected_at nullablecancelled_at nullablerelated_contract_id nullablerelated_project_id nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم المقترحة للحالات
+offer_type: job, contract, project, consulting, internship, partnershipstatus: draft, sent, viewed, negotiating, accepted, rejected, withdrawn, expired, converted_to_contract, converted_to_membership
+فهارس وقواعد
+index(organization_id)index(company_id)index(professional_profile_id)index(recipient_user_id)index(sender_user_id)index(status)index(offer_type)index(expires_at)
+ملاحظات
+الشركة لا تستطيع إرسال offer إلا إذا كانت لديها permission job_offer.send وسمح المحترف باستقبال العروض.
+قبول العرض لا ينشئ company_membership تلقائيًا إلا عبر workflow/approval واضح.
+17. job_offer_terms
+تفاصيل شروط العرض بشكل منفصل عن الرسالة.
+الحقول
+idjob_offer_idwork_type nullablelocation_type nullablelocation_text nullablestart_date nullableend_date nullablesalary_min decimal(15,2) nullablesalary_max decimal(15,2) nullablehourly_rate decimal(15,2) nullablecurrency_code nullablepayment_cycle nullableexpected_hours_per_week nullablebenefits json nullableresponsibilities json nullablerequirements json nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة للحالات
+work_type: full_time, part_time, contract, freelance, consultant, internshiplocation_type: onsite, hybrid, remote
+فهارس وقواعد
+unique(job_offer_id)
+18. job_offer_status_history
+سجل تغيرات حالة العرض.
+الحقول
+idjob_offer_idfrom_status nullableto_statuschanged_by_user_id nullablereason nullablemessage nullablecreated_at
+فهارس وقواعد
+index(job_offer_id)index(to_status)index(changed_by_user_id)
+ملاحظات
+كل انتقال مهم يجب أن يسجل activity/audit حسب حساسية الحالة.
+19. professional_inquiries
+استفسار أولي من شركة لمحترف قبل إرسال عرض رسمي.
+الحقول
+iduuidorganization_id nullablecompany_id nullableprofessional_profile_idsender_user_id nullablerecipient_user_idinquiry_type default messagesubject nullablemessage longtextstatus default opencreated_atupdated_at
+القيم المقترحة للحالات
+inquiry_type: message, availability_check, collaboration_request, interview_requeststatus: open, replied, closed, reported, blocked
+فهارس وقواعد
+index(professional_profile_id)index(company_id)index(recipient_user_id)index(status)
+20. talent_saved_profiles
+حفظ شركة أو مستخدم لملف مهني للرجوع إليه لاحقًا.
+الحقول
+idorganization_idcompany_id nullablesaved_by_user_idprofessional_profile_idlist_name nullablenotes nullablecreated_atupdated_at
+فهارس وقواعد
+unique(saved_by_user_id, professional_profile_id)index(organization_id)index(company_id)
+ملاحظات
+الملاحظات هنا خاصة بالشركة ولا تظهر للمحترف.
+21. talent_searches
+سجل عمليات البحث المهمة لأغراض التحسين والتحليلات مع احترام الخصوصية.
+الحقول
+iduuidorganization_id nullablecompany_id nullablesearched_by_user_id nullablequery nullablefilters json nullableresult_count integer default 0created_at
+فهارس وقواعد
+index(organization_id)index(company_id)index(searched_by_user_id)index(created_at)
+ملاحظات
+لا تستخدم هذه البيانات لاستنتاجات حساسة بدون سياسة خصوصية واضحة.
+22. skill_endorsements
+تزكيات أو تأكيدات مهارة.
+الحقول
+iduuidprofessional_profile_skill_idendorsed_by_user_id nullableendorsed_by_company_id nullableendorsement_type default peermessage nullablestatus default activecreated_atupdated_at
+القيم المقترحة للحالات
+endorsement_type: peer, company, manager, client, platform, certificatestatus: active, hidden, revoked, disputed
+فهارس وقواعد
+index(professional_profile_skill_id)index(endorsed_by_user_id)index(endorsed_by_company_id)index(status)
+23. professional_reviews
+تقييمات مهنية عامة أو شبه عامة، منفصلة عن تقييمات HR الداخلية.
+الحقول
+iduuidprofessional_profile_idreviewer_user_id nullablereviewer_company_id nullablesource_type nullablesource_id nullablerating decimal(3,2) nullabletitle nullablebody longtext nullablevisibility default privatestatus default pending_reviewcreated_atupdated_atdeleted_at nullable
+القيم المقترحة للحالات
+visibility: private, profile_only, publicstatus: pending_review, published, hidden, rejected, disputed, removed
+فهارس وقواعد
+index(professional_profile_id)index(reviewer_company_id)index(status)index(visibility)index(rating)
+ملاحظات
+لا تنقل evaluations الداخلية تلقائيًا إلى reviews العامة.
+أي review عام يجب أن يخضع لقواعد moderation والحق في الاعتراض.
+24. professional_reputation_scores
+قيم مشتقة للسمعة المهنية قابلة لإعادة البناء.
+الحقول
+idprofessional_profile_idscore_typescore_value decimal(8,3)calculated_from json nullablecalculated_atmetadata json nullablecreated_atupdated_at
+القيم المقترحة للحالات
+score_type: overall, reliability, skill_strength, work_history_trust, review_quality, response_rate
+فهارس وقواعد
+unique(professional_profile_id, score_type)index(score_value)index(calculated_at)
+ملاحظات
+هذا الجدول derived ولا يجب اعتباره مصدر الحقيقة.
+25. talent_publication_consents
+موافقة المستخدم على نشر بياناته المهنية.
+الحقول
+idprofessional_profile_iduser_idconsent_typestatus default activegranted_at nullablerevoked_at nullableterms_version nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة للحالات
+consent_type: profile_publication, skills_publication, work_history_publication, reviews_publication, mall_indexing, job_offersstatus: active, revoked, expired
+فهارس وقواعد
+index(professional_profile_id)index(user_id)index(consent_type)index(status)
+ملاحظات
+لا نشر في Mall أو Talent Search بدون consent مناسب.
+26. talent_moderation_cases
+مراجعة محتوى مهني أو شكاوى حول ملف محترف.
+الحقول
+iduuidprofessional_profile_id nullablesubject_type nullablesubject_id nullablecase_typestatus default openseverity default mediumopened_by_user_id nullableassigned_to_user_id nullabledecision nullableresolved_at nullablemetadata json nullablecreated_atupdated_at
+القيم المقترحة للحالات
+case_type: profile_report, fake_experience, abusive_content, spam, fraud, review_dispute, identity_issuestatus: open, under_review, action_required, resolved, rejected, escalatedseverity: low, medium, high, critical
+فهارس وقواعد
+index(professional_profile_id)index(status)index(case_type)index(severity)
+27. talent_reports
+بلاغات المستخدمين أو الشركات عن ملف أو عرض أو رسالة.
+الحقول
+iduuidreporter_user_id nullableprofessional_profile_id nullablereported_typereported_idreasonmessage nullablestatus default submittedcreated_atupdated_at
+القيم المقترحة للحالات
+reason: fake_profile, fake_work_history, spam, harassment, fraud, inappropriate_content, otherstatus: submitted, under_review, action_taken, dismissed
+فهارس وقواعد
+index(professional_profile_id)index(reported_type, reported_id)index(status)index(reason)
+28. talent_privacy_events
+سجل أحداث الخصوصية الخاصة بالمحترف.
+الحقول
+iduuidprofessional_profile_iduser_idevent_typedescription nullablebefore json nullableafter json nullableip_address nullableuser_agent nullablecreated_at
+القيم المقترحة للحالات
+event_type: visibility_changed, consent_granted, consent_revoked, work_history_hidden, reviews_hidden, profile_published, profile_unpublished, blocked_company
+فهارس وقواعد
+index(professional_profile_id)index(user_id)index(event_type)index(created_at)
+29. Talent Mall Mirror
+الظهور في Kabeeri Mall أو نتائج البحث العامة لا يجب أن يقرأ professional_profiles مباشرة في كل حالة. الأفضل وجود نسخة عامة mirror مثل mall_mirror_talent أو talent_public_index، يتم تحديثها فقط من بيانات وافق المستخدم على نشرها.
+mall_mirror_talentiduuiduser_id nullableprofessional_profile_id nullablemall_sync_source_id nullableexternal_id nullableheadline nullablesummary nullableskills json nullablecountry_id nullablecity nullableavailability_status nullablevisibility default hiddensource_status default activepublication_status default draftlast_synced_at nullablemetadata json nullablecreated_atupdated_at
+Mirror لا يحتوي على private notes أو salary preferences الخاصة أو evaluations الداخلية.
+أي revoke consent يجب أن يحدث mirror إلى hidden/disconnected أو يحذف البيانات العامة حسب السياسة.
+Portable/Dedicated يمكنهما إرسال public talent payload فقط عبر Mall Sync API.
+30. ERD مختصر
+erDiagram    USERS ||--o| PROFESSIONAL_PROFILES : may_have    PROFESSIONAL_PROFILES ||--o{ PROFESSIONAL_PROFILE_SKILLS : has    TALENT_SKILLS ||--o{ PROFESSIONAL_PROFILE_SKILLS : classifies    PROFESSIONAL_PROFILES ||--o{ PROFESSIONAL_WORK_HISTORY : lists    PROFESSIONAL_WORK_HISTORY ||--o{ WORK_HISTORY_VERIFICATIONS : verified_by    PROFESSIONAL_PROFILES ||--o{ PROFESSIONAL_PORTFOLIO_ITEMS : showcases    PROFESSIONAL_PROFILES ||--o{ PROFESSIONAL_AVAILABILITY_WINDOWS : schedules    PROFESSIONAL_PROFILES ||--o| PROFESSIONAL_PREFERENCES : configures    COMPANIES ||--o{ JOB_OFFERS : sends    PROFESSIONAL_PROFILES ||--o{ JOB_OFFERS : receives    JOB_OFFERS ||--o| JOB_OFFER_TERMS : has    JOB_OFFERS ||--o{ JOB_OFFER_STATUS_HISTORY : tracks    PROFESSIONAL_PROFILES ||--o{ PROFESSIONAL_REVIEWS : receives    PROFESSIONAL_PROFILES ||--o{ TALENT_PUBLICATION_CONSENTS : grants    PROFESSIONAL_PROFILES ||--o{ TALENT_MODERATION_CASES : reviewed_by    PROFESSIONAL_PROFILES ||--o{ TALENT_PRIVACY_EVENTS : logs    PROFESSIONAL_PROFILES ||--o| MALL_MIRROR_TALENT : publishes_to
+31. Flows
+31.1 إنشاء ملف مهني
+User opens Personal Space→ create professional_profile draft→ add headline/summary/skills→ configure visibility settings→ grant or deny publication consents→ preview public profile→ submit/publish→ optional moderation→ update mall_mirror_talent if allowed
+31.2 إرسال عرض عمل
+Company user searches Talent→ checks permission job_offer.send→ checks professional allows offers→ create job_offer draft→ add job_offer_terms→ send offer→ notify professional→ professional views/accepts/rejects/negotiates→ status history recorded→ optional contract or company_membership workflow later
+31.3 تحويل قبول العرض إلى عضوية شركة
+JobOffer accepted→ optional Contract generated→ company admin approval→ create company_membership→ assign role→ onboarding tasks created→ professional_work_history can be linked later with consent
+31.4 إخفاء سجل عمل
+Professional changes work history visibility→ update professional_work_history.visibility→ create talent_privacy_event→ refresh mall_mirror_talent→ remove public references if needed
+32. Permissions المقترحة
+professional_profile.viewprofessional_profile.manageprofessional_profile.publishprofessional_profile.privacy.managetalent.search.viewtalent.profile.savetalent.profile.contactjob_offer.sendjob_offer.viewjob_offer.acceptjob_offer.rejectjob_offer.negotiatetalent.moderation.viewtalent.moderation.managetalent.reputation.viewtalent.reputation.managetalent.privacy.audit.view
+33. Privacy Rules
+Professional Profile لا يظهر للعامة افتراضيًا. الوضع الافتراضي private.
+Work History لا يظهر إلا إذا visibility تسمح بذلك، حتى لو كان مرتبطًا بـ company_membership.
+Employee evaluations الخاصة لا تنسخ إلى professional_reviews.
+Salary/rate preferences لا تظهر إلا إذا اختار المستخدم ذلك.
+الشركة لا ترى بيانات اتصال مباشرة إلا إذا public_contact_enabled أو عبر messaging/inquiry flow.
+أي شركة محظورة من المستخدم لا تستطيع إرسال inquiry أو job offer.
+Mall indexing يحتاج consent منفصل عن profile publication.
+34. Moderation & Trust Rules
+أي profile public يمكن التبليغ عنه.
+fake work history يتحول إلى talent_moderation_case وربما work_history_verification.
+reviews العامة قابلة للاعتراض ولا تظهر مباشرة في الحالات الحساسة.
+verification_status لا يعني أن الشخص موظف حاليًا؛ فقط أن هوية أو خبرة معينة تم التحقق منها.
+moderation يمكنها override publication_status بدون تغيير source data.
+35. Frontend Anywhere
+الواجهة الخارجية تقرأ فقط public talent mirror أو public API scopes.
+لا تسمح API العامة بقراءة private work history أو job offers.
+إرسال inquiry من frontend خارجي يحتاج scope محدد وrate limit.
+أي تغيير في visibility يؤدي إلى cache invalidation للواجهة الخارجية.
+36. Portable
+Professional Profile الخاص بالعميل لا يصدر إلا إذا كان المستخدم ضمن organization data أو وافق على ذلك حسب السياسة.
+job_offers المرتبطة بالمنظمة يمكن تصديرها كبيانات تشغيلية للعميل، لكن بيانات المستخدم الشخصية غير التابعة قد تحتاج anonymization.
+إذا استمر Mall Sync بعد الخروج، يرسل Portable فقط public talent payload بموافقة المستخدم.
+UUIDs يجب أن تبقى ثابتة للمزامنة مع Mall Mirror.
+37. Dedicated
+في Dedicated يمكن بقاء professional_profiles داخل Dedicated DB إذا كانت جزءًا من tenant.
+Mall Central لا يقرأ Dedicated DB مباشرة، بل عبر sync API.
+Enterprise customers قد يحتاجون policy تمنع نشر talent خارج بيئتهم إلا بموافقة المؤسسة والمستخدم.
+38. Events
+ProfessionalProfileCreatedProfessionalProfilePublishedProfessionalProfileVisibilityChangedProfessionalSkillAddedWorkHistoryAddedWorkHistoryVerificationRequestedWorkHistoryVerifiedJobOfferSentJobOfferViewedJobOfferAcceptedJobOfferRejectedTalentInquiryCreatedProfessionalReviewSubmittedTalentReportSubmittedTalentConsentRevoked
+39. Indexing & Search
+البحث العام يستخدم talent public index أو mall_mirror_talent لاستخدام أسرع وآمن.
+الفلاتر الأساسية: category, skills, country/city, availability, verification status, rating, remote preference.
+لا يدخل private metadata في search index.
+عند revoke consent يجب حذف/إخفاء السجل من index بسرعة.
+40. MVP Build Order
+المرحلة
+الجداول/المخرجات
+1
+professional_profiles + visibility settings
+2
+talent_skills + professional_profile_skills
+3
+work_history + portfolio
+4
+availability + preferences
+5
+job_offers + offer terms + status history
+6
+publication consents + mall mirror update
+7
+reports + moderation cases
+8
+reviews + reputation derived scores
+9
+tests + privacy audit + demo
+41. Testing Priorities
+مستخدم لا يستطيع نشر profile شخص آخر.
+الشركة لا تستطيع إرسال job_offer إذا المحترف أغلق استقبال العروض.
+work_history private لا يظهر في public API ولا Mall Mirror.
+revoking consent يخفي profile من index.
+قبول job offer لا ينشئ company_membership بدون approval.
+reviews الداخلية لا تظهر كـ public reviews.
+moderator يستطيع suspend public profile بدون حذف source data.
+42. Definition of Done
+professional profile يعمل draft/publish/private.
+skills تعمل بعلاقات حقيقية وليس JSON فقط.
+work history له visibility وتحكم خصوصية.
+job offers تعمل send/view/accept/reject/negotiate.
+company-to-professional inquiry يعمل بشكل آمن.
+publication consent موجود ومرتبط بـ Mall Mirror.
+Talent search لا يعرض إلا public data.
+moderation/reporting موجودة للملفات العامة.
+activity/privacy events تسجل التغييرات الحساسة.
+اختبارات الصلاحيات والخصوصية ناجحة.
+43. أخطاء ممنوعة
+ربط professional_profiles بشركة واحدة داخل users أو profile.
+إظهار company_membership أو employee evaluation في السوق تلقائيًا.
+استخدام JSON فقط للمهارات بدل skill tables.
+إرسال job offer بدون permission وبدون احترام privacy settings.
+فتح Talent Marketplace بدون moderation/reporting.
+اعتبار reputation score حقيقة نهائية بدل derived metric.
+نشر contact info العامة افتراضيًا.
+44. الخلاصة التنفيذية
+Talent Marketplace في Kabeeri يجب أن يبدأ كطبقة مهنية آمنة ومتحكم فيها، لا كسوق فوضوي. مصدر الحقيقة هو User + Professional Profile + Skills + Work History، أما الظهور العام فيتم عبر consent وmirror وmoderation. القاعدة النهائية: لا موهبة عامة بدون خصوصية، ولا ثقة بدون تحقق، ولا عروض عمل بدون صلاحيات وسجل واضح.
+KABEERI Database File 12 — Talent Marketplace Database

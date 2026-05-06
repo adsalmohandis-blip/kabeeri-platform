@@ -1,0 +1,10 @@
+KABEERI V7 Mobile App Enablement — Acceptance Checklist
+KABEERI Professional Knowledge System — v1.6.2
+قبول الأعمال
+أي App يمكنه امتلاك Mobile Config، وأي Theme يمكنه امتلاك Mobile Profile.
+قبول التقنية
+APIs موثقة بـ OpenAPI، Flutter shell يقرأ config/profile، لا يتم كشف بيانات خاصة.
+قبول الأمان
+token-based auth، rate limit، device revoke، audit logs للأحداث الحساسة.
+قبول الاختبارات
+اختبارات config، manifest، device registry، push token registry، tenant isolation.

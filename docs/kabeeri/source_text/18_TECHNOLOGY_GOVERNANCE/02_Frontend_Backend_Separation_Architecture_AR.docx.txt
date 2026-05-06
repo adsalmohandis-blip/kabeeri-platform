@@ -1,0 +1,6 @@
+KABEERI Frontend / Backend Separation Architecture
+شرح فصل الواجهات عن Laravel Backend لدعم الثيمات والبلجنات والموبايل والديسك توب.
+KABEERI Professional Knowledge System — v1.6.2
+Laravel لا يعرض الثيمات العامة مباشرة كـ Blade. Laravel يملك البيانات والمنطق والصلاحيات والـ APIs. الويب العام يبنى على Next.js/React ويقرأ من API فقط.
+Laravel Backend/API├── Domain logic / DB / RBAC / Jobs / Events├── Filament Admin└── REST JSON APIs + OpenAPINext.js Web Theme Runtime├── React theme components├── Theme manifests├── App recipes└── Reads public/private scoped APIsFlutter Mobile Shell└── Reads Mobile Theme Profiles + API ManifestElectron Desktop Client└── Local SQLite + Outbox Sync + REST APIs
+مطور الثيم لا يحتاج الدخول إلى Laravel internals، ومطور البلجن يلتزم بـ manifest وpermissions وAPI contract.

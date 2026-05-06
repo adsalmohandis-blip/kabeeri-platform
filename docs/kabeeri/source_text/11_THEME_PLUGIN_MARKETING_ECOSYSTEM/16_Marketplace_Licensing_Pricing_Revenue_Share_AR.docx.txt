@@ -1,0 +1,49 @@
+16 — قواعد الترخيص والتسعير وتقاسم الإيرادات
+يوضح هذا الملف قواعد بيع وتوزيع الثيمات والبلجنات وحماية حقوق Kabeeri Creators.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+أنواع الترخيص
+License
+الاستخدام
+ملاحظات
+Free
+تثبيت مجاني
+قد يحمل Kabeeri branding حسب الخطة
+Freemium
+أساس مجاني + خصائص Pro
+مناسب للانتشار
+Pro
+مدفوع لكل App أو Organization
+يدعم الثيمات والبلجنات المتقدمة
+Premium / Agency
+ترخيص لوكالات أو استخدام متعدد
+سعر أعلى + دعم أفضل
+Enterprise
+اتفاق خاص
+يشمل SLA وPrivate Packages
+Revenue Share المقترح
+المصدر
+Creator/Partner
+Kabeeri
+ملاحظات
+Theme sale
+70%
+30%
+قابل للتعديل حسب المستوى
+Plugin sale
+65%
+35%
+حسب المخاطر والدعم
+Agency kit
+60%
+40%
+قد يشمل leads من المنصة
+Affiliate commission
+حسب البرنامج
+Platform fee
+تطبق hold/refund rules
+قواعد مهمة
+لا يتم الدفع الفعلي إلا بعد فترة hold.
+أي refund يؤدي إلى reversal للعمولة.
+الثيمات/البلجنات التجارية تحتاج license metadata.
+الملفات التي تحتوي assets خارجية تحتاج إثبات ترخيص.

@@ -1,0 +1,67 @@
+KABEERI Talent Marketplace Public Professionals Architecture
+سوق المواهب العام للمحترفين والخدمات بدون عمولة تنفيذ
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. تعريف Talent Marketplace
+Talent Marketplace هو سوق مواهب عام يعرض ملفات المحترفين المستقلين والموظفين عن بعد ومقدمي الخدمات. لا يشترط أن يكون المحترف يعمل داخل Kabeeri Work Network.
+• الزائر يستطيع تصفح الملفات العامة.
+• التواصل يتطلب حساب شخصي مجاني.
+• المنصة لا تأخذ نسبة على تنفيذ الخدمة في البداية.
+• الترقية تكون للظهور، التوثيق، التحليلات، والأدوات الاحترافية.
+2. من يظهر في Talent Marketplace؟
+الفئة
+أمثلة
+هل تحتاج اعتماد Kabeeri؟
+محترفون إبداعيون
+مصمم جرافيك، مونتير، مصور، كاتب محتوى
+لا، إلا لو يريد badge
+محترفون تقنيون
+مطور، UI/UX، مدير سوشيال
+لا للظهور، نعم للشارات
+متخصصون إداريون
+مساعد افتراضي، محاسب، HR
+حسب نوع الخدمة
+Work Network Members
+App Builder, Growth Partner, Migration Specialist
+نعم لهذه titles
+Agencies
+وكالات صغيرة أو فرق عمل
+نعم لو Agency Partner
+3. نموذج الدخل بدون عمولة تنفيذ
+المنافسة لا تكون عبر أخذ نسبة من كل مشروع، بل عبر بناء الثقة والظهور والأدوات.
+مصدر الدخل
+الوصف
+Premium Profile
+ظهور أعلى وتحليلات وportfolio أكبر
+Verified Professional Badge
+تحقق من الهوية/المؤهلات
+Featured Listing
+ظهور مميز في نتائج البحث
+Company Hiring Tools
+أدوات للشركات للبحث والتواصل
+Academy Certifications
+دورات وشهادات مدفوعة أو freemium
+Service Package Listing
+عرض باقات خدمات منظمة
+4. قواعد التواصل
+• التصفح العام مسموح للزائر.
+• التواصل أو طلب الخدمة يتطلب حسابًا شخصيًا مجانيًا.
+• يتم حماية البريد/الهاتف حسب إعدادات الخصوصية.
+• يمكن استخدام inbox داخلي قبل مشاركة البيانات الشخصية.
+• أي بلاغ أو إساءة استخدام يدخل Moderation/Disputes.
+5. الفرق بين Talent وWork Network
+البند
+Talent Marketplace
+Work Network
+الغرض
+عرض مواهب وخدمات عامة
+تشغيل وظائف مرتبطة بمنصة Kabeeri
+الاعتماد
+اختياري غالبًا
+إجباري لكل title
+الدخل
+Premium/featured/search tools
+مشاريع، إحالات، عمولات، dashboard
+الأمثلة
+مصمم، مونتير، كاتب
+App Builder, Growth Partner, Creator
+KABEERI — Confidential Product Architecture

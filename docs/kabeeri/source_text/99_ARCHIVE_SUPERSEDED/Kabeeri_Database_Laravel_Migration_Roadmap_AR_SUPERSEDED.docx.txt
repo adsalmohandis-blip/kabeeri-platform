@@ -1,0 +1,356 @@
+KABEERI Database File 08 — Laravel Migration Roadmap
+خريطة تنفيذ Laravel Migrations لقاعدة بيانات KABEERI
+هذا الملف يحوّل ملفات قاعدة البيانات السابقة إلى خطة تنفيذ عملية داخل Laravel.
+يعتمد هذا الملف على:
+01 — Core Kernel Database02 — Kabeeri Cloud Database03 — Kabeeri Frontend Anywhere Database04 — Kabeeri Portable Database05 — Kabeeri Dedicated Database06 — Integration Between The Five Systems07 — Master ERD & Module Database Blueprint
+الهدف:
+ترتيب بناء قاعدة البيانات خطوة بخطوة بطريقة تمنع تضارب العلاقات، وتسمح بالتوسع، وتحافظ على قابلية التصدير، وتدعم Cloud / Frontend Anywhere / Portable / Dedicated.
+1. القاعدة الكبرى في تنفيذ Migrations
+لا تبني كل قاعدة البيانات مرة واحدة.
+نفّذها على Layers:
+Layer 00 — Laravel Default / Auth BaseLayer 01 — Global ReferencesLayer 02 — Core IdentityLayer 03 — Organizations / Tenant CoreLayer 04 — RBACLayer 05 — Companies / SitesLayer 06 — Settings / Flags / Logs / MediaLayer 07 — CMSLayer 08 — Rabet / Business IdentityLayer 09 — Commerce / ServicesLayer 10 — ERP EssentialsLayer 11 — Cloud / Billing / Hosting ModesLayer 12 — Frontend Anywhere / Portable / DedicatedLayer 13 — Mall Mirror / SyncLayer 14 — Collaboration / Teams / AI / IntegrationsLayer 15 — BI / GRC / Enterprise
+2. قواعد Laravel Migration Naming
+2.1 صيغة الاسم
+YYYY_MM_DD_HHMMSS_create_table_name_table.phpYYYY_MM_DD_HHMMSS_add_field_to_table_name_table.php
+2.2 أمثلة
+2026_01_01_000001_create_countries_table.php2026_01_01_000010_create_organizations_table.php2026_01_01_000020_create_sites_table.php2026_01_01_000030_create_content_entries_table.php
+2.3 ممنوع
+create_everything_table.phpcreate_erp_tables.phpbig_migration_all_modules.php
+3. قواعد عامة لكل Migration
+3.1 كل جدول مهم يفضّل أن يحتوي
+$table->id();$table->ulid('uuid')->unique();$table->timestamps();
+أو UUID بدل ULID حسب القرار النهائي.
+3.2 Business tables غالبًا تحتوي
+$table->foreignId('organization_id')->constrained()->cascadeOnDelete();$table->foreignId('site_id')->nullable()->constrained()->nullOnDelete();$table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();$table->string('status')->default('active')->index();$table->json('metadata')->nullable();$table->softDeletes();
+3.3 لا تضيف كل هذه الأعمدة بشكل أعمى
+استخدم فقط المناسب لكل جدول.
+4. قواعد Foreign Keys
+4.1 Platform Tables
+مثل:
+countriescurrenciespermissionsplansentitlements
+غالبًا لا تحتوي organization_id.
+4.2 Tenant Tables
+يجب أن تحتوي organization_id أو ترتبط بجدول يحتويه.
+4.3 Site Tables
+يجب أن تحتوي:
+organization_idsite_id
+4.4 Company Tables
+يجب أن تحتوي:
+organization_idcompany_id
+4.5 Mall Mirror Tables
+قد تحتوي organization_id/company_id nullable لأن بعض المصادر قد تكون خارجية.
+5. قواعد Indexes العامة
+أضف هذه الفهارس حيث ينطبق:
+$table->index('organization_id');$table->index(['organization_id', 'status']);$table->index(['organization_id', 'site_id']);$table->index(['organization_id', 'company_id']);$table->index(['company_id', 'status']);$table->index(['site_id', 'status']);$table->index('created_at');
+Slug uniqueness
+$table->unique(['site_id', 'slug']);$table->unique(['company_id', 'slug']);$table->unique(['organization_id', 'slug']);
+حسب السياق.
+6. قواعد JSON
+استخدم JSON في
+metadatasettingsmanifestpayloaderrorsconfigconditionsactions
+لا تستخدم JSON في
+moneytax totalsstock quantitiesforeign keysinvoice totalsjournal linespermission assignments
+7. ترتيب التنفيذ الأعلى
+00_laravel_base01_global_references02_users_profiles03_organizations_memberships04_rbac05_companies_sites06_settings_flags_logs_media_modules07_cms08_rabet_business_identity09_commerce_services10_erp_essentials11_cloud_billing12_hosting_modes13_mall_sync_mirror14_collaboration_ai_integrations15_enterprise_bi_grc
+8. Layer 00 — Laravel Base
+الهدف
+تجهيز جداول Laravel الأساسية.
+migrations
+create_users_tablecreate_cache_tablecreate_jobs_tablecreate_failed_jobs_tablecreate_personal_access_tokens_table optional
+ملاحظات
+Laravel يوفر بعضها تلقائيًا.
+لكن جدول users يجب تعديله ليتوافق مع Kabeeri.
+9. Layer 01 — Global References
+الهدف
+جداول مرجعية لا تتبع Tenant.
+migrations order
+001_create_countries_table002_create_currencies_table003_create_languages_table optional004_create_timezones_table optional005_create_industries_table optional
+countries
+idiso2 uniqueiso3 nullablenamenative_name nullablephone_code nullabledefault_currency_code nullabledefault_language nullablestatuscreated_atupdated_at
+currencies
+idcode uniquenamesymbol nullabledecimal_placesstatuscreated_atupdated_at
+seeders
+CountriesSeederCurrenciesSeeder
+tests
+country code uniquecurrency code unique
+10. Layer 02 — Users & Profiles
+migrations order
+010_create_users_table011_create_user_profiles_table012_add_avatar_media_id_later_after_media optional
+users ملاحظات
+لا تضف organization_id داخل users.
+user_profiles depends on
+userscountries nullable
+seeders
+AdminUserSeeder
+tests
+user can be createdprofile belongs to useruser can exist without organization
+11. Layer 03 — Organizations / Tenant Core
+migrations order
+020_create_organizations_table021_create_organization_memberships_table022_create_organization_invitations_table optional023_create_organization_operating_modes_table024_create_business_passports_table later after companies/business_profiles nullable support
+organizations depends on
+userscountries nullable
+organization_memberships depends on
+organizationsusers
+organization_operating_modes depends on
+organizations
+recommended indexes
+organizations.slug uniqueorganization_memberships unique(organization_id, user_id)organization_operating_modes index(organization_id, current_mode, status)
+seeders
+DefaultOrganizationSeeder optional
+tests
+user can create organizationcreator becomes owner membershipuser can belong to multiple organizationsoperating mode defaults to cloud_managed
+12. Layer 04 — RBAC
+migrations order
+030_create_permissions_table031_create_roles_table032_create_role_permission_table033_create_membership_role_assignments_table034_create_membership_permission_overrides_table
+permissions
+Platform global.
+roles
+Can be:
+platformorganizationcompanysitemodule
+depends on
+organizations nullablecompanies nullable later issuesites nullable later issue
+تنفيذ مهم
+لأن roles قد تحتاج company_id/site_id قبل إنشاء companies/sites، عندك خياران:
+Option A
+أنشئ roles بعد companies/sites.
+Option B
+أنشئ roles هنا بدون FK لـ company_id/site_id، ثم أضف FK لاحقًا.
+التوصية
+استخدم Option B بحذر:
+roles table هناadd company/site foreign constraints لاحقًا بعد layer 05
+seeders
+CorePermissionsSeederCoreRolesSeeder
+tests
+role has permissionsmembership can receive rolepermission deny override works
+13. Layer 05 — Companies / Sites
+migrations order
+040_create_companies_table041_create_company_memberships_table042_create_departments_table043_create_sites_table044_add_company_site_foreign_keys_to_roles_table optional045_add_company_site_foreign_keys_to_settings_later optional
+companies depends on
+organizationscountries nullable
+company_memberships depends on
+companiesusersorganization_memberships nullable
+departments depends on
+companiesusers nullable for manager
+sites depends on
+organizationscompanies nullable
+indexes
+companies unique(organization_id, slug)company_memberships unique(company_id, user_id)sites unique(organization_id, slug)sites unique(domain) nullable carefulsites index(company_id)
+tests
+organization can create companyorganization can create sitesite can link to companysame slug allowed in different organizationssame user can work in multiple companies
+14. Layer 06 — Settings / Flags / Logs / Media / Modules
+migrations order
+050_create_settings_table051_create_feature_flags_table052_create_feature_flag_overrides_table053_create_activity_logs_table054_create_audit_logs_table055_create_notifications_table056_create_media_assets_table057_create_media_usages_table058_create_media_folders_table optional059_create_modules_table060_create_module_installations_table
+settings depends on
+organizations nullable
+media_assets depends on
+organizationssites nullablecompanies nullableusers nullable
+module_installations depends on
+organizationssites nullablecompanies nullablemodules
+ملاحظة مهمة
+بعد إنشاء media_assets، يمكن إضافة:
+avatar_media_id to userslogo_media_id to companies/business_profiles later
+indexes
+settings unique(scope_type, scope_id, key)activity_logs index(organization_id, created_at)audit_logs index(organization_id, created_at)media_assets index(organization_id, site_id)module_installations unique(organization_id, company_id, site_id, module_id)
+seeders
+CoreFeatureFlagsSeederCoreModulesSeeder
+tests
+setting can be scopedfeature flag override worksactivity log can be writtenmedia belongs to organizationmodule can be installed
+15. Layer 07 — CMS
+migrations order
+070_create_content_types_table071_create_content_entries_table072_create_content_revisions_table073_create_taxonomies_table074_create_taxonomy_terms_table075_create_content_term_table076_create_menus_table077_create_menu_items_table078_create_redirects_table079_create_forms_table080_create_form_fields_table081_create_form_submissions_table082_create_seo_meta_table optional
+depends on
+organizationssitesusers nullablemedia_assets nullable
+content_entries important fields
+organization_idsite_idcontent_type_idtitleslugstatuspublished_atauthor_user_idfeatured_media_id nullable
+indexes
+content_entries unique(site_id, slug)content_entries index(site_id, status, published_at)content_revisions index(content_entry_id)taxonomy_terms unique(taxonomy_id, slug)menus unique(site_id, slug)redirects index(site_id, source_path)forms index(site_id, status)
+seeders
+DefaultContentTypesSeederDefaultPageSeederDefaultMenuSeeder
+tests
+create pagepublish pagerevision createdslug unique per sitepublic page only renders if publishedform submission works
+16. Layer 08 — Rabet / Business Identity
+migrations order
+090_create_business_profiles_table091_create_verification_requests_table092_create_verification_documents_table093_create_verification_reviews_table094_create_legal_partners_table095_create_legal_partner_users_table096_create_legal_review_notes_table097_create_trust_records_table098_create_company_badges_table099_update_business_passports_table_add_business_profile_links optional100_create_mall_publication_consents_table
+depends on
+organizationscompaniesbusiness_profilesmedia_assetsusers
+indexes
+business_profiles unique(company_id, slug)business_profiles index(verification_status)verification_requests index(company_id, status)verification_documents index(verification_request_id)trust_records index(company_id, created_at)mall_publication_consents index(organization_id, company_id, status)
+tests
+company can create business profilebusiness profile can submit verificationverification document is privatelegal reviewer sees assigned review onlypublication consent required for mall
+17. Layer 09 — Commerce / Services
+migrations order
+110_create_customers_table111_create_customer_addresses_table112_create_product_categories_table113_create_products_table114_create_product_variants_table115_create_product_prices_table116_create_product_category_product_table117_create_carts_table118_create_cart_items_table119_create_orders_table120_create_order_items_table121_create_payments_table122_create_shipments_table123_create_coupons_table124_create_coupon_redemptions_table125_create_service_categories_table126_create_services_table127_create_service_requests_table128_create_service_request_messages_table129_create_service_pricing_rules_table
+depends on
+organizationssitescompaniescustomersproductsmedia_assetsbusiness_profiles
+indexes
+customers index(organization_id, email)products unique(site_id, slug)products index(company_id, status)orders unique(company_id, order_number)orders index(customer_id, status)payments index(order_id, status)services unique(company_id, slug)service_requests index(company_id, status)
+tests
+product can be createdproduct slug unique per site/company policycart can add productorder creates order itemsservice request can be submittedservice request can convert to lead later
+18. Layer 10 — ERP Essentials
+يقسم إلى Sub-layers حتى لا يصبح ضخمًا.
+18.1 ERP CRM migrations
+130_create_lead_sources_table131_create_leads_table132_create_crm_contacts_table133_create_customer_timeline_entries_table134_create_crm_activities_table135_create_pipelines_table136_create_pipeline_stages_table137_create_opportunities_table138_create_lead_scores_table139_create_customer_segments_table
+CRM depends on
+organizationscompaniescustomersusersservice_requestsform_submissions
+18.2 ERP Sales migrations
+140_create_quotations_table141_create_quotation_items_table142_create_sales_orders_table143_create_sales_order_items_table144_create_price_lists_table145_create_price_list_items_table146_create_discount_rules_table147_create_customer_credit_limits_table
+Sales depends on
+companiescustomersleadsproductsservices
+18.3 ERP Invoicing migrations
+150_create_invoices_table151_create_invoice_items_table152_create_invoice_payments_table153_create_credit_notes_table154_create_debit_notes_table155_create_payment_allocations_table optional later
+Invoicing depends on
+companiescustomersordersquotationssales_orderspayments
+18.4 ERP Inventory migrations
+160_create_warehouses_table161_create_stock_balances_table162_create_stock_movements_table163_create_stock_transfers_table164_create_stock_transfer_items_table165_create_stock_counts_table166_create_stock_count_items_table167_create_inventory_batches_table168_create_inventory_serials_table169_create_inventory_reorder_rules_table170_create_inventory_valuation_layers_table
+Inventory depends on
+companiesproductswarehousesusers
+critical indexes
+stock_balances unique(warehouse_id, product_id)stock_movements index(product_id, warehouse_id, created_at)stock_movements index(source_type, source_id)
+18.5 ERP Purchasing migrations
+171_create_suppliers_table172_create_purchase_requisitions_table173_create_purchase_requisition_items_table174_create_supplier_rfqs_table175_create_supplier_rfq_items_table176_create_supplier_quotations_table177_create_purchase_orders_table178_create_purchase_order_items_table179_create_goods_receipts_table180_create_goods_receipt_items_table181_create_supplier_bills_table182_create_supplier_bill_items_table
+18.6 ERP Accounting migrations
+183_create_chart_of_accounts_table184_create_journal_entries_table185_create_journal_entry_lines_table186_create_accounting_periods_table187_create_bank_accounts_table188_create_cash_accounts_table189_create_cost_centers_table190_create_profit_centers_table191_create_budgets_table192_create_budget_lines_table193_create_fixed_assets_table194_create_bank_reconciliations_table
+Accounting critical rules
+journal_entry_lines must balance by service validationposted journal cannot be edited directlyperiod close requires permission
+18.7 HR / HCM migrations
+195_create_employee_records_table196_create_employee_documents_table197_create_attendance_records_table198_create_leave_requests_table199_create_job_requisitions_table200_create_job_applications_table201_create_performance_reviews_table202_create_training_courses_table203_create_employee_training_enrollments_table204_create_payroll_runs_table205_create_payroll_items_table
+HR critical rules
+employee_record can link to user but not requiredpayroll requires country pack before production releaseemployee documents are sensitive
+19. Layer 11 — Cloud / Billing
+migrations order
+210_create_billing_accounts_table211_create_plans_table212_create_plan_features_table213_create_subscriptions_table214_create_subscription_items_table215_create_usage_records_table216_create_entitlements_table217_create_account_entitlements_table218_create_invoices_platform_table219_create_payments_platform_table220_create_cloud_sites_table221_create_cloud_domains_table222_create_cloud_backups_table223_create_cloud_health_checks_table224_create_cloud_resource_usage_table225_create_cloud_deployment_events_table
+depends on
+organizationscompanies nullablesitesmedia_assets for backup files optional
+tests
+billing account createdsubscription applies entitlementscloud site created for sitedomain uniquebackup record created
+20. Layer 12 — Hosting Modes
+20.1 Frontend Anywhere migrations
+230_create_frontend_projects_table231_create_frontend_deployments_table232_create_frontend_domains_table233_create_frontend_api_keys_table234_create_frontend_api_scopes_table235_create_frontend_builds_table236_create_frontend_webhooks_table237_create_frontend_cache_invalidations_table238_create_frontend_content_snapshots_table239_create_external_site_connections_table240_create_public_api_requests_table
+20.2 Portable migrations
+241_create_export_jobs_table242_create_export_manifests_table243_create_tenant_export_items_table244_create_export_downloads_table245_create_portable_packages_table246_create_self_hosted_installations_table247_create_self_hosted_connection_tokens_table248_create_self_hosted_sync_status_table249_create_portable_update_channels_table250_create_portable_update_logs_table251_create_portable_license_keys_table252_create_portable_retention_records_table
+20.3 Dedicated migrations
+253_create_dedicated_tenants_table254_create_dedicated_environments_table255_create_dedicated_databases_table256_create_dedicated_storage_buckets_table257_create_dedicated_domains_table258_create_dedicated_access_keys_table259_create_dedicated_update_windows_table260_create_dedicated_update_logs_table261_create_dedicated_backup_policies_table262_create_dedicated_backup_records_table263_create_dedicated_health_checks_table264_create_dedicated_support_access_requests_table265_create_dedicated_sync_status_table
+20.4 Transition migrations
+266_create_tenant_transitions_table267_create_tenant_transition_steps_table
+tests
+frontend project can create API keyexport job can be createdself-hosted installation can registerdedicated tenant can be createdtenant transition steps can be tracked
+21. Layer 13 — Mall Sync / Mirror
+migrations order
+270_create_mall_sync_sources_table271_create_mall_sync_events_table272_create_mall_sync_errors_table273_create_mall_mirror_businesses_table274_create_mall_mirror_services_table275_create_mall_mirror_products_table276_create_mall_mirror_talent_table277_create_mall_mirror_statuses_table278_create_listing_reviews_table279_create_listing_reports_table280_create_featured_listings_table281_create_mall_inquiries_table282_create_mall_carts_table283_create_mall_cart_items_table284_create_mall_orders_table285_create_mall_order_items_table286_create_disputes_table287_create_commissions_table288_create_payout_accounts_table289_create_payouts_table290_create_payout_items_table
+depends on
+business_passportsbusiness_profilescompaniesusersmall_publication_consentsmall_sync_sources
+critical tests
+cannot publish to mall without consentcloud source can update mirror internallyportable source can update mirror through sync sourcemall moderation can suspend listing
+22. Layer 14 — Collaboration / Integrations / AI / Security
+22.1 Projects / Tasks
+300_create_projects_table301_create_project_tasks_table302_create_task_assignments_table303_create_task_comments_table304_create_task_attachments_table305_create_task_status_histories_table306_create_timesheets_table
+22.2 Workflows / Approvals
+310_create_workflow_definitions_table311_create_workflow_steps_table312_create_workflow_runs_table313_create_approval_rules_table314_create_approval_requests_table315_create_approval_steps_table316_create_approval_actions_table317_create_approval_delegations_table318_create_approval_escalations_table
+22.3 Teams
+320_create_team_channels_table321_create_team_channel_members_table322_create_conversations_table323_create_conversation_participants_table324_create_messages_table325_create_message_attachments_table326_create_mentions_table
+22.4 Integrations
+330_create_connectors_table331_create_integration_connections_table332_create_integration_credentials_table333_create_integration_mappings_table334_create_sync_jobs_table335_create_sync_records_table336_create_webhook_endpoints_table337_create_webhook_deliveries_table
+22.5 AI
+340_create_ai_prompt_templates_table341_create_ai_agent_configs_table342_create_ai_change_plans_table343_create_ai_change_approvals_table344_create_ai_change_logs_table345_create_ai_rollback_points_table346_create_ai_usage_records_table
+22.6 Security Center
+350_create_security_events_table351_create_sensitive_access_logs_table352_create_api_tokens_table353_create_user_sessions_table354_create_security_policies_table355_create_privileged_access_requests_table356_create_sso_providers_table357_create_sso_identities_table
+23. Layer 15 — BI / GRC / Enterprise
+23.1 Reports / BI
+360_create_report_definitions_table361_create_saved_report_filters_table362_create_scheduled_reports_table363_create_dashboard_widgets_table364_create_kpis_table365_create_kpi_values_table366_create_data_dictionary_terms_table367_create_data_quality_rules_table368_create_data_quality_results_table369_create_data_warehouse_jobs_table
+23.2 GRC
+370_create_policies_table371_create_compliance_obligations_table372_create_risk_registers_table373_create_controls_table374_create_control_tests_table375_create_internal_audit_plans_table376_create_audit_findings_table377_create_delegation_of_authority_rules_table378_create_segregation_of_duties_rules_table
+23.3 Industry Solutions
+380_create_industry_solutions_table381_create_industry_solution_installations_table382_create_solution_templates_table383_create_solution_workflows_table
+24. Migration Dependency Map مختصر
+flowchart TD    A[Global References] --> B[Users]    B --> C[Organizations]    C --> D[Memberships]    D --> E[RBAC]    C --> F[Companies]    C --> G[Sites]    F --> H[Business Profiles]    G --> I[CMS]    G --> J[Commerce]    H --> K[Rabet Verification]    F --> L[ERP]    J --> L    C --> M[Billing Cloud]    G --> M    M --> N[Hosting Modes]    H --> O[Mall Sync Mirror]    N --> O    L --> P[BI GRC Enterprise]
+25. Seeders Roadmap
+Core Seeders
+CountriesSeederCurrenciesSeederCorePermissionsSeederCoreRolesSeederCoreModulesSeederCoreFeatureFlagsSeederAdminUserSeeder
+CMS Seeders
+DefaultContentTypesSeederDefaultThemeSeederDefaultPagesSeederDefaultMenusSeeder
+Business Seeders
+DefaultCompanyRolesSeederBusinessProfileDemoSeederVerificationChecklistSeeder
+Commerce Seeders
+ProductCategorySeederDemoProductsSeederDemoServicesSeeder
+ERP Seeders
+DefaultChartOfAccountsSeederDefaultSalesPipelineSeederDefaultWarehouseSeederDefaultDepartmentsSeeder
+Cloud/Hosting Seeders
+PlansSeederEntitlementsSeederCloudPlansSeederPortablePlansSeederDedicatedPlansSeeder
+Mall Seeders
+MallCategoriesSeederMallDemoListingsSeeder
+26. Factories Roadmap
+ابدأ بالـ factories التالية:
+UserFactoryOrganizationFactoryOrganizationMembershipFactoryCompanyFactorySiteFactoryContentEntryFactoryMediaAssetFactoryBusinessProfileFactoryProductFactoryCustomerFactoryOrderFactoryLeadFactoryQuotationFactoryInvoiceFactoryWarehouseFactoryEmployeeRecordFactory
+ثم لاحقًا:
+CloudSiteFactoryExportJobFactoryMallSyncSourceFactoryMallMirrorBusinessFactory
+27. Test Roadmap حسب الطبقات
+Core Tests
+TenantIsolationTestOrganizationMembershipTestPermissionServiceTestRoleAssignmentTestSettingsScopeTestActivityLogTest
+CMS Tests
+ContentPublishTestContentRevisionTestSlugUniquenessTestPublicRenderTestFormSubmissionTest
+Commerce Tests
+ProductCreateTestCartTestOrderCreateTestPaymentRecordTestServiceRequestTest
+ERP Tests
+LeadConversionTestQuotationToInvoiceTestStockMovementTestPurchaseOrderReceiptTestJournalEntryBalanceTest
+Hosting Mode Tests
+CloudSiteProvisionTestFrontendApiScopeTestExportJobTestSelfHostedRegistrationTestDedicatedTenantTestTenantTransitionTest
+Mall Tests
+MallConsentRequiredTestMallMirrorUpdateTestMallSyncSignatureTestMallModerationTest
+28. Migration Safety Rules
+28.1 قبل تشغيل Migration كبير
+backup databasecheck foreign keyscheck nullable impactrun testsrun migrate:fresh in local
+28.2 في Production
+never drop columns immediatelyuse add new column → backfill → switch code → remove lateravoid long blocking migrations
+29. Recommended V1 Migration Scope
+لا تبني كل هذا في V1.
+V1 يحتاج فقط:
+Global ReferencesUsers / ProfilesOrganizations / MembershipsRBACCompanies / Company MembershipsSitesSettings / Feature FlagsActivity / Audit LogsMediaModulesCMS basicBusiness Profile basicVerification foundationExport jobs foundationOperating modes foundationBusiness passports foundation
+30. V1 Migration Files المقترحة فعليًا
+001_create_countries_table002_create_currencies_table010_create_users_table011_create_user_profiles_table020_create_organizations_table021_create_organization_memberships_table022_create_organization_operating_modes_table030_create_permissions_table031_create_roles_table032_create_role_permission_table033_create_membership_role_assignments_table034_create_membership_permission_overrides_table040_create_companies_table041_create_company_memberships_table042_create_departments_table043_create_sites_table050_create_settings_table051_create_feature_flags_table052_create_feature_flag_overrides_table053_create_activity_logs_table054_create_audit_logs_table055_create_notifications_table056_create_media_assets_table057_create_media_usages_table059_create_modules_table060_create_module_installations_table070_create_content_types_table071_create_content_entries_table072_create_content_revisions_table073_create_taxonomies_table074_create_taxonomy_terms_table075_create_content_term_table076_create_menus_table077_create_menu_items_table090_create_business_profiles_table091_create_verification_requests_table092_create_verification_documents_table097_create_trust_records_table099_create_business_passports_table100_create_mall_publication_consents_table241_create_export_jobs_table_foundation266_create_tenant_transitions_table_foundation
+31. V1 لا يحتاج الآن
+Full ERPFull Cloud billingFull Portable exportFull Dedicated registryFull Mall mirrorFull AIFull IntegrationsFull BI/GRC
+لكن يجب أن تكون الجداول الأساسية لا تمنعها لاحقًا.
+32. Laravel Migration Coding Standards
+استخدم
+$table->foreignId('organization_id')->constrained()->cascadeOnDelete();$table->foreignId('site_id')->nullable()->constrained()->nullOnDelete();$table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();$table->ulid('uuid')->unique();$table->string('status')->default('active')->index();$table->json('metadata')->nullable();$table->timestamps();$table->softDeletes();
+لكن لا تستخدم cascadeOnDelete مع كل شيء
+في الجداول المالية أو audit:
+$table->foreignId('company_id')->constrained()->restrictOnDelete();
+أو nullOnDelete حسب الحالة.
+33. Delete Strategy
+cascadeOnDelete مناسب لـ
+menu_items under menusform_fields under formscart_items under cartstemporary data
+restrictOnDelete مناسب لـ
+invoicesjournal_entriesstock_movementsverification_reviewslegal records
+nullOnDelete مناسب لـ
+created_byupdated_byassigned_toauthor_user_id
+34. Money Fields Standard
+استخدم:
+$table->decimal('amount', 15, 2);$table->char('currency_code', 3)->default('EGP');
+للكميات:
+$table->decimal('quantity', 15, 3);
+للتكلفة الدقيقة:
+$table->decimal('unit_cost', 15, 4);
+35. Status Fields Standard
+استخدم string status مع enums في التطبيق.
+مثال:
+$table->string('status', 50)->default('draft')->index();
+ولا تستخدم database enum في البداية لتسهيل التطوير.
+36. Final Migration Principle
+كل migration يجب أن تجاوب:
+من يملك هذا الجدول؟هل هو قابل للتصدير؟هل يظهر في Mall؟هل يحتوي بيانات حساسة؟هل يحتاج audit؟هل يحتاج indexes؟هل يعتمد على جدول سابق؟هل يمكن تشغيله في Cloud وPortable وDedicated؟
+37. الخلاصة
+Laravel Migration Roadmap هو الجسر بين التصميم النظري والتنفيذ.
+القاعدة النهائية:
+Build the database in layers, not modules randomly.Every migration must protect ownership, portability, security, and future operating modes.
+38. التالي بعد هذا الملف
+الملف التالي المقترح:
+KABEERI Database File 09 — V1 Exact Migration Pack
+وسيحتوي على:
+أسماء migrations الخاصة بـ V1 فقط.
+أعمدة كل جدول في V1.
+Laravel code skeleton لكل migration.
+Seeders المطلوبة.
+Factories المطلوبة.
+Tests المطلوبة.
+هذا سيكون أول ملف قابل للتحويل المباشر إلى كود.

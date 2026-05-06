@@ -1,0 +1,1713 @@
+05 — كتالوج الثيمات الرئيسي 300 Theme
+الكتالوج مقسم إلى 30 نوع مشروع. كل نوع يحتوي 10 Presets. استخدم هذا الملف كمرجع أسماء وتوزيع وليس كود فعلي.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+01 — شركات وخدمات عامة
+#
+Theme Name
+App Type
+Tier
+Bundle
+1
+Kabeeri Business Prime
+website
+Freemium
+Business Starter Bundle
+2
+Kabeeri Business Classic
+website
+Free
+Business Starter Bundle
+3
+Kabeeri Business Modern
+website
+Freemium
+Business Starter Bundle
+4
+Kabeeri Business Pro
+website
+Pro
+Business Starter Bundle
+5
+Kabeeri Business Lite
+website
+Free
+Business Starter Bundle
+6
+Kabeeri Business Bold
+website
+Pro
+Business Starter Bundle
+7
+Kabeeri Business Elite
+website
+Premium
+Business Starter Bundle
+8
+Kabeeri Business Flow
+website
+Freemium
+Business Starter Bundle
+9
+Kabeeri Business Hub
+website
+Pro
+Business Starter Bundle
+10
+Kabeeri Business Launch
+website
+Pro
+Business Starter Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+02 — عيادات ومراكز صحية
+#
+Theme Name
+App Type
+Tier
+Bundle
+11
+Kabeeri Clinic Prime
+service
+Freemium
+Clinic Bundle
+12
+Kabeeri Clinic Classic
+service
+Free
+Clinic Bundle
+13
+Kabeeri Clinic Modern
+service
+Freemium
+Clinic Bundle
+14
+Kabeeri Clinic Pro
+service
+Pro
+Clinic Bundle
+15
+Kabeeri Clinic Lite
+service
+Free
+Clinic Bundle
+16
+Kabeeri Clinic Bold
+service
+Pro
+Clinic Bundle
+17
+Kabeeri Clinic Elite
+service
+Premium
+Clinic Bundle
+18
+Kabeeri Clinic Flow
+service
+Freemium
+Clinic Bundle
+19
+Kabeeri Clinic Hub
+service
+Pro
+Clinic Bundle
+20
+Kabeeri Clinic Launch
+service
+Pro
+Clinic Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+03 — تجميل وسبا وWellness
+#
+Theme Name
+App Type
+Tier
+Bundle
+21
+Kabeeri Beauty Prime
+service
+Freemium
+Beauty Wellness Bundle
+22
+Kabeeri Beauty Classic
+service
+Free
+Beauty Wellness Bundle
+23
+Kabeeri Beauty Modern
+service
+Freemium
+Beauty Wellness Bundle
+24
+Kabeeri Beauty Pro
+service
+Pro
+Beauty Wellness Bundle
+25
+Kabeeri Beauty Lite
+service
+Free
+Beauty Wellness Bundle
+26
+Kabeeri Beauty Bold
+service
+Pro
+Beauty Wellness Bundle
+27
+Kabeeri Beauty Elite
+service
+Premium
+Beauty Wellness Bundle
+28
+Kabeeri Beauty Flow
+service
+Freemium
+Beauty Wellness Bundle
+29
+Kabeeri Beauty Hub
+service
+Pro
+Beauty Wellness Bundle
+30
+Kabeeri Beauty Launch
+service
+Pro
+Beauty Wellness Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+04 — مطاعم وكافيهات وأغذية
+#
+Theme Name
+App Type
+Tier
+Bundle
+31
+Kabeeri Food Prime
+service/commerce
+Freemium
+Restaurant Bundle
+32
+Kabeeri Food Classic
+service/commerce
+Free
+Restaurant Bundle
+33
+Kabeeri Food Modern
+service/commerce
+Freemium
+Restaurant Bundle
+34
+Kabeeri Food Pro
+service/commerce
+Pro
+Restaurant Bundle
+35
+Kabeeri Food Lite
+service/commerce
+Free
+Restaurant Bundle
+36
+Kabeeri Food Bold
+service/commerce
+Pro
+Restaurant Bundle
+37
+Kabeeri Food Elite
+service/commerce
+Premium
+Restaurant Bundle
+38
+Kabeeri Food Flow
+service/commerce
+Freemium
+Restaurant Bundle
+39
+Kabeeri Food Hub
+service/commerce
+Pro
+Restaurant Bundle
+40
+Kabeeri Food Launch
+service/commerce
+Pro
+Restaurant Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+05 — متاجر إلكترونية عامة
+#
+Theme Name
+App Type
+Tier
+Bundle
+41
+Kabeeri Store Prime
+store
+Freemium
+Commerce Starter Bundle
+42
+Kabeeri Store Classic
+store
+Free
+Commerce Starter Bundle
+43
+Kabeeri Store Modern
+store
+Freemium
+Commerce Starter Bundle
+44
+Kabeeri Store Pro
+store
+Pro
+Commerce Starter Bundle
+45
+Kabeeri Store Lite
+store
+Free
+Commerce Starter Bundle
+46
+Kabeeri Store Bold
+store
+Pro
+Commerce Starter Bundle
+47
+Kabeeri Store Elite
+store
+Premium
+Commerce Starter Bundle
+48
+Kabeeri Store Flow
+store
+Freemium
+Commerce Starter Bundle
+49
+Kabeeri Store Hub
+store
+Pro
+Commerce Starter Bundle
+50
+Kabeeri Store Launch
+store
+Pro
+Commerce Starter Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+06 — أزياء وموضة وإكسسوارات
+#
+Theme Name
+App Type
+Tier
+Bundle
+51
+Kabeeri Fashion Prime
+store
+Freemium
+Fashion Commerce Bundle
+52
+Kabeeri Fashion Classic
+store
+Free
+Fashion Commerce Bundle
+53
+Kabeeri Fashion Modern
+store
+Freemium
+Fashion Commerce Bundle
+54
+Kabeeri Fashion Pro
+store
+Pro
+Fashion Commerce Bundle
+55
+Kabeeri Fashion Lite
+store
+Free
+Fashion Commerce Bundle
+56
+Kabeeri Fashion Bold
+store
+Pro
+Fashion Commerce Bundle
+57
+Kabeeri Fashion Elite
+store
+Premium
+Fashion Commerce Bundle
+58
+Kabeeri Fashion Flow
+store
+Freemium
+Fashion Commerce Bundle
+59
+Kabeeri Fashion Hub
+store
+Pro
+Fashion Commerce Bundle
+60
+Kabeeri Fashion Launch
+store
+Pro
+Fashion Commerce Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+07 — إلكترونيات وموبايلات وأجهزة
+#
+Theme Name
+App Type
+Tier
+Bundle
+61
+Kabeeri Electronics Prime
+store
+Freemium
+Electronics Commerce Bundle
+62
+Kabeeri Electronics Classic
+store
+Free
+Electronics Commerce Bundle
+63
+Kabeeri Electronics Modern
+store
+Freemium
+Electronics Commerce Bundle
+64
+Kabeeri Electronics Pro
+store
+Pro
+Electronics Commerce Bundle
+65
+Kabeeri Electronics Lite
+store
+Free
+Electronics Commerce Bundle
+66
+Kabeeri Electronics Bold
+store
+Pro
+Electronics Commerce Bundle
+67
+Kabeeri Electronics Elite
+store
+Premium
+Electronics Commerce Bundle
+68
+Kabeeri Electronics Flow
+store
+Freemium
+Electronics Commerce Bundle
+69
+Kabeeri Electronics Hub
+store
+Pro
+Electronics Commerce Bundle
+70
+Kabeeri Electronics Launch
+store
+Pro
+Electronics Commerce Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+08 — أثاث ومنزل وديكور
+#
+Theme Name
+App Type
+Tier
+Bundle
+71
+Kabeeri Home Prime
+store/catalog
+Freemium
+Home Furniture Bundle
+72
+Kabeeri Home Classic
+store/catalog
+Free
+Home Furniture Bundle
+73
+Kabeeri Home Modern
+store/catalog
+Freemium
+Home Furniture Bundle
+74
+Kabeeri Home Pro
+store/catalog
+Pro
+Home Furniture Bundle
+75
+Kabeeri Home Lite
+store/catalog
+Free
+Home Furniture Bundle
+76
+Kabeeri Home Bold
+store/catalog
+Pro
+Home Furniture Bundle
+77
+Kabeeri Home Elite
+store/catalog
+Premium
+Home Furniture Bundle
+78
+Kabeeri Home Flow
+store/catalog
+Freemium
+Home Furniture Bundle
+79
+Kabeeri Home Hub
+store/catalog
+Pro
+Home Furniture Bundle
+80
+Kabeeri Home Launch
+store/catalog
+Pro
+Home Furniture Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+09 — عقارات وتطوير عقاري
+#
+Theme Name
+App Type
+Tier
+Bundle
+81
+Kabeeri RealEstate Prime
+directory/service
+Freemium
+Real Estate Bundle
+82
+Kabeeri RealEstate Classic
+directory/service
+Free
+Real Estate Bundle
+83
+Kabeeri RealEstate Modern
+directory/service
+Freemium
+Real Estate Bundle
+84
+Kabeeri RealEstate Pro
+directory/service
+Pro
+Real Estate Bundle
+85
+Kabeeri RealEstate Lite
+directory/service
+Free
+Real Estate Bundle
+86
+Kabeeri RealEstate Bold
+directory/service
+Pro
+Real Estate Bundle
+87
+Kabeeri RealEstate Elite
+directory/service
+Premium
+Real Estate Bundle
+88
+Kabeeri RealEstate Flow
+directory/service
+Freemium
+Real Estate Bundle
+89
+Kabeeri RealEstate Hub
+directory/service
+Pro
+Real Estate Bundle
+90
+Kabeeri RealEstate Launch
+directory/service
+Pro
+Real Estate Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+10 — مقاولات وتشطيبات ومعمار
+#
+Theme Name
+App Type
+Tier
+Bundle
+91
+Kabeeri Construction Prime
+website/service
+Freemium
+Construction Bundle
+92
+Kabeeri Construction Classic
+website/service
+Free
+Construction Bundle
+93
+Kabeeri Construction Modern
+website/service
+Freemium
+Construction Bundle
+94
+Kabeeri Construction Pro
+website/service
+Pro
+Construction Bundle
+95
+Kabeeri Construction Lite
+website/service
+Free
+Construction Bundle
+96
+Kabeeri Construction Bold
+website/service
+Pro
+Construction Bundle
+97
+Kabeeri Construction Elite
+website/service
+Premium
+Construction Bundle
+98
+Kabeeri Construction Flow
+website/service
+Freemium
+Construction Bundle
+99
+Kabeeri Construction Hub
+website/service
+Pro
+Construction Bundle
+100
+Kabeeri Construction Launch
+website/service
+Pro
+Construction Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+11 — تعليم ومدارس وحضانات
+#
+Theme Name
+App Type
+Tier
+Bundle
+101
+Kabeeri Education Prime
+education
+Freemium
+Education Bundle
+102
+Kabeeri Education Classic
+education
+Free
+Education Bundle
+103
+Kabeeri Education Modern
+education
+Freemium
+Education Bundle
+104
+Kabeeri Education Pro
+education
+Pro
+Education Bundle
+105
+Kabeeri Education Lite
+education
+Free
+Education Bundle
+106
+Kabeeri Education Bold
+education
+Pro
+Education Bundle
+107
+Kabeeri Education Elite
+education
+Premium
+Education Bundle
+108
+Kabeeri Education Flow
+education
+Freemium
+Education Bundle
+109
+Kabeeri Education Hub
+education
+Pro
+Education Bundle
+110
+Kabeeri Education Launch
+education
+Pro
+Education Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+12 — أكاديميات وكورسات وLMS
+#
+Theme Name
+App Type
+Tier
+Bundle
+111
+Kabeeri LMS Prime
+lms
+Freemium
+LMS Bundle
+112
+Kabeeri LMS Classic
+lms
+Free
+LMS Bundle
+113
+Kabeeri LMS Modern
+lms
+Freemium
+LMS Bundle
+114
+Kabeeri LMS Pro
+lms
+Pro
+LMS Bundle
+115
+Kabeeri LMS Lite
+lms
+Free
+LMS Bundle
+116
+Kabeeri LMS Bold
+lms
+Pro
+LMS Bundle
+117
+Kabeeri LMS Elite
+lms
+Premium
+LMS Bundle
+118
+Kabeeri LMS Flow
+lms
+Freemium
+LMS Bundle
+119
+Kabeeri LMS Hub
+lms
+Pro
+LMS Bundle
+120
+Kabeeri LMS Launch
+lms
+Pro
+LMS Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+13 — محاماة ومحاسبة واستشارات
+#
+Theme Name
+App Type
+Tier
+Bundle
+121
+Kabeeri Legal Prime
+website/service
+Freemium
+Professional Services Bundle
+122
+Kabeeri Legal Classic
+website/service
+Free
+Professional Services Bundle
+123
+Kabeeri Legal Modern
+website/service
+Freemium
+Professional Services Bundle
+124
+Kabeeri Legal Pro
+website/service
+Pro
+Professional Services Bundle
+125
+Kabeeri Legal Lite
+website/service
+Free
+Professional Services Bundle
+126
+Kabeeri Legal Bold
+website/service
+Pro
+Professional Services Bundle
+127
+Kabeeri Legal Elite
+website/service
+Premium
+Professional Services Bundle
+128
+Kabeeri Legal Flow
+website/service
+Freemium
+Professional Services Bundle
+129
+Kabeeri Legal Hub
+website/service
+Pro
+Professional Services Bundle
+130
+Kabeeri Legal Launch
+website/service
+Pro
+Professional Services Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+14 — وكالات تسويق وتصميم وبرمجة
+#
+Theme Name
+App Type
+Tier
+Bundle
+131
+Kabeeri Agency Prime
+agency
+Freemium
+Agency Bundle
+132
+Kabeeri Agency Classic
+agency
+Free
+Agency Bundle
+133
+Kabeeri Agency Modern
+agency
+Freemium
+Agency Bundle
+134
+Kabeeri Agency Pro
+agency
+Pro
+Agency Bundle
+135
+Kabeeri Agency Lite
+agency
+Free
+Agency Bundle
+136
+Kabeeri Agency Bold
+agency
+Pro
+Agency Bundle
+137
+Kabeeri Agency Elite
+agency
+Premium
+Agency Bundle
+138
+Kabeeri Agency Flow
+agency
+Freemium
+Agency Bundle
+139
+Kabeeri Agency Hub
+agency
+Pro
+Agency Bundle
+140
+Kabeeri Agency Launch
+agency
+Pro
+Agency Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+15 — SaaS وتكنولوجيا وتطبيقات
+#
+Theme Name
+App Type
+Tier
+Bundle
+141
+Kabeeri SaaS Prime
+website/saas
+Freemium
+SaaS Bundle
+142
+Kabeeri SaaS Classic
+website/saas
+Free
+SaaS Bundle
+143
+Kabeeri SaaS Modern
+website/saas
+Freemium
+SaaS Bundle
+144
+Kabeeri SaaS Pro
+website/saas
+Pro
+SaaS Bundle
+145
+Kabeeri SaaS Lite
+website/saas
+Free
+SaaS Bundle
+146
+Kabeeri SaaS Bold
+website/saas
+Pro
+SaaS Bundle
+147
+Kabeeri SaaS Elite
+website/saas
+Premium
+SaaS Bundle
+148
+Kabeeri SaaS Flow
+website/saas
+Freemium
+SaaS Bundle
+149
+Kabeeri SaaS Hub
+website/saas
+Pro
+SaaS Bundle
+150
+Kabeeri SaaS Launch
+website/saas
+Pro
+SaaS Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+16 — لوجستيات وشحن ونقل
+#
+Theme Name
+App Type
+Tier
+Bundle
+151
+Kabeeri Logistics Prime
+service
+Freemium
+Logistics Bundle
+152
+Kabeeri Logistics Classic
+service
+Free
+Logistics Bundle
+153
+Kabeeri Logistics Modern
+service
+Freemium
+Logistics Bundle
+154
+Kabeeri Logistics Pro
+service
+Pro
+Logistics Bundle
+155
+Kabeeri Logistics Lite
+service
+Free
+Logistics Bundle
+156
+Kabeeri Logistics Bold
+service
+Pro
+Logistics Bundle
+157
+Kabeeri Logistics Elite
+service
+Premium
+Logistics Bundle
+158
+Kabeeri Logistics Flow
+service
+Freemium
+Logistics Bundle
+159
+Kabeeri Logistics Hub
+service
+Pro
+Logistics Bundle
+160
+Kabeeri Logistics Launch
+service
+Pro
+Logistics Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+17 — فنادق وسياحة وحجوزات
+#
+Theme Name
+App Type
+Tier
+Bundle
+161
+Kabeeri Hospitality Prime
+booking
+Freemium
+Hospitality Bundle
+162
+Kabeeri Hospitality Classic
+booking
+Free
+Hospitality Bundle
+163
+Kabeeri Hospitality Modern
+booking
+Freemium
+Hospitality Bundle
+164
+Kabeeri Hospitality Pro
+booking
+Pro
+Hospitality Bundle
+165
+Kabeeri Hospitality Lite
+booking
+Free
+Hospitality Bundle
+166
+Kabeeri Hospitality Bold
+booking
+Pro
+Hospitality Bundle
+167
+Kabeeri Hospitality Elite
+booking
+Premium
+Hospitality Bundle
+168
+Kabeeri Hospitality Flow
+booking
+Freemium
+Hospitality Bundle
+169
+Kabeeri Hospitality Hub
+booking
+Pro
+Hospitality Bundle
+170
+Kabeeri Hospitality Launch
+booking
+Pro
+Hospitality Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+18 — صيانة وخدمات منزلية ومحلية
+#
+Theme Name
+App Type
+Tier
+Bundle
+171
+Kabeeri LocalServices Prime
+service
+Freemium
+Local Services Bundle
+172
+Kabeeri LocalServices Classic
+service
+Free
+Local Services Bundle
+173
+Kabeeri LocalServices Modern
+service
+Freemium
+Local Services Bundle
+174
+Kabeeri LocalServices Pro
+service
+Pro
+Local Services Bundle
+175
+Kabeeri LocalServices Lite
+service
+Free
+Local Services Bundle
+176
+Kabeeri LocalServices Bold
+service
+Pro
+Local Services Bundle
+177
+Kabeeri LocalServices Elite
+service
+Premium
+Local Services Bundle
+178
+Kabeeri LocalServices Flow
+service
+Freemium
+Local Services Bundle
+179
+Kabeeri LocalServices Hub
+service
+Pro
+Local Services Bundle
+180
+Kabeeri LocalServices Launch
+service
+Pro
+Local Services Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+19 — سيارات ومعارض وورش
+#
+Theme Name
+App Type
+Tier
+Bundle
+181
+Kabeeri Auto Prime
+catalog/service
+Freemium
+Automotive Bundle
+182
+Kabeeri Auto Classic
+catalog/service
+Free
+Automotive Bundle
+183
+Kabeeri Auto Modern
+catalog/service
+Freemium
+Automotive Bundle
+184
+Kabeeri Auto Pro
+catalog/service
+Pro
+Automotive Bundle
+185
+Kabeeri Auto Lite
+catalog/service
+Free
+Automotive Bundle
+186
+Kabeeri Auto Bold
+catalog/service
+Pro
+Automotive Bundle
+187
+Kabeeri Auto Elite
+catalog/service
+Premium
+Automotive Bundle
+188
+Kabeeri Auto Flow
+catalog/service
+Freemium
+Automotive Bundle
+189
+Kabeeri Auto Hub
+catalog/service
+Pro
+Automotive Bundle
+190
+Kabeeri Auto Launch
+catalog/service
+Pro
+Automotive Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+20 — بورتفوليو وأفراد ومهنيين
+#
+Theme Name
+App Type
+Tier
+Bundle
+191
+Kabeeri Portfolio Prime
+portfolio
+Freemium
+Professional Portfolio Bundle
+192
+Kabeeri Portfolio Classic
+portfolio
+Free
+Professional Portfolio Bundle
+193
+Kabeeri Portfolio Modern
+portfolio
+Freemium
+Professional Portfolio Bundle
+194
+Kabeeri Portfolio Pro
+portfolio
+Pro
+Professional Portfolio Bundle
+195
+Kabeeri Portfolio Lite
+portfolio
+Free
+Professional Portfolio Bundle
+196
+Kabeeri Portfolio Bold
+portfolio
+Pro
+Professional Portfolio Bundle
+197
+Kabeeri Portfolio Elite
+portfolio
+Premium
+Professional Portfolio Bundle
+198
+Kabeeri Portfolio Flow
+portfolio
+Freemium
+Professional Portfolio Bundle
+199
+Kabeeri Portfolio Hub
+portfolio
+Pro
+Professional Portfolio Bundle
+200
+Kabeeri Portfolio Launch
+portfolio
+Pro
+Professional Portfolio Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+21 — مجلات ومدونات وأخبار
+#
+Theme Name
+App Type
+Tier
+Bundle
+201
+Kabeeri Magazine Prime
+content
+Freemium
+Magazine Blog Bundle
+202
+Kabeeri Magazine Classic
+content
+Free
+Magazine Blog Bundle
+203
+Kabeeri Magazine Modern
+content
+Freemium
+Magazine Blog Bundle
+204
+Kabeeri Magazine Pro
+content
+Pro
+Magazine Blog Bundle
+205
+Kabeeri Magazine Lite
+content
+Free
+Magazine Blog Bundle
+206
+Kabeeri Magazine Bold
+content
+Pro
+Magazine Blog Bundle
+207
+Kabeeri Magazine Elite
+content
+Premium
+Magazine Blog Bundle
+208
+Kabeeri Magazine Flow
+content
+Freemium
+Magazine Blog Bundle
+209
+Kabeeri Magazine Hub
+content
+Pro
+Magazine Blog Bundle
+210
+Kabeeri Magazine Launch
+content
+Pro
+Magazine Blog Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+22 — منظمات وجمعيات وتبرعات
+#
+Theme Name
+App Type
+Tier
+Bundle
+211
+Kabeeri NGO Prime
+ngo
+Freemium
+NGO Donations Bundle
+212
+Kabeeri NGO Classic
+ngo
+Free
+NGO Donations Bundle
+213
+Kabeeri NGO Modern
+ngo
+Freemium
+NGO Donations Bundle
+214
+Kabeeri NGO Pro
+ngo
+Pro
+NGO Donations Bundle
+215
+Kabeeri NGO Lite
+ngo
+Free
+NGO Donations Bundle
+216
+Kabeeri NGO Bold
+ngo
+Pro
+NGO Donations Bundle
+217
+Kabeeri NGO Elite
+ngo
+Premium
+NGO Donations Bundle
+218
+Kabeeri NGO Flow
+ngo
+Freemium
+NGO Donations Bundle
+219
+Kabeeri NGO Hub
+ngo
+Pro
+NGO Donations Bundle
+220
+Kabeeri NGO Launch
+ngo
+Pro
+NGO Donations Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+23 — فعاليات ومؤتمرات وحفلات
+#
+Theme Name
+App Type
+Tier
+Bundle
+221
+Kabeeri Events Prime
+events
+Freemium
+Events Bundle
+222
+Kabeeri Events Classic
+events
+Free
+Events Bundle
+223
+Kabeeri Events Modern
+events
+Freemium
+Events Bundle
+224
+Kabeeri Events Pro
+events
+Pro
+Events Bundle
+225
+Kabeeri Events Lite
+events
+Free
+Events Bundle
+226
+Kabeeri Events Bold
+events
+Pro
+Events Bundle
+227
+Kabeeri Events Elite
+events
+Premium
+Events Bundle
+228
+Kabeeri Events Flow
+events
+Freemium
+Events Bundle
+229
+Kabeeri Events Hub
+events
+Pro
+Events Bundle
+230
+Kabeeri Events Launch
+events
+Pro
+Events Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+24 — Fitness / Gym / Sports
+#
+Theme Name
+App Type
+Tier
+Bundle
+231
+Kabeeri Fitness Prime
+booking
+Freemium
+Fitness Bundle
+232
+Kabeeri Fitness Classic
+booking
+Free
+Fitness Bundle
+233
+Kabeeri Fitness Modern
+booking
+Freemium
+Fitness Bundle
+234
+Kabeeri Fitness Pro
+booking
+Pro
+Fitness Bundle
+235
+Kabeeri Fitness Lite
+booking
+Free
+Fitness Bundle
+236
+Kabeeri Fitness Bold
+booking
+Pro
+Fitness Bundle
+237
+Kabeeri Fitness Elite
+booking
+Premium
+Fitness Bundle
+238
+Kabeeri Fitness Flow
+booking
+Freemium
+Fitness Bundle
+239
+Kabeeri Fitness Hub
+booking
+Pro
+Fitness Bundle
+240
+Kabeeri Fitness Launch
+booking
+Pro
+Fitness Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+25 — زراعة وحيوانات وبيطرة
+#
+Theme Name
+App Type
+Tier
+Bundle
+241
+Kabeeri AgriPets Prime
+service/store
+Freemium
+Agriculture Pets Bundle
+242
+Kabeeri AgriPets Classic
+service/store
+Free
+Agriculture Pets Bundle
+243
+Kabeeri AgriPets Modern
+service/store
+Freemium
+Agriculture Pets Bundle
+244
+Kabeeri AgriPets Pro
+service/store
+Pro
+Agriculture Pets Bundle
+245
+Kabeeri AgriPets Lite
+service/store
+Free
+Agriculture Pets Bundle
+246
+Kabeeri AgriPets Bold
+service/store
+Pro
+Agriculture Pets Bundle
+247
+Kabeeri AgriPets Elite
+service/store
+Premium
+Agriculture Pets Bundle
+248
+Kabeeri AgriPets Flow
+service/store
+Freemium
+Agriculture Pets Bundle
+249
+Kabeeri AgriPets Hub
+service/store
+Pro
+Agriculture Pets Bundle
+250
+Kabeeri AgriPets Launch
+service/store
+Pro
+Agriculture Pets Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+26 — ماركت بليس ودليل أعمال
+#
+Theme Name
+App Type
+Tier
+Bundle
+251
+Kabeeri Directory Prime
+directory
+Freemium
+Directory Marketplace Bundle
+252
+Kabeeri Directory Classic
+directory
+Free
+Directory Marketplace Bundle
+253
+Kabeeri Directory Modern
+directory
+Freemium
+Directory Marketplace Bundle
+254
+Kabeeri Directory Pro
+directory
+Pro
+Directory Marketplace Bundle
+255
+Kabeeri Directory Lite
+directory
+Free
+Directory Marketplace Bundle
+256
+Kabeeri Directory Bold
+directory
+Pro
+Directory Marketplace Bundle
+257
+Kabeeri Directory Elite
+directory
+Premium
+Directory Marketplace Bundle
+258
+Kabeeri Directory Flow
+directory
+Freemium
+Directory Marketplace Bundle
+259
+Kabeeri Directory Hub
+directory
+Pro
+Directory Marketplace Bundle
+260
+Kabeeri Directory Launch
+directory
+Pro
+Directory Marketplace Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+27 — صفحات هبوط وحملات
+#
+Theme Name
+App Type
+Tier
+Bundle
+261
+Kabeeri Landing Prime
+landing
+Freemium
+Landing Campaign Bundle
+262
+Kabeeri Landing Classic
+landing
+Free
+Landing Campaign Bundle
+263
+Kabeeri Landing Modern
+landing
+Freemium
+Landing Campaign Bundle
+264
+Kabeeri Landing Pro
+landing
+Pro
+Landing Campaign Bundle
+265
+Kabeeri Landing Lite
+landing
+Free
+Landing Campaign Bundle
+266
+Kabeeri Landing Bold
+landing
+Pro
+Landing Campaign Bundle
+267
+Kabeeri Landing Elite
+landing
+Premium
+Landing Campaign Bundle
+268
+Kabeeri Landing Flow
+landing
+Freemium
+Landing Campaign Bundle
+269
+Kabeeri Landing Hub
+landing
+Pro
+Landing Campaign Bundle
+270
+Kabeeri Landing Launch
+landing
+Pro
+Landing Campaign Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+28 — شركاء ومسوقين بالعمولة
+#
+Theme Name
+App Type
+Tier
+Bundle
+271
+Kabeeri Affiliate Prime
+partner_storefront
+Freemium
+Affiliate Partner Bundle
+272
+Kabeeri Affiliate Classic
+partner_storefront
+Free
+Affiliate Partner Bundle
+273
+Kabeeri Affiliate Modern
+partner_storefront
+Freemium
+Affiliate Partner Bundle
+274
+Kabeeri Affiliate Pro
+partner_storefront
+Pro
+Affiliate Partner Bundle
+275
+Kabeeri Affiliate Lite
+partner_storefront
+Free
+Affiliate Partner Bundle
+276
+Kabeeri Affiliate Bold
+partner_storefront
+Pro
+Affiliate Partner Bundle
+277
+Kabeeri Affiliate Elite
+partner_storefront
+Premium
+Affiliate Partner Bundle
+278
+Kabeeri Affiliate Flow
+partner_storefront
+Freemium
+Affiliate Partner Bundle
+279
+Kabeeri Affiliate Hub
+partner_storefront
+Pro
+Affiliate Partner Bundle
+280
+Kabeeri Affiliate Launch
+partner_storefront
+Pro
+Affiliate Partner Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+29 — Kabeeri Work Network / Agency Kits
+#
+Theme Name
+App Type
+Tier
+Bundle
+281
+Kabeeri WorkNet Prime
+work_network
+Freemium
+Work Network Bundle
+282
+Kabeeri WorkNet Classic
+work_network
+Free
+Work Network Bundle
+283
+Kabeeri WorkNet Modern
+work_network
+Freemium
+Work Network Bundle
+284
+Kabeeri WorkNet Pro
+work_network
+Pro
+Work Network Bundle
+285
+Kabeeri WorkNet Lite
+work_network
+Free
+Work Network Bundle
+286
+Kabeeri WorkNet Bold
+work_network
+Pro
+Work Network Bundle
+287
+Kabeeri WorkNet Elite
+work_network
+Premium
+Work Network Bundle
+288
+Kabeeri WorkNet Flow
+work_network
+Freemium
+Work Network Bundle
+289
+Kabeeri WorkNet Hub
+work_network
+Pro
+Work Network Bundle
+290
+Kabeeri WorkNet Launch
+work_network
+Pro
+Work Network Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.
+30 — Enterprise / Industry / B2B Portals
+#
+Theme Name
+App Type
+Tier
+Bundle
+291
+Kabeeri Enterprise Prime
+portal
+Freemium
+Enterprise Portal Bundle
+292
+Kabeeri Enterprise Classic
+portal
+Free
+Enterprise Portal Bundle
+293
+Kabeeri Enterprise Modern
+portal
+Freemium
+Enterprise Portal Bundle
+294
+Kabeeri Enterprise Pro
+portal
+Pro
+Enterprise Portal Bundle
+295
+Kabeeri Enterprise Lite
+portal
+Free
+Enterprise Portal Bundle
+296
+Kabeeri Enterprise Bold
+portal
+Pro
+Enterprise Portal Bundle
+297
+Kabeeri Enterprise Elite
+portal
+Premium
+Enterprise Portal Bundle
+298
+Kabeeri Enterprise Flow
+portal
+Freemium
+Enterprise Portal Bundle
+299
+Kabeeri Enterprise Hub
+portal
+Pro
+Enterprise Portal Bundle
+300
+Kabeeri Enterprise Launch
+portal
+Pro
+Enterprise Portal Bundle
+ملاحظات: كل الثيمات في هذا القسم يجب أن تكون RTL-ready، وتستخدم App Recipe، ولا تحتوي business logic داخل الثيم.

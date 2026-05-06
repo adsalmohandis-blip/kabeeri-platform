@@ -1,0 +1,32 @@
+KABEERI System Features Catalog v1.3.0 Addendum
+إضافة للكتالوج الشامل توضح الخصائص الجديدة التي دخلت بعد v1.2.1.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+الخاصية
+النوع
+ماذا تشمل؟
+الإصدار
+Universal Mall
+شبكة اكتشاف موحدة
+Products, Services, Courses, Travel, Talent, Businesses, Jobs, Partners, Themes, Events, Deals, RFQ, Assets
+V2-V6
+External Sync
+ربط أي منصة معروفة أو custom
+Connectors, feeds, APIs, manual import, public mirror
+V2-V6
+Backoffice Anywhere
+إدارة بزنس خارجي من Kabeeri
+CRM, Products, Services, Courses, Marketing, Reports, Mall Sync
+V3
+Travel & Tourism Mall
+رحلات داخلية وخارجية وبرامج سياحة
+Trips, packages, agency profiles, booking requests
+V3/V4
+Work Network Jobs
+وظائف وفرص دخل للشباب
+Growth Partner, App Builder, Creator, Migration, Support, Agency
+V2-V5
+Academy Certifications
+تعليم واعتماد وBadges
+Learning paths, quizzes, practical tasks, levels
+V2-V4

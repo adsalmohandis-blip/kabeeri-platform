@@ -1,0 +1,1386 @@
+KABEERI V1 Codex Prompt Pack
+كل برومبت يبدأ في صفحة مستقلة — مرتب للتنفيذ الآمن باستخدام ChatGPT Codex
+طريقة الاستخدام:
+• لا ترسل كل البرومبتات مرة واحدة. نفّذ برومبت واحد فقط ثم اختبر وراجع واعمل commit.
+• ابدأ دائمًا بـ Prompt 00 في أي Session جديدة مع Codex.
+• نفّذ V1 فقط. أي شيء من V2 وما بعدها مؤجل.
+• استخدم Fix Prompt فقط عند ظهور خطأ، وReview Prompt قبل كل commit.
+الملف مبني ليكون مرجعًا مباشرًا أثناء التكويد، وليس وثيقة تخطيط عامة.
+Prompt 00 — قواعد العمل الإلزامية لـ Codex
+TASK TRACKING AUTOMATION — MANDATORYBefore starting any task from this prompt pack, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php start V1 TXXAfter implementation and tests pass, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php done V1 TXX --prompt=XX --tests="php artisan test" --commit=pending --notes="short summary"If blocked, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php block V1 TXX --notes="reason"Codex must not mark tasks as verified. Only the project owner can run:php 24_kabeeri_task_tracking/scripts/kbr-task.php verify V1 TXX --notes="reviewed"Replace TXX and XX with the current task/prompt number. This rule is mandatory and comes before all implementation instructions.--- ORIGINAL PROMPT 00 CONTENT ---You are working on KABEERI V1 only. Read the documentation in /docs/kabeeri before making changes, especially:- CODING_START_HERE.md- V1 Scope Freeze- Laravel Module Architecture- Laravel Migration Build Order- V1 Sprint 1 Coding Plan FINAL- Permissions Matrix V1- Feature Flags Matrix V1- Seed Data & Demo Scenario Hard rules:1. Implement V1 only. Do not implement V2, V3, V4, V5, or V6 features.2. Do not implement Mall, Commerce, ERP Pro, AI Co-builder, Affiliate, Academy, Work Network, Agency Partner, or External Sync unless explicitly requested in this task.3. Do not add organization_id, company_id, site_id, or role columns directly to users.4. Users can belong to multiple organizations through memberships.5. Organizations are the tenant boundary.6. Sites are user-facing Apps in the UI, but the technical table can remain sites for V1.7. Keep the code modular and consistent with the KABEERI Laravel Module Architecture.8. Prefer small Actions and Services over large controllers.9. Add tests for every feature.10. Do not change existing migrations unless the project is still empty and the task explicitly allows it.11. Do not run destructive commands unless I explicitly confirm.12. Do not install unnecessary packages.13. If a decision is unclear, make the safest V1 assumption and document it in a short note.14. After changes, run tests and report exactly what changed. Your output should include:- Summary of changes- Files changed- Commands run- Tests added- Test results- Any risks or TODOs
+Prompt 01 — إنشاء مشروع Laravel V1
+Create the initial Laravel project foundation for KABEERI V1.
+Goal:
+Set up a clean Laravel application ready for V1 development.
+Tasks:
+1. Inspect the current folder.
+2. If Laravel is not installed, create a Laravel project here.
+3. Configure environment for local development.
+4. Add basic project README sections:
+- What this project is
+- V1 scope only
+- How to run locally
+- How to run tests
+5. Do not implement any business feature yet.
+6. Do not install Filament yet unless Laravel is already stable.
+Technical preferences:
+- PHP 8.3+
+- Laravel 11 or 12 depending on current stable project setup
+- MySQL-compatible database
+- Pest or PHPUnit tests
+Acceptance criteria:
+- Laravel app boots.
+- Home route works.
+- Tests run successfully.
+- README has local setup instructions.
+Do not implement:
+- Organizations
+- CMS
+- Filament resources
+- Permissions
+- Any V2+ features
+Prompt 02 — أدوات الجودة الأساسية
+Set up KABEERI V1 development quality tooling.
+Tasks:
+1. Ensure tests can run.
+2. Add or configure Laravel Pint.
+3. Add basic static-friendly conventions if already supported by the project.
+4. Create a simple CI-friendly command list in README:
+- composer install
+- php artisan migrate
+- php artisan test
+- vendor/bin/pint
+5. Add a basic health test that confirms the app boots.
+Acceptance criteria:
+- Tests pass.
+- Pint runs.
+- No business features are added.
+- No unnecessary packages are installed.
+Do not implement:
+- Filament
+- Database business tables
+- Auth customization
+Prompt 03 — تثبيت Filament بدون Resources
+Install and configure Filament for KABEERI V1 admin foundation.
+Tasks:
+1. Install Filament using the official recommended approach for the current Laravel version.
+2. Create a default admin panel.
+3. Ensure an admin user can be created through a seeder or artisan command if Filament requires it.
+4. Do not create business resources yet.
+5. Document the admin URL and setup steps in README.
+Acceptance criteria:
+- Filament admin panel loads.
+- Tests still pass.
+- No KABEERI domain models are created yet.
+Do not implement:
+- Organizations
+- Sites
+- CMS
+- Permissions
+- Future marketplace or ERP features
+Prompt 04 — Module Architecture Skeleton
+Create the KABEERI V1 module architecture skeleton.
+Goal:
+Prepare folders and conventions without implementing domain logic yet.
+Create a clean modular structure similar to:
+app/
+Modules/
+Core/
+Models/
+Actions/
+Services/
+Policies/
+Events/
+Listeners/
+Jobs/
+Filament/
+Database/
+CMS/
+Media/
+Rabet/
+Platform/
+Tasks:
+1. Create folders only where appropriate.
+2. Add a short MODULES.md explaining how modules should be organized.
+3. Do not move Laravel core files unnecessarily.
+4. Do not create actual feature code except simple placeholders if needed.
+Acceptance criteria:
+- Folder structure exists.
+- MODULES.md explains conventions.
+- Tests still pass.
+Do not implement database tables in this task.
+Prompt 05 — Core Lookup Tables
+Implement V1 core lookup tables only.
+Create migrations, models, factories, and seeders for:
+1. countries
+2. currencies
+Rules:
+- Keep these global platform tables.
+- Do not add organization_id to them.
+- Use status column where appropriate.
+- Add useful indexes.
+- Seed a minimal set of countries and currencies for demo:
+- Egypt
+- Saudi Arabia
+- UAE
+- United States
+- EGP
+- SAR
+- AED
+- USD
+Acceptance criteria:
+- Migrations run.
+- Models exist.
+- Seeders work.
+- Tests verify tables can be seeded.
+Do not implement organizations or users changes in this task.
+Prompt 06 — User Profile Foundation
+Implement KABEERI V1 user profile foundation.
+Important rule:
+Do not add organization_id, company_id, site_id, or role columns to users.
+Tasks:
+1. Keep Laravel users table compatible with auth.
+2. Add uuid or ulid to users if not already present.
+3. Create user_profiles table:
+- id
+- user_id
+- bio nullable
+- country_id nullable
+- city nullable
+- website_url nullable
+- social_links json nullable
+- visibility default private
+- metadata json nullable
+- timestamps
+4. Create UserProfile model.
+5. Add relationships:
+- User hasOne UserProfile
+- UserProfile belongsTo User
+6. Add factory.
+7. Add tests.
+Acceptance criteria:
+- User can have a profile.
+- No tenant fields are added to users.
+- Tests pass.
+Prompt 07 — Organizations Foundation
+Implement KABEERI V1 organizations foundation.
+Create:
+1. organizations migration
+2. Organization model
+3. Organization factory
+4. Organization policy basic
+5. tests
+Fields:
+- id
+- uuid or ulid unique
+- name
+- slug unique
+- owner_user_id foreign key to users
+- account_type default business
+- status default active
+- plan_code nullable
+- country_id nullable
+- locale default ar
+- timezone default Africa/Cairo
+- settings json nullable
+- metadata json nullable
+- timestamps
+- soft deletes
+account_type values:
+- individual
+- business
+- agency
+- enterprise
+- legal_partner
+- platform_internal
+Rules:
+- Organization is the tenant root.
+- User may own many organizations.
+- Do not create memberships yet unless needed for tests.
+Acceptance criteria:
+- Organization belongs to owner user.
+- Owner user has many owned organizations.
+- Slug uniqueness tested.
+- Tests pass.
+Do not implement sites, companies, billing, or agency features yet.
+Prompt 08 — Organization Memberships
+Implement KABEERI V1 organization memberships.
+Create:
+1. organization_memberships migration
+2. OrganizationMembership model
+3. relationships
+4. factory
+5. tests
+Fields:
+- id
+- uuid or ulid unique
+- organization_id
+- user_id
+- membership_type
+- status default active
+- job_title nullable
+- invited_by nullable
+- invited_at nullable
+- accepted_at nullable
+- start_date nullable
+- end_date nullable
+- visibility default organization_only
+- metadata json nullable
+- timestamps
+- soft deletes
+membership_type values:
+- owner
+- admin
+- employee
+- contractor
+- freelancer
+- consultant
+- external_collaborator
+- legal_reviewer
+- agency_member
+Rules:
+- unique organization_id + user_id
+- User belongs to organization through membership.
+- Organization owner should have an owner membership.
+- Add an Action if useful:
+CreateOrganizationWithOwnerMembership
+Acceptance criteria:
+- Creating organization can create owner membership.
+- User can belong to multiple organizations.
+- Tests pass.
+Prompt 09 — Companies Foundation
+Implement KABEERI V1 companies foundation.
+Create:
+1. companies migration
+2. Company model
+3. Company factory
+4. basic policy
+5. tests
+Fields:
+- id
+- uuid or ulid unique
+- organization_id
+- legal_name nullable
+- trade_name
+- slug
+- country_id nullable
+- city nullable
+- legal_type nullable
+- registration_number nullable
+- tax_number nullable
+- industry nullable
+- company_size nullable
+- status default draft
+- verification_status default not_submitted
+- verified_at nullable
+- verification_expires_at nullable
+- metadata json nullable
+- timestamps
+- soft deletes
+Indexes:
+- organization_id
+- unique organization_id + slug
+- verification_status
+- status
+Rules:
+- Company belongs to Organization.
+- Organization has many Companies.
+- This is not full Rabet verification yet.
+Acceptance criteria:
+- Company can be created under organization.
+- Slug unique within organization.
+- Tests pass.
+Do not implement legal partner workflow yet.
+Prompt 10 — Company Memberships
+Implement KABEERI V1 company memberships.
+Create:
+1. company_memberships migration
+2. CompanyMembership model
+3. relationships
+4. factory
+5. tests
+Fields:
+- id
+- uuid or ulid unique
+- company_id
+- user_id
+- organization_membership_id nullable
+- role_title nullable
+- department_id nullable
+- manager_user_id nullable
+- employment_type nullable
+- status default active
+- start_date nullable
+- end_date nullable
+- public_work_history default false
+- metadata json nullable
+- timestamps
+- soft deletes
+Rules:
+- unique company_id + user_id
+- Company membership links people to business account.
+- Do not implement HR module.
+Acceptance criteria:
+- User can belong to multiple companies through memberships.
+- Company belongs to organization.
+- Tests pass.
+Prompt 11 — Sites / Apps Foundation
+Implement KABEERI V1 sites foundation.
+Important:
+The technical table is sites, but user-facing language should call them Apps where appropriate.
+Create:
+1. sites migration
+2. Site model
+3. factory
+4. policy basic
+5. tests
+Fields:
+- id
+- uuid or ulid unique
+- organization_id
+- company_id nullable
+- name
+- slug
+- domain nullable
+- subdomain nullable
+- site_type default website
+- status default active
+- language default ar
+- timezone default Africa/Cairo
+- theme_id nullable
+- settings json nullable
+- metadata json nullable
+- created_by nullable
+- timestamps
+- soft deletes
+site_type values:
+- website
+- blog
+- store
+- portal
+- landing
+- internal_portal
+- mall_seller_site
+Indexes:
+- unique organization_id + slug
+- unique domain nullable-safe if supported
+- subdomain
+- company_id
+- status
+Rules:
+- Site belongs to Organization.
+- Site may belong to Company.
+- Do not implement commerce or mall.
+Acceptance criteria:
+- Organization can have many sites/apps.
+- Company can have many sites/apps.
+- Tests pass.
+Prompt 12 — Settings Foundation
+Implement KABEERI V1 settings foundation.
+Create:
+1. settings migration
+2. Setting model
+3. SettingService
+4. tests
+Fields:
+- id
+- organization_id nullable
+- scope_type
+- scope_id nullable
+- key
+- value json nullable
+- value_type default string
+- is_encrypted default false
+- timestamps
+Scope examples:
+- platform
+- organization
+- company
+- site
+- module
+- user
+Indexes:
+- unique scope_type + scope_id + key
+- organization_id
+Rules:
+- Store flexible settings.
+- Do not over-engineer encryption now; add safe placeholder methods if needed.
+- Do not create billing settings.
+Acceptance criteria:
+- Can set/get setting by scope.
+- Can override organization/site setting.
+- Tests pass.
+Prompt 13 — Feature Flags Foundation
+Implement KABEERI V1 feature flags foundation.
+Create:
+1. feature_flags migration
+2. feature_flag_overrides migration
+3. FeatureFlag model
+4. FeatureFlagOverride model
+5. FeatureFlagService
+6. tests
+7. seed V1 flags
+feature_flags fields:
+- id
+- key unique
+- description nullable
+- default_value boolean default false
+- status default active
+- timestamps
+feature_flag_overrides fields:
+- id
+- feature_flag_id
+- organization_id nullable
+- scope_type nullable
+- scope_id nullable
+- value boolean
+- timestamps
+Seed initial flags:
+- enable_cms
+- enable_media_library
+- enable_theme_foundation
+- enable_package_foundation
+- enable_rabet_foundation
+- enable_onboarding_basic
+- enable_activity_logs
+Rules:
+- Feature flags are not billing entitlements yet.
+- Keep it simple for V1.
+Acceptance criteria:
+- FeatureFlagService resolves default and override.
+- Tests pass.
+Prompt 14 — RBAC Tables
+Implement KABEERI V1 RBAC database foundation.
+Create migrations, models, and tests for:
+1. roles
+2. permissions
+3. role_permission
+4. membership_role_assignments
+5. membership_permission_overrides
+roles fields:
+- id
+- uuid or ulid unique
+- organization_id nullable
+- company_id nullable
+- site_id nullable
+- name
+- slug
+- scope
+- is_system default false
+- timestamps
+scope values:
+- platform
+- organization
+- company
+- site
+- module
+- legal_partner
+- mall
+permissions fields:
+- id
+- name
+- slug unique
+- group
+- description nullable
+- risk_level default low
+- timestamps
+role_permission:
+- role_id
+- permission_id
+- timestamps
+- primary role_id + permission_id
+membership_role_assignments:
+- id
+- membership_type
+- membership_id
+- role_id
+- scope_type nullable
+- scope_id nullable
+- created_by nullable
+- created_at
+membership_permission_overrides:
+- id
+- membership_type
+- membership_id
+- permission_id
+- effect allow/deny
+- reason nullable
+- created_by nullable
+- created_at
+Rules:
+- Do not use a role column on users.
+- Roles attach to memberships.
+- Keep permission checking service simple.
+Acceptance criteria:
+- Seed V1 permissions.
+- Assign role to organization membership.
+- Check permission through membership.
+- Tests pass.
+Prompt 15 — V1 Roles and Permissions Seeder
+Create V1 roles and permissions seeders.
+Roles:
+- Platform Super Admin
+- Organization Owner
+- Organization Admin
+- Site Admin
+- Editor
+- Media Manager
+- Viewer
+Permissions groups:
+organization:
+- organization.view
+- organization.manage
+- organization.members.manage
+- organization.settings.manage
+site:
+- site.view
+- site.create
+- site.edit
+- site.delete
+- site.settings.manage
+content:
+- content.view
+- content.create
+- content.edit
+- content.publish
+- content.delete
+media:
+- media.view
+- media.upload
+- media.edit
+- media.delete
+company:
+- company.view
+- company.create
+- company.edit
+- company.manage
+rabet:
+- business_profile.view
+- business_profile.edit
+- verification.submit
+system:
+- activity_log.view
+- settings.view
+- feature_flags.view
+Rules:
+- Permissions should be seeded idempotently.
+- Do not create V2 commerce permissions.
+- Do not create ERP permissions.
+Acceptance criteria:
+- Seeder can be run multiple times safely.
+- Roles have expected permissions.
+- Tests pass.
+Prompt 16 — Permission Check Service
+Implement a simple V1 permission checking service.
+Create:
+- PermissionService or AccessService
+- methods to check if a user has a permission in an organization/company/site context through memberships and assigned roles
+Rules:
+- Users do not have global role column.
+- Use organization_memberships and company_memberships.
+- Platform Super Admin can be handled as a platform role through membership or safe config placeholder, but do not hardcode emails unless documented.
+- Keep simple and testable.
+Acceptance criteria:
+- User with Organization Owner role can manage organization.
+- User without permission cannot manage.
+- Permission override deny wins over role allow.
+- Tests pass.
+Do not build full UI yet.
+Prompt 17 — Activity Logs
+Implement KABEERI V1 activity logs.
+Create:
+1. activity_logs migration
+2. ActivityLog model
+3. ActivityLogger service
+4. tests
+Fields:
+- id
+- uuid or ulid unique
+- organization_id nullable
+- company_id nullable
+- site_id nullable
+- actor_user_id nullable
+- action
+- subject_type nullable
+- subject_id nullable
+- description nullable
+- ip_address nullable
+- user_agent nullable
+- metadata json nullable
+- created_at
+Indexes:
+- organization_id + created_at
+- company_id + created_at
+- site_id + created_at
+- actor_user_id
+- action
+- subject_type + subject_id
+Rules:
+- Log important V1 actions.
+- Do not implement full audit trail yet.
+- Keep service easy to call from Actions.
+Acceptance criteria:
+- Can write activity log.
+- Can query by organization.
+- Tests pass.
+Prompt 18 — Audit Logs Basic
+Implement V1 audit_logs basic foundation.
+Create:
+1. audit_logs migration
+2. AuditLog model
+3. AuditLogger service
+4. tests
+Fields:
+- id
+- uuid or ulid unique
+- organization_id nullable
+- company_id nullable
+- site_id nullable
+- actor_user_id nullable
+- action
+- risk_level
+- subject_type nullable
+- subject_id nullable
+- before json nullable
+- after json nullable
+- reason nullable
+- ip_address nullable
+- user_agent nullable
+- created_at
+Rules:
+- Audit logs are for sensitive events.
+- Do not build enterprise GRC.
+- Add examples for role_changed, permission_override_created, export_requested.
+Acceptance criteria:
+- Can record audit log with before/after.
+- Tests pass.
+Prompt 19 — Notifications Basic
+Implement V1 notifications basic foundation.
+Create:
+1. notifications migration
+2. Notification model if not using Laravel built-in notifications directly
+3. simple NotificationService
+4. tests
+Fields:
+- id
+- uuid or ulid unique
+- recipient_user_id
+- organization_id nullable
+- company_id nullable
+- site_id nullable
+- type
+- title
+- body nullable
+- action_url nullable
+- priority default normal
+- read_at nullable
+- metadata json nullable
+- timestamps
+Rules:
+- Keep notification system simple.
+- Do not implement Unified Inbox.
+- Do not implement email/WhatsApp marketing.
+Acceptance criteria:
+- Can create notification.
+- Can mark as read.
+- Tests pass.
+Prompt 20 — Media Assets Foundation
+Implement KABEERI V1 media assets foundation.
+Create:
+1. media_assets migration
+2. media_usages migration
+3. MediaAsset model
+4. MediaUsage model
+5. MediaService basic
+6. tests
+media_assets fields:
+- id
+- uuid or ulid unique
+- organization_id
+- site_id nullable
+- company_id nullable
+- uploaded_by nullable
+- disk
+- path
+- relative_path
+- filename
+- original_filename
+- mime_type
+- extension
+- size_bytes
+- width nullable
+- height nullable
+- visibility default private
+- alt_text nullable
+- caption nullable
+- checksum nullable
+- metadata json nullable
+- timestamps
+- soft deletes
+visibility values:
+- public
+- private
+- organization_only
+- company_only
+- sensitive
+media_usages fields:
+- id
+- media_asset_id
+- usable_type
+- usable_id
+- field_name nullable
+- created_at
+Rules:
+- Do not store binary file data in DB.
+- Store relative paths.
+- Do not implement image transformations yet.
+Acceptance criteria:
+- Can create media asset metadata.
+- Can attach usage to a model polymorphically.
+- Tests pass.
+Prompt 21 — Theme Foundation
+Implement KABEERI V1 theme foundation.
+Create:
+1. themes migration
+2. theme_settings migration
+3. Theme model
+4. ThemeSetting model
+5. ThemeRegistryService basic
+6. seed default starter theme
+7. tests
+themes fields:
+- id
+- uuid or ulid unique
+- name
+- slug unique
+- version nullable
+- publisher nullable
+- status default active
+- type default official
+- supports_rtl boolean default true
+- supports_dark_mode boolean default false
+- preview_media_id nullable
+- manifest json nullable
+- metadata json nullable
+- timestamps
+- soft deletes
+theme_settings fields:
+- id
+- site_id
+- theme_id
+- key
+- value json nullable
+- timestamps
+- unique site_id + theme_id + key
+Rules:
+- Theme controls presentation only.
+- No business logic inside theme.
+- Do not implement 300 themes now.
+- Do not implement public theme marketplace now.
+Acceptance criteria:
+- Starter theme seeded.
+- Site can reference theme_id.
+- Theme settings can be stored per site.
+- Tests pass.
+Prompt 22 — Package Foundation
+Implement KABEERI V1 package foundation.
+Create:
+1. modules migration if not already created
+2. module_installations migration
+3. packages or installed_packages table if required by docs
+4. Package/Module models
+5. simple PackageRegistryService
+6. tests
+Keep V1 simple:
+- modules table tracks logical modules.
+- module_installations tracks enabled modules for organization/company/site.
+- Do not implement public marketplace.
+- Do not implement paid packages.
+- Do not implement developer submissions.
+modules fields:
+- id
+- key unique
+- name
+- description nullable
+- module_type
+- status default active
+- version nullable
+- requires json nullable
+- timestamps
+module_type values:
+- core
+- cms
+- commerce
+- erp
+- mall
+- ai
+- integration
+- security
+- industry
+module_installations fields:
+- id
+- organization_id
+- company_id nullable
+- site_id nullable
+- module_id
+- status default active
+- installed_by nullable
+- installed_at nullable
+- settings json nullable
+- timestamps
+Acceptance criteria:
+- Can seed core/cms/media/rabet modules.
+- Can enable module for organization/site.
+- Tests pass.
+Prompt 23 — CMS Core Tables
+Implement KABEERI V1 CMS core database foundation.
+Create migrations, models, factories, and tests for:
+1. content_types
+2. content_entries
+3. content_revisions
+4. taxonomies
+5. taxonomy_terms
+6. content_taxonomy_term
+content_types:
+- id
+- uuid/ulid
+- organization_id
+- site_id nullable
+- name
+- slug
+- description nullable
+- fields json nullable
+- status default active
+- timestamps
+- soft deletes
+content_entries:
+- id
+- uuid/ulid
+- organization_id
+- site_id
+- content_type_id
+- author_user_id nullable
+- title
+- slug
+- excerpt nullable
+- body longtext nullable
+- status default draft
+- visibility default public
+- published_at nullable
+- seo json nullable
+- metadata json nullable
+- timestamps
+- soft deletes
+content_revisions:
+- id
+- content_entry_id
+- created_by nullable
+- title nullable
+- body longtext nullable
+- data json nullable
+- created_at
+taxonomies:
+- id
+- organization_id
+- site_id nullable
+- name
+- slug
+- type default category
+- timestamps
+taxonomy_terms:
+- id
+- taxonomy_id
+- parent_id nullable
+- name
+- slug
+- description nullable
+- timestamps
+Rules:
+- Support pages and posts through content_types.
+- Do not implement complex page builder.
+- Do not implement WordPress importer here.
+- Use tenant scoping.
+Acceptance criteria:
+- Can create page content type.
+- Can create post content type.
+- Can create content entry.
+- Can assign taxonomy term.
+- Tests pass.
+Prompt 24 — CMS Actions and Policies
+Implement V1 CMS Actions and Policies.
+Create Actions:
+- CreateContentEntry
+- UpdateContentEntry
+- PublishContentEntry
+- ArchiveContentEntry or DeleteContentEntry safely
+Create Policy:
+- ContentEntryPolicy
+Rules:
+- Use PermissionService where applicable.
+- Publishing requires content.publish.
+- Editing requires content.edit.
+- Creating requires content.create.
+- Keep logic outside controllers.
+Acceptance criteria:
+- Authorized editor can create/edit/publish.
+- Unauthorized user cannot publish.
+- Publishing sets status published and published_at.
+- Activity log is written for create/update/publish.
+- Tests pass.
+Prompt 25 — CMS Public Rendering Basic
+Implement simple V1 public rendering for CMS pages.
+Goal:
+Allow a published page to be viewed publicly by site slug and page slug.
+Tasks:
+1. Add route for public site/page preview:
+/app/{site:slug}/{contentEntry:slug}
+or another safe V1 route if model binding requires organization context.
+2. Render a basic Blade template using the starter theme layout.
+3. Only show published + public content.
+4. Do not implement full domain routing.
+5. Do not implement frontend anywhere.
+Acceptance criteria:
+- Published page renders.
+- Draft page does not render publicly.
+- Tests pass.
+Prompt 26 — Rabet Business Profile Draft Foundation
+Implement V1 Rabet business profile draft foundation.
+Create:
+1. business_profiles migration
+2. verification_requests migration
+3. verification_documents migration
+4. models
+5. factories
+6. tests
+business_profiles:
+- id
+- uuid/ulid
+- organization_id
+- company_id
+- site_id nullable
+- display_name
+- slug
+- description nullable
+- public_email nullable
+- public_phone nullable
+- website_url nullable
+- logo_media_id nullable
+- cover_media_id nullable
+- visibility default draft
+- status default draft
+- metadata json nullable
+- timestamps
+- soft deletes
+verification_requests:
+- id
+- uuid/ulid
+- organization_id
+- company_id
+- requested_by nullable
+- status default draft
+- submitted_at nullable
+- reviewed_at nullable
+- reviewed_by nullable
+- notes nullable
+- metadata json nullable
+- timestamps
+verification_documents:
+- id
+- verification_request_id
+- media_asset_id
+- document_type
+- status default pending
+- notes nullable
+- timestamps
+Rules:
+- This is foundation only.
+- Do not implement legal partner network.
+- Do not approve real verification automatically.
+- Do not build Mall publishing.
+Acceptance criteria:
+- Company can have business profile draft.
+- Verification request can be created as draft/submitted.
+- Documents can be attached.
+- Tests pass.
+Prompt 27 — Onboarding Basic
+Implement KABEERI V1 onboarding basic.
+Goal:
+After registration or first login, user can create:
+- Organization
+- optional Company draft
+- first Site/App
+Create:
+1. OnboardingService
+2. CreateFirstWorkspace action
+3. tests
+Flow:
+- user provides organization name
+- create organization
+- create owner membership
+- create default company draft optionally
+- create first site/app
+- seed basic CMS page if requested
+- log activity
+Rules:
+- Keep UI simple.
+- Do not implement Academy, Work Network, billing, or plans.
+- Do not implement complex wizard database yet unless already in V1 docs.
+Acceptance criteria:
+- User can create first organization and app.
+- Owner membership is created.
+- Activity logs are written.
+- Tests pass.
+Prompt 28 — Filament Resource: Organizations
+Create Filament resources for V1 Organizations.
+Resources:
+- OrganizationResource
+- Relation manager for organization memberships if appropriate
+Features:
+- list organizations
+- view organization
+- create organization
+- edit basic fields
+- see owner
+- see status/account_type
+Rules:
+- Respect policies.
+- Do not expose dangerous deletes unless soft delete is safe.
+- Do not add billing fields.
+- Keep forms clean and Arabic-friendly labels if possible.
+Acceptance criteria:
+- Authorized user can manage organization.
+- Unauthorized user cannot.
+- Filament resource loads.
+- Tests or smoke checks pass.
+Prompt 29 — Filament Resource: Companies and Sites/Apps
+Create Filament resources for:
+1. Companies
+2. Sites/Apps
+CompanyResource:
+- list, create, edit
+- organization context
+- verification_status visible but not full workflow
+SiteResource:
+- label as App in UI where appropriate
+- list, create, edit
+- organization context
+- company optional
+- site_type
+- status
+- language/timezone
+Rules:
+- Respect policies.
+- Do not implement commerce/store logic.
+- Do not implement domain verification.
+- Do not implement frontend anywhere.
+Acceptance criteria:
+- User can create company under organization.
+- User can create site/app under organization.
+- Tests or smoke checks pass.
+Prompt 30 — Filament Resource: CMS
+Create Filament resources for V1 CMS.
+Resources:
+- ContentTypeResource
+- ContentEntryResource
+- TaxonomyResource or TaxonomyTerm management if simple
+ContentEntryResource:
+- title
+- slug
+- content_type
+- status
+- visibility
+- body
+- excerpt
+- seo fields basic as json or simple fields
+- publish action
+Rules:
+- Respect CMS policies.
+- Use Actions for create/update/publish where possible.
+- Do not implement visual builder.
+- Do not implement WordPress importer.
+Acceptance criteria:
+- Admin/editor can create draft page.
+- Admin/editor can publish page.
+- Activity logs created.
+- Tests or smoke checks pass.
+Prompt 31 — Filament Resource: Media Library Basic
+Create V1 Filament resource for Media Library basic.
+Resource:
+- MediaAssetResource
+Features:
+- list media metadata
+- upload file if safely possible with Laravel storage
+- edit alt_text and caption
+- set visibility
+- view file metadata
+Rules:
+- Store file path/metadata only.
+- Keep upload scoped to organization.
+- Do not implement transformations.
+- Do not implement private signed links unless already simple.
+Acceptance criteria:
+- User can upload media for organization/site.
+- Media metadata is stored.
+- Tests or smoke checks pass.
+Prompt 32 — Filament Resource: Settings and Feature Flags
+Create safe V1 Filament resources/pages for:
+1. Feature Flags read-only or admin-only
+2. Settings scoped to organization/site where safe
+Rules:
+- Do not expose platform-wide dangerous settings to normal users.
+- Feature flags can be listed.
+- Overrides can be managed only by authorized admin.
+- Respect policies.
+Acceptance criteria:
+- Organization admin can view relevant flags/settings.
+- Unauthorized users cannot modify platform settings.
+- Tests or smoke checks pass.
+Prompt 33 — Filament Resource: Activity Logs
+Create V1 Filament resource for Activity Logs.
+Features:
+- list logs
+- filter by organization/company/site/action/actor
+- view metadata
+- read-only
+Rules:
+- Activity logs are read-only.
+- Respect organization scope.
+- Do not expose logs across tenants.
+Acceptance criteria:
+- Organization admin can see own organization logs.
+- Cannot see another organization logs.
+- Tests pass.
+Prompt 34 — Demo Seed Data
+Create V1 demo seed data based on KABEERI Seed Data & Demo Scenario.
+Seed:
+- platform admin user
+- demo organization
+- owner membership
+- demo company
+- demo site/app
+- default starter theme
+- CMS content types: page, post
+- demo pages:
+- Home
+- About
+- Services
+- Contact
+- demo media metadata or placeholder media
+- V1 roles and permissions
+- V1 feature flags
+- business profile draft
+Rules:
+- Seeders should be idempotent.
+- Do not seed V2 commerce or ERP data.
+- Do not use real secrets.
+- Document demo login in README or local-only note.
+Acceptance criteria:
+- Fresh database can migrate and seed.
+- Admin can login.
+- Demo app/site exists.
+- Published demo page renders.
+- Tests pass.
+Prompt 35 — V1 Smoke Test Suite
+Create a V1 smoke test suite.
+Tests should cover:
+1. User can exist with profile.
+2. User can create organization.
+3. Owner membership is created.
+4. Organization can create company.
+5. Organization can create site/app.
+6. Role and permission can be assigned to membership.
+7. Authorized user can create CMS page.
+8. Authorized user can publish CMS page.
+9. Published page is publicly viewable.
+10. Media asset metadata can be stored.
+11. Activity log is written.
+12. Tenant isolation prevents user from accessing another organization's records.
+Rules:
+- Use factories and seeders.
+- Keep tests stable.
+- Do not test future features.
+Acceptance criteria:
+- Smoke tests pass.
+- Existing tests pass.
+Prompt 36 — Security Pass V1
+Perform a V1 security pass.
+Scope:
+- Check policies for organizations, companies, sites/apps, CMS, media, activity logs.
+- Ensure tenant isolation.
+- Ensure no user role column exists.
+- Ensure no organization_id/company_id/site_id added to users.
+- Ensure activity logs are read-only.
+- Ensure media access is scoped.
+- Ensure dangerous actions are not exposed in Filament.
+Tasks:
+1. Inspect code.
+2. Add missing policies or tests.
+3. Fix only V1 security issues.
+4. Report risks.
+Acceptance criteria:
+- Tenant isolation tests pass.
+- No unauthorized cross-organization access.
+- Tests pass.
+Do not implement enterprise security, SSO, SIEM, MFA, or GRC.
+Prompt 37 — V1 UI Cleanup Pass
+Perform a V1 Filament/admin UI cleanup pass.
+Scope:
+- Labels
+- Navigation groups
+- Form spacing
+- Required fields
+- Table columns
+- Filters
+- Actions
+- Empty states
+Navigation groups:
+- Core
+- Organizations
+- Apps
+- Content
+- Media
+- Rabet Foundation
+- System
+Rules:
+- Improve usability only.
+- Do not add new features.
+- Do not implement frontend design system.
+- Keep Arabic/RTL friendliness in mind where possible.
+Acceptance criteria:
+- Filament admin is organized.
+- Forms are usable.
+- Tests pass.
+Prompt 38 — V1 Public Site Basic Theme
+Implement basic public starter theme rendering for V1.
+Scope:
+- Simple Blade layout
+- Header
+- Footer
+- Content body
+- Basic responsive layout
+- RTL-ready direction support
+- Use site/theme settings where simple
+Rules:
+- Do not implement visual builder.
+- Do not implement 300 themes.
+- Do not implement theme marketplace.
+- Keep CSS minimal.
+- No heavy JS.
+Acceptance criteria:
+- Published page displays with starter layout.
+- RTL text displays acceptably.
+- Tests or smoke checks pass.
+Prompt 39 — V1 Documentation Update
+Update developer documentation for current V1 implementation.
+Update:
+- README
+- MODULES.md
+- local setup docs
+- seed/demo docs
+- how to run tests
+- V1 implemented features list
+- known not implemented features
+Include:
+- V1 only
+- what is intentionally postponed to V2+
+- how to login to demo admin
+- how to create organization/app/page
+Rules:
+- Do not change code unless docs reveal a broken instruction.
+- Keep docs concise and accurate.
+Acceptance criteria:
+- New developer can run project locally.
+- Docs match actual commands.
+- Tests pass.
+Prompt 40 — V1 Release Candidate Check
+Prepare KABEERI V1 Release Candidate 1 check.
+Do not add new features.
+Tasks:
+1. Run all tests.
+2. Run Pint.
+3. Inspect migrations order.
+4. Confirm fresh migrate + seed works.
+5. Confirm admin login works.
+6. Confirm demo organization/app/page exists.
+7. Confirm published page renders.
+8. Confirm tenant isolation tests exist.
+9. Confirm README is accurate.
+10. Produce a release readiness report.
+Acceptance criteria:
+- Tests pass.
+- Fresh setup works.
+- Report lists:
+- completed V1 features
+- skipped future features
+- risks
+- next sprint recommendations
+Fix Prompt — إصلاح آمن عند حدوث خطأ
+Fix only the failing tests or errors from the last change.
+Rules:
+1. Do not add new features.
+2. Do not refactor unrelated code.
+3. Do not change database structure unless the failure is directly caused by the current migration/task.
+4. Explain the root cause.
+5. Run tests again.
+Error/output:
+[paste the exact error here]
+Review Prompt — مراجعة قبل commit
+Review the current uncommitted changes for KABEERI V1.
+Check:
+- Does this stay within V1 scope?
+- Any accidental V2+ feature?
+- Any tenant isolation risk?
+- Any users table anti-pattern?
+- Any missing tests?
+- Any unsafe migrations?
+- Any over-engineering?
+Do not modify files unless you find a clear issue.
+Return a review report first.
+Commit Message Prompt — رسالة commit
+Generate a concise conventional commit message for the current changes.
+Rules:
+- Mention the V1 module.
+- Keep it short.
+- Do not exaggerate.
+- Include test status if relevant.
+Return only:
+1. Commit title
+2. Optional commit body
+ترتيب التنفيذ المختصر
+00 rules
+01 Laravel project
+02 tooling
+03 Filament
+04 module skeleton
+05 countries/currencies
+06 user profiles
+07 organizations
+08 org memberships
+09 companies
+10 company memberships
+11 sites/apps
+12 settings
+13 feature flags
+14 RBAC
+15 permissions seeder
+16 permission service
+17 activity logs
+18 audit logs
+19 notifications
+20 media
+21 themes
+22 package foundation
+23 CMS tables
+24 CMS actions/policies
+25 public rendering
+26 Rabet foundation
+27 onboarding
+28-33 Filament resources
+34 demo seed
+35 smoke tests
+36 security pass
+37 UI cleanup
+38 starter theme
+39 docs
+40 release candidate
+KABEERI V1 Codex Prompt Pack

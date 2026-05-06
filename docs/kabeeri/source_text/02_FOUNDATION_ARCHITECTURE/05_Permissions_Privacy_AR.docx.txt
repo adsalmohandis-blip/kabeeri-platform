@@ -1,0 +1,598 @@
+KABEERI — ملحق 5: خريطة الصلاحيات والخصوصية والظهور
+ملحق للملف الرئيسي + ملاحق التأسيس والتشغيل والترابط والإصدارات
+هذا الملف يحدد قواعد الصلاحيات والخصوصية والظهور داخل Kabeeri، لأن المنصة تحتوي على كيانات كثيرة ومتشابكة:
+Users.
+Organizations.
+Sites.
+Companies.
+Rabet Company OS.
+Kabeeri Mall.
+Talent Marketplace.
+ERP Modules.
+Legal Verification.
+Teams.
+AI Co-builder.
+Billing.
+Marketplace الداخلي.
+الهدف:
+منع تسريب البيانات، منع تضارب الصلاحيات، وإتاحة توسع آمن للشركات والمواقع والموظفين والـ marketplaces.
+1. القاعدة الرئيسية
+Kabeeri يجب أن يبنى على 3 مستويات من التحكم:
+Authentication→ Authorization→ Visibility / Privacy
+1.1 Authentication
+من أنت؟
+مثال:
+User مسجل.
+Legal Partner.
+Platform Admin.
+Customer.
+Professional.
+1.2 Authorization
+مسموح لك تعمل إيه؟
+مثال:
+إنشاء صفحة.
+نشر محتوى.
+دعوة عضو فريق.
+الموافقة على فاتورة.
+مراجعة مستند توثيق.
+1.3 Visibility / Privacy
+مسموح لك تشوف إيه؟
+مثال:
+ملف مهني عام.
+تقييم داخلي خاص.
+مستند قانوني.
+فاتورة.
+مهمة داخل مشروع.
+2. مبادئ الصلاحيات
+2.1 User لا يملك صلاحيات ثابتة عامة
+المستخدم لا يجب أن يكون له role واحد عالمي فقط.
+لأن نفس الشخص يمكن أن يكون:
+Owner في Company AConsultant في Company BEmployee في Company CCustomer في Company DLegal reviewer في Legal Partner Office
+لذلك الصلاحيات تأتي من Membership Context.
+2.2 Context-first Permissions
+أي صلاحية يجب أن تسأل:
+داخل أي سياق؟
+السياقات:
+PlatformOrganizationCompanySiteProjectModuleMarketplace Listing
+مثال:
+Ahmed يستطيع نشر صفحات في Site Aلكن لا يستطيع نشر صفحات في Site B
+2.3 Least Privilege
+كل مستخدم يحصل على أقل صلاحيات تكفيه.
+لا نعطي صلاحيات واسعة افتراضيًا.
+2.4 Explicit Sensitive Permissions
+الصلاحيات الحساسة يجب أن تكون منفصلة وواضحة.
+مثال:
+billing.managecompany.verification.approvefinance.journal.postpayroll.processusers.role.assignplugin.installai.apply_sensitive_change
+2.5 Deny Overrides Allow
+لو هناك conflict:
+deny يغلب allow
+مثال:
+المستخدم عضو في Role يسمح برؤية التقارير، لكن عليه override يمنع finance reports.
+النتيجة: ممنوع.
+2.6 كل Action مهم يسجل في Activity Log
+أي فعل مهم يجب تسجيله:
+من فعل؟
+متى؟
+في أي Organization/Company/Site؟
+على أي object؟
+من أي IP؟
+ما البيانات القديمة والجديدة عند الحاجة؟
+3. أنواع المستخدمين والصلاحيات العامة
+3.1 Visitor
+زائر غير مسجل.
+يمكنه
+تصفح الصفحات العامة.
+تصفح Kabeeri Mall حسب visibility.
+مشاهدة Business Profiles العامة.
+مشاهدة Services العامة.
+مشاهدة Products العامة.
+مشاهدة Professional Profiles العامة أو المختصرة.
+إرسال request إذا كان مسموحًا.
+لا يمكنه
+دخول Admin.
+مشاهدة بيانات خاصة.
+إرسال عروض وظائف.
+رؤية مستندات قانونية.
+رؤية تقييمات داخلية.
+3.2 Customer
+عميل مسجل.
+يمكنه
+شراء منتجات.
+طلب خدمات.
+إرسال reviews حسب القواعد.
+متابعة طلباته.
+إرسال رسائل للبزنس.
+حفظ شركات أو خدمات.
+لا يمكنه
+رؤية بيانات الشركة الداخلية.
+رؤية موظفي الشركة إلا لو ظاهرين للعامة.
+رؤية مستندات أو فواتير غير تخصه.
+3.3 Professional
+فرد له Professional Profile.
+يمكنه
+إدارة ملفه المهني.
+ضبط visibility.
+إضافة مهارات.
+تلقي عروض وظائف.
+قبول أو رفض عروض.
+الانضمام لشركة بعد قبول دعوة.
+رؤية تقييماته حسب النوع.
+لا يمكنه
+تعديل تقييمات الآخرين.
+رؤية تقييمات داخلية لشركة أخرى.
+رؤية عروض غير موجهة إليه.
+3.4 Business Owner
+صاحب Organization أو Company.
+يمكنه
+إنشاء Organization.
+إنشاء Site.
+إنشاء Company.
+إدارة Business Profile.
+دعوة أعضاء.
+رفع مستندات توثيق.
+إدارة الاشتراك.
+تفعيل modules.
+لا يمكنه افتراضيًا
+مراجعة توثيق نفسه كـ Legal Partner.
+تعديل سجلات audit.
+حذف Activity Logs.
+تجاوز سياسات المنصة.
+3.5 Company Admin
+مسؤول داخل الشركة.
+يمكنه حسب الصلاحيات
+إدارة الفريق.
+إدارة المهام.
+إدارة الخدمات.
+إدارة المنتجات.
+إدارة العملاء.
+إدارة المشاريع.
+رؤية التقارير.
+إدارة Business Profile.
+لا يمكنه إلا بصلاحية خاصة
+تغيير بيانات قانونية.
+تعديل billing.
+حذف الشركة.
+الوصول للـ payroll.
+الموافقة على financial actions.
+3.6 Employee / Team Member
+عضو فريق داخل شركة.
+يمكنه حسب دوره
+رؤية المهام المكلف بها.
+تحديث حالة المهام.
+التعليق.
+رفع ملفات.
+رؤية مشاريع محددة.
+استخدام Inbox/Teams حسب الصلاحية.
+لا يمكنه
+رؤية كل بيانات الشركة.
+رؤية ملفات HR الخاصة.
+رؤية payroll.
+رؤية مستندات قانونية إلا إذا صرّح له.
+3.7 Manager
+مدير فريق أو قسم.
+يمكنه
+رؤية فريقه.
+توزيع المهام.
+تقييم أعضاء فريقه.
+رؤية workload.
+الموافقة على tasks أو requests حسب workflow.
+لا يمكنه إلا بصلاحية خاصة
+رؤية كل أقسام الشركة.
+رؤية رواتب خارج فريقه.
+تعديل أدوار النظام.
+3.8 HR Manager
+يمكنه
+إدارة employee records.
+إدارة onboarding/offboarding.
+رؤية ملفات الموظفين.
+إدارة leave/attendance لاحقًا.
+إدارة evaluations الخاصة.
+لا يمكنه إلا بصلاحية خاصة
+معالجة payroll.
+رؤية accounting data.
+تغيير legal verification.
+3.9 Finance User / Accountant
+يمكنه حسب الصلاحية
+رؤية الفواتير.
+تسجيل المدفوعات.
+إدارة الحسابات.
+إنشاء تقارير مالية.
+مراجعة payment status.
+لا يمكنه إلا بصلاحية خاصة
+حذف قيود محاسبية.
+إغلاق فترة مالية.
+تغيير tax settings.
+تعديل payroll.
+3.10 Legal Partner
+مكتب محاماة أو مستخدم تابع له.
+يمكنه
+رؤية طلبات التوثيق المسندة إليه.
+رؤية المستندات المرتبطة بهذه الطلبات فقط.
+طلب معلومات إضافية.
+قبول أو رفض verification حسب صلاحياته.
+كتابة ملاحظات قانونية.
+لا يمكنه
+رؤية كل شركات المنصة.
+رؤية ERP أو Teams للشركة.
+تغيير بيانات الشركة التشغيلية.
+تعديل Trust Score مباشرة إلا عبر نتيجة التوثيق.
+3.11 Developer
+مطور plugins/themes/modules.
+يمكنه لاحقًا
+إنشاء developer profile.
+رفع package للمراجعة.
+متابعة حالة review.
+رؤية analytics لحزمه.
+إدارة documentation.
+لا يمكنه
+الوصول لبيانات العملاء المثبتين للحزمة.
+تجاوز مراجعة security.
+تفعيل package مباشرة في حسابات المستخدمين.
+3.12 Platform Admin
+إدارة Kabeeri.
+يمكنه حسب مستوى الإدارة
+إدارة users.
+إدارة organizations.
+إدارة verification.
+إدارة legal partners.
+إدارة moderation.
+إدارة billing.
+إدارة packages.
+إدارة Kabeeri Mall.
+يجب تقييده عبر
+MFA.
+Audit Log قوي.
+IP restrictions لاحقًا.
+Admin role separation.
+No direct silent data edits.
+4. Permission Naming System
+4.1 الصيغة العامة
+resource.action
+أمثلة:
+content.createcontent.editcontent.publishcontent.deletemedia.uploadmedia.deletesite.settings.manageorganization.managecompany.managebusiness_profile.publishverification.submitverification.reviewteam.invitetask.assignbilling.manageplugin.installai.plan.createai.change.apply
+4.2 صلاحيات Platform
+platform.admin.accessplatform.users.manageplatform.organizations.manageplatform.billing.manageplatform.moderation.manageplatform.verification.manageplatform.legal_partners.manageplatform.packages.reviewplatform.settings.manage
+4.3 صلاحيات Organization
+organization.vieworganization.manageorganization.settings.manageorganization.members.inviteorganization.members.removeorganization.roles.manageorganization.billing.manageorganization.modules.manage
+4.4 صلاحيات Site/CMS
+site.view_adminsite.settings.managecontent.createcontent.editcontent.publishcontent.archivecontent.deletecontent.restorecontent.seo.managemedia.uploadmedia.editmedia.deletetheme.activatetheme.manageredirects.manageforms.manage
+4.5 صلاحيات Company/Rabet
+company.viewcompany.managecompany.profile.managecompany.team.managecompany.departments.managecompany.verification.submitcompany.verification.documents.uploadcompany.trust.viewcompany.rabet.activatecompany.digital_office.manage
+4.6 صلاحيات Tasks/Teams
+task.createtask.edittask.assigntask.commenttask.completetask.deleteproject.createproject.manageteam.channel.createteam.message.sendteam.message.deleteteam.files.upload
+4.7 صلاحيات Kabeeri Mall
+mall.business.publishmall.business.editmall.service.publishmall.service.editmall.product.publishmall.product.editmall.listing.featuremall.review.respondmall.message.replymall.moderation.report
+4.8 صلاحيات Talent Marketplace
+professional_profile.manageprofessional_profile.publishjob_offer.sendjob_offer.negotiatejob_offer.acceptjob_offer.rejectprofessional.rating.viewprofessional.evaluation.create
+4.9 صلاحيات Commerce
+commerce.product.createcommerce.product.editcommerce.product.deletecommerce.order.viewcommerce.order.managecommerce.refund.createcommerce.discount.managecommerce.checkout.managecommerce.payment.managecommerce.shipping.manage
+4.10 صلاحيات ERP
+crm.lead.createcrm.lead.managesales.quote.createsales.quote.approvesales.order.manageinventory.stock.viewinventory.stock.adjustpurchasing.po.createpurchasing.po.approvefinance.invoice.createfinance.invoice.approvefinance.payment.recordaccounting.journal.createaccounting.journal.posthr.employee.managepayroll.process
+4.11 صلاحيات AI
+ai.assistant.useai.plan.createai.plan.approveai.change.applyai.change.rollbackai.content.generateai.workflow.createai.module.createai.finance.readai.finance.suggestai.sensitive_action.request
+5. Visibility System
+5.1 القيم الأساسية للظهور
+publicprivateunlistedorganization_onlycompany_onlyteam_onlymembers_onlyverified_companies_onlylegal_partner_onlyplatform_admin_onlycustom
+5.2 معاني القيم
+public
+أي زائر يمكنه الرؤية.
+private
+المالك فقط أو أصحاب صلاحيات خاصة.
+unlisted
+يمكن الوصول بالرابط، لكنه لا يظهر في البحث أو القوائم.
+organization_only
+أعضاء Organization فقط.
+company_only
+أعضاء Company فقط.
+team_only
+فريق أو project محدد فقط.
+members_only
+مستخدمون مسجلون فقط.
+verified_companies_only
+فقط شركات موثقة.
+legal_partner_only
+مكاتب المحاماة المعتمدة أو الشركاء القانونيون المرتبطون.
+platform_admin_only
+إدارة المنصة فقط.
+custom
+قواعد مخصصة حسب object.
+6. Privacy Rules للملفات المهنية
+6.1 Professional Profile Visibility
+المستخدم يتحكم في ظهوره:
+PublicVerified companies onlyHiddenAnonymous previewOpen to offers فقط
+6.2 Open to Offers
+حالات:
+open_to_offersnot_lookinghidden_from_current_employersanonymous_until_interestvisible_to_verified_companies_only
+6.3 Work History Visibility
+كل شركة عمل معها الفرد يمكن ضبط ظهورها:
+publicprivateverified_companies_onlyhide_company_nameshow_role_only
+6.4 Evaluation Visibility
+التقييمات تنقسم إلى:
+private_company_evaluationpublic_professional_reviewplatform_moderation_recordreviewed_user_onlymanager_onlyhr_only
+7. Privacy Rules للشركات
+7.1 Company Profile
+يمكن أن يكون:
+draftprivatepublicverified_publicsuspended
+7.2 Business Profile
+يمكن أن يظهر في:
+Company site فقطKabeeri MallBusiness MarketplaceServices MarketplaceProducts MarketplaceB2B network فقط
+7.3 Team Visibility
+الشركة تختار:
+hide_teamshow_key_people_onlyshow_public_teamshow_verified_team_only
+7.4 Legal Documents
+لا تظهر للعامة أبدًا.
+من يراها:
+Company OwnerAuthorized Company AdminAssigned Legal PartnerPlatform Verification Admin
+8. Privacy Rules لـ Kabeeri Mall
+8.1 Business Listings
+يمكن للجميع رؤيتها إذا public.
+لكن بعض البيانات قد تكون محدودة:
+رقم الهاتف.
+البريد.
+العنوان.
+أسماء الفريق.
+تقييمات معينة.
+8.2 Service Listings
+يمكن أن تكون:
+publicverified_customers_onlyrequest_quote_onlyhidden
+8.3 Product Listings
+يمكن أن تكون:
+publicmembers_onlyb2b_onlyhiddenout_of_stock_hidden
+8.4 Talent Listings
+يمكن أن تكون:
+publicverified_companies_onlyanonymoushidden
+9. Sensitive Data Map
+9.1 بيانات عالية الحساسية
+Legal documentsIdentity documentsTax numbersBank accountsPayrollSalaryFinancial recordsPrivate evaluationsContractsDispute evidenceAI change logs for sensitive actions
+9.2 قواعد التعامل معها
+لا تظهر للعامة.
+تحتاج صلاحيات صريحة.
+تسجل كل عملية view/download.
+لا تصدر في exports إلا بتصريح.
+لا يستخدمها AI بدون إذن خاص.
+تشفر عند الحاجة.
+10. Who Can See What — جداول عملية
+10.1 Legal Documents
+المستخدم
+يرى؟
+Visitor
+لا
+Customer
+لا
+Employee عادي
+لا
+Company Owner
+نعم
+Authorized Company Admin
+نعم
+Legal Partner assigned
+نعم
+Platform Verification Admin
+نعم
+Developer
+لا
+10.2 Public Business Profile
+المستخدم
+يرى؟
+Visitor
+نعم إذا public
+Customer
+نعم
+Verified Company
+نعم
+Platform Admin
+نعم
+Suspended profile
+لا للعامة
+10.3 Private Employee Evaluation
+المستخدم
+يرى؟
+Employee نفسه
+حسب الإعداد
+Direct Manager
+نعم
+HR
+نعم
+Company Owner
+نعم حسب policy
+Customer
+لا
+Visitor
+لا
+Other employees
+لا
+10.4 Professional Public Rating
+المستخدم
+يرى؟
+Visitor
+حسب visibility
+Verified Company
+نعم لو مسموح
+Current Employer
+حسب privacy settings
+Platform Admin
+نعم
+10.5 Company Tasks
+المستخدم
+يرى؟
+Assigned user
+نعم
+Watcher
+نعم
+Project Manager
+نعم
+Company Admin
+نعم حسب policy
+Other company employee
+لا إلا لو له صلاحية
+Visitor
+لا
+10.6 Billing Data
+المستخدم
+يرى؟
+Organization Owner
+نعم
+Billing Manager
+نعم
+Employee
+لا
+Platform Billing Admin
+نعم
+Legal Partner
+لا
+Developer
+لا
+11. AI Permission Rules
+11.1 AI لا يمتلك صلاحيات مستقلة
+AI يعمل بصلاحيات المستخدم الذي يطلب منه.
+AI permissions = User permissions - Sensitive actions requiring approval
+11.2 AI Actions Types
+Safe AI Actions
+كتابة draft.
+اقتراح SEO.
+تلخيص report.
+اقتراح task.
+توليد form draft.
+Sensitive AI Actions
+نشر محتوى.
+تغيير workflow.
+تعديل صلاحية.
+تعديل أسعار.
+إنشاء discount.
+إرسال job offer.
+Critical AI Actions
+حذف بيانات.
+تعديل payroll.
+تعديل tax settings.
+تغيير payment gateway.
+نشر plugin.
+تنفيذ bulk update.
+تغيير accounting entries.
+11.3 AI Guardrail
+أي Action حساس أو critical يجب أن يمر بـ:
+AI Plan→ Preview→ Permission Check→ User Approval→ Optional Approval Workflow→ Apply→ Activity Log→ Rollback Snapshot
+12. Approval Permission Rules
+12.1 لا موافقة بدون صلاحية
+المستخدم لا يمكنه الموافقة على شيء إلا إذا عنده:
+subject.approve
+أمثلة:
+content.publish.approvefinance.invoice.approvepurchasing.po.approveverification.approvejob_offer.approve
+12.2 موافقات حسب القيمة
+مثال:
+Invoice أقل من 10,000 → ManagerInvoice بين 10,000 و50,000 → Finance ManagerInvoice أكبر من 50,000 → CFO/Owner
+13. Legal Partner Permissions
+13.1 نطاق عمل المكتب القانوني
+مكتب المحاماة لا يرى إلا:
+طلبات توثيق مسندة إليه.
+المستندات المرتبطة بها.
+checklist الدولة.
+ملاحظات التوثيق.
+13.2 لا يرى
+CRM.
+Sales.
+Accounting.
+HR.
+Team chats.
+Payroll.
+Private tasks.
+14. Platform Admin Separation
+يجب ألا يكون كل Platform Admin لديه كل الصلاحيات.
+أدوار منصة مقترحة
+Platform Super AdminPlatform Support AdminPlatform Billing AdminPlatform Verification AdminPlatform Moderation AdminPlatform Security AdminPlatform Marketplace Reviewer
+كل دور له صلاحيات محددة.
+15. Role Templates
+15.1 Organization Roles
+OwnerAdminBilling ManagerDeveloperViewer
+15.2 Company Roles
+Company OwnerCompany AdminManagerEmployeeContractorExternal CollaboratorHR ManagerFinance ManagerSales ManagerInventory ManagerSupport Agent
+15.3 Site Roles
+Site AdminEditorAuthorContributorSEO ManagerMedia ManagerViewer
+15.4 Mall Roles
+Seller AdminService ManagerProduct ManagerCustomer SupportMarketplace Listing Manager
+16. Database Requirements
+16.1 Existing required tables
+rolespermissionsrole_permissionorganization_membershipscompany_membershipsmembership_permission_overridesprivacy_settingsactivity_logs
+16.2 Additional recommended tables
+visibility_rules
+idsubject_typesubject_idvisibilityrules jsoncreated_atupdated_at
+access_logs
+لتسجيل رؤية أو تحميل البيانات الحساسة.
+iduser_idsubject_typesubject_idactionip_addressuser_agentcreated_at
+consent_records
+iduser_idconsent_typeversionstatusaccepted_atrevoked_atmetadata jsoncreated_atupdated_at
+data_access_policies
+idscope_typescope_idpolicy_keyrules jsonstatuscreated_atupdated_at
+17. Laravel Implementation Guidance
+17.1 Policies لكل Model حساس
+يجب وجود Policies لـ:
+OrganizationPolicySitePolicyCompanyPolicyBusinessProfilePolicyProfessionalProfilePolicyVerificationRequestPolicyDocumentPolicyTaskPolicyInvoicePolicyReviewPolicyJobOfferPolicy
+17.2 Permission Service
+app/Core/Permissions/Services/PermissionService.php
+مسؤول عن:
+حساب الصلاحيات من membership.
+تطبيق overrides.
+دعم deny over allow.
+دعم context.
+17.3 Visibility Service
+app/Core/Privacy/Services/VisibilityService.php
+مسؤول عن:
+تحديد من يرى object.
+تطبيق قواعد public/private/verified.
+دعم custom rules.
+17.4 Sensitive Access Logger
+app/Core/Security/Services/SensitiveAccessLogger.php
+يسجل:
+فتح مستند قانوني.
+تحميل عقد.
+رؤية payroll.
+تصدير بيانات.
+رؤية بيانات بنكية.
+18. API Rules
+18.1 كل API يجب أن يفحص
+Authenticated?Membership context?Permission?Visibility?Sensitive access logging?Rate limit?
+18.2 مثال API خطأ
+GET /api/v1/companies/10/documents
+بدون تحقق من membership والpermission.
+18.3 مثال أفضل
+GET /api/v1/companies/{company}/documents→ Check user membership→ Check document.view permission→ Check visibility→ Log access if sensitive
+19. V1 Requirements من هذا الملحق
+Must-have في V1
+RBAC basicOrganization membershipsSite rolesPermission checksVisibility field في content/media/business profilesActivity logsBasic privacy settingsPolicies للـ core modelsDeny/allow override foundation
+Should-have في V1
+Access logs for sensitive filesConsent recordsVisibility servicePermission service
+Not required في V1
+Full ABACEnterprise SSOPAMAdvanced SoDFull legal access reportingAdvanced privacy automation
+20. أخطاء ممنوعة
+20.1 لا تضع role داخل users فقط
+خطأ:
+users.role = admin
+الصحيح:
+user has membershipsmembership has rolerole has permissions
+20.2 لا تجعل كل Admin يرى كل شيء
+Company Admin لا يرى بالضرورة:
+payroll.
+legal documents.
+billing.
+private evaluations.
+20.3 لا تجعل Professional Profile public افتراضيًا
+يجب أن يختار المستخدم ظهوره.
+20.4 لا تجعل AI يتجاوز الصلاحيات
+AI يعمل كالمستخدم، وليس كـ super admin.
+20.5 لا تجعل Legal Partner يرى كل بيانات الشركة
+مكتب المحاماة يرى ما يحتاجه للتوثيق فقط.
+21. الخلاصة التنفيذية
+الصلاحيات والخصوصية في Kabeeri يجب أن تبنى على:
+User مستقلMembership contextRBAC من البدايةABAC لاحقًاVisibility لكل كيان عام أو حساسPrivacy settings للأفراد والشركاتSensitive access loggingAI تحت نفس الصلاحياتLegal Partner scoped accessPlatform Admin role separation
+بدون هذا، Kabeeri سيتعرض لمشاكل خطيرة عند إضافة:
+Talent Marketplace.
+Rabet Verification.
+ERP.
+Kabeeri Mall.
+AI Co-builder.
+Legal Partner Network.
+22. الخطوة التالية
+بعد هذا الملحق، يمكن الدخول إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق إضافي اختياري:
+ملحق 6 — Event Map & Workflow Engine
+إذا أردنا ضبط الأحداث والـ workflows قبل V1.

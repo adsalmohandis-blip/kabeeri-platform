@@ -1,0 +1,284 @@
+KABEERI Database File 09 — V1 Exact Migration Pack
+حزمة Migrations الدقيقة لإصدار V1 فقط
+هذا الملف هو أول ملف قابل للتحويل المباشر إلى كود Laravel.
+يعتمد على الملفات السابقة:
+01 — Core Kernel Database02 — Kabeeri Cloud Database03 — Kabeeri Frontend Anywhere Database04 — Kabeeri Portable Database05 — Kabeeri Dedicated Database06 — Integration Between The Five Systems07 — Master ERD & Module Database Blueprint08 — Laravel Migration Roadmap
+هدف هذا الملف:
+تحديد جداول V1 فقط بدقة، مع أعمدتها، علاقاتها، فهارسها، seeders، factories، tests، وترتيب تنفيذها.
+1. نطاق V1 في قاعدة البيانات
+V1 لا يبني كل Kabeeri.
+V1 يبني النواة التي تسمح للمنصة أن تعمل كـ CMS + Business Foundation قابل للتوسع.
+V1 يشمل
+Global referencesUsersUser profilesOrganizationsOrganization membershipsOperating modes foundationRBAC foundationCompaniesCompany membershipsDepartmentsSitesSettingsFeature flagsActivity logsAudit logsNotificationsMediaModulesCMS basicMenusRabet business profile foundationVerification foundationTrust records foundationBusiness passport foundationMall publication consent foundationExport jobs foundationTenant transition foundation
+V1 لا يشمل
+Full commerceFull ERPCloud billingFrontend Anywhere fullPortable full exportDedicated full registryMall mirror fullAI fullIntegrations fullTeams fullBI/GRC full
+لكن V1 يجب أن يصمم بطريقة لا تمنع هذه الأجزاء لاحقًا.
+2. قاعدة V1 الذهبية
+V1 = Core ownership + CMS + Business identity foundation
+أي أن V1 يجب أن يثبت:
+User can register/loginUser can create organizationOrganization can create companyOrganization can create siteSite can publish pages/postsOrganization can upload mediaCompany can create business profileBusiness can start verificationSystem can log activities/auditsSystem can understand operating modeSystem can prepare for export laterSystem can prepare for Mall publication later
+3. ترتيب Migrations في V1
+استخدم ترتيب واضح.
+001_create_countries_table002_create_currencies_table010_create_users_table011_create_user_profiles_table020_create_organizations_table021_create_organization_memberships_table022_create_organization_operating_modes_table030_create_permissions_table031_create_roles_table032_create_role_permission_table033_create_membership_role_assignments_table034_create_membership_permission_overrides_table040_create_companies_table041_create_company_memberships_table042_create_departments_table043_create_sites_table050_create_settings_table051_create_feature_flags_table052_create_feature_flag_overrides_table053_create_activity_logs_table054_create_audit_logs_table055_create_notifications_table056_create_media_assets_table057_create_media_usages_table058_create_modules_table059_create_module_installations_table070_create_content_types_table071_create_content_entries_table072_create_content_revisions_table073_create_taxonomies_table074_create_taxonomy_terms_table075_create_content_term_table076_create_menus_table077_create_menu_items_table090_create_business_profiles_table091_create_verification_requests_table092_create_verification_documents_table093_create_trust_records_table094_create_business_passports_table095_create_mall_publication_consents_table096_create_export_jobs_table097_create_tenant_transitions_table098_create_tenant_transition_steps_table
+4. Migration 001 — countries
+الهدف
+جدول مرجعي للدول.
+الحقول
+idiso2iso3namenative_namephone_codedefault_currency_codedefault_languagestatuscreated_atupdated_at
+Laravel skeleton
+Schema::create('countries', function (Blueprint $table) {    $table->id();    $table->string('iso2', 2)->unique();    $table->string('iso3', 3)->nullable()->index();    $table->string('name');    $table->string('native_name')->nullable();    $table->string('phone_code')->nullable();    $table->char('default_currency_code', 3)->nullable();    $table->string('default_language', 10)->nullable();    $table->string('status', 50)->default('active')->index();    $table->timestamps();});
+Seeder
+CountriesSeeder
+5. Migration 002 — currencies
+الحقول
+idcodenamesymboldecimal_placesstatuscreated_atupdated_at
+Laravel skeleton
+Schema::create('currencies', function (Blueprint $table) {    $table->id();    $table->char('code', 3)->unique();    $table->string('name');    $table->string('symbol')->nullable();    $table->unsignedTinyInteger('decimal_places')->default(2);    $table->string('status', 50)->default('active')->index();    $table->timestamps();});
+Seeder
+CurrenciesSeeder
+6. Migration 010 — users
+الهدف
+جدول المستخدمين الأساسي.
+قاعدة مهمة
+لا تضع organization_id داخل users.
+نفس المستخدم قد يكون عضوًا في أكثر من Organization.
+الحقول
+iduuidnameemailemail_verified_atphonephone_verified_atpasswordlocaletimezonestatuslast_login_atremember_tokencreated_atupdated_atdeleted_at
+Laravel skeleton
+Schema::create('users', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->string('name');    $table->string('email')->unique();    $table->timestamp('email_verified_at')->nullable();    $table->string('phone')->nullable()->index();    $table->timestamp('phone_verified_at')->nullable();    $table->string('password');    $table->string('locale', 10)->default('ar');    $table->string('timezone')->default('Africa/Cairo');    $table->string('status', 50)->default('active')->index();    $table->timestamp('last_login_at')->nullable()->index();    $table->rememberToken();    $table->timestamps();    $table->softDeletes();});
+Factory
+UserFactory
+Tests
+user_can_be_createduser_uuid_is_uniqueuser_can_exist_without_organization
+7. Migration 011 — user_profiles
+الحقول
+iduser_idbiocountry_idcitywebsite_urlsocial_linksvisibilitymetadatacreated_atupdated_at
+Laravel skeleton
+Schema::create('user_profiles', function (Blueprint $table) {    $table->id();    $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();    $table->text('bio')->nullable();    $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();    $table->string('city')->nullable();    $table->string('website_url')->nullable();    $table->json('social_links')->nullable();    $table->string('visibility', 50)->default('private')->index();    $table->json('metadata')->nullable();    $table->timestamps();});
+8. Migration 020 — organizations
+الهدف
+يمثل ملف العميل الأساسي / Tenant.
+الحقول
+iduuidnameslugowner_user_idaccount_typestatusplan_codecountry_idlocaletimezonesettingsmetadatacreated_atupdated_atdeleted_at
+Laravel skeleton
+Schema::create('organizations', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->string('name');    $table->string('slug')->unique();    $table->foreignId('owner_user_id')->nullable()->constrained('users')->nullOnDelete();    $table->string('account_type', 50)->default('business')->index();    $table->string('status', 50)->default('active')->index();    $table->string('plan_code')->nullable()->index();    $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();    $table->string('locale', 10)->default('ar');    $table->string('timezone')->default('Africa/Cairo');    $table->json('settings')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->softDeletes();});
+account_type
+individualbusinessagencyenterpriselegal_partnerplatform_internal
+Factory
+OrganizationFactory
+Tests
+user_can_create_organizationorganization_slug_is_uniqueorganization_has_owner
+9. Migration 021 — organization_memberships
+الهدف
+يربط users بـ organizations.
+الحقول
+iduuidorganization_iduser_idmembership_typestatusjob_titleinvited_byinvited_ataccepted_atstart_dateend_datevisibilitymetadatacreated_atupdated_atdeleted_at
+Laravel skeleton
+Schema::create('organization_memberships', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('user_id')->constrained()->cascadeOnDelete();    $table->string('membership_type', 50)->default('employee')->index();    $table->string('status', 50)->default('active')->index();    $table->string('job_title')->nullable();    $table->foreignId('invited_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamp('invited_at')->nullable();    $table->timestamp('accepted_at')->nullable();    $table->date('start_date')->nullable();    $table->date('end_date')->nullable();    $table->string('visibility', 50)->default('organization_only')->index();    $table->json('metadata')->nullable();    $table->timestamps();    $table->softDeletes();    $table->unique(['organization_id', 'user_id']);});
+membership_type
+owneradminemployeecontractorfreelancerconsultantexternal_collaboratorlegal_revieweragency_member
+Tests
+user_can_belong_to_multiple_organizationssame_user_cannot_duplicate_membership_in_same_organizationorganization_owner_membership_created
+10. Migration 022 — organization_operating_modes
+الهدف
+تحديد وضع تشغيل العميل:
+cloud_managedfrontend_anywhereportable_self_hosteddedicated_managed
+الحقول
+idorganization_idcurrent_modeprevious_modestatusstarted_atended_atmetadatacreated_atupdated_at
+Laravel skeleton
+Schema::create('organization_operating_modes', function (Blueprint $table) {    $table->id();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->string('current_mode', 80)->default('cloud_managed')->index();    $table->string('previous_mode', 80)->nullable()->index();    $table->string('status', 50)->default('active')->index();    $table->timestamp('started_at')->nullable();    $table->timestamp('ended_at')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->index(['organization_id', 'current_mode', 'status'], 'org_mode_status_idx');});
+11. Migration 030 — permissions
+الهدف
+تعريف الصلاحيات.
+الحقول
+idnamesluggroupdescriptionrisk_levelcreated_atupdated_at
+Laravel skeleton
+Schema::create('permissions', function (Blueprint $table) {    $table->id();    $table->string('name');    $table->string('slug')->unique();    $table->string('group')->index();    $table->text('description')->nullable();    $table->string('risk_level', 50)->default('low')->index();    $table->timestamps();});
+Seeder
+CorePermissionsSeeder
+12. Migration 031 — roles
+الهدف
+أدوار عامة أو خاصة بـ Organization/Company/Site.
+الحقول
+iduuidorganization_idcompany_idsite_idnameslugscopeis_systemcreated_atupdated_at
+ملاحظة
+في V1، company_id وsite_id موجودان لأن companies/sites تم إنشاؤها قبل roles؟
+في ترتيبنا الحالي roles قبل companies/sites، لذلك الأفضل في V1:
+إما نقل roles بعد companies/sites.
+أو إنشاء roles هنا بـ organization_id فقط ثم إضافة company_id/site_id لاحقًا.
+قرار V1 العملي
+لتقليل التعقيد، ننفذ roles قبل companies/sites، مع:
+organization_id nullablecompany_id nullable بدون FK في V1site_id nullable بدون FK في V1
+ثم نضيف القيود لاحقًا في Migration منفصل بعد sites.
+Laravel skeleton
+Schema::create('roles', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->nullable()->constrained()->cascadeOnDelete();    $table->unsignedBigInteger('company_id')->nullable()->index();    $table->unsignedBigInteger('site_id')->nullable()->index();    $table->string('name');    $table->string('slug');    $table->string('scope', 50)->default('organization')->index();    $table->boolean('is_system')->default(false)->index();    $table->timestamps();    $table->unique(['scope', 'organization_id', 'company_id', 'site_id', 'slug'], 'roles_scope_unique');});
+13. Migration 032 — role_permission
+Schema::create('role_permission', function (Blueprint $table) {    $table->foreignId('role_id')->constrained()->cascadeOnDelete();    $table->foreignId('permission_id')->constrained()->cascadeOnDelete();    $table->timestamps();    $table->primary(['role_id', 'permission_id']);});
+14. Migration 033 — membership_role_assignments
+الهدف
+إسناد أدوار للعضويات.
+Laravel skeleton
+Schema::create('membership_role_assignments', function (Blueprint $table) {    $table->id();    $table->string('membership_type');    $table->unsignedBigInteger('membership_id');    $table->foreignId('role_id')->constrained()->cascadeOnDelete();    $table->string('scope_type')->nullable();    $table->unsignedBigInteger('scope_id')->nullable();    $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamps();    $table->index(['membership_type', 'membership_id'], 'membership_role_member_idx');    $table->index(['scope_type', 'scope_id'], 'membership_role_scope_idx');});
+15. Migration 034 — membership_permission_overrides
+Schema::create('membership_permission_overrides', function (Blueprint $table) {    $table->id();    $table->string('membership_type');    $table->unsignedBigInteger('membership_id');    $table->foreignId('permission_id')->constrained()->cascadeOnDelete();    $table->string('effect', 20); // allow / deny    $table->text('reason')->nullable();    $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamps();    $table->index(['membership_type', 'membership_id'], 'membership_permission_member_idx');    $table->index('effect');});
+16. Migration 040 — companies
+الهدف
+Business Account داخل Organization.
+Laravel skeleton
+Schema::create('companies', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->string('legal_name')->nullable();    $table->string('trade_name');    $table->string('slug');    $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();    $table->string('city')->nullable();    $table->string('legal_type')->nullable();    $table->string('registration_number')->nullable();    $table->string('tax_number')->nullable();    $table->string('industry')->nullable()->index();    $table->string('company_size')->nullable();    $table->string('status', 50)->default('draft')->index();    $table->string('verification_status', 50)->default('not_submitted')->index();    $table->timestamp('verified_at')->nullable();    $table->timestamp('verification_expires_at')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->softDeletes();    $table->unique(['organization_id', 'slug']);    $table->index(['organization_id', 'status']);});
+17. Migration 041 — company_memberships
+Schema::create('company_memberships', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('company_id')->constrained()->cascadeOnDelete();    $table->foreignId('user_id')->constrained()->cascadeOnDelete();    $table->foreignId('organization_membership_id')->nullable()->constrained()->nullOnDelete();    $table->string('role_title')->nullable();    $table->unsignedBigInteger('department_id')->nullable()->index();    $table->foreignId('manager_user_id')->nullable()->constrained('users')->nullOnDelete();    $table->string('employment_type')->nullable()->index();    $table->string('status', 50)->default('active')->index();    $table->date('start_date')->nullable();    $table->date('end_date')->nullable();    $table->boolean('public_work_history')->default(false);    $table->json('metadata')->nullable();    $table->timestamps();    $table->softDeletes();    $table->unique(['company_id', 'user_id']);});
+18. Migration 042 — departments
+Schema::create('departments', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('parent_id')->nullable()->constrained('departments')->nullOnDelete();    $table->string('name');    $table->string('slug');    $table->foreignId('manager_user_id')->nullable()->constrained('users')->nullOnDelete();    $table->string('status', 50)->default('active')->index();    $table->json('metadata')->nullable();    $table->timestamps();    $table->softDeletes();    $table->unique(['organization_id', 'company_id', 'slug'], 'departments_scope_slug_unique');});
+ملاحظة لاحقة
+بعد departments، يمكن عمل Migration لإضافة FK على company_memberships.department_id.
+19. Migration 043 — sites
+Schema::create('sites', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();    $table->string('name');    $table->string('slug');    $table->string('domain')->nullable()->unique();    $table->string('subdomain')->nullable()->unique();    $table->string('site_type', 50)->default('website')->index();    $table->string('status', 50)->default('active')->index();    $table->string('language', 10)->default('ar');    $table->string('timezone')->default('Africa/Cairo');    $table->unsignedBigInteger('theme_id')->nullable()->index();    $table->json('settings')->nullable();    $table->json('metadata')->nullable();    $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamps();    $table->softDeletes();    $table->unique(['organization_id', 'slug']);    $table->index(['organization_id', 'status']);    $table->index(['company_id', 'status']);});
+20. Migration 050 — settings
+Schema::create('settings', function (Blueprint $table) {    $table->id();    $table->foreignId('organization_id')->nullable()->constrained()->cascadeOnDelete();    $table->string('scope_type', 80)->index();    $table->unsignedBigInteger('scope_id')->nullable()->index();    $table->string('key');    $table->json('value')->nullable();    $table->string('value_type', 50)->default('string');    $table->boolean('is_encrypted')->default(false);    $table->timestamps();    $table->unique(['scope_type', 'scope_id', 'key'], 'settings_scope_key_unique');});
+21. Migration 051 — feature_flags
+Schema::create('feature_flags', function (Blueprint $table) {    $table->id();    $table->string('key')->unique();    $table->text('description')->nullable();    $table->boolean('default_value')->default(false);    $table->string('status', 50)->default('active')->index();    $table->timestamps();});
+22. Migration 052 — feature_flag_overrides
+Schema::create('feature_flag_overrides', function (Blueprint $table) {    $table->id();    $table->foreignId('feature_flag_id')->constrained()->cascadeOnDelete();    $table->foreignId('organization_id')->nullable()->constrained()->cascadeOnDelete();    $table->string('scope_type')->nullable();    $table->unsignedBigInteger('scope_id')->nullable();    $table->boolean('value');    $table->timestamps();    $table->index(['scope_type', 'scope_id']);});
+23. Migration 053 — activity_logs
+Schema::create('activity_logs', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();    $table->foreignId('site_id')->nullable()->constrained()->nullOnDelete();    $table->foreignId('actor_user_id')->nullable()->constrained('users')->nullOnDelete();    $table->string('action')->index();    $table->string('subject_type')->nullable();    $table->unsignedBigInteger('subject_id')->nullable();    $table->text('description')->nullable();    $table->ipAddress('ip_address')->nullable();    $table->text('user_agent')->nullable();    $table->json('metadata')->nullable();    $table->timestamp('created_at')->useCurrent();    $table->index(['organization_id', 'created_at']);    $table->index(['company_id', 'created_at']);    $table->index(['site_id', 'created_at']);    $table->index(['subject_type', 'subject_id']);});
+24. Migration 054 — audit_logs
+Schema::create('audit_logs', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();    $table->foreignId('site_id')->nullable()->constrained()->nullOnDelete();    $table->foreignId('actor_user_id')->nullable()->constrained('users')->nullOnDelete();    $table->string('action')->index();    $table->string('risk_level', 50)->default('low')->index();    $table->string('subject_type')->nullable();    $table->unsignedBigInteger('subject_id')->nullable();    $table->json('before')->nullable();    $table->json('after')->nullable();    $table->text('reason')->nullable();    $table->ipAddress('ip_address')->nullable();    $table->text('user_agent')->nullable();    $table->timestamp('created_at')->useCurrent();    $table->index(['organization_id', 'created_at']);    $table->index(['subject_type', 'subject_id']);});
+25. Migration 055 — notifications
+Schema::create('notifications', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('recipient_user_id')->constrained('users')->cascadeOnDelete();    $table->foreignId('organization_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();    $table->foreignId('site_id')->nullable()->constrained()->nullOnDelete();    $table->string('type')->index();    $table->string('title');    $table->text('body')->nullable();    $table->string('action_url')->nullable();    $table->string('priority', 50)->default('normal')->index();    $table->timestamp('read_at')->nullable()->index();    $table->json('metadata')->nullable();    $table->timestamps();});
+26. Migration 056 — media_assets
+Schema::create('media_assets', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('site_id')->nullable()->constrained()->nullOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();    $table->foreignId('uploaded_by')->nullable()->constrained('users')->nullOnDelete();    $table->string('disk');    $table->string('path');    $table->string('relative_path');    $table->string('filename');    $table->string('original_filename');    $table->string('mime_type')->index();    $table->string('extension')->nullable()->index();    $table->unsignedBigInteger('size_bytes')->default(0);    $table->unsignedInteger('width')->nullable();    $table->unsignedInteger('height')->nullable();    $table->string('visibility', 50)->default('private')->index();    $table->string('alt_text')->nullable();    $table->text('caption')->nullable();    $table->string('checksum')->nullable()->index();    $table->json('metadata')->nullable();    $table->timestamps();    $table->softDeletes();    $table->index(['organization_id', 'site_id']);    $table->index(['organization_id', 'company_id']);});
+27. Migration 057 — media_usages
+Schema::create('media_usages', function (Blueprint $table) {    $table->id();    $table->foreignId('media_asset_id')->constrained()->cascadeOnDelete();    $table->string('usable_type');    $table->unsignedBigInteger('usable_id');    $table->string('field_name')->nullable();    $table->timestamps();    $table->index(['usable_type', 'usable_id']);});
+28. Migration 058 — modules
+Schema::create('modules', function (Blueprint $table) {    $table->id();    $table->string('key')->unique();    $table->string('name');    $table->text('description')->nullable();    $table->string('module_type', 50)->index();    $table->string('status', 50)->default('active')->index();    $table->string('version')->nullable();    $table->json('requires')->nullable();    $table->timestamps();});
+29. Migration 059 — module_installations
+Schema::create('module_installations', function (Blueprint $table) {    $table->id();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('site_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('module_id')->constrained()->cascadeOnDelete();    $table->string('status', 50)->default('active')->index();    $table->foreignId('installed_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamp('installed_at')->nullable();    $table->json('settings')->nullable();    $table->timestamps();    $table->unique(['organization_id', 'company_id', 'site_id', 'module_id'], 'module_install_unique');});
+30. Migration 070 — content_types
+Schema::create('content_types', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('site_id')->constrained()->cascadeOnDelete();    $table->string('name');    $table->string('slug');    $table->string('type', 50)->default('custom')->index();    $table->boolean('is_system')->default(false);    $table->json('schema')->nullable();    $table->string('status', 50)->default('active')->index();    $table->timestamps();    $table->unique(['site_id', 'slug']);});
+31. Migration 071 — content_entries
+Schema::create('content_entries', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('site_id')->constrained()->cascadeOnDelete();    $table->foreignId('content_type_id')->constrained()->cascadeOnDelete();    $table->foreignId('author_user_id')->nullable()->constrained('users')->nullOnDelete();    $table->foreignId('featured_media_id')->nullable()->constrained('media_assets')->nullOnDelete();    $table->string('title');    $table->string('slug');    $table->text('excerpt')->nullable();    $table->longText('body')->nullable();    $table->string('status', 50)->default('draft')->index();    $table->timestamp('published_at')->nullable()->index();    $table->string('template')->nullable();    $table->string('seo_title')->nullable();    $table->text('seo_description')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->softDeletes();    $table->unique(['site_id', 'slug']);    $table->index(['site_id', 'status', 'published_at']);    $table->index(['organization_id', 'site_id']);});
+32. Migration 072 — content_revisions
+Schema::create('content_revisions', function (Blueprint $table) {    $table->id();    $table->foreignId('content_entry_id')->constrained()->cascadeOnDelete();    $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();    $table->unsignedInteger('revision_number');    $table->string('title')->nullable();    $table->text('excerpt')->nullable();    $table->longText('body')->nullable();    $table->json('snapshot')->nullable();    $table->timestamps();    $table->unique(['content_entry_id', 'revision_number'], 'content_revision_unique');});
+33. Migration 073 — taxonomies
+Schema::create('taxonomies', function (Blueprint $table) {    $table->id();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('site_id')->constrained()->cascadeOnDelete();    $table->string('name');    $table->string('slug');    $table->string('status', 50)->default('active')->index();    $table->timestamps();    $table->unique(['site_id', 'slug']);});
+34. Migration 074 — taxonomy_terms
+Schema::create('taxonomy_terms', function (Blueprint $table) {    $table->id();    $table->foreignId('taxonomy_id')->constrained()->cascadeOnDelete();    $table->foreignId('parent_id')->nullable()->constrained('taxonomy_terms')->nullOnDelete();    $table->string('name');    $table->string('slug');    $table->text('description')->nullable();    $table->string('status', 50)->default('active')->index();    $table->timestamps();    $table->unique(['taxonomy_id', 'slug']);});
+35. Migration 075 — content_term
+Schema::create('content_term', function (Blueprint $table) {    $table->foreignId('content_entry_id')->constrained()->cascadeOnDelete();    $table->foreignId('taxonomy_term_id')->constrained()->cascadeOnDelete();    $table->timestamps();    $table->primary(['content_entry_id', 'taxonomy_term_id']);});
+36. Migration 076 — menus
+Schema::create('menus', function (Blueprint $table) {    $table->id();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('site_id')->constrained()->cascadeOnDelete();    $table->string('name');    $table->string('slug');    $table->string('location')->nullable()->index();    $table->string('status', 50)->default('active')->index();    $table->timestamps();    $table->unique(['site_id', 'slug']);});
+37. Migration 077 — menu_items
+Schema::create('menu_items', function (Blueprint $table) {    $table->id();    $table->foreignId('menu_id')->constrained()->cascadeOnDelete();    $table->foreignId('parent_id')->nullable()->constrained('menu_items')->nullOnDelete();    $table->string('label');    $table->string('url')->nullable();    $table->string('item_type')->nullable();    $table->unsignedBigInteger('item_id')->nullable();    $table->unsignedInteger('sort_order')->default(0);    $table->string('target')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->index(['item_type', 'item_id']);});
+38. Migration 090 — business_profiles
+Schema::create('business_profiles', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->constrained()->cascadeOnDelete();    $table->string('display_name');    $table->string('slug');    $table->string('business_type')->nullable()->index();    $table->string('industry')->nullable()->index();    $table->longText('description')->nullable();    $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();    $table->string('city')->nullable();    $table->string('phone')->nullable();    $table->string('email')->nullable();    $table->string('website_url')->nullable();    $table->foreignId('logo_media_id')->nullable()->constrained('media_assets')->nullOnDelete();    $table->string('verification_status', 50)->default('not_submitted')->index();    $table->string('visibility', 50)->default('private')->index();    $table->timestamp('published_at')->nullable()->index();    $table->json('metadata')->nullable();    $table->timestamps();    $table->softDeletes();    $table->unique(['company_id', 'slug']);    $table->index(['organization_id', 'visibility']);});
+39. Migration 091 — verification_requests
+Schema::create('verification_requests', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->constrained()->cascadeOnDelete();    $table->foreignId('business_profile_id')->nullable()->constrained()->nullOnDelete();    $table->string('verification_type', 50)->default('business_basic')->index();    $table->string('status', 50)->default('draft')->index();    $table->foreignId('submitted_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamp('submitted_at')->nullable();    $table->timestamp('reviewed_at')->nullable();    $table->foreignId('reviewed_by')->nullable()->constrained('users')->nullOnDelete();    $table->text('review_notes')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->index(['company_id', 'status']);});
+40. Migration 092 — verification_documents
+Schema::create('verification_documents', function (Blueprint $table) {    $table->id();    $table->foreignId('verification_request_id')->constrained()->cascadeOnDelete();    $table->foreignId('media_asset_id')->constrained()->restrictOnDelete();    $table->string('document_type')->index();    $table->string('status', 50)->default('uploaded')->index();    $table->foreignId('uploaded_by')->nullable()->constrained('users')->nullOnDelete();    $table->json('metadata')->nullable();    $table->timestamps();});
+Security
+أي view/download لهذا المستند يجب أن يسجل sensitive access لاحقًا.
+41. Migration 093 — trust_records
+Schema::create('trust_records', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('business_profile_id')->nullable()->constrained()->nullOnDelete();    $table->string('record_type')->index();    $table->string('title');    $table->text('description')->nullable();    $table->string('visibility', 50)->default('private')->index();    $table->timestamp('issued_at')->nullable();    $table->timestamp('expires_at')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->index(['organization_id', 'record_type']);    $table->index(['company_id', 'visibility']);});
+42. Migration 094 — business_passports
+Schema::create('business_passports', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('business_profile_id')->nullable()->constrained()->nullOnDelete();    $table->string('passport_status', 50)->default('active')->index();    $table->string('current_mode', 80)->default('cloud_managed')->index();    $table->string('mall_participation_status', 50)->default('inactive')->index();    $table->string('verification_status', 50)->nullable()->index();    $table->string('trust_status', 50)->nullable()->index();    $table->string('primary_source_type')->nullable();    $table->unsignedBigInteger('primary_source_id')->nullable();    $table->timestamp('last_sync_at')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->index(['organization_id', 'passport_status']);    $table->index(['company_id', 'mall_participation_status']);});
+43. Migration 095 — mall_publication_consents
+Schema::create('mall_publication_consents', function (Blueprint $table) {    $table->id();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete();    $table->foreignId('business_profile_id')->nullable()->constrained()->nullOnDelete();    $table->string('consent_type')->index();    $table->string('status', 50)->default('active')->index();    $table->foreignId('granted_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamp('granted_at')->nullable();    $table->foreignId('revoked_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamp('revoked_at')->nullable();    $table->string('terms_version')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->index(['organization_id', 'consent_type', 'status'], 'mall_consent_org_type_status_idx');});
+44. Migration 096 — export_jobs foundation
+الهدف
+تجهيز قابلية التصدير من V1، حتى لو التصدير الكامل لاحقًا.
+Schema::create('export_jobs', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->foreignId('requested_by')->nullable()->constrained('users')->nullOnDelete();    $table->string('export_type', 80)->default('foundation')->index();    $table->string('status', 50)->default('pending')->index();    $table->json('scope')->nullable();    $table->boolean('include_private_files')->default(false);    $table->boolean('include_audit_logs')->default(true);    $table->boolean('include_ai_logs')->default(false);    $table->boolean('include_mall_public_data')->default(true);    $table->timestamp('started_at')->nullable();    $table->timestamp('completed_at')->nullable();    $table->timestamp('expires_at')->nullable();    $table->foreignId('file_media_id')->nullable()->constrained('media_assets')->nullOnDelete();    $table->text('error_message')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->index(['organization_id', 'status']);});
+45. Migration 097 — tenant_transitions foundation
+Schema::create('tenant_transitions', function (Blueprint $table) {    $table->id();    $table->ulid('uuid')->unique();    $table->foreignId('organization_id')->constrained()->cascadeOnDelete();    $table->string('from_mode', 80)->nullable()->index();    $table->string('to_mode', 80)->index();    $table->string('status', 50)->default('pending')->index();    $table->foreignId('requested_by')->nullable()->constrained('users')->nullOnDelete();    $table->foreignId('approved_by')->nullable()->constrained('users')->nullOnDelete();    $table->timestamp('started_at')->nullable();    $table->timestamp('completed_at')->nullable();    $table->timestamp('failed_at')->nullable();    $table->text('error_message')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();    $table->index(['organization_id', 'status']);});
+46. Migration 098 — tenant_transition_steps
+Schema::create('tenant_transition_steps', function (Blueprint $table) {    $table->id();    $table->foreignId('tenant_transition_id')->constrained()->cascadeOnDelete();    $table->string('step_key')->index();    $table->unsignedInteger('step_order')->default(0);    $table->string('status', 50)->default('pending')->index();    $table->timestamp('started_at')->nullable();    $table->timestamp('completed_at')->nullable();    $table->text('message')->nullable();    $table->json('metadata')->nullable();    $table->timestamps();});
+47. V1 Seeders المطلوبة
+47.1 Core seeders
+CountriesSeederCurrenciesSeederCorePermissionsSeederCoreRolesSeederCoreModulesSeederCoreFeatureFlagsSeederAdminUserSeeder
+47.2 CMS seeders
+DefaultContentTypesSeederDefaultSiteSettingsSeederDefaultMenuSeederDefaultPagesSeeder
+47.3 Business seeders
+DefaultBusinessProfileSettingsSeederVerificationTypesSeederMallConsentTypesSeeder
+48. V1 Permissions Seeder
+أقل صلاحيات لازمة في V1:
+organization.vieworganization.manageorganization.members.vieworganization.members.managecompany.viewcompany.createcompany.managesite.viewsite.createsite.managecontent.viewcontent.createcontent.editcontent.publishcontent.deletemedia.viewmedia.uploadmedia.deletebusiness_profile.viewbusiness_profile.manageverification.submitverification.documents.uploadsettings.manageactivity.viewaudit.viewexport.requesttransition.request
+49. V1 Roles Seeder
+Platform Super Admin
+كل الصلاحيات.
+Organization Owner
+إدارة المؤسسة كاملة.
+Organization Admin
+إدارة معظم الأشياء بدون platform control.
+Content Manager
+إدارة CMS وMedia.
+Business Manager
+إدارة Company وBusiness Profile وVerification.
+Viewer
+عرض فقط.
+50. V1 Modules Seeder
+corecmsmediarabet_foundationbusiness_profilesverification_foundationexport_foundationhosting_modes_foundation
+51. V1 Factories المطلوبة
+UserFactoryUserProfileFactoryOrganizationFactoryOrganizationMembershipFactoryCompanyFactoryCompanyMembershipFactorySiteFactoryMediaAssetFactoryContentTypeFactoryContentEntryFactoryBusinessProfileFactoryVerificationRequestFactoryTrustRecordFactoryBusinessPassportFactoryExportJobFactoryTenantTransitionFactory
+52. V1 Model List
+CountryCurrencyUserUserProfileOrganizationOrganizationMembershipOrganizationOperatingModePermissionRoleCompanyCompanyMembershipDepartmentSiteSettingFeatureFlagFeatureFlagOverrideActivityLogAuditLogNotificationMediaAssetMediaUsageModuleModuleInstallationContentTypeContentEntryContentRevisionTaxonomyTaxonomyTermMenuMenuItemBusinessProfileVerificationRequestVerificationDocumentTrustRecordBusinessPassportMallPublicationConsentExportJobTenantTransitionTenantTransitionStep
+53. V1 Policies المطلوبة
+OrganizationPolicyCompanyPolicySitePolicyContentEntryPolicyMediaAssetPolicyBusinessProfilePolicyVerificationRequestPolicySettingPolicyActivityLogPolicyAuditLogPolicyExportJobPolicyTenantTransitionPolicy
+54. V1 Actions المطلوبة
+CreateOrganizationActionInviteOrganizationMemberActionCreateCompanyActionCreateSiteActionCreateContentEntryActionPublishContentEntryActionCreateContentRevisionActionUploadMediaAssetActionCreateBusinessProfileActionSubmitVerificationRequestActionUploadVerificationDocumentActionGrantMallPublicationConsentActionCreateExportJobFoundationActionCreateTenantTransitionActionLogActivityActionLogAuditAction
+55. V1 Tests المطلوبة
+Core tests
+UserCanRegisterTestUserCanCreateOrganizationTestOrganizationOwnerMembershipCreatedTestUserCanBelongToMultipleOrganizationsTestTenantIsolationTest
+RBAC tests
+PermissionServiceTestRolePermissionTestPermissionOverrideDenyWinsTestUnauthorizedUserCannotManageOrganizationTest
+Company/Site tests
+OrganizationCanCreateCompanyTestOrganizationCanCreateSiteTestCompanySlugUniquePerOrganizationTestSiteSlugUniquePerOrganizationTest
+CMS tests
+CreateContentTypeTestCreateContentEntryTestPublishContentEntryTestContentRevisionCreatedTestPublicCanViewPublishedContentTestPublicCannotViewDraftContentTest
+Media tests
+UploadMediaAssetTestMediaBelongsToOrganizationTestPrivateMediaRequiresPermissionTest
+Business tests
+CreateBusinessProfileTestSubmitVerificationRequestTestUploadVerificationDocumentTestVerificationDocumentIsPrivateTestGrantMallConsentTest
+Foundation tests
+OrganizationOperatingModeDefaultTestExportJobFoundationTestTenantTransitionFoundationTestActivityLogCreatedTestAuditLogCreatedForSensitiveActionTest
+56. V1 Critical Index Checklist
+تأكد من وجود:
+organizations.slug uniqueorganization_memberships unique(organization_id, user_id)companies unique(organization_id, slug)company_memberships unique(company_id, user_id)sites unique(organization_id, slug)content_entries unique(site_id, slug)content_entries index(site_id, status, published_at)media_assets index(organization_id, site_id)business_profiles unique(company_id, slug)verification_requests index(company_id, status)activity_logs index(organization_id, created_at)audit_logs index(organization_id, created_at)export_jobs index(organization_id, status)tenant_transitions index(organization_id, status)
+57. V1 Sensitive Data Rules
+Sensitive في V1
+verification_documentsprivate mediabusiness registration dataaudit logsexport jobs
+يجب حمايته بـ
+PolicyAudit logPrivate storage visibilityNo public URL direct access
+58. V1 Minimum Demo Data
+Seed demo:
+Admin userDemo organizationDemo companyDemo siteDefault homepageDefault blog postDefault menuDemo business profile draftDemo verification request draftDemo media asset
+59. V1 Migration Execution Command
+أثناء التطوير:
+php artisan migrate:fresh --seedphp artisan test
+قبل أي commit كبير:
+php artisan migrate:fresh --seedphp artisan test --testsuite=Feature
+60. V1 Release Gate Database
+قاعدة بيانات V1 تعتبر جاهزة إذا:
+All V1 migrations run successfullyAll V1 seeders run successfullyFactories generate valid dataTenant isolation tests passRBAC tests passCMS publish tests passBusiness profile tests passVerification document privacy tests passExport foundation tests passOperating mode foundation worksNo orphan tenant data appears in tests
+61. ماذا بعد هذا الملف؟
+الخطوة التالية المنطقية:
+KABEERI Database File 10 — V1 Models, Policies, Actions & Services Blueprint
+لأن migrations وحدها لا تكفي.
+نحتاج بعدها:
+Models.
+Relationships.
+Scopes.
+Policies.
+Actions.
+Services.
+Events.
+Filament Resources.
+62. الخلاصة النهائية
+V1 Exact Migration Pack هو أول أساس قابل للبرمجة.
+القاعدة النهائية:
+Build V1 database as a stable ownership and CMS foundation, not as a miniature version of the entire enterprise platform.
+لا تضع ERP كامل الآن.
+لا تضع Cloud كامل الآن.
+لا تضع Mall كامل الآن.
+لكن ضع مفاتيح التوسع:
+organization_idcompany_idsite_idoperating_modebusiness_passportmall_consentexport_jobtransitionactivity_logaudit_log
+هذه هي الأعمدة والمفاهيم التي ستحمي Kabeeri من إعادة البناء لاحقًا.

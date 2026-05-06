@@ -1,0 +1,431 @@
+KABEERI — ملحق 12: منصة المطورين وSDK Architecture
+Developer Platform & SDK Architecture
+هذا الملحق يحدد كيف سيتعامل المطورون مع Kabeeri، وكيف سيتم بناء البلجنز، الثيمات، الموديولات، الـ connectors، AI Skills، والقوالب بطريقة منظمة وآمنة.
+الهدف:
+جعل Kabeeri قابلة للتوسع بواسطة مطورين وشركاء، بدون تكرار فوضى إضافات WordPress أو السماح لكود خارجي بكسر المنصة.
+1. لماذا Developer Platform مهم؟
+Kabeeri تستهدف أن تكون منصة وليست تطبيقًا مغلقًا.
+لذلك يجب أن تسمح للمطورين ببناء:
+PluginsThemesERP ModulesCommerce AppsConnectorsAI SkillsTemplatesIndustry SolutionsDeveloper Tools
+لكن هذا يجب أن يتم عبر قواعد واضحة:
+SDKManifestPermissionsHooks/EventsAPIsReview ProcessPackage SigningVersioningTestingDocumentationMarketplace Governance
+2. المبادئ الأساسية
+2.1 Core لا يتم تعديله مباشرة
+المطور لا يجب أن يعدّل ملفات Core.
+بدلًا من ذلك يستخدم:
+Events.
+Hooks.
+APIs.
+Services.
+Extension points.
+Theme overrides.
+Module contracts.
+2.2 كل Package له Manifest
+أي Plugin أو Theme أو Module يجب أن يحتوي على ملف manifest يشرح:
+الاسم.
+النوع.
+الإصدار.
+الناشر.
+الصلاحيات.
+الاعتماديات.
+events/hooks المستخدمة.
+إعدادات التثبيت.
+متطلبات Kabeeri.
+2.3 الصلاحيات معلنة قبل التثبيت
+أي Package يجب أن يعلن ماذا يحتاج.
+مثال:
+Read ordersUpdate payment statusRead customer emailCreate webhooks
+2.4 لا وصول مباشر للبيانات الحساسة
+أي Package يريد الوصول إلى:
+finance.
+payroll.
+legal documents.
+identity documents.
+bank accounts.
+API secrets.
+يحتاج مراجعة وصلاحيات صريحة.
+2.5 Events بدل الربط العشوائي
+المطور يربط بمنطق المنصة عبر Events وListeners وليس عبر تعديل كود الـ Core.
+مثال:
+OrderCreated→ Payment App listener→ Accounting listener→ Notification listener
+3. أنواع الحزم في Kabeeri
+3.1 Plugin
+إضافة صغيرة تضيف وظيفة محددة.
+أمثلة:
+SEO Pro.
+Forms Pro.
+Cookie Consent.
+Analytics.
+WhatsApp Button.
+3.2 Theme
+تصميم واجهة الموقع أو المتجر.
+أمثلة:
+Business Theme.
+Blog Theme.
+Store Theme.
+Real Estate Theme.
+3.3 Module
+وظيفة كبيرة داخل النظام.
+أمثلة:
+CRM.
+Inventory.
+Helpdesk.
+HR.
+3.4 Suite
+مجموعة Modules مترابطة.
+أمثلة:
+Finance Suite.
+HCM Suite.
+Retail Suite.
+3.5 Connector
+تكامل مع نظام خارجي.
+أمثلة:
+Odoo Connector.
+QuickBooks Connector.
+Shopify Connector.
+SAP Business One Connector.
+3.6 Commerce App
+توسعة للمتاجر.
+أمثلة:
+Payment Gateway.
+Shipping App.
+Loyalty App.
+Subscription App.
+3.7 AI Skill
+قدرة إضافية للـ AI Co-builder.
+أمثلة:
+AI SEO Skill.
+AI Workflow Builder.
+AI Finance Report Explainer.
+3.8 Template
+قالب جاهز.
+أمثلة:
+Page Template.
+Email Template.
+Workflow Template.
+Dashboard Template.
+CRM Pipeline Template.
+3.9 Industry Solution
+حزمة موجهة لصناعة معينة.
+أمثلة:
+Real Estate Solution.
+Clinic Solution.
+School Solution.
+Construction Solution.
+4. Package Manifest
+4.1 اسم الملف
+kabeeri.json
+أو:
+package.kabeeri.json
+التوصية:
+kabeeri.json
+4.2 مثال Manifest
+{  "name": "admit/paymob-payments",  "display_name": "Paymob Payments",  "type": "commerce_app",  "version": "1.0.0",  "publisher": "ADMIT",  "description": "Adds Paymob payment gateway to Kabeeri Commerce.",  "requires": {    "kabeeri": ">=1.0.0",    "php": ">=8.3",    "modules": ["commerce"]  },  "permissions": [    "commerce.order.view",    "commerce.payment.manage",    "customer.read"  ],  "events": {    "listens": ["OrderCreated", "PaymentReceived"],    "emits": ["PaymentStatusUpdated"]  },  "settings": true,  "migrations": true,  "routes": true,  "risk_level": "sensitive",  "support_url": "https://example.com/support"}
+4.3 حقول إجبارية
+namedisplay_nametypeversionpublisherdescriptionrequirespermissionsrisk_level
+5. Package Structure
+5.1 Plugin Structure
+my-plugin/  kabeeri.json  src/    PluginServiceProvider.php    Actions/    Listeners/    Services/    Models/    Http/      Controllers/      Requests/    database/      migrations/    resources/      views/      lang/    routes/      web.php      api.php  tests/  README.md  CHANGELOG.md
+5.2 Theme Structure
+my-theme/  kabeeri.json  theme.json  templates/    home.blade.php    page.blade.php    post.blade.php    archive.blade.php  components/    header.blade.php    footer.blade.php    hero.blade.php  assets/    css/    js/    images/  screenshot.png  README.md
+5.3 Module Structure
+crm-module/  kabeeri.json  src/    ModuleServiceProvider.php    Models/    Actions/    Policies/    Events/    Listeners/    Workflows/    Reports/    Http/    database/      migrations/      seeders/  tests/  docs/
+5.4 Connector Structure
+quickbooks-connector/  kabeeri.json  src/    ConnectorServiceProvider.php    Auth/      OAuthHandler.php    Sync/      CustomersSync.php      InvoicesSync.php    Mappers/    Webhooks/    Jobs/    Settings/  tests/  README.md
+5.5 AI Skill Structure
+ai-seo-skill/  kabeeri.json  src/    AISkillServiceProvider.php    Prompts/    Tools/    Policies/    Guards/  prompt_templates/  tests/  README.md
+6. Service Providers
+كل Package يجب أن يسجل نفسه عبر Service Provider.
+6.1 مسؤوليات Service Provider
+تسجيل routes.
+تسجيل migrations.
+تسجيل views.
+تسجيل translations.
+تسجيل event listeners.
+تسجيل hooks.
+تسجيل settings.
+تسجيل permissions.
+6.2 مثال مبسط
+class PaymobServiceProvider extends PackageServiceProvider{    public function registerPackage(): void    {        $this->name('paymob-payments')            ->hasSettings()            ->hasMigrations()            ->hasRoutes()            ->listensTo(OrderCreated::class, CreatePaymobPayment::class);    }}
+7. Hooks & Events API
+7.1 Events
+Events هي الطريقة الرسمية للتكامل.
+أمثلة:
+ContentPublishedOrderCreatedPaymentReceivedCompanyVerifiedTaskAssignedInvoiceIssued
+7.2 Hooks
+Hooks تستخدم لتعديل أو إضافة سلوك في نقاط محددة.
+أمثلة:
+content.before_rendercontent.after_rendercheckout.before_paymentcheckout.after_paymentadmin.sidebar.itemsseo.meta.generate
+7.3 Filters
+تسمح بتعديل قيمة.
+مثال:
+seo.title.filterproduct.price.display.filter
+7.4 Actions
+تسمح بتنفيذ إجراء.
+مثال:
+order.created.actionuser.registered.action
+8. Permissions API
+8.1 تسجيل صلاحيات Package
+كل Package يستطيع تسجيل صلاحياته:
+PackagePermission::register([    'paymob.settings.manage',    'paymob.transactions.view',]);
+8.2 عدم استخدام صلاحيات غير معلنة
+أي Package يستخدم Permission غير مذكورة في manifest يجب أن يفشل في review.
+9. Settings API
+9.1 Scope الإعدادات
+Settings يمكن أن تكون:
+platformorganizationcompanysitemoduleuser
+9.2 Package Settings
+أي Package له settings يجب أن يحدد:
+key.
+type.
+validation.
+encrypted or not.
+scope.
+مثال:
+{  "key": "paymob.api_key",  "type": "password",  "encrypted": true,  "scope": "organization"}
+10. Theme SDK
+10.1 هدف Theme SDK
+جعل بناء الثيمات سهلًا لمطوري WordPress/Laravel.
+10.2 يجب أن يدعم
+templates.
+components.
+layouts.
+theme settings.
+design tokens.
+RTL.
+responsive preview.
+global styles.
+hooks.
+10.3 theme.json
+مثال:
+{  "name": "Kabeeri Business",  "version": "1.0.0",  "supports": {    "rtl": true,    "dark_mode": true,    "commerce": false,    "visual_builder": true  },  "settings": {    "primary_color": "#000000",    "logo": true,    "layout": "boxed"  }}
+11. Module SDK
+11.1 الهدف
+تمكين بناء Modules كبيرة بدون كسر Core.
+11.2 Module يجب أن يحدد
+Models.
+Permissions.
+Menus.
+Routes.
+Events.
+Workflows.
+Reports.
+Settings.
+Dependencies.
+11.3 ERP Module Rules
+أي ERP Module يجب أن:
+يستخدم Company scope.
+يسجل Activity Logs.
+يحترم permissions.
+يدعم audit في العمليات الحساسة.
+لا يعدل finance/payroll بدون قواعد صارمة.
+12. Connector SDK
+12.1 الهدف
+تسهيل بناء تكاملات خارجية.
+12.2 يجب أن يوفر
+OAuth handling.
+API credentials vault.
+Sync jobs.
+Field mapping.
+Error logs.
+Retry queue.
+Webhook handlers.
+Conflict resolution.
+12.3 Connector Interface
+interface ConnectorInterface{    public function connect(array $credentials): ConnectionResult;    public function sync(string $entity): SyncResult;    public function disconnect(): void;}
+13. AI Skill SDK
+13.1 الهدف
+السماح ببناء قدرات AI آمنة.
+13.2 AI Skill يجب أن يحدد
+prompts.
+required context.
+data access.
+risk level.
+whether it writes data.
+required permissions.
+audit behavior.
+13.3 ممنوع على AI Skills
+الوصول غير المعلن للبيانات.
+تجاوز الصلاحيات.
+تنفيذ critical actions بدون approval.
+إرسال بيانات حساسة بدون سياسة.
+14. CLI للمطورين
+Kabeeri يحتاج CLI لتسريع التطوير.
+14.1 أوامر مقترحة
+kabeeri installkabeeri plugin:create my-pluginkabeeri theme:create my-themekabeeri module:create crmkabeeri connector:create quickbookskabeeri ai-skill:create seo-helperkabeeri package:validatekabeeri package:testkabeeri package:buildkabeeri package:signkabeeri package:publishkabeeri cache:clearkabeeri backup:createkabeeri migrate:wordpress
+15. Local Development Environment
+15.1 مطلوب
+Docker setup optional.
+Local database.
+Mail testing.
+Queue worker.
+Storage link.
+Demo seed data.
+Test site.
+15.2 Starter Kits
+يجب توفير:
+Plugin Starter KitTheme Starter KitERP Module Starter KitConnector Starter KitAI Skill Starter KitIndustry Solution Starter Kit
+16. Testing Requirements
+16.1 أنواع الاختبارات
+Unit tests.
+Feature tests.
+Policy tests.
+Permission tests.
+Migration tests.
+Package install tests.
+Compatibility tests.
+Security tests.
+16.2 أي Package يجب أن يمر بـ
+Manifest validationInstall testActivation testPermission checkBasic security scanCompatibility check
+17. Documentation Requirements
+كل Package يجب أن يحتوي:
+READMEInstallation guideConfiguration guidePermissions explanationChangelogSupport policyUninstall notesKnown limitations
+18. Versioning Rules
+18.1 SemVer
+Kabeeri يجب أن يستخدم Semantic Versioning:
+MAJOR.MINOR.PATCH
+مثال:
+1.2.0
+18.2 Breaking Changes
+أي breaking change يجب أن يظهر بوضوح في:
+changelog.
+update screen.
+compatibility check.
+19. Deprecation Policy
+أي API أو Hook سيتم إزالته يجب أن يمر بـ:
+Deprecated→ Warning→ Migration guide→ Removal in major version
+20. Package Review & Publishing
+20.1 المراحل
+DraftSubmittedAutomated validationSecurity reviewPerformance reviewDocumentation reviewApprovedPublished
+20.2 أسباب الرفض
+Manifest ناقص.
+صلاحيات غير معلنة.
+كود خطر.
+أداء سيئ.
+عدم توافق.
+documentation ضعيفة.
+business logic خاطئ.
+21. Developer Accounts
+21.1 أنواع المطورين
+Individual DeveloperCompany PublisherVerified PartnerOfficial PublisherEnterprise Private Publisher
+21.2 Developer Profile
+يحتوي على:
+الاسم.
+الشركة.
+البلد.
+الموقع.
+packages.
+verification status.
+support rating.
+security status.
+22. Developer Monetization
+المطور يمكنه بيع:
+Plugins.
+Themes.
+Modules.
+AI Skills.
+Templates.
+Connectors.
+نموذج الإيراد:
+Developer price→ Kabeeri platform commission→ Taxes/payment fees→ Developer payout
+23. Private Marketplace
+Enterprise قد يحتاج Marketplace خاص.
+23.1 يشمل
+Packages داخلية.
+Modules خاصة.
+Approval قبل التثبيت.
+Version pinning.
+Private publisher.
+24. Security Rules للمطورين
+24.1 ممنوع
+direct core modification.
+hidden external calls.
+stealing data.
+bypassing permissions.
+disabling audit logs.
+unsafe file execution.
+24.2 مطلوب
+declare permissions.
+use APIs.
+respect scopes.
+log sensitive actions.
+support uninstall.
+provide docs.
+25. Uninstall Rules
+أي Package يجب أن يحدد ماذا يحدث عند الإزالة:
+Deactivate onlyRemove settingsKeep dataDelete data after confirmationExport data before delete
+الحذف الكامل للبيانات يجب أن يحتاج تأكيد صريح.
+26. Compatibility Matrix
+كل Package يجب أن يوضح التوافق مع:
+Kabeeri version.
+PHP version.
+Laravel version internally.
+Required modules.
+Conflicting packages.
+Supported languages.
+RTL support.
+27. Developer API Documentation
+يجب توفير Docs تشمل:
+Getting startedPackage manifestEventsHooksPermissionsSettingsThemesModulesConnectorsAI SkillsTestingPublishingSecurity guidelines
+28. V1 Requirements من هذا الملحق
+Must-have في V1
+installed_packages tablepackage manifest concepttheme structure basicplugin activation/deactivation basicpackage eventspermission disclosure foundationbasic CLI commands
+Should-have في V1
+plugin:create commandtheme:create commandpackage:validate commandstarter plugin skeletonstarter theme skeleton
+Not required in V1
+Public developer marketplaceFull SDKPaid package salesPackage signing completeAI Skill SDKConnector SDK completeERP Module SDK complete
+29. Roadmap عبر الإصدارات
+V1
+Package foundation.
+Basic plugin/theme structure.
+Local install.
+Basic CLI.
+V2
+Developer CLI V1.
+Plugin manifest validation.
+Theme settings.
+Official plugins only.
+V3
+Module SDK basic.
+Workflow hooks.
+ERP essentials internal modules.
+V4
+Internal Marketplace V1.
+Package signing.
+Verified partners.
+Developer docs.
+Review pipeline.
+V5
+Connector SDK.
+ERP Module SDK.
+Revenue share.
+Private packages.
+API explorer.
+V6
+Full Developer Platform.
+Public developer marketplace.
+AI Skill SDK.
+Theme/Module/Connector certification.
+Enterprise private marketplace.
+30. الأخطاء الممنوعة
+30.1 لا تجعل plugins تعدل Core
+هذا سيكسر قابلية التحديث.
+30.2 لا تسمح بحزم بدون manifest
+الـ manifest أساس الحوكمة.
+30.3 لا تسمح بحزم بدون صلاحيات معلنة
+المستخدم يجب أن يعرف ما سيتم الوصول إليه.
+30.4 لا تفتح Marketplace للمطورين قبل review/signing
+ابدأ Official ثم Verified Partners.
+30.5 لا تبني SDK معقد من V1
+ابدأ بسيطًا ثم وسع.
+31. الخلاصة التنفيذية
+Kabeeri Developer Platform يجب أن توازن بين:
+سهولة التوسعة+ أمان المنصة+ وضوح الصلاحيات+ توافق الإصدارات+ جودة المطورين+ حوكمة السوق
+القاعدة النهائية:
+Kabeeri يجب أن يكون قابلًا للتوسعة مثل WordPress، لكن محكومًا وآمنًا مثل منصة Enterprise.
+32. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق اختياري إضافي:
+ملحق 13 — Testing, QA & DevOps Architecture
+إذا أردنا تثبيت الاختبارات وبيئة التطوير والنشر قبل V1.

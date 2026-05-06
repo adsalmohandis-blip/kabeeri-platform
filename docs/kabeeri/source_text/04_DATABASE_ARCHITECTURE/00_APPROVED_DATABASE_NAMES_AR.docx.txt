@@ -1,0 +1,13 @@
+KABEERI Approved Database Names
+الأسماء المعتمدة فقط لقواعد البيانات حسب بيئة التشغيل.
+KABEERI Professional Knowledge System — v1.6.2
+البيئة
+اسم قاعدة البيانات المعتمد
+Local Development
+kabeeri_platform_local
+Testing
+kabeeri_platform_testing
+Staging
+kabeeri_platform_staging
+Production
+kabeeri_platform_production

@@ -1,0 +1,71 @@
+KABEERI Freemium Technical Entitlement Enforcement
+شرح تقني لكيفية فرض حدود الخطة المجانية والترقيات داخل Laravel بدون كسر V1.
+Version: v1.6.4 | Status: Approved Documentation Addendum
+هذا الملف جزء من تحديث Freemium & Plans ولا يغير ملفات V1 المجمدة مباشرة. أي تطبيق يتم عبر Addendum أو تاسك واضح في Codex.
+الموقع داخل المعمارية
+Freemium ليس مجرد Pricing Page. هو طبقة Entitlements يتم فحصها قبل إنشاء الموارد، تثبيت الثيمات/البلجنز، ربط الدومين، استخدام التخزين، واستخدام ميزات AI/Commerce/Marketing.
+Feature Flags vs Entitlements
+Feature Flags تتحكم في فتح/غلق ميزة على مستوى النظام أو التجربة. Entitlements تتحكم في حق العميل حسب خطته واشتراكه. لا يتم استخدام Feature Flag وحده لمنح ميزة مدفوعة.
+نقاط الفحص في الكود
+قبل إنشاء App/Site جديد.
+قبل نشر صفحة جديدة إذا تجاوز حد الصفحات.
+قبل رفع ملف جديد أو تجاوزه حد التخزين.
+قبل تركيب Theme أو Plugin يتطلب خطة أعلى.
+قبل إزالة Branding أو ربط Custom Domain.
+قبل استخدام AI credits أو إرسال حملات تسويقية.
+داخل Filament actions وداخل APIs العامة، وليس في الواجهة فقط.
+الخدمات المقترحة
+PlanResolverService, EntitlementService, UsageMeterService, UpgradeTriggerService, FairUseGuardService. كل خدمة تكون قابلة للاختبار ولا تعتمد على واجهة المستخدم.
+Entitlements الأساسية
+Key
+Type
+Description
+Free Default
+can_create_app
+boolean
+يسمح بإنشاء تطبيق
+true في Free
+max_apps
+integer
+عدد التطبيقات المسموح
+1 في Free
+max_pages
+integer
+عدد الصفحات
+25 في Free
+max_storage_mb
+integer
+مساحة التخزين
+250 في Free
+can_use_custom_domain
+boolean
+ربط دومين خاص
+false في Free
+can_remove_branding
+boolean
+إزالة شعار Kabeeri
+false في Free
+can_install_free_themes
+boolean
+تثبيت ثيمات مجانية
+true
+can_install_pro_themes
+boolean
+تثبيت ثيمات مدفوعة/Pro
+false في Free
+can_install_free_plugins
+boolean
+تثبيت بلجنز مجانية
+true
+can_install_paid_plugins
+boolean
+تثبيت بلجنز مدفوعة
+false في Free
+ai_credits_monthly
+integer
+رصيد AI شهري
+0 أو محدود جدًا
+support_level
+enum
+نوع الدعم
+community في Free

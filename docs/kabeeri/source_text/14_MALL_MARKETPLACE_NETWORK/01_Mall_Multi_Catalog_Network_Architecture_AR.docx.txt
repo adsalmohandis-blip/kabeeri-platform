@@ -1,0 +1,135 @@
+KABEERI / Kabeeri — powered by ADMIT
+KABEERI Mall Multi-Catalog Network Architecture
+مول المنتجات والخدمات والمشاريع/البزنسز عبر كل التطبيقات ومصادر البيانات
+Version: v1.2.1 — Coding Ready Addendum
+1. القرار التنفيذي
+Kabeeri Mall ليس مولًا واحدًا فقط، بل شبكة اكتشاف عامة Multi-Catalog تعرض المنتجات والخدمات والبزنسز/المشاريع المتاحة عبر كل تطبيقات Kabeeri، سواء كانت مستضافة داخل Kabeeri Cloud أو Frontend Anywhere أو Portable أو Dedicated أو مصدر خارجي مثل WordPress.
+القاعدة الحاكمة: المول لا يقرأ مباشرة من قواعد بيانات العملاء أو المواقع الخارجية. كل شيء يظهر في المول عبر Mall Mirror + Publication Consent + Sync Source.
+2. الكتالوجات العامة داخل Kabeeri Mall
+الكتالوج
+ما يعرضه
+مصدر البيانات
+من ينفذ الطلب
+Product Mall
+منتجات عامة من المتاجر والتطبيقات
+Commerce / WooCommerce / External feeds / Portable Sync
+التاجر الأصلي أو التطبيق المصدر
+Service Mall
+خدمات قابلة للطلب أو الحجز
+Service Catalog / Business Profile / External Service Feed
+مزود الخدمة الأصلي
+Business & Projects Mall
+بزنسز، شركات، تطبيقات، مشاريع، بروفايلات موثقة
+Rabet Business Profile / App Profile / External Site Connection
+صاحب البزنس أو الوكالة/الفريق المسؤول
+Talent Mall
+أفراد ومهنيون ومهارات
+Professional Profiles / Work Network
+الشخص أو الفريق
+Theme & Plugin Market
+ثيمات، إضافات، قوالب، حزم
+Internal Marketplace / Creator Network
+المطور أو الناشر
+3. نطاق Product Mall
+Product Mall يعرض المنتجات المنشورة بموافقة التاجر من أي تطبيق مشترك في المنصة أو متصل بها. المنتج يبقى مملوكًا للتاجر الأصلي، والمول يعرض نسخة عامة فقط: الاسم، الصور، السعر العام، التوفر، رابط الشراء أو الطلب، وبيانات الثقة.
+مسموح بالظهور
+ممنوع الظهور
+اسم المنتج، الوصف، الصور، السعر العام، التصنيف، التوفر، رابط المنتج
+تكلفة المورد، هوامش الربح، بيانات الطلبات الخاصة، بيانات العملاء، المخزون الداخلي التفصيلي
+تقييمات المنتج العامة، عروض عامة، كوبونات مصرح بها
+بيانات الدفع الحساسة، سجلات الشحن الخاصة، ملاحظات الموظفين
+4. نطاق Service Mall
+Service Mall يعرض الخدمات من الشركات، المهنيين، الوكالات، ومقدمي الخدمات. الطلب قد يكون Lead أو Service Request أو Booking حسب نوع الخدمة. التنفيذ دائمًا عند مقدم الخدمة الأصلي، وليس عند المول.
+نوع الخدمة
+التفاعل المتوقع
+البلجنات/الموديولات المرتبطة
+خدمات شركات
+طلب خدمة / طلب عرض سعر
+Services Catalog, Forms, CRM Leads
+خدمات عيادات أو مواعيد
+حجز أو طلب موعد
+Booking Lite, Appointment Reminders
+خدمات وكالات وبناة تطبيقات
+طلب تنفيذ مشروع
+Work Network, Implementation Projects
+خدمات استشارية وقانونية
+طلب استشارة / رفع مستندات
+Secure Upload, Rabet Verification
+5. نطاق Business & Projects Mall
+هذا المول يعرض البزنسز والمشاريع والتطبيقات العامة. المقصود بالمشروع هنا قد يكون: بزنس موثق، تطبيق موقع/متجر، مشروع وكالة، ملف شركة، أو جهة تعرض نفسها كشريك/مزود خدمة. هذه الطبقة هي واجهة الاكتشاف العامة لـ Rabet + Kabeeri Apps.
+العنصر
+يعرض في المول كـ
+ملاحظات
+Company / Business Profile
+Business Listing
+مصدره Rabet ويظهر trust/verification status
+Kabeeri App
+Project/App Listing
+موقع أو متجر أو بوابة عامة يختار صاحبها نشرها
+Agency Project
+Agency Case Study / Managed Project
+يحتاج موافقة العميل أو anonymized case study
+External WordPress Site
+External Business/App Listing
+يظهر عبر connector أو public feed مع consent
+6. دعم التطبيقات الخارجية مثل WordPress
+يمكن لموقع WordPress أو أي موقع خارجي أن يشارك منتجاته أو خدماته أو بروفايله العام في Kabeeri Mall بشرط وجود Connector أو Feed أو API آمن، وموافقة نشر واضحة. لا يتم سحب بيانات خاصة أو تشغيلية من WordPress.
+طريقة الربط
+مناسبة لـ
+الملاحظات
+WordPress Helper Plugin
+مواقع WordPress
+يرسل public products/services/business data فقط
+WooCommerce Connector
+متاجر WooCommerce
+products/prices/availability + public URL
+Public Feed / CSV
+مصادر بسيطة
+استيراد دوري بمراجعة
+Manual Listing
+بزنس صغير
+إدارة يدوية داخل Kabeeri
+7. قواعد النشر والموافقة
+القاعدة
+التفسير
+Consent before publication
+لا يظهر منتج أو خدمة أو بزنس في المول بدون موافقة نشر محددة.
+Mirror only
+المول يعرض نسخة عامة قابلة لإعادة البناء ولا يمثل source of truth.
+Source owner remains owner
+التاجر أو مقدم الخدمة هو المسؤول عن السعر، التوفر، التنفيذ، الشحن، الدعم.
+Moderation first
+أي محتوى عام قابل للبلاغ والمراجعة والإخفاء.
+No private data
+لا فواتير خاصة، لا عملاء، لا مخزون داخلي، لا مستندات حساسة.
+8. تجربة المستخدم داخل المول
+واجهة Kabeeri Mall يجب أن تعرض تبويبات واضحة: منتجات، خدمات، بزنسز/مشاريع، مواهب، ثيمات وإضافات. كل تبويب له فلاتر مختلفة، لكن كلها تعتمد على نفس مبادئ الثقة والموافقة والمصدر.
+التبويب
+أهم الفلاتر
+المنتجات
+التصنيف، السعر، الدولة، التوفر، التاجر، التقييم، الشحن، مصدر المنتج
+الخدمات
+المجال، الدولة، نوع الخدمة، إمكانية الحجز، السعر من/إلى، التقييم، التوثيق
+البزنسز/المشاريع
+القطاع، الدولة، verified، نوع التطبيق، Rabet status، الخدمات المتاحة
+المواهب
+المهارة، المستوى، التوفر، البادجات، الدولة، اللغة
+الثيمات والإضافات
+المجال، السعر، المطور، التوافق، RTL، التقييم، آخر تحديث
+9. علاقة المول بالمسوقين والشركاء
+Growth Partners وPartner Storefronts يمكنهم عرض منتجات وخدمات تجار آخرين فقط عبر اتفاقيات وموافقات واضحة. الواجهة الخاصة بالمسوق تعرض public mirror items، والطلب أو التنفيذ يذهب للتاجر الأصلي مع tracking للعمولة.
+10. Roadmap
+المرحلة
+النطاق
+V1
+Business Profile draft + Mall mirror foundation + consent model.
+V2
+Product/Service publication from Kabeeri apps + basic search/filter.
+V3
+CRM/service requests + product/service lead flows.
+V4
+Kabeeri Mall V1 public launch + moderation + reviews.
+V5
+Partner storefronts + commissions + external connectors.
+V6
+Advanced multi-catalog marketplace + enterprise/private catalogs + BI.

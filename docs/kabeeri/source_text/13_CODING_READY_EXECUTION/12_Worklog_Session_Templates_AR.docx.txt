@@ -1,0 +1,39 @@
+KABEERI Solo Builder Worklog & Session Templates
+قوالب متابعة يومية لمنع فقدان السياق أثناء العمل المتقطع
+1. لماذا نحتاج Worklog؟
+لأن العمل يتم بشكل فردي ووقت الجلسات غير ثابت، يجب تسجيل آخر Prompt والملفات المتغيرة ونتيجة الاختبارات والـ commit التالي. هذا يمنع تكرار العمل أو فقدان مكان التوقف.
+2. قالب WORKLOG.md
+الحقل
+ما يكتب فيه
+Date
+تاريخ الجلسة
+Time Available
+ساعة / ساعتين / يوم كامل
+Version
+غالبًا V1 حاليًا
+Prompt Used
+رقم واسم Prompt من V1 Codex Pack
+Branch
+اسم الفرع الحالي
+Files Changed
+أهم الملفات التي تغيرت
+Tests Run
+الأوامر ونتيجتها
+Commit
+عنوان commit أو pending
+Next Task
+المهمة القادمة بوضوح
+Risks / Notes
+أي قرار أو مشكلة أو تحذير
+3. قالب جلسة قصيرة
+Session Type: Micro SessionGoal: تنفيذ جزء صغير فقطAllowed work: قراءة، إصلاح test، migration واحدة، model واحد، docs updateStop rule: توقف عند أول اختبار ينجح أو أول مشكلة تحتاج قرار.
+4. قالب جلسة متوسطة
+Session Type: Standard SessionGoal: تنفيذ Prompt واحد كامل من V1Required: branch منفصل + tests + commitStop rule: لا تبدأ Prompt جديد قبل commit.
+5. قالب يوم كامل
+Session Type: Deep Work BlockGoal: تنفيذ 2 إلى 4 Prompts مرتبطةRequired: commit بعد كل PromptStop rule: بعد كل 3 ساعات شغل tests كاملة وراجع WORKLOG.
+6. قواعد كتابة الملاحظات بعد كل جلسة
+• اكتب ما تم إنجازه لا ما كنت تنوي إنجازه.
+• اكتب Prompt القادم بالرقم والاسم.
+• اكتب إن كان هناك failing test قبل أن تغلق الجهاز.
+• اكتب أي قرار معماري ظهر أثناء الكود.
+• لا تعتمد على الذاكرة؛ المشروع كبير جدًا.

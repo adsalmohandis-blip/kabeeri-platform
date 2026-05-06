@@ -1,0 +1,312 @@
+KABEERI Database Master ERD / Relationship Map
+خريطة العلاقات المرجعية بين كيانات وقواعد بيانات KABEERI
+ملف تنفيذي بعد Database Master Index وقبل Laravel Migration Build Order
+الغرض من هذا الملف هو تثبيت خريطة العلاقات الكبرى بين كيانات KABEERI قبل كتابة migrations. لا يكرر هذا الملف كل أعمدة الجداول؛ بل يحدد مصدر الحقيقة، العلاقات، حدود كل Module، وقواعد الربط بين Cloud وFrontend Anywhere وPortable وDedicated وMall Mirror.
+القاعدة الحاكمة: Core Kernel هو مصدر الهوية والملكية والصلاحيات، لكن مصدر البيانات التشغيلية قد يكون Cloud DB أو Dedicated DB أو Portable self-hosted DB حسب وضع العميل.
+1. موقع هذا الملف في سلسلة التوثيق
+الملف
+الدور
+العلاقة بهذا الملف
+Database Master Index
+فهرسة ملفات الداتابيز وترتيبها
+هذا الملف يبني عليه ويحوّل الفهرس إلى خريطة علاقات
+Master ERD / Relationship Map
+تثبيت العلاقات الكبرى ومصدر الحقيقة
+الملف الحالي
+Laravel Migration Build Order
+تحويل العلاقات إلى موجات migrations
+يأتي بعد هذا الملف مباشرة
+Laravel Module Architecture
+تحويل الجداول إلى Models/Policies/Services/Events
+يعتمد على خريطة العلاقات
+V1 Implementation Blueprint
+خطة التنفيذ اليومية لأول نسخة
+يعتمد على أول موجات العلاقات والموديولات
+2. القاعدة العليا للعلاقات
+كل جدول مهم داخل KABEERI يجب أن يجيب على أربعة أسئلة قبل بنائه:
+• يتبع أي Organization؟
+• يتبع أي Company أو Site عند الحاجة؟
+• من يملك حق القراءة والكتابة عليه؟
+• هل يمكن تصديره أو مزامنته أو ظهوره في Mall؟
+أي علاقة لا تستطيع الإجابة على هذه الأسئلة تصبح خطرًا معماريًا لأنها قد تؤدي إلى تسريب بيانات أو صعوبة تصدير أو تضارب في Portable/Dedicated.
+3. الخريطة العليا للكيانات
+User  -> OrganizationMembership      -> Organization / Customer Account          -> Company / Business Account              -> CompanyMembership              -> BusinessProfile                  -> Rabet Verification                  -> Trust Records                  -> Mall Mirror Business              -> Sites / Stores / Portals                  -> CMS Content                  -> Commerce Store                  -> Frontend Project / Cloud Site          -> Billing Account          -> Subscriptions / Entitlements          -> Operating Mode              -> Cloud / Frontend Anywhere / Portable / Dedicated
+هذه الخريطة تعني أن الموقع ليس أصل النظام. الأصل هو Organization، ثم Company/Site كقنوات تشغيل وظهور، ثم Business Profile وMall Mirror كنسخة عامة اختيارية.
+4. Core Identity & Ownership ERD
+erDiagram  USERS ||--o{ ORGANIZATION_MEMBERSHIPS : joins  ORGANIZATIONS ||--o{ ORGANIZATION_MEMBERSHIPS : contains  ORGANIZATIONS ||--o{ COMPANIES : owns  COMPANIES ||--o{ COMPANY_MEMBERSHIPS : contains  USERS ||--o{ COMPANY_MEMBERSHIPS : works_in  ORGANIZATIONS ||--o{ SITES : owns  COMPANIES ||--o{ SITES : may_publish  COMPANIES ||--o{ BUSINESS_PROFILES : presents_as  BUSINESS_PROFILES ||--o{ VERIFICATION_REQUESTS : verifies  BUSINESS_PROFILES ||--o{ MALL_MIRROR_BUSINESSES : mirrors_publicly
+الكيان
+مصدر الحقيقة
+العلاقات الأساسية
+ملاحظة تنفيذية
+users
+Core Kernel
+has memberships / profiles / actions
+لا يحتوي company_id أو organization_id ثابت
+organizations
+Core Kernel
+owns companies, sites, billing, operating mode
+يمثل Customer Account أو Tenant
+companies
+Core Kernel + Rabet
+belongs to organization; has profiles, teams, verification
+يمثل Business Account
+sites
+Core Kernel + CMS/Commerce
+belongs to organization; optional company
+واجهة رقمية وليست شركة
+business_profiles
+Rabet
+belongs to company/organization; mirrors to Mall
+الواجهة العامة للبزنس
+mall_mirror_businesses
+Mall Central Mirror
+derived from business profile or sync source
+ليست مصدر الحقيقة
+5. قواعد Source of Truth
+نوع البيانات
+Cloud
+Frontend Anywhere
+Portable
+Dedicated
+مبدأ العلاقة
+Identity / Auth
+Kabeeri DB
+Kabeeri DB
+Customer DB
+Dedicated DB
+Core Kernel schema ثابت
+CMS private content
+Kabeeri DB
+Kabeeri DB
+Customer DB
+Dedicated DB
+لا يظهر في Mall إلا إذا كان public وموافق عليه
+Public frontend
+Kabeeri hosted
+External
+Customer hosted
+Dedicated/External
+واجهة العرض ليست مصدر الحقيقة
+ERP operational data
+Kabeeri DB
+Kabeeri DB
+Customer DB
+Dedicated DB
+لا يرسل إلى Mall
+Mall public mirror
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+نسخة عامة مشتقة فقط
+Billing relationship
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+لا يخلط مع فواتير العميل لعملائه
+Verification public status
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+Kabeeri Central
+الثقة العامة مرتبطة بالمنصة
+6. Organization Relationship Map
+Organization هي نقطة الربط الرئيسية بين الهوية، الاشتراك، المواقع، الشركات، التصدير، أنماط التشغيل، والـ Mall participation.
+ORGANIZATIONS  |- organization_memberships  |- companies  |   |- company_memberships  |   |- business_profiles  |   |- verification_requests  |   |- employee_profiles / ERP data  |- sites  |   |- cms content  |   |- commerce store  |   |- cloud_sites / frontend_projects  |- billing_accounts  |   |- subscriptions  |   |- entitlements  |- organization_operating_modes  |- business_passports  |- export_jobs / dedicated_tenants / self_hosted_installations
+قاعدة مهمة: لا يتم بناء أي Module جديد بدون organization_id أو علاقة واضحة بكيان يملك organization_id.
+7. Site / CMS Relationship Map
+SITES  |- content_types  |   |- content_fields  |- content_entries  |   |- content_revisions  |   |- content_blocks  |   |- seo_records  |- taxonomies  |   |- taxonomy_terms  |- menus  |   |- menu_items  |- redirects  |- forms  |   |- form_submissions  |- media_usages  |- search_index_records
+العلاقة
+القاعدة
+Site -> Content
+أي صفحة أو مقال أو content entry يجب أن يكون داخل Site.
+Content -> Media
+الملفات ترتبط عبر media_usages وليس عبر URL نصي عشوائي.
+Content -> SEO
+SEO records منفصلة أو مدمجة حسب الكيان، لكن source يبقى content.
+Content -> Frontend Anywhere
+الواجهة الخارجية تقرأ public API أو snapshots فقط.
+Content -> Portable
+كل content must be exportable by organization/site.
+8. Company / Rabet / Verification Relationship Map
+COMPANIES  |- business_profiles  |   |- business_profile_services  |   |- verification_badges  |- verification_requests  |   |- verification_documents  |   |- legal_review_assignments  |   |- legal_review_notes  |- trust_records  |- trust_score_snapshots  |- rabet_office_records  |- mall_publication_consents
+Rabet لا يساوي Mall. Rabet مسؤول عن الهوية والثقة والتوثيق. Mall مسؤول عن الظهور العام والاكتشاف والطلبات العامة.
+9. Mall Mirror Relationship Map
+MALL_SYNC_SOURCES  |- mall_sync_events  |- mall_sync_errors  |- mall_mirror_businesses      |- mall_mirror_services      |- mall_mirror_products      |- mall_mirror_talent      |- reviews      |- moderation_cases      |- disputes      |- featured_listing_orders
+القاعدة
+التفسير
+Mall لا يقرأ مباشرة من قاعدة العميل
+يقرأ من Mall Mirror فقط.
+Consent قبل النشر
+أي business/service/product/talent يحتاج publication consent.
+Moderation يعلو على Source
+حتى لو أرسل المصدر published، يمكن للمنصة إخفاؤه أو تعليقه.
+Mirror ليس Operational Data
+لا يحتوي invoices/payroll/tasks/private contracts.
+UUID مهم
+المطابقة بين Cloud/Portable/Dedicated تتم عبر UUID/external_id.
+10. Commerce Relationship Map
+COMMERCE  products    |- product_variants    |- product_prices    |- inventory_links    |- mall_publication_links  carts    |- cart_items  orders    |- order_items    |- payments    |- shipments    |- invoice_links    |- inventory_reservations  customers    |- customer_addresses    |- customer_timeline
+Commerce مسؤول عن البيع والطلبات. Mall مسؤول عن الاكتشاف. ERP مسؤول عن التشغيل اللاحق مثل المخزون، الفواتير، المحاسبة، والمشتريات.
+11. ERP Relationship Map
+ERP ESSENTIALS / PRO  CRM: leads -> opportunities -> quotations  Sales: quotations -> sales_orders -> invoices  Inventory: warehouses -> stock_balances -> stock_movements  Purchasing: suppliers -> purchase_orders -> goods_receipts -> supplier_bills  Accounting: chart_of_accounts -> journals -> AR/AP -> statements  HR: employee_profiles -> evaluations -> documents  Contracts: contracts -> parties -> approvals -> renewals  Helpdesk: tickets -> SLA -> assignments -> resolutions  POS: sessions -> cash movements -> orders -> stock deduction
+ERP لا يجب أن يعتمد على CMS أو Mall مباشرة. الربط يتم عبر shared objects مثل company_id، customer_id، product_id، order_id، invoice_id، event_id.
+12. Billing / Entitlements Relationship Map
+BILLING_ACCOUNTS  |- subscriptions  |   |- subscription_items  |- account_entitlements  |- usage_records  |- invoices_platform  |   |- payments_platform  |- licenses  |- dunning_events  |- revenue_allocations
+تمييز مهم
+الشرح
+invoices_platform
+فواتير Kabeeri للعميل.
+customer_invoices
+فواتير العميل لعملائه داخل ERP/Commerce.
+entitlements
+تحدد هل يمكن تفعيل Cloud/AI/Portable/Commerce/Mall.
+usage_records
+تسجل AI usage/storage/sync/emails/page views.
+13. Cloud / Frontend Anywhere / Portable / Dedicated Relationship Map
+ORGANIZATION_OPERATING_MODES  |- cloud_sites  |   |- cloud_domains  |   |- cloud_backups  |- frontend_projects  |   |- frontend_api_keys  |   |- frontend_builds  |   |- frontend_webhooks  |- export_jobs  |   |- export_manifests  |   |- portable_packages  |- self_hosted_installations  |   |- self_hosted_connection_tokens  |   |- self_hosted_sync_status  |- dedicated_tenants      |- dedicated_environments      |- dedicated_databases      |- dedicated_sync_status
+هذه الأنظمة ليست بدائل منفصلة في الكود. كلها تعتمد على Core Kernel، لكن تختلف في مكان تشغيل البيانات والواجهة والمزامنة.
+14. AI / Workflow / Audit Relationship Map
+AI_COBUILDER  prompt -> context_snapshot -> permission_check -> change_plan -> risk_assessment  -> preview -> approval_request -> apply_run -> applied_changes -> rollback_pointEVENTS_WORKFLOWS  action -> event -> listener_runs -> workflow_runs -> approval_requests -> actionsAUDIT  sensitive_action -> audit_log -> security_event -> optional incident/grc evidence
+الربط
+القاعدة
+AI -> Permissions
+AI لا يتجاوز صلاحيات المستخدم.
+AI -> Workflow
+أي تغيير متوسط/عال الخطورة يحتاج approval.
+AI -> Rollback
+أي apply مؤثر يحتاج rollback point.
+Workflow -> Events
+الـ workflows تبدأ من events أو manual triggers.
+Audit -> Security
+الأحداث الحساسة تذهب إلى audit/security logs.
+15. Security / Permissions Relationship Map
+USERS  |- sessions  |- mfa_methods  |- api_tokens  |- security_eventsMEMBERSHIPS  |- membership_role_assignments  |- membership_permission_overridesROLES  |- role_permissionSENSITIVE OBJECTS  |- access logs  |- consent records  |- data classification  |- retention policies  |- privacy requests
+الصلاحيات Context-first. لا يوجد role عالمي واحد يكفي. كل فعل مهم يجب أن يسأل: داخل أي Organization/Company/Site/Module؟
+16. Search / Reports / Data Platform Relationship Map
+SOURCE TABLES  -> events  -> index/reindex jobs  -> search_index_records  -> query logs / click logsSOURCE TABLES  -> analytics events  -> data ingestion jobs  -> staging records  -> marts/facts/dimensions  -> reports/dashboards/KPIs
+Search وBI/Data Platform جداول مشتقة. يمكن إعادة بنائها. لا يجب أن تكون مصدر الحقيقة للبيانات التشغيلية.
+17. Cross-module Linking Rules
+القاعدة
+التطبيق العملي
+لا نستخدم JSON بدل العلاقات الأساسية
+membership/company/site/product/order يجب أن تكون علاقات حقيقية.
+استخدم polymorphic بحذر
+مفيد في activity_logs/media_usages/approvals لكن ليس لكل شيء.
+كل public mirror يحتاج source
+mall_sync_source_id أو local subject.
+كل external sync يحتاج UUID/external_id
+حتى لا نعتمد على auto-increment IDs بين أنظمة مختلفة.
+كل sensitive table يحتاج audit
+verification, finance, payroll, legal docs, permissions, AI apply.
+كل exportable data يجب أن يكون tenant-scoped
+organization_id أو علاقة واضحة بجدول tenant-scoped.
+18. الجداول المشتركة التي لا يجب تكرارها
+الجدول/المفهوم
+مكانه الصحيح
+لا يكرر داخل
+users
+Core Kernel
+Talent/ERP/Legal Partner/Developer Console
+organizations
+Core Kernel
+Cloud/Billing/Agency/Dedicated
+companies
+Core Kernel + Rabet
+ERP/Mall/Commerce
+sites
+Core Kernel
+CMS/Commerce/Cloud/Frontend Anywhere
+media_assets
+Media & Files
+CMS/Rabet/Commerce/ERP
+billing_accounts
+Billing
+Cloud/Agency/Portable/Dedicated
+activity_logs/audit_logs
+Core/Security
+كل الموديولات
+approval_requests
+Events & Workflows
+ERP/AI/Billing/Rabet
+mall_mirror_*
+Mall
+Commerce/Talent/Rabet
+19. Laravel Relationship Implementation Notes
+Model
+أهم العلاقات المقترحة
+User
+hasOne UserProfile; hasMany OrganizationMembership; hasMany CompanyMembership; hasMany ActivityLog
+Organization
+belongsTo owner User; hasMany Companies; hasMany Sites; hasMany BillingAccounts; hasMany OperatingModes
+Company
+belongsTo Organization; hasMany CompanyMembership; hasMany BusinessProfile; hasMany VerificationRequest
+Site
+belongsTo Organization; belongsTo Company nullable; hasMany ContentEntry; hasOne CloudSite; hasMany FrontendProject
+BusinessProfile
+belongsTo Company; hasMany VerificationRequest; hasOne/Many MallMirrorBusiness via source
+CloudSite
+belongsTo Site; hasMany CloudDomain; hasMany CloudBackup; hasMany CloudHealthCheck
+MallSyncSource
+hasMany SyncEvents; hasMany MirrorBusinesses/Services/Products/Talent
+WorkflowRun
+belongsTo WorkflowDefinition; hasMany StepRun; hasMany ApprovalRequest
+AiChangePlan
+belongsTo Session; hasMany Preview; hasMany ApprovalRequest; hasMany ApplyRun
+20. Relationship Build Waves
+Wave
+العلاقات التي تثبت أولًا
+سبب الأولوية
+Wave 1
+users, organizations, memberships, roles, permissions
+بدونها لا توجد هوية أو صلاحية.
+Wave 2
+companies, sites, settings, feature flags, logs, media
+أساس CMS وRabet وCloud.
+Wave 3
+CMS content, taxonomies, menus, forms, SEO
+أول منتج usable.
+Wave 4
+business profiles, verification foundation, trust basics
+تمهيد Rabet/Mall.
+Wave 5
+commerce foundation, orders, customers, coupons
+بيع مبدئي وربط لاحق مع ERP.
+Wave 6
+billing, cloud sites, entitlements, backups
+تجاري SaaS.
+Wave 7
+mall mirror, reviews, moderation, disputes
+ظهور عام آمن.
+Wave 8
+ERP essentials, workflows, approvals, reports
+تشغيل أعمال حقيقي.
+Wave 9
+AI, integration hub, portable/dedicated
+توسعات محكومة.
+21. Anti-patterns ممنوعة
+• إضافة users.company_id أو users.role.
+• جعل Mall يقرأ من جداول Commerce أو ERP مباشرة.
+• خلط فواتير Kabeeri للعميل مع فواتير العميل لعملائه.
+• وضع بيانات payroll أو finance أو legal docs في public mirrors.
+• الاعتماد على IDs الداخلية في sync بين Portable/Dedicated وCentral.
+• تنفيذ AI changes مباشرة بدون plan/preview/approval/rollback.
+• بناء search أو BI كمصدر الحقيقة بدل أن تكون derived/cached.
+• تكرار documents/media في كل Module بدل media_assets/document_records المركزية.
+22. Checklist قبل Laravel Migration Build Order
+☐ تثبيت naming convention: plural snake_case للجداول وPascalCase للـ Models.
+☐ تحديد كل جدول: global أم tenant-scoped أم mirror أم derived.
+☐ تحديد organization_id / company_id / site_id لكل جدول يحتاج scoping.
+☐ تحديد UUID/ULID لكل كيان يحتاج public API أو export أو sync.
+☐ تحديد الجداول التي تستخدم soft deletes.
+☐ تحديد الجداول الحساسة التي تحتاج audit_logs.
+☐ تحديد indexes الأساسية قبل أول migration.
+☐ تحديد العلاقات nullable في V1 التي ستصبح required لاحقًا.
+☐ تحديد export registry لكل Module.
+☐ تحديد feature flags لكل Module قبل بناء UI.
+23. الخلاصة التنفيذية
+هذا الملف يثبت أن KABEERI يجب أن يبنى من Organization-first architecture، وليس Site-first architecture. الموقع قناة، الشركة كيان تجاري، البروفايل واجهة عامة، والـ Mall Mirror نسخة عامة مشتقة، بينما Core Kernel هو مصدر الهوية والملكية والصلاحيات.
+بعد هذا الملف، الخطوة التنفيذية الصحيحة هي كتابة KABEERI Laravel Migration Build Order لتحويل هذه العلاقات إلى موجات migrations قابلة للبناء والاختبار تدريجيًا.
+KABEERI — Database Master ERD / Relationship Map
+Generated architecture document — Arabic draft

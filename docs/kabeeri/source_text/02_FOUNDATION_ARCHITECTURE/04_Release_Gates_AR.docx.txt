@@ -1,0 +1,651 @@
+KABEERI — ملحق 4: خريطة الإصدارات الستة ومعايير الانتقال
+ملحق للملف الرئيسي + ملحق التأسيس المعماري + ملحق التشغيل + ملحق الترابط
+هذا الملف يحدد قواعد تنفيذ الإصدارات الستة لـ Kabeeri، وما الذي يدخل في كل إصدار، وما الذي يمنع دخوله، وما شروط الانتقال من نسخة إلى النسخة التالية.
+الهدف:
+تحويل الرؤية الكبيرة إلى Release Gates واضحة تمنع تضخم المنتج، وتحافظ على ترتيب البناء الصحيح.
+1. لماذا نحتاج Release Gates؟
+Kabeeri منصة ضخمة تشمل:
+CMSCommerceERPRabet B2BKabeeri MallTalent MarketplaceAI Co-builderCloudMarketplaceIntegrationsTeamsLegal Verification
+بدون Release Gates، سيحدث واحد من الأخطاء التالية:
+بناء Features متقدمة قبل الأساس.
+دخول ERP قبل Company/Team/Permissions.
+دخول Kabeeri Mall قبل moderation/visibility.
+دخول AI قبل permissions/approval/rollback.
+دخول Cloud قبل استقرار self-hosted core.
+دخول Marketplace قبل package security.
+محاولة بناء كل شيء دفعة واحدة.
+لذلك كل إصدار يجب أن يكون له:
+Scope واضح.
+ممنوعات واضحة.
+مخرجات واضحة.
+Acceptance Criteria.
+Database readiness.
+Technical readiness.
+Business readiness.
+Go/No-Go decision.
+2. الإصدارات الستة النهائية
+V1: CMS Core FoundationV2: WordPress Migration + Commerce FoundationV3: Business Foundation + ERP EssentialsV4: Cloud + Marketplace + Agency PlatformV5: ERP Pro + Integration HubV6: Complete CMS + Commerce + ERP Platform
+3. تعريف Release Gate
+Release Gate هو نقطة قرار في نهاية كل إصدار.
+لا ننتقل للإصدار التالي إلا إذا تحققت شروط محددة.
+كل Gate يجب أن يجيب على:
+هل النسخة مستقرة؟هل الموديولات الأساسية تعمل؟هل قاعدة البيانات جاهزة للمرحلة التالية؟هل الصلاحيات تعمل؟هل لا يوجد كسر في البيانات؟هل التجربة قابلة للاستخدام؟هل يوجد demo حقيقي؟هل يمكن اختبارها مع مستخدمين فعليين؟
+4. V1 — CMS Core Foundation
+4.1 هدف V1
+بناء نواة Kabeeri القابلة للتنصيب والاستخدام كموقع CMS بسيط، مع تأسيس البنية التي ستدعم Rabet وKabeeri Mall وCommerce وERP لاحقًا.
+V1 ليس مجرد CMS.
+V1 هو:
+Core Foundation for CMS + Company OS
+4.2 نطاق V1
+Core
+Users.
+Authentication.
+Organizations.
+Organization memberships.
+Roles.
+Permissions.
+Sites.
+Settings.
+Feature Flags.
+Activity Log.
+Notifications basic.
+Onboarding basic.
+CMS
+Pages.
+Posts.
+Content Types basic.
+Categories.
+Tags.
+Media Library.
+SEO basic.
+Sitemap.
+Robots.txt basic.
+Theme system basic.
+Cache basic.
+Rabet Foundation
+Companies table.
+Company status.
+Business Profile draft.
+Verification status foundation.
+Verification documents foundation.
+Basic team membership foundation.
+Package Foundation
+installed_packages table.
+Plugin manifest concept.
+Theme activation.
+Basic package status.
+Operating Layers Foundation
+Activity logs.
+Feature flags.
+Visibility fields.
+Import/export job foundation.
+Notification foundation.
+4.3 ما لا يدخل V1
+ممنوع في V1:
+ERP كامل.
+Commerce كامل.
+Kabeeri Mall كامل.
+Talent Marketplace.
+Legal Partner Portal.
+Cloud.
+Internal Marketplace عام.
+AI Co-builder كامل.
+Visual Builder كامل.
+Advanced approvals.
+Billing كامل.
+Multi-vendor marketplace.
+Advanced Teams.
+Accounting.
+Payroll.
+4.4 Database readiness في V1
+يجب أن تكون هذه الجداول موجودة أو مخططة كمigrations:
+usersuser_profilesorganizationsorganization_membershipsrolespermissionsrole_permissionmembership_permission_overridessitessettingsfeature_flagsfeature_flag_overridesactivity_logscontent_typescontent_entriescontent_revisionstaxonomiestaxonomy_termscontent_termmedia_assetsmedia_usagescompaniescompany_memberships basicbusiness_profilesverification_requests basicverification_documents basicinstalled_packagespackage_eventsnotificationsnotification_preferences optionalimport_jobsexport_jobs
+4.5 Technical acceptance criteria
+V1 يعتبر ناجحًا تقنيًا إذا:
+يمكن تثبيت النظام من البداية.
+يمكن إنشاء أول admin user.
+يمكن إنشاء Organization.
+يمكن إنشاء Site.
+يمكن إنشاء Pages وPosts.
+يمكن رفع Media.
+يمكن اختيار Theme.
+يمكن نشر صفحة عامة.
+يعمل SEO title/description.
+يعمل sitemap.
+تعمل permissions الأساسية.
+كل action مهم يسجل في Activity Log.
+يمكن إنشاء Business Profile draft.
+يمكن رفع document مبدئي للتوثيق.
+يمكن تفعيل/تعطيل feature flag.
+لا توجد علاقة user بشركة واحدة فقط.
+4.6 Business acceptance criteria
+V1 يعتبر ناجحًا تجاريًا إذا:
+يمكن بناء موقع شركة بسيط.
+يمكن عرضه كـ demo لعميل.
+يمكن لصاحب شركة خدمات صغيرة استخدامه بدل صفحة ثابتة.
+يمكن شرح مسار الترقية لاحقًا إلى Verified Company.
+يمكن إقناع عميل تجريبي أن Kabeeri ليس مجرد WordPress clone.
+4.7 Demo المطلوب في نهاية V1
+Demo حقيقي باسم:
+شركة خدمات صغيرة
+يحتوي على:
+Home page.
+About page.
+Services page.
+Contact page.
+Blog page.
+Media.
+SEO.
+Business Profile draft.
+Team member invited.
+Activity log.
+4.8 Gate للانتقال إلى V2
+لا نبدأ V2 إلا إذا:
+CMS stableSites stableMedia stableSEO basic worksActivity Log worksOrganization/Site separation worksBusiness Profile draft worksImport/export foundation existsPermissions basic works
+5. V2 — WordPress Migration + Commerce Foundation
+5.1 هدف V2
+تحويل Kabeeri إلى بديل عملي لمواقع WordPress الصغيرة وبداية بديل WooCommerce بسيط.
+5.2 نطاق V2
+WordPress Migration
+WordPress XML importer.
+Import posts.
+Import pages.
+Import categories.
+Import tags.
+Import authors.
+Import media.
+Import featured images.
+Preserve slugs.
+Preserve publish dates.
+Basic SEO meta mapping.
+Redirect map basic.
+Migration report.
+CMS Expansion
+Custom Content Types basic.
+Custom fields basic.
+Forms basic.
+Redirects plugin.
+Theme settings.
+Theme overrides basic.
+Blocks/Components basic.
+Commerce Foundation
+Products.
+Product categories.
+Product images.
+SKU.
+Price.
+Stock quantity.
+Simple cart.
+Basic checkout.
+Orders.
+Customers.
+Coupons basic.
+Cash on Delivery.
+Bank transfer.
+Manual payment.
+Rabet / Mall Foundation
+Public Business Profile basic.
+Business directory basic.
+Service listing basic.
+Contact request form.
+Team Foundation
+Basic task management.
+User profile improvements.
+Mentions basic.
+Company membership basic.
+5.3 ما لا يدخل V2
+ممنوع في V2:
+Full ERP.
+Full accounting.
+Cloud.
+Marketplace داخلي مفتوح.
+Full Kabeeri Mall.
+Talent Marketplace كامل.
+Legal Partner Network كامل.
+AI Co-builder كامل.
+Multi-vendor checkout.
+Advanced payments.
+Advanced inventory.
+5.4 Database readiness في V2
+يجب إضافة أو تفعيل:
+custom_fieldsform_definitionsform_submissionsredirectsproductsproduct_categoriesproduct_mediacartscart_itemsordersorder_itemscustomerscouponsservice_listingsservice_requestsbasic_tasksbasic_task_comments
+5.5 Technical acceptance criteria
+V2 يعتبر ناجحًا تقنيًا إذا:
+يمكن استيراد WordPress XML لموقع بسيط.
+يتم استيراد media وربط featured images.
+يتم الحفاظ على slugs قدر الإمكان.
+يظهر migration report.
+يمكن إنشاء product.
+يمكن إضافة product إلى cart.
+يمكن إنشاء order.
+يمكن الدفع manual/COD.
+يمكن عرض business profile للعامة.
+يمكن إرسال contact/service request.
+يمكن إنشاء task basic.
+5.6 Business acceptance criteria
+V2 يعتبر ناجحًا تجاريًا إذا:
+يمكن نقل blog أو موقع WordPress بسيط.
+يمكن بناء متجر بسيط يستقبل طلبات.
+يمكن للشركة عرض خدماتها في directory basic.
+يمكن للعميل إرسال طلب خدمة.
+يمكن تجربة Kabeeri كبديل WordPress/WooCommerce خفيف.
+5.7 Demo المطلوب في نهاية V2
+Demo 1:
+موقع WordPress تم نقله إلى Kabeeri
+Demo 2:
+متجر بسيط يبيع منتجات ويستقبل orders
+Demo 3:
+Business Profile عام مع خدمات ونموذج طلب
+5.8 Gate للانتقال إلى V3
+لا نبدأ V3 إلا إذا:
+WordPress import works for basic sitesProducts/orders stableCustomers basic existsBusiness profiles public worksService requests workTask basic worksCompany membership basic existsNotifications basic works
+6. V3 — Business Foundation + ERP Essentials
+6.1 هدف V3
+تحويل Kabeeri من CMS/Commerce إلى Business Platform فعلي للشركات الصغيرة.
+6.2 نطاق V3
+Rabet Company OS Foundation
+Company Verification V1.
+Digital Office basic.
+Team setup.
+Departments.
+Tasks full V1.
+Projects basic.
+Activity feed.
+Early trust record.
+ERP Essentials
+Shared Business Objects.
+CRM Lite.
+Leads.
+Customers timeline.
+Sales Basic.
+Quotations basic.
+Inventory Basic.
+Stock movements.
+Invoicing Basic.
+PDF invoice basic.
+Accounting Starter.
+Purchasing Basic.
+Suppliers.
+Reports Basic.
+Workforce Foundation
+Employee profile.
+Basic evaluations.
+Work history basic.
+Company membership improvements.
+Workflow Foundation
+Workflow Automation V1.
+Event-triggered actions basic.
+Approval status basic.
+Commerce Pro V1
+Product variants basic.
+Discount rules basic.
+Shipping zones basic.
+Tax rules basic.
+Payment gateways initial.
+Abandoned carts basic.
+6.3 ما لا يدخل V3
+ممنوع في V3:
+Full accounting.
+Payroll.
+Manufacturing.
+Full WMS.
+Full legal partner marketplace.
+Full Kabeeri Mall.
+Cloud الكامل.
+Marketplace الداخلي المفتوح.
+Advanced AI.
+Enterprise governance.
+6.4 Database readiness في V3
+يجب إضافة أو تفعيل:
+leadscrm_contactsdeals basicquotationsquotation_itemsinvoicesinvoice_itemssupplierspurchase_orders basicstock_movementswarehouses basicprojectsdepartmentsevaluationsworkflows basicworkflow_runs basictrust_records basicverification_reviews
+6.5 Technical acceptance criteria
+V3 يعتبر ناجحًا تقنيًا إذا:
+يمكن إنشاء Lead من Service Request.
+يمكن تحويل Lead إلى Quotation.
+يمكن إنشاء Invoice من Order أو Quotation.
+يمكن خصم المخزون عند Order.
+يمكن عرض customer timeline.
+يمكن تقييم عضو فريق.
+يمكن إدارة Tasks داخل Company.
+يمكن رفع مستندات توثيق ومراجعتها داخليًا.
+يمكن عرض dashboard للمبيعات والمخزون.
+6.6 Business acceptance criteria
+V3 يعتبر ناجحًا تجاريًا إذا:
+شركة صغيرة يمكنها إدارة العملاء والمبيعات والمخزون والفواتير.
+يمكن عرض Rabet كـ Digital Office basic.
+يمكن استخدام النظام لإدارة فريق صغير.
+يمكن استخدامه كبديل مبسط لأدوات كثيرة متفرقة.
+6.7 Demo المطلوب في نهاية V3
+Demo:
+شركة خدمات موثقة جزئيًاتستقبل طلب خدمةتحوله إلى Leadتنشئ عرض سعرتنشئ فاتورةتدير Tasks للفريقوتعرض Dashboard
+6.8 Gate للانتقال إلى V4
+لا نبدأ V4 إلا إذا:
+Company OS basic worksTasks full V1 worksCRM Lite worksInvoices basic workInventory basic worksBusiness Profile + Verification foundation stableReports basic workPermissions across company/team stable
+7. V4 — Cloud + Marketplace + Agency Platform
+7.1 هدف V4
+تحويل Kabeeri إلى منتج تجاري قابل للبيع والتوسع.
+7.2 نطاق V4
+Cloud
+Kabeeri Cloud V1.
+Site provisioning.
+SSL.
+Domain management.
+Backups.
+Monitoring basic.
+Staging.
+Billing
+Plans.
+Subscriptions.
+Invoices.
+Payment providers.
+Failed payment handling.
+Usage limits.
+Internal Marketplace V1
+Official plugins.
+Official themes.
+Official modules.
+Install from dashboard.
+Package signing.
+Compatibility checks.
+Permission display.
+Kabeeri Mall Expansion
+Services Marketplace V1.
+Products Marketplace basic.
+Featured listings.
+Seller dashboard basic.
+Reviews basic.
+Moderation queue basic.
+Talent Marketplace V1
+Public professional profiles.
+Job offers basic.
+Visibility settings.
+Company-to-professional messaging.
+Rabet Company OS V1
+Verified badge.
+Legal Verification Partner Network V1.
+B2B service marketplace.
+RFQ/Quotation workflow.
+Reputation basic.
+Dispute management basic.
+Agency Platform
+Agency dashboard.
+Manage client sites.
+Bulk backups.
+Bulk updates.
+Client access.
+White label basic.
+Teams & AI
+Kabeeri Teams V1.
+Channels.
+Direct messages.
+Threads.
+System alert channels.
+AI Co-builder V1 for pages/forms/content types/dashboards.
+7.3 ما لا يدخل V4
+ممنوع في V4:
+Full ERP Pro.
+Full Integration Hub.
+Full public developer marketplace.
+Full accounting advanced.
+Payroll.
+Manufacturing.
+Advanced enterprise governance.
+Full AI multi-agent.
+7.4 Database readiness في V4
+يجب إضافة أو تفعيل:
+cloud_sitescloud_domainssubscriptionsbilling_accountspaymentsmarketplace_listings internalpackage_signaturesmoderation_queuereviewsreview_reportstalent_profiles public fieldsjob_offerslegal_partnerslegal_partner_usersverification_partner_assignmentsdisputes basicconversations/messagesai_change_plansai_change_logs
+7.5 Technical acceptance criteria
+V4 يعتبر ناجحًا تقنيًا إذا:
+يمكن إنشاء موقع Cloud.
+يمكن ربط domain.
+يمكن إنشاء subscription.
+يمكن تثبيت package رسمي.
+يمكن عرض permissions قبل التثبيت.
+يمكن إظهار business/service/product في Kabeeri Mall.
+يمكن إرسال job offer.
+يمكن مكتب محاماة مراجعة verification.
+يمكن استخدام Teams basic.
+يمكن AI بناء صفحة أو form بعد preview/approval.
+7.6 Business acceptance criteria
+V4 يعتبر ناجحًا تجاريًا إذا:
+يمكن بيع Kabeeri Cloud.
+يمكن بيع Pro license.
+يمكن تحصيل رسوم verification.
+يمكن وكالة إدارة عدة مواقع.
+يمكن شركة استخدام Rabet Company OS.
+يمكن للزوار اكتشاف بزنس/خدمة/منتج في Kabeeri Mall.
+7.7 Demo المطلوب في نهاية V4
+Demo 1:
+Agency تدير 5 مواقع عملاء من Kabeeri
+Demo 2:
+شركة موثقة عبر مكتب محاماة تظهر في Kabeeri Mall
+Demo 3:
+AI يبني landing page + form + dashboard بعد موافقة المستخدم
+7.8 Gate للانتقال إلى V5
+لا نبدأ V5 إلا إذا:
+Cloud V1 stableBilling worksPackage install/update worksRabet Company OS V1 worksKabeeri Mall V1 worksTalent V1 worksLegal Partner Network V1 worksTeams V1 worksAI Co-builder V1 has safe preview/approval
+8. V5 — ERP Pro + Integration Hub
+8.1 هدف V5
+تحويل Kabeeri إلى منصة أعمال قوية للشركات الصغيرة والمتوسطة مع تكاملات حقيقية.
+8.2 نطاق V5
+ERP Pro
+CRM Pro.
+Sales Pro.
+Inventory Pro.
+WMS V1.
+Purchasing Pro.
+Accounting Basic Complete.
+HR Basic.
+Projects.
+Helpdesk.
+POS Basic.
+Contracts.
+Advanced approvals.
+Integration Hub V1
+API credentials vault.
+OAuth connections.
+Webhook subscriptions.
+Sync jobs.
+Retry queue.
+Error logs.
+Field mapping.
+Conflict resolution basic.
+Manual sync.
+Scheduled sync.
+Connectors V1
+Odoo.
+Zoho CRM.
+Zoho Books.
+QuickBooks.
+Xero.
+Daftra.
+Shopify.
+WooCommerce.
+Talent / Workforce Pro
+Advanced evaluations.
+Skills graph.
+Contract workflow.
+Multi-company memberships.
+Reputation scoring.
+HR/Payroll integration foundation.
+AI & Teams
+ERP AI Assistants.
+Explain sync errors.
+Data cleaning assistant.
+Advanced team collaboration.
+Approvals from chat.
+8.3 ما لا يدخل V5
+ممنوع في V5:
+Full Enterprise Suite.
+Full manufacturing/MES.
+Full payroll localization.
+Full BI warehouse.
+Full open public marketplace.
+Digital Twin/IoT.
+8.4 Database readiness في V5
+يجب إضافة أو تفعيل:
+dealspipelinessales_ordersprice_listscustomer_groupswarehouses advancedinventory_batchespurchase_requisitionspurchase_orders advancedsupplier_billschart_of_accountsjournal_entriesgeneral_ledgeraccounts_payableaccounts_receivableemployeeshr_documentsprojects advancedhelpdesk_ticketscontractsapproval_workflowsapproval_requestsintegration_connectionssync_jobssync_logsfield_mappingsskills_graphreputation_scores
+8.5 Technical acceptance criteria
+V5 يعتبر ناجحًا تقنيًا إذا:
+CRM pipeline يعمل.
+Sales order يتحول إلى invoice.
+Inventory multi-warehouse يعمل.
+Purchasing cycle basic يعمل.
+Accounting basic complete ينتج P&L basic.
+HR basic يعمل.
+Helpdesk يعمل.
+POS basic يخصم من المخزون.
+Integration Hub يزامن entity مع نظام خارجي.
+Sync errors تظهر بوضوح.
+Approval workflows تعمل.
+8.6 Business acceptance criteria
+V5 يعتبر ناجحًا تجاريًا إذا:
+شركة متوسطة يمكنها إدارة عملياتها اليومية.
+يمكن التكامل مع Odoo أو QuickBooks أو Zoho.
+يمكن بيع ERP modules كمنتجات مدفوعة.
+يمكن بيع connectors.
+يمكن لشركة تعمل بالفعل استخدام Kabeeri كطبقة تشغيل أو تكامل.
+8.7 Demo المطلوب في نهاية V5
+Demo:
+شركة تبيع منتجات وخدماتتدير CRM ومبيعات ومخزون ومحاسبة ومشترياتوتربط QuickBooks أو Odooوتستخدم Teams وApprovals
+8.8 Gate للانتقال إلى V6
+لا نبدأ V6 إلا إذا:
+ERP Pro stableAccounting basic complete worksIntegration Hub stableAt least 2 connectors workContracts workAdvanced approvals workTalent reputation worksCloud/Billing/Marketplace stable
+9. V6 — Complete Platform Release
+9.1 هدف V6
+الوصول إلى منصة كاملة تجمع CMS + Commerce + ERP + Cloud + Marketplace + AI + Enterprise.
+9.2 نطاق V6
+CMS Complete
+Advanced WordPress Migrator.
+WooCommerce mapping.
+Elementor/Gutenberg partial mapping.
+SEO Complete.
+Multilingual Complete.
+Visual Builder Complete.
+Theme Builder Complete.
+Headless CMS.
+Commerce Complete
+Advanced checkout.
+Multi-currency.
+Multi-language commerce.
+B2B catalogs.
+Customer groups.
+Subscriptions basic.
+Gift cards.
+Bundles.
+Returns management.
+Shipping carrier integrations.
+POS advanced.
+Headless commerce.
+ERP Complete
+Finance Advanced.
+Accounting Advanced.
+Payroll Modular.
+HR Pro.
+Manufacturing/MRP Basic.
+Warehouse Advanced.
+Assets.
+BI Dashboards.
+Enterprise reporting.
+Enterprise
+SSO/SAML/OAuth.
+Advanced audit logs.
+Multi-company.
+Multi-branch.
+Multi-currency.
+Enterprise governance.
+Compliance exports.
+SIEM/SOC integrations.
+Marketplace Complete
+Internal Marketplace V2.
+Verified developers.
+Paid plugins/modules/themes.
+ERP module marketplace.
+Legal review for payroll/tax modules.
+Kabeeri Mall Complete.
+Multi-vendor operations.
+Sponsored listings.
+Advanced verification.
+AI Complete
+Full AI Co-builder.
+Multi-agent system.
+Developer assistant.
+ERP assistants.
+AI permissions.
+AI audit logs.
+AI rollback.
+AI marketplace skills.
+Integrations Complete
+SAP Business One.
+Microsoft Dynamics 365.
+Oracle NetSuite.
+Advanced Odoo.
+Advanced Shopify.
+Foodics.
+Payment gateways.
+Shipping carriers.
+9.3 Technical acceptance criteria
+V6 يعتبر ناجحًا تقنيًا إذا:
+منصة Cloud مستقرة.
+Self-hosted مستقر.
+Marketplace داخلي يعمل.
+Kabeeri Mall كامل يعمل.
+ERP Suite يعمل للشركات المتوسطة.
+Enterprise connectors تعمل.
+AI Co-builder آمن وقابل للرجوع.
+Governance/Audit/Compliance تعمل.
+Performance monitoring يعمل.
+9.4 Business acceptance criteria
+V6 يعتبر ناجحًا تجاريًا إذا:
+يمكن بيع Kabeeri كبديل WordPress للشركات.
+يمكن بيع Kabeeri كبديل WooCommerce/Shopify في شرائح معينة.
+يمكن بيع ERP Modules للشركات.
+يمكن بيع Cloud subscriptions.
+يمكن بيع Verification services.
+يمكن بيع Marketplace visibility.
+يمكن بيع Enterprise contracts.
+يمكن جذب Developers وPartners.
+9.5 Demo المطلوب في نهاية V6
+Demo كامل:
+شركة تبدأ بموقعتترقى إلى Verified Company عبر Rabetتبيع خدمات ومنتجات في Kabeeri Mallتدير فريقها ومهامهاتوظف أفراد من Talent Marketplaceتستخدم CRM/Sales/Inventory/Accounting/HRتربط نظام خارجي مثل Odoo أو QuickBooksوتستخدم AI لبناء Dashboard وWorkflow جديد
+10. Release Health Metrics
+كل إصدار يجب قياسه بهذه المؤشرات:
+10.1 Technical Metrics
+Installation success ratePage load timeError rateFailed jobsDatabase migration successBackup/restore successPermission errorsActivity log coverageTest coverage
+10.2 Product Metrics
+Time to create first siteTime to publish first pageTime to import WordPress siteTime to create productTime to receive first orderTime to verify companyTime to create business profile
+10.3 Business Metrics
+Active organizationsActive sitesVerified businessesPublished business profilesOrders createdService requestsJob offers sentSubscriptions paidChurn
+10.4 Trust Metrics
+Verification completion rateRejected verification rateDisputes openedDisputes resolvedAverage response timeReview qualityTrust score distribution
+11. Go / No-Go Checklist
+قبل الانتقال من أي إصدار للذي بعده:
+11.1 Go إذا:
+Critical bugs مغلقة.
+Database migrations مستقرة.
+Backups تعمل.
+Permissions تعمل.
+Activity logs تغطي الأحداث المهمة.
+Demo قابل للعرض.
+Documentation أساسية موجودة.
+لا يوجد Feature رئيسي مكسور.
+11.2 No-Go إذا:
+الصلاحيات غير مستقرة.
+البيانات تضيع أو تتكرر.
+migration يكسر النظام.
+لا يوجد rollback للعمليات المهمة.
+Admin experience غير قابلة للاستخدام.
+Feature أساسي غير مكتمل.
+لا يمكن شرح قيمة النسخة للعميل.
+12. ملخص Release Gates
+V1 Gate:Core + CMS + Organization/Site/Company foundation stableV2 Gate:WordPress migration + Commerce foundation + Business directory basic stableV3 Gate:Rabet basic + ERP essentials + tasks/team/business flows stableV4 Gate:Cloud + Billing + Marketplace + Rabet Company OS + Kabeeri Mall V1 stableV5 Gate:ERP Pro + Integration Hub + Connectors + Contracts + Approvals stableV6 Gate:Complete Platform ready for commercial scale and enterprise use
+13. الخلاصة التنفيذية
+هذا الملحق يحكم التنفيذ.
+أي Feature جديدة يجب أن تحدد:
+في أي إصدار تدخل؟ما الذي تعتمد عليه؟ما الذي ستخدمه لاحقًا؟ما الجداول التي تحتاجها؟ما معايير قبولها؟هل تؤثر على الصلاحيات؟هل تؤثر على privacy؟هل تحتاج activity log؟هل تحتاج billing؟هل تحتاج moderation؟هل تحتاج approvals؟
+إذا لم نستطع الإجابة، لا تدخل الـ Feature بعد.
+14. الخطوة التالية
+بعد هذا الملحق، يمكن بناء:
+KABEERI — ملحق 5: خريطة الصلاحيات والخصوصية والظهور
+ثم بعدها:
+Kabeeri V1 — Core Foundation for CMS + Company OS

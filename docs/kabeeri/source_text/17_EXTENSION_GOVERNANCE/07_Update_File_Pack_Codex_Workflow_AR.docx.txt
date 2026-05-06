@@ -1,0 +1,23 @@
+KABEERI Update File Pack & Codex Workflow Rules
+قانون رسمي لكيفية إضافة أي تحديث أو ميزة جديدة إلى ملفات Kabeeri بعد v1.6.4.
+Version: v1.6.4 | Status: Approved Documentation Addendum
+هذا الملف جزء من تحديث Freemium & Plans ولا يغير ملفات V1 المجمدة مباشرة. أي تطبيق يتم عبر Addendum أو تاسك واضح في Codex.
+القانون الأساسي
+كل تحديث جديد يجب أن ينتج حزمة ملفات منظمة حسب النوع: Business, Technical, Database/API, Codex Prompts, Acceptance. لا يتم خلط برومبتات التحديث مع برومبتات V1–V6 الأساسية.
+أماكن الملفات
+برومبتات V1–V6 الأساسية تبقى في 16_CODE_PROPMPTS_TO_CREATE_BY_CODEX.
+برومبتات الإضافات والتحديثات تبقى في 22_EXTENSION_CODEX_PROMPTS.
+ملفات البزنس للتحديثات الكبيرة تبقى في 19_EXTENSION_BUSINESS_ARCHITECTURE أو في فولدر البزنس الرئيسي لو كانت قرارًا استراتيجيًا عامًا.
+ملفات التقنية للتحديثات تبقى في 20_EXTENSION_TECHNICAL_ARCHITECTURE.
+ملفات الداتابيز/API للتحديثات تبقى في 21_EXTENSION_DATABASE_API_ADDENDUM أو داخل 04_DATABASE_ARCHITECTURE عند اعتمادها كجزء من قاعدة البيانات.
+قوائم القبول تبقى في 23_EXTENSION_ACCEPTANCE_CHECKLISTS.
+أجزاء أي Prompt
+Title واضح يحدد نطاق المهمة.
+Context: الملفات التي يجب قراءتها.
+Hard rules: ما لا يجب كسره أو تنفيذه.
+Tasks: خطوات صغيرة محددة.
+Acceptance criteria: شروط القبول.
+Do not implement: منع التوسع غير المطلوب.
+Output format: Summary, files changed, commands, tests, risks.
+سياسة النسخ
+V1 مجمدة لأنها دخلت التكويد. V2–V6 قابلة للتعديل حتى يبدأ تنفيذ كل نسخة. أي تعديل على نسخة مجمدة يتم عبر Addendum فقط. التحديثات الجديدة تستخدم أرقام وثائق Knowledge System مثل v1.6.4 وليس V9 إلا إذا كانت موجة تطوير منتج معتمدة.

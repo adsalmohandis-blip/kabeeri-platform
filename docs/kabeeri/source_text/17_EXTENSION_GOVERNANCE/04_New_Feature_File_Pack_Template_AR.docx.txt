@@ -1,0 +1,21 @@
+KABEERI New Feature File Pack Template
+قالب الملفات المطلوب عند إضافة أي ميزة جديدة.
+KABEERI Professional Knowledge System — v1.6.2
+رقم الملف
+العنوان
+المحتوى المطلوب
+01
+Business Architecture
+القيمة التجارية، المستخدمين المستهدفين، الحالات، التسعير/النمو، المخاطر.
+02
+Technical Architecture
+المكونات، الخدمات، APIs، integrations، security، dependency map.
+03
+Database & API Addendum
+الجداول الجديدة، الأعمدة، العلاقات، endpoints، permissions، feature flags.
+04
+Codex Prompt Pack
+برومبتات صفحة لكل مهمة، بدون تغيير نظام ملفات Codex السابق.
+05
+Acceptance Checklist
+معايير القبول، tests، security، performance، rollout، rollback.

@@ -1,0 +1,610 @@
+KABEERI Database Master Index
+فهرس قواعد البيانات الرئيسي — ملفات Database 01 إلى 39
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف هو طبقة تنظيمية فوق ملفات قواعد البيانات التي تم إعدادها. هدفه منع التكرار والتضارب قبل الانتقال إلى Laravel migrations، وتحديد أين يعيش كل كيان، وما الذي يعتمد على ماذا، وما ترتيب البناء الصحيح.
+البند
+القيمة
+نوع الملف
+Database Master Index
+يغطي
+39 ملف Database
+الهدف التالي بعده
+Master ERD ثم Laravel Migration Build Order
+مبدأ التحكم
+Core Kernel أولًا، ثم الموديولات، ثم التشغيل، ثم Enterprise/Industry
+حالة قاعدة البيانات
+مكتملة معماريًا كأساس، مع توسعات اختيارية حسب السوق والقطاع
+1. الهدف من Database Master Index
+تجميع كل ملفات Database في خريطة واحدة قابلة للتنفيذ.
+تحديد علاقة كل ملف بالإصدار المناسب V1 إلى V6.
+تحديد الجداول المشتركة التي يجب ألا تتكرر بأسماء مختلفة.
+تحديد ترتيب بناء migrations في Laravel.
+تحديد ملفات Database التي تعتبر source of truth لكل مجال.
+تجهيز المرحلة التالية: Master ERD وMigration Build Order.
+2. قاعدة القراءة العامة
+لا يجب قراءة ملفات Database كجزر منفصلة. كل ملف يصف domain معين، لكن الملكية والصلاحيات والظهور والـ audit والـ billing والتصدير تعتمد على Core Kernel وFive Systems Integration.
+User→ Organization / Customer Account→ Company / Business Account→ Site / Store / Portal→ Business Profile→ Mall Mirror / Public Listing→ Modules: CMS, Commerce, ERP, AI, Workflows, Integrations
+3. فهرس ملفات Database
+#
+الملف
+النطاق
+الإصدار / المرحلة
+الغرض المختصر
+1
+Core Kernel Database
+النواة / الهوية / الملكية
+V1 Foundation
+أساس Users, Organizations, Companies, Sites, RBAC, Settings, Logs, Media refs.
+2
+Kabeeri Cloud Database
+Cloud / SaaS
+V4 Commercial + default mode
+Cloud sites, domains, backups, health, billing core, entitlements.
+3
+Frontend Anywhere Database
+Headless / external frontend
+V4+
+External frontends, API keys, scopes, deployments, snapshots, cache invalidation.
+4
+Kabeeri Portable Database
+Self-hosted export
+V4+
+Export jobs, packages, self-hosted installations, licenses, update channels, mall sync.
+5
+Kabeeri Dedicated Database
+Dedicated enterprise hosting
+V6 / Enterprise
+Dedicated tenants, environments, databases, storage, health, backup, support access.
+6
+Five Systems Integration
+Operating modes integration
+Cross-cutting
+Operating modes, business passports, mall mirrors, tenant transitions, sync sources.
+7
+CMS Database
+CMS
+V1/V2
+Content types, entries, revisions, taxonomies, menus, redirects, SEO, sitemap, forms basic.
+8
+Media & Files Database
+Media / Documents
+V1+
+Media assets, usages, private documents, file versions, signed links, transformations.
+9
+Rabet & Verification Database
+Company trust / verification
+V1 foundation + V3/V4
+Business profiles, verification requests, documents, legal partner reviews, trust records.
+10
+Commerce Database
+Commerce foundation
+V2/V3
+Products, variants, cart, checkout, orders, customers, coupons, payments, shipping, tax links.
+11
+Mall & Public Marketplace Database
+Public marketplace
+V4/V6
+Mall mirror, listings, categories, inquiries, featured placements, public statuses.
+12
+Talent Marketplace Database
+Talent marketplace
+V4/V6
+Professional profiles, skills, work history, availability, offers, talent mirror.
+13
+ERP Essentials Database
+ERP foundation
+V3
+CRM lite, quotations, invoicing, inventory, purchasing, accounting starter, employees, evaluations.
+14
+ERP Pro Database
+ERP Pro
+V5
+CRM/Sales/Inventory/Purchasing/Accounting Pro, CLM, Helpdesk, POS, commissions, payouts.
+15
+Integration Hub Database
+Integration / iPaaS foundation
+V5/V6
+Connectors, connections, credentials refs, mappings, sync jobs/logs/errors, webhooks.
+16
+AI Co-builder Database
+AI builder governance
+V4/V6
+Sessions, prompts, plans, risk, previews, approvals, apply runs, rollback points, tool calls.
+17
+Events & Workflows Database
+Events / workflow engine
+V3+
+Events, listeners, workflow definitions/runs, approvals, automations, webhooks, retries.
+18
+Security & Compliance Database
+Security center
+V4/V6
+MFA, sessions, API tokens, security events, sensitive access, privacy, incidents, package/AI security.
+19
+Internal Marketplace & Packages Database
+Internal marketplace
+V1 foundation + V4/V6
+Packages, publishers, manifests, permissions, review pipeline, signing, installs, updates.
+20
+Localization & Country Packs Database
+Localization
+V6-ready
+Country packs, translations, tax/invoice/e-invoicing/legal/payment/shipping/privacy/payroll rules.
+21
+Migration Database
+Migration tools
+V2+
+Import projects, source objects, mappings, validation, preview, batches, redirects, reconciliation.
+22
+Billing & Subscriptions Database
+Billing
+V4+
+Plans, prices, subscriptions, entitlements, usage, invoices, payments, refunds, coupons, licenses.
+23
+Notification Center & Unified Inbox Database
+Notifications / inbox
+V1 foundation + V4
+Notifications, delivery attempts, conversations, messages, participants, templates, routing.
+24
+Reviews, Ratings & Reputation Database
+Reputation
+V4+
+Reviews, ratings, responses, reports, moderation links, reputation scores, trust score signals.
+25
+Dispute Resolution Database
+Disputes
+V4/V6
+Disputes, parties, evidence, decisions, appeals, SLA, financial holds, trust impact.
+26
+Search Engine Database
+Search
+V1 basic + V4/V6
+Search indexes, records, facets, synonyms, reindex jobs, query/click logs, saved searches.
+27
+Moderation System Database
+Moderation
+V4+
+Moderation cases, reports, queue items, actions, decisions, appeals, rule matches, blocked terms.
+28
+Teams / Collaboration Database
+Team collaboration
+V4
+Channels, DMs, threads, mentions, files, task links, approval links, read receipts.
+29
+Agency Platform Database
+Agency platform
+V4
+Agency clients, grants, client sites, maintenance notes, white-label foundation, reseller links.
+30
+Onboarding Wizard Database
+Onboarding
+V1+
+Flows, versions, steps, sessions, answers, checklists, action runs, templates, suggestions.
+31
+Advanced Reporting / BI / Analytics Database
+Reporting / BI
+V5/V6
+Report definitions, runs, dashboards, widgets, KPIs, scheduled reports, exports.
+32
+GRC / Risk / Compliance Database
+GRC
+V6
+Policies, obligations, risks, controls, testing, evidence, audits, findings, DOA/SoD.
+33
+Developer Console & SDK Database
+Developer platform
+V6-ready
+Developer accounts, SDK projects, API clients, sandboxes, test runs, docs, metrics.
+34
+Industry Solutions Database
+Industry solutions
+V6+
+Solution registry, templates, workflows, dashboards, requirements, installs, demo data.
+35
+Enterprise Architecture / App Portfolio Database
+Enterprise architecture
+V6
+Application portfolio, system catalog, capabilities, data ownership, integration maps, impact analysis.
+36
+Testing / QA / DevOps Operational Database
+QA / DevOps
+All releases
+Test suites, QA gates, releases, deployments, quality runs, backup verification, incidents.
+37
+Data Warehouse / Data Platform Database
+Data platform
+V6
+Data sources, ingestion, raw/staging, marts, metrics, dictionary, lineage, quality, BI exports.
+38
+ESG / EHS / Sustainability Database
+Enterprise suite optional
+V6+/Industry
+ESG metrics, frameworks, emission records, EHS incidents, inspections, permits, sustainability evidence.
+39
+PLM / R&D / Engineering Database
+Enterprise suite optional
+V6+/Industry
+Engineering items, versions, requirements, EBOM, R&D projects, ECR/ECO, release packages.
+4. تصنيف الملفات حسب الطبقات
+الطبقة
+أرقام الملفات
+الوصف
+Core & Ownership
+01, 06
+النواة، Business Passport، operating modes، transitions، source of truth.
+Hosting / Deployment Modes
+02, 03, 04, 05, 06
+Cloud, Frontend Anywhere, Portable, Dedicated، والتكامل بينهم.
+Content & Public Presence
+07, 08, 09, 11, 12, 24, 26, 27
+CMS، ملفات، Rabet، Mall، Talent، reviews، search، moderation.
+Commerce & Business Operations
+10, 13, 14, 17, 22, 23, 25
+Commerce، ERP Essentials/Pro، workflows، billing، inbox، disputes.
+Platform Extensibility
+15, 19, 20, 21, 33, 34
+Integration Hub، packages، localization، migration، SDK، industry solutions.
+Security, Governance & Enterprise
+18, 31, 32, 35, 36, 37
+Security، BI، GRC، Enterprise Architecture، QA/DevOps، Data Platform.
+Optional Industry/Enterprise Suites
+38, 39
+ESG/EHS/Sustainability وPLM/R&D/Engineering.
+5. خريطة الإصدارات
+الإصدار
+ملفات Database الأكثر ارتباطًا
+V1 — Core CMS + Company Foundation
+01, 07, 08, 09 foundation, 17 foundation, 18 foundation, 19 foundation, 23 foundation, 26 basic, 30 basic, 36 QA
+V2 — WordPress Migration + Commerce Foundation
+07 expansion, 10 foundation, 21 migration, 23 inbox expansion, 26 search expansion
+V3 — Business Foundation + ERP Essentials
+09 Rabet workflow, 13 ERP Essentials, 17 workflows/approvals, 23 notifications/inbox, 31 basic reports
+V4 — Cloud + Marketplace + Rabet Mall
+02, 03, 06, 11, 12, 16 AI V1, 18 Security Center, 19 Internal Marketplace, 22 Billing, 24 Reviews, 25 Disputes, 27 Moderation, 28 Teams, 29 Agency
+V5 — ERP Pro + Integration Hub
+14 ERP Pro, 15 Integration Hub, 31 Advanced Reporting foundation, 17 Advanced approvals, 22 commissions/billing links
+V6 — Enterprise Complete Platform
+05 Dedicated, 20 Country Packs, 32 GRC, 33 Developer Console, 34 Industry, 35 Enterprise Architecture, 37 Data Platform, 38 ESG, 39 PLM
+6. Source of Truth للكيانات المركزية
+الجدول / المفهوم
+الملف المصدر
+قاعدة التوحيد
+users
+Core Kernel
+هوية الشخص الحقيقي. ممنوع إضافة company_id أو organization_id مباشرة داخله.
+organizations
+Core Kernel
+ملف العميل/الـ tenant الأساسي. كل بيانات العميل يجب أن ترتبط به مباشرة أو غير مباشرة.
+organization_memberships
+Core Kernel
+مصدر أدوار وصلاحيات المستخدم داخل Organization.
+companies
+Core Kernel / Rabet
+الكيان التجاري داخل Organization. يستخدم في Rabet وERP وCommerce وMall.
+company_memberships
+Core Kernel / ERP
+علاقة المستخدم بالشركة، منفصلة عن Professional Profile وEmployee Profile.
+sites
+Core Kernel / CMS / Cloud
+الواجهة الرقمية: موقع، متجر، portal، landing. ليست Company.
+business_profiles
+Rabet / Mall
+الواجهة العامة للشركة، ومنها تنشأ Mall mirrors.
+media_assets / media_usages
+Media
+مكتبة ملفات مركزية. الملفات لا تحفظ في DB، بل metadata وrelative paths.
+settings / feature_flags
+Core
+إعدادات وتفعيل خصائص لكل scope. تستخدم عبر كل الموديولات.
+activity_logs / audit_logs
+Core / Security
+سجل عام وسجل حساس. أي action مهم يجب أن يسجل.
+billing_accounts / subscriptions / entitlements
+Billing
+مصدر الحقوق التجارية والاستهلاك والقيود.
+mall_sync_sources / mall_mirror_*
+Integration / Mall
+النسخة العامة التي يعتمد عليها Mall، وليس DB العميل الأصلية.
+workflow_definitions / workflow_runs / approval_requests
+Events & Workflows
+محرك الإجراءات والموافقات عبر الموديولات.
+search_index_records
+Search
+جداول مشتقة قابلة لإعادة البناء، ليست source of truth.
+7. قرارات توحيد مهمة قبل بناء migrations
+هذه القرارات تمنع تكرار الجداول بين الموديولات. عند التعارض، المصدر المذكور هنا هو المرجع الأعلى.
+النقطة
+قرار التوحيد
+Billing in Cloud vs Billing file
+يجب اعتبار ملف Billing & Subscriptions هو المصدر الرئيسي. جداول Cloud billing في ملف Cloud كانت foundation أولية وتحتاج توحيد naming مع ملف Billing.
+Media vs Documents
+Media Library للصور والملفات العامة/الخاصة. Document Management للمستندات القانونية والتشغيلية ذات صلاحيات وسجلات وصول أقوى. لا نكرر الملفات.
+Notifications in Core vs Notification Center
+جدول notifications الأساسي في Core هو foundation. ملف Notification Center يوسع delivery, preferences, templates, inbox.
+Audit logs in Core vs Security
+audit_logs الأساسية في Core. ملف Security يضيف sensitive access, incidents, privileged access, API/security events.
+Mall Mirror in Integration vs Mall file
+الجداول mirror يجب أن تكون في Central/Mall domain، لكن مصدر sync معرف في Integration. لا يقرأ Mall من DB العميل مباشرة.
+Reviews in Mall/Talent/Commerce
+Reviews engine هو المصدر المركزي للتقييمات والسمعة. الموديولات تربط reviews عبر subject_type/subject_id.
+Approvals in ERP vs Workflows
+الموافقات التشغيلية في ERP تستخدم Workflow/Approval engine المركزي بدل جداول منفصلة لكل موديول.
+Reports in ERP vs BI/Data Platform
+التقارير التشغيلية البسيطة داخل ERP، لكن التقارير الثقيلة والـ dashboards والـ KPI في BI/Data Platform.
+AI suggestions in multiple modules
+AI-specific storage يجب أن يبقى في AI Co-builder، والموديولات تحفظ فقط references أو applied change links.
+8. ترتيب بناء قاعدة البيانات — Build Waves
+الترتيب التالي ليس release plan تسويقي فقط، بل ترتيب فعلي لبناء migrations بحيث لا يتم إنشاء جدول يعتمد على كيان لم يُبْنَ بعد.
+Wave
+المجموعة
+الجداول / النطاق
+ملاحظات
+0
+Global References
+countries, currencies, languages لاحقًا, global permissions, modules
+لا تعتمد على tenant.
+1
+Identity & Ownership
+users, user_profiles, organizations, memberships, companies, company_memberships, sites
+أساس كل شيء.
+2
+Access & Core Operations
+roles, permissions, role_permission, settings, feature_flags, activity_logs, audit_logs, notifications foundation, media_assets
+لا تبدأ CMS قبلها.
+3
+Operating Modes Foundation
+cloud_sites, organization_operating_modes, business_passports, mall_sync_sources, tenant_transitions
+يربط Cloud/Portable/Dedicated/Frontend Anywhere.
+4
+CMS + Media + Documents
+content_types, content_entries, revisions, taxonomies, menus, redirects, forms, document records
+أول منتج قابل للاستخدام.
+5
+Rabet & Verification
+business_profiles, verification_requests, verification_documents, legal partner review records, trust_records
+أساس الثقة والظهور العام.
+6
+Commerce Foundation
+products, variants, carts, orders, customers, coupons, payments, shipping/tax settings
+V2.
+7
+Mall / Talent / Trust
+mall_mirror_*, listings, professional_profiles, reviews, moderation, disputes, search indexes
+لا يبدأ قبل visibility/consent.
+8
+Billing / Inbox / Notifications
+billing_accounts, plans, subscriptions, entitlements, invoices_platform, payments_platform, conversations, deliveries
+لا تخلط مع ERP invoices.
+9
+ERP Essentials
+leads, quotations, invoices, stock balances/movements, purchase orders, employees, evaluations, workflow basic
+V3.
+10
+Advanced Operations
+ERP Pro, Integration Hub, AI Co-builder, advanced workflows/approvals, commissions/payouts
+V5/V4 AI.
+11
+Enterprise Governance & Analytics
+Security advanced, BI, GRC, Data Platform, Enterprise Architecture, Testing/DevOps operational
+V6 readiness.
+12
+Industry / Enterprise Suites
+Industry Solutions, ESG, PLM, future Retail/Manufacturing/HCM advanced
+اختيارية حسب السوق.
+9. خريطة Laravel Modules المقترحة
+الهدف هو أن تبقى قاعدة البيانات modular، لكن بدون microservices مبكرة. كل Module يملك migrations/models/policies/actions/jobs/tests الخاصة به، مع الاعتماد على Core.
+Module
+ملفات DB
+مسار Laravel مقترح
+Models أساسية
+Core
+01, 06
+Modules/Core
+User, Organization, Company, Site, Role, Permission, Setting, FeatureFlag, ActivityLog, AuditLog
+CMS
+07
+Modules/Cms
+ContentType, ContentEntry, Revision, Taxonomy, Menu, Redirect, Form
+MediaDocuments
+08
+Modules/MediaDocuments
+MediaAsset, MediaUsage, Document, FileAccessLog, SignedLink
+Rabet
+09
+Modules/Rabet
+BusinessProfile, VerificationRequest, VerificationDocument, LegalReview, TrustRecord
+Commerce
+10
+Modules/Commerce
+Product, Variant, Cart, Order, Customer, Coupon, Payment, ShippingZone
+Mall
+11, 24, 25, 26, 27
+Modules/Mall
+MallMirrorBusiness, Listing, Inquiry, Review, Dispute, ModerationCase, SearchIndex
+Talent
+12
+Modules/Talent
+ProfessionalProfile, Skill, WorkHistory, PortfolioItem, JobOffer
+ERP
+13, 14
+Modules/Erp
+Lead, Quotation, Invoice, StockMovement, PurchaseOrder, JournalEntry, Contract, Ticket, POSSession
+Integration
+15, 21
+Modules/Integration
+Connector, Connection, SyncJob, SyncLog, FieldMapping, MigrationProject
+AI
+16
+Modules/Ai
+AiSession, AiPlan, AiPreview, AiApproval, AiApplyRun, RollbackPoint
+Workflow
+17
+Modules/Workflow
+EventLog, WorkflowDefinition, WorkflowRun, ApprovalRequest, Automation, Webhook
+Security
+18, 32
+Modules/SecurityCompliance
+MfaMethod, ApiToken, SecurityEvent, Incident, Policy, Risk, Control, Evidence
+Billing
+22
+Modules/Billing
+BillingAccount, Plan, Price, Subscription, Entitlement, UsageRecord, PlatformInvoice, Payment
+PlatformOps
+23, 28, 29, 30, 36
+Modules/PlatformOps
+Notification, Conversation, Channel, AgencyClient, OnboardingSession, DeploymentRun
+Analytics
+31, 37
+Modules/Analytics
+ReportDefinition, Dashboard, Kpi, DataSource, DataMart, DataQualityRule
+DeveloperPlatform
+19, 33
+Modules/DeveloperPlatform
+Package, Publisher, Manifest, DeveloperAccount, SdkProject, Sandbox
+Enterprise
+34, 35, 38, 39
+Modules/Enterprise
+IndustrySolution, ApplicationPortfolio, EsgMetric, EngineeringItem, ECO
+10. قواعد عامة لأسماء الجداول والحقول
+أسماء الجداول بصيغة الجمع وsnake_case: users, organizations, business_profiles.
+أسماء الموديلات بصيغة المفرد وPascalCase: User, Organization, BusinessProfile.
+كل كيان business مهم يفضل أن يحتوي: id, uuid, organization_id, status, visibility, metadata, created_by, updated_by, timestamps, deleted_at عند الحاجة.
+id للعلاقات الداخلية السريعة، وuuid/ulid للتصدير، الـ API، والمزامنة بين Cloud/Portable/Dedicated.
+لا نستخدم JSON بدل العلاقات الأساسية. JSON فقط للإعدادات المرنة، metadata، provider-specific data، أو rules قابلة للتغيير.
+أي بيانات قابلة للظهور العام يجب أن تحتوي visibility/publication_status أو تمر عبر consent/mirror layer.
+أي جدول يحتوي بيانات حساسة يجب أن يرتبط بـ audit_logs أو sensitive_access_logs حسب مستوى الخطر.
+11. قواعد الـ Tenancy والعزل
+النمط الافتراضي في البداية: Shared Database + Tenant Scoping.
+كل بيانات العميل يجب أن تحتوي organization_id مباشرة أو يمكن الوصول إليها عبر علاقة واضحة تحتوي organization_id.
+site_id لا يغني عن organization_id في الجداول المهمة إذا كان الجدول يحتاج export أو billing أو audit.
+company_id يستخدم عندما يكون الكيان تابعًا لشركة، وليس مجرد موقع.
+Dedicated لا يلغي organization_id؛ يبقى موجودًا لتوحيد الكود ودعم multi-company داخل العميل الكبير.
+Portable export يعتمد على organization_id + UUID preservation + export registry.
+12. قواعد Visibility / Privacy / Public Mirror
+لا يظهر أي شيء في Mall بدون mall_publication_consent.
+Mall لا يقرأ من قاعدة بيانات العميل مباشرة؛ يعتمد على mall_mirror_* tables.
+Frontend Anywhere لا يرى إلا public API scopes ولا يحصل على private invoices أو accounting أو employee data.
+Talent Marketplace يستخدم Professional Profile منفصل عن Employee Profile الداخلي.
+Reviews العامة لا تساوي performance evaluations الداخلية.
+Search العام يستخدم public index فقط، أما admin search فيجب أن يكون permission-aware.
+13. قواعد Events / Workflows / Audit
+Action happens→ Event fired→ Listeners run→ Activity/Audit log created→ Notifications/Workflows/Webhooks triggered→ Optional AI suggestion / approval / rollback point
+لا تربط الموديولات ببعض مباشرة إذا كان Event يكفي.
+أي Action حساس يجب أن يترك audit log: permissions, billing, finance, verification, AI apply, package install, export, sync.
+الموافقات المركزية يجب أن تمر عبر Workflow/Approval engine بدل جداول مختلفة في كل موديول.
+AI لا يطبق تغييرات مؤثرة إلا عبر plan/preview/approval/apply/rollback.
+14. قواعد Billing وEntitlements
+ملف Billing & Subscriptions هو source of truth للخطط والاشتراكات والحقوق التجارية.
+Cloud Database يحتوي روابط cloud provisioning، لكنه لا يجب أن يكرر منطق billing كامل.
+Platform invoices منفصلة عن invoices التي يصدرها العميل لعملائه داخل ERP/Commerce.
+أي ميزة مدفوعة يجب أن تمر عبر EntitlementService قبل التنفيذ.
+Usage records يجب أن تكون قابلة للربط بـ organization/site/company/subscription/source.
+15. قواعد Portable / Dedicated / Frontend Anywhere
+النمط
+Source of Truth
+ما يبقى في Kabeeri Central
+ملاحظة
+Cloud
+Kabeeri Cloud DB
+Billing, Mall Mirror, Verification/Trust, logs حسب السياسة
+الوضع الافتراضي.
+Frontend Anywhere
+Kabeeri Cloud DB
+كل البيانات الأصلية + Mall Mirror
+الواجهة فقط خارجية.
+Portable
+Customer Self-hosted DB
+Business Passport, Mall Mirror إذا وافق، license, export logs, trust/public records
+Mall Sync عبر signed API.
+Dedicated
+Dedicated DB
+Central registry, billing relationship, public trust/mall mirror, health/update bridge
+بيئة منفصلة ومدارة أو مدعومة.
+16. مخاطر يجب منعها قبل التنفيذ
+إنشاء users.company_id أو users.role سيكسر نموذج الصلاحيات المتعدد.
+خلط Business Profile مع Company سيجعل Mall وRabet غير واضحين.
+خلط Platform billing invoices مع customer invoices سيخلق مشاكل محاسبية.
+قراءة Mall من DB العميل مباشرة ستكسر الخصوصية وPortable/Dedicated.
+تخزين API keys أو credentials plain text في قاعدة البيانات ممنوع.
+استخدام JSON لعلاقات أساسية مثل products أو companies داخل user خطأ معماري.
+إدخال ERP Pro أو GRC أو Industry Suites قبل Core/CMS/Commerce/Rabet/Billing سيؤخر V1 بلا داعي.
+17. قائمة الجداول التي يجب تدقيقها في Master ERD
+المجموعة
+الجداول التي تحتاج مراجعة ERD تفصيلية
+Identity
+users, organizations, organization_memberships, companies, company_memberships, sites
+RBAC
+roles, permissions, role_permission, membership_role_assignments, membership_permission_overrides
+CMS
+content_types, content_entries, revisions, taxonomies, terms, menus, redirects, forms
+Media/Documents
+media_assets, media_usages, documents, document_versions, signed_links, access_logs
+Rabet
+business_profiles, verification_requests, verification_documents, legal_partner_reviews, trust_records
+Commerce
+products, product_variants, carts, orders, order_items, customers, payments, coupons
+Mall/Talent
+mall_mirror_*, mall_listings, professional_profiles, skills, reviews, moderation_cases, disputes
+Billing
+billing_accounts, plans, prices, subscriptions, entitlements, usage_records, invoices_platform, payments_platform
+Workflows
+events, listener_runs, workflow_definitions, workflow_runs, approval_requests, automations, webhooks
+ERP
+leads, contacts, quotations, invoices, stock_movements, purchase_orders, journal_entries, employees, contracts, tickets
+Integration
+connectors, connections, credentials refs, sync_jobs, sync_logs, field_mappings, external_object_links
+AI
+ai_sessions, ai_messages, ai_plans, ai_previews, ai_approvals, ai_apply_runs, rollback_points
+Enterprise
+policies, risks, controls, evidence, dashboards, data_sources, applications, industry_solutions
+18. مخرجات هذا الملف للمرحلة التالية
+#
+المخرج التالي
+الوصف
+1
+Master ERD / Relationship Map
+رسم العلاقات الكبرى وتحديد cardinality لكل كيان.
+2
+Laravel Migration Build Order
+تحويل build waves إلى ملفات migrations فعلية بالترتيب، مع indexes وFK strategy.
+3
+Laravel Module Architecture
+تحديد Modules, Models, Policies, Actions, Events, Jobs, Filament Resources, Tests.
+4
+V1 Implementation Blueprint
+أول نسخة قابلة للبناء: migrations + models + policies + Filament + tests + demo.
+5
+V1 Backlog & Git Plan
+تحويل blueprint إلى issues/commits يومية صغيرة مناسبة لمؤسس واحد مع AI.
+19. قرار ختامي
+تعتبر مرحلة Database Architecture مكتملة بما يكفي للانتقال إلى التنفيذ، بشرط عدم فتح ملفات Database جديدة إلا إذا ظهرت حاجة قطاعية واضحة. الخطوة الصحيحة الآن هي تحويل هذا الفهرس إلى Master ERD ثم Migration Build Order.
+قرار
+الحالة
+Core database files
+مكتملة
+Hosting/ownership modes
+مكتملة
+CMS/Commerce/Rabet/Mall/Talent
+مكتملة
+ERP Essentials/Pro/Integration/AI/Workflows
+مكتملة
+Security/Billing/Notifications/Reviews/Disputes/Search/Moderation
+مكتملة
+Enterprise/GRC/BI/Data Platform/Developer/Industry
+مكتملة كمعمارية
+التوصية
+الانتقال إلى Master ERD / Migration Build Order
+20. Checklist قبل كتابة أول Migration
+تثبيت naming convention النهائي للجداول والـ models.
+تحديد UUID/ULID strategy.
+تحديد FK strategy: enforce vs nullable vs soft references.
+تحديد soft delete strategy لكل domain.
+تحديد polymorphic relations المقبولة والممنوعة.
+تحديد encrypted columns وvault refs.
+تحديد audit thresholds: ما الذي يذهب activity_logs وما الذي يذهب audit_logs.
+تحديد export registry لكل module من البداية.
+تحديد permissions seed وأسماء الصلاحيات الأساسية.
+تحديد feature flags seed لكل release.
+تحديد أول demo flow: register → organization → site → page publish → media upload → business profile draft.
+KABEERI Database Master Index
+KABEERI / Kabeeri / kabeeri — powered by ADMIT

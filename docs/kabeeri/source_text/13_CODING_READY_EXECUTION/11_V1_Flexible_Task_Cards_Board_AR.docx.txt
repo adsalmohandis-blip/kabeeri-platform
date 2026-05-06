@@ -1,0 +1,318 @@
+KABEERI V1 Flexible Task Cards Board
+لوحة بطاقات مرنة لتنفيذ V1 مع Codex — كل بطاقة قابلة للتنفيذ منفصلة
+1. قواعد استخدام لوحة المهام
+هذه اللوحة لا تستبدل ملف V1 Codex Prompt Pack، بل تترجمه إلى بطاقات تنفيذ مرنة حسب الوقت المتاح. عند تنفيذ أي بطاقة، استخدم الـ Prompt المقابل من ملف V1 الأصلي ولا تدمج بطاقتين في نفس الجلسة إلا إذا كان لديك يوم كامل وبعد commit منفصل لكل بطاقة.
+2. تصنيف المجهود
+الكود
+المعنى
+المدة
+الوصف
+S
+Small
+30–60 دقيقة
+مهمة صغيرة أو مراجعة أو تجهيز
+M
+Medium
+1.5–3 ساعات
+Prompt كامل متوسط
+L
+Large
+3–6 ساعات
+Prompt كبير أو مجموعة خطوات تحتاج مراجعة
+3. بطاقات V1 بالترتيب
+ID
+Prompt
+العنوان
+الحجم
+المطلوب
+تعريف الإنجاز
+ملاحظات
+T00
+Prompt 00
+Rules & Session Context
+S
+تهيئة جلسة Codex بقواعد V1
+لا يوجد تعديل كود
+كل جلسة جديدة
+T01
+Prompt 01
+Laravel Project Foundation
+M
+إنشاء/تثبيت مشروع Laravel
+Laravel يعمل + tests pass
+قبل أي ميزة
+T02
+Prompt 02
+Quality Tooling
+S
+Pint/tests/health test
+pint/test commands documented
+بعد Laravel مباشرة
+T03
+Prompt 03
+Filament Install
+M
+تثبيت لوحة الإدارة
+Filament loads
+بدون resources
+T04
+Prompt 04
+Module Skeleton
+S
+هيكل الموديولات
+app/Modules + MODULES.md
+بدون DB
+T05
+Prompt 05
+Core Lookups
+S
+countries/currencies
+seed/tests pass
+أساس عالمي
+T06
+Prompt 06
+User Profile
+M
+user_profiles
+لا tenant columns في users
+بعد auth
+T07
+Prompt 07
+Organizations
+M
+organizations table/model/policy
+owner relationship + tests
+Tenant root
+T08
+Prompt 08
+Org Memberships
+M
+organization_memberships
+owner membership action
+بعد organizations
+T09
+Prompt 09
+Companies
+M
+companies foundation
+company under org
+بعد memberships
+T10
+Prompt 10
+Company Memberships
+M
+company_memberships
+multiple company memberships
+بعد companies
+T11
+Prompt 11
+Sites / Apps
+M
+sites technical / apps UI
+organization has apps
+بعد companies
+T12
+Prompt 12
+Settings
+M
+settings service
+scoped set/get tests
+Core config
+T13
+Prompt 13
+Feature Flags
+M
+feature flags + overrides
+resolve default/override
+قبل modules
+T14
+Prompt 14
+RBAC DB
+L
+roles/permissions tables
+role assigned to membership
+دقيق جدًا
+T15
+Prompt 15
+Roles Seeder
+M
+V1 roles/permissions seed
+idempotent seeder
+بعد RBAC
+T16
+Prompt 16
+Permission Service
+L
+check permissions via memberships
+deny override wins
+قبل policies
+T17
+Prompt 17
+Activity Logs
+M
+activity_logs service
+log by org/action
+Core audit light
+T18
+Prompt 18
+Audit Logs Basic
+M
+audit_logs sensitive events
+before/after stored
+لا GRC
+T19
+Prompt 19
+Notifications Basic
+M
+notifications basic
+create/read tests
+بدون inbox
+T20
+Prompt 20
+Media Assets
+L
+media_assets/usages
+metadata + polymorphic usage
+قبل CMS media
+T21
+Prompt 21
+Theme Foundation
+M
+themes/settings
+starter theme seeded
+لا 300 themes
+T22
+Prompt 22
+Package Foundation
+M
+modules/installations
+enable module
+لا marketplace
+T23
+Prompt 23
+CMS Tables
+L
+content types/entries/taxonomies
+page/post supported
+Core CMS
+T24
+Prompt 24
+CMS Actions/Policies
+L
+create/update/publish actions
+permission-based publishing
+بعد CMS tables
+T25
+Prompt 25
+Public Rendering
+M
+published page rendering
+draft not public
+starter output
+T26
+Prompt 26
+Rabet Draft
+M
+business profile draft
+verification draft only
+لا legal partners
+T27
+Prompt 27
+Onboarding Basic
+M
+first workspace action
+org+app created
+بعد core models
+T28
+Prompt 28
+Filament Organizations
+M
+OrganizationResource
+policies respected
+UI start
+T29
+Prompt 29
+Filament Companies/Apps
+M
+Company/Site Resources
+create/edit works
+UI core
+T30
+Prompt 30
+Filament CMS
+L
+Content resources
+publish action
+UI CMS
+T31
+Prompt 31
+Filament Media
+M
+Media resource/upload
+metadata stored
+UI media
+T32
+Prompt 32
+Filament Settings/Flags
+M
+safe settings/flags
+authorized only
+System UI
+T33
+Prompt 33
+Filament Activity Logs
+S
+read-only logs
+tenant scoped
+Admin observability
+T34
+Prompt 34
+Demo Seed Data
+M
+demo org/app/pages
+fresh seed works
+قبل smoke tests
+T35
+Prompt 35
+Smoke Tests
+L
+V1 end-to-end smoke
+tenant isolation + flows
+Release confidence
+T36
+Prompt 36
+Security Pass
+L
+policy/tenant review
+no cross-org access
+قبل RC
+T37
+Prompt 37
+UI Cleanup
+M
+Filament navigation/forms
+usable admin
+بدون features
+T38
+Prompt 38
+Starter Theme
+M
+basic public theme
+RTL acceptable
+لا visual builder
+T39
+Prompt 39
+Docs Update
+S
+README/docs sync
+commands accurate
+قبل RC
+T40
+Prompt 40
+Release Candidate
+M
+final checks/report
+fresh setup works
+نهاية V1 RC
+4. مسار العمل الأدنى لو وقتك محدود
+لو وقتك قليل جدًا، أنجز T00 → T04 أولًا، ثم تقدم في قاعدة البيانات الأساسية T05 → T13. لا تدخل CMS أو Filament Resources قبل استقرار Organizations/Memberships/Sites/RBAC.

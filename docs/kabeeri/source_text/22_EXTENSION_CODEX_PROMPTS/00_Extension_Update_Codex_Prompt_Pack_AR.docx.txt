@@ -1,0 +1,37 @@
+TASK TRACKING AUTOMATION — MANDATORYBefore starting any task from this prompt pack, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php start EXT_UPDATE TXXAfter implementation and tests pass, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php done EXT_UPDATE TXX --prompt=XX --tests="php artisan test" --commit=pending --notes="short summary"If blocked, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php block EXT_UPDATE TXX --notes="reason"Codex must not mark tasks as verified. Only the project owner can run:php 24_kabeeri_task_tracking/scripts/kbr-task.php verify EXT_UPDATE TXX --notes="reviewed"Replace TXX and XX with the current task/prompt number. This rule is mandatory and comes before all implementation instructions.
+00 — برومبتات Codex لإضافة تحديثات وثائقية جديدة
+ملف عملي يستخدم عند إضافة أي ميزة جديدة إلى ملفات Kabeeri. يلتزم بنفس النظام المتفق عليه ولا يغير ملفات V1 المجمّدة.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+Prompt 00 — Extension Update Rules
+You are updating the KABEERI Knowledge System documentation only.
+Read 17_EXTENSION_GOVERNANCE/06_Extension_Codex_Prompt_Rules_AR.docx and 17_EXTENSION_GOVERNANCE/03_File_Folder_Architecture_Rules_AR.docx before editing.
+Rules:
+1. Do not modify frozen V1 documents unless explicitly requested.
+2. Add new documents in the correct folder according to file type.
+3. Update the folder map, manifest, and release notes.
+4. Keep paths short to avoid Windows path too long errors.
+5. Report files added, files updated, and risks.
+Prompt 01 — Add Business Architecture File
+Create a Business Architecture document for the new extension.
+Include: problem, target users, value proposition, business flows, pricing/monetization impact, dependencies, out-of-scope, Vx positioning.
+Do not create technical tables or migrations in this file.
+Prompt 02 — Add Technical Architecture File
+Create a Technical Architecture document for the extension.
+Include: components, boundaries, data flow, service boundaries, API contracts, integration points, security assumptions, feature flags, rollout plan.
+Do not implement code.
+Prompt 03 — Add Database and API Addendum File
+Create a Database & API Addendum for the extension.
+Include: new tables, altered tables if any, indexes, relationships, API endpoints, permissions, events, jobs, feature flags, migration risks.
+All schema changes must be additive unless explicitly approved.
+Prompt 04 — Add Codex Prompt Pack File
+Create a Codex Prompt Pack for the extension.
+Every prompt must start on a new page in DOCX.
+Each prompt must include: goal, tasks, hard rules, acceptance criteria, do-not-implement, output format.
+Use one prompt per small feature.
+Prompt 05 — Add Acceptance Checklist File
+Create an Acceptance Checklist for the extension.
+Include: functional checks, security checks, tenant isolation checks, API checks, migration checks, QA checks, release gate, rollback/disable strategy.
+Prompt 06 — Update Index and Manifest
+After adding extension files, update: Project Folder Map, Extension Registry, MANIFEST csv/json, release notes, and current version.
+Do not rename existing files unless required to fix path length.

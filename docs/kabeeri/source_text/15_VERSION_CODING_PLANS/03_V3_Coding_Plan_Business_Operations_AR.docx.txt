@@ -1,0 +1,37 @@
+KABEERI V3 Coding Plan — Business Operations
+خطة تكويد منفصلة لهذا الإصدار، مهيأة للتحويل إلى Sprint Backlog داخل أداة إدارة المشروع.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. هدف الإصدار
+هذا الملف يحدد ما يتم تكويده في هذا الإصدار فقط، مع منع إدخال ميزات من إصدارات لاحقة إلا كـ feature flags مغلقة أو foundations واضحة.
+2. السبرنتات المقترحة
+السبرنت
+النطاق
+أهم الجداول/الموديولات
+مخرج قابل للاختبار
+Sprint 1
+CRM Lite
+leads, contacts, timeline, sources
+Convert service request to lead
+Sprint 2
+Booking + Service Ops
+booking lite, appointments, reminders
+Book service appointment
+Sprint 3
+Courses + Travel Basic
+course listings, trip packages mirrors/admin
+Publish course/trip listing
+Sprint 4
+Sales/Invoicing/Inventory Basic
+quotations, invoices, stock balances
+Convert quote/order to invoice
+Sprint 5
+App Builder Projects
+implementation projects, access grants, milestones
+Client hires builder
+Sprint 6
+Reports + QA
+basic dashboards, workflow tests
+Operations demo
+3. Release Gate
+لا يعتبر الإصدار جاهزًا إلا بعد نجاح unit/feature/policy tests، ومراجعة الصلاحيات، وتحديث seed data، وتشغيل demo scenario بدون أخطاء.

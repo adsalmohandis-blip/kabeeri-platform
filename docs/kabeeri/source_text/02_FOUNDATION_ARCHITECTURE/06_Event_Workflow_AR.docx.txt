@@ -1,0 +1,500 @@
+KABEERI — ملحق 6: خريطة الأحداث ومحرك الـ Workflows
+ملحق للملف الرئيسي وملاحق التأسيس والتشغيل والترابط والإصدارات والصلاحيات
+هذا الملف يشرح كيف تتحرك الأحداث داخل Kabeeri، وكيف ترتبط أجزاء المنصة ببعضها عبر Events وWorkflows وAutomations.
+الهدف:
+جعل Kabeeri منصة مترابطة وذكية، بحيث أي حدث مهم يمكن أن يطلق إشعارًا، مهمة، Workflow، Webhook، AI Suggestion، Audit Log، أو تكامل خارجي.
+1. لماذا Event Map مهم؟
+Kabeeri ليس CMS منفصل عن ERP أو Marketplace أو Rabet.
+كل شيء مترابط:
+نشر صفحة→ يمسح Cache→ يحدث Sitemap→ يسجل Activity→ يرسل Notification→ يظهر في Report
+طلب خدمة من Kabeeri Mall→ يفتح Conversation→ ينشئ Lead في CRM→ يرسل Notification لفريق المبيعات→ ينشئ Task متابعة→ يدخل في Activity Log
+شركة تم توثيقها→ يظهر Verified Badge→ يتحدث Trust Score→ تظهر في Kabeeri Mall→ يرسل Notification→ يسجل Audit Log
+بدون Event System، كل موديول سيبدأ يتصل مباشرة بباقي الموديولات، وهذا سيخلق فوضى وصعوبة في التطوير.
+2. الفلسفة الأساسية
+Kabeeri يجب أن يبنى بأسلوب:
+Event-driven Modular Monolith
+في البداية لا نحتاج Microservices.
+لكن نحتاج أن كل موديول يتكلم عبر Events بدل الاعتماد المباشر المبالغ فيه.
+القاعدة
+Action happens→ Event fired→ Listeners react→ Logs/Notifications/Workflows/Webhooks run
+مثال:
+ContentPublished→ ClearContentCache listener→ UpdateSitemap listener→ LogActivity listener→ NotifyEditors listener→ TriggerWorkflows listener
+3. الفرق بين Event وWorkflow وAutomation
+3.1 Event
+حدث حصل بالفعل.
+مثال:
+OrderCreatedInvoicePaidTaskAssignedCompanyVerified
+صيغة الأحداث غالبًا Past Tense لأنها حدثت بالفعل.
+3.2 Listener
+كود يستمع للحدث وينفذ رد فعل محدد.
+مثال:
+عند OrderCreated→ SendOrderNotification→ ReserveStock→ CreateActivityLog
+3.3 Workflow
+سلسلة خطوات لها شروط وموافقات وحالات.
+مثال:
+Purchase Request→ Manager Approval→ Finance Approval→ Purchase Order→ Goods Receipt→ Supplier Bill
+3.4 Automation
+قاعدة بسيطة من نوع:
+When X happens → If Y is true → Do Z
+مثال:
+When stock is below 10→ notify inventory manager
+3.5 Webhook
+إرسال حدث لنظام خارجي.
+مثال:
+OrderPaid → Send webhook to external ERP
+4. أنواع الأحداث داخل Kabeeri
+الأحداث تنقسم إلى مجموعات:
+Core EventsCMS EventsRabet EventsMall EventsTalent EventsCommerce EventsERP EventsTeam EventsVerification EventsBilling EventsMarketplace EventsAI EventsSecurity EventsIntegration Events
+5. Core Events
+5.1 UserRegistered
+عندما يسجل مستخدم جديد.
+Triggers
+إنشاء account.
+بدء onboarding.
+إرسال welcome notification.
+تسجيل activity.
+Listeners
+StartUserOnboardingSendWelcomeNotificationLogUserRegistration
+5.2 OrganizationCreated
+عندما ينشئ المستخدم Organization.
+Triggers
+إنشاء default roles.
+إنشاء default settings.
+إنشاء billing account draft.
+تسجيل activity.
+Listeners
+CreateDefaultOrganizationRolesCreateDefaultOrganizationSettingsCreateBillingAccountDraftLogOrganizationCreated
+5.3 SiteCreated
+عندما يتم إنشاء موقع.
+Triggers
+إعداد theme افتراضي.
+إنشاء pages افتراضية.
+إنشاء SEO settings.
+تسجيل activity.
+Listeners
+ApplyDefaultThemeCreateDefaultPagesCreateSiteSeoSettingsLogSiteCreated
+5.4 MemberInvited
+عند دعوة عضو لفريق أو Organization.
+Triggers
+إرسال دعوة.
+إنشاء notification.
+تسجيل activity.
+Listeners
+SendInvitationEmailCreateInvitationNotificationLogMemberInvitation
+6. CMS Events
+6.1 ContentCreated
+عند إنشاء صفحة أو مقال.
+Listeners
+LogContentCreatedCreateContentRevisionNotifyContentTeam optional
+6.2 ContentUpdated
+عند تعديل محتوى.
+Listeners
+CreateContentRevisionClearContentCacheLogContentUpdatedTriggerSeoRecheck optional
+6.3 ContentPublished
+عند نشر صفحة أو مقال.
+Listeners
+ClearPageCacheUpdateSitemapGeneratePublicUrlLogContentPublishedNotifySubscribers optionalTriggerPublishingWorkflows
+6.4 ContentArchived
+عند أرشفة محتوى.
+Listeners
+ClearPageCacheUpdateSitemapLogContentArchivedSuggestRedirect optional
+6.5 MediaUploaded
+عند رفع ملف.
+Listeners
+GenerateThumbnailsScanFileBasicExtractMetadataLogMediaUploaded
+6.6 ThemeActivated
+عند تفعيل Theme.
+Listeners
+ClearThemeCacheValidateThemeCompatibilityLogThemeActivated
+7. Rabet Company OS Events
+7.1 CompanyCreated
+عند إنشاء شركة داخل Organization.
+Listeners
+CreateCompanyDefaultsCreateCompanyRolesLogCompanyCreatedSuggestRabetUpgrade
+7.2 BusinessProfilePublished
+عند نشر بروفايل بزنس عام.
+Listeners
+IndexBusinessProfileNotifyBusinessOwnerLogBusinessProfilePublishedTriggerModerationCheck optional
+7.3 VerificationSubmitted
+عند إرسال طلب توثيق.
+Listeners
+ValidateVerificationDocumentsAssignVerificationReviewerNotifyCompanyOwnerLogVerificationSubmitted
+7.4 VerificationApproved
+عند الموافقة على التوثيق.
+Listeners
+UpdateCompanyVerificationStatusIssueVerifiedBadgeUpdateTrustScorePublishVerifiedStatusToMallNotifyCompanyOwnerLogVerificationApproved
+7.5 VerificationRejected
+عند رفض التوثيق.
+Listeners
+UpdateVerificationStatusNotifyCompanyOwnerWithReasonCreateCorrectionTask optionalLogVerificationRejected
+7.6 TrustScoreUpdated
+عند تغير Trust Score.
+Listeners
+UpdateMallRankingSignalsNotifyIfScoreDrops optionalLogTrustScoreChange
+8. Legal Partner Events
+8.1 LegalPartnerAssigned
+عند إسناد طلب توثيق لمكتب محاماة.
+Listeners
+NotifyLegalPartnerCreateLegalPartnerTaskLogLegalPartnerAssignment
+8.2 LegalPartnerRequestedInfo
+عند طلب مستندات أو معلومات إضافية.
+Listeners
+NotifyCompanyOwnerUpdateVerificationStatusToNeedInfoLogLegalPartnerRequest
+8.3 LegalReviewCompleted
+عند إكمال المراجعة القانونية.
+Listeners
+UpdateVerificationRequestNotifyPlatformVerificationAdmin optionalLogLegalReviewCompleted
+9. Kabeeri Mall Events
+9.1 BusinessViewed
+عند مشاهدة بروفايل بزنس.
+Uses
+Analytics.
+Ranking.
+Business insights.
+Listeners
+TrackBusinessViewUpdateBusinessAnalytics
+9.2 ServiceRequestCreated
+عند طلب خدمة.
+Listeners
+CreateConversationCreateCRMLead optionalNotifyBusinessTeamCreateFollowUpTask optionalLogServiceRequest
+9.3 ProductInquiryCreated
+عند استفسار عن منتج.
+Listeners
+CreateConversationNotifySellerLogProductInquiry
+9.4 ListingReported
+عند الإبلاغ عن بزنس/خدمة/منتج/موهبة.
+Listeners
+CreateModerationReportNotifyModerationTeamFlagListingIfNeededLogListingReported
+9.5 ReviewSubmitted
+عند إضافة Review.
+Listeners
+QueueReviewModerationUpdateRatingAverageIfApprovedNotifyReviewableOwnerLogReviewSubmitted
+10. Talent Marketplace Events
+10.1 ProfessionalProfilePublished
+عند نشر ملف مهني.
+Listeners
+IndexProfessionalProfileNotifyProfessionalLogProfessionalProfilePublished
+10.2 JobOfferSent
+عند إرسال عرض عمل.
+Listeners
+NotifyProfessionalCreateConversationLogJobOfferSent
+10.3 JobOfferAccepted
+عند قبول عرض.
+Listeners
+CreateCompanyMembershipStartOnboardingFlowCreateContractDraft optionalNotifyCompanyLogJobOfferAccepted
+10.4 EvaluationSubmitted
+عند تقييم فرد.
+Listeners
+UpdateProfessionalScore optionalNotifyReviewedUser depending_visibilityLogEvaluationSubmitted
+11. Team & Task Events
+11.1 TaskCreated
+Listeners
+NotifyAssigneeIfExistsLogTaskCreated
+11.2 TaskAssigned
+Listeners
+NotifyAssigneeUpdateWorkloadLogTaskAssigned
+11.3 TaskCompleted
+Listeners
+NotifyTaskWatchersUpdateProjectProgressUpdatePerformanceMetricsLogTaskCompleted
+11.4 ProjectCreated
+Listeners
+CreateDefaultProjectChannels optionalLogProjectCreated
+11.5 TeamMessageSent
+Listeners
+NotifyMentionedUsersStoreMessageLogMessageIfNeeded
+12. Commerce Events
+12.1 ProductCreated
+Listeners
+IndexProductLogProductCreated
+12.2 ProductPublished
+Listeners
+IndexProductForMall optionalUpdateSitemapIfPublicLogProductPublished
+12.3 OrderCreated
+Listeners
+NotifySellerNotifyCustomerReserveStock optionalCreateOrderActivityCreateCustomerTimelineEntry optional
+12.4 PaymentReceived
+Listeners
+MarkOrderPaidGenerateInvoice optionalTriggerFulfillmentWorkflowPostAccountingEntry optionalNotifyCustomerLogPaymentReceived
+12.5 OrderCancelled
+Listeners
+ReleaseStockNotifyCustomerNotifySellerLogOrderCancelled
+12.6 RefundIssued
+Listeners
+UpdateOrderStatusPostRefundAccountingEntry optionalNotifyCustomerLogRefundIssued
+13. ERP Events
+13.1 LeadCreated
+Listeners
+AssignLeadOwner optionalCreateFollowUpTask optionalNotifySalesTeamLogLeadCreated
+13.2 QuoteCreated
+Listeners
+NotifySalesManager optionalLogQuoteCreated
+13.3 QuoteApproved
+Listeners
+CreateSalesOrder optionalNotifyCustomer optionalLogQuoteApproved
+13.4 InvoiceIssued
+Listeners
+NotifyCustomerUpdateAccountsReceivable optionalLogInvoiceIssued
+13.5 InvoicePaid
+Listeners
+UpdatePaymentStatusPostAccountingEntry optionalNotifyFinanceTeamLogInvoicePaid
+13.6 StockAdjusted
+Listeners
+LogStockMovementCheckLowStockUpdateInventoryValuation optional
+13.7 LowStockDetected
+Listeners
+NotifyInventoryManagerCreatePurchaseRequest optionalLogLowStockDetected
+13.8 PurchaseOrderApproved
+Listeners
+NotifySupplier optionalNotifyPurchasingTeamLogPurchaseOrderApproved
+13.9 EmployeeJoined
+Listeners
+CreateEmployeeRecordStartOnboardingTasksNotifyHRLogEmployeeJoined
+14. Billing Events
+14.1 SubscriptionCreated
+Listeners
+EnablePlanFeaturesCreateInvoiceIfNeededNotifyBillingOwnerLogSubscriptionCreated
+14.2 PaymentFailed
+Listeners
+NotifyBillingOwnerRetryPaymentIfConfiguredMarkSubscriptionAtRiskLogPaymentFailed
+14.3 SubscriptionCancelled
+Listeners
+ScheduleFeatureDowngradeNotifyOwnerLogSubscriptionCancelled
+14.4 UsageLimitReached
+Listeners
+NotifyOwnerSuggestPlanUpgradeBlockActionIfHardLimitLogUsageLimitReached
+15. Internal Marketplace Events
+15.1 PackageInstalled
+Listeners
+ValidatePackageCompatibilityApplyPackageMigrations optionalLogPackageInstalledNotifyAdmin
+15.2 PackageActivated
+Listeners
+EnablePackageFeaturesRegisterPackageHooksLogPackageActivated
+15.3 PackageDeactivated
+Listeners
+DisablePackageFeaturesClearPackageCacheLogPackageDeactivated
+15.4 PackageUpdateFailed
+Listeners
+RollbackPackageIfPossibleNotifyAdminLogPackageUpdateFailed
+16. AI Events
+16.1 AIPlanCreated
+عند إنشاء AI لخطة تعديل.
+Listeners
+StoreAIPlanNotifyUserForReviewLogAIPlanCreated
+16.2 AIPlanApproved
+عند موافقة المستخدم على خطة AI.
+Listeners
+CreateSnapshotBeforeApplyQueueAIChangeApplicationLogAIPlanApproved
+16.3 AIChangeApplied
+عند تطبيق التغيير.
+Listeners
+LogAIChangeAppliedNotifyUserRegisterRollbackPoint
+16.4 AIActionBlocked
+عند منع AI من تنفيذ إجراء بسبب صلاحيات أو خطورة.
+Listeners
+NotifyUserWithReasonLogSecurityEvent
+16.5 AIChangeRolledBack
+عند التراجع عن تغيير AI.
+Listeners
+RestoreSnapshotLogAIChangeRolledBackNotifyUser
+17. Security Events
+17.1 LoginSucceeded
+Listeners
+UpdateLastLoginLogLoginSuccess
+17.2 LoginFailed
+Listeners
+IncrementFailedLoginCountDetectBruteForceLogLoginFailure
+17.3 PermissionDenied
+Listeners
+LogPermissionDeniedNotifySecurityIfSensitive optional
+17.4 SensitiveDataViewed
+Listeners
+CreateAccessLogNotifyOwnerIfConfigured
+17.5 RoleChanged
+Listeners
+LogRoleChangedNotifyAffectedUserNotifySecurityForSensitiveRoles
+18. Integration Events
+18.1 WebhookReceived
+Listeners
+ValidateWebhookSignatureRouteWebhookToConnectorLogWebhookReceived
+18.2 SyncJobStarted
+Listeners
+LogSyncStarted
+18.3 SyncJobFailed
+Listeners
+RetryIfAllowedNotifyIntegrationOwnerExplainErrorWithAI optionalLogSyncFailed
+18.4 SyncJobCompleted
+Listeners
+UpdateLastSyncAtNotifyIfConfiguredLogSyncCompleted
+19. Workflow Engine Concept
+19.1 الهدف
+محرك Workflows يسمح بتعريف عمليات مثل:
+موافقة نشر المحتوىدورة طلب الشراءدورة توثيق الشركةدورة طلب خدمةدورة توظيفدورة معالجة شكوى
+19.2 مكونات الـ Workflow
+Workflow DefinitionTriggerConditionsStepsActionsApprovalsSLANotificationsLogsVersioning
+19.3 Workflow Trigger Types
+Event triggerManual triggerScheduled triggerAPI triggerAI-suggested trigger
+19.4 Workflow Step Types
+TaskApprovalNotificationField UpdateCreate RecordSend EmailWebhookAI SuggestionWait/DelayCondition Branch
+20. Workflow Database Design
+20.1 workflow_definitions
+idorganization_id nullablecompany_id nullablenameslugdescriptiontrigger_typetrigger_event nullablestatusversioncreated_bycreated_atupdated_at
+20.2 workflow_steps
+idworkflow_definition_idstep_orderstep_typenameconfig jsonconditions jsonnext_step_id nullablecreated_atupdated_at
+20.3 workflow_runs
+idworkflow_definition_idtriggered_by_user_id nullabletrigger_eventsubject_typesubject_idstatuscurrent_step_id nullablestarted_atcompleted_atfailed_atmetadata jsoncreated_atupdated_at
+20.4 workflow_step_runs
+idworkflow_run_idworkflow_step_idstatusstarted_atcompleted_atfailed_atresult jsonerror_message nullablecreated_atupdated_at
+20.5 automation_rules
+للقواعد البسيطة.
+idorganization_id nullablecompany_id nullablenametrigger_eventconditions jsonactions jsonstatuscreated_bycreated_atupdated_at
+21. Workflow Examples
+21.1 Content Publishing Workflow
+Editor creates page→ Status: Review→ Manager approval→ Publish→ Clear cache→ Update sitemap→ Notify team
+يعتمد على
+CMS.
+Roles.
+Approval.
+Notifications.
+Activity Log.
+21.2 Company Verification Workflow
+Business uploads documents→ System validates required docs→ Legal partner assigned→ Legal review→ Approve / Request info / Reject→ Badge issued if approved→ Trust score updated
+يعتمد على
+Company.
+Documents.
+Legal Partner.
+Verification.
+Notifications.
+Activity Log.
+21.3 Service Request Workflow
+Visitor requests service→ Conversation created→ Lead created→ Sales task created→ Quote generated→ Quote approved→ Contract optional→ Invoice issued
+يعتمد على
+Kabeeri Mall.
+Inbox.
+CRM.
+Sales.
+Tasks.
+Invoicing.
+21.4 Purchase Request Workflow
+Employee creates purchase request→ Manager approval→ Finance approval→ Purchase order→ Goods receipt→ Supplier bill→ Payment approval
+يعتمد على
+ERP Purchasing.
+Approvals.
+Inventory.
+Accounting.
+Notifications.
+21.5 Job Offer Workflow
+Company sends offer→ Professional reviews→ Negotiation→ Accept→ Contract generated→ Membership created→ Onboarding tasks created
+يعتمد على
+Talent Marketplace.
+Company.
+Contracts.
+Memberships.
+Onboarding.
+Tasks.
+22. Workflow Permissions
+كل Workflow يحتاج صلاحيات.
+22.1 من ينشئ Workflow؟
+workflow.createworkflow.manage
+22.2 من يشغل Workflow يدويًا؟
+workflow.run
+22.3 من يوافق على Step؟
+حسب step:
+content.approvefinance.invoice.approvepurchasing.po.approveverification.review
+23. Workflow Safety Rules
+23.1 لا Workflow يحذف بيانات بدون Approval
+أي action من نوع delete أو bulk update يحتاج approval.
+23.2 كل Workflow Run يسجل Activity
+لا توجد عمليات صامتة.
+23.3 Workflow Versions
+لا نعدل workflow مستخدم مباشرة بدون versioning.
+23.4 Workflow Failures يجب أن تكون مرئية
+أي فشل يظهر في:
+Logs.
+Notifications.
+Admin dashboard.
+24. Event Naming Conventions
+24.1 Events بصيغة Past Tense
+ContentPublishedOrderCreatedInvoicePaidCompanyVerified
+24.2 Listener بصيغة فعل
+UpdateSitemapSendNotificationCreateActivityLogReserveStock
+24.3 Workflow بصيغة Process
+Company Verification WorkflowPurchase Approval WorkflowContent Publishing Workflow
+25. Laravel Implementation Structure
+app/Core/Events/app/Core/Listeners/app/Core/Workflows/  Models/  Actions/  Services/  StepHandlers/  Triggers/  Conditions/  Actions/app/Core/Automation/app/Core/Webhooks/
+داخل كل Domain
+مثال:
+app/CMS/Content/Events/ContentPublished.phpapp/CMS/Content/Listeners/UpdateSitemap.phpapp/CMS/Content/Listeners/ClearPageCache.php
+26. Event Bus Rules
+26.1 كل Event يجب أن يحمل Context
+actor_user_idorganization_idcompany_id nullablesite_id nullablesubject_typesubject_idmetadata
+26.2 كل Event مهم يجب أن يصل إلى Activity Log
+ليس بالضرورة كل events الصغيرة، لكن الأحداث المهمة فقط.
+26.3 لا تجعل Listener يحتوي منطق ضخم
+Listener يستدعي Action أو Service.
+27. V1 Requirements من هذا الملحق
+Must-have في V1
+Event naming conventionsActivity log listenerBasic notification eventsCMS eventsOrganization/Site eventsFeature flag eventsSimple content publishing workflow status
+Should-have في V1
+automation_rules table draftworkflow_definitions table draftworkflow_runs table draft
+Not required in V1
+Full workflow builder UIAdvanced workflow engineAI workflow creationERP workflowsExternal webhooks full
+28. V2 إلى V6 Roadmap للـ Events/Workflows
+V1
+Core events.
+CMS events.
+Activity log.
+Notifications basic.
+V2
+Import events.
+Commerce foundation events.
+Service request events.
+Task events basic.
+V3
+Rabet verification events.
+CRM/Sales/Inventory/Invoicing events.
+Workflow Automation V1.
+V4
+Cloud events.
+Billing events.
+Marketplace events.
+Talent events.
+AI Co-builder V1 events.
+Legal Partner events.
+V5
+ERP Pro workflows.
+Integration events.
+Sync events.
+Advanced approvals.
+Contract events.
+V6
+Full workflow engine.
+AI-generated workflows.
+Enterprise audit workflows.
+Cross-company workflows.
+Advanced automation.
+29. الأخطاء الممنوعة
+29.1 لا تستدعي Module مباشرة من Module آخر بشكل عشوائي
+خطأ:
+ServiceRequestController ينشئ Lead مباشرة بمنطق CRM داخله
+أفضل:
+ServiceRequestCreated event→ CRM listener creates Lead
+29.2 لا تجعل Notifications داخل كل Controller
+خطأ:
+Controller يرسل notification مباشرة
+أفضل:
+Event → Notification Listener
+29.3 لا تبني Workflows hardcoded فقط
+في البداية ممكن تكون بسيطة، لكن يجب أن تكون قابلة للتحول إلى configurable workflows لاحقًا.
+29.4 لا تجعل AI يطبق Workflow بدون Approval
+AI يقترح، والمستخدم يوافق.
+30. الخلاصة التنفيذية
+Kabeeri يجب أن يحتوي على Event System قوي من البداية لأن كل شيء مترابط.
+القاعدة:
+كل فعل مهم → Eventكل Event مهم → Activity Logكل Event مناسب → Notificationsكل Event تجاري → Workflow/Automation محتملكل Event خارجي → Webhook محتملكل AI Action → Plan/Approval/Event/Log/Rollback
+بدون هذا النظام، Kabeeri سيتحول إلى كود متشابك يصعب تطويره.
+31. الخطوة التالية
+بعد هذا الملحق، يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق إضافي اختياري:
+ملحق 7 — AI Co-builder Guardrails
+إذا أردنا تثبيت قواعد AI بالتفصيل قبل ملف V1.

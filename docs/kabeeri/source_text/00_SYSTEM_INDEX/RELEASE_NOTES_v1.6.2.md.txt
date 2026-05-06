@@ -1,0 +1,10 @@
+# KABEERI v1.6.2 Release Notes
+
+- Added official folder map and architecture document.
+- Added approved database names document under database architecture.
+- Added Extension Governance folders and rules.
+- Added Technology Governance with final stack decisions.
+- Added V7 Mobile App Enablement docs.
+- Added V8 Desktop Offline Client docs.
+- Kept original V1-V6 Codex prompt folder unchanged.
+- Short root folder name used to avoid Windows path-too-long errors.

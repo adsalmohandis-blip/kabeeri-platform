@@ -1,0 +1,1549 @@
+KABEERI Database File 38
+ESG / EHS / Sustainability Database
+قاعدة بيانات الاستدامة والبيئة والصحة والسلامة — KABEERI
+هذا الملف يصف تصميم قاعدة البيانات الخاص بحزمة ESG / EHS / Sustainability داخل Kabeeri، وهي حزمة Enterprise / Industry اختيارية تخدم الشركات التي تحتاج إدارة الاستدامة، الصحة والسلامة، المخاطر البيئية، التقارير التنظيمية، مؤشرات الأداء، والأدلة الداعمة للامتثال.
+الملف لا يستبدل GRC أو BI أو Document Management، بل يبني فوقهم ويغذيهم ببيانات متخصصة قابلة للتدقيق والتحليل.
+1. هدف ESG / EHS / Sustainability Database
+الهدف هو إضافة طبقة بيانات متخصصة تسمح لـ Kabeeri بدعم الشركات التي تحتاج إلى قياس وإدارة والإبلاغ عن الاستدامة والبيئة والصحة والسلامة، بدون تلويث Core بجداول قطاعية مبكرة.
+• تسجيل مؤشرات ESG على مستوى Organization / Company / Facility / Site.
+• إدارة حوادث السلامة والتحقيقات والإجراءات التصحيحية.
+• تسجيل بيانات الطاقة والمياه والنفايات والانبعاثات.
+• دعم أهداف الاستدامة والمبادرات وخطط العمل.
+• ربط الأدلة والمستندات بمتطلبات الامتثال والتقارير.
+• تغذية BI/KPI dashboards وGRC controls وIndustry Solutions.
+• السماح بالتوسع لاحقا إلى تقارير ESG متقدمة حسب الدولة أو الصناعة.
+2. موقع ESG داخل Kabeeri
+هذه الطبقة ليست جزءا من V1 أو V2. هي حزمة Enterprise / Industry يمكن تفعيلها عندما تصل الشركة إلى مستوى تشغيل يحتاج GRC وBI وData Platform وIndustry Solutions.
+الطبقة
+العلاقة مع ESG/EHS
+Core Kernel
+يوفر users, organizations, companies, sites, permissions, activity/audit logs.
+GRC
+يربط المخاطر، الالتزامات، الضوابط، الأدلة، والاختبارات بملفات ESG/EHS.
+BI / Data Platform
+يحسب KPIs ويجهز dashboards وwarehouse snapshots.
+Documents / Media
+يحفظ الأدلة والتقارير والتراخيص والصور والملفات الداعمة.
+Workflows
+يدير approvals, incident investigation, corrective actions, periodic reviews.
+Industry Solutions
+يفعل نماذج خاصة للصناعة مثل construction safety أو food traceability.
+Country Packs
+يضبط قواعد الإفصاح والاحتفاظ والسجلات حسب الدولة.
+3. ما يدخل وما لا يدخل
+يدخل في هذا الملف
+لا يدخل هنا
+ESG profiles, frameworks, disclosures, metrics, goals, initiatives.
+محاسبة مالية كاملة أو ERP Finance.
+EHS incidents, investigations, corrective actions, inspections.
+Payroll / HR evaluations الخاصة.
+Energy, water, waste, emissions, carbon factors.
+BI engine الكامل، لأنه ملف مستقل.
+Supplier ESG assessment and evidence.
+GRC core policies/controls الكامل، لأنه ملف مستقل.
+Sustainability reports and exports.
+Country Pack legislation engine الكامل.
+4. المبادئ الحاكمة
+• ESG data must be tenant-scoped: organization_id إلزامي في أغلب الجداول.
+• كل رقم منشور في تقرير يجب أن يكون traceable إلى مصدره أو evidence أو calculation run.
+• البيانات البيئية والصحية الحساسة لا تظهر في Mall أو Public API إلا بتصريح صريح.
+• ESG records قابلة للتصدير في Portable، لكن Platform/internal secrets لا تخرج.
+• الجداول التحليلية مشتقة ويمكن إعادة بنائها من operational records.
+• كل incident أو corrective action مهم يسجل activity/audit logs.
+• لا يتم حساب الانبعاثات بدون emission factor version واضح.
+5. Data Domains
+Domain
+الغرض
+أمثلة جداول
+ESG Governance
+إدارة الملف، الأطر، الفترات، الإفصاحات.
+esg_profiles, esg_reporting_frameworks, esg_disclosure_periods
+Metrics & Goals
+تعريف المؤشرات وقيمها وأهدافها.
+esg_metric_definitions, esg_metric_values, esg_goals
+Environmental Data
+طاقة، مياه، نفايات، قياسات بيئية.
+energy_consumption_records, water_usage_records, waste_records
+Carbon / GHG
+مصادر الانبعاثات وعوامل التحويل وحسابات الكربون.
+emission_sources, ghg_emission_factors, ghg_emission_records
+EHS Operations
+الحوادث والتحقيقات والتفتيش والإجراءات التصحيحية.
+ehs_incidents, ehs_investigations, ehs_inspections
+Evidence & Reporting
+الأدلة، المرفقات، التقارير، التصدير.
+sustainability_evidence, esg_reports, esg_report_exports
+Supplier ESG
+تقييم الموردين والمخاطر المرتبطة بسلسلة الإمداد.
+supplier_esg_assessments, supplier_esg_findings
+6. الجداول الأساسية
+الجداول
+esg_profiles
+esg_reporting_frameworks
+esg_disclosure_periods
+esg_facilities
+esg_metric_definitions
+esg_metric_values
+esg_goals
+esg_initiatives
+environmental_measurements
+energy_consumption_records
+water_usage_records
+waste_records
+emission_sources
+ghg_emission_factors
+ghg_emission_records
+ehs_incidents
+ehs_incident_people
+ehs_investigations
+ehs_corrective_actions
+ehs_inspections
+ehs_inspection_findings
+ehs_permits
+supplier_esg_assessments
+supplier_esg_findings
+sustainability_evidence
+esg_calculation_runs
+esg_data_quality_checks
+esg_reports
+esg_report_exports
+esg_audit_reviews
+7. esg_profiles
+يمثل ملف ESG/EHS/Sustainability لشركة أو Organization.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتكامل والتصدير
+organization_id
+bigint
+إلزامي
+company_id
+bigint nullable
+إذا كان الملف لشركة محددة
+profile_type
+varchar(50)
+esg / ehs / sustainability / combined
+status
+varchar(50)
+draft / active / suspended / archived
+reporting_boundary
+varchar(50)
+organization / company / facility / custom
+default_country_id
+bigint nullable
+يرتبط بـ Country Packs
+owner_user_id
+bigint nullable
+مسؤول الملف
+settings
+json nullable
+إعدادات خاصة
+metadata
+json nullable
+بيانات مرنة
+created_at / updated_at / deleted_at
+timestamps
+قياسي
+8. esg_reporting_frameworks
+الأطر والمعايير التي يمكن أن تستخدمها الشركة في التقارير والإفصاحات.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+key
+varchar(100)
+مثال: custom_internal, gri_like, csrd_like
+name
+varchar(255)
+اسم الإطار
+framework_type
+varchar(50)
+internal / regulatory / voluntary / industry
+country_id
+bigint nullable
+إذا كان إطارا محليا
+status
+varchar(50)
+active / deprecated
+version
+varchar(50) nullable
+نسخة الإطار
+requirements
+json nullable
+متطلبات الإفصاح
+created_at / updated_at
+timestamps
+قياسي
+9. esg_disclosure_periods
+فترات الإفصاح والتقارير.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتصدير
+organization_id
+bigint
+النطاق
+company_id
+bigint nullable
+اختياري
+framework_id
+bigint nullable
+الإطار المستخدم
+name
+varchar(255)
+مثال: FY 2026 ESG Report
+period_type
+varchar(50)
+monthly / quarterly / yearly / custom
+start_date
+date
+بداية الفترة
+end_date
+date
+نهاية الفترة
+status
+varchar(50)
+open / locked / submitted / audited / archived
+locked_at
+timestamp nullable
+إقفال الفترة
+metadata
+json nullable
+بيانات إضافية
+created_at / updated_at
+timestamps
+قياسي
+10. esg_facilities
+المواقع التشغيلية التي يتم عليها القياس: مصنع، فرع، مخزن، مكتب، مشروع.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتكامل
+organization_id
+bigint
+إلزامي
+company_id
+bigint nullable
+الشركة المالكة
+site_id
+bigint nullable
+إذا ارتبط بموقع Kabeeri
+facility_name
+varchar(255)
+اسم المنشأة
+facility_type
+varchar(50)
+office / factory / warehouse / project / clinic / school / store
+country_id
+bigint nullable
+الدولة
+city
+varchar(120) nullable
+المدينة
+status
+varchar(50)
+active / inactive / closed
+metadata
+json nullable
+موقع جغرافي، مساحة، عدد الموظفين
+created_at / updated_at / deleted_at
+timestamps
+قياسي
+11. esg_metric_definitions
+تعريف المؤشرات القابلة للقياس.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+key
+varchar(120)
+مثال: electricity_kwh, water_m3, lost_time_injury_rate
+name
+varchar(255)
+اسم المؤشر
+category
+varchar(50)
+environment / social / governance / safety / carbon
+unit
+varchar(50)
+kWh, m3, kgCO2e, count, percent
+calculation_method
+text nullable
+طريقة الحساب
+is_system
+boolean
+مؤشر نظامي أو مخصص
+status
+varchar(50)
+active / deprecated
+metadata
+json nullable
+تعريفات إضافية
+created_at / updated_at
+timestamps
+قياسي
+12. esg_metric_values
+القيم الفعلية للمؤشرات خلال فترة معينة.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتتبع
+organization_id
+bigint
+إلزامي
+company_id
+bigint nullable
+اختياري
+facility_id
+bigint nullable
+مكان القياس
+disclosure_period_id
+bigint nullable
+فترة الإفصاح
+metric_definition_id
+bigint
+المؤشر
+value
+decimal(18,6)
+القيمة
+unit
+varchar(50)
+الوحدة عند التسجيل
+source_type
+varchar(80) nullable
+manual / import / integration / calculation
+source_id
+bigint nullable
+مرجع المصدر
+confidence_level
+varchar(50) nullable
+estimated / measured / verified
+status
+varchar(50)
+draft / approved / locked / rejected
+recorded_by
+bigint nullable
+المستخدم
+recorded_at
+timestamp nullable
+وقت التسجيل
+metadata
+json nullable
+ملاحظات
+created_at / updated_at
+timestamps
+قياسي
+13. esg_goals
+أهداف الاستدامة والسلامة.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتصدير
+organization_id
+bigint
+إلزامي
+company_id
+bigint nullable
+اختياري
+metric_definition_id
+bigint nullable
+المؤشر المرتبط
+goal_name
+varchar(255)
+اسم الهدف
+goal_category
+varchar(50)
+environment / safety / social / governance
+baseline_value
+decimal(18,6) nullable
+خط الأساس
+target_value
+decimal(18,6) nullable
+القيمة المستهدفة
+unit
+varchar(50) nullable
+الوحدة
+baseline_period_id
+bigint nullable
+فترة الأساس
+target_date
+date nullable
+تاريخ مستهدف
+status
+varchar(50)
+draft / active / achieved / delayed / cancelled
+owner_user_id
+bigint nullable
+المسؤول
+created_at / updated_at
+timestamps
+قياسي
+14. esg_initiatives
+مبادرات مرتبطة بتحسين مؤشر أو هدف.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتكامل
+organization_id
+bigint
+إلزامي
+goal_id
+bigint nullable
+الهدف المرتبط
+name
+varchar(255)
+اسم المبادرة
+description
+longtext nullable
+الوصف
+initiative_type
+varchar(50)
+energy_saving / safety_training / waste_reduction / compliance
+status
+varchar(50)
+planned / active / completed / paused / cancelled
+start_date
+date nullable
+بداية
+end_date
+date nullable
+نهاية
+budget_amount
+decimal(15,2) nullable
+ميزانية اختيارية
+currency_code
+char(3) nullable
+العملة
+owner_user_id
+bigint nullable
+المسؤول
+metadata
+json nullable
+تفاصيل إضافية
+created_at / updated_at
+timestamps
+قياسي
+15. environmental_measurements
+قياسات بيئية عامة غير مصنفة كطاقة أو مياه أو نفايات.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+النطاق
+facility_id
+bigint nullable
+مكان القياس
+measurement_type
+varchar(80)
+air_quality / noise / temperature / humidity / emissions_monitoring
+value
+decimal(18,6)
+القيمة
+unit
+varchar(50)
+الوحدة
+measured_at
+timestamp
+وقت القياس
+source_type
+varchar(80) nullable
+manual / sensor / integration / import
+status
+varchar(50)
+draft / approved / rejected
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+16. energy_consumption_records
+استهلاك الطاقة حسب المصدر.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+إلزامي
+facility_id
+bigint nullable
+المنشأة
+energy_type
+varchar(50)
+electricity / fuel / gas / renewable / steam
+quantity
+decimal(18,6)
+الكمية
+unit
+varchar(50)
+kWh / liter / m3 / GJ
+period_start / period_end
+date
+الفترة
+supplier_name
+varchar(255) nullable
+مزود الطاقة
+invoice_document_id
+bigint nullable
+دليل/فاتورة
+status
+varchar(50)
+draft / approved / locked
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+17. water_usage_records
+استهلاك المياه وتصريفها.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+النطاق
+facility_id
+bigint nullable
+المنشأة
+water_type
+varchar(50)
+municipal / groundwater / recycled / discharged
+quantity
+decimal(18,6)
+الكمية
+unit
+varchar(50)
+m3 غالبا
+period_start / period_end
+date
+الفترة
+source_document_id
+bigint nullable
+دليل
+status
+varchar(50)
+draft / approved / locked
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+18. waste_records
+تسجيل المخلفات والنفايات.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+النطاق
+facility_id
+bigint nullable
+المنشأة
+waste_type
+varchar(80)
+general / recyclable / hazardous / organic / e_waste
+quantity
+decimal(18,6)
+الكمية
+unit
+varchar(50)
+kg / ton / m3
+treatment_method
+varchar(80) nullable
+landfill / recycle / incineration / compost / reuse
+vendor_name
+varchar(255) nullable
+متعهد النفايات
+manifest_document_id
+bigint nullable
+دليل/تصريح
+period_start / period_end
+date
+الفترة
+status
+varchar(50)
+draft / approved / locked
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+19. emission_sources
+مصادر الانبعاثات داخل الشركة.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+النطاق
+facility_id
+bigint nullable
+المنشأة
+source_name
+varchar(255)
+اسم المصدر
+source_type
+varchar(80)
+stationary_combustion / mobile_combustion / purchased_electricity / refrigerants / process
+scope
+varchar(20)
+scope_1 / scope_2 / scope_3
+status
+varchar(50)
+active / inactive
+metadata
+json nullable
+تفاصيل فنية
+created_at / updated_at
+timestamps
+قياسي
+20. ghg_emission_factors
+عوامل تحويل الانبعاثات المستخدمة في الحسابات.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+factor_key
+varchar(120)
+مفتاح العامل
+country_id
+bigint nullable
+حسب الدولة
+activity_type
+varchar(80)
+electricity / diesel / gasoline / gas / waste
+unit_from
+varchar(50)
+وحدة النشاط
+unit_to
+varchar(50)
+kgCO2e
+factor_value
+decimal(18,8)
+معامل التحويل
+source_name
+varchar(255) nullable
+مصدر العامل
+version
+varchar(50)
+النسخة
+valid_from / valid_to
+date nullable
+الصلاحية
+status
+varchar(50)
+active / deprecated
+metadata
+json nullable
+ملاحظات
+created_at / updated_at
+timestamps
+قياسي
+21. ghg_emission_records
+نتائج حساب الانبعاثات.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتتبع
+organization_id
+bigint
+النطاق
+facility_id
+bigint nullable
+المنشأة
+emission_source_id
+bigint nullable
+المصدر
+factor_id
+bigint nullable
+عامل التحويل
+activity_quantity
+decimal(18,6)
+كمية النشاط
+activity_unit
+varchar(50)
+الوحدة
+emission_value
+decimal(18,6)
+القيمة المحسوبة
+emission_unit
+varchar(50)
+kgCO2e أو tCO2e
+scope
+varchar(20)
+scope_1 / scope_2 / scope_3
+calculation_run_id
+bigint nullable
+مرجع الحساب
+period_start / period_end
+date
+الفترة
+status
+varchar(50)
+draft / approved / locked
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+22. ehs_incidents
+حوادث الصحة والسلامة والبيئة.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتتبع
+organization_id
+bigint
+النطاق
+company_id
+bigint nullable
+الشركة
+facility_id
+bigint nullable
+الموقع
+incident_number
+varchar(80)
+رقم داخلي
+incident_type
+varchar(80)
+injury / near_miss / environmental_spill / property_damage / security
+severity
+varchar(50)
+low / medium / high / critical
+occurred_at
+timestamp
+وقت الحادث
+reported_by
+bigint nullable
+المبلغ
+description
+longtext
+الوصف
+status
+varchar(50)
+reported / under_investigation / action_required / closed / reopened
+requires_regulatory_report
+boolean
+هل يحتاج بلاغ تنظيمي
+metadata
+json nullable
+تفاصيل إضافية
+created_at / updated_at
+timestamps
+قياسي
+23. ehs_incident_people
+الأشخاص المتأثرون أو الشهود.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+incident_id
+bigint
+الحادث
+person_type
+varchar(50)
+employee / contractor / visitor / witness / public
+user_id
+bigint nullable
+إذا كان مستخدما في النظام
+name
+varchar(255) nullable
+للأشخاص الخارجيين
+role_in_incident
+varchar(80)
+injured / witness / reporter / responsible
+injury_details
+json nullable
+تفاصيل إصابة إن وجدت
+privacy_level
+varchar(50)
+restricted / confidential / internal
+created_at / updated_at
+timestamps
+قياسي
+24. ehs_investigations
+تحقيقات الحوادث.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+incident_id
+bigint
+الحادث
+investigation_lead_user_id
+bigint nullable
+قائد التحقيق
+root_cause
+longtext nullable
+السبب الجذري
+findings
+longtext nullable
+النتائج
+status
+varchar(50)
+open / in_review / approved / closed
+started_at / completed_at
+timestamp nullable
+تواريخ
+approved_by
+bigint nullable
+المعتمد
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+25. ehs_corrective_actions
+الإجراءات التصحيحية والوقائية.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتكامل
+organization_id
+bigint
+النطاق
+source_type
+varchar(80)
+incident / inspection / audit / risk / manual
+source_id
+bigint nullable
+مرجع المصدر
+action_title
+varchar(255)
+العنوان
+description
+longtext nullable
+الوصف
+action_type
+varchar(50)
+corrective / preventive / improvement
+priority
+varchar(50)
+low / medium / high / critical
+assigned_to
+bigint nullable
+المسؤول
+due_date
+date nullable
+موعد نهائي
+status
+varchar(50)
+open / in_progress / completed / overdue / cancelled
+completed_at
+timestamp nullable
+الإغلاق
+verification_status
+varchar(50)
+not_required / pending / verified / failed
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+26. ehs_inspections
+تفتيشات السلامة والبيئة.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتصدير
+organization_id
+bigint
+النطاق
+facility_id
+bigint nullable
+الموقع
+inspection_type
+varchar(80)
+safety / environmental / fire / equipment / contractor
+checklist_template_id
+bigint nullable
+اختياري من workflows/templates
+scheduled_at
+timestamp nullable
+الجدولة
+performed_at
+timestamp nullable
+التنفيذ
+performed_by
+bigint nullable
+المفتش
+status
+varchar(50)
+scheduled / in_progress / completed / cancelled
+score
+decimal(5,2) nullable
+نتيجة التفتيش
+created_at / updated_at
+timestamps
+قياسي
+27. ehs_inspection_findings
+ملاحظات التفتيش.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+inspection_id
+bigint
+التفتيش
+finding_type
+varchar(80)
+non_conformity / observation / improvement / positive
+severity
+varchar(50)
+low / medium / high / critical
+description
+longtext
+الوصف
+related_action_id
+bigint nullable
+إجراء تصحيحي
+status
+varchar(50)
+open / actioned / closed
+created_at / updated_at
+timestamps
+قياسي
+28. ehs_permits
+التصاريح والرخص البيئية أو السلامة.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتتبع
+organization_id
+bigint
+النطاق
+facility_id
+bigint nullable
+الموقع
+permit_type
+varchar(100)
+environmental / fire_safety / waste / occupational_health
+permit_number
+varchar(120) nullable
+رقم التصريح
+issuer
+varchar(255) nullable
+الجهة
+issued_at / expires_at
+date nullable
+الصلاحية
+status
+varchar(50)
+active / expiring / expired / suspended
+document_id
+bigint nullable
+ملف التصريح
+reminder_days_before
+integer nullable
+تنبيه قبل الانتهاء
+created_at / updated_at
+timestamps
+قياسي
+29. supplier_esg_assessments
+تقييمات ESG للموردين.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتكامل
+organization_id
+bigint
+النطاق
+supplier_id
+bigint nullable
+يرتبط بالمورد في ERP/Purchasing
+assessment_name
+varchar(255)
+اسم التقييم
+assessment_type
+varchar(80)
+questionnaire / audit / document_review / site_visit
+score
+decimal(5,2) nullable
+النتيجة
+risk_level
+varchar(50)
+low / medium / high / critical
+status
+varchar(50)
+draft / sent / submitted / reviewed / approved / rejected
+started_at / completed_at
+timestamp nullable
+تواريخ
+reviewed_by
+bigint nullable
+المراجع
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+30. supplier_esg_findings
+ملاحظات ومخاطر الموردين.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+assessment_id
+bigint
+التقييم
+finding_category
+varchar(80)
+environment / labor / safety / governance / compliance
+severity
+varchar(50)
+low / medium / high / critical
+description
+longtext
+الوصف
+required_action
+longtext nullable
+المطلوب
+due_date
+date nullable
+موعد التصحيح
+status
+varchar(50)
+open / mitigated / accepted / closed
+created_at / updated_at
+timestamps
+قياسي
+31. sustainability_evidence
+الأدلة الداعمة للأرقام والتقارير.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتصدير
+organization_id
+bigint
+النطاق
+subject_type
+varchar(120)
+metric_value / incident / permit / report / goal / supplier_assessment
+subject_id
+bigint nullable
+مرجع
+document_id
+bigint nullable
+ملف من Document Management
+media_asset_id
+bigint nullable
+ملف من Media
+evidence_type
+varchar(80)
+invoice / photo / certificate / audit_note / sensor_export / report
+confidentiality
+varchar(50)
+public / internal / confidential / restricted
+status
+varchar(50)
+active / expired / replaced / rejected
+created_by
+bigint nullable
+المستخدم
+created_at / updated_at
+timestamps
+قياسي
+32. esg_calculation_runs
+عمليات حساب مؤشرات أو انبعاثات.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتتبع
+organization_id
+bigint
+النطاق
+run_type
+varchar(80)
+ghg_emissions / kpi_rollup / goal_progress / supplier_score
+status
+varchar(50)
+pending / running / completed / failed / cancelled
+input_hash
+varchar(128) nullable
+لمنع التكرار
+started_at / completed_at
+timestamp nullable
+تواريخ
+triggered_by
+bigint nullable
+المستخدم أو job
+result_summary
+json nullable
+ملخص النتيجة
+error_message
+text nullable
+خطأ
+created_at / updated_at
+timestamps
+قياسي
+33. esg_data_quality_checks
+فحوص جودة البيانات.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+النطاق
+check_type
+varchar(80)
+missing_evidence / outlier / duplicate / unit_mismatch / stale_data
+subject_type
+varchar(120)
+نوع السجل
+subject_id
+bigint nullable
+معرف السجل
+severity
+varchar(50)
+info / warning / high / critical
+status
+varchar(50)
+open / resolved / ignored
+message
+text
+رسالة
+resolved_by
+bigint nullable
+من حلها
+resolved_at
+timestamp nullable
+وقت الحل
+created_at / updated_at
+timestamps
+قياسي
+34. esg_reports
+تقارير الاستدامة الرسمية أو الداخلية.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتصدير
+organization_id
+bigint
+النطاق
+company_id
+bigint nullable
+الشركة
+disclosure_period_id
+bigint nullable
+الفترة
+framework_id
+bigint nullable
+الإطار
+report_name
+varchar(255)
+اسم التقرير
+report_type
+varchar(80)
+internal / management / regulatory / public
+status
+varchar(50)
+draft / in_review / approved / published / archived
+approved_by
+bigint nullable
+المعتمد
+approved_at
+timestamp nullable
+وقت الاعتماد
+published_at
+timestamp nullable
+وقت النشر
+metadata
+json nullable
+إعدادات التقرير
+created_at / updated_at
+timestamps
+قياسي
+35. esg_report_exports
+ملفات التصدير الناتجة عن التقارير.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+report_id
+bigint
+التقرير
+export_type
+varchar(50)
+pdf / xlsx / csv / json / xbrl_like
+status
+varchar(50)
+pending / running / completed / failed / expired
+file_media_id
+bigint nullable
+الملف الناتج
+generated_by
+bigint nullable
+المستخدم
+generated_at
+timestamp nullable
+وقت الإنشاء
+expires_at
+timestamp nullable
+انتهاء الرابط
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+قياسي
+36. esg_audit_reviews
+مراجعات تدقيق داخلي أو خارجي لبيانات ESG/EHS.
+الحقل
+النوع المقترح
+الملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتتبع
+organization_id
+bigint
+النطاق
+subject_type
+varchar(120)
+report / metric_period / facility / supplier_assessment
+subject_id
+bigint nullable
+مرجع
+review_type
+varchar(80)
+internal / external / management / regulatory
+reviewer_name
+varchar(255) nullable
+المراجع
+status
+varchar(50)
+planned / in_progress / completed / failed
+opinion
+varchar(80) nullable
+clean / qualified / adverse / not_applicable
+notes
+longtext nullable
+ملاحظات
+started_at / completed_at
+timestamp nullable
+تواريخ
+created_at / updated_at
+timestamps
+قياسي
+37. ERD المختصر
+erDiagram ORGANIZATIONS ||--o{ ESG_PROFILES : owns COMPANIES ||--o{ ESG_PROFILES : may_have ESG_PROFILES ||--o{ ESG_DISCLOSURE_PERIODS : reports_in ESG_PROFILES ||--o{ ESG_FACILITIES : includes ESG_METRIC_DEFINITIONS ||--o{ ESG_METRIC_VALUES : records ESG_DISCLOSURE_PERIODS ||--o{ ESG_METRIC_VALUES : contains ESG_FACILITIES ||--o{ ENERGY_CONSUMPTION_RECORDS : consumes ESG_FACILITIES ||--o{ WATER_USAGE_RECORDS : uses ESG_FACILITIES ||--o{ WASTE_RECORDS : generates ESG_FACILITIES ||--o{ EMISSION_SOURCES : emits EMISSION_SOURCES ||--o{ GHG_EMISSION_RECORDS : produces GHG_EMISSION_FACTORS ||--o{ GHG_EMISSION_RECORDS : calculates ESG_FACILITIES ||--o{ EHS_INCIDENTS : reports EHS_INCIDENTS ||--o{ EHS_INCIDENT_PEOPLE : involves EHS_INCIDENTS ||--o{ EHS_INVESTIGATIONS : investigated_by EHS_INCIDENTS ||--o{ EHS_CORRECTIVE_ACTIONS : creates EHS_INSPECTIONS ||--o{ EHS_INSPECTION_FINDINGS : finds ESG_REPORTS ||--o{ ESG_REPORT_EXPORTS : exports ESG_REPORTS ||--o{ ESG_AUDIT_REVIEWS : reviewed_by
+38. Indexes مهمة
+الجدول
+الفهارس المقترحة
+esg_profiles
+index(organization_id, status), index(company_id), unique(organization_id, company_id, profile_type) where possible
+esg_metric_values
+index(organization_id, metric_definition_id), index(disclosure_period_id), index(facility_id), index(status)
+energy_consumption_records
+index(organization_id, period_start, period_end), index(facility_id), index(energy_type)
+ghg_emission_records
+index(organization_id, scope), index(facility_id), index(period_start, period_end), index(calculation_run_id)
+ehs_incidents
+index(organization_id, occurred_at), index(facility_id), index(severity, status), unique(organization_id, incident_number)
+ehs_corrective_actions
+index(organization_id, status), index(assigned_to, due_date), index(source_type, source_id)
+esg_reports
+index(organization_id, status), index(disclosure_period_id), index(framework_id)
+39. Permissions المقترحة
+Permission
+الوصف
+Risk
+esg.profile.view
+عرض ملف ESG
+low
+esg.profile.manage
+إدارة الملف والإعدادات
+medium
+esg.metric.view
+عرض المؤشرات
+low
+esg.metric.record
+تسجيل قيم مؤشرات
+medium
+esg.metric.approve
+اعتماد قيم المؤشرات
+high
+esg.report.generate
+توليد تقارير
+medium
+esg.report.approve
+اعتماد تقرير
+high
+ehs.incident.report
+تسجيل حادث
+medium
+ehs.incident.investigate
+إدارة التحقيق
+high
+ehs.corrective_action.manage
+إدارة الإجراءات التصحيحية
+medium
+ehs.permit.manage
+إدارة التصاريح
+high
+esg.evidence.view_restricted
+عرض أدلة مقيدة
+high
+esg.audit.review
+تنفيذ مراجعة/تدقيق
+high
+40. Feature Flags
+• enable_esg_suite
+• enable_ehs_incidents
+• enable_esg_metrics
+• enable_ghg_calculations
+• enable_energy_water_waste_tracking
+• enable_supplier_esg_assessments
+• enable_esg_reporting
+• enable_esg_ai_suggestions
+• enable_esg_public_disclosures
+• enable_esg_data_quality_checks
+41. Flows الأساسية
+41.1 ESG Profile Setup Flow
+Organization enables ESG Suite→ entitlement check→ esg_profile created→ reporting boundary selected→ facilities created→ frameworks selected→ default metrics loaded→ roles/permissions assigned→ first disclosure period opened
+41.2 Metric Recording Flow
+User records metric value→ unit validated→ evidence required check→ data quality checks run→ approval request optional→ metric value approved→ KPI snapshot updated→ report period aggregates refreshed
+41.3 EHS Incident Flow
+Incident reported→ severity classified→ notifications sent→ investigation opened→ people/evidence attached→ root cause recorded→ corrective actions assigned→ verification completed→ incident closed→ audit log and KPI updated
+41.4 GHG Calculation Flow
+Energy/fuel/activity data approved→ calculation run queued→ emission factor version selected→ ghg_emission_records generated→ data quality checks run→ result approved/locked→ dashboard/report updates
+41.5 ESG Report Flow
+Disclosure period opened→ metrics collected→ evidence attached→ data quality checks resolved→ report draft generated→ workflow approval→ report export created→ report locked/published if allowed
+42. Integration مع GRC
+ESG/EHS لا يكرر GRC. بدلا من ذلك يمكن ربط الحقول التالية:
+ESG/EHS
+GRC Link
+ehs_permits
+compliance_obligations / evidence
+ehs_incidents
+risk_events / audit findings
+ehs_corrective_actions
+corrective_actions / remediation plans
+esg_data_quality_checks
+control testing / findings
+esg_audit_reviews
+internal_audit / evidence
+supplier_esg_findings
+third-party risk register
+43. Integration مع BI / Data Platform
+الـ ESG operational tables تغذي Data Platform، لكن لا يجب أن تقرأ dashboards الثقيلة من الجداول التشغيلية مباشرة في كل request.
+• esg_metric_values → KPI Store / Data Mart.
+• ghg_emission_records → Carbon dashboard.
+• ehs_incidents → Safety dashboard.
+• corrective actions → SLA/overdue dashboard.
+• supplier_esg_assessments → supplier risk dashboard.
+• esg_data_quality_checks → data quality dashboard.
+44. Integration مع AI
+AI Use Case
+القيود
+اقتراح أسباب جذرية لحادث
+لا يعتمد النتيجة بدون investigator approval.
+اقتراح corrective actions
+تدخل كـ draft فقط.
+شرح KPI أو انبعاثات
+قراءة فقط مع data minimization.
+اكتشاف outliers في القياسات
+ينشئ data_quality_check ولا يعدل السجل.
+تلخيص ESG report
+لا ينشر بدون report.approve.
+45. Cloud / Frontend Anywhere / Portable / Dedicated
+Mode
+قاعدة التعامل مع ESG/EHS
+Cloud
+كل البيانات داخل Kabeeri Cloud، مع jobs للحسابات والتقارير.
+Frontend Anywhere
+لا تخرج بيانات ESG الخاصة للواجهة العامة؛ يمكن عرض public sustainability statements فقط إذا فعلت الشركة ذلك.
+Portable
+يتم تصدير ESG/EHS tenant data حسب export registry، مع احترام السرية والاحتفاظ القانوني.
+Dedicated
+مناسب للشركات الكبيرة والحساسة، ويمكن إبقاء التقارير والـ sync مع Central بشكل ملخص فقط.
+Mall
+لا ينشر ESG/EHS تلقائيا. فقط trust/public badges أو sustainability claims المعتمدة والمصرح بها.
+46. Privacy & Security
+• EHS incident people data قد تكون حساسة ويجب تقييدها.
+• صور الحوادث والتقارير الطبية لا تظهر في Public APIs.
+• تصاريح ومخالفات الجهات التنظيمية قد تكون confidential.
+• كل وصول إلى restricted evidence يسجل sensitive_access_log.
+• public sustainability claims تحتاج approval وconsent.
+• Supplier ESG findings لا ترسل إلى Mall أو public listings بدون موافقة.
+47. Export Registry
+Module
+Tables
+esg_core
+esg_profiles, esg_facilities, esg_reporting_frameworks, esg_disclosure_periods
+esg_metrics
+esg_metric_definitions, esg_metric_values, esg_goals, esg_initiatives
+environmental
+energy_consumption_records, water_usage_records, waste_records, environmental_measurements
+ghg
+emission_sources, ghg_emission_factors, ghg_emission_records, esg_calculation_runs
+ehs
+ehs_incidents, ehs_incident_people, ehs_investigations, ehs_corrective_actions, ehs_inspections, ehs_findings, ehs_permits
+supplier_esg
+supplier_esg_assessments, supplier_esg_findings
+reporting
+sustainability_evidence, esg_reports, esg_report_exports, esg_audit_reviews
+48. Seeders المقترحة
+• ESGPermissionsSeeder
+• DefaultESGMetricDefinitionsSeeder
+• DefaultEHSIncidentTypesSeeder
+• DefaultGHGEmissionFactorsSeeder
+• DefaultESGReportingFrameworksSeeder
+• DefaultSustainabilityDashboardSeeder
+• DemoESGDataSeeder
+• DemoEHSIncidentSeeder
+49. CLI Commands المقترحة
+php artisan kabeeri:esg:open-period {organizationId}php artisan kabeeri:esg:calculate-kpis {organizationId}php artisan kabeeri:esg:calculate-ghg {organizationId} {periodId}php artisan kabeeri:esg:data-quality {organizationId}php artisan kabeeri:ehs:check-overdue-actions {organizationId}php artisan kabeeri:esg:generate-report {reportId}php artisan kabeeri:esg:export {reportId} --type=pdf
+50. Build Order العملي
+المرحلة
+ما يتم بناؤه
+1
+esg_profiles + esg_facilities + permissions + feature flags
+2
+metric definitions/values + goals + evidence
+3
+energy/water/waste records + GHG factors/calculations
+4
+EHS incidents + investigations + corrective actions
+5
+inspections + permits + supplier ESG assessments
+6
+reports + exports + data quality checks
+7
+BI dashboards + GRC links + AI suggestions
+8
+Portable/Dedicated export rules + release tests
+51. Acceptance Criteria
+• يمكن إنشاء ESG profile لشركة أو Organization.
+• يمكن تسجيل facilities وربطها بالشركة.
+• يمكن تسجيل مؤشرات وقيم مع evidence واعتمادها.
+• يمكن تسجيل حادث EHS وفتح تحقيق وإجراء تصحيحي وإغلاقه.
+• يمكن حساب GHG records من activity data باستخدام factor version واضح.
+• يمكن توليد تقرير ESG داخلي وتصديره.
+• كل بيانات حساسة تخضع لصلاحيات وsensitive access logging.
+• Dashboards لا تكسر الأداء لأنها تعتمد على snapshots/jobs.
+• Portable export يحترم الخصوصية والاحتفاظ القانوني.
+• لا يوجد public disclosure بدون approval وconsent.
+52. الخلاصة
+ESG / EHS / Sustainability Suite تجعل Kabeeri قادرا على خدمة الشركات التي تحتاج إدارة الاستدامة والسلامة والامتثال البيئي ضمن نفس منصة التشغيل، مع الاعتماد على Core وGRC وBI وDocuments وWorkflows بدلا من بناء نظام منفصل.
+القاعدة النهائية: ESG/EHS is not a public marketing claim by default. It is controlled operational, compliance, and evidence-backed data.
+KABEERI — powered by ADMIT | Database Architecture

@@ -1,0 +1,329 @@
+KABEERI Database File 07 — Master ERD & Module Database Blueprint
+الخريطة الرئيسية لعلاقات قاعدة البيانات بين كل موديولات KABEERI
+هذا الملف يأتي بعد ملفات:
+01 — Core Kernel Database02 — Kabeeri Cloud Database03 — Kabeeri Frontend Anywhere Database04 — Kabeeri Portable Database05 — Kabeeri Dedicated Database06 — Integration Between The Five Systems
+هدف هذا الملف هو تقديم ERD Master Blueprint واضح قبل الدخول في:
+Laravel Migration RoadmapSQL Schema MasterModule-by-module migrations
+1. الهدف من هذا الملف
+هذا الملف يحدد:
+الخريطة الكاملة للموديولات.
+العلاقات الأساسية بين الجداول.
+الجداول المالكة للبيانات.
+الجداول التابعة.
+حدود كل Domain.
+ترتيب الاعتماد بين الجداول.
+أين نستخدم organization_id.
+أين نستخدم site_id.
+أين نستخدم company_id.
+أين نستخدم Mall Mirror.
+أين نستخدم Export / Sync / Dedicated / Portable.
+القاعدة:
+هذا الملف لا يكتب كل أعمدة كل جدول، بل يرسم العلاقات الكبرى التي يجب أن يلتزم بها أي Migration لاحقًا.
+2. الصورة الكبرى لقاعدة بيانات Kabeeri
+Kabeeri Database ليست قاعدة بيانات CMS فقط.
+هي قاعدة بيانات:
+Identity+ CMS+ Commerce+ Rabet+ ERP+ Cloud+ Marketplace+ Mall+ Talent+ Teams+ AI+ Integrations+ BI+ GRC+ Hosting Modes
+لذلك لا يجب تصميمها من منظور:
+sites → pages
+بل من منظور:
+organization → companies/sites → modules → public/private data → operating modes
+3. أعلى ERD في المنصة
+erDiagram    USERS ||--o{ ORGANIZATION_MEMBERSHIPS : joins    ORGANIZATIONS ||--o{ ORGANIZATION_MEMBERSHIPS : contains    ORGANIZATIONS ||--o{ COMPANIES : owns    ORGANIZATIONS ||--o{ SITES : owns    ORGANIZATIONS ||--o{ BILLING_ACCOUNTS : pays_with    ORGANIZATIONS ||--o{ BUSINESS_PASSPORTS : identified_by    ORGANIZATIONS ||--o{ MODULE_INSTALLATIONS : enables    ORGANIZATIONS ||--o{ ORGANIZATION_OPERATING_MODES : runs_as    COMPANIES ||--o{ COMPANY_MEMBERSHIPS : employs    COMPANIES ||--o{ BUSINESS_PROFILES : presents    COMPANIES ||--o{ CRM_CONTACTS : manages    COMPANIES ||--o{ LEADS : receives    COMPANIES ||--o{ INVOICES : issues    COMPANIES ||--o{ WAREHOUSES : operates    COMPANIES ||--o{ EMPLOYEE_RECORDS : has    SITES ||--o{ CONTENT_ENTRIES : publishes    SITES ||--o{ MEDIA_ASSETS : stores    SITES ||--o{ PRODUCTS : sells    SITES ||--o{ FORMS : contains    BUSINESS_PROFILES ||--o{ VERIFICATION_REQUESTS : submits    BUSINESS_PROFILES ||--o{ MALL_SYNC_SOURCES : can_sync    BUSINESS_PASSPORTS ||--o{ MALL_PUBLICATION_CONSENTS : grants    MALL_SYNC_SOURCES ||--o{ MALL_SYNC_EVENTS : receives    MALL_SYNC_SOURCES ||--o{ MALL_MIRROR_BUSINESSES : updates    MALL_MIRROR_BUSINESSES ||--o{ MALL_MIRROR_SERVICES : lists    MALL_MIRROR_BUSINESSES ||--o{ MALL_MIRROR_PRODUCTS : lists
+4. Layered Database Architecture
+قاعدة البيانات تنقسم إلى Layers:
+Layer 1 — Core KernelLayer 2 — Site/CMS LayerLayer 3 — Business/Rabet LayerLayer 4 — Commerce LayerLayer 5 — ERP LayerLayer 6 — Collaboration/Workflow LayerLayer 7 — Cloud/Billing/Hosting Modes LayerLayer 8 — Marketplace/Mall/Public Mirror LayerLayer 9 — AI/Integration/Data LayerLayer 10 — Enterprise/GRC/BI Layer
+5. قاعدة Ownership النهائية
+كل جدول في Kabeeri يجب أن يندرج تحت واحد من الأنماط التالية:
+5.1 Platform-owned
+جداول عامة للمنصة:
+plansentitlementspermissionscountriescurrenciesmarketplace global packagesconnector catalog
+5.2 Organization-owned
+جداول تابعة للعميل ككل:
+settingssitescompaniesbilling_accountsmodule_installationsexport_jobsai_usage_records
+5.3 Site-owned
+جداول تابعة لموقع:
+content_entriesmenusformsredirectsproducts optionallyfrontend_projectscloud_sites
+5.4 Company-owned
+جداول تابعة لشركة/بزنس:
+business_profilesleadsquotationsinvoiceswarehousesemployeesprojectscontracts
+5.5 Public Mirror-owned
+جداول عرض عامة في Mall:
+mall_mirror_businessesmall_mirror_servicesmall_mirror_productsmall_mirror_talent
+6. Core Kernel Relationship Blueprint
+الجداول
+usersuser_profilesorganizationsorganization_membershipscompaniescompany_membershipssitesrolespermissionsrole_permissionmembership_role_assignmentsmembership_permission_overridessettingsfeature_flagsactivity_logsaudit_logsnotificationsmedia_assetsmedia_usagesmodulesmodule_installations
+العلاقات
+erDiagram    USERS ||--o{ USER_PROFILES : owns    USERS ||--o{ ORGANIZATION_MEMBERSHIPS : has    ORGANIZATIONS ||--o{ ORGANIZATION_MEMBERSHIPS : includes    ORGANIZATIONS ||--o{ COMPANIES : owns    ORGANIZATIONS ||--o{ SITES : owns    COMPANIES ||--o{ COMPANY_MEMBERSHIPS : includes    USERS ||--o{ COMPANY_MEMBERSHIPS : participates    ORGANIZATION_MEMBERSHIPS ||--o{ MEMBERSHIP_ROLE_ASSIGNMENTS : assigned    ROLES ||--o{ MEMBERSHIP_ROLE_ASSIGNMENTS : used_by    ROLES ||--o{ ROLE_PERMISSION : contains    PERMISSIONS ||--o{ ROLE_PERMISSION : grants    ORGANIZATIONS ||--o{ MODULE_INSTALLATIONS : installs    MODULES ||--o{ MODULE_INSTALLATIONS : installed    ORGANIZATIONS ||--o{ MEDIA_ASSETS : owns    MEDIA_ASSETS ||--o{ MEDIA_USAGES : used_in
+ملاحظات تصميمية
+users لا يحتوي organization_id.
+organization_memberships هي علاقة المستخدم بالعميل.
+company_memberships هي علاقة المستخدم بالشركة.
+roles يمكن أن تكون Platform أو Organization أو Company أو Site scoped.
+permissions global.
+module_installations هي التي تحدد ماذا يعمل للعميل.
+7. CMS Relationship Blueprint
+الجداول
+content_typescontent_entriescontent_revisionstaxonomiestaxonomy_termscontent_termmenusmenu_itemsredirectsformsform_fieldsform_submissionsseo_meta optional
+العلاقات
+erDiagram    SITES ||--o{ CONTENT_TYPES : defines    CONTENT_TYPES ||--o{ CONTENT_ENTRIES : classifies    SITES ||--o{ CONTENT_ENTRIES : contains    CONTENT_ENTRIES ||--o{ CONTENT_REVISIONS : has    SITES ||--o{ TAXONOMIES : defines    TAXONOMIES ||--o{ TAXONOMY_TERMS : has    CONTENT_ENTRIES ||--o{ CONTENT_TERM : tagged_by    TAXONOMY_TERMS ||--o{ CONTENT_TERM : tags    SITES ||--o{ MENUS : has    MENUS ||--o{ MENU_ITEMS : contains    SITES ||--o{ REDIRECTS : routes    SITES ||--o{ FORMS : contains    FORMS ||--o{ FORM_FIELDS : defines    FORMS ||--o{ FORM_SUBMISSIONS : receives
+Ownership
+معظم CMS هو:
+organization_id + site_id
+ملاحظات
+content_entries هو جدول محوري.
+content_revisions لا يجب أن تكون ثقيلة بلا حدود؛ نحتاج retention settings.
+seo_meta يمكن دمجه في content_entries أولًا، وفصله لاحقًا.
+8. Media Relationship Blueprint
+الجداول
+media_assetsmedia_usagesmedia_folders optional
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ MEDIA_ASSETS : owns    SITES ||--o{ MEDIA_ASSETS : may_scope    COMPANIES ||--o{ MEDIA_ASSETS : may_scope    MEDIA_ASSETS ||--o{ MEDIA_USAGES : referenced_by
+ملاحظات
+media_assets يحتوي relative_path.
+sensitive files تحتاج visibility + audit.
+media_usages polymorphic مناسب هنا.
+9. Rabet / Business Identity Blueprint
+الجداول
+business_profilesverification_requestsverification_documentsverification_reviewslegal_partnerslegal_partner_userslegal_review_notestrust_recordscompany_badgesbusiness_passportsmall_publication_consents
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ BUSINESS_PASSPORTS : owns    COMPANIES ||--o{ BUSINESS_PROFILES : presents    BUSINESS_PROFILES ||--o{ VERIFICATION_REQUESTS : submits    VERIFICATION_REQUESTS ||--o{ VERIFICATION_DOCUMENTS : includes    VERIFICATION_REQUESTS ||--o{ VERIFICATION_REVIEWS : reviewed_by    LEGAL_PARTNERS ||--o{ LEGAL_PARTNER_USERS : has    LEGAL_PARTNERS ||--o{ VERIFICATION_REVIEWS : performs    COMPANIES ||--o{ TRUST_RECORDS : earns    COMPANIES ||--o{ COMPANY_BADGES : displays    BUSINESS_PASSPORTS ||--o{ MALL_PUBLICATION_CONSENTS : grants
+ملاحظات
+BusinessPassport هو العلاقة طويلة المدى بين البزنس وKabeeri.
+Verification documents ملفات حساسة.
+Legal reviewers لا يرون ERP أو private operations.
+10. Commerce Blueprint
+الجداول
+customerscustomer_addressesproductsproduct_variantsproduct_pricesproduct_categoriesproduct_category_productcartscart_itemsordersorder_itemspaymentsshipmentscouponscoupon_redemptions
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ CUSTOMERS : has    SITES ||--o{ PRODUCTS : lists    COMPANIES ||--o{ PRODUCTS : owns    PRODUCTS ||--o{ PRODUCT_VARIANTS : has    PRODUCTS ||--o{ PRODUCT_PRICES : priced_by    PRODUCT_CATEGORIES ||--o{ PRODUCT_CATEGORY_PRODUCT : maps    PRODUCTS ||--o{ PRODUCT_CATEGORY_PRODUCT : belongs    CUSTOMERS ||--o{ CUSTOMER_ADDRESSES : has    CUSTOMERS ||--o{ ORDERS : places    ORDERS ||--o{ ORDER_ITEMS : contains    PRODUCTS ||--o{ ORDER_ITEMS : sold_as    ORDERS ||--o{ PAYMENTS : paid_by    ORDERS ||--o{ SHIPMENTS : fulfilled_by    COUPONS ||--o{ COUPON_REDEMPTIONS : used_as
+ملاحظات
+customer لا يساوي user دائمًا.
+orders يجب أن تحمل organization_id دائمًا.
+إذا كان البيع تابعًا لشركة، استخدم company_id.
+لا تثق بسعر frontend؛ احسب server-side.
+11. Services Blueprint
+الجداول
+servicesservice_categoriesservice_requestsservice_request_messagesservice_pricing_rules
+العلاقات
+erDiagram    COMPANIES ||--o{ SERVICES : offers    BUSINESS_PROFILES ||--o{ SERVICES : publishes    SERVICE_CATEGORIES ||--o{ SERVICES : categorizes    SERVICES ||--o{ SERVICE_REQUESTS : receives    SERVICE_REQUESTS ||--o{ SERVICE_REQUEST_MESSAGES : discusses    CUSTOMERS ||--o{ SERVICE_REQUESTS : submits
+ملاحظات
+Service Request يمكن تحويله إلى Lead في CRM.
+Service يمكن أن يظهر في Mall Mirror.
+12. ERP CRM Blueprint
+الجداول
+leadslead_sourcescrm_contactscrm_activitiespipelinespipeline_stagesopportunitieslead_scorescustomer_segmentscustomer_timeline_entries
+العلاقات
+erDiagram    COMPANIES ||--o{ LEADS : receives    LEAD_SOURCES ||--o{ LEADS : originates    LEADS ||--o{ CRM_ACTIVITIES : has    CUSTOMERS ||--o{ CRM_CONTACTS : may_link    CUSTOMERS ||--o{ CUSTOMER_TIMELINE_ENTRIES : has    PIPELINES ||--o{ PIPELINE_STAGES : contains    PIPELINE_STAGES ||--o{ OPPORTUNITIES : groups    LEADS ||--o{ OPPORTUNITIES : may_convert    LEADS ||--o{ LEAD_SCORES : scored_by
+ملاحظات
+Service Request → Lead.
+Form Submission → Lead.
+Order Customer → CRM Customer Timeline.
+13. ERP Sales Blueprint
+الجداول
+quotationsquotation_itemssales_orderssales_order_itemsprice_listsprice_list_itemsdiscount_rulescustomer_credit_limits
+العلاقات
+erDiagram    CUSTOMERS ||--o{ QUOTATIONS : receives    LEADS ||--o{ QUOTATIONS : may_generate    QUOTATIONS ||--o{ QUOTATION_ITEMS : contains    QUOTATIONS ||--o{ SALES_ORDERS : converts_to    SALES_ORDERS ||--o{ SALES_ORDER_ITEMS : contains    PRICE_LISTS ||--o{ PRICE_LIST_ITEMS : includes    CUSTOMERS ||--o{ CUSTOMER_CREDIT_LIMITS : controlled_by
+ملاحظات
+Quotation accepted يمكن أن يتحول إلى Sales Order أو Invoice.
+Sales Order يمكن أن يحجز مخزون.
+14. ERP Invoicing Blueprint
+الجداول
+invoicesinvoice_itemsinvoice_paymentscredit_notesdebit_notespaymentspayment_allocations
+العلاقات
+erDiagram    CUSTOMERS ||--o{ INVOICES : billed    QUOTATIONS ||--o{ INVOICES : can_convert    SALES_ORDERS ||--o{ INVOICES : can_generate    ORDERS ||--o{ INVOICES : can_generate    INVOICES ||--o{ INVOICE_ITEMS : contains    INVOICES ||--o{ INVOICE_PAYMENTS : receives    PAYMENTS ||--o{ PAYMENT_ALLOCATIONS : allocated    INVOICES ||--o{ CREDIT_NOTES : may_have    INVOICES ||--o{ DEBIT_NOTES : may_have
+ملاحظات
+لا تخلط فواتير المنصة مع فواتير العميل.
+استخدم invoice_type أو جدول منفصل platform invoices.
+15. ERP Inventory Blueprint
+الجداول
+warehousesstock_balancesstock_movementsstock_transfersstock_transfer_itemsstock_countsstock_count_itemsinventory_batchesinventory_serialsinventory_reorder_rulesinventory_valuation_layers
+العلاقات
+erDiagram    COMPANIES ||--o{ WAREHOUSES : owns    WAREHOUSES ||--o{ STOCK_BALANCES : holds    PRODUCTS ||--o{ STOCK_BALANCES : counted_as    PRODUCTS ||--o{ STOCK_MOVEMENTS : moved    WAREHOUSES ||--o{ STOCK_MOVEMENTS : affected    STOCK_TRANSFERS ||--o{ STOCK_TRANSFER_ITEMS : contains    WAREHOUSES ||--o{ STOCK_TRANSFERS : from_or_to    STOCK_COUNTS ||--o{ STOCK_COUNT_ITEMS : contains    PRODUCTS ||--o{ INVENTORY_BATCHES : batched    PRODUCTS ||--o{ INVENTORY_SERIALS : serialized    PRODUCTS ||--o{ INVENTORY_REORDER_RULES : replenished_by
+قاعدة ذهبية
+stock_movements = source of truthstock_balances = current snapshot
+ممنوع تعديل stock_balances يدويًا بدون stock movement.
+16. ERP Purchasing Blueprint
+الجداول
+supplierspurchase_requisitionspurchase_requisition_itemssupplier_rfqssupplier_rfq_itemssupplier_quotationspurchase_orderspurchase_order_itemsgoods_receiptsgoods_receipt_itemssupplier_billssupplier_bill_items
+العلاقات
+erDiagram    COMPANIES ||--o{ SUPPLIERS : manages    PURCHASE_REQUISITIONS ||--o{ PURCHASE_REQUISITION_ITEMS : contains    SUPPLIERS ||--o{ SUPPLIER_RFQS : receives    SUPPLIER_RFQS ||--o{ SUPPLIER_RFQ_ITEMS : contains    SUPPLIERS ||--o{ SUPPLIER_QUOTATIONS : sends    SUPPLIERS ||--o{ PURCHASE_ORDERS : receives    PURCHASE_ORDERS ||--o{ PURCHASE_ORDER_ITEMS : contains    PURCHASE_ORDERS ||--o{ GOODS_RECEIPTS : fulfilled_by    GOODS_RECEIPTS ||--o{ GOODS_RECEIPT_ITEMS : contains    SUPPLIERS ||--o{ SUPPLIER_BILLS : bills
+ملاحظات
+Goods Receipt يجب أن ينشئ Stock Movement.
+Supplier Bill يدخل AP.
+17. ERP Accounting Blueprint
+الجداول
+chart_of_accountsjournal_entriesjournal_entry_linesaccounting_periodsbank_accountscash_accountscost_centersprofit_centersbudgetsbudget_linesfixed_assetsbank_reconciliations
+العلاقات
+erDiagram    COMPANIES ||--o{ CHART_OF_ACCOUNTS : defines    JOURNAL_ENTRIES ||--o{ JOURNAL_ENTRY_LINES : contains    CHART_OF_ACCOUNTS ||--o{ JOURNAL_ENTRY_LINES : posted_to    COMPANIES ||--o{ ACCOUNTING_PERIODS : controls    COMPANIES ||--o{ BANK_ACCOUNTS : owns    COMPANIES ||--o{ CASH_ACCOUNTS : owns    COMPANIES ||--o{ COST_CENTERS : tracks    COMPANIES ||--o{ PROFIT_CENTERS : tracks    BUDGETS ||--o{ BUDGET_LINES : contains    COMPANIES ||--o{ FIXED_ASSETS : owns
+ملاحظات
+Accounting لا يفضل Polymorphic بكثرة.
+Journal entries posted لا تُعدل بدون reversal/audit.
+18. HR / HCM Blueprint
+الجداول
+employee_recordsemployee_documentsattendance_recordsleave_requestsjob_requisitionsjob_applicationsperformance_reviewstraining_coursesemployee_training_enrollmentspayroll_runspayroll_itemsdepartments
+العلاقات
+erDiagram    COMPANIES ||--o{ EMPLOYEE_RECORDS : employs    DEPARTMENTS ||--o{ EMPLOYEE_RECORDS : organizes    USERS ||--o{ EMPLOYEE_RECORDS : may_link    EMPLOYEE_RECORDS ||--o{ EMPLOYEE_DOCUMENTS : has    EMPLOYEE_RECORDS ||--o{ ATTENDANCE_RECORDS : logs    EMPLOYEE_RECORDS ||--o{ LEAVE_REQUESTS : requests    JOB_REQUISITIONS ||--o{ JOB_APPLICATIONS : receives    EMPLOYEE_RECORDS ||--o{ PERFORMANCE_REVIEWS : reviewed_by    TRAINING_COURSES ||--o{ EMPLOYEE_TRAINING_ENROLLMENTS : includes    PAYROLL_RUNS ||--o{ PAYROLL_ITEMS : pays
+ملاحظات
+EmployeeRecord لا يساوي User دائمًا.
+Payroll لا يطلق بدون Country Pack.
+19. Projects / Tasks / Work Blueprint
+الجداول
+projectsproject_taskstask_assignmentstask_commentstask_attachmentstask_status_historiestimesheets
+العلاقات
+erDiagram    COMPANIES ||--o{ PROJECTS : runs    PROJECTS ||--o{ PROJECT_TASKS : contains    PROJECT_TASKS ||--o{ TASK_ASSIGNMENTS : assigned_to    USERS ||--o{ TASK_ASSIGNMENTS : receives    PROJECT_TASKS ||--o{ TASK_COMMENTS : has    PROJECT_TASKS ||--o{ TASK_ATTACHMENTS : includes    PROJECT_TASKS ||--o{ TASK_STATUS_HISTORIES : tracks    USERS ||--o{ TIMESHEETS : logs
+20. Workflow / Approval Blueprint
+الجداول
+workflow_definitionsworkflow_stepsworkflow_runsapproval_rulesapproval_requestsapproval_stepsapproval_actionsapproval_delegationsapproval_escalations
+العلاقات
+erDiagram    WORKFLOW_DEFINITIONS ||--o{ WORKFLOW_STEPS : contains    WORKFLOW_DEFINITIONS ||--o{ WORKFLOW_RUNS : runs    APPROVAL_RULES ||--o{ APPROVAL_REQUESTS : triggers    APPROVAL_REQUESTS ||--o{ APPROVAL_STEPS : contains    APPROVAL_STEPS ||--o{ APPROVAL_ACTIONS : records    USERS ||--o{ APPROVAL_DELEGATIONS : delegates    APPROVAL_REQUESTS ||--o{ APPROVAL_ESCALATIONS : escalates
+ملاحظات
+Approval subject يمكن أن يكون polymorphic.
+لكن الموافقات المالية تحتاج وضوح وربط مباشر قدر الإمكان.
+21. Cloud / Billing Blueprint
+الجداول
+cloud_sitescloud_domainscloud_backupscloud_health_checkscloud_resource_usagebilling_accountsplansplan_featuressubscriptionssubscription_itemsusage_recordsentitlementsaccount_entitlementsinvoices_platformpayments_platform
+العلاقات
+erDiagram    SITES ||--|| CLOUD_SITES : hosted_as    CLOUD_SITES ||--o{ CLOUD_DOMAINS : has    CLOUD_SITES ||--o{ CLOUD_BACKUPS : backed_up_by    CLOUD_SITES ||--o{ CLOUD_HEALTH_CHECKS : checked_by    ORGANIZATIONS ||--o{ BILLING_ACCOUNTS : owns    BILLING_ACCOUNTS ||--o{ SUBSCRIPTIONS : subscribes    PLANS ||--o{ SUBSCRIPTIONS : selected    PLANS ||--o{ PLAN_FEATURES : defines    BILLING_ACCOUNTS ||--o{ ACCOUNT_ENTITLEMENTS : receives    BILLING_ACCOUNTS ||--o{ INVOICES_PLATFORM : billed
+22. Frontend Anywhere Blueprint
+الجداول
+frontend_projectsfrontend_deploymentsfrontend_domainsfrontend_api_keysfrontend_api_scopesfrontend_buildsfrontend_webhooksfrontend_cache_invalidationsfrontend_content_snapshotsexternal_site_connectionspublic_api_requests
+العلاقات
+erDiagram    SITES ||--o{ FRONTEND_PROJECTS : exposes    FRONTEND_PROJECTS ||--o{ FRONTEND_DEPLOYMENTS : deploys    FRONTEND_PROJECTS ||--o{ FRONTEND_DOMAINS : has    FRONTEND_PROJECTS ||--o{ FRONTEND_API_KEYS : authenticates    FRONTEND_API_KEYS ||--o{ FRONTEND_API_SCOPES : grants    FRONTEND_PROJECTS ||--o{ FRONTEND_BUILDS : produces    FRONTEND_PROJECTS ||--o{ FRONTEND_WEBHOOKS : notifies    FRONTEND_PROJECTS ||--o{ FRONTEND_CACHE_INVALIDATIONS : invalidates
+23. Portable Blueprint
+الجداول
+export_jobsexport_manifeststenant_export_itemsexport_downloadsportable_packagesself_hosted_installationsself_hosted_connection_tokensself_hosted_sync_statusportable_update_channelsportable_update_logsportable_license_keysportable_retention_records
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ EXPORT_JOBS : requests    EXPORT_JOBS ||--o{ EXPORT_MANIFESTS : creates    EXPORT_JOBS ||--o{ TENANT_EXPORT_ITEMS : includes    EXPORT_JOBS ||--o{ PORTABLE_PACKAGES : produces    ORGANIZATIONS ||--o{ SELF_HOSTED_INSTALLATIONS : registers    SELF_HOSTED_INSTALLATIONS ||--o{ SELF_HOSTED_CONNECTION_TOKENS : uses    SELF_HOSTED_INSTALLATIONS ||--o{ SELF_HOSTED_SYNC_STATUS : tracks    ORGANIZATIONS ||--o{ PORTABLE_LICENSE_KEYS : licensed    ORGANIZATIONS ||--o{ PORTABLE_RETENTION_RECORDS : retains
+24. Dedicated Blueprint
+الجداول
+dedicated_tenantsdedicated_environmentsdedicated_databasesdedicated_storage_bucketsdedicated_domainsdedicated_access_keysdedicated_update_windowsdedicated_update_logsdedicated_backup_policiesdedicated_backup_recordsdedicated_health_checksdedicated_support_access_requestsdedicated_sync_status
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ DEDICATED_TENANTS : owns    DEDICATED_TENANTS ||--o{ DEDICATED_ENVIRONMENTS : has    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_DATABASES : uses    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_STORAGE_BUCKETS : stores    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_DOMAINS : exposes    DEDICATED_TENANTS ||--o{ DEDICATED_ACCESS_KEYS : authenticates    DEDICATED_TENANTS ||--o{ DEDICATED_UPDATE_WINDOWS : schedules    DEDICATED_ENVIRONMENTS ||--o{ DEDICATED_UPDATE_LOGS : updated_by
+25. Kabeeri Mall / Public Mirror Blueprint
+الجداول
+mall_publication_consentsmall_sync_sourcesmall_sync_eventsmall_sync_errorsmall_mirror_businessesmall_mirror_servicesmall_mirror_productsmall_mirror_talentmall_mirror_statuseslisting_reviewslisting_reportsfeatured_listingsmall_inquiriesmall_cartsmall_ordersmall_order_itemsdisputescommissionspayouts
+العلاقات
+erDiagram    BUSINESS_PASSPORTS ||--o{ MALL_PUBLICATION_CONSENTS : grants    MALL_SYNC_SOURCES ||--o{ MALL_SYNC_EVENTS : receives    MALL_SYNC_EVENTS ||--o{ MALL_SYNC_ERRORS : may_fail    MALL_SYNC_SOURCES ||--o{ MALL_MIRROR_BUSINESSES : updates    MALL_MIRROR_BUSINESSES ||--o{ MALL_MIRROR_SERVICES : offers    MALL_MIRROR_BUSINESSES ||--o{ MALL_MIRROR_PRODUCTS : sells    MALL_MIRROR_BUSINESSES ||--o{ LISTING_REVIEWS : reviewed_by    MALL_MIRROR_BUSINESSES ||--o{ LISTING_REPORTS : reported_as    MALL_ORDERS ||--o{ MALL_ORDER_ITEMS : contains    MALL_ORDER_ITEMS ||--o{ COMMISSIONS : calculates    PAYOUTS ||--o{ COMMISSIONS : pays
+ملاحظات
+Mall Mirror ليس نسخة تشغيلية كاملة.
+Mall Mirror هو public/public-approved copy.
+Mall لا يقرأ مباشرة من Portable/Dedicated DB.
+26. Talent Blueprint
+الجداول
+professional_profilesprofessional_skillsprofessional_work_historyjob_offersskill_endorsements
+العلاقات
+erDiagram    USERS ||--o{ PROFESSIONAL_PROFILES : owns    PROFESSIONAL_PROFILES ||--o{ PROFESSIONAL_SKILLS : has    PROFESSIONAL_PROFILES ||--o{ PROFESSIONAL_WORK_HISTORY : includes    PROFESSIONAL_PROFILES ||--o{ JOB_OFFERS : receives    COMPANIES ||--o{ JOB_OFFERS : sends    PROFESSIONAL_SKILLS ||--o{ SKILL_ENDORSEMENTS : endorsed_by
+27. Agency Blueprint
+الجداول
+agency_profilesagency_clientsagency_client_sitesagency_reports
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ AGENCY_PROFILES : may_be    AGENCY_PROFILES ||--o{ AGENCY_CLIENTS : manages    AGENCY_CLIENTS ||--o{ AGENCY_CLIENT_SITES : includes    SITES ||--o{ AGENCY_CLIENT_SITES : managed_by
+28. Teams Blueprint
+الجداول
+team_channelsteam_channel_membersconversationsconversation_participantsmessagesmessage_attachmentsmentions
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ TEAM_CHANNELS : has    COMPANIES ||--o{ TEAM_CHANNELS : may_scope    TEAM_CHANNELS ||--o{ TEAM_CHANNEL_MEMBERS : includes    USERS ||--o{ TEAM_CHANNEL_MEMBERS : joins    CONVERSATIONS ||--o{ CONVERSATION_PARTICIPANTS : contains    USERS ||--o{ CONVERSATION_PARTICIPANTS : participates    TEAM_CHANNELS ||--o{ MESSAGES : receives    CONVERSATIONS ||--o{ MESSAGES : receives    MESSAGES ||--o{ MESSAGE_ATTACHMENTS : has    MESSAGES ||--o{ MENTIONS : mentions
+29. Integrations Blueprint
+الجداول
+connectorsintegration_connectionsintegration_credentialsintegration_mappingssync_jobssync_recordswebhook_endpointswebhook_deliveries
+العلاقات
+erDiagram    CONNECTORS ||--o{ INTEGRATION_CONNECTIONS : instantiated_as    ORGANIZATIONS ||--o{ INTEGRATION_CONNECTIONS : owns    INTEGRATION_CONNECTIONS ||--o{ INTEGRATION_CREDENTIALS : authenticates    INTEGRATION_CONNECTIONS ||--o{ INTEGRATION_MAPPINGS : maps    INTEGRATION_CONNECTIONS ||--o{ SYNC_JOBS : runs    SYNC_JOBS ||--o{ SYNC_RECORDS : processes    WEBHOOK_ENDPOINTS ||--o{ WEBHOOK_DELIVERIES : sends
+ملاحظات
+Credentials مشفرة.
+Sync لا يكتب بدون mapping واضح.
+Sync logs مهمة للتشخيص.
+30. AI Blueprint
+الجداول
+ai_change_plansai_change_approvalsai_change_logsai_rollback_pointsai_usage_recordsai_prompt_templatesai_agent_configs
+العلاقات
+erDiagram    USERS ||--o{ AI_CHANGE_PLANS : requests    AI_CHANGE_PLANS ||--o{ AI_CHANGE_APPROVALS : requires    AI_CHANGE_PLANS ||--o{ AI_CHANGE_LOGS : applies    AI_CHANGE_PLANS ||--o{ AI_ROLLBACK_POINTS : creates    ORGANIZATIONS ||--o{ AI_USAGE_RECORDS : consumes    AI_AGENT_CONFIGS ||--o{ AI_CHANGE_PLANS : may_drive
+ملاحظات
+AI لا يتخطى permissions.
+AI high-risk يحتاج approval.
+AI changes تحتاج rollback point حيث يمكن.
+31. Security Blueprint
+الجداول
+security_eventssensitive_access_logsapi_tokensuser_sessionssecurity_policiesprivileged_access_requestssso_providerssso_identities
+العلاقات
+erDiagram    USERS ||--o{ USER_SESSIONS : has    USERS ||--o{ API_TOKENS : creates    ORGANIZATIONS ||--o{ SECURITY_EVENTS : records    USERS ||--o{ SENSITIVE_ACCESS_LOGS : accesses    ORGANIZATIONS ||--o{ SECURITY_POLICIES : defines    ORGANIZATIONS ||--o{ SSO_PROVIDERS : configures    SSO_PROVIDERS ||--o{ SSO_IDENTITIES : links    USERS ||--o{ PRIVILEGED_ACCESS_REQUESTS : requests
+32. BI / Data Blueprint
+الجداول
+report_definitionssaved_report_filtersscheduled_reportsdashboard_widgetskpiskpi_valuesdata_dictionary_termsdata_quality_rulesdata_quality_resultsdata_warehouse_jobs
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ REPORT_DEFINITIONS : owns    REPORT_DEFINITIONS ||--o{ SAVED_REPORT_FILTERS : saved_as    REPORT_DEFINITIONS ||--o{ SCHEDULED_REPORTS : scheduled    ORGANIZATIONS ||--o{ DASHBOARD_WIDGETS : displays    ORGANIZATIONS ||--o{ KPIS : defines    KPIS ||--o{ KPI_VALUES : measures    ORGANIZATIONS ||--o{ DATA_DICTIONARY_TERMS : documents    DATA_QUALITY_RULES ||--o{ DATA_QUALITY_RESULTS : detects    ORGANIZATIONS ||--o{ DATA_WAREHOUSE_JOBS : runs
+33. GRC Blueprint
+الجداول
+policiescompliance_obligationsrisk_registerscontrolscontrol_testsinternal_audit_plansaudit_findingsdelegation_of_authority_rulessegregation_of_duties_rules
+العلاقات
+erDiagram    ORGANIZATIONS ||--o{ POLICIES : defines    ORGANIZATIONS ||--o{ COMPLIANCE_OBLIGATIONS : tracks    ORGANIZATIONS ||--o{ RISK_REGISTERS : owns    RISK_REGISTERS ||--o{ CONTROLS : mitigated_by    CONTROLS ||--o{ CONTROL_TESTS : tested_by    INTERNAL_AUDIT_PLANS ||--o{ AUDIT_FINDINGS : finds    ORGANIZATIONS ||--o{ DELEGATION_OF_AUTHORITY_RULES : controls    ORGANIZATIONS ||--o{ SEGREGATION_OF_DUTIES_RULES : prevents
+34. Industry Solutions Blueprint
+الجداول
+industry_solutionsindustry_solution_installationssolution_templatessolution_workflows
+العلاقات
+erDiagram    INDUSTRY_SOLUTIONS ||--o{ INDUSTRY_SOLUTION_INSTALLATIONS : installed_as    ORGANIZATIONS ||--o{ INDUSTRY_SOLUTION_INSTALLATIONS : installs    INDUSTRY_SOLUTIONS ||--o{ SOLUTION_TEMPLATES : includes    INDUSTRY_SOLUTIONS ||--o{ SOLUTION_WORKFLOWS : includes
+35. Master Dependency Order
+عند تنفيذ Migrations، اتبع هذا الترتيب الأعلى:
+1. Global references2. Users3. Organizations4. Memberships5. RBAC6. Companies7. Sites8. Settings / Flags / Logs9. Media10. CMS11. Business Profiles / Rabet12. Commerce13. CRM14. Sales15. Invoicing16. Inventory17. Purchasing18. Accounting19. HR20. Projects / Tasks21. Workflows / Approvals22. Billing / Cloud23. Frontend Anywhere24. Portable25. Dedicated26. Mall Mirror / Sync27. Talent28. Agency29. Teams30. Integrations31. AI32. Security Center33. BI / Reports34. GRC35. Industry Solutions
+36. Critical Foreign Key Rules
+36.1 لا تجعل كل FK إلزامي
+بعض الجداول تحتاج nullable:
+site_id nullablecompany_id nullable
+لأن الكيان قد يكون Organization-wide.
+36.2 organization_id غالبًا إلزامي
+في Business data.
+36.3 platform tables لا تحتاج organization_id
+مثل:
+planspermissionscountriescurrenciesconnectors catalog
+37. UUID Matching Across Modes
+أي كيان قابل للمزامنة أو التصدير يجب أن يحتوي UUID.
+أمثلة:
+organizationscompaniessitesbusiness_profilesproductsservicescontent_entriesmall mirror recordsself_hosted_installationsdedicated_tenants
+38. Export Registry Coverage
+كل Module يجب أن يعلن:
+tablesownership keyfile dependenciessensitive fieldsexport behaviorretention behaviormall public payload behavior
+مثال:
+commerce.products:  owner: organization_id/site_id/company_id  export: yes  mall_public: yes  sensitive: no for public fieldscommerce.orders:  export: yes  mall_public: no  sensitive: yes
+39. Public vs Private Data Rule
+أي جدول يجب تصنيفه:
+publicprivatesensitivefinancialoperationalderivedplatform
+هذا التصنيف يؤثر على:
+التصدير.
+الظهور في Mall.
+AI access.
+audit logs.
+retention.
+40. أهم Anti-patterns ممنوعة
+40.1 موقع بدون Organization
+ممنوع.
+40.2 منتج بدون Ownership واضح
+ممنوع.
+40.3 Mall يقرأ مباشرة من Portable DB
+ممنوع.
+40.4 AI يعدل بيانات مالية مباشرة
+ممنوع.
+40.5 Sync بدون Consent
+ممنوع.
+40.6 Integration credentials plain text
+ممنوع.
+40.7 Stock balance يتغير بدون movement
+ممنوع.
+40.8 Posted journal يتعدل بدون reversal/audit
+ممنوع.
+41. Master ERD Decision Summary
+القرارات النهائية:
+Organization is the primary tenant boundary.Company is the business operating unit.Site is the digital channel.Business Passport is the continuing identity/trust relationship.Mall Mirror is the public marketplace copy.Operating Mode defines where runtime data lives.Export Registry controls portability.Entitlements control commercial access.Audit Logs protect trust.
+42. ماذا بعد هذا الملف؟
+بعد هذا الملف، الخطوة التالية المنطقية هي:
+KABEERI Database File 08 — Laravel Migration Roadmap
+وهذا الملف سيحول الـ ERD إلى ترتيب تنفيذ Migrations فعلي:
+أي migration أولًا.
+أي indexes.
+أي nullable.
+أي foreign keys.
+أي seeders.
+أي factories.
+أي tests.
+43. الخلاصة النهائية
+Kabeeri Database يجب أن تكون مصممة كمنظومة وليس كجداول منفصلة.
+القاعدة النهائية:
+Every table must know who owns it, who can access it, whether it can be exported, whether it can be published to Mall, and which operating mode controls its source of truth.

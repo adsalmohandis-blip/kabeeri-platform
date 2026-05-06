@@ -1,0 +1,1875 @@
+KABEERI Database File 16
+Kabeeri AI Co-builder Database
+قاعدة بيانات الذكاء الاصطناعي البنّاء داخل KABEERI
+هذا الملف يصف قاعدة بيانات AI Co-builder كطبقة بناء وتعديل آمنة داخل Kabeeri. الهدف ليس إضافة Chatbot فقط، بل بناء نظام قادر على اقتراح خطط، معاينة التغييرات، طلب الموافقات، تطبيق التغييرات المسموحة، تسجيل كل شيء، وإنشاء نقاط رجوع قبل أي تغيير مؤثر.
+يعتمد هذا الملف على Core Kernel وPermissions وActivity/Audit Logs وFeature Flags وWorkflows، ويخدم CMS وCommerce وERP وRabet وMall وDeveloper Platform وIntegration Hub.
+1. الهدف من AI Co-builder Database
+هدف قاعدة البيانات هو تمثيل دورة حياة أي طلب AI داخل Kabeeri من أول prompt إلى آخر rollback. لا يكفي حفظ المحادثة؛ يجب حفظ السياق، الخطة، المخاطر، المعاينة، الموافقات، التنفيذ، التكلفة، والأثر على الكيانات.
+منع AI من تجاوز صلاحيات المستخدم.
+منع أي تعديل حساس بدون Preview + Approval.
+تسجيل كل قرار وتغيير في Activity Log و Audit Log عند الحاجة.
+توفير Rollback Point قبل التغييرات المؤثرة.
+فصل AI Assistant عن AI Co-builder وعن AI Agent وعن AI Skill.
+ربط AI usage بالخطط والـ entitlements والتكلفة.
+تجهيز V4 Co-builder V1، ثم V5 ERP Assistants، ثم V6 Advanced AI Agents.
+2. القاعدة الذهبية
+لا يوجد AI Action مباشر وخطير. أي تعديل مؤثر يجب أن يمر بالمسار التالي:
+Prompt→ Context Check→ Permission Check→ AI Plan→ Risk Classification→ Preview→ User Approval→ Optional Workflow Approval→ Apply Changes→ Activity Log / Audit Log→ Rollback Point
+كل جدول في هذا الملف مصمم لدعم هذا المسار. أي اختصار لهذا المسار يعتبر خطأ معماري، خصوصا في finance وpayroll وlegal documents وidentity documents وpermissions وpackage installation وpublic publishing.
+3. نطاق هذا الملف
+داخل النطاق
+خارج النطاق
+Prompt sessions, messages, context snapshots
+تنفيذ LLM provider نفسه أو تدريب موديلات داخلية
+AI plans, plan items, risk assessment
+واجهة chat النهائية بالتفصيل
+Preview, approvals, apply runs, rollback points
+Workflow Engine الكامل، له ملف مستقل
+AI usage, cost, provider abstraction
+Billing العام، لكنه يرتبط بالusage
+AI agents, skills, policies, tool calls
+Marketplace package governance الكامل
+Simulation and guardrail violations
+GRC enterprise الكامل
+4. أنواع AI داخل Kabeeri
+النوع
+التعريف
+أمثلة
+درجة الخطورة
+AI Assistant
+مساعد يشرح ويلخص ويقترح بدون تعديل مباشر.
+شرح تقرير، اقتراح SEO، تلخيص مبيعات.
+Low غالبا
+AI Co-builder
+يبني أو يعدل عناصر داخل النظام بعد خطة ومعاينة وموافقة.
+صفحة، Form، Content Type، Dashboard، Workflow.
+Medium إلى High
+AI Agent
+مساعد متخصص في مجال أو Suite.
+CMS Agent، Commerce Agent، Finance Agent، HR Agent.
+حسب المجال
+AI Skill
+قدرة قابلة للتفعيل أو التثبيت من Marketplace الداخلي.
+AI SEO Skill، Product Description، Workflow Builder.
+تحتاج manifest وpermissions
+5. Data Domains
+Domain
+الغرض
+أهم الجداول
+Provider Layer
+تجريد مزودي AI والموديلات.
+ai_providers, ai_provider_models
+Conversation Layer
+الجلسات والرسائل والسياق.
+ai_assistant_sessions, ai_messages, ai_context_snapshots
+Planning Layer
+خطة التغيير وبنودها والمخاطر.
+ai_change_plans, ai_change_plan_items, ai_risk_assessments
+Preview & Approval Layer
+المعاينات والموافقات.
+ai_previews, ai_plan_approvals
+Execution Layer
+تنفيذ الخطة والنتائج.
+ai_apply_runs, ai_applied_changes, ai_tool_calls
+Rollback Layer
+نقاط الرجوع وما تحتويه.
+ai_rollback_points, ai_rollback_items
+Governance Layer
+السياسات والانتهاكات والحساسية.
+ai_guardrail_policies, ai_guardrail_violations, ai_sensitive_data_findings
+Usage & Cost Layer
+التكلفة والحدود والاستهلاك.
+ai_usage_records, ai_cost_allocations
+Agents & Skills Layer
+الوكلاء والمهارات القابلة للتفعيل.
+ai_agent_definitions, ai_agent_runs, ai_skills, ai_skill_installations
+6. الجداول الأساسية
+القائمة التالية هي Core Tables المقترحة لملف AI Co-builder. بعض الجداول يمكن تأجيلها في V1/V2، لكن يجب أن تكون الأسماء والمعاني ثابتة من البداية.
+المجموعة
+الجداول
+Providers
+ai_providers, ai_provider_models
+Sessions
+ai_assistant_sessions, ai_messages, ai_context_snapshots, ai_context_items
+Templates
+ai_prompt_templates
+Plans
+ai_change_plans, ai_change_plan_items, ai_risk_assessments
+Preview/Approval
+ai_previews, ai_plan_approvals
+Apply/Changes
+ai_apply_runs, ai_applied_changes, ai_change_logs, ai_tool_calls
+Rollback
+ai_rollback_points, ai_rollback_items
+Policies
+ai_guardrail_policies, ai_guardrail_violations, ai_sensitive_data_findings
+Usage
+ai_usage_records, ai_cost_allocations
+Agents/Skills
+ai_agent_definitions, ai_agent_runs, ai_skills, ai_skill_installations, ai_skill_permissions
+Simulation/Feedback
+ai_simulations, ai_simulation_results, ai_feedback
+7. Provider Layer
+ai_providers
+يمثل مزود AI مجردا بدون حفظ مفاتيح سرية كنص واضح.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+معرف داخلي
+uuid
+char(26/36)
+unique
+معرف للتكامل
+name
+varchar(120)
+اسم المزود
+slug
+varchar(120)
+unique
+openai, anthropic, local, custom
+provider_type
+varchar(50)
+index
+hosted, self_hosted, gateway, enterprise
+status
+varchar(50)
+index
+active, paused, disabled
+credential_ref
+varchar(255)
+nullable
+مرجع إلى Vault أو secret manager
+settings
+json
+nullable
+إعدادات غير سرية
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+unique(slug)
+index(provider_type)
+index(status)
+ملاحظات:
+لا يتم حفظ API keys plain text داخل قاعدة البيانات.
+أي credential يجب أن يكون encrypted أو vault reference.
+ai_provider_models
+الموديلات المتاحة لكل مزود وقدراتها وحدودها.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_provider_id
+bigint
+FK/index
+يرتبط بـ ai_providers
+model_key
+varchar(150)
+index
+اسم الموديل عند المزود
+display_name
+varchar(150)
+اسم ظاهر للمستخدم
+model_type
+varchar(50)
+index
+chat, reasoning, embedding, image, speech
+supports_tools
+boolean
+هل يدعم tool/function calling
+supports_json_mode
+boolean
+هل يدعم structured output
+max_context_tokens
+integer
+nullable
+حد السياق
+input_cost_unit
+decimal(12,6)
+nullable
+تكلفة تقريبية
+output_cost_unit
+decimal(12,6)
+nullable
+تكلفة تقريبية
+status
+varchar(50)
+index
+active, deprecated, disabled
+metadata
+json
+nullable
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+index(ai_provider_id, status)
+index(model_type)
+8. Conversation & Context Layer
+ai_assistant_sessions
+جلسة AI داخل سياق معين مثل organization أو site أو company أو module.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+FK/index
+السياق الأساسي
+company_id
+bigint
+nullable/index
+اختياري
+site_id
+bigint
+nullable/index
+اختياري
+user_id
+bigint
+FK/index
+صاحب الجلسة
+session_type
+varchar(50)
+index
+assistant, cobuilder, agent, skill
+domain
+varchar(50)
+index
+cms, commerce, erp, rabet, mall, integration
+title
+varchar(255)
+nullable
+عنوان تلقائي أو يدوي
+status
+varchar(50)
+index
+open, archived, locked
+last_message_at
+timestamp
+nullable
+metadata
+json
+nullable
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(user_id, last_message_at)
+index(domain, session_type)
+ai_messages
+رسائل المستخدم وAI داخل الجلسة، مع فصل الرسالة عن الخطة والتنفيذ.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+ai_assistant_session_id
+bigint
+FK/index
+organization_id
+bigint
+FK/index
+لتسهيل التصدير والفهرسة
+sender_type
+varchar(50)
+index
+user, assistant, system, tool
+sender_user_id
+bigint
+nullable/index
+لو الرسالة من مستخدم
+message_role
+varchar(50)
+user, assistant, system, tool
+content
+longtext
+النص
+content_format
+varchar(50)
+default text
+text, markdown, json
+model_id
+bigint
+nullable/FK
+الموديل المستخدم في الرد
+risk_level
+varchar(50)
+nullable/index
+low, medium, high, critical
+metadata
+json
+nullable
+created_at
+timestamp
+index
+فهارس مقترحة:
+index(ai_assistant_session_id, created_at)
+index(organization_id, created_at)
+index(risk_level)
+ملاحظات:
+يمكن تطبيق retention أو summarization لاحقا على الرسائل الطويلة مع حفظ audit للأفعال المهمة.
+ai_context_snapshots
+لقطة سياق مجمعة قبل إنشاء الخطة حتى يمكن مراجعة لماذا اقترح AI ما اقترحه.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+FK/index
+site_id
+bigint
+nullable/index
+company_id
+bigint
+nullable/index
+ai_message_id
+bigint
+nullable/FK
+الرسالة التي طلبت السياق
+context_type
+varchar(80)
+index
+cms_build, workflow_build, report_explain, sync_debug
+scope_summary
+json
+nullable
+ملخص النطاق
+sensitive_data_detected
+boolean
+default false
+redaction_applied
+boolean
+default false
+created_by
+bigint
+nullable/index
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(context_type)
+ai_context_items
+كل عنصر دخل في السياق مع سبب إدخاله ومصدره.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_context_snapshot_id
+bigint
+FK/index
+source_type
+varchar(120)
+index
+content_entry, product, invoice, workflow, integration_log
+source_id
+bigint
+nullable/index
+source_uuid
+char(26/36)
+nullable/index
+permission_checked
+boolean
+default false
+permission_result
+varchar(50)
+nullable
+allowed, denied, redacted
+included_fields
+json
+nullable
+redacted_fields
+json
+nullable
+metadata
+json
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(ai_context_snapshot_id)
+index(source_type, source_id)
+9. Prompt Templates
+ai_prompt_templates
+مكتبة prompts رسمية حتى لا تكون أوامر AI عشوائية.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+name
+varchar(150)
+slug
+varchar(150)
+unique
+category
+varchar(80)
+index
+cms, commerce, erp, integration, migration
+prompt_template
+longtext
+القالب
+required_context
+json
+nullable
+ما يحتاجه القالب من سياق
+output_schema
+json
+nullable
+شكل الخرج المتوقع
+risk_level
+varchar(50)
+index
+low, medium, high
+status
+varchar(50)
+index
+draft, active, deprecated
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+unique(slug)
+index(category, status)
+index(risk_level)
+10. Planning Layer
+ai_change_plans
+الخطة الرئيسية التي يقترحها AI قبل أي تنفيذ.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+FK/index
+company_id
+bigint
+nullable/index
+site_id
+bigint
+nullable/index
+ai_assistant_session_id
+bigint
+nullable/FK/index
+ai_message_id
+bigint
+nullable/FK
+رسالة الطلب الأصلية
+requested_by
+bigint
+FK/index
+المستخدم
+plan_type
+varchar(80)
+index
+build_page, create_form, build_workflow, setup_crm, explain_report
+title
+varchar(255)
+status
+varchar(50)
+index
+draft, awaiting_preview, awaiting_approval, approved, applying, applied, rejected, cancelled, failed
+risk_level
+varchar(50)
+index
+low, medium, high, critical
+summary
+longtext
+nullable
+model_id
+bigint
+nullable/FK
+context_snapshot_id
+bigint
+nullable/FK
+requires_user_approval
+boolean
+default true
+requires_workflow_approval
+boolean
+default false
+approved_at
+timestamp
+nullable
+applied_at
+timestamp
+nullable
+metadata
+json
+nullable
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+index(organization_id, status)
+index(requested_by, created_at)
+index(plan_type, risk_level)
+ai_change_plan_items
+بنود الخطة التفصيلية، كل بند يمثل create/update/delete/configure أو suggest.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_change_plan_id
+bigint
+FK/index
+step_order
+integer
+index
+action_type
+varchar(50)
+index
+create, update, delete, configure, suggest, explain
+target_type
+varchar(120)
+index
+content_entry, form, workflow, dashboard, product, crm_pipeline
+target_id
+bigint
+nullable/index
+لو العنصر موجود
+target_uuid
+char(26/36)
+nullable/index
+change_summary
+text
+proposed_payload
+json
+nullable
+البيانات المقترحة
+before_snapshot
+json
+nullable
+للتحديثات
+risk_level
+varchar(50)
+index
+permission_slug
+varchar(150)
+nullable/index
+الصلاحية المطلوبة
+status
+varchar(50)
+index
+planned, approved, applied, skipped, failed
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+index(ai_change_plan_id, step_order)
+index(target_type, target_id)
+index(permission_slug)
+ai_risk_assessments
+نتيجة تصنيف الخطر لكل خطة أو بند.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_change_plan_id
+bigint
+FK/index
+ai_change_plan_item_id
+bigint
+nullable/FK/index
+risk_level
+varchar(50)
+index
+low, medium, high, critical
+risk_score
+integer
+nullable/index
+0-100
+risk_reasons
+json
+nullable
+أسباب التصنيف
+sensitive_domains
+json
+nullable
+finance, payroll, legal, identity
+required_approvals
+json
+nullable
+blocked
+boolean
+default false
+هل التغيير ممنوع
+assessed_by
+varchar(50)
+default system
+system, policy, admin
+created_at
+timestamp
+فهارس مقترحة:
+index(ai_change_plan_id)
+index(risk_level, blocked)
+11. Preview & Approval Layer
+ai_previews
+معاينة قابلة للعرض قبل التطبيق.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+ai_change_plan_id
+bigint
+FK/index
+preview_type
+varchar(80)
+index
+diff, rendered_page, data_changes, workflow_simulation, report
+status
+varchar(50)
+index
+generated, expired, failed
+preview_payload
+json
+nullable
+الاختلافات أو النتائج
+rendered_media_id
+bigint
+nullable/FK
+لقطة/ملف معاينة
+expires_at
+timestamp
+nullable
+created_by
+bigint
+nullable/index
+created_at
+timestamp
+فهارس مقترحة:
+index(ai_change_plan_id)
+index(preview_type, status)
+ai_plan_approvals
+موافقات المستخدمين أو workflow approvals على خطة AI.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+ai_change_plan_id
+bigint
+FK/index
+approval_type
+varchar(50)
+index
+user, workflow, admin, security
+approver_user_id
+bigint
+nullable/FK/index
+workflow_approval_id
+bigint
+nullable/index
+يرتبط بمحرك approvals عند الحاجة
+decision
+varchar(50)
+index
+pending, approved, rejected, changes_requested
+comment
+text
+nullable
+decided_at
+timestamp
+nullable
+metadata
+json
+nullable
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+index(ai_change_plan_id, decision)
+index(approver_user_id, decision)
+12. Execution Layer
+ai_apply_runs
+عملية تطبيق خطة AI. قد تفشل أو تنجح جزئيا، لذلك يجب فصلها عن plan.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+ai_change_plan_id
+bigint
+FK/index
+organization_id
+bigint
+FK/index
+started_by
+bigint
+FK/index
+من ضغط Apply أو النظام
+status
+varchar(50)
+index
+queued, running, completed, failed, rolled_back, cancelled
+started_at
+timestamp
+nullable
+completed_at
+timestamp
+nullable
+failed_at
+timestamp
+nullable
+error_message
+text
+nullable
+rollback_point_id
+bigint
+nullable/FK/index
+metadata
+json
+nullable
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(ai_change_plan_id, status)
+ai_applied_changes
+كل تغيير فعلي تم على كيان داخل Kabeeri بواسطة AI.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_apply_run_id
+bigint
+FK/index
+ai_change_plan_item_id
+bigint
+nullable/FK/index
+organization_id
+bigint
+FK/index
+subject_type
+varchar(120)
+index
+نوع الكيان
+subject_id
+bigint
+nullable/index
+subject_uuid
+char(26/36)
+nullable/index
+change_type
+varchar(50)
+index
+created, updated, deleted, configured
+before
+json
+nullable
+after
+json
+nullable
+status
+varchar(50)
+index
+success, failed, reverted
+error_message
+text
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(subject_type, subject_id)
+index(ai_apply_run_id)
+ai_tool_calls
+استدعاءات tools/actions التي استخدمها AI أثناء التخطيط أو التطبيق.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+nullable/index
+ai_assistant_session_id
+bigint
+nullable/FK/index
+ai_change_plan_id
+bigint
+nullable/FK/index
+tool_name
+varchar(150)
+index
+اسم الأداة
+tool_type
+varchar(80)
+index
+read, write, simulate, external_api
+input_payload
+json
+nullable
+يجب ألا يحتوي أسرار
+output_summary
+json
+nullable
+status
+varchar(50)
+index
+allowed, denied, executed, failed
+permission_checked
+boolean
+default false
+risk_level
+varchar(50)
+nullable/index
+created_at
+timestamp
+فهارس مقترحة:
+index(tool_name, status)
+index(organization_id, created_at)
+ai_change_logs
+سجل مختصر وقابل للعرض في واجهة المستخدم عن أفعال AI.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+FK/index
+site_id
+bigint
+nullable/index
+company_id
+bigint
+nullable/index
+actor_user_id
+bigint
+nullable/index
+من طلب أو وافق
+ai_change_plan_id
+bigint
+nullable/FK/index
+action
+varchar(150)
+index
+plan_created, preview_generated, approved, applied, rolled_back
+description
+text
+nullable
+risk_level
+varchar(50)
+nullable/index
+metadata
+json
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(action)
+index(risk_level)
+ملاحظات:
+الأحداث الحساسة يجب أيضا نسخها إلى audit_logs وليس فقط ai_change_logs.
+13. Rollback Layer
+ai_rollback_points
+نقطة رجوع قبل تطبيق خطة أو مجموعة تغييرات.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+FK/index
+ai_change_plan_id
+bigint
+nullable/FK/index
+ai_apply_run_id
+bigint
+nullable/FK/index
+rollback_type
+varchar(80)
+index
+json_snapshot, database_snapshot, content_revision, manual
+status
+varchar(50)
+index
+available, used, expired, failed
+description
+text
+nullable
+expires_at
+timestamp
+nullable
+created_by
+bigint
+nullable/index
+created_at
+timestamp
+used_at
+timestamp
+nullable
+فهارس مقترحة:
+index(organization_id, created_at)
+index(status, expires_at)
+ai_rollback_items
+العناصر التي يمكن استرجاعها ضمن rollback point.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_rollback_point_id
+bigint
+FK/index
+subject_type
+varchar(120)
+index
+subject_id
+bigint
+nullable/index
+subject_uuid
+char(26/36)
+nullable/index
+snapshot_payload
+json
+nullable
+نسخة البيانات قبل التغيير
+snapshot_media_id
+bigint
+nullable/FK
+لو snapshot ملف
+restore_strategy
+varchar(80)
+default update
+update, recreate, delete_created, manual
+status
+varchar(50)
+index
+ready, restored, failed, skipped
+created_at
+timestamp
+فهارس مقترحة:
+index(ai_rollback_point_id)
+index(subject_type, subject_id)
+14. Guardrails & Sensitive Data
+ai_guardrail_policies
+سياسات تحدد ما المسموح والممنوع للذكاء الاصطناعي حسب المجال والخطة والخطورة.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+nullable/index
+null = سياسة عامة
+policy_key
+varchar(150)
+index
+domain
+varchar(80)
+index
+cms, commerce, finance, hr, legal, integration
+rule_type
+varchar(80)
+index
+allow, deny, require_approval, require_redaction
+risk_level
+varchar(50)
+nullable/index
+conditions
+json
+nullable
+effect
+json
+nullable
+status
+varchar(50)
+index
+active, disabled
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+index(organization_id, domain, status)
+index(policy_key)
+ai_guardrail_violations
+أي محاولة AI تخالف سياسة أو تصل لبيانات ممنوعة.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+nullable/index
+user_id
+bigint
+nullable/index
+ai_change_plan_id
+bigint
+nullable/FK/index
+ai_tool_call_id
+bigint
+nullable/FK/index
+policy_key
+varchar(150)
+nullable/index
+violation_type
+varchar(100)
+index
+permission_denied, sensitive_data, blocked_action, unsafe_output
+severity
+varchar(50)
+index
+low, medium, high, critical
+message
+text
+blocked
+boolean
+default true
+resolved_by
+bigint
+nullable/index
+resolved_at
+timestamp
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(severity, blocked)
+ai_sensitive_data_findings
+نتائج اكتشاف بيانات حساسة في السياق أو prompt أو output.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+organization_id
+bigint
+nullable/index
+source_type
+varchar(120)
+index
+message, context_item, tool_input, tool_output
+source_id
+bigint
+nullable/index
+data_category
+varchar(80)
+index
+payroll, bank, identity, legal, health, private_evaluation
+detection_method
+varchar(80)
+nullable
+pattern, classifier, policy
+action_taken
+varchar(80)
+index
+redacted, blocked, allowed_with_policy
+confidence
+decimal(5,2)
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(data_category, action_taken)
+15. Usage & Cost Layer
+ai_usage_records
+تسجيل استهلاك AI للحدود والتكلفة والفوترة.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+nullable/index
+company_id
+bigint
+nullable/index
+site_id
+bigint
+nullable/index
+user_id
+bigint
+nullable/index
+feature
+varchar(120)
+index
+ai_chat, ai_plan, ai_apply, report_explain, sync_debug
+provider_id
+bigint
+nullable/FK
+model_id
+bigint
+nullable/FK
+input_tokens
+integer
+default 0
+output_tokens
+integer
+default 0
+tool_calls_count
+integer
+default 0
+cost_estimate
+decimal(15,6)
+nullable
+currency_code
+char(3)
+nullable
+source_type
+varchar(120)
+nullable/index
+source_id
+bigint
+nullable/index
+recorded_at
+timestamp
+index
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, recorded_at)
+index(feature, recorded_at)
+index(user_id, recorded_at)
+ai_cost_allocations
+توزيع تكلفة AI على منظمة/شركة/موقع/مشروع داخلي.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_usage_record_id
+bigint
+FK/index
+organization_id
+bigint
+FK/index
+allocation_type
+varchar(80)
+index
+organization, company, site, project, department
+allocation_id
+bigint
+nullable/index
+amount
+decimal(15,6)
+currency_code
+char(3)
+default EGP
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, allocation_type, allocation_id)
+16. Agents & Skills Layer
+ai_agent_definitions
+تعريف وكلاء AI المتخصصين حسب المجال.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+agent_key
+varchar(150)
+unique
+cms_agent, commerce_agent, finance_agent
+name
+varchar(150)
+domain
+varchar(80)
+index
+description
+text
+nullable
+default_model_id
+bigint
+nullable/FK
+allowed_tools
+json
+nullable
+required_permissions
+json
+nullable
+risk_level
+varchar(50)
+index
+status
+varchar(50)
+index
+draft, active, disabled
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+unique(agent_key)
+index(domain, status)
+ai_agent_runs
+تشغيل محدد لوكيل AI.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+ai_agent_definition_id
+bigint
+FK/index
+organization_id
+bigint
+nullable/index
+user_id
+bigint
+nullable/index
+run_type
+varchar(80)
+index
+assist, plan, simulate, apply
+status
+varchar(50)
+index
+queued, running, completed, failed, blocked
+input_summary
+json
+nullable
+output_summary
+json
+nullable
+started_at
+timestamp
+nullable
+completed_at
+timestamp
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(ai_agent_definition_id, status)
+ai_skills
+مهارات AI قابلة للتثبيت أو التفعيل من Marketplace الداخلي.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+package_id
+bigint
+nullable/index
+لو skill من package
+name
+varchar(150)
+slug
+varchar(150)
+unique
+skill_type
+varchar(80)
+index
+seo, product_description, workflow_builder, report_explainer
+manifest
+json
+nullable
+الصلاحيات والأدوات
+risk_level
+varchar(50)
+index
+status
+varchar(50)
+index
+draft, official, active, suspended
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+unique(slug)
+index(skill_type, status)
+index(risk_level)
+ai_skill_installations
+تفعيل Skill داخل Organization/Site/Company.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+organization_id
+bigint
+FK/index
+company_id
+bigint
+nullable/index
+site_id
+bigint
+nullable/index
+ai_skill_id
+bigint
+FK/index
+status
+varchar(50)
+index
+active, paused, revoked
+installed_by
+bigint
+nullable/index
+settings
+json
+nullable
+installed_at
+timestamp
+nullable
+created_at
+timestamp
+updated_at
+timestamp
+فهارس مقترحة:
+unique(organization_id, company_id, site_id, ai_skill_id)
+index(status)
+ai_skill_permissions
+الصلاحيات التي تطلبها Skill ويجب عرضها قبل التفعيل.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_skill_id
+bigint
+FK/index
+permission_slug
+varchar(150)
+index
+access_type
+varchar(50)
+index
+read, write, suggest, apply
+risk_level
+varchar(50)
+index
+reason
+text
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(ai_skill_id)
+index(permission_slug)
+17. Simulation & Feedback
+ai_simulations
+تشغيل simulation قبل تفعيل workflow أو تغيير مؤثر.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+uuid
+char(26/36)
+unique
+organization_id
+bigint
+FK/index
+ai_change_plan_id
+bigint
+nullable/FK/index
+simulation_type
+varchar(80)
+index
+workflow, report, integration_sync, pricing_change
+input_scope
+json
+nullable
+آخر 10 طلبات مثلا
+status
+varchar(50)
+index
+queued, running, completed, failed
+started_by
+bigint
+nullable/index
+created_at
+timestamp
+completed_at
+timestamp
+nullable
+فهارس مقترحة:
+index(organization_id, created_at)
+index(simulation_type, status)
+ai_simulation_results
+نتائج simulation مع التحذيرات وعدد السجلات المتأثرة.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+ai_simulation_id
+bigint
+FK/index
+result_type
+varchar(80)
+index
+summary, affected_records, warning, error
+severity
+varchar(50)
+nullable/index
+payload
+json
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(ai_simulation_id)
+index(result_type, severity)
+ai_feedback
+تقييم المستخدم لمخرجات AI لتحسين الجودة والحوكمة.
+الحقل
+النوع
+القيود / الفهارس
+الوصف
+id
+bigint
+PK
+organization_id
+bigint
+nullable/index
+user_id
+bigint
+nullable/index
+source_type
+varchar(120)
+index
+message, plan, preview, apply_run
+source_id
+bigint
+index
+rating
+integer
+nullable
+1-5
+feedback_type
+varchar(80)
+nullable/index
+helpful, inaccurate, unsafe, slow, expensive
+comment
+text
+nullable
+created_at
+timestamp
+فهارس مقترحة:
+index(organization_id, created_at)
+index(source_type, source_id)
+18. Risk Levels
+المستوى
+الوصف
+أمثلة
+السلوك المطلوب
+Level 1 / Low
+اقتراح أو إنشاء draft غير منشور.
+SEO title، page draft، product description draft.
+Preview + log، وقد يطبق بعد موافقة بسيطة.
+Level 2 / Medium
+تغيير يؤثر على محتوى منشور أو إعدادات غير حساسة.
+تحديث صفحة منشورة، تعديل menu، إنشاء form.
+Preview + user approval.
+Level 3 / High
+تغيير يؤثر على عمليات أو بيانات عملاء.
+Workflow، CRM pipeline، checkout settings.
+Approval مشدد + rollback point + audit log.
+Level 4 / Critical
+Finance/legal/permissions/security/identity.
+تعديل journal، payroll، legal status، role permissions.
+Blocked أو workflow approval متعدد + sensitive logs.
+Level 5 / Forbidden
+قرارات لا يجب أن ينفذها AI.
+توثيق قانوني نهائي، دفع payouts، حذف audit logs.
+Deny دائم أو escalate للإنسان.
+19. Permissions المقترحة
+Permission
+الوصف
+Risk
+ai.assistant.use
+استخدام المساعد العام
+low
+ai.plan.create
+إنشاء خطة AI
+medium
+ai.plan.preview
+رؤية المعاينة
+medium
+ai.plan.approve
+اعتماد خطة AI
+high
+ai.plan.apply
+تطبيق الخطة
+high
+ai.rollback.execute
+تنفيذ rollback
+high
+ai.agent.run
+تشغيل Agent
+medium/high
+ai.skill.install
+تثبيت AI Skill
+high
+ai.policy.manage
+إدارة سياسات AI
+critical
+ai.usage.view
+عرض استهلاك AI
+low
+ai.sensitive_context.allow
+السماح بسياق حساس وفق سياسة
+critical
+20. Events
+Event
+متى يحدث
+Listeners مقترحة
+AIPlanCreated
+عند إنشاء خطة
+LogActivity, ClassifyRisk, GeneratePreview
+AIPlanRiskClassified
+بعد تصنيف الخطر
+RequireApproval, BlockIfForbidden
+AIPreviewGenerated
+بعد المعاينة
+NotifyRequester
+AIPlanApproved
+بعد الموافقة
+CreateRollbackPoint
+AIPlanApplied
+بعد التطبيق
+LogAudit, NotifyRequester, UpdateUsage
+AIPlanFailed
+عند فشل التطبيق
+LogFailure, SuggestFix, AttemptRollbackIfSafe
+AIRollbackExecuted
+بعد الرجوع
+LogAudit, NotifyAdmins
+AIGuardrailViolationDetected
+عند مخالفة سياسة
+SecurityLog, BlockAction, NotifySecurity
+AIUsageRecorded
+بعد تسجيل الاستهلاك
+CheckEntitlements, BillingUsage
+21. ERD
+erDiagram ORGANIZATIONS ||--o{ AI_ASSISTANT_SESSIONS : owns USERS ||--o{ AI_ASSISTANT_SESSIONS : starts AI_ASSISTANT_SESSIONS ||--o{ AI_MESSAGES : contains AI_MESSAGES ||--o{ AI_CONTEXT_SNAPSHOTS : requests AI_CONTEXT_SNAPSHOTS ||--o{ AI_CONTEXT_ITEMS : includes AI_MESSAGES ||--o{ AI_CHANGE_PLANS : creates AI_CHANGE_PLANS ||--o{ AI_CHANGE_PLAN_ITEMS : contains AI_CHANGE_PLANS ||--o{ AI_RISK_ASSESSMENTS : classified_by AI_CHANGE_PLANS ||--o{ AI_PREVIEWS : previews AI_CHANGE_PLANS ||--o{ AI_PLAN_APPROVALS : approved_by AI_CHANGE_PLANS ||--o{ AI_APPLY_RUNS : applied_by AI_APPLY_RUNS ||--o{ AI_APPLIED_CHANGES : changes AI_APPLY_RUNS ||--o{ AI_ROLLBACK_POINTS : creates AI_ROLLBACK_POINTS ||--o{ AI_ROLLBACK_ITEMS : contains AI_PROVIDERS ||--o{ AI_PROVIDER_MODELS : offers AI_SKILLS ||--o{ AI_SKILL_INSTALLATIONS : installed_as AI_SKILLS ||--o{ AI_SKILL_PERMISSIONS : requires
+22. AI Co-builder Main Flow
+User Prompt→ Create ai_message→ Build ai_context_snapshot→ Check permissions for each ai_context_item→ Create ai_change_plan→ Create ai_change_plan_items→ Classify risk into ai_risk_assessments→ Generate ai_preview→ Request ai_plan_approvals→ Create ai_rollback_point→ Run ai_apply_run→ Write ai_applied_changes→ Log ai_change_logs + activity_logs + audit_logs when needed→ Record ai_usage_records→ Notify user
+23. Low-risk vs High-risk Apply
+الحالة
+مثال
+هل يمكن تطبيقها مباشرة؟
+الشرط
+Low-risk draft
+إنشاء صفحة draft
+نعم بعد preview واضح
+صلاحية content.create + rollback أو revision
+Published content
+تعديل صفحة منشورة
+لا
+approval من صاحب الصلاحية
+Workflow change
+تفعيل workflow موافقات
+لا
+simulation + approval
+Finance
+تعديل invoice أو journal
+لا
+workflow approval + audit + غالبا منع التطبيق المباشر
+Permissions
+إسناد role أو permission
+لا
+admin approval + security log
+Legal verification
+اعتماد توثيق شركة
+لا
+قرار بشري من legal partner
+24. Data Access Rules
+AI لا يرى إلا ما يراه المستخدم أو ما تسمح به سياسة النظام.
+أي Context Item يجب أن يحمل نتيجة permission check.
+البيانات الحساسة ترسل إلى المزود الخارجي فقط إذا كانت السياسة تسمح وبموافقة واضحة.
+يجب تطبيق redaction عند التعامل مع payroll وbank accounts وidentity documents وlegal private documents وprivate evaluations.
+لا يستخدم AI credentials مباشرة؛ أي tool يحتاج اتصال خارجي يستخدم Integration Hub بسياسات scopes.
+أي write action يجب أن يمر عبر Actions/Services الرسمية وليس SQL مباشر.
+25. Integration مع Core وModules
+Module
+تكامل AI
+قواعد خاصة
+CMS
+إنشاء pages/forms/content types/SEO suggestions.
+draft-first وrevisions إلزامية.
+Commerce
+وصف منتجات، setup catalog، checkout suggestions.
+لا يعدل prices أو payments الحساسة بدون approval.
+Rabet
+تجهيز checklist وتحليل نقص المستندات.
+لا يعتمد verification النهائي.
+ERP
+شرح تقارير، CRM suggestions، inventory alerts.
+لا يرحل قيود مالية أو payroll بدون approval مشدد.
+Integration Hub
+شرح sync errors واقتراح mappings.
+لا يشغل sync production بدون preview/mapping.
+Marketplace
+اقتراح package skeleton أو skill manifest.
+لا يثبت packages بدون permission disclosure.
+Workflows
+اقتراح workflow وتعريف خطواته.
+simulation + approval قبل activation.
+26. Operating Modes
+Mode
+مكان بيانات AI
+ملاحظات
+Kabeeri Cloud
+Central Cloud DB
+الوضع الافتراضي، usage وentitlements في Central.
+Frontend Anywhere
+Cloud DB
+الواجهة الخارجية لا ترى AI logs أو private context.
+Kabeeri Portable
+Customer DB للبيانات التشغيلية، Central للترخيص/usage الاختياري
+يجب تصدير ai plans/logs حسب policy، مع حذف provider secrets.
+Kabeeri Dedicated
+Dedicated DB مع Central registry
+قد يستخدم provider مخصص وsupport access مؤقت.
+Mall Mirror
+Central public mirror فقط
+AI لا ينشر في Mall بدون consent/moderation.
+27. Portable Export Rules
+عند تصدير نسخة Portable يجب التفريق بين بيانات محادثات AI وسجلات التغييرات وسجلات audit والتكاليف. ليس كل شيء قابل للتصدير بنفس السياسة.
+البيان
+التصدير
+السبب
+ai_change_plans
+نعم غالبا
+جزء من تاريخ العمل
+ai_applied_changes
+نعم
+مهم للرجوع وفهم التغييرات
+ai_rollback_points
+نعم إذا لم تنته صلاحيتها
+يدعم الاستعادة بعد الخروج
+ai_messages
+حسب policy
+قد تحتوي بيانات حساسة
+ai_context_items
+حسب redaction
+قد تحتوي private data
+ai_provider credentials
+لا
+أسرار منصة أو vault references
+ai_usage_records
+ملخص أو كامل حسب العقد
+للفوترة والتكلفة
+guardrail violations
+حسب security/legal policy
+قد تكون مطلوبة للامتثال
+28. Feature Flags
+enable_ai_assistantenable_ai_cobuilder_v1enable_ai_change_plansenable_ai_previewenable_ai_approvalenable_ai_apply_low_riskenable_ai_rollback_foundationenable_ai_usage_trackingenable_ai_agentsenable_ai_skillsenable_ai_workflow_builderenable_ai_erp_assistantsenable_ai_simulationenable_ai_sensitive_data_redactionenable_ai_enterprise_governance
+29. Indexing & Performance
+كل الجداول التشغيلية يجب أن تحتوي organization_id أو ترتبط مباشرة بجدول يحتويه.
+فهارس أساسية على organization_id + created_at لسجلات الاستخدام والمحادثات والتغييرات.
+فهارس على status وrisk_level وplan_type لتسهيل لوحات المراجعة.
+لا تحفظ embeddings أو vector data داخل MySQL في البداية إلا كمرحلة لاحقة أو جدول منفصل.
+ai_messages قد يكبر بسرعة؛ استخدم retention أو archiving أو summarization لاحقا.
+ai_usage_records يجب أن يكون قابلا للتجميع شهريا للخطط والفوترة.
+30. Security Requirements
+لا API keys لمزودي AI في DB كنص واضح.
+كل tool call يكتب بيانات يجب أن يمر بصلاحية واضحة.
+كل high/critical action يكتب audit_logs.
+دعم rate limits حسب organization/user/feature.
+إمكانية تعطيل provider أو model أو skill بسرعة.
+إمكانية revocation لأي AI Skill installation.
+منع إرسال بيانات حساسة لمزود خارجي إذا policy لا تسمح.
+تسجيل IP/user agent للأفعال الحساسة عبر audit_logs عند التنفيذ.
+31. Testing Requirements
+اختبار
+المطلوب
+Permission test
+AI لا يستطيع تنفيذ action لا يملكها المستخدم.
+Preview test
+لا يوجد apply بدون preview محفوظ.
+Approval test
+High-risk plan يحتاج approval.
+Rollback test
+تغيير draft يمكن الرجوع عنه.
+Sensitive data test
+payroll/legal/private evaluation يتم redaction أو block.
+Usage test
+كل provider call يسجل usage.
+Guardrail test
+Level 5 action يتم رفضه.
+Simulation test
+workflow plan ينتج simulation قبل activation.
+Export test
+Portable لا يصدر provider secrets.
+Audit test
+تغيير critical يظهر في audit_logs.
+32. Build Order
+المرحلة
+الجداول / المخرجات
+V1 foundation
+ai_change_plans draft, ai_change_logs draft, provider abstraction placeholder
+V2 helper
+ai_prompt_templates, migration/SEO helper usage records
+V3 suggestions
+report summaries, CRM/workflow suggestions بدون apply حساس
+V4 Co-builder V1
+sessions, messages, plans, preview, approvals, low-risk apply, rollback foundation, usage
+V5 ERP assistants
+agents, simulations, sync/error explainers, stricter finance guardrails
+V6 advanced
+multi-agent, skills marketplace, enterprise governance, AI policy settings
+33. Definition of Done
+يمكن للمستخدم طلب بناء صفحة أو Form أو Dashboard عبر AI.
+يتم إنشاء ai_change_plan ببنود واضحة وتصنيف خطر.
+تظهر preview قبل التطبيق.
+لا يطبق AI أي تغيير حساس بدون approval.
+كل apply ينشئ ai_apply_run وai_applied_changes.
+يوجد rollback point للتغييرات المدعومة.
+تسجل usage records والتكلفة التقريبية.
+تسجل guardrail violations عند محاولة مخالفة السياسة.
+AI لا يتجاوز صلاحيات المستخدم.
+Portable export لا يحتوي أسرار مزود AI.
+34. أخطاء ممنوعة
+لا تجعل AI Super Admin.
+لا تطبق changes بدون preview.
+لا ترسل بيانات حساسة لمزود خارجي بدون policy واضحة.
+لا تجعل AI يقرر توثيق قانوني نهائي.
+لا تجعل AI يعدل accounting أو payroll نهائيا بدون approval مشدد.
+لا تنفذ tool calls مباشرة من LLM إلى قاعدة البيانات.
+لا تحفظ provider API keys plain text.
+لا تسمح لـ AI Skill بالعمل بدون manifest وpermissions.
+لا تخلط chat messages مع audit logs؛ لكل واحد وظيفة مختلفة.
+لا تعتمد على prompt فقط كحماية؛ يجب وجود policies وpermissions في الكود.
+35. الخلاصة التنفيذية
+AI Co-builder في Kabeeri يجب أن يكون قويا في البناء، لكنه محكوم بالصلاحيات والسياسات والموافقات والرجوع. القيمة الحقيقية ليست في أن يكتب نصا، بل في أن يحول نية المستخدم إلى خطة آمنة قابلة للفحص ثم يطبقها داخل حدود النظام.
+القاعدة النهائية: AI يقترح ويبني، لكن Kabeeri يحكم وينفذ بأمان.
+KABEERI Database File 16 — AI Co-builder Database

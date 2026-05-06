@@ -1,0 +1,1134 @@
+KABEERI Database File 20
+Kabeeri Localization & Country Packs Database
+قاعدة بيانات التوطين وحزم الدول
+هذا الملف يصف التصميم التفصيلي لقاعدة بيانات التوطين وحزم الدول داخل KABEERI، بحيث تستطيع المنصة العمل في أكثر من دولة بدون كتابة قواعد الضرائب، الفواتير، التوثيق، الدفع، الشحن، الرواتب أو الخصوصية مباشرة داخل Core.
+القاعدة الحاكمة: لا نضع قوانين الدول داخل النواة. نضعها داخل Country Packs قابلة للتفعيل والتحديث والمراجعة القانونية حسب الدولة والنسخة.
+فهرس الملف
+1. هدف قاعدة بيانات Localization & Country Packs
+2. المبادئ الحاكمة
+3. نطاق البيانات
+4. الجداول الأساسية
+5. Country Pack Registry
+6. Language & Translation Layer
+7. Currency & Exchange Layer
+8. Tax & Invoice Rules
+9. E-invoicing Layer
+10. Legal Verification Country Rules
+11. Address, Phone, Payment & Shipping Rules
+12. Payroll & Employment Rules Foundation
+13. Privacy, Compliance & Retention Rules
+14. Document Templates
+15. Activation, Updates & Impact Analysis
+16. ERD & Flows
+17. Permissions, Events & Tests
+18. Release Readiness & ممنوعات
+1. هدف قاعدة بيانات Localization & Country Packs
+Kabeeri ليست CMS فقط، بل تحتوي CMS وCommerce وERP وRabet Verification وKabeeri Mall وTalent وBilling وPayroll وTax وE-invoicing وPayments وShipping. لذلك اختلاف الدولة لا يؤثر على النصوص فقط، بل يؤثر على طريقة تشغيل النظام بالكامل.
+هدف هذا الملف هو بناء طبقة بيانات مستقلة تسمح بتفعيل قواعد دولة معينة على Organization أو Company أو Site أو Module بدون إعادة بناء النظام أو تعديل Core.
+دعم اللغة والعملة وتنسيقات التاريخ والأرقام والعناوين والهواتف.
+دعم قواعد الضرائب والفواتير والفاتورة الإلكترونية حسب الدولة.
+دعم متطلبات Rabet Legal Verification حسب الدولة ونوع الشركة والنشاط.
+دعم بوابات الدفع وشركات الشحن المحلية بدون تفعيل غير صحيح في دولة غير مدعومة.
+تجهيز Payroll وEmployment Rules كأساس مؤجل لا يفعل بدون مراجعة قانونية محلية.
+تسهيل تحديث الحزم عند تغير القوانين مع Impact Analysis وActivity/Audit Logs.
+2. المبادئ الحاكمة
+المبدأ
+الشرح
+No Country Logic in Core
+لا تكتب قواعد الضرائب أو التوثيق أو الرواتب داخل Core. Core يستدعي Country Pack Services.
+Versioned Packs
+كل Country Pack له نسخة وسريان effective_from/effective_to حتى يمكن تتبع التغييرات القانونية.
+Scoped Activation
+تفعيل الحزمة قد يكون على مستوى Organization أو Company أو Site أو Billing Account أو Module.
+Legal Review Required
+أي حزمة تحتوي tax/payroll/legal/e-invoicing يجب أن تمر بمراجعة قانونية أو ضريبية محلية.
+Module-aware Rules
+القواعد ليست عامة فقط؛ قد تطبق على Commerce أو ERP أو Rabet أو Payroll أو Billing.
+Safe Updates
+تحديث الحزمة لا يطبق تلقائيا على بيانات حساسة بدون تحليل أثر وموافقة عند الحاجة.
+Portable/Dedicated Ready
+كل قواعد الدولة يجب أن تكون قابلة للتصدير أو المزامنة مع Portable/Dedicated حسب الترخيص.
+3. نطاق البيانات
+Domain
+ما يغطيه
+Country Pack Registry
+تعريف الحزم، النسخ، المكونات، التفعيل، التحديثات.
+Language & Translation
+اللغات، الترجمات، المصطلحات المحلية، اتجاه الكتابة RTL/LTR.
+Currency & Exchange
+العملة الافتراضية، تنسيق السعر، أسعار الصرف، عملة التقارير.
+Tax & Invoice
+أنواع الضرائب، النسب، الاستثناءات، قواعد رقم الفاتورة، حقول التسجيل الضريبي.
+E-invoicing
+متطلبات الفاتورة الإلكترونية، QR، التوقيع، API، حالات الإرسال والرفض.
+Legal Verification
+أنواع الشركات، المستندات المطلوبة، الأنشطة المنظمة، الشركاء القانونيون.
+Address & Phone
+قواعد العنوان والمدينة/المحافظة والرمز البريدي والهواتف.
+Payment & Shipping
+بوابات الدفع وشركات الشحن والمناطق والدعم حسب الدولة.
+Payroll & Employment
+أساس قواعد الرواتب والإجازات والاستقطاعات ونهاية الخدمة بشكل مؤجل.
+Privacy & Compliance
+الاحتفاظ بالسجلات، الموافقات، التصدير/الحذف، مدة الاحتفاظ بالـ audit.
+Document Templates
+قوالب الفاتورة والعقد وعرض السعر وقائمة التحقق القانونية.
+4. الجداول الأساسية Overview
+الجداول التالية هي الطبقة المقترحة. بعض الجداول العامة مثل countries وcurrencies موجودة في Core Kernel، وهذا الملف لا يكررها إلا عند الحاجة إلى توسيع القواعد الخاصة بها.
+country_packs
+country_pack_versions
+country_pack_components
+country_pack_rules
+country_pack_installations
+country_pack_update_logs
+country_pack_impact_analyses
+languages
+locales
+translation_terms
+translation_overrides
+currency_formats
+exchange_rates
+organization_localization_settings
+company_localization_settings
+site_localization_settings
+tax_categories
+tax_rates
+tax_registration_fields
+tax_exemption_rules
+tax_calculation_profiles
+invoice_rules
+invoice_numbering_sequences
+e_invoicing_profiles
+e_invoice_submissions
+country_company_types
+country_verification_document_rules
+regulated_activity_rules
+legal_partner_country_authorizations
+address_format_rules
+phone_format_rules
+payment_gateway_country_rules
+shipping_provider_country_rules
+shipping_zone_rules
+payroll_rule_sets
+employment_rule_sets
+privacy_country_rules
+retention_country_rules
+country_document_templates
+5. Country Pack Registry
+Country Pack هو Package خاص لدولة معينة يحتوي قواعد وتكوينات يمكن تفعيلها وتحديثها بدون تعديل Core.
+5.1 country_packs
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتصدير والربط الخارجي
+country_id
+fk countries.id
+الدولة المستهدفة
+package_id
+nullable fk packages.id
+عند ربطها بنظام Packages
+name
+varchar
+مثال: kabeeri/egypt-pack
+display_name
+varchar
+Egypt Country Pack
+slug
+varchar unique
+egypt
+publisher
+varchar
+ADMIT أو Partner معتمد
+current_version_id
+nullable fk
+آخر نسخة فعالة
+status
+draft/active/deprecated/suspended
+حالة الحزمة
+supports
+json
+languages, currency, tax, e_invoicing, payroll, verification
+created_at / updated_at
+timestamps
+قياسي
+5.2 country_pack_versions
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_id
+fk
+الحزمة
+version
+varchar
+1.0.0
+version_type
+major/minor/patch/security/legal
+تصنيف التحديث
+status
+draft/under_review/approved/active/retired
+لا تفعل نسخة غير approved
+effective_from
+date nullable
+تاريخ بداية السريان
+effective_to
+date nullable
+تاريخ نهاية السريان
+requires_kabeeri_version
+varchar nullable
+مثال >=1.0.0
+change_summary
+longtext nullable
+ملخص التغييرات
+reviewed_by
+nullable user_id
+مراجعة داخلية أو قانونية
+approved_at
+timestamp nullable
+اعتماد النسخة
+metadata
+json
+تفاصيل إضافية
+5.3 country_pack_components
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+component_type
+language/currency/tax/invoice/e_invoicing/verification/payroll/address/phone/payment/shipping/privacy/templates
+نوع المكون
+status
+active/inactive/experimental/legal_review_required
+حالة المكون
+settings
+json
+إعدادات مرنة للمكون
+created_at / updated_at
+timestamps
+قياسي
+5.4 country_pack_rules
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+component_id
+nullable fk
+المكون المرتبط
+rule_type
+tax/invoice/verification/payroll/address/phone/privacy/shipping/payment
+تصنيف القاعدة
+rule_key
+varchar
+مثال vat.standard_rate
+module_key
+nullable varchar
+commerce/erp/rabet/billing/payroll
+applies_to
+organization/company/site/user/customer/order/invoice
+نطاق التطبيق
+rules
+json
+القواعد نفسها
+priority
+integer default 100
+ترتيب التطبيق
+status
+active/inactive/deprecated
+حالة القاعدة
+effective_from/effective_to
+date nullable
+سريان منفصل للقاعدة
+5.5 country_pack_installations
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+fk organizations.id
+العميل
+company_id
+nullable fk companies.id
+تفعيل خاص بشركة
+site_id
+nullable fk sites.id
+تفعيل خاص بموقع
+country_pack_id
+fk
+الحزمة
+country_pack_version_id
+fk
+النسخة المفعلة
+installation_scope
+organization/company/site/module
+نطاق التفعيل
+status
+active/pending_update/suspended/removed
+حالة التفعيل
+installed_by
+user_id nullable
+من فعلها
+installed_at
+timestamp
+تاريخ التفعيل
+settings
+json nullable
+Overrides مسموحة
+فهارس مهمة: unique(organization_id, company_id, site_id, country_pack_id)، index(country_pack_version_id)، index(status)، index(installation_scope).
+6. Language & Translation Layer
+لغة النظام ليست ترجمة UI فقط. يجب أن تشمل المصطلحات القانونية والضريبية والتجارية، واتجاه الكتابة، وأسماء الحقول المحلية.
+الجدول
+الغرض
+حقول رئيسية
+languages
+تعريف اللغات العامة.
+code, name, native_name, direction, status
+locales
+تعريف locale مثل ar_EG وen_US.
+language_id, country_id, code, direction, date_format, number_format
+translation_terms
+مصطلحات وترجمات افتراضية.
+locale, group, key, value, status
+translation_overrides
+تخصيص ترجمة على مستوى Organization/Site.
+organization_id, scope_type, scope_id, locale, key, value
+country_terminology_sets
+مصطلحات قانونية/ضريبية محلية.
+country_pack_version_id, term_key, local_value, english_value
+6.1 languages
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+code
+varchar unique
+ar, en
+name
+varchar
+Arabic, English
+native_name
+varchar nullable
+العربية
+direction
+rtl/ltr
+اتجاه الكتابة
+status
+active/inactive
+حالة اللغة
+6.2 translation_terms
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+locale
+varchar indexed
+ar_EG
+group
+varchar indexed
+invoice, verification, commerce
+key
+varchar
+tax_number
+value
+text
+رقم ضريبي
+country_pack_version_id
+nullable fk
+إذا كان المصطلح من Country Pack
+status
+active/deprecated
+حالة المصطلح
+7. Currency & Exchange Layer
+currencies موجودة في Core، لكن Country Packs تحتاج قواعد عرض وتحويل وسعر صرف وعملة محاسبة وتقارير.
+الجدول
+الغرض
+currency_formats
+طريقة عرض العملة حسب الدولة واللغة.
+exchange_rates
+أسعار الصرف التاريخية والمصدر.
+currency_conversion_rules
+قواعد التحويل والتقريب.
+organization_currency_settings
+عملة التشغيل والتقارير لكل Organization.
+7.1 currency_formats
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_id
+fk countries.id
+الدولة
+currency_code
+varchar(3)
+EGP/SAR/AED
+locale
+varchar nullable
+ar_EG
+symbol_position
+before/after
+موضع الرمز
+decimal_separator
+varchar
+نقطة أو فاصلة
+thousand_separator
+varchar
+فاصل الآلاف
+decimal_places
+integer
+عدد المنازل
+format_pattern
+varchar nullable
+{amount} {symbol}
+7.2 exchange_rates
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+base_currency
+varchar(3)
+عملة الأساس
+target_currency
+varchar(3)
+عملة الهدف
+rate
+decimal(18,8)
+سعر الصرف
+source
+varchar nullable
+manual/provider
+valid_at
+timestamp
+تاريخ السعر
+created_at
+timestamp
+تاريخ التسجيل
+8. Tax & Invoice Rules
+قواعد الضرائب يجب أن تكون قابلة للتحديث خارج Core، ويجب ألا تختلط فواتير Kabeeri Platform Billing بفواتير العميل لعملائه.
+الجدول
+الغرض
+tax_categories
+أنواع الضرائب: VAT, Sales Tax, Withholding, None.
+tax_rates
+نسب الضرائب حسب الدولة والنشاط والتاريخ.
+tax_registration_fields
+حقول التسجيل الضريبي المطلوبة للشركات.
+tax_exemption_rules
+قواعد الإعفاءات.
+tax_calculation_profiles
+ملفات حساب ضريبة مرتبطة بالشركة/الموقع/المتجر.
+invoice_rules
+قواعد الفواتير ومحتواها وشروطها.
+invoice_numbering_sequences
+تسلسل أرقام الفواتير حسب الدولة/الشركة/السنة.
+8.1 tax_rates
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+tax_category_id
+fk
+نوع الضريبة
+country_id
+fk countries.id
+الدولة
+region_id
+nullable
+لو هناك اختلاف إقليمي
+rate
+decimal(8,4)
+النسبة
+applies_to
+product/service/shipping/invoice/import/export
+نطاق التطبيق
+industry
+nullable varchar
+نشاط محدد
+effective_from/effective_to
+date
+سريان النسبة
+status
+active/deprecated
+الحالة
+8.2 tax_registration_fields
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+field_key
+varchar
+tax_number, vat_number, commercial_registry
+label_key
+varchar
+مفتاح ترجمة
+validation_pattern
+nullable varchar
+Regex إن وجد
+required_for
+json
+company types / activities
+is_sensitive
+boolean
+هل يعتبر حساسا
+display_order
+integer
+ترتيب الظهور
+8.3 invoice_rules
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+invoice_type
+tax_invoice/simplified_invoice/receipt/quotation/credit_note
+نوع المستند
+required_fields
+json
+حقول واجبة
+optional_fields
+json
+حقول اختيارية
+numbering_rule
+json
+قواعد الترقيم
+requires_qr
+boolean
+QR مطلوب
+requires_signature
+boolean
+توقيع رقمي مطلوب
+language_requirements
+json
+لغة الفاتورة
+status
+active/inactive
+الحالة
+8.4 invoice_numbering_sequences
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+fk
+العميل
+company_id
+fk nullable
+الشركة
+country_id
+fk
+الدولة
+invoice_type
+varchar
+tax_invoice/receipt/...
+prefix
+varchar nullable
+مثال INV-EG-2026
+current_number
+bigint default 0
+آخر رقم
+reset_policy
+never/yearly/monthly
+سياسة التصفير
+locked_at
+timestamp nullable
+لمنع التزامن الخاطئ
+9. E-invoicing Layer
+الفاتورة الإلكترونية تختلف حسب الدولة، لذلك تكون كحزمة قواعد وتكاملات اختيارية. هذا التصميم يجهز البنية دون افتراض أن كل دولة مكتملة من البداية.
+الجدول
+الغرض
+e_invoicing_profiles
+إعدادات الربط الإلكتروني لشركة/دولة.
+e_invoicing_endpoints
+تعريف نقاط API الحكومية أو مزود الخدمة.
+e_invoice_submissions
+سجل إرسال الفواتير وحالاتها.
+e_invoice_submission_errors
+أخطاء الإرسال/الرفض.
+e_invoice_certificates
+مراجع شهادات التوقيع بدون حفظ أسرار صريحة.
+9.1 e_invoicing_profiles
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+fk
+العميل
+company_id
+fk
+الشركة
+country_pack_version_id
+fk
+نسخة قواعد الدولة
+provider
+varchar nullable
+government/provider/connector
+status
+draft/active/suspended/error
+الحالة
+credentials_ref
+nullable varchar
+مرجع Vault فقط
+settings
+json
+إعدادات الربط
+last_success_at / last_error_at
+timestamp nullable
+آخر حالة
+9.2 e_invoice_submissions
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char
+للتتبع
+organization_id
+fk
+العميل
+company_id
+fk
+الشركة
+invoice_id
+nullable fk
+فاتورة العميل من ERP/Commerce
+profile_id
+fk e_invoicing_profiles.id
+ملف الربط
+submission_status
+pending/sent/accepted/rejected/failed/cancelled
+حالة الإرسال
+external_reference
+nullable varchar
+رقم من جهة خارجية
+payload_hash
+nullable varchar
+تتبع لا يكشف بيانات
+submitted_at/accepted_at/rejected_at
+timestamp nullable
+تواريخ
+response_payload
+json nullable
+رد الجهة الخارجية بعد تنقيح الأسرار
+10. Legal Verification Country Rules
+Rabet Verification لا يمكن أن يكون موحدا عالميا لأن نوع السجل التجاري، البطاقة الضريبية، المفوض بالتوقيع، التراخيص والأنشطة المنظمة تختلف حسب الدولة.
+الجدول
+الغرض
+country_company_types
+أنواع الشركات حسب الدولة.
+country_verification_document_rules
+المستندات المطلوبة لكل نوع شركة ونشاط.
+regulated_activity_rules
+أنشطة تحتاج تحقق إضافي أو تراخيص.
+legal_partner_country_authorizations
+أي مكتب قانوني معتمد لأي دولة/نشاط.
+verification_renewal_rules
+قواعد التجديد وانتهاء الصلاحية.
+10.1 country_company_types
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+country_id
+fk
+الدولة
+type_key
+varchar
+llc/joint_stock/branch/freelancer
+local_name
+varchar
+الاسم المحلي
+display_order
+integer
+ترتيب الظهور
+status
+active/inactive
+الحالة
+10.2 country_verification_document_rules
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+company_type_id
+nullable fk
+نوع الشركة
+activity_rule_id
+nullable fk
+النشاط المنظم إن وجد
+document_key
+varchar
+commercial_register/tax_card/license
+label_key
+varchar
+مفتاح ترجمة
+is_required
+boolean
+مطلوب أم لا
+requires_expiry_date
+boolean
+هل له انتهاء
+validity_days
+nullable integer
+مدة الصلاحية
+file_requirements
+json
+pdf/image/max size
+review_checklist
+json
+قائمة مراجعة قانونية
+10.3 legal_partner_country_authorizations
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+legal_partner_id
+fk
+مكتب/شريك قانوني
+country_id
+fk
+الدولة
+authorized_activity_types
+json nullable
+أنشطة يسمح بمراجعتها
+status
+pending/active/suspended/revoked
+حالة الاعتماد
+approved_by
+nullable user_id
+اعتماد ADMIT/Kabeeri
+approved_at
+timestamp nullable
+تاريخ الاعتماد
+expires_at
+timestamp nullable
+انتهاء الاعتماد
+11. Address, Phone, Payment & Shipping Rules
+هذه القواعد تؤثر على التسجيل والطلب والشحن والتحقق وواجهات الـ forms. لا يجب قبول بوابة دفع أو شركة شحن في دولة غير مدعومة.
+الجدول
+الغرض
+أمثلة حقول
+address_format_rules
+شكل العنوان حسب الدولة.
+country_id, required_fields, optional_fields, region_labels, postal_code_pattern
+country_regions
+تقسيمات الدولة.
+country_id, name, type, parent_id
+phone_format_rules
+قواعد الهاتف.
+country_id, mobile_pattern, landline_pattern, display_format
+payment_gateway_country_rules
+دعم بوابات الدفع.
+gateway_key, country_id, supported_currencies, status, settings
+shipping_provider_country_rules
+دعم شركات الشحن.
+provider_key, country_id, zones_supported, cod_supported
+shipping_zone_rules
+مناطق الشحن والتكلفة.
+country_id, region_id, provider_key, pricing_rules
+11.1 payment_gateway_country_rules
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+gateway_key
+varchar
+paymob/fawry/paytabs/tap/stripe
+country_id
+fk
+الدولة
+supported_currencies
+json
+عملات مدعومة
+supported_methods
+json
+card/wallet/cod/bank_transfer
+requires_merchant_verification
+boolean
+هل يحتاج تحقق تاجر
+status
+active/inactive/deprecated
+حالة الدعم
+settings_schema
+json nullable
+حقول إعدادات البوابة
+11.2 shipping_provider_country_rules
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+provider_key
+varchar
+aramex/local_provider/...
+country_id
+fk
+الدولة
+service_types
+json
+same_day/standard/international
+cod_supported
+boolean
+دعم الدفع عند الاستلام
+label_supported
+boolean
+طباعة بوليصة
+tracking_supported
+boolean
+تتبع
+status
+active/inactive
+الحالة
+12. Payroll & Employment Rules Foundation
+Payroll لا يدخل مبكرا إلا بعد مراجعة قانونية محلية. لكن نجهز الجداول من الآن حتى لا نعيد بناء HCM لاحقا.
+الجدول
+الغرض
+payroll_rule_sets
+مجموعة قواعد الرواتب لكل دولة/نسخة.
+payroll_allowance_rules
+بدلات.
+payroll_deduction_rules
+استقطاعات وضرائب وتأمينات.
+overtime_rules
+قواعد العمل الإضافي.
+leave_rules
+الإجازات والاستحقاقات.
+end_of_service_rules
+نهاية الخدمة.
+employment_contract_rules
+قواعد عقود العمل والنماذج.
+payslip_template_rules
+قالب قسيمة الراتب.
+12.1 payroll_rule_sets
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+country_id
+fk
+الدولة
+rule_set_name
+varchar
+Payroll Egypt 2026
+status
+draft/legal_review/approved/active/suspended
+لا يفعل قبل legal review
+effective_from/effective_to
+date
+سريان
+settings
+json
+إعدادات عامة
+reviewed_by / approved_by
+nullable user_id
+مراجعة واعتماد
+13. Privacy, Compliance & Retention Rules
+تختلف قواعد الخصوصية والاحتفاظ بالسجلات حسب الدولة. هذه الطبقة تؤثر على Security & Compliance وPortable export وData Subject Requests.
+الجدول
+الغرض
+privacy_country_rules
+قواعد الموافقة والخصوصية حسب الدولة.
+retention_country_rules
+مدة الاحتفاظ بسجلات مالية/قانونية/تدقيق.
+data_export_country_rules
+ما الذي يسمح بتصديره أو حذفه.
+consent_template_rules
+قوالب نصوص الموافقة المحلية.
+13.1 retention_country_rules
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+record_type
+invoice/audit/legal_document/payroll/contract
+نوع السجل
+retention_days
+integer
+مدة الاحتفاظ
+delete_policy
+delete/anonymize/archive/manual_review
+سياسة التصرف
+legal_basis
+text nullable
+أساس قانوني مختصر
+status
+active/inactive
+الحالة
+14. Document Templates
+قوالب المستندات جزء أساسي من Country Packs لأنها تؤثر على الفاتورة، الإيصال، عرض السعر، العقد، job offer، وقائمة التحقق القانونية.
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_version_id
+fk
+نسخة الحزمة
+template_key
+varchar
+invoice_template, contract_template
+document_type
+invoice/receipt/quotation/contract/job_offer/checklist
+نوع المستند
+locale
+varchar
+ar_EG/en_EG
+template_engine
+blade/html/docx/pdf_schema
+طريقة توليد القالب
+template_body
+longtext nullable
+القالب نفسه إذا كان نصيا
+media_asset_id
+nullable fk
+ملف قالب مرفوع
+variables_schema
+json
+المتغيرات المطلوبة
+status
+draft/active/deprecated
+الحالة
+15. Activation, Updates & Impact Analysis
+تحديث Country Pack قد يغير الضرائب أو متطلبات التوثيق أو بوابة دفع أو قواعد الفاتورة الإلكترونية. لذلك يجب تحليل الأثر قبل التطبيق.
+15.1 country_pack_impact_analyses
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+fk nullable
+العميل المتأثر
+country_pack_id
+fk
+الحزمة
+from_version_id
+fk nullable
+من نسخة
+to_version_id
+fk
+إلى نسخة
+impact_level
+low/medium/high/critical
+درجة الأثر
+affected_modules
+json
+commerce/erp/rabet/payroll/billing
+affected_records_count
+integer nullable
+عدد السجلات المتوقع
+requires_approval
+boolean
+هل يحتاج موافقة
+analysis_payload
+json
+تفاصيل التحليل
+status
+pending/reviewed/approved/applied/cancelled
+الحالة
+15.2 country_pack_update_logs
+الحقل
+النوع/القيمة
+ملاحظات
+id
+bigint
+Primary key
+country_pack_installation_id
+fk
+التفعيل
+from_version_id
+fk nullable
+النسخة السابقة
+to_version_id
+fk
+النسخة الجديدة
+status
+scheduled/running/completed/failed/rolled_back
+حالة التحديث
+started_by
+nullable user_id
+من بدأ
+started_at/completed_at
+timestamp nullable
+التوقيت
+message
+text nullable
+رسالة
+metadata
+json
+تفاصيل
+15.3 Country Pack Update Flow
+New country_pack_version is created.
+Legal/Tax/Compliance review is completed if needed.
+Impact analysis runs for affected organizations and modules.
+User/admin sees affected modules and risky changes.
+Approval is requested for high-risk changes.
+Update applies rules in safe order.
+Activity log and audit log are created.
+Affected invoices/tax/verification settings are validated.
+16. ERD & Flows
+16.1 ERD مختصر
+erDiagram    COUNTRIES ||--o{ COUNTRY_PACKS : has    COUNTRY_PACKS ||--o{ COUNTRY_PACK_VERSIONS : versions    COUNTRY_PACK_VERSIONS ||--o{ COUNTRY_PACK_COMPONENTS : contains    COUNTRY_PACK_VERSIONS ||--o{ COUNTRY_PACK_RULES : defines    ORGANIZATIONS ||--o{ COUNTRY_PACK_INSTALLATIONS : enables    COMPANIES ||--o{ COUNTRY_PACK_INSTALLATIONS : may_enable    SITES ||--o{ COUNTRY_PACK_INSTALLATIONS : may_enable    COUNTRY_PACK_VERSIONS ||--o{ TAX_RATES : provides    COUNTRY_PACK_VERSIONS ||--o{ INVOICE_RULES : provides    COUNTRY_PACK_VERSIONS ||--o{ E_INVOICING_PROFILES : configures    COUNTRY_PACK_VERSIONS ||--o{ COUNTRY_COMPANY_TYPES : defines    COUNTRY_COMPANY_TYPES ||--o{ COUNTRY_VERIFICATION_DOCUMENT_RULES : requires    COUNTRY_PACK_VERSIONS ||--o{ PAYMENT_GATEWAY_COUNTRY_RULES : enables    COUNTRY_PACK_VERSIONS ||--o{ SHIPPING_PROVIDER_COUNTRY_RULES : enables    COUNTRY_PACK_VERSIONS ||--o{ PRIVACY_COUNTRY_RULES : governs    COUNTRY_PACK_INSTALLATIONS ||--o{ COUNTRY_PACK_UPDATE_LOGS : updates
+16.2 Activation Flow
+Organization selects country→ system finds active Country Pack→ plan/entitlement check→ install country_pack_installation→ apply organization/company/site localization settings→ enable tax/invoice/payment/shipping/verification components→ create activity log→ run validation report
+16.3 Invoice Flow
+Invoice draft created→ resolve company country pack→ load invoice_rules + tax_calculation_profile→ calculate taxes→ assign invoice_numbering_sequence→ validate required fields→ generate PDF/HTML template→ if e-invoicing enabled, create e_invoice_submission→ log audit event
+16.4 Verification Flow
+Company selects registered country + company type→ load country_company_types→ load country_verification_document_rules→ show required documents→ company uploads documents→ assign legal partner authorized for country/activity→ reviewer follows checklist→ verification result updates trust record
+16.5 Payment/Shipping Flow
+Checkout starts→ resolve site/company country pack→ load payment_gateway_country_rules→ filter unsupported gateways→ load shipping_provider_country_rules + shipping_zone_rules→ show only available methods→ order stores country_pack_version used for traceability
+17. Permissions, Events & Tests
+17.1 Permissions
+country_pack.view
+country_pack.install
+country_pack.update
+country_pack.approve_legal
+localization.settings.manage
+tax.rules.view
+tax.rules.manage
+e_invoicing.configure
+verification.country_rules.manage
+payment.country_rules.manage
+shipping.country_rules.manage
+payroll.country_rules.manage_sensitive
+privacy.country_rules.manage_sensitive
+17.2 Events
+CountryPackInstalled
+CountryPackUpdated
+CountryPackImpactAnalysisCompleted
+LocalizationSettingsChanged
+TaxRateChanged
+InvoiceRuleChanged
+EInvoiceSubmissionAccepted
+EInvoiceSubmissionRejected
+VerificationDocumentRulesChanged
+PaymentGatewayCountryRuleChanged
+ShippingProviderCountryRuleChanged
+17.3 Test Cases
+Test Suite
+أمثلة
+Country Pack Registry Tests
+لا يمكن تفعيل نسخة غير approved، ولا يمكن وجود current_version غير active.
+Tax Tests
+تطبيق النسبة الصحيحة حسب التاريخ والدولة والنشاط، ومنع تعديل نسبة مستخدمة بدون versioning.
+Invoice Tests
+توليد رقم فاتورة صحيح، ورفض فاتورة ناقصة حقول مطلوبة.
+E-invoicing Tests
+تسجيل حالة accepted/rejected، وعدم حفظ secrets كنص واضح.
+Verification Tests
+عرض المستندات المطلوبة حسب الدولة ونوع الشركة والنشاط.
+Payment/Shipping Tests
+عدم إظهار بوابة أو شركة شحن غير مدعومة في الدولة.
+Payroll Safety Tests
+Payroll pack لا يفعل إذا status ليس active ومعتمد قانونيا.
+Portable/Dedicated Tests
+تصدير الحزمة والنسخة والسريان بدون كسر sync أو invoice history.
+18. Release Readiness & ممنوعات
+18.1 Release Staging
+المرحلة
+المطلوب
+V1
+countries/currencies basics، locale settings، translation foundation، لا tax/payroll كامل.
+V2
+Tax/Shipping/Payment basic للـ Commerce foundation مع manual rules.
+V3
+Tax rules basic، invoice rules، verification country requirements foundation. Payroll ممنوع.
+V4
+Legal Partner country authorization، billing country settings، Mall country filters.
+V5
+Integration Hub يدعم payment/shipping/tax connectors foundation.
+V6
+Advanced localization/country packs، tax packs integration، e-invoicing foundation، payroll foundation by country packs.
+18.2 أخطاء ممنوعة
+ممنوع كتابة قواعد دولة داخل Core مباشرة.
+ممنوع تعديل tax rate مستخدم تاريخيا بدون إنشاء نسخة جديدة أو effective_from واضح.
+ممنوع تفعيل Payroll بدون مراجعة قانونية محلية واعتماد واضح.
+ممنوع حفظ API credentials أو certificates كنص واضح داخل قاعدة البيانات.
+ممنوع عرض Payment Gateway في دولة غير مدعومة.
+ممنوع مزج فواتير Kabeeri Platform Billing مع فواتير العميل لعملائه.
+ممنوع تحديث Country Pack عالي المخاطر بدون Impact Analysis.
+ممنوع اعتبار Country Pack ترجمة فقط؛ هو قواعد تشغيلية وتجارية وقانونية.
+19. Laravel Structure مقترحة
+app/  Localization/    CountryPacks/      Models/      Actions/      Services/      Policies/      Events/    Tax/    Invoicing/    EInvoicing/    VerificationRules/    Payments/    Shipping/    PayrollFoundation/    PrivacyRules/database/migrations/  localization/  country_packs/  tax_rules/  invoice_rules/  e_invoicing/  verification_country_rules/  payment_shipping_country_rules/tests/Feature/Localization/tests/Feature/CountryPacks/tests/Feature/TaxRules/tests/Feature/VerificationRules/
+20. الخلاصة التنفيذية
+ملف Localization & Country Packs Database يحول التوطين من ترجمة واجهة إلى طبقة تشغيل كاملة. هذه الطبقة تحدد كيف تعمل Kabeeri قانونيا وماليا وتشغيليا في كل دولة، بدون كسر Core أو إعادة بناء النظام لكل سوق.
+القاعدة النهائية: Country Pack هو عقد تشغيل محلي بين Core وModules. كل دولة لها قواعدها، وكل قاعدة لها نسخة وسريان ومراجعة وأثر وسجل.
+KABEERI Database Architecture — Localization & Country Packs
+Kabeeri — powered by ADMIT

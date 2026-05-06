@@ -1,0 +1,1657 @@
+KABEERI Database File 13
+Kabeeri ERP Essentials Database
+قاعدة بيانات ERP Essentials في V3
+هذا الملف يصف تصميم قاعدة البيانات الخاص بطبقة ERP Essentials في KABEERI، وهي الطبقة التي تحول الموقع والمتجر والبروفايل التجاري إلى نظام تشغيل أعمال أولي: CRM، مبيعات، فواتير، مخزون، مشتريات، محاسبة بداية، موظفون، تقييمات، موافقات، وتقارير أساسية.
+هذا الملف لا يصف ERP Pro أو Enterprise ERP الكامل. هذه الطبقة مصممة لكي تكون صغيرة، قابلة للاختبار، ومبنية فوق Core Kernel وCMS وCommerce وRabet Foundation.
+ملخص سريع
+البند
+الوصف
+اسم الملف
+KABEERI Database File 13 — Kabeeri ERP Essentials Database
+النطاق
+V3: Business Foundation + ERP Essentials
+يعتمد على
+Core Kernel, CMS, Commerce Foundation, Rabet Foundation, Activity Logs, Permissions, Feature Flags
+لا يشمل
+ERP Pro, Payroll, Manufacturing, BI Advanced, Financial Consolidation, Full Accounting
+هدف قاعدة البيانات
+ربط الطلبات والخدمات والعملاء والمخزون والفواتير والموافقات في نموذج واحد قابل للنمو
+1. تعريف ERP Essentials
+ERP Essentials هو الحد الأدنى العملي من أنظمة التشغيل الداخلية التي تحتاجها الشركة بعد أن يصبح لديها موقع أو متجر أو طلبات خدمات. لا يبدأ Kabeeri كنظام ERP ثقيل، بل يبدأ من الموقع والمتجر ثم يضيف التشغيل تدريجيًا.
+تحويل Service Requests وForm Submissions إلى Leads.
+إدارة العملاء وجهات الاتصال وخط مبيعات بسيط.
+إنشاء عروض أسعار وتحويلها إلى فواتير.
+ربط المنتجات والطلبات بالمخزون.
+إدارة الموردين وأوامر الشراء الأساسية.
+تأسيس محاسبة بداية بدون ادعاء أنها محاسبة كاملة.
+إدارة ملفات موظفين وتقييمات خاصة.
+تشغيل موافقات بسيطة على الإجراءات الحساسة.
+إنتاج تقارير تشغيلية أساسية.
+2. الحدود المعمارية
+2.1 ما يدخل في هذا الملف
+CRM Lite
+Sales Basic
+Invoicing Basic
+Inventory Basic
+Purchasing Basic
+Accounting Starter
+Employee Profiles
+Evaluations Basic
+Workflow Automation V1
+Reports Basic
+2.2 ما لا يدخل في هذا الملف
+Payroll
+Manufacturing
+Advanced WMS
+Advanced BI
+Treasury
+Financial Consolidation
+Full Tax Engine
+Multi-country e-invoicing
+ERP Pro workflows
+Enterprise GRC
+3. الاعتماديات الأساسية
+لا يبدأ ERP Essentials إلا بعد استقرار V1 وV2. أي جدول في هذه الطبقة يجب أن يكون tenant-scoped وأن يترك أثرًا في activity_logs أو audit_logs عند الفعل المهم.
+يعتمد على
+سبب الاعتماد
+organizations / companies
+تحديد المالك والسياق التشغيلي
+company_memberships
+تحديد من ينفذ أدوار المبيعات والمخزون والمالية
+business_profiles / services
+مصدر طلبات الخدمات والعملاء المحتملين
+products / orders / customers
+مصدر التجارة والطلبات والفواتير والمخزون
+media_assets / documents
+مرفقات العروض والفواتير والموظفين
+roles / permissions
+حماية العمليات المالية والمخزنية
+feature_flags
+تفعيل CRM أو Inventory أو Accounting تدريجيًا
+activity_logs / audit_logs
+تتبع كل تغيير مهم
+notifications
+إشعار المستخدمين بالموافقات والمهام والتحديثات
+4. قواعد تصميم قاعدة البيانات
+كل جدول تشغيلي يجب أن يحتوي organization_id على الأقل، وعند الحاجة company_id وsite_id.
+لا نخلط فواتير Kabeeri Platform Billing مع فواتير العميل لعملائه. فواتير العميل تستخدم جداول customer_invoices.
+العمليات الحساسة مثل posting journal أو stock adjustment أو invoice issue تسجل في audit_logs.
+أي كيان قابل للتصدير يجب أن يستخدم uuid بجانب id الداخلي.
+Accounting Starter لا يحاول تغطية كل المحاسبة، لكنه يضع الأساس للربط مع V5 Accounting Pro.
+Inventory movements هي مصدر الحقيقة لحركات المخزون، وليس stock_balances وحدها.
+Employee evaluations private by default ولا تظهر في Talent Marketplace.
+5. الجداول الأساسية
+المجال
+الجداول
+CRM Lite
+crm_leads, crm_contacts, crm_lead_sources, crm_lead_stages, crm_activities, crm_customer_timelines
+Sales Basic
+sales_pipelines, sales_pipeline_stages, quotations, quotation_items, quotation_approvals
+Invoicing Basic
+customer_invoices, customer_invoice_items, customer_invoice_payments, invoice_number_sequences
+Inventory Basic
+warehouses, stock_items, stock_balances, stock_movements, stock_adjustments, stock_reservations, low_stock_alerts
+Purchasing Basic
+suppliers, purchase_orders, purchase_order_items, purchase_receipts, purchase_receipt_items
+Accounting Starter
+chart_of_accounts, accounting_periods, journal_entries, journal_entry_lines, payment_allocations
+Employees
+departments, job_titles, employee_profiles, employee_documents, employee_work_history
+Evaluations
+employee_evaluation_forms, employee_evaluations, employee_evaluation_answers, performance_notes
+Workflows
+workflow_definitions, workflow_steps, workflow_runs, approval_requests, approval_actions
+Reports
+report_definitions, report_saved_filters, report_snapshots, dashboard_widgets
+6. CRM Lite Database
+CRM Lite يبدأ من Leads وContacts وActivities. الهدف ليس CRM كامل، بل ربط طلب الخدمة أو نموذج الاتصال بمتابعة مبيعات بسيطة.
+6.1 crm_leads
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف داخلي وخارجي
+organization_id
+FK indexed
+المالك الأساسي
+company_id
+nullable FK indexed
+الشركة التي تستقبل الـ lead
+site_id
+nullable FK indexed
+مصدر الواجهة أو الموقع
+contact_id
+nullable FK
+يرتبط بجهة اتصال عند التأهيل
+source_type
+varchar(50)
+form_submission, service_request, manual, mall_inquiry, order, import
+source_id
+nullable bigint
+السجل الأصلي لو موجود
+title
+varchar(255)
+عنوان مختصر
+name / email / phone
+nullable
+بيانات أولية قبل إنشاء contact
+stage_id
+nullable FK
+مرحلة المتابعة
+status
+varchar indexed
+new, contacted, qualified, lost, converted
+assigned_to
+nullable FK users
+مسؤول المتابعة
+estimated_value
+decimal nullable
+قيمة متوقعة
+currency_code
+char(3)
+عملة القيمة
+metadata
+json
+بيانات إضافية
+created_by / created_at
+FK / timestamp
+تتبع الإنشاء
+6.2 crm_contacts
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف contact
+organization_id / company_id
+FK indexed
+السياق
+customer_id
+nullable FK
+ربط مع Commerce Customer عند وجوده
+display_name
+varchar
+اسم ظاهر
+email / phone
+nullable indexed
+وسائل التواصل
+contact_type
+varchar
+person, company_contact, supplier_contact
+lifecycle_status
+varchar
+lead, prospect, customer, inactive
+owner_user_id
+nullable FK
+صاحب العلاقة
+visibility
+varchar
+company_only by default
+metadata
+json
+بيانات مرنة
+6.3 crm_lead_sources
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف المصدر
+organization_id
+FK nullable
+مصدر خاص بعميل أو system
+name / slug
+varchar
+اسم المصدر
+source_type
+varchar
+website, mall, referral, import, manual
+status
+varchar
+active, disabled
+6.4 crm_lead_stages
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف المرحلة
+organization_id / company_id
+FK
+السياق
+name / slug
+varchar
+اسم المرحلة
+sort_order
+int
+ترتيب داخل pipeline
+is_won / is_lost
+boolean
+دلالة نهائية
+status
+varchar
+active, archived
+6.5 crm_activities
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف النشاط
+organization_id / company_id
+FK indexed
+السياق
+lead_id / contact_id
+nullable FK
+الكيان المرتبط
+activity_type
+varchar
+call, email, meeting, note, task, follow_up
+subject
+varchar
+عنوان النشاط
+description
+longtext nullable
+التفاصيل
+scheduled_at / completed_at
+timestamp nullable
+المواعيد
+assigned_to
+nullable FK users
+المسؤول
+status
+varchar
+planned, done, cancelled
+6.6 crm_customer_timelines
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف حدث timeline
+organization_id / company_id
+FK indexed
+السياق
+contact_id / customer_id
+nullable FK
+صاحب الحدث
+event_type
+varchar
+lead_created, quotation_sent, invoice_paid, order_created
+subject_type / subject_id
+nullable polymorphic
+الكيان المرتبط
+occurred_at
+timestamp
+وقت الحدث
+metadata
+json
+ملخص آمن
+7. Sales Basic Database
+Sales Basic يضيف pipeline بسيط وعروض أسعار قابلة للتحويل إلى فواتير. لا يدير عقود مبيعات متقدمة أو price lists متقدمة؛ هذه في V5.
+7.1 sales_pipelines
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف pipeline
+organization_id / company_id
+FK indexed
+السياق
+name / slug
+varchar
+اسم خط المبيعات
+is_default
+boolean
+الافتراضي للشركة
+status
+varchar
+active, archived
+7.2 sales_pipeline_stages
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف المرحلة
+pipeline_id
+FK
+يتبع pipeline
+name / slug
+varchar
+اسم المرحلة
+sort_order
+int
+الترتيب
+probability
+int nullable
+نسبة تقريبية
+stage_type
+varchar
+open, won, lost
+7.3 quotations
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف عرض السعر
+organization_id / company_id / site_id
+FK indexed
+السياق
+lead_id / contact_id / customer_id
+nullable FK
+الطرف المستلم
+quotation_number
+varchar unique per org
+رقم عرض السعر
+status
+varchar indexed
+draft, sent, accepted, rejected, expired, converted
+currency_code
+char(3)
+العملة
+subtotal / tax_total / discount_total / total
+decimal
+الإجماليات
+valid_until
+date nullable
+تاريخ الصلاحية
+issued_by
+nullable FK users
+من أصدر
+approved_by
+nullable FK users
+اعتماد اختياري
+converted_invoice_id
+nullable FK
+الفاتورة الناتجة
+notes / terms
+text nullable
+ملاحظات وشروط
+7.4 quotation_items
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف البند
+quotation_id
+FK indexed
+عرض السعر
+item_type
+varchar
+product, service, custom
+item_id
+nullable bigint
+ربط بالمنتج أو الخدمة
+description
+text
+وصف البند
+quantity
+decimal
+الكمية
+unit_price
+decimal
+سعر الوحدة
+tax_rate / discount_amount / line_total
+decimal
+حسابات البند
+7.5 quotation_approvals
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف اعتماد العرض
+quotation_id
+FK indexed
+عرض السعر
+approval_request_id
+nullable FK
+ربط بمحرك الموافقات
+status
+varchar
+pending, approved, rejected
+approved_by / approved_at
+nullable
+من اعتمد ومتى
+reason
+text nullable
+سبب الرفض أو الملاحظة
+8. Invoicing Basic Database
+Invoicing Basic هو فواتير العميل لعملائه، وليس فواتير Kabeeri Platform. يجب عدم خلط customer_invoices مع invoices_platform.
+8.1 invoice_number_sequences
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف التسلسل
+organization_id / company_id
+FK indexed
+السياق
+sequence_key
+varchar
+مثال customer_invoice
+prefix
+varchar nullable
+INV-
+current_number
+bigint
+آخر رقم
+padding
+int
+عدد الخانات
+reset_policy
+varchar
+never, yearly, monthly
+8.2 customer_invoices
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الفاتورة
+organization_id / company_id / site_id
+FK indexed
+السياق
+customer_id / contact_id
+nullable FK
+العميل
+order_id / quotation_id
+nullable FK
+مصدر الفاتورة
+invoice_number
+varchar unique per org
+رقم الفاتورة
+status
+varchar indexed
+draft, issued, sent, partially_paid, paid, void, overdue
+currency_code
+char(3)
+العملة
+subtotal / tax_total / discount_total / total / paid_total / balance_due
+decimal
+الإجماليات
+issued_at / due_date / paid_at
+timestamp/date nullable
+التواريخ
+issued_by
+nullable FK users
+من أصدر
+pdf_media_id
+nullable FK media_assets
+نسخة PDF
+metadata
+json
+بيانات إضافية
+8.3 customer_invoice_items
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف البند
+invoice_id
+FK indexed
+الفاتورة
+item_type / item_id
+varchar / nullable bigint
+product, service, custom
+description
+text
+الوصف
+quantity / unit_price
+decimal
+الكمية والسعر
+tax_rate / tax_amount / discount_amount / line_total
+decimal
+حسابات البند
+8.4 customer_invoice_payments
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الدفعة
+invoice_id
+FK indexed
+الفاتورة
+organization_id / company_id
+FK indexed
+السياق
+amount
+decimal
+قيمة الدفعة
+currency_code
+char(3)
+العملة
+payment_method
+varchar nullable
+cash, bank_transfer, manual, gateway
+payment_reference
+varchar nullable
+رقم مرجع
+recorded_by
+FK users
+من سجل
+paid_at
+timestamp
+تاريخ الدفع
+status
+varchar
+recorded, reversed, failed
+9. Inventory Basic Database
+Inventory Basic يعتمد على حركات المخزون كمصدر حقيقة. stock_balances يمكن إعادة بناؤه من stock_movements إذا لزم الأمر.
+9.1 warehouses
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف المخزن
+organization_id / company_id
+FK indexed
+السياق
+name / slug
+varchar
+اسم المخزن
+warehouse_type
+varchar
+main, branch, virtual, returns
+status
+varchar
+active, inactive, archived
+address_json
+json nullable
+عنوان مرن
+9.2 stock_items
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف عنصر المخزون
+organization_id / company_id
+FK indexed
+السياق
+product_id
+nullable FK
+ربط بمنتج Commerce
+sku
+varchar indexed
+SKU
+name
+varchar
+اسم داخلي
+track_stock
+boolean
+هل يتتبع المخزون
+reorder_point
+decimal nullable
+حد إعادة الطلب
+status
+varchar
+active, inactive
+9.3 stock_balances
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف الرصيد
+organization_id / company_id
+FK indexed
+السياق
+warehouse_id
+FK indexed
+المخزن
+stock_item_id
+FK indexed
+العنصر
+quantity_on_hand
+decimal
+الموجود فعليًا
+quantity_reserved
+decimal
+محجوز للطلبات
+quantity_available
+decimal derived
+المتاح
+last_movement_at
+timestamp nullable
+آخر حركة
+9.4 stock_movements
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الحركة
+organization_id / company_id
+FK indexed
+السياق
+warehouse_id
+FK indexed
+المخزن
+stock_item_id
+FK indexed
+العنصر
+movement_type
+varchar indexed
+in, out, adjustment, reservation, release, transfer
+quantity
+decimal
+موجب أو سالب حسب النوع
+unit_cost
+decimal nullable
+تكلفة اختيارية
+source_type / source_id
+nullable polymorphic
+order, purchase_receipt, stock_adjustment
+created_by
+FK users
+من أنشأ
+movement_at
+timestamp
+وقت الحركة
+9.5 stock_adjustments
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف التسوية
+organization_id / company_id
+FK indexed
+السياق
+warehouse_id
+FK
+المخزن
+status
+varchar
+draft, pending_approval, approved, posted, rejected
+reason
+text
+سبب التسوية
+requested_by / approved_by
+FK nullable
+طلب واعتماد
+posted_at
+timestamp nullable
+وقت الترحيل
+9.6 stock_reservations
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الحجز
+organization_id / company_id
+FK indexed
+السياق
+order_id
+nullable FK
+الطلب التجاري
+stock_item_id / warehouse_id
+FK
+العنصر والمخزن
+quantity
+decimal
+الكمية المحجوزة
+status
+varchar
+reserved, released, consumed, expired
+reserved_until
+timestamp nullable
+نهاية الحجز
+9.7 low_stock_alerts
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف التنبيه
+organization_id / company_id
+FK indexed
+السياق
+stock_item_id / warehouse_id
+FK
+العنصر والمخزن
+threshold / current_quantity
+decimal
+الحد والكمية
+status
+varchar
+open, acknowledged, resolved
+created_at / resolved_at
+timestamp nullable
+التواريخ
+10. Purchasing Basic Database
+Purchasing Basic يضيف الموردين وأوامر شراء بسيطة واستلام مخزون. لا يشمل RFQ متقدم أو supplier performance المتقدم؛ هذه في V5.
+10.1 suppliers
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف المورد
+organization_id / company_id
+FK indexed
+السياق
+name
+varchar
+اسم المورد
+contact_id
+nullable FK crm_contacts
+جهة اتصال
+email / phone
+nullable
+بيانات تواصل
+tax_number
+nullable
+رقم ضريبي
+status
+varchar
+active, inactive, blocked
+metadata
+json
+بيانات إضافية
+10.2 purchase_orders
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف أمر الشراء
+organization_id / company_id
+FK indexed
+السياق
+supplier_id
+FK indexed
+المورد
+po_number
+varchar unique per org
+رقم أمر الشراء
+status
+varchar indexed
+draft, pending_approval, approved, ordered, partially_received, received, cancelled
+currency_code
+char(3)
+العملة
+subtotal / tax_total / total
+decimal
+الإجماليات
+ordered_at / expected_at
+date nullable
+التواريخ
+created_by / approved_by
+FK nullable
+الإنشاء والاعتماد
+10.3 purchase_order_items
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف البند
+purchase_order_id
+FK indexed
+أمر الشراء
+stock_item_id / product_id
+nullable FK
+العنصر
+description
+text
+الوصف
+quantity_ordered / quantity_received
+decimal
+المطلوب والمستلم
+unit_cost / line_total
+decimal
+التكلفة والإجمالي
+10.4 purchase_receipts
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الاستلام
+organization_id / company_id
+FK indexed
+السياق
+purchase_order_id
+FK indexed
+أمر الشراء
+warehouse_id
+FK
+مخزن الاستلام
+receipt_number
+varchar
+رقم الاستلام
+status
+varchar
+draft, posted, cancelled
+received_by / received_at
+FK / timestamp
+من استلم ومتى
+10.5 purchase_receipt_items
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف البند المستلم
+purchase_receipt_id
+FK indexed
+الاستلام
+purchase_order_item_id
+nullable FK
+بند أمر الشراء
+stock_item_id
+FK
+عنصر المخزون
+quantity_received
+decimal
+الكمية المستلمة
+stock_movement_id
+nullable FK
+حركة المخزون الناتجة
+11. Accounting Starter Database
+Accounting Starter هو أساس محاسبي بسيط: شجرة حسابات أولية، قيود مسودة/مرحلة، وربط أولي مع الفواتير والمدفوعات. لا يغطي كل قواعد المحاسبة أو الضرائب.
+11.1 chart_of_accounts
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الحساب
+organization_id / company_id
+FK indexed
+السياق
+parent_id
+nullable FK self
+حساب أب
+account_code
+varchar indexed
+كود الحساب
+name
+varchar
+اسم الحساب
+account_type
+varchar
+asset, liability, equity, income, expense
+normal_balance
+varchar
+debit, credit
+status
+varchar
+active, inactive
+11.2 accounting_periods
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف الفترة
+organization_id / company_id
+FK indexed
+السياق
+name
+varchar
+مثال 2026-05
+start_date / end_date
+date
+نطاق الفترة
+status
+varchar
+open, locked, closed
+locked_by / locked_at
+nullable
+من أغلق الفترة
+11.3 journal_entries
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف القيد
+organization_id / company_id
+FK indexed
+السياق
+entry_number
+varchar unique per org
+رقم القيد
+entry_date
+date
+تاريخ القيد
+status
+varchar indexed
+draft, posted, void
+source_type / source_id
+nullable polymorphic
+invoice, payment, stock_adjustment
+description
+text nullable
+الشرح
+posted_by / posted_at
+nullable FK/timestamp
+من رحل ومتى
+11.4 journal_entry_lines
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف سطر القيد
+journal_entry_id
+FK indexed
+القيد
+account_id
+FK chart_of_accounts
+الحساب
+debit / credit
+decimal
+مدين ودائن
+description
+text nullable
+شرح السطر
+cost_center_id
+nullable
+محجوز للمستقبل
+11.5 payment_allocations
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف التخصيص
+organization_id / company_id
+FK indexed
+السياق
+payment_id
+nullable FK customer_invoice_payments
+الدفعة
+invoice_id
+FK customer_invoices
+الفاتورة
+amount_allocated
+decimal
+المبلغ المخصص
+allocated_at
+timestamp
+وقت التخصيص
+12. Employee Profiles Database
+Employee Profile هنا داخلي للشركة ويختلف عن Professional Profile في Talent Marketplace. لا تظهر بيانات HR أو التقييمات في الواجهة العامة.
+12.1 departments
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف القسم
+organization_id / company_id
+FK indexed
+السياق
+parent_id
+nullable FK self
+قسم أب
+name / slug
+varchar
+اسم القسم
+manager_user_id
+nullable FK users
+مدير القسم
+status
+varchar
+active, inactive
+12.2 job_titles
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف المسمى
+organization_id / company_id
+FK indexed
+السياق
+name / slug
+varchar
+المسمى الوظيفي
+level
+varchar nullable
+junior, senior, manager
+status
+varchar
+active, inactive
+12.3 employee_profiles
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الموظف
+organization_id / company_id
+FK indexed
+السياق
+user_id
+nullable FK users
+قد يكون له حساب
+company_membership_id
+nullable FK
+ربط بعضوية الشركة
+department_id / job_title_id
+nullable FK
+القسم والمسمى
+employee_number
+varchar nullable
+رقم داخلي
+manager_employee_id
+nullable FK self
+المدير
+employment_status
+varchar
+active, probation, suspended, terminated
+hire_date / termination_date
+date nullable
+تواريخ العمل
+visibility
+varchar
+private by default
+metadata
+json
+بيانات HR مرنة
+12.4 employee_documents
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف مستند موظف
+employee_profile_id
+FK indexed
+الموظف
+media_asset_id
+FK media_assets
+الملف
+document_type
+varchar
+contract, id, certificate, policy_acknowledgement
+visibility
+varchar
+hr_only, manager_only, employee_visible
+expires_at
+date nullable
+انتهاء مستند
+12.5 employee_work_history
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف سجل تاريخ العمل
+employee_profile_id
+FK indexed
+الموظف
+department_id / job_title_id
+nullable FK
+القسم والمسمى
+start_date / end_date
+date nullable
+الفترة
+change_reason
+varchar nullable
+promotion, transfer, correction
+created_by
+FK users
+من سجل التغيير
+13. Evaluations Basic Database
+Evaluations Basic خاص وسري. يظهر للمديرين وHR فقط حسب الصلاحيات ولا يخرج إلى Mall أو Talent إلا بموافقة وتصميم منفصل في المستقبل.
+13.1 employee_evaluation_forms
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف نموذج التقييم
+organization_id / company_id
+FK indexed
+السياق
+name
+varchar
+اسم النموذج
+form_schema
+json
+أسئلة ومحاور التقييم
+status
+varchar
+draft, active, archived
+created_by
+FK users
+من أنشأ
+13.2 employee_evaluations
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف التقييم
+organization_id / company_id
+FK indexed
+السياق
+employee_profile_id
+FK indexed
+الموظف
+form_id
+FK
+النموذج
+evaluator_user_id
+FK users
+المقيم
+period_start / period_end
+date nullable
+فترة التقييم
+overall_score
+decimal nullable
+درجة عامة
+status
+varchar
+draft, submitted, reviewed, locked
+visibility
+varchar
+hr_private by default
+submitted_at / reviewed_at
+timestamp nullable
+تواريخ
+13.3 employee_evaluation_answers
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف الإجابة
+evaluation_id
+FK indexed
+التقييم
+question_key
+varchar
+مفتاح السؤال
+answer_value
+json
+الإجابة
+score
+decimal nullable
+درجة السؤال
+13.4 performance_notes
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الملاحظة
+organization_id / company_id
+FK indexed
+السياق
+employee_profile_id
+FK indexed
+الموظف
+note_type
+varchar
+praise, concern, warning, coaching
+body
+text
+نص الملاحظة
+visibility
+varchar
+hr_only, manager_only
+created_by
+FK users
+من أضاف
+14. Workflow Automation V1 Database
+Workflow Automation V1 يدعم خطوات وموافقات بسيطة. لا يحل محل محرك workflow كامل، لكنه يسمح بضبط quotation approvals وpurchase approvals وstock adjustments.
+14.1 workflow_definitions
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف workflow
+organization_id / company_id
+FK indexed
+السياق
+name / key
+varchar
+اسم ومفتاح
+trigger_event
+varchar nullable
+مثال quotation_submitted
+subject_type
+varchar nullable
+quotation, purchase_order, stock_adjustment
+status
+varchar
+draft, active, archived
+definition_json
+json
+قواعد مرنة
+14.2 workflow_steps
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف الخطوة
+workflow_definition_id
+FK indexed
+التعريف
+step_key
+varchar
+مفتاح الخطوة
+step_type
+varchar
+approval, notification, task, condition
+sort_order
+int
+ترتيب
+settings
+json
+إعدادات
+14.3 workflow_runs
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف التشغيل
+organization_id / company_id
+FK indexed
+السياق
+workflow_definition_id
+FK
+التعريف
+subject_type / subject_id
+polymorphic
+الكيان المعالج
+status
+varchar
+running, completed, failed, cancelled
+started_by / started_at / completed_at
+nullable
+التتبع
+14.4 approval_requests
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف طلب الموافقة
+organization_id / company_id
+FK indexed
+السياق
+workflow_run_id
+nullable FK
+تشغيل workflow
+subject_type / subject_id
+polymorphic
+الكيان المطلوب اعتماده
+requested_by
+FK users
+طالب الموافقة
+approver_user_id
+nullable FK users
+المعتمد المحدد
+approver_role_id
+nullable FK roles
+أو دور معتمد
+status
+varchar indexed
+pending, approved, rejected, cancelled, expired
+due_at
+timestamp nullable
+موعد نهائي
+decided_at
+timestamp nullable
+وقت القرار
+14.5 approval_actions
+الحقل
+النوع / القاعدة
+ملاحظات
+id
+bigint
+تعريف الفعل
+approval_request_id
+FK indexed
+طلب الموافقة
+actor_user_id
+FK users
+من نفذ
+action
+varchar
+approve, reject, comment, delegate
+comment
+text nullable
+تعليق
+created_at
+timestamp
+وقت الفعل
+15. Reports Basic Database
+Reports Basic لا يعني BI كامل. هو تعريف تقارير وتشغيل snapshots وحفظ filters لواجهات dashboard الأساسية.
+15.1 report_definitions
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف التقرير
+organization_id
+nullable FK
+قد يكون system أو خاص بعميل
+report_key
+varchar
+مثال sales_summary
+name
+varchar
+اسم التقرير
+domain
+varchar
+sales, inventory, leads, tasks, verification
+query_config
+json
+تعريف آمن لا SQL خام للمستخدم
+status
+varchar
+active, disabled
+15.2 report_saved_filters
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف الفلتر
+organization_id / user_id
+FK indexed
+المالك
+report_definition_id
+FK
+التقرير
+name
+varchar
+اسم الفلتر
+filters_json
+json
+شروط الفلترة
+visibility
+varchar
+private, team, organization
+15.3 report_snapshots
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف اللقطة
+organization_id / company_id
+FK indexed
+السياق
+report_definition_id
+FK
+التقرير
+snapshot_period_start / end
+date nullable
+الفترة
+payload
+json
+نتيجة التقرير
+generated_by
+nullable FK users
+من شغّل
+generated_at
+timestamp
+وقت التوليد
+15.4 dashboard_widgets
+الحقل
+النوع / القاعدة
+ملاحظات
+id / uuid
+bigint / uuid
+تعريف widget
+organization_id / company_id / user_id
+nullable FK
+السياق أو المالك
+widget_key
+varchar
+sales_summary_card
+report_definition_id
+nullable FK
+تقرير مصدر
+settings
+json
+إعدادات العرض
+sort_order
+int
+الترتيب
+status
+varchar
+active, hidden
+16. Feature Flags المقترحة
+Feature Flag
+الغرض
+enable_rabet_company_os
+تفعيل Company Dashboard وRabet foundation
+enable_crm_lite
+تفعيل leads/contacts/activities
+enable_sales_basic
+تفعيل quotations وsales pipeline
+enable_quotations
+إصدار عروض الأسعار
+enable_invoicing_basic
+إصدار فواتير العملاء
+enable_inventory_basic
+تفعيل المخزون والحركات
+enable_purchasing_basic
+تفعيل الموردين وأوامر الشراء
+enable_accounting_starter
+تفعيل شجرة الحسابات والقيود الأولية
+enable_employee_profiles
+تفعيل ملفات الموظفين
+enable_evaluations_basic
+تفعيل التقييمات الخاصة
+enable_workflow_automation_v1
+تفعيل workflow definitions/runs
+enable_approval_requests
+تفعيل الموافقات
+enable_reports_basic
+تفعيل التقارير الأساسية
+17. الصلاحيات الأساسية
+المجال
+أمثلة Permissions
+CRM
+crm.lead.view, crm.lead.create, crm.lead.assign, crm.contact.manage
+Sales
+sales.quotation.view, sales.quotation.create, sales.quotation.approve, sales.quotation.convert_to_invoice
+Invoicing
+finance.invoice.view, finance.invoice.issue, finance.payment.record, finance.invoice.void
+Inventory
+inventory.stock.view, inventory.stock.adjust, inventory.stock.reserve, inventory.warehouse.manage
+Purchasing
+purchasing.supplier.manage, purchasing.po.create, purchasing.po.approve, purchasing.receipt.post
+Accounting Starter
+accounting.coa.manage, accounting.journal.draft, accounting.journal.post, accounting.period.lock
+Employees
+hr.employee.view, hr.employee.manage, hr.document.view_sensitive
+Evaluations
+hr.evaluation.create, hr.evaluation.review, hr.evaluation.view_private
+Workflow
+workflow.manage, approval.request, approval.decide
+Reports
+reports.view, reports.export, reports.schedule
+18. الأحداث الأساسية
+Event
+متى يحدث
+Listeners محتملة
+LeadCreated
+عند إنشاء lead من form أو service request
+NotifySalesUser, AddTimelineEvent
+LeadConverted
+عند تحويل lead إلى quotation أو customer
+UpdateLeadStatus, LogActivity
+QuotationIssued
+عند إرسال عرض سعر
+NotifyCustomer, LogActivity
+QuotationAccepted
+عند قبول العرض
+AllowInvoiceConversion
+InvoiceIssued
+عند إصدار فاتورة
+CreateAuditLog, OptionalJournalDraft
+PaymentRecorded
+عند تسجيل دفعة
+UpdateInvoiceBalance, AddTimelineEvent
+StockReserved
+عند حجز مخزون لطلب
+UpdateStockBalance
+StockAdjusted
+عند تسوية مخزون
+AuditSensitiveChange
+PurchaseOrderApproved
+عند اعتماد أمر شراء
+NotifyPurchasing, AllowReceipt
+PurchaseReceiptPosted
+عند استلام مشتريات
+CreateStockMovement
+JournalEntryPosted
+عند ترحيل قيد
+AuditSensitiveChange
+EmployeeEvaluationSubmitted
+عند إرسال تقييم
+NotifyReviewer, LogPrivateActivity
+ApprovalRequested
+عند طلب موافقة
+NotifyApprover
+ApprovalDecided
+عند قبول/رفض
+ResumeWorkflow
+19. Flows تشغيلية
+19.1 Service Request إلى Lead
+Visitor submits service request → service_request created → crm_lead created with source_type=service_request → assigned_to sales user → crm_customer_timeline event → notification sent.
+19.2 Lead إلى Quotation إلى Invoice
+Sales user qualifies lead → quotation draft → optional approval → quotation sent → customer accepts → customer_invoice created → quotation status converted → timeline updated.
+19.3 Order إلى Stock Reservation إلى Invoice
+Commerce order confirmed → stock_reservations created → stock_movements reservation/out after fulfillment → customer_invoice optional → payment recorded → invoice balance updated.
+19.4 Purchase Order إلى Stock Receipt
+Purchasing user creates PO → approval request if threshold applies → PO approved → goods received → purchase_receipt posted → stock_movements in → stock_balances updated.
+19.5 Accounting Starter Posting
+Invoice issued or payment recorded → optional journal draft generated → accountant reviews → journal_entry posted → audit log created. في V3 يمكن جعل journal generation manual أو semi-automatic فقط.
+19.6 Employee Evaluation
+Manager opens evaluation form → employee_evaluation draft → answers saved → submitted → HR/manager review → locked. لا تظهر البيانات في Talent Marketplace ولا Mall.
+20. ERD مختصر
+erDiagram ORGANIZATIONS ||--o{ COMPANIES : owns COMPANIES ||--o{ CRM_LEADS : receives CRM_LEADS ||--o{ CRM_ACTIVITIES : has CRM_CONTACTS ||--o{ CRM_CUSTOMER_TIMELINES : appears_in CRM_LEADS ||--o{ QUOTATIONS : converts_to QUOTATIONS ||--o{ QUOTATION_ITEMS : contains QUOTATIONS ||--o{ CUSTOMER_INVOICES : converts_to CUSTOMER_INVOICES ||--o{ CUSTOMER_INVOICE_ITEMS : contains CUSTOMER_INVOICES ||--o{ CUSTOMER_INVOICE_PAYMENTS : paid_by COMPANIES ||--o{ WAREHOUSES : owns WAREHOUSES ||--o{ STOCK_BALANCES : tracks STOCK_ITEMS ||--o{ STOCK_MOVEMENTS : moves PURCHASE_ORDERS ||--o{ PURCHASE_ORDER_ITEMS : contains PURCHASE_ORDERS ||--o{ PURCHASE_RECEIPTS : received_by CUSTOMER_INVOICES ||--o{ JOURNAL_ENTRIES : may_generate JOURNAL_ENTRIES ||--o{ JOURNAL_ENTRY_LINES : contains COMPANIES ||--o{ EMPLOYEE_PROFILES : employs EMPLOYEE_PROFILES ||--o{ EMPLOYEE_EVALUATIONS : evaluated_by WORKFLOW_DEFINITIONS ||--o{ WORKFLOW_RUNS : runs WORKFLOW_RUNS ||--o{ APPROVAL_REQUESTS : asks APPROVAL_REQUESTS ||--o{ APPROVAL_ACTIONS : records
+21. Frontend Anywhere Rules
+Frontend Anywhere لا يحصل على API لقراءة ERP private data.
+يمكن فقط عرض public catalog أو service request endpoints حسب scopes.
+Leads الناتجة من forms الخارجية تسجل داخل Cloud DB.
+Invoices, employees, accounting, purchasing, evaluations ممنوعة من public API.
+أي API لإرسال request أو form يجب أن يستخدم scoped key وrate limiting وCORS allowed origins.
+22. Portable Rules
+كل جداول ERP Essentials يجب أن تسجل نفسها في Tenant Export Registry.
+يجب الحفاظ على uuid للكيانات التي قد تتزامن لاحقًا مع Mall أو Cloud import.
+Accounting/audit logs قد تحتاج retention policy حسب الاتفاق.
+Employee evaluations والملفات الخاصة لا تصدر إلا إذا include_private_files وpolicy تسمح.
+بعد Portable، Mall Sync لا يرسل ERP private data إطلاقًا.
+23. Dedicated Rules
+Dedicated يستخدم نفس schema للـ ERP Essentials داخل قاعدة العميل المخصصة.
+organization_id يظل موجودًا حتى لو العميل واحد لتوحيد الكود ودعم multi-company.
+Central Kabeeri قد يستقبل usage summaries فقط، وليس تفاصيل ERP.
+support access لأي بيانات ERP يحتاج approval مؤقت وتسجيل audit.
+health reports لا تشمل بيانات العملاء أو الفواتير التفصيلية.
+24. Data Privacy & Audit Rules
+البيان
+درجة الحساسية
+القاعدة
+Leads and contacts
+متوسط
+company-scoped ولا تظهر للعامة
+Customer invoices
+حساس
+audit عند issue/void/payment
+Stock adjustments
+حساس
+approval + audit عند التسوية
+Journal entries
+حساس جدًا
+posting permission منفصلة
+Employee profiles
+حساس
+HR/company-only
+Employee evaluations
+حساس جدًا
+private by default
+Purchase orders
+حساس
+approval thresholds
+Reports snapshots
+حسب المجال
+inherit permissions من report domain
+25. Indexing مقترح
+كل جدول تشغيلي: index(organization_id), index(company_id), index(status), index(created_at).
+crm_leads: index(assigned_to, status), index(source_type, source_id).
+quotations/customer_invoices: unique(organization_id, quotation_number/invoice_number).
+stock_balances: unique(warehouse_id, stock_item_id).
+stock_movements: index(stock_item_id, movement_at), index(source_type, source_id).
+purchase_orders: unique(organization_id, po_number).
+journal_entries: unique(organization_id, entry_number), index(status, entry_date).
+approval_requests: index(approver_user_id, status), index(subject_type, subject_id).
+report_snapshots: index(report_definition_id, generated_at).
+26. Migration Order المقترح
+المرحلة
+الجداول
+1
+departments, job_titles, warehouses, chart_of_accounts, invoice_number_sequences
+2
+crm_lead_sources, crm_lead_stages, sales_pipelines, sales_pipeline_stages
+3
+crm_contacts, crm_leads, crm_activities, crm_customer_timelines
+4
+quotations, quotation_items, quotation_approvals
+5
+customer_invoices, customer_invoice_items, customer_invoice_payments
+6
+stock_items, stock_balances, stock_movements, stock_adjustments, stock_reservations, low_stock_alerts
+7
+suppliers, purchase_orders, purchase_order_items, purchase_receipts, purchase_receipt_items
+8
+accounting_periods, journal_entries, journal_entry_lines, payment_allocations
+9
+employee_profiles, employee_documents, employee_work_history
+10
+employee_evaluation_forms, employee_evaluations, employee_evaluation_answers, performance_notes
+11
+workflow_definitions, workflow_steps, workflow_runs, approval_requests, approval_actions
+12
+report_definitions, report_saved_filters, report_snapshots, dashboard_widgets
+27. Acceptance Criteria
+يمكن تحويل Service Request إلى Lead بدون فقد المصدر.
+يمكن إنشاء Quotation وتحويله إلى Customer Invoice.
+يمكن إصدار Invoice وتسجيل Payment وتحديث balance_due.
+يمكن ربط Product بـ Stock Item وتحديث Stock Balance عبر Movement.
+يمكن إنشاء Purchase Order واستلامه وتوليد Stock Movement.
+يمكن إنشاء Journal Entry draft وترحيله بصلاحية منفصلة.
+لا يستطيع مستخدم بدون صلاحية رؤية employee evaluations.
+تسجل audit logs للأفعال الحساسة: invoice issue, stock adjustment, journal posting, evaluation review.
+تعمل feature flags لتعطيل أي suite بدون كسر باقي النظام.
+تسجل جداول ERP Essentials في Export Registry لدعم Portable لاحقًا.
+28. ملاحظات تنفيذ Laravel
+استخدم Models منفصلة لكل domain مع Policies واضحة.
+لا تضع منطق إصدار الفاتورة داخل Controller؛ استخدم Action مثل IssueCustomerInvoiceAction.
+حركات المخزون يجب أن تمر عبر StockMovementService لمنع تعديل stock_balances مباشرة.
+journal posting يجب أن يكون transaction آمنًا ويتحقق من توازن debit/credit.
+استخدم Observers أو Events لتسجيل activity_logs، لكن audit_logs الحساسة يجب أن تكون explicit.
+استخدم Form Requests للتحقق من إدخالات quotations/invoices/purchase orders.
+كل تحويل مثل quotation_to_invoice يجب أن يكون idempotent قدر الإمكان.
+29. الخلاصة
+هذا الملف يضع قاعدة بيانات ERP Essentials كطبقة تشغيل أولية فوق Kabeeri Core وCommerce وRabet. الهدف ليس بناء ERP كامل في V3، بل ربط البيانات الأساسية بطريقة صحيحة تمنع إعادة البناء لاحقًا. بعد هذا الملف يمكن التوسع إلى ERP Pro في V5 بدون كسر نماذج العملاء، الفواتير، المخزون، المشتريات، الموظفين، والموافقات.
+KABEERI — Database Architecture Series
+Database File 13 — ERP Essentials | powered by ADMIT

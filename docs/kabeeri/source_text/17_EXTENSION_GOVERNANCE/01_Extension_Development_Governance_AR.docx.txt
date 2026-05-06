@@ -1,0 +1,32 @@
+KABEERI Extension Development Governance
+قواعد إضافة أي ميزة جديدة إلى المنصة بدون كسر الملفات أو النسخ السابقة.
+KABEERI Professional Knowledge System — v1.6.2
+1. القاعدة الأساسية
+أي ميزة جديدة تدخل كـ Extension Wave مستقلة برقم Vx. لا يتم تعديل الملفات المجمدة مباشرة؛ يتم إضافة Addendum أو ملف جديد يشير إلى الملفات السابقة.
+2. الملفات الإلزامية لكل إضافة
+الترتيب
+الملف
+الفولدر
+01
+Business Architecture
+19_EXTENSION_BUSINESS_ARCHITECTURE
+02
+Technical Architecture
+20_EXTENSION_TECHNICAL_ARCHITECTURE
+03
+Database & API Addendum
+21_EXTENSION_DATABASE_API_ADDENDUM
+04
+Codex Prompt Pack
+22_EXTENSION_CODEX_PROMPTS
+05
+Acceptance Checklist
+23_EXTENSION_ACCEPTANCE_CHECKLISTS
+3. قواعد المنع
+• ممنوع تعديل نسخة مجمدة مباشرة.
+• ممنوع كسر API قديم بدون versioning.
+• ممنوع حذف أو تغيير معنى جدول قديم بدون خطة Migration واضحة.
+• ممنوع تنفيذ ميزة جديدة بدون Feature Flag أو Acceptance Checklist.
+• ممنوع إدخال ثيم أو بلجن يطلب صلاحيات غير معلنة.
+4. الحالة الحالية
+V1 مجمدة لأنها دخلت التكويد. V2–V6 قابلة للتعديل إلى أن يبدأ تنفيذ كل نسخة. V7 وV8 Extensions جديدة: Mobile وDesktop.

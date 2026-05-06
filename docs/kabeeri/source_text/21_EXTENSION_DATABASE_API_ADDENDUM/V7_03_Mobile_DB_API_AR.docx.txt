@@ -1,0 +1,21 @@
+KABEERI V7 Mobile App Enablement — Database & API Addendum
+KABEERI Professional Knowledge System — v1.6.2
+جداول مقترحة
+الجدول
+الغرض
+mobile_app_configs
+إعدادات تطبيق الموبايل لكل App
+mobile_theme_profiles
+وصفات واجهة الموبايل لكل Theme
+mobile_api_manifests
+قائمة endpoints المدعومة لكل App
+user_devices
+أجهزة المستخدمين
+push_tokens
+توكنات الإشعارات
+mobile_sync_logs
+سجلات اتصال ومزامنة الموبايل
+Endpoints مقترحة
+GET /api/v1/mobile/apps/{app}/configGET /api/v1/mobile/apps/{app}/theme-profileGET /api/v1/mobile/apps/{app}/manifestGET /api/v1/mobile/apps/{app}/pagesGET /api/v1/mobile/apps/{app}/productsPOST /api/v1/mobile/devices/registerPOST /api/v1/mobile/push-tokens
+Feature Flags
+enable_mobile_app_layer، enable_mobile_theme_profiles، enable_mobile_api_manifest، enable_mobile_push_notifications.

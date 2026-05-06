@@ -1,0 +1,1666 @@
+KABEERI
+Database File 22
+Kabeeri Billing & Subscriptions Database
+نظام الفوترة والاشتراكات والحقوق التجارية
+هذا الملف يصف قاعدة بيانات Billing في Kabeeri كطبقة تشغيل مركزية تخدم Cloud وPro وERP Modules وRabet Verification وKabeeri Mall وInternal Marketplace وAI usage وAgency وEnterprise.
+الهدف: فصل فواتير المنصة عن فواتير الشركات، وربط الخطط بالحقوق والحدود والاستخدام والمدفوعات بطريقة قابلة للتوسع عبر Cloud / Frontend Anywhere / Portable / Dedicated.
+1. تعريف Billing & Subscriptions
+Billing & Subscriptions هو نظام الإيرادات المركزي في Kabeeri. لا يخص Cloud فقط، ولا يجب أن يكون موديولاً جانبياً؛ بل طبقة مشتركة تتحكم في الخطط، الاشتراكات، حدود الاستخدام، الفواتير، المدفوعات، الحقوق التجارية، التجارب المجانية، الترقيات، الإلغاءات، والربط مع منتجات المنصة المختلفة.
+• Kabeeri Cloud subscriptions.
+• Kabeeri Pro / Self-hosted licenses.
+• ERP module and suite subscriptions.
+• Rabet Company OS plans and verification fees.
+• Kabeeri Mall listings, featured placements, lead fees, and commissions.
+• Internal Marketplace package purchases and revenue share.
+• AI usage credits and usage-based actions.
+• Agency plans, support plans, and Enterprise contracts.
+2. القاعدة الرئيسية
+Kabeeri ليست منتجاً واحداً بسعر واحد. لذلك قاعدة البيانات يجب أن تدعم نماذج تسعير متعددة بدون خلط بين Platform Billing وBusiness Invoicing.
+المفهوم
+المعنى
+مكانه
+Platform Billing
+الفواتير التي تصدرها Kabeeri للعميل مقابل اشتراك أو خدمة منصة
+Billing Database
+Business Invoicing
+الفواتير التي تصدرها شركة العميل لعملائها داخل ERP/Commerce
+ERP / Commerce Database
+Entitlement
+حق تجاري يسمح بميزة أو يحدد حد استخدام
+Billing Database + Entitlement Service
+Usage Record
+سجل استخدام قابل للتحويل إلى حد أو تكلفة
+Billing Database
+Commission
+نصيب المنصة أو الشركاء من عملية Marketplace/Mall/Service
+Billing + Commission references
+ممنوع خلط invoices_platform مع customer_invoices أو supplier_bills. فواتير Kabeeri للعميل شيء، وفواتير العميل لعملائه شيء آخر تماماً.
+3. موقع Billing داخل المعمارية
+Billing يعتمد على Core Kernel لأنه يحتاج Organization وCompany وUser وPermissions وActivity Logs. ويغذي Cloud وMarketplace وRabet وERP وAI وDedicated/Portable بالحقوق التجارية وحدود الاستخدام.
+Core Kernel → Billing Account → Plan → Subscription → Entitlements → Usage → Invoice → Payment → Access Control
+أي Feature مدفوعة يجب أن تمر عبر EntitlementService قبل التفعيل.
+4. مبادئ تصميم قاعدة البيانات
+• Centralized Billing: نظام واحد للفوترة يخدم كل المنتجات، وليس Billing منفصل داخل كل موديول.
+• Product-aware: الخطة يمكن أن تخص Cloud أو ERP أو Rabet أو Mall أو AI أو Enterprise.
+• Entitlement-first: لا يتم تفعيل ميزة اعتماداً على plan_code فقط، بل على entitlement صريح.
+• Usage-ready: تخزين الاستخدام بشكل قابل للتجميع والتحويل لفواتير أو limits.
+• Tax-ready: يدعم الضرائب والفواتير حسب Country Packs لاحقاً.
+• Audit-ready: كل تغيير في خطة أو اشتراك أو دفع أو entitlement يسجل.
+• Exit-ready: عند Portable/Dedicated يبقى billing relationship مركزياً ما لم ينص العقد على غير ذلك.
+• No secrets in DB: لا تحفظ بيانات بطاقات أو payment secrets كنص واضح.
+5. Billing Data Domains
+النطاق
+الجداول الأساسية
+الغرض
+Accounts
+billing_accounts, billing_contacts, billing_addresses, billing_tax_profiles
+تعريف من يدفع ومن يستلم الفاتورة
+Catalog
+plans, plan_versions, plan_features, plan_limits, plan_prices, add_ons
+تعريف المنتجات والخطط والأسعار
+Subscriptions
+subscriptions, subscription_items, subscription_changes, trials
+دورة حياة الاشتراك
+Entitlements
+entitlements, account_entitlements, entitlement_grants
+الحقوق التجارية وحدود المزايا
+Usage
+usage_meters, usage_records, usage_aggregates, usage_alerts
+قياس الاستخدام والحدود
+Invoicing
+invoices_platform, invoice_items_platform, credit_notes_platform
+فواتير Kabeeri نفسها
+Payments
+payments_platform, payment_methods, refunds_platform, payment_provider_events
+المدفوعات والاسترداد
+Promotions
+coupons, coupon_redemptions, discounts
+العروض والخصومات
+Revenue Share
+billing_revenue_allocations, billing_partner_payout_refs
+ربط العمولات والمدفوعات للشركاء
+Lifecycle
+cancellation_requests, dunning_attempts, billing_events
+الإلغاء، الفشل، التجديد، التحصيل
+6. الجداول الأساسية
+6.1 billing_accounts
+يمثل حساب فوترة مرتبطاً بـ Organization أو Company أو User أو Agency أو Legal Partner.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+للربط الخارجي
+organization_id
+nullable indexed
+الأغلب يكون Organization
+company_id
+nullable indexed
+عند فوترة شركة محددة
+user_id
+nullable indexed
+للاشتراك الفردي
+billing_type
+varchar(50)
+organization/company/individual/agency/enterprise/legal_partner
+legal_name
+varchar nullable
+billing_email
+varchar indexed
+country_id
+nullable
+للضرائب والفاتورة
+currency_code
+char(3)
+EGP افتراضياً حسب البلد
+tax_number
+varchar nullable
+tax_profile_id
+nullable
+اختياري
+status
+varchar(50)
+active/past_due/suspended/closed
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• active
+• past_due
+• suspended
+• closed
+• archived
+الفهارس المهمة:
+• index(organization_id)
+• index(company_id)
+• index(user_id)
+• index(status)
+• index(billing_email)
+ملاحظات تصميم:
+• لا تعتمد على plan_code داخل organizations كمصدر وحيد؛ يمكن إبقاؤه cache فقط.
+• Billing Account يمكن أن يكون للشركة أو للوكالة أو للمؤسسة حسب النموذج التجاري.
+6.2 billing_contacts
+أشخاص التواصل للفوترة داخل الحساب.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+user_id
+nullable
+لو الشخص مستخدم داخل Kabeeri
+name
+varchar
+email
+varchar
+phone
+varchar nullable
+contact_role
+varchar
+billing_admin/accountant/owner
+is_primary
+boolean
+status
+varchar
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• active
+• inactive
+الفهارس المهمة:
+• index(billing_account_id)
+• index(email)
+6.3 billing_addresses
+عناوين الفوترة والضرائب.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+address_type
+varchar
+billing/tax/shipping
+country_id
+nullable
+city
+varchar nullable
+state
+varchar nullable
+postal_code
+varchar nullable
+line1
+varchar
+line2
+varchar nullable
+is_default
+boolean
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الفهارس المهمة:
+• index(billing_account_id)
+• index(country_id)
+6.4 billing_tax_profiles
+ملف الضرائب الخاص بحساب الفوترة.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+country_id
+nullable
+tax_number
+varchar nullable
+tax_exempt
+boolean default false
+tax_region
+varchar nullable
+e_invoice_required
+boolean default false
+status
+varchar default active
+metadata
+json nullable
+بيانات Country Pack
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• active
+• pending_validation
+• invalid
+• expired
+ملاحظات تصميم:
+• يرتبط لاحقاً بملف Localization & Country Packs لتحديد VAT/GST/e-invoicing.
+6.5 payment_methods
+وسائل الدفع المخزنة كمرجع Provider وليس بيانات حساسة.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+billing_account_id
+foreign key
+provider
+varchar
+stripe/paymob/paytabs/manual/bank_transfer/etc
+provider_customer_ref
+varchar nullable
+provider_payment_method_ref
+varchar nullable
+method_type
+varchar
+card/bank_transfer/wallet/manual
+display_name
+varchar nullable
+Card ending ****
+is_default
+boolean default false
+status
+varchar default active
+expires_at
+timestamp nullable
+إن وجد
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+revoked_at
+timestamp nullable
+الحالات / القيم المقترحة:
+• active
+• expired
+• revoked
+• failed
+ملاحظات تصميم:
+• لا تحفظ card_number أو CVV أو secrets. استخدم provider references فقط.
+6.6 plans
+تعريف الخطة التجارية العامة.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+name
+varchar
+slug
+varchar unique
+description
+text nullable
+plan_type
+varchar
+cloud/pro/erp/rabet/mall/ai/agency/enterprise/portable/dedicated
+status
+varchar default active
+is_public
+boolean default true
+sort_order
+integer default 0
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• draft
+• active
+• grandfathered
+• deprecated
+• archived
+الفهارس المهمة:
+• unique(slug)
+• index(plan_type)
+• index(status)
+ملاحظات تصميم:
+• لا تخزن features/limits فقط كـ JSON داخل plans إذا كانت تحتاج querying؛ استخدم plan_features وplan_limits.
+6.7 plan_versions
+نسخ الخطط لتجنب كسر الاشتراكات القديمة عند تغيير الأسعار أو الحدود.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+plan_id
+foreign key
+version
+varchar
+1.0.0
+status
+varchar
+draft/active/retired
+effective_from
+timestamp nullable
+effective_to
+timestamp nullable
+change_summary
+text nullable
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الفهارس المهمة:
+• index(plan_id,status)
+• unique(plan_id, version)
+6.8 plan_prices
+أسعار الخطة حسب العملة والدورة والبلد إن احتجنا.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+plan_id
+foreign key
+plan_version_id
+nullable
+currency_code
+char(3)
+billing_cycle
+varchar
+monthly/annual/one_time/usage_based/custom
+country_id
+nullable
+تسعير محلي اختياري
+price
+decimal(15,2)
+setup_fee
+decimal(15,2) default 0
+trial_days
+integer default 0
+status
+varchar default active
+created_at
+timestamp
+updated_at
+timestamp
+الفهارس المهمة:
+• index(plan_id)
+• index(currency_code)
+• index(billing_cycle)
+6.9 plan_features
+خصائص الخطة غير العددية.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+plan_id
+foreign key
+feature_key
+varchar
+enable_commerce
+value
+json
+true/false/string/object
+value_type
+varchar
+boolean/string/json
+created_at
+timestamp
+updated_at
+timestamp
+ملاحظات تصميم:
+• أمثلة: enable_cms, enable_commerce, enable_mall_sync, enable_ai_cobuilder, enable_portable_export.
+6.10 plan_limits
+حدود الخطة العددية.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+plan_id
+foreign key
+limit_key
+varchar
+max_sites
+limit_value
+decimal(15,3)
+unit
+varchar nullable
+count/mb/requests/credits
+limit_type
+varchar
+soft/hard
+reset_cycle
+varchar nullable
+monthly/annual/never
+created_at
+timestamp
+updated_at
+timestamp
+ملاحظات تصميم:
+• أمثلة: max_sites, max_storage_mb, max_products, max_team_members, max_ai_actions.
+6.11 subscriptions
+اشتراك Billing Account في خطة.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+billing_account_id
+foreign key
+plan_id
+foreign key
+plan_version_id
+nullable
+status
+varchar default trialing/active
+started_at
+timestamp nullable
+trial_ends_at
+timestamp nullable
+current_period_start
+timestamp nullable
+current_period_end
+timestamp nullable
+cancelled_at
+timestamp nullable
+cancellation_reason
+varchar nullable
+renewal_status
+varchar default auto
+auto/manual/do_not_renew
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• trialing
+• active
+• past_due
+• cancelled
+• expired
+• suspended
+• pending_change
+الفهارس المهمة:
+• index(billing_account_id)
+• index(plan_id)
+• index(status)
+• index(current_period_end)
+6.12 subscription_items
+بنود إضافية داخل الاشتراك؛ تسمح بربط خطة بموقع أو موديول أو Add-on.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+subscription_id
+foreign key
+item_type
+varchar
+site/module/storage_addon/ai_credits/support_plan/mall_featured_listing
+item_id
+nullable
+id للكيان المرتبط عند الحاجة
+quantity
+integer default 1
+unit_price
+decimal(15,2) default 0
+currency_code
+char(3)
+starts_at
+timestamp nullable
+ends_at
+timestamp nullable
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الفهارس المهمة:
+• index(subscription_id)
+• index(item_type,item_id)
+6.13 subscription_changes
+طلبات الترقية أو التخفيض أو تغيير الخطة.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+subscription_id
+foreign key
+from_plan_id
+nullable
+to_plan_id
+nullable
+change_type
+varchar
+upgrade/downgrade/cycle_change/add_item/remove_item
+status
+varchar default pending
+effective_at
+timestamp nullable
+proration_amount
+decimal(15,2) nullable
+requested_by
+nullable user id
+approved_by
+nullable user id
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• pending
+• approved
+• applied
+• failed
+• cancelled
+ملاحظات تصميم:
+• التخفيض قد لا يطبق فوراً إذا كانت الموارد الحالية تتخطى حدود الخطة الجديدة.
+6.14 subscription_trials
+تجارب مجانية أو تجارب Add-ons.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+plan_id
+nullable
+trial_type
+varchar
+cloud/pro/erp/ai/addon
+status
+varchar default active
+started_at
+timestamp
+ends_at
+timestamp
+converted_at
+timestamp nullable
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• active
+• converted
+• expired
+• cancelled
+6.15 entitlements
+تعريف الحقوق التجارية القابلة للفحص من النظام.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+key
+varchar unique
+enable_commerce
+description
+text nullable
+value_type
+varchar
+boolean/integer/decimal/string/json
+risk_level
+varchar default low
+created_at
+timestamp
+updated_at
+timestamp
+ملاحظات تصميم:
+• أمثلة: enable_cms, enable_commerce, enable_rabet, enable_mall_sync, enable_ai_cobuilder, max_sites, max_storage_mb.
+6.16 account_entitlements
+الحقوق المطبقة فعلياً على Billing Account.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+entitlement_key
+varchar indexed
+value
+json
+source_type
+varchar nullable
+plan/subscription/addon/manual/enterprise_contract
+source_id
+nullable
+expires_at
+timestamp nullable
+created_at
+timestamp
+updated_at
+timestamp
+الفهارس المهمة:
+• unique(billing_account_id, entitlement_key, source_type, source_id)
+• index(entitlement_key)
+ملاحظات تصميم:
+• في حالة وجود أكثر من مصدر للحق، EntitlementService يدمج القيم حسب قواعد واضحة.
+6.17 entitlement_grants
+منح مؤقت أو استثناء يدوي للعميل.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+entitlement_key
+varchar
+value
+json
+grant_reason
+varchar/text
+granted_by
+user id nullable
+starts_at
+timestamp nullable
+expires_at
+timestamp nullable
+status
+varchar default active
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• active
+• expired
+• revoked
+ملاحظات تصميم:
+• كل Grant حساس يجب أن يسجل في audit_logs.
+6.18 usage_meters
+تعريف أنواع الاستخدام القابلة للقياس.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+key
+varchar unique
+storage_mb
+name
+varchar
+unit
+varchar
+mb/count/credits/requests
+aggregation_method
+varchar
+sum/max/latest/count
+reset_cycle
+varchar nullable
+monthly/annual/never
+billable
+boolean default false
+created_at
+timestamp
+updated_at
+timestamp
+ملاحظات تصميم:
+• أمثلة: storage_mb, bandwidth_mb, ai_actions, ai_tokens, emails_sent, sync_events, api_calls, team_seats, sites_count.
+6.19 usage_records
+سجلات استخدام خام.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+organization_id
+nullable indexed
+company_id
+nullable indexed
+site_id
+nullable indexed
+billing_account_id
+nullable indexed
+subscription_id
+nullable indexed
+usage_type
+varchar indexed
+quantity
+decimal(15,3)
+unit
+varchar
+source_type
+varchar nullable
+cloud_site/ai_run/sync_job/media_asset
+source_id
+nullable
+recorded_at
+timestamp indexed
+metadata
+json nullable
+created_at
+timestamp
+الفهارس المهمة:
+• index(billing_account_id, usage_type, recorded_at)
+• index(organization_id, usage_type, recorded_at)
+• index(source_type, source_id)
+6.20 usage_aggregates
+تجميع الاستخدام لفترة معينة لتسريع الحدود والفواتير.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+usage_type
+varchar
+period_start
+timestamp
+period_end
+timestamp
+quantity
+decimal(15,3)
+unit
+varchar
+calculated_at
+timestamp
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الفهارس المهمة:
+• unique(billing_account_id, usage_type, period_start, period_end)
+6.21 usage_alerts
+تنبيهات تخطي الحدود أو الاقتراب منها.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+usage_type
+varchar
+threshold_percent
+integer
+80/90/100
+status
+varchar default pending
+sent_at
+timestamp nullable
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• pending
+• sent
+• dismissed
+• resolved
+6.22 invoices_platform
+فواتير Kabeeri للعميل.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+billing_account_id
+foreign key
+subscription_id
+nullable
+invoice_number
+varchar unique
+status
+varchar default draft
+payment_status
+varchar default unpaid
+currency_code
+char(3)
+subtotal
+decimal(15,2)
+tax_total
+decimal(15,2) default 0
+discount_total
+decimal(15,2) default 0
+total
+decimal(15,2)
+issued_at
+timestamp nullable
+due_date
+timestamp nullable
+paid_at
+timestamp nullable
+country_pack_id
+nullable
+للفواتير المحلية
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• draft
+• issued
+• void
+• cancelled
+ملاحظات تصميم:
+• هذه ليست customer_invoices داخل ERP. الاسم المتعمد invoices_platform لمنع الخلط.
+6.23 invoice_items_platform
+بنود فاتورة المنصة.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+invoice_platform_id
+foreign key
+description
+varchar/text
+item_type
+varchar
+subscription/addon/usage/verification/featured_listing/support
+item_id
+nullable
+quantity
+decimal(15,3)
+unit_price
+decimal(15,2)
+tax_rate
+decimal(8,4) nullable
+tax_amount
+decimal(15,2) default 0
+discount_amount
+decimal(15,2) default 0
+total
+decimal(15,2)
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الفهارس المهمة:
+• index(invoice_platform_id)
+• index(item_type,item_id)
+6.24 payments_platform
+مدفوعات العميل إلى Kabeeri.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+billing_account_id
+foreign key
+invoice_platform_id
+nullable
+amount
+decimal(15,2)
+currency_code
+char(3)
+status
+varchar default pending
+payment_method_id
+nullable
+provider
+varchar nullable
+provider_reference
+varchar nullable indexed
+paid_at
+timestamp nullable
+failure_reason
+text nullable
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• pending
+• authorized
+• paid
+• failed
+• refunded
+• cancelled
+الفهارس المهمة:
+• index(billing_account_id)
+• index(invoice_platform_id)
+• index(provider_reference)
+• index(status)
+6.25 refunds_platform
+استرداد مدفوعات المنصة.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+payment_platform_id
+foreign key
+billing_account_id
+foreign key
+amount
+decimal(15,2)
+currency_code
+char(3)
+status
+varchar default pending
+reason
+varchar/text nullable
+provider_reference
+varchar nullable
+processed_at
+timestamp nullable
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• pending
+• processed
+• failed
+• cancelled
+6.26 credit_notes_platform
+إشعارات خصم أو رصيد للعميل.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+billing_account_id
+foreign key
+invoice_platform_id
+nullable
+credit_number
+varchar unique
+amount
+decimal(15,2)
+currency_code
+char(3)
+reason
+varchar/text nullable
+status
+varchar default issued
+issued_at
+timestamp nullable
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• draft
+• issued
+• applied
+• void
+6.27 account_credit_balances
+رصيد حساب يمكن استخدامه في فواتير لاحقة.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+currency_code
+char(3)
+balance
+decimal(15,2) default 0
+updated_at
+timestamp
+created_at
+timestamp
+الفهارس المهمة:
+• unique(billing_account_id, currency_code)
+6.28 account_credit_transactions
+حركات الرصيد.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+currency_code
+char(3)
+amount
+decimal(15,2)
+موجب أو سالب
+transaction_type
+varchar
+credit_note/payment_adjustment/manual_apply/refund
+source_type
+varchar nullable
+source_id
+nullable
+description
+text nullable
+created_at
+timestamp
+الفهارس المهمة:
+• index(billing_account_id)
+• index(source_type, source_id)
+6.29 coupons
+كوبونات وعروض للخطط أو الخدمات.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+code
+varchar unique
+name
+varchar
+discount_type
+varchar
+percent/fixed/free_trial/credits
+discount_value
+decimal(15,2)
+currency_code
+nullable
+applies_to_plan_type
+varchar nullable
+max_redemptions
+integer nullable
+starts_at
+timestamp nullable
+expires_at
+timestamp nullable
+status
+varchar default active
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• active
+• paused
+• expired
+• archived
+6.30 coupon_redemptions
+استخدام الكوبون.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+coupon_id
+foreign key
+billing_account_id
+foreign key
+subscription_id
+nullable
+invoice_platform_id
+nullable
+redeemed_by
+nullable user id
+discount_amount
+decimal(15,2) nullable
+redeemed_at
+timestamp
+metadata
+json nullable
+الفهارس المهمة:
+• index(coupon_id)
+• index(billing_account_id)
+6.31 add_ons
+تعريف الإضافات المدفوعة المستقلة عن الخطط.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+name
+varchar
+slug
+varchar unique
+addon_type
+varchar
+storage/ai/seats/sites/security/support/module/mall
+status
+varchar default active
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+ملاحظات تصميم:
+• أمثلة: Extra Storage, AI Credits, Extra Team Seats, Staging Environment, Premium Support.
+6.32 add_on_prices
+أسعار Add-ons.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+add_on_id
+foreign key
+currency_code
+char(3)
+billing_cycle
+varchar
+monthly/annual/one_time/usage_based
+unit_price
+decimal(15,2)
+unit_name
+varchar nullable
+seat/gb/credit/site
+status
+varchar default active
+created_at
+timestamp
+updated_at
+timestamp
+6.33 licenses
+تراخيص Self-hosted / Portable / Enterprise.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+billing_account_id
+foreign key
+organization_id
+nullable indexed
+license_key_hash
+varchar unique
+license_type
+varchar
+pro/portable/dedicated/enterprise/lts
+status
+varchar default active
+max_sites
+integer nullable
+max_users
+integer nullable
+allowed_modules
+json nullable
+issued_at
+timestamp
+expires_at
+timestamp nullable
+last_check_at
+timestamp nullable
+metadata
+json nullable
+created_at
+timestamp
+updated_at
+revoked_at
+timestamp nullable
+الحالات / القيم المقترحة:
+• active
+• expired
+• revoked
+• suspended
+ملاحظات تصميم:
+• احفظ hash فقط لمفتاح الترخيص، وليس النص الكامل.
+6.34 billing_events
+سجل أحداث Billing الداخلي.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+billing_account_id
+nullable
+event_type
+varchar
+subscription_created/payment_failed/invoice_issued/etc
+subject_type
+varchar nullable
+subject_id
+nullable
+status
+varchar default recorded
+payload
+json nullable
+created_at
+timestamp
+الفهارس المهمة:
+• index(billing_account_id, created_at)
+• index(event_type)
+• index(subject_type, subject_id)
+6.35 payment_provider_events
+أحداث Webhook من مزود الدفع.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+provider
+varchar
+provider_event_id
+varchar indexed
+event_type
+varchar
+status
+varchar default received
+payload_hash
+varchar nullable
+payload
+json nullable
+received_at
+timestamp
+processed_at
+timestamp nullable
+errors
+json nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• received
+• processed
+• ignored
+• failed
+ملاحظات تصميم:
+• يجب منع replay attacks عبر provider_event_id وsignature validation.
+6.36 dunning_attempts
+محاولات تحصيل بعد فشل الدفع.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+billing_account_id
+foreign key
+subscription_id
+nullable
+invoice_platform_id
+nullable
+attempt_number
+integer
+status
+varchar default pending
+scheduled_at
+timestamp
+attempted_at
+timestamp nullable
+message
+text nullable
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• pending
+• sent
+• paid
+• failed
+• cancelled
+6.37 cancellation_requests
+طلبات إلغاء أو إيقاف الاشتراك.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+uuid
+ulid/uuid unique
+subscription_id
+foreign key
+requested_by
+nullable user id
+reason_code
+varchar nullable
+reason_text
+text nullable
+status
+varchar default pending
+effective_at
+timestamp nullable
+data_retention_choice
+varchar nullable
+export/delete/archive
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• pending
+• approved
+• applied
+• cancelled
+ملاحظات تصميم:
+• قبل الحذف النهائي يجب عرض export options حسب سياسة الاحتفاظ.
+6.38 billing_revenue_allocations
+توزيع إيراد عملية بين Kabeeri وشركاء أو مطورين.
+الحقل
+النوع / القاعدة
+الملاحظة
+id
+bigint primary
+source_type
+varchar
+mall_commission/package_sale/verification_fee/agency_resale
+source_id
+nullable
+billing_account_id
+nullable
+الحساب الذي دفع
+partner_type
+varchar nullable
+legal_partner/developer/agency/seller
+partner_id
+nullable
+gross_amount
+decimal(15,2)
+platform_amount
+decimal(15,2)
+partner_amount
+decimal(15,2)
+currency_code
+char(3)
+status
+varchar default pending
+created_at
+timestamp
+updated_at
+timestamp
+الحالات / القيم المقترحة:
+• pending
+• approved
+• paid
+• cancelled
+ملاحظات تصميم:
+• هذا ليس محرك العمولات الكامل، بل جسر Billing مع Commission Engine وPartner Payouts.
+7. Product Pricing Matrix
+المنتج
+أنواع التسعير
+جداول Billing المرتبطة
+Kabeeri Cloud
+اشتراك شهري/سنوي + حدود موارد
+plans, subscriptions, entitlements, usage_records
+Kabeeri Pro / Portable
+ترخيص + تحديثات + دعم
+licenses, subscriptions, plan_prices
+Frontend Anywhere
+Add-on أو خطة مستقلة
+plan_type=frontend_anywhere, frontend usage meters
+Dedicated
+عقد سنوي + Setup + Support
+enterprise_contract references, subscriptions, invoices_platform
+Commerce
+Add-on أو خطة Store
+entitlements, subscription_items
+ERP Modules
+Per suite / per user / per company
+subscription_items, usage_meters
+Rabet Verification
+رسوم توثيق وتجديد
+invoice_items_platform + revenue_allocations
+Kabeeri Mall
+Featured, Sponsored, Commission, Lead fees
+subscription_items + billing_revenue_allocations
+Internal Marketplace
+Package purchase/subscription/revenue share
+subscription_items + revenue_allocations
+AI Co-builder
+Credits/usage/agents
+usage_meters, usage_records, credit balances
+Agency
+اشتراك وكالة + مواقع عملاء
+billing_accounts type agency, subscription_items
+8. Entitlement Flow
+أي ميزة مدفوعة تمر عبر EntitlementService بدلاً من سؤال plan فقط.
+User tries action → Resolve billing_account → Load active subscriptions → Merge plan features/limits/add-ons/grants → Check usage → Allow/deny → Log decision if sensitive
+السؤال
+مثال Entitlement
+النتيجة
+هل يستطيع إنشاء موقع جديد؟
+max_sites
+allow إذا sites_count < max_sites
+هل يستطيع تفعيل Commerce؟
+enable_commerce
+allow/deny
+هل يسمح بالتصدير Portable؟
+enable_portable_export
+allow/deny
+هل يستطيع تشغيل AI Agent؟
+enable_ai_cobuilder + ai_credits
+allow إذا credits كافية
+هل يمكن نشر Featured Listing؟
+enable_mall_featured_listing
+allow إذا اشتراك أو دفعة
+9. Usage Metering Flow
+الاستخدام يجب أن يسجل قريباً من مصدر الحدث، لكن التجميع والفوترة تكون مركزية.
+Action happens → usage_record created → periodic aggregation → limit check → alert/charge → invoice item if billable
+• Storage usage يمكن حسابه من media_assets أو storage jobs.
+• AI usage يأتي من ai_usage_records أو ai_apply_runs.
+• Integration sync runs تأتي من Integration Hub.
+• Bandwidth/page views تأتي من Cloud/Analytics لاحقاً.
+• Team seats تأتي من memberships active counts.
+10. Invoice Generation Flow
+subscription renewal job → calculate base plan → add subscription items → add billable usage → apply coupons/credits → calculate tax via Country Pack → create invoice_platform → notify billing contacts → collect payment
+• يجب أن تكون أرقام فواتير المنصة مستقلة عن ERP customer invoices.
+• invoice_items_platform يجب أن تحمل source_type/source_id عند الحاجة للتتبع.
+• Country Pack يمكنه تحديد tax rate وe-invoicing لاحقاً.
+• كل إصدار فاتورة يجب أن يسجل billing_event وactivity/audit عند الحاجة.
+11. Payment Flow
+invoice_platform issued → payment attempt created → provider checkout/charge → payment_provider_event received → validate signature → update payment → update invoice payment_status → update subscription status → refresh entitlements
+حالة الدفع
+أثرها على الفاتورة
+أثرها على الاشتراك
+pending
+unpaid
+لا تغيير
+paid
+paid
+active أو renewed
+failed
+unpaid/past_due
+past_due + dunning
+refunded
+refunded/partial
+حسب سياسة المنتج
+cancelled
+unpaid/cancelled
+قد يتم تعليق الاشتراك
+12. Upgrade / Downgrade Rules
+• Upgrade يمكن تطبيقه فوراً مع proration اختياري.
+• Downgrade يطبق نهاية الدورة إذا كان العميل يستخدم موارد أعلى من الحد الجديد.
+• تغيير billing_cycle من monthly إلى annual ينشئ subscription_change ويحافظ على history.
+• إزالة Add-on لا تحذف البيانات فوراً؛ تحوّلها إلى read-only أو تطلب cleanup.
+• كل تغيير خطة يجب أن يعيد حساب account_entitlements.
+13. Cancellation / Refund / Retention
+الحالة
+القاعدة
+Cancellation
+طلب إلغاء مع effective_at وسبب وقرار الاحتفاظ بالبيانات.
+Grace Period
+فترة سماح قبل تعليق الخدمة عند فشل الدفع.
+Past Due
+تعطيل بعض المزايا غير الحرجة أولاً، ثم تعليق كامل حسب السياسة.
+Refund
+يرتبط بدفعة محددة ولا يحذف الفاتورة الأصلية.
+Retention
+Billing history وplatform invoices وlegal records تبقى حسب الشروط حتى لو حذف التشغيل.
+Export before deletion
+قبل حذف بيانات Cloud يجب توفير export إذا كان مسموحاً بالخطة.
+14. Cloud / Frontend Anywhere / Portable / Dedicated
+الوضع
+مصدر Billing
+الملاحظات
+Cloud
+Kabeeri Central
+الاشتراك والحقوق والاستخدام داخل المنصة.
+Frontend Anywhere
+Kabeeri Central
+الواجهة خارجية لكن الداتا والـ billing داخل Cloud.
+Portable
+Kabeeri Central للعلاقة والترخيص اختياري
+العميل self-hosted، لكن license/update/support/mall sync يمكن أن يظل مدفوعاً.
+Dedicated
+Kabeeri Central غالباً
+الفوترة المركزية ترصد usage summaries فقط دون بيانات خاصة.
+Terminated
+Billing history فقط
+لا تبقى حقوق تشغيلية إلا إذا توجد التزامات قانونية أو ديون.
+15. AI Billing
+AI لا يجب أن يكون مجانياً بالكامل لأنه يستهلك تكلفة مباشرة. يمكن تسعيره كرصيد أو limits ضمن الخطة أو Add-on.
+• ai_credits balance أو usage_records من ai_actions/ai_tokens.
+• AI Assistant basic ضمن الخطط، وAI Agents المتقدمة كـ Add-on.
+• AI apply sensitive changes قد يحتاج Entitlement + Permission + Approval.
+• Enterprise private AI يمكن تسعيره بعقد منفصل.
+16. Legal Verification Billing
+التوثيق القانوني يحتاج رسوم مختلفة حسب الدولة والقطاع وسرعة المراجعة، وقد يتضمن توزيع إيراد بين Kabeeri ومكتب قانوني.
+verification_request submitted → fee calculated by country pack/verification level → invoice item created → payment confirmed → legal review starts → revenue allocation created for legal partner
+17. Mall / Marketplace Billing
+العنصر
+التسعير
+الجداول
+Free Listing
+مجاني بحدود ظهور
+entitlements
+Featured Listing
+دفعة أو اشتراك
+subscription_items / invoice_items_platform
+Sponsored Placement
+مدة + موضع + ميزانية
+subscription_items + usage_records
+Lead Fee
+حسب lead مؤهل
+usage_records + invoice_items_platform
+Commission
+نسبة من بيع/حجز/عقد
+billing_revenue_allocations
+Package Sale
+بيع أو اشتراك أو revenue share
+billing_revenue_allocations
+18. Permissions
+Permission
+المعنى
+billing.account.view
+رؤية حساب الفوترة
+billing.account.manage
+تعديل بيانات الفوترة
+billing.subscription.view
+رؤية الاشتراكات
+billing.subscription.manage
+تغيير خطة أو إلغاء
+billing.payment.manage
+إدارة وسيلة الدفع
+billing.invoice.view
+رؤية فواتير المنصة
+billing.invoice.download
+تحميل PDF الفاتورة
+billing.entitlement.manage
+تعديل استثناءات الحقوق
+billing.refund.manage
+إدارة الاسترداد
+billing.revenue_share.view
+رؤية العمولات وتوزيع الإيراد
+أي grant أو refund أو manual credit أو entitlement override يجب أن يسجل في audit_logs.
+19. Events
+• BillingAccountCreated
+• PlanActivated
+• SubscriptionStarted
+• SubscriptionChanged
+• SubscriptionPastDue
+• SubscriptionCancelled
+• EntitlementsRefreshed
+• UsageRecorded
+• UsageLimitExceeded
+• InvoiceIssued
+• PaymentSucceeded
+• PaymentFailed
+• RefundProcessed
+• LicenseIssued
+• LicenseRevoked
+20. ERD مختصر
+erDiagram ORGANIZATIONS ||--o{ BILLING_ACCOUNTS : owns BILLING_ACCOUNTS ||--o{ BILLING_CONTACTS : has BILLING_ACCOUNTS ||--o{ BILLING_ADDRESSES : has BILLING_ACCOUNTS ||--o{ PAYMENT_METHODS : uses BILLING_ACCOUNTS ||--o{ SUBSCRIPTIONS : subscribes PLANS ||--o{ PLAN_VERSIONS : versioned_by PLANS ||--o{ PLAN_FEATURES : includes PLANS ||--o{ PLAN_LIMITS : limits PLANS ||--o{ PLAN_PRICES : priced_by SUBSCRIPTIONS ||--o{ SUBSCRIPTION_ITEMS : contains SUBSCRIPTIONS ||--o{ SUBSCRIPTION_CHANGES : changes BILLING_ACCOUNTS ||--o{ ACCOUNT_ENTITLEMENTS : receives ENTITLEMENTS ||--o{ ACCOUNT_ENTITLEMENTS : grants BILLING_ACCOUNTS ||--o{ USAGE_RECORDS : records BILLING_ACCOUNTS ||--o{ USAGE_AGGREGATES : aggregates BILLING_ACCOUNTS ||--o{ INVOICES_PLATFORM : billed_by INVOICES_PLATFORM ||--o{ INVOICE_ITEMS_PLATFORM : includes INVOICES_PLATFORM ||--o{ PAYMENTS_PLATFORM : paid_by PAYMENTS_PLATFORM ||--o{ REFUNDS_PLATFORM : may_refund BILLING_ACCOUNTS ||--o{ LICENSES : licensed_by
+21. Laravel Structure المقترح
+app/Core/Billing/  Models/    BillingAccount.php    Plan.php    Subscription.php    Entitlement.php    UsageRecord.php    PlatformInvoice.php    PlatformPayment.php  Actions/    CreateBillingAccount.php    StartSubscription.php    ChangeSubscription.php    RecordUsage.php    GeneratePlatformInvoice.php    ApplyPaymentProviderEvent.php    RefreshEntitlements.php  Services/    EntitlementService.php    UsageMeteringService.php    InvoiceService.php    PaymentProviderService.php    TaxCalculationService.php    LicenseService.php  Policies/    BillingAccountPolicy.php    SubscriptionPolicy.php  Events/  Listeners/  Jobs/  Http/Controllers/  Http/Requests/
+22. Indexes المهمة
+• billing_accounts.organization_id / company_id / status
+• plans.slug / plan_type / status
+• subscriptions.billing_account_id / status / current_period_end
+• subscription_items.subscription_id + item_type/item_id
+• account_entitlements.billing_account_id + entitlement_key
+• usage_records.billing_account_id + usage_type + recorded_at
+• usage_aggregates.billing_account_id + usage_type + period_start/end
+• invoices_platform.billing_account_id + status + payment_status
+• payments_platform.provider_reference
+• licenses.license_key_hash
+• payment_provider_events.provider + provider_event_id
+23. Release Roadmap
+الإصدار
+ما يدخل
+V1
+Billing foundation: billing_accounts, plans, entitlements concept, license placeholder.
+V2
+Pro plan basic, Commerce add-on concept, simple monetization optional.
+V3
+ERP module plans, Rabet basic plan, verification fee model draft.
+V4
+Full subscriptions, Cloud billing, legal verification payments, featured listings, package purchases basic.
+V5
+Commission engine links, partner payouts, AI usage billing, connector subscriptions, enterprise contract support.
+V6
+Full monetization platform, multi-currency, taxes by country, marketplace revenue share, advanced analytics, enterprise billing.
+24. أخطاء ممنوعة
+• لا تبني Cloud بدون Billing foundation.
+• لا تخلط Platform Invoice مع Business Invoice.
+• لا تجعل كل شيء free خصوصاً AI وCloud وERP.
+• لا تعتمد على plan_code فقط داخل Organization.
+• لا تحفظ بيانات دفع حساسة داخل DB.
+• لا تنفذ downgrade يحذف بيانات العميل تلقائياً.
+• لا تجعل Billing خاصاً بـ Cloud فقط؛ يجب أن يخدم Verification وMarketplace وERP وAI.
+• لا تفتح commissions/revenue share قبل وجود audit logs وpayment reconciliation.
+25. الخلاصة التنفيذية
+Billing & Subscriptions هو طبقة الإيرادات والحقوق التجارية في Kabeeri. يجب بناؤه تدريجياً: foundation مبكر في V1/V3، ثم full subscriptions في V4، ثم usage/commissions/partner payouts في V5، ثم multi-country enterprise billing في V6.
+القرار النهائي: Kabeeri يمكن أن يعطي العميل حرية Cloud وPortable وDedicated، لكن العلاقة التجارية والحقوق والتراخيص والاستخدام يجب أن تبقى واضحة ومركزية وقابلة للتدقيق.
+KABEERI Database File 22 — Billing & Subscriptions Database
+Kabeeri — powered by ADMIT

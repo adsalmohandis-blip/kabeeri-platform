@@ -1,0 +1,53 @@
+KABEERI Partner, Affiliate & Dropshipping Commerce Architecture
+شبكة شركاء النمو والتسويق بالعمولة وواجهات البيع الشريكة
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. الفكرة الأساسية
+هذه الطبقة تجعل Kabeeri مصدر دخل للشباب والشركاء، وتسمح للمسوقين بعرض منتجات/خدمات التجار بإذنهم مقابل عمولة، بدون نقل ملكية المنتجات أو تنفيذ الشحن من المسوق.
+Growth Partner gets link→ Merchant joins through link→ Merchant allows catalog sharing→ Partner creates storefront→ End customer buys/requests→ Original merchant fulfills→ Commission event created
+2. الأدوار
+الدور
+المعنى
+Merchant
+صاحب المنتج/الخدمة الأصلي
+Growth Partner
+المسوق أو شريك النمو
+Partner Storefront Owner
+يدير واجهة عرض وتسويق
+End Customer
+المشتري النهائي
+Kabeeri
+تتبع، اتفاقيات، عمولات، حوكمة
+3. قواعد الملكية والوفاء
+• المسوق لا يملك المنتج.
+• التاجر الأصلي يحتفظ بالأسعار والمخزون والتنفيذ.
+• الشحن والتواصل النهائي يظل عند التاجر إلا إذا اتفق الطرفان على غير ذلك.
+• المسوق يعرض نسخة عامة مصرح بها من الكتالوج.
+• العمولة لا تنشأ إلا من حدث conversion صالح.
+4. أنواع العمولات
+النوع
+الاستخدام
+Referral Commission
+تسجيل عميل جديد في Kabeeri
+Recurring Subscription Commission
+نسبة من اشتراك العميل لفترة محددة
+Lead Commission
+عمولة على lead مؤهل
+Order Commission
+نسبة من بيع منتج
+Service Booking Commission
+عمولة على طلب خدمة
+Theme/Plugin Sale Commission
+عمولة بيع أصل رقمي
+Agency Referral Commission
+إحالة وكالة أو مشروع تنفيذ
+5. منع التلاعب
+• منع self-referral.
+• hold period قبل الدفع.
+• عكس العمولة عند refund/cancellation.
+• Fraud score للروابط والطلبات.
+• مراجعة أولية للعمولات الكبيرة.
+• KYC للمسوقين المتقدمين.
+• Dispute process للتجار والمسوقين.
+6. Database Concepts
+partner_profilesaffiliate_programsaffiliate_linksaffiliate_referralsattribution_eventspartner_agreementscatalog_sharing_rulespartner_storefrontspartner_storefront_itemspartner_commission_rulespartner_commission_eventspartner_payoutsfraud_checks
+KABEERI — Confidential Product Architecture

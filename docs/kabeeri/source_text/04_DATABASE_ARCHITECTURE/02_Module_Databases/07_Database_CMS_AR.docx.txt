@@ -1,0 +1,448 @@
+KABEERI Database File 07
+Kabeeri CMS Database
+نظام قاعدة بيانات إدارة المحتوى
+هذا الملف يصف تصميم قاعدة البيانات الخاص بطبقة CMS داخل KABEERI، وهي أول طبقة منتج فوق Core Kernel، وتخدم المواقع، المدونات، الصفحات، المحتوى المنظم، القوائم، السيو، النشر، والربط مع Frontend Anywhere وPortable وDedicated.
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+1. هدف ملف CMS Database
+تثبيت نموذج بيانات المحتوى قبل التوسع إلى Commerce وERP وMall.
+توفير CMS قوي لكنه منظم، وليس نسخة من WordPress postmeta الفوضوية.
+دعم Pages وPosts وContent Types وTaxonomies وRevisions وSEO من البداية.
+ضمان أن المحتوى قابل للتصدير في Portable، وقابل للعرض عبر Frontend Anywhere، وقابل للعزل داخل Dedicated.
+توفير أساس واضح للـ AI Co-builder لاحقًا بدون السماح بتعديلات مباشرة خطيرة على المحتوى المنشور.
+2. موقع CMS داخل المعمارية العامة
+يعتمد CMS على Core Kernel، ولا يملك هوية أو صلاحيات مستقلة. أي محتوى يجب أن يعرف: أي Organization؟ أي Site؟ أي Company عند الحاجة؟ من أنشأ؟ من نشر؟ وما حالة الظهور؟
+Core Kernel→ Organizations→ Sites→ CMS Content→ Media references→ Theme rendering→ SEO / Sitemap→ Frontend Anywhere snapshots or APIs→ Portable export registry→ Dedicated tenant DB
+3. حدود هذا الملف
+يدخل في هذا الملف:
+Content Types
+Content Fields
+Content Entries
+Pages / Posts as content entries
+Revisions
+Taxonomies / Terms
+Menus
+Redirects
+SEO fields
+Sitemap / Robots foundation
+Forms basic as CMS extension
+Content publishing and scheduling foundation
+لا يدخل بالتفصيل في هذا الملف:
+Media storage internals: لها ملف مستقل.
+Commerce products/orders: لها ملف مستقل.
+Rabet Business Profiles: لها ملف مستقل.
+Mall mirror tables: موجودة في ملف التكامل والـ Mall.
+Advanced Visual Builder الكامل: لاحقًا بعد CMS foundation.
+AI Co-builder logs/plans: لها ملف مستقل.
+4. مبادئ تصميم CMS
+المبدأ
+التفسير
+Site-scoped
+المحتوى يتبع Site داخل Organization، ولا يوجد محتوى عام عائم بدون مالك.
+Typed Content
+كل نوع محتوى له schema واضح بدل الاعتماد على metadata غير منضبط.
+Revisionable
+أي تعديل مهم على المحتوى يجب أن يترك revision يمكن الرجوع له.
+Publishable
+النشر له حالات واضحة: draft, review, scheduled, published, archived, trashed.
+Portable
+المحتوى قابل للتجميع والتصدير مع UUIDs وروابط media relative.
+Frontend-ready
+يدعم API وStatic Snapshots وCache invalidation للواجهات الخارجية.
+SEO-ready
+الـ slug وmeta وcanonical وredirects وsitemap ليست إضافات عشوائية.
+Permission-aware
+النشر والحذف وتعديل السيو وإدارة redirects صلاحيات منفصلة.
+5. Core Dependencies
+يعتمد CMS على الجداول التالية من Core Kernel:
+users
+organizations
+organization_memberships
+sites
+companies optional
+roles
+permissions
+activity_logs
+audit_logs
+media_assets
+media_usages
+feature_flags
+settings
+module_installations
+6. CMS Tables Overview
+content_typescontent_type_fieldscontent_entriescontent_entry_valuescontent_revisionscontent_blockscontent_entry_blockscontent_relationstaxonomiestaxonomy_termscontent_termcontent_slug_historycontent_publication_schedulescontent_publication_logscontent_seo_metamenusmenu_itemsredirectssitemap_recordsrobots_rulesformsform_fieldsform_submissionsform_submission_valuescms_search_index
+7. قاعدة Pages وPosts
+في Kabeeri لا نحتاج جدول pages وجدول posts منفصلين في البداية. الأفضل أن يكون كلاهما content_entries بنوع محتوى مختلف:
+content_types.slug = pagecontent_types.slug = postcontent_entries.content_type_id -> content_types.id
+يمكن لاحقًا إضافة content types أخرى مثل: property, case_study, event, service_article، دون تغيير جذري في البنية.
+8. content_types
+يمثل نوع المحتوى داخل Site، مثل page أو post أو landing_page أو custom content type.
+الحقول المقترحة:
+iduuidorganization_idsite_idnameslugdescription nullablecontent_kind default customis_system default falsesupports_title default truesupports_body default truesupports_featured_image default truesupports_excerpt default truesupports_author default truesupports_taxonomies default truesupports_seo default truestatus default activesettings json nullablemetadata json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+الحالات / القيم المقترحة:
+content_kind: page, post, custom, system, landing, documentationstatus: active, inactive, archived
+الفهارس:
+unique(site_id, slug)index(organization_id)index(site_id)index(status)
+ملاحظات تصميم:
+يتم إنشاء page وpost كـ system content types عند إنشاء Site.
+لا يتم حذف system content types إلا بتعطيلها أو إخفائها من الواجهة.
+الـ settings تستخدم لتحديد السلوك، وليس لتخزين العلاقات الأساسية.
+9. content_type_fields
+يعرف حقول كل Content Type بطريقة typed ومنظمة.
+الحقول المقترحة:
+iduuidcontent_type_idorganization_idsite_idnameslugfield_typeis_required default falseis_translatable default falseis_searchable default falseis_filterable default falseis_public default truesort_order default 0validation_rules json nullableoptions json nullabledefault_value json nullablesettings json nullablecreated_atupdated_at
+الحالات / القيم المقترحة:
+field_type: text, textarea, rich_text, markdown, number, boolean, date, datetime, select, multi_select, media, gallery, relation, json, repeater, location, url, email, phone
+الفهارس:
+unique(content_type_id, slug)index(content_type_id)index(site_id)index(field_type)index(is_searchable)
+ملاحظات تصميم:
+هذا الجدول يمنع الاعتماد على postmeta عشوائي.
+الحقول الحساسة يجب أن تكون is_public=false ولا تظهر في public APIs.
+الـ validation_rules يجب أن تتحول لاحقًا إلى FormRequest أو Value Objects.
+10. content_entries
+يمثل صفحة أو مقال أو أي سجل محتوى داخل Site.
+الحقول المقترحة:
+iduuidorganization_idsite_idcompany_id nullablecontent_type_idauthor_user_id nullabletitleslugexcerpt nullablebody longtext nullablebody_json json nullablefeatured_media_id nullablestatus default draftvisibility default publicpassword_hash nullablelanguage default arlocale nullableis_homepage default falsetemplate_key nullableseo_title nullableseo_description nullablecanonical_url nullablerobots_index default truerobots_follow default truepublished_at nullablescheduled_at nullablearchived_at nullablecreated_by nullableupdated_by nullablepublished_by nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+الحالات / القيم المقترحة:
+status: draft, in_review, scheduled, published, archived, trashedvisibility: public, private, organization_only, company_only, password_protected, unlisted
+الفهارس:
+unique(site_id, slug)index(organization_id)index(site_id, status)index(content_type_id)index(author_user_id)index(published_at)index(visibility)fulltext(title, excerpt, body) optional
+ملاحظات تصميم:
+Pages وPosts كلاهما content_entries.
+body يمكن أن يكون HTML/Rich Text، بينما body_json يستخدم للـ blocks أو structured body.
+لا تعرض private أو draft content في public rendering أو Frontend Anywhere API.
+11. content_entry_values
+يخزن القيم الخاصة بالحقول المعرّفة في content_type_fields عندما نحتاج بحث أو فلترة منظمة.
+الحقول المقترحة:
+idcontent_entry_idcontent_type_field_idvalue_text longtext nullablevalue_number decimal(20,6) nullablevalue_boolean boolean nullablevalue_date date nullablevalue_datetime timestamp nullablevalue_json json nullablemedia_asset_id nullablerelated_entry_id nullablecreated_atupdated_at
+الفهارس:
+unique(content_entry_id, content_type_field_id)index(content_type_field_id)index(media_asset_id)index(related_entry_id)index(value_date)index(value_datetime)
+ملاحظات تصميم:
+نستخدم أعمدة typed للبحث والفلاتر بدل تخزين كل شيء في JSON فقط.
+يمكن استخدام value_json للحقول المركبة أو repeater.
+أي field is_searchable يجب أن ينعكس في cms_search_index لاحقًا.
+12. content_revisions
+يحفظ نسخ المحتوى قبل وبعد التعديل، ويدعم rollback.
+الحقول المقترحة:
+iduuidorganization_idsite_idcontent_entry_idrevision_numbertitleslugexcerpt nullablebody longtext nullablebody_json json nullablefield_values_snapshot json nullableseo_snapshot json nullablestatus_snapshot nullablecreated_by nullablechange_summary nullablecreated_at
+الفهارس:
+unique(content_entry_id, revision_number)index(content_entry_id)index(site_id)index(created_by)index(created_at)
+ملاحظات تصميم:
+ينشأ revision عند update مهم أو publish.
+AI Co-builder لا يطبق تغيير محتوى بدون إنشاء revision أو rollback point.
+يمكن ضغط أو أرشفة revisions القديمة لاحقًا حسب الخطة.
+13. content_blocks
+مكتبة أنواع البلوكات المتاحة للصفحات والمقالات.
+الحقول المقترحة:
+iduuidorganization_id nullablesite_id nullablenameslugblock_typeis_system default falseschema jsondefault_data json nullablesettings json nullablestatus default activecreated_atupdated_at
+الحالات / القيم المقترحة:
+block_type: layout, content, media, form, commerce, rabet, customstatus: active, inactive, deprecated
+الفهارس:
+unique(site_id, slug)index(block_type)index(status)
+ملاحظات تصميم:
+هذا foundation للـ blocks وليس Visual Builder كامل.
+البلوك يمكن أن يكون system أو مخصص لموقع/عميل.
+أي block يعرض بيانات Commerce أو Rabet يجب أن يتحقق من entitlements والصلاحيات.
+14. content_entry_blocks
+يربط البلوكات بصفحة أو محتوى معين مع ترتيب وبيانات.
+الحقول المقترحة:
+iduuidcontent_entry_idcontent_block_id nullableparent_block_id nullableblock_key nullablesort_order default 0data json nullablevisibility default publicsettings json nullablecreated_atupdated_at
+الحالات / القيم المقترحة:
+visibility: public, private, hidden, device_desktop, device_mobile
+الفهارس:
+index(content_entry_id)index(parent_block_id)index(sort_order)index(visibility)
+ملاحظات تصميم:
+يدعم nested blocks بشكل محدود.
+لا يستخدم كنظام visual builder كامل في V1.
+عند النشر، يمكن تحويله إلى body_json snapshot لتحسين الأداء.
+15. taxonomies
+يمثل أنظمة التصنيف مثل categories وtags أو تصنيفات مخصصة.
+الحقول المقترحة:
+iduuidorganization_idsite_idcontent_type_id nullablenameslugtaxonomy_type default customis_hierarchical default falsestatus default activesettings json nullablecreated_atupdated_atdeleted_at nullable
+الحالات / القيم المقترحة:
+taxonomy_type: category, tag, topic, customstatus: active, inactive, archived
+الفهارس:
+unique(site_id, slug)index(content_type_id)index(taxonomy_type)
+ملاحظات تصميم:
+categories وtags يتم إنشاؤها كـ system taxonomies.
+يمكن ربط taxonomy بنوع محتوى معين أو تركها عامة للموقع.
+16. taxonomy_terms
+يمثل عنصر تصنيف مثل Category أو Tag.
+الحقول المقترحة:
+iduuidtaxonomy_idorganization_idsite_idparent_id nullablenameslugdescription nullablesort_order default 0seo_title nullableseo_description nullablestatus default activemetadata json nullablecreated_atupdated_atdeleted_at nullable
+الحالات / القيم المقترحة:
+status: active, inactive, archived
+الفهارس:
+unique(taxonomy_id, slug)index(parent_id)index(site_id)index(status)
+ملاحظات تصميم:
+يدعم hierarchy للـ categories إذا is_hierarchical=true.
+لا يتم حذف term مستخدم قبل فك ارتباطه أو نقله.
+17. content_term
+جدول pivot يربط المحتوى بالتصنيفات.
+الحقول المقترحة:
+content_entry_idtaxonomy_term_idcreated_atprimary(content_entry_id, taxonomy_term_id)
+الفهارس:
+index(taxonomy_term_id)index(content_entry_id)
+ملاحظات تصميم:
+يجب تحديث sitemap/search index عند تغيير terms لمحتوى منشور.
+18. content_relations
+يربط محتوى بمحتوى آخر: related posts، parent page، سلسلة دروس، إلخ.
+الحقول المقترحة:
+idsource_content_entry_idtarget_content_entry_idrelation_typesort_order default 0metadata json nullablecreated_at
+الحالات / القيم المقترحة:
+relation_type: parent, related, translation, duplicate_of, series_next, series_previous
+الفهارس:
+index(source_content_entry_id)index(target_content_entry_id)index(relation_type)
+ملاحظات تصميم:
+مهم لاحقًا للترجمات، العلاقات بين الخدمات والمقالات، واقتراحات AI.
+لا يستخدم بدل relationships الأساسية مع site/company.
+19. content_slug_history
+يحفظ تغييرات slugs لتوليد redirects ومنع كسر SEO.
+الحقول المقترحة:
+idorganization_idsite_idcontent_entry_idold_slugnew_slugchanged_by nullableredirect_created default falsecreated_at
+الفهارس:
+index(site_id, old_slug)index(content_entry_id)index(redirect_created)
+ملاحظات تصميم:
+عند تغيير slug لمحتوى منشور، يجب اقتراح redirect تلقائي.
+لا يسمح بتكرار old_slug مع route نشط إلا بقرار واضح.
+20. content_publication_schedules
+يدعم جدولة النشر والأرشفة.
+الحقول المقترحة:
+iduuidorganization_idsite_idcontent_entry_idschedule_typescheduled_forstatus default pendingcreated_by nullableprocessed_at nullableerror_message nullablemetadata json nullablecreated_atupdated_at
+الحالات / القيم المقترحة:
+schedule_type: publish, unpublish, archivestatus: pending, processing, completed, failed, cancelled
+الفهارس:
+index(content_entry_id)index(site_id, scheduled_for)index(status)
+ملاحظات تصميم:
+يتطلب queue/scheduler.
+قبل التنفيذ يتم فحص permission/ownership مرة أخرى.
+21. content_publication_logs
+يسجل عمليات النشر والأرشفة والحذف الناعم.
+الحقول المقترحة:
+iduuidorganization_idsite_idcontent_entry_idactionactor_user_id nullablefrom_status nullableto_status nullablepublished_url nullablecreated_at
+الحالات / القيم المقترحة:
+action: submitted_for_review, approved, published, unpublished, archived, restored, trashed
+الفهارس:
+index(content_entry_id)index(site_id, created_at)index(actor_user_id)
+ملاحظات تصميم:
+مختلف عن activity_logs: هذا خاص بتاريخ نشر المحتوى.
+الأحداث الحساسة مثل حذف محتوى منشور يمكن أن تدخل audit_logs أيضًا.
+22. content_seo_meta
+جدول اختياري لتوسيع السيو بدل تضخيم content_entries.
+الحقول المقترحة:
+idcontent_entry_idsite_idmeta_title nullablemeta_description nullablecanonical_url nullableog_title nullableog_description nullableog_image_media_id nullabletwitter_title nullabletwitter_description nullableschema_json json nullablerobots_index default truerobots_follow default truecreated_atupdated_at
+الفهارس:
+unique(content_entry_id)index(site_id)index(og_image_media_id)
+ملاحظات تصميم:
+في V1 يمكن إبقاء seo_title وseo_description داخل content_entries، وهذا الجدول يصبح extension لاحقًا.
+الـ schema_json لا يستخدم في V1 إلا بشكل محدود.
+23. menus
+يمثل قائمة تنقل داخل الموقع.
+الحقول المقترحة:
+iduuidorganization_idsite_idnamesluglocation nullablestatus default activesettings json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+الحالات / القيم المقترحة:
+location: header, footer, sidebar, mobile, customstatus: active, inactive, archived
+الفهارس:
+unique(site_id, slug)index(site_id, location)index(status)
+ملاحظات تصميم:
+V2 يحتاج Menus Basic لإدارة navigation بدل hardcoded navigation.
+كل Theme يحدد locations المدعومة.
+24. menu_items
+عناصر القائمة، ويمكن أن تشير إلى محتوى أو URL خارجي.
+الحقول المقترحة:
+iduuidmenu_idparent_id nullablelabelitem_typetarget_type nullabletarget_id nullableurl nullableroute_name nullableopen_in_new_tab default falsesort_order default 0visibility default publicsettings json nullablecreated_atupdated_at
+الحالات / القيم المقترحة:
+item_type: content_entry, taxonomy_term, custom_url, route, divider, headingvisibility: public, logged_in, logged_out, hidden
+الفهارس:
+index(menu_id)index(parent_id)index(target_type, target_id)index(sort_order)
+ملاحظات تصميم:
+القوائم يجب أن تُمسح من الكاش عند التعديل.
+لا يسمح بـ open redirects أو URLs خطيرة في custom_url.
+25. redirects
+مدير التحويلات لحماية SEO والهجرة من WordPress.
+الحقول المقترحة:
+iduuidorganization_idsite_idsource_pathtarget_urlredirect_type default 301status default activehit_count default 0last_hit_at nullablecreated_by nullablesource_reason nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+الحالات / القيم المقترحة:
+redirect_type: 301, 302, 307, 308, 410status: active, inactive, expired
+الفهارس:
+unique(site_id, source_path)index(site_id, status)index(redirect_type)index(last_hit_at)
+ملاحظات تصميم:
+يجب منع open redirect abuse.
+Redirects مهمة جدًا مع WordPress Migration وSlug changes.
+410 يستخدم للمحتوى المحذوف عمدًا.
+26. sitemap_records
+سجل مشتق لتوليد sitemap بسرعة، ويمكن إعادة بنائه.
+الحقول المقترحة:
+idorganization_idsite_idsubject_typesubject_idurlchangefreq nullablepriority decimal(2,1) nullablelastmod nullableis_indexable default truecreated_atupdated_at
+الفهارس:
+unique(site_id, subject_type, subject_id)index(site_id, is_indexable)index(lastmod)
+ملاحظات تصميم:
+Derived table: يمكن إعادة بنائه من content_entries والتصنيفات.
+يتحدث عند ContentPublished أو ContentArchived أو SEO settings changes.
+27. robots_rules
+قواعد robots.txt الأساسية لكل Site.
+الحقول المقترحة:
+idorganization_idsite_iduser_agent default *rule_typepathsort_order default 0status default activecreated_atupdated_at
+الحالات / القيم المقترحة:
+rule_type: allow, disallow, sitemap
+الفهارس:
+index(site_id)index(status)index(sort_order)
+ملاحظات تصميم:
+في V1 يمكن توليد robots.txt بسيط من settings، وهذا الجدول يفتح الباب لاحقًا للإدارة المتقدمة.
+28. CMS Forms Basic
+Forms جزء من CMS Expansion في V2، لأنها تخدم Contact Pages وLead Capture وService Requests. النموذج هنا بسيط، ولا يحل محل Workflow أو CRM كامل.
+28.1 forms
+يمثل نموذجًا عامًا داخل Site.
+الحقول المقترحة:
+iduuidorganization_idsite_idnameslugdescription nullablestatus default activesubmit_button_label nullablesuccess_message nullablenotification_email nullablespam_protection_enabled default truesettings json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+الحالات / القيم المقترحة:
+status: active, inactive, archived
+الفهارس:
+unique(site_id, slug)index(organization_id)index(site_id)index(status)
+ملاحظات تصميم:
+لا يتم تنفيذ scripts واردة من المستخدم داخل form settings.
+النماذج العامة تخضع لـ CSRF/rate limit/spam protection.
+28.2 form_fields
+حقول النموذج.
+الحقول المقترحة:
+idform_idnameslugfield_typeis_required default falsesort_order default 0validation_rules json nullableoptions json nullableplaceholder nullablehelp_text nullablesettings json nullablecreated_atupdated_at
+الحالات / القيم المقترحة:
+field_type: text, textarea, email, phone, number, select, checkbox, file, hidden
+الفهارس:
+unique(form_id, slug)index(form_id)index(field_type)
+ملاحظات تصميم:
+file fields لا تحفظ الملف هنا؛ تستخدم media_assets أو جدول ملفات خاص في ملف Media.
+validation_rules يجب أن تتحقق server-side دائمًا.
+28.3 form_submissions
+كل إرسال لنموذج.
+الحقول المقترحة:
+iduuidorganization_idsite_idform_idstatus default newsubmitted_by_user_id nullableip_address nullableuser_agent nullablesource_url nullablespam_score nullablecreated_lead_id nullablemetadata json nullablecreated_atupdated_at
+الحالات / القيم المقترحة:
+status: new, read, spam, archived, converted_to_lead
+الفهارس:
+index(form_id, created_at)index(site_id, created_at)index(status)index(created_lead_id)
+ملاحظات تصميم:
+يمكن لاحقًا تحويل submission إلى lead في CRM.
+لا يجب عرض submissions إلا بصلاحية forms.submissions.view.
+28.4 form_submission_values
+قيم الحقول المرسلة.
+الحقول المقترحة:
+idform_submission_idform_field_id nullablefield_slugvalue_text longtext nullablevalue_json json nullablemedia_asset_id nullablecreated_at
+الفهارس:
+index(form_submission_id)index(form_field_id)index(media_asset_id)
+ملاحظات تصميم:
+يفضل الاحتفاظ بـ field_slug حتى لو تغير أو حذف form_field لاحقًا.
+الحقول الحساسة يمكن تشفيرها حسب settings.
+29. cms_search_index
+جدول مشتق للبحث الأساسي قبل استخدام Meilisearch/Typesense.
+الحقول المقترحة:
+idorganization_idsite_idsubject_typesubject_idtitlebody_text longtext nullablekeywords text nullablelanguage nullablevisibility default publicstatus default activeindexed_at nullablecreated_atupdated_at
+الحالات / القيم المقترحة:
+subject_type: content_entry, taxonomy_term, product optional, service optionalstatus: active, stale, deleted
+الفهارس:
+unique(site_id, subject_type, subject_id)index(site_id, status)fulltext(title, body_text, keywords)
+ملاحظات تصميم:
+هذا ليس محرك بحث نهائي، لكنه يكفي V1/V2.
+يمكن إعادة بنائه، لذلك لا يعتمد عليه كمصدر حقيقة.
+30. CMS ERD
+erDiagram SITES ||--o{ CONTENT_TYPES : defines CONTENT_TYPES ||--o{ CONTENT_TYPE_FIELDS : has CONTENT_TYPES ||--o{ CONTENT_ENTRIES : classifies CONTENT_ENTRIES ||--o{ CONTENT_ENTRY_VALUES : stores CONTENT_ENTRIES ||--o{ CONTENT_REVISIONS : versions CONTENT_ENTRIES ||--o{ CONTENT_ENTRY_BLOCKS : composes CONTENT_BLOCKS ||--o{ CONTENT_ENTRY_BLOCKS : used_by SITES ||--o{ TAXONOMIES : has TAXONOMIES ||--o{ TAXONOMY_TERMS : contains CONTENT_ENTRIES ||--o{ CONTENT_TERM : tagged TAXONOMY_TERMS ||--o{ CONTENT_TERM : assigned CONTENT_ENTRIES ||--o{ CONTENT_SLUG_HISTORY : changes CONTENT_ENTRIES ||--o{ CONTENT_PUBLICATION_SCHEDULES : schedules SITES ||--o{ MENUS : has MENUS ||--o{ MENU_ITEMS : contains SITES ||--o{ REDIRECTS : protects SITES ||--o{ SITEMAP_RECORDS : indexes SITES ||--o{ FORMS : has FORMS ||--o{ FORM_FIELDS : defines FORMS ||--o{ FORM_SUBMISSIONS : receives
+31. Content Creation Flow
+User opens Site Admin→ Permission check: content.create→ Select content_type→ Create content_entry as draft→ Fill base fields + custom field values→ Optional attach media→ Save revision→ Activity log created→ User previews content
+32. Publishing Flow
+Editor requests publish→ Permission check: content.publish→ Validate slug uniqueness→ Validate required fields→ Create revision snapshot→ status = published→ published_at set→ ContentPublished event fired→ Update sitemap_records→ Clear page cache→ Create frontend_cache_invalidations if Frontend Anywhere enabled→ Activity log + publication log
+33. Slug Change Flow
+Published content slug changes→ store old/new in content_slug_history→ suggest redirect→ if accepted: create redirects record→ update sitemap→ clear cache→ log activity
+34. Menu Update Flow
+Admin updates menu→ Permission check: menus.manage→ Validate item targets→ Save menu_items order→ MenuUpdated event fired→ ClearMenuCache listener→ Frontend webhook/cache invalidation if needed
+35. Frontend Anywhere Compatibility
+Frontend Anywhere لا يأخذ قاعدة بيانات CMS. هو يقرأ فقط البيانات العامة عبر Public API أو Static Snapshots. لذلك يجب أن يوفر CMS طبقة Query آمنة ترجع published + public فقط.
+مسموح للواجهة الخارجية:
+published pages/posts
+public content fields
+public media references
+menus
+taxonomies
+SEO meta
+forms submission endpoint حسب scope
+ممنوع للواجهة الخارجية:
+drafts
+private content
+revisions
+form submissions
+admin settings
+audit logs
+AI plans
+private media
+36. Portable / Dedicated Compatibility
+يجب أن يسجل CMS نفسه في Tenant Export Registry. أي جدول CMS أساسي يجب أن يكون قابلاً للتصدير حسب organization_id وsite_id.
+cms export registry: content_types content_type_fields content_entries content_entry_values content_revisions optional content_blocks content_entry_blocks taxonomies taxonomy_terms content_term content_slug_history menus menu_items redirects sitemap_records optional rebuildable robots_rules forms form_fields form_submissions optional by policy
+في Dedicated يستخدم نفس schema داخل قاعدة العميل المخصصة لتوحيد الكود وتقليل الاختلاف بين أوضاع التشغيل.
+37. Permissions المقترحة
+content.viewcontent.createcontent.editcontent.publishcontent.archivecontent.deletecontent.restorecontent.revisions.viewcontent.revisions.rollbackcontent.seo.managecontent.slug.managecontent.schedulecontent_types.viewcontent_types.managetaxonomies.managemenus.manageredirects.viewredirects.manageforms.viewforms.createforms.editforms.deleteforms.submissions.viewforms.submissions.delete
+الصلاحيات الحساسة التي يفضل دخولها audit_logs: content.delete, content.revisions.rollback, redirects.manage, forms.submissions.delete.
+38. Events المقترحة
+ContentTypeCreatedContentEntryCreatedContentEntryUpdatedContentEntryPublishedContentEntryArchivedContentEntryDeletedContentRevisionCreatedContentRevisionRolledBackTaxonomyTermCreatedMenuUpdatedRedirectCreatedSitemapUpdatedFormSubmitted
+39. Listeners المقترحة
+CreateContentRevisionLogContentActivityUpdateSitemapClearContentCacheCreateRedirectSuggestionNotifyEditorsIndexContentForSearchInvalidateFrontendCacheSendFormSubmissionNotificationCreateLeadFromFormSubmission optional
+40. Feature Flags
+enable_cmscms_enable_pagescms_enable_postscms_enable_custom_content_typescms_enable_content_blockscms_enable_revisionscms_enable_scheduled_publishcms_enable_menuscms_enable_redirectscms_enable_formscms_enable_basic_searchcms_enable_sitemapcms_enable_robots_rules
+41. Indexing & Performance Notes
+كل queries العامة يجب أن تبدأ بـ site_id + status + visibility.
+استخدم unique(site_id, slug) لتجنب تضارب الروابط.
+لا تحمل revisions في شاشة قائمة المحتوى.
+استخدم pagination في كل قوائم admin.
+cms_search_index جدول مشتق ويمكن إعادة بنائه.
+sitemap_records مشتق ولا يجب اعتباره مصدر حقيقة.
+عند Frontend Anywhere، لا تضرب DB لكل طلب عام إذا كان Snapshot Mode مفعّلًا.
+42. Security Rules
+تنظيف HTML أو استخدام محرر موثوق يمنع XSS في public rendering.
+عدم تنفيذ shortcodes أو scripts مستوردة من WordPress بدون sanitize.
+التحقق من صلاحية content.publish منفصلة عن content.edit.
+عدم عرض drafts أو revisions في Public API.
+منع open redirects داخل redirects.
+تسجيل حذف المحتوى المنشور أو rollback في audit_logs.
+حماية form submissions بـ CSRF/rate limiting/spam checks.
+عدم حفظ كلمات مرور visibility كنص صريح؛ استخدم password_hash.
+43. Admin Navigation المقترح
+Content  Pages  Posts  Content Types  Categories  Tags  Revisions optionalForms  All Forms  SubmissionsAppearance  MenusSystem  Redirects  Sitemap  Robots.txt  Activity Log
+44. Public Rendering Routes
+GET /                      -> homepage content_entryGET /{slug}                -> page by slugGET /blog                  -> posts archiveGET /blog/{slug}           -> post by slugGET /category/{slug}       -> taxonomy archiveGET /tag/{slug}            -> taxonomy archiveGET /sitemap.xml           -> sitemap_recordsGET /robots.txt            -> robots_rules/settings
+45. API Endpoints المقترحة
+Admin API:GET    /api/v1/sites/{site}/contentPOST   /api/v1/sites/{site}/contentPATCH  /api/v1/content/{entry}POST   /api/v1/content/{entry}/publishPOST   /api/v1/content/{entry}/rollback/{revision}GET    /api/v1/sites/{site}/menusPOST   /api/v1/sites/{site}/redirectsPublic API:GET    /api/v1/public/sites/{site}/pages/{slug}GET    /api/v1/public/sites/{site}/postsGET    /api/v1/public/sites/{site}/menus/{location}POST   /api/v1/public/forms/{form}/submit
+46. Seeders المطلوبة
+DefaultContentTypesSeederDefaultTaxonomiesSeederCmsPermissionsSeederCmsRolesSeederDefaultPagesSeederDefaultMenuSeederDemoPostsSeeder optionalDemoFormsSeeder optional
+47. Tests المطلوبة
+Site admin can create page.
+Editor can edit but cannot publish if permission missing.
+Publishing creates revision and activity log.
+Slug must be unique per site.
+Draft content is not publicly visible.
+Private content is not returned by public API.
+Changing slug creates slug history and redirect suggestion.
+Menu update clears cache.
+Form submission validates required fields.
+Redirect target cannot be unsafe external URL unless explicitly allowed.
+48. Build Order العملي
+1. content_types + default page/post types
+2. content_entries الأساسي مع SEO fields
+3. public rendering للصفحات والمقالات
+4. content_revisions
+5. taxonomies + taxonomy_terms + content_term
+6. menus + menu_items
+7. redirects + slug history
+8. sitemap_records + robots_rules
+9. forms + submissions
+10. cms_search_index + cache invalidation foundation
+49. Go / No-Go Criteria
+يمكن إنشاء صفحة ونشرها وعرضها للزائر.
+يمكن إنشاء مقال وتصنيفه وعرض أرشيف المقالات.
+الـ SEO title/description/canonical يعمل.
+Sitemap وRobots يعملان بشكل بسيط.
+Revision ينشأ عند النشر ويمكن الرجوع له.
+Menu يظهر في الثيم ويتحدث عند التعديل.
+Redirects تعمل وتحمي URLs القديمة.
+Frontend Anywhere لا يرى إلا محتوى public/published.
+Portable export يستطيع تجميع جداول CMS بدون بيانات من عملاء آخرين.
+اختبارات الصلاحيات الأساسية تمر.
+50. ملاحظات ختامية
+CMS Database هو أول ملف Module Database بعد ملفات أنماط التشغيل والملكية. يجب تنفيذه فوق Core Kernel كما هو، ثم بعده يأتي ملف Media & Files Database لأن المحتوى يعتمد على media_assets ولا يجب خلط تخزين الملفات داخل جداول CMS.
+KABEERI Database File 07 — CMS Database — powered by ADMIT

@@ -1,0 +1,139 @@
+KABEERI 300 Themes × Plugin Bundle Matrix Overview
+خريطة ربط أنواع الثيمات بحزم البلجنات المطلوبة والمقترحة والاختيارية
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. الغرض
+هذا الملف يعمل كجسر بين 300 Theme Strategy وPlugin Ecosystem. الهدف أن كل ثيم يحتوي App Recipe واضحة، فلا يختار المستخدم البلجنات يدويًا من الصفر.
+Theme Category → App Type → Required Bundle → Recommended Bundle → Optional Upsells → Setup Wizard
+2. Matrix رئيسية حسب 30 نوع مشروع
+نوع المشروع
+Required Bundle
+Recommended
+Optional
+شركات وخدمات
+Business Starter
+CRM Leads, Reviews, Rabet Badge
+Invoicing, Tasks
+عيادات
+Clinic Bundle
+WhatsApp Reminders, Reviews
+Payments, Consent Forms
+تجميل/Wellness
+Booking + Gallery
+Reviews, Offers
+Memberships, Packages
+مطاعم
+Menu + Branches
+Reservation, QR Menu
+Online Ordering
+متاجر عامة
+Commerce Starter
+Coupons, Reviews
+Feeds, Abandoned Cart
+أزياء
+Commerce + Variants
+Lookbook, Wishlist
+Returns, Gift Cards
+إلكترونيات
+Commerce + Warranty
+Comparison, Reviews
+Installments
+أثاث/ديكور
+Catalog + Gallery
+Quote Request
+Consultation Booking
+عقارات
+Property Listings
+Map, CRM
+Document Upload
+مقاولات
+Projects + Quote
+Portfolio, Rabet
+Procurement later
+مدارس
+Education Basic
+Events, Enrollment
+Parent Portal later
+LMS
+Courses + Enrollment
+Payments, Certificates
+Quizzes
+محاماة/استشارات
+Consultation + Secure Upload
+Rabet, Booking
+Client Portal
+وكالات
+Portfolio + Case Studies
+Quote Request
+Agency Dashboard
+SaaS
+Landing + Pricing
+Demo Request
+Docs Portal
+لوجستيات
+Quote + Branches
+Tracking Placeholder
+Delivery Mgmt
+فنادق/سياحة
+Rooms/Tours + Booking
+Payments, Reviews
+Multi-language
+خدمات منزلية
+Services + Booking
+Emergency CTA
+Staff Scheduling
+سيارات
+Vehicle Listings
+Booking, CRM
+Finance Request
+بورتفوليو
+Portfolio + Services
+Booking, Reviews
+Talent Link
+مجلات
+Blog Pro
+Newsletter, Authors
+Ads, Paywall later
+جمعيات
+Donations + Volunteers
+Impact Reports
+Recurring Donations
+فعاليات
+Events + Tickets Lite
+Schedule, Speakers
+QR Check-in later
+Fitness
+Class Booking
+Memberships
+Progress Forms
+زراعة/بيطرة
+Services + Products
+Booking, Delivery
+Reminders
+دليل/Marketplace
+Listings + Search
+Reviews, Featured
+Paid Listings
+Landing
+Landing + Forms
+UTM, Pixels
+A/B Testing
+Affiliate
+Partner Storefront
+Commission, Catalog Sharing
+Payouts
+Work Network
+Profile + Badges
+Request Service
+Project Workspace
+Enterprise/B2B
+Portal + Requests
+Approvals, Documents
+GRC/BI later
+3. قواعد Setup Wizard
+• يثبت required packages أولًا.
+• يعرض recommended packages للمستخدم مع سبب كل حزمة.
+• يحترم الخطة والـ entitlements.
+• يعرض الصلاحيات قبل التثبيت.
+• ينشئ demo data فقط بعد موافقة المستخدم.
+• يسجل كل خطوة في activity logs.
+KABEERI — Confidential Product Architecture

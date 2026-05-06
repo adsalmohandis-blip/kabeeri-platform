@@ -1,0 +1,12 @@
+KABEERI File & Folder Architecture Rules
+قواعد صارمة لتسمية ووضع الملفات والفولدرات داخل الحزمة.
+KABEERI Professional Knowledge System — v1.6.2
+1. قاعدة عدم التداخل العميق
+لا تستخدم فولدرات داخل فولدرات إلا عند وجود سبب معماري واضح. الحد المفضل: Root / Section / File. لا نكرر root folder داخل zip.
+2. قاعدة تسمية ملفات الإضافات
+تسمية الملفات تكون: Vx_YY_Short_Name_AR.docx حيث X رقم النسخة، YY ترتيب الملف داخل الإضافة.
+مثال: V7_02_Mobile_Technical_AR.docx
+3. معمارية إضافة ميزة جديدة
+New Idea→ Extension Registry Entry→ Business Architecture→ Technical Architecture→ Database & API Addendum→ Codex Prompt Pack→ Acceptance Checklist→ Release Notes / Manifest Update
+4. قواعد الفولدرات الجديدة
+لا يتم إنشاء فولدر جديد إلا إذا كان يخدم طبقة مستقلة أو نوع ملفات متكرر. أي فولدر جديد يجب أن يضاف إلى 00_SYSTEM_INDEX/03_Project_Folder_Map_Architecture_AR.docx.

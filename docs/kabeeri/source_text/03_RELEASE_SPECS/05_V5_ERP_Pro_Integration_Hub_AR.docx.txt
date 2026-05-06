@@ -1,0 +1,845 @@
+KABEERI V5 — ERP Pro + Integration Hub
+الإصدار الخامس من منصة KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يشرح V5 بالتفصيل بعد بناء V1 وV2 وV3 وV4.
+V5 هو الإصدار الذي ينقل Kabeeri من:
+Cloud + Marketplace + Rabet + Mall + ERP Essentials
+إلى:
+ERP Pro+ Integration Hub+ Advanced Operations+ Contracts+ Helpdesk+ POS Basic+ Commission Engine+ Partner Payouts+ AI ERP Assistants
+الرسالة التنفيذية لـ V5:
+Kabeeri V5 يجعل المنصة قادرة على تشغيل شركة نامية بعمليات حقيقية، وربطها بأنظمة خارجية، وإدارة التكاملات، العقود، الدعم، العمولات، والمدفوعات للشركاء.
+1. هدف V5
+1.1 الهدف التقني
+توسيع ERP Essentials في V3 إلى ERP Pro، وإضافة Integration Hub يربط Kabeeri بأنظمة السوق، وتوسيع Kabeeri Mall تجاريًا بالعمولات والمدفوعات، وإضافة أدوات تشغيل متقدمة مثل Contracts وHelpdesk وPOS Basic.
+1.2 الهدف التجاري
+V5 يسمح ببيع Kabeeri للشركات التي تخطت مرحلة الموقع والمتجر وتحتاج نظام تشغيل متكامل، لكنه لا يزال أقل تعقيدًا من ERP Enterprise كامل.
+1.3 هدف المنتج
+V5 يجب أن يثبت 8 وعود:
+1. يمكن إدارة CRM/Sales/Inventory/Purchasing/Accounting بشكل أعمق.2. يمكن إدارة العقود ودورة حياتها.3. يمكن إدارة الدعم والتذاكر والـ SLA.4. يمكن تشغيل POS Basic للفروع أو نقاط البيع.5. يمكن ربط Kabeeri بأنظمة خارجية مثل Odoo/Zoho/QuickBooks/Shopify/WooCommerce.6. يمكن إدارة العمولات والمدفوعات للشركاء والبائعين ومكاتب المحاماة.7. يمكن استخدام AI Assistants لتحليل التقارير والأخطاء والتكاملات.8. يمكن تجهيز المنصة لـ Enterprise controls في V6.
+2. V5 يعتمد على ماذا؟
+V5 يعتمد على استقرار V1-V4:
+Core RBACOrganizations / Companies / SitesCMS / Commerce foundationCRM LiteSales BasicInventory BasicPurchasing BasicInvoicing BasicAccounting StarterRabet Company OSKabeeri Mall V1Internal MarketplaceBilling / EntitlementsLegal Partner NetworkTeams V1AI Co-builder V1Security CenterWorkflows / Approvals basic
+لا يبدأ V5 إذا كانت:
+الفواتير غير مستقرة.
+المخزون لا يسجل حركات صحيحة.
+الصلاحيات غير دقيقة.
+Billing/Entitlements لا تعمل.
+Kabeeri Mall لا يحتوي moderation.
+Integration security غير مجهزة.
+3. ما هو V5؟
+V5 هو:
+ERP Pro + Integrations Release
+يشمل:
+CRM Pro.
+Sales Pro.
+Inventory Pro.
+Purchasing Pro.
+Accounting Pro foundation.
+Contracts / CLM foundation.
+Helpdesk / ITSM foundation.
+POS Basic.
+Integration Hub.
+Connector SDK V1.
+Marketplace monetization.
+Commission engine.
+Partner payouts.
+Advanced approvals.
+AI ERP Assistants.
+Advanced reporting foundation.
+4. ما ليس V5؟
+V5 ليس:
+Enterprise ERP كامل.
+Manufacturing كامل.
+Payroll كامل.
+Multi-country tax/e-invoicing كامل.
+Financial consolidation كامل.
+BI/Lakehouse كامل.
+Digital Twin.
+IoT كامل.
+Full public developer marketplace.
+Full no-code platform.
+Enterprise SSO/SIEM كامل.
+V5 يجعل النظام قويًا للشركات النامية، ويجهز V6 للـ Enterprise.
+5. رسالة V5 التسويقية
+5.1 للشركات النامية
+Kabeeri V5 يجمع موقعك، متجرك، مبيعاتك، فواتيرك، مخزونك، عقودك، دعمك، وتكاملاتك في نظام واحد قابل للنمو.
+5.2 ضد ERP التقليدي
+بدل مشروع ERP ضخم ومكلف يبدأ من الصفر، Kabeeri يكبر مع شركتك من الموقع والمتجر إلى تشغيل متكامل.
+5.3 للشركات التي لديها أنظمة بالفعل
+لا تحتاج أن تستبدل كل شيء. اربط Kabeeri بأنظمتك الحالية ثم انقل ما تحتاجه تدريجيًا.
+5.4 للوكالات والشركاء
+Kabeeri V5 يفتح نموذج دخل جديد: تنفيذ، تكاملات، Connectors، Packages، عمولات، وManaged Operations.
+6. نطاق V5 الرئيسي
+6.1 CRM Pro
+Deal pipelines متعددة.
+Activities.
+Follow-up automation.
+Lead scoring basic.
+Customer segmentation.
+Customer notes.
+Sales tasks.
+Source attribution.
+Email templates foundation.
+6.2 Sales Pro
+Quotations advanced.
+Price lists.
+Discounts rules.
+Sales orders.
+Sales contracts link.
+Approval thresholds.
+Customer credit limit foundation.
+6.3 Inventory Pro
+Multi-warehouse improvements.
+Stock transfers.
+Batch/Lot/Serial foundation.
+Inventory valuation foundation.
+Stock counts.
+Reorder rules.
+Inventory adjustment approvals.
+6.4 Purchasing Pro
+Purchase requisitions.
+RFQ to suppliers.
+Supplier quotations.
+PO approval workflow.
+Goods receipts.
+Supplier bills foundation.
+Supplier performance basic.
+6.5 Accounting Pro Foundation
+AP/AR foundation.
+Supplier bills.
+Customer aging.
+Supplier aging.
+Bank/cash accounts foundation.
+Payment allocation.
+Journal posting rules.
+Basic financial statements foundation.
+6.6 Contracts / CLM Foundation
+Contract records.
+Contract parties.
+Contract documents.
+Approval workflow.
+Renewal reminders.
+Contract status.
+Link contracts to customers, suppliers, employees, services, legal verification.
+6.7 Helpdesk / ITSM Foundation
+Tickets.
+Ticket categories.
+SLA basic.
+Assignment.
+Status.
+Customer portal foundation.
+Internal service requests.
+Knowledge base foundation.
+6.8 POS Basic
+POS sessions.
+Cashier role.
+Quick product search.
+Cart.
+Cash payment.
+Order creation.
+Stock deduction.
+Receipt printing/PDF basic.
+6.9 Integration Hub
+Connector registry.
+Connections.
+Credentials vault foundation.
+Sync jobs.
+Sync logs.
+Field mapping.
+Webhooks.
+Error handling.
+Retry rules.
+Connector settings.
+6.10 Connectors V1
+Official connectors foundation for:
+WordPressWooCommerceShopifyOdooZohoQuickBooksXeroDaftraGoogle Sheets / CSVPayment gateways foundationShipping providers foundation
+ليس كل Connector يجب أن يكون كاملًا في V5، لكن Architecture يجب أن تكون جاهزة.
+6.11 Commission Engine
+Kabeeri Mall commissions.
+Service booking commissions.
+Package marketplace revenue share.
+Legal partner payouts.
+Agency reseller commission.
+Seller payout records.
+6.12 Advanced Approvals
+Approval thresholds.
+Multi-step approvals.
+Delegation basic.
+Approval comments.
+Approval SLA.
+Escalation foundation.
+6.13 AI ERP Assistants
+AI report explainer.
+AI sync error explainer.
+AI data cleanup suggestions.
+AI CRM follow-up suggestions.
+AI inventory alerts explanation.
+AI invoice anomaly detection basic.
+AI workflow suggestions.
+6.14 Advanced Reporting Foundation
+Report definitions.
+Saved filters.
+Scheduled report jobs foundation.
+Export reports.
+Dashboard widgets.
+7. V5 Feature Flags
+enable_crm_proenable_sales_proenable_inventory_proenable_purchasing_proenable_accounting_pro_foundationenable_contracts_foundationenable_helpdesk_foundationenable_pos_basicenable_integration_hubenable_connector_sdk_v1enable_official_connectorsenable_commission_engineenable_partner_payoutsenable_advanced_approvalsenable_ai_erp_assistantsenable_advanced_reports_foundation
+8. V5 User Stories
+8.1 Sales Manager يدير pipeline متقدم
+As a sales managerI want multiple sales pipelines with stages and activitiesSo different sales processes can be tracked correctly.
+8.2 Inventory Manager ينقل مخزون بين مخازن
+As an inventory managerI want to transfer stock between warehousesSo inventory is accurate across locations.
+8.3 Purchasing User يطلب شراء
+As an employeeI want to create a purchase requisitionSo procurement can review and create a purchase order.
+8.4 Accountant يتابع AR/AP
+As an accountantI want to track customer receivables and supplier payablesSo I can understand who owes us and what we owe.
+8.5 Legal/Business User يدير عقد
+As a company adminI want to store and track contractsSo renewals and approvals are not missed.
+8.6 Support Agent يدير تذكرة
+As a support agentI want to assign and resolve ticketsSo customer issues are handled with clear SLA.
+8.7 Cashier يستخدم POS
+As a cashierI want to create a POS saleSo walk-in customers can buy products quickly.
+8.8 Admin يربط QuickBooks أو Odoo
+As an integration adminI want to connect an external ERP/accounting systemSo data can sync between Kabeeri and existing tools.
+8.9 Platform يدفع عمولة لشريك
+As a platform billing adminI want to calculate commissions and payoutsSo partners, sellers, and legal offices can be paid correctly.
+8.10 AI يشرح خطأ Sync
+As an integration adminI want AI to explain why a sync job failedSo I can fix mapping or credentials faster.
+9. Roles الجديدة أو الموسعة في V5
+9.1 CRM Manager
+يدير pipelines وlead scoring وactivities.
+9.2 Sales Operations Manager
+يدير price lists وsales orders وapproval thresholds.
+9.3 Procurement Manager
+يدير requisitions وRFQs وpurchase orders.
+9.4 Warehouse Supervisor
+يدير transfers وstock counts وbatch/serial foundation.
+9.5 Accountant Pro
+يدير AR/AP وsupplier bills وbank/cash foundation.
+9.6 Contract Manager
+يدير العقود والموافقات والتجديدات.
+9.7 Support Manager
+يدير helpdesk وSLA والتذاكر.
+9.8 Support Agent
+يتابع التذاكر ويحلها.
+9.9 Cashier
+يستخدم POS فقط.
+9.10 Integration Admin
+يدير Connectors وCredentials وSync Jobs.
+9.11 Connector Developer
+يبني أو يختبر Connectors داخل بيئة محكومة.
+9.12 Payout Manager
+يدير العمولات والمدفوعات للشركاء.
+9.13 AI ERP User
+يستخدم AI لتحليل التقارير والاقتراحات دون تنفيذ خطير.
+10. Permissions الجديدة في V5
+10.1 CRM Pro
+crm.pipeline.managecrm.activity.viewcrm.activity.createcrm.activity.managecrm.segment.viewcrm.segment.managecrm.lead_score.viewcrm.lead_score.manage
+10.2 Sales Pro
+sales.price_list.viewsales.price_list.managesales.discount_rule.viewsales.discount_rule.managesales.order.viewsales.order.createsales.order.managesales.credit_limit.viewsales.credit_limit.manage
+10.3 Inventory Pro
+inventory.transfer.viewinventory.transfer.createinventory.transfer.approveinventory.stock_count.viewinventory.stock_count.manageinventory.batch.viewinventory.batch.manageinventory.serial.viewinventory.serial.manageinventory.valuation.viewinventory.reorder_rule.manage
+10.4 Purchasing Pro
+purchasing.requisition.viewpurchasing.requisition.createpurchasing.requisition.approvepurchasing.rfq.viewpurchasing.rfq.managepurchasing.supplier_quote.viewpurchasing.supplier_quote.managepurchasing.goods_receipt.viewpurchasing.goods_receipt.managepurchasing.supplier_bill.viewpurchasing.supplier_bill.manage
+10.5 Accounting Pro Foundation
+accounting.ar.viewaccounting.ap.viewaccounting.supplier_bill.createaccounting.supplier_bill.approveaccounting.bank_account.viewaccounting.bank_account.manageaccounting.cash_account.viewaccounting.payment.allocateaccounting.financial_statement.view
+10.6 Contracts
+contract.viewcontract.createcontract.editcontract.approvecontract.sign_status.managecontract.renewal.managecontract.documents.viewcontract.documents.manage
+10.7 Helpdesk
+helpdesk.ticket.viewhelpdesk.ticket.createhelpdesk.ticket.assignhelpdesk.ticket.replyhelpdesk.ticket.closehelpdesk.sla.managehelpdesk.category.manageknowledge_base.viewknowledge_base.manage
+10.8 POS
+pos.session.openpos.session.closepos.sale.createpos.refund.createpos.cash_drawer.viewpos.receipt.print
+10.9 Integration Hub
+integration.connector.viewintegration.connector.installintegration.connection.createintegration.connection.manageintegration.credentials.manageintegration.sync.runintegration.sync.view_logsintegration.mapping.manageintegration.webhook.manage
+10.10 Commission / Payouts
+commission.viewcommission.managepayout.viewpayout.createpayout.approvepayout.mark_paid
+10.11 Advanced Approvals
+approval.rule.viewapproval.rule.manageapproval.delegation.manageapproval.escalation.manage
+10.12 AI ERP
+ai.erp.report.explainai.erp.sync_error.explainai.erp.data_cleanup.suggestai.erp.workflow.suggestai.erp.anomaly.detect
+11. قاعدة بيانات V5
+هذا القسم يضيف الجداول الأساسية على V1-V4.
+11.1 CRM Pro Tables
+crm_activities
+idorganization_idcompany_id nullablelead_id nullablecustomer_id nullablecontact_id nullableassigned_to nullableactivity_typesubjectbody nullablestatus default opendue_at nullablecompleted_at nullablemetadata json nullablecreated_atupdated_at
+activity_type values
+callemailmeetingnotetaskfollow_up
+customer_segments
+idorganization_idcompany_id nullablenameslugdescription nullableconditions json nullablestatus default activecreated_atupdated_at
+lead_scores
+idlead_idscore integer default 0factors json nullablecalculated_at nullablecreated_atupdated_at
+11.2 Sales Pro Tables
+price_lists
+idorganization_idcompany_id nullablenameslugcurrency default EGPstatus default activestarts_at nullableends_at nullablemetadata json nullablecreated_atupdated_at
+price_list_items
+idprice_list_idproduct_id nullableservice_listing_id nullableprice decimal(15,2)min_quantity decimal(15,3) nullablemetadata json nullablecreated_atupdated_at
+discount_rules
+idorganization_idcompany_id nullablenamerule_typeconditions json nullableactions json nullablestatus default activestarts_at nullableends_at nullablecreated_atupdated_at
+sales_orders
+idorganization_idcompany_id nullablecustomer_id nullablequotation_id nullableorder_id nullablesales_order_numberstatus default draftcurrency default EGPsubtotal decimal(15,2) default 0discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2) default 0approved_by nullableapproved_at nullablecreated_by nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+sales_order_items
+idsales_order_iditem_type nullableitem_id nullabledescriptionquantity decimal(15,3)unit_price decimal(15,2)discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2)created_atupdated_at
+customer_credit_limits
+idcustomer_idorganization_idcompany_id nullablecredit_limit decimal(15,2)currency default EGPcurrent_exposure decimal(15,2) default 0status default activecreated_atupdated_at
+11.3 Inventory Pro Tables
+stock_transfers
+idorganization_idcompany_id nullabletransfer_numberfrom_warehouse_idto_warehouse_idstatus default draftrequested_by nullableapproved_by nullableapproved_at nullableshipped_at nullablereceived_at nullablenotes nullablecreated_atupdated_at
+stock_transfer_items
+idstock_transfer_idproduct_idquantity decimal(15,3)shipped_quantity decimal(15,3) default 0received_quantity decimal(15,3) default 0created_atupdated_at
+stock_counts
+idorganization_idcompany_id nullablewarehouse_idcount_numberstatus default draftstarted_by nullablecompleted_by nullablestarted_at nullablecompleted_at nullablecreated_atupdated_at
+stock_count_items
+idstock_count_idproduct_idsystem_quantity decimal(15,3)counted_quantity decimal(15,3) nullabledifference decimal(15,3) nullablecreated_atupdated_at
+inventory_batches
+idorganization_idcompany_id nullableproduct_idbatch_numberexpiry_date nullablemanufactured_at nullablestatus default activemetadata json nullablecreated_atupdated_at
+inventory_serials
+idorganization_idcompany_id nullableproduct_idserial_numberwarehouse_id nullablestatus default availablesource_type nullablesource_id nullablecreated_atupdated_at
+inventory_reorder_rules
+idorganization_idcompany_id nullablewarehouse_id nullableproduct_idmin_quantity decimal(15,3)max_quantity decimal(15,3) nullablereorder_quantity decimal(15,3) nullablepreferred_supplier_id nullablestatus default activecreated_atupdated_at
+inventory_valuation_layers
+idorganization_idcompany_id nullableproduct_idwarehouse_id nullablequantity decimal(15,3)unit_cost decimal(15,4)total_cost decimal(15,2)source_type nullablesource_id nullablecreated_atupdated_at
+11.4 Purchasing Pro Tables
+purchase_requisitions
+idorganization_idcompany_id nullablerequisition_numberrequested_by nullablestatus default draftneeded_by nullablenotes nullableapproved_by nullableapproved_at nullablecreated_atupdated_at
+purchase_requisition_items
+idpurchase_requisition_idproduct_id nullabledescriptionquantity decimal(15,3)estimated_unit_cost decimal(15,2) nullablecreated_atupdated_at
+supplier_rfqs
+idorganization_idcompany_id nullablerfq_numbersupplier_id nullablestatus default draftdeadline nullablenotes nullablecreated_by nullablesent_at nullablecreated_atupdated_at
+supplier_rfq_items
+idsupplier_rfq_idproduct_id nullabledescriptionquantity decimal(15,3)created_atupdated_at
+supplier_quotations
+idsupplier_rfq_id nullablesupplier_idquotation_number nullablestatus default receivedcurrency default EGPsubtotal decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2) default 0valid_until nullablereceived_at nullablemetadata json nullablecreated_atupdated_at
+goods_receipts
+idorganization_idcompany_id nullablepurchase_order_id nullablewarehouse_id nullablereceipt_numberstatus default draftreceived_by nullablereceived_at nullablenotes nullablecreated_atupdated_at
+goods_receipt_items
+idgoods_receipt_idpurchase_order_item_id nullableproduct_id nullablequantity_received decimal(15,3)unit_cost decimal(15,2) nullablecreated_atupdated_at
+11.5 Accounting Pro Foundation Tables
+supplier_bills
+idorganization_idcompany_id nullablesupplier_id nullablepurchase_order_id nullablebill_numberstatus default draftpayment_status default unpaidcurrency default EGPsubtotal decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2) default 0issued_at nullabledue_date nullableapproved_by nullableapproved_at nullablemetadata json nullablecreated_atupdated_at
+supplier_bill_items
+idsupplier_bill_iditem_type nullableitem_id nullabledescriptionquantity decimal(15,3) default 1unit_price decimal(15,2)tax_total decimal(15,2) default 0total decimal(15,2)created_atupdated_at
+bank_accounts
+idorganization_idcompany_id nullableaccount_namebank_name nullableaccount_number_masked nullablecurrency default EGPchart_account_id nullablestatus default activemetadata json nullablecreated_atupdated_at
+cash_accounts
+idorganization_idcompany_id nullablenamecurrency default EGPchart_account_id nullablestatus default activecreated_atupdated_at
+payment_allocations
+idpayment_idallocatable_typeallocatable_idamount decimal(15,2)created_atupdated_at
+accounting_periods
+idorganization_idcompany_id nullablenamestart_dateend_datestatus default openclosed_by nullableclosed_at nullablecreated_atupdated_at
+11.6 Contracts Tables
+contracts
+idorganization_idcompany_id nullablecontract_numbercontract_typetitlestatus default draftparty_type nullableparty_id nullablestart_date nullableend_date nullablerenewal_date nullablevalue decimal(15,2) nullablecurrency default EGPowner_user_id nullableapproved_by nullableapproved_at nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+contract_type values
+customersupplieremployeepartnerlegalserviceleaseother
+contract_documents
+idcontract_idmedia_asset_iddocument_type default mainversion nullableuploaded_by nullablecreated_atupdated_at
+contract_parties
+idcontract_idparty_typeparty_id nullablename nullableemail nullablerole nullablecreated_atupdated_at
+contract_events
+idcontract_idevent_typetitledescription nullableevent_date nullablecreated_by nullablemetadata json nullablecreated_atupdated_at
+11.7 Helpdesk Tables
+helpdesk_ticket_categories
+idorganization_idcompany_id nullablenameslugstatus default activecreated_atupdated_at
+helpdesk_tickets
+idorganization_idcompany_id nullablecustomer_id nullablecreated_by_user_id nullableassigned_to nullablecategory_id nullableticket_numbersubjectbody longtext nullablestatus default openpriority default normalsla_due_at nullableresolved_at nullableclosed_at nullablesource default internalmetadata json nullablecreated_atupdated_at
+status values
+openpendingin_progressresolvedclosedcancelled
+helpdesk_ticket_messages
+idhelpdesk_ticket_iduser_id nullablebody longtextis_internal_note default falsecreated_atupdated_at
+sla_policies
+idorganization_idcompany_id nullablenameconditions json nullableresponse_time_minutes nullableresolution_time_minutes nullablestatus default activecreated_atupdated_at
+knowledge_base_articles
+idorganization_idcompany_id nullablesite_id nullabletitleslugbody longtextstatus default draftvisibility default privatecreated_by nullablepublished_at nullablecreated_atupdated_at
+11.8 POS Tables
+pos_registers
+idorganization_idcompany_id nullablewarehouse_id nullablenamecode nullablestatus default activecreated_atupdated_at
+pos_sessions
+idpos_register_idopened_byclosed_by nullablestatus default openopening_cash decimal(15,2) default 0closing_cash decimal(15,2) nullableopened_atclosed_at nullablemetadata json nullablecreated_atupdated_at
+pos_sales
+idpos_session_idorder_id nullablereceipt_numbercustomer_id nullablestatus default completedsubtotal decimal(15,2) default 0tax_total decimal(15,2) default 0discount_total decimal(15,2) default 0total decimal(15,2) default 0payment_method nullablepaid_amount decimal(15,2) default 0change_amount decimal(15,2) default 0created_atupdated_at
+pos_sale_items
+idpos_sale_idproduct_id nullableproduct_namequantity decimal(15,3)unit_price decimal(15,2)total decimal(15,2)created_atupdated_at
+11.9 Integration Hub Tables
+connectors
+idnameslugconnector_typeproviderstatus default activeis_official default truedescription nullablerequired_scopes json nullablesettings_schema json nullablecreated_atupdated_at
+integration_connections
+idorganization_idcompany_id nullablesite_id nullableconnector_idnamestatus default disconnectedauth_typecredentials_ref nullablesettings json nullablelast_connected_at nullablelast_error nullablecreated_by nullablecreated_atupdated_at
+integration_credentials
+idintegration_connection_idcredential_typeencrypted_payload textrotated_at nullablecreated_atupdated_at
+sync_jobs
+idintegration_connection_idsync_typeentity_typestatus default pendingdirection default pullstarted_at nullablecompleted_at nullablefailed_at nullablesummary json nullableerror_message nullablemetadata json nullablecreated_atupdated_at
+direction values
+pullpushtwo_way
+sync_records
+idsync_job_idsource_id nullabletarget_id nullableentity_typestatusraw_payload json nullablemapped_payload json nullableerrors json nullablecreated_atupdated_at
+integration_mappings
+idintegration_connection_identity_typesource_fieldtarget_fieldtransform_rule json nullablestatus default activecreated_atupdated_at
+webhook_endpoints
+idorganization_id nullablecompany_id nullablesite_id nullablenameurlsecret_hash nullablestatus default activeevents jsoncreated_atupdated_at
+webhook_deliveries
+idwebhook_endpoint_idevent_namepayload jsonstatus default pendingresponse_status nullableresponse_body nullableattempt_count default 0last_attempt_at nullablecreated_atupdated_at
+11.10 Commission / Payout Tables
+commission_rules
+idorganization_id nullablerule_scopenameconditions json nullablecommission_typevalue decimal(15,4)status default activestarts_at nullableends_at nullablecreated_atupdated_at
+commission_type values
+percentagefixedhybrid
+commissions
+idsource_typesource_idbeneficiary_typebeneficiary_id nullablepayer_type nullablepayer_id nullabletotal_amount decimal(15,2)commission_amount decimal(15,2)currency default EGPstatus default pendingmetadata json nullablecreated_atupdated_at
+payout_accounts
+idbeneficiary_typebeneficiary_idaccount_typeaccount_details_encrypted text nullablecurrency default EGPstatus default activecreated_atupdated_at
+payouts
+idpayout_account_idamount decimal(15,2)currency default EGPstatus default pendingapproved_by nullableapproved_at nullablepaid_at nullablereference nullablemetadata json nullablecreated_atupdated_at
+payout_items
+idpayout_idcommission_idamount decimal(15,2)created_atupdated_at
+11.11 Advanced Approvals Tables
+approval_rules
+idorganization_id nullablecompany_id nullablenamesubject_typeactionconditions json nullablesteps jsonstatus default activecreated_atupdated_at
+approval_delegations
+idorganization_id nullablecompany_id nullabledelegator_user_iddelegate_user_idstarts_atends_atscope json nullablestatus default activecreated_atupdated_at
+approval_escalations
+idapproval_request_idescalated_to nullablereason nullableescalated_atcreated_atupdated_at
+11.12 Reporting Tables
+report_definitions
+idorganization_id nullablecompany_id nullablenameslugreport_typequery_config jsonvisualization_config json nullablestatus default activecreated_by nullablecreated_atupdated_at
+saved_report_filters
+idreport_definition_iduser_idnamefilters jsoncreated_atupdated_at
+scheduled_reports
+idreport_definition_idschedule jsonrecipients jsonstatus default activelast_run_at nullablenext_run_at nullablecreated_atupdated_at
+dashboard_widgets
+idorganization_id nullablecompany_id nullableuser_id nullablewidget_typetitleconfig jsonorder_column default 0created_atupdated_at
+12. Indexes مهمة في V5
+crm_activities.company_idcrm_activities.lead_idcrm_activities.customer_idcrm_activities.assigned_tosales_orders.company_idsales_orders.sales_order_numberstock_transfers.company_idstock_transfers.from_warehouse_idstock_transfers.to_warehouse_idstock_counts.warehouse_idinventory_batches.product_idinventory_serials.serial_numberpurchase_requisitions.company_idsupplier_rfqs.company_idsupplier_quotations.supplier_idgoods_receipts.purchase_order_idsupplier_bills.company_idsupplier_bills.supplier_idbank_accounts.company_idcontracts.company_idcontracts.contract_numbercontracts.end_datehelpdesk_tickets.company_idhelpdesk_tickets.assigned_tohelpdesk_tickets.statuspos_sessions.pos_register_idpos_sales.pos_session_idintegration_connections.connector_idintegration_connections.organization_idsync_jobs.integration_connection_idsync_jobs.statuswebhook_deliveries.webhook_endpoint_idcommissions.source_type + source_idcommissions.beneficiary_type + beneficiary_idpayouts.statusapproval_rules.subject_type + actionreport_definitions.company_id
+Composite unique:
+unique(sales_orders.company_id, sales_order_number)unique(stock_transfers.company_id, transfer_number)unique(purchase_requisitions.company_id, requisition_number)unique(contracts.company_id, contract_number)unique(helpdesk_tickets.company_id, ticket_number)unique(pos_registers.company_id, code)unique(connectors.slug)
+13. Laravel Structure المضافة في V5
+app/  ERP/    CRMPro/      Activities/      Segments/      LeadScoring/    SalesPro/      PriceLists/      DiscountRules/      SalesOrders/      CreditLimits/    InventoryPro/      Transfers/      StockCounts/      Batches/      Serials/      Valuation/      ReorderRules/    PurchasingPro/      Requisitions/      RFQs/      SupplierQuotations/      GoodsReceipts/      SupplierBills/    AccountingPro/      AP/      AR/      BankAccounts/      CashAccounts/      PaymentAllocations/      FinancialStatements/  Contracts/    Records/    Documents/    Parties/    Events/    Workflows/  Helpdesk/    Tickets/    Categories/    SLA/    KnowledgeBase/  POS/    Registers/    Sessions/    Sales/    Receipts/  Integrations/    Connectors/    Connections/    Credentials/    SyncJobs/    Mappings/    Webhooks/    SDK/  Commissions/    Rules/    Calculations/    Payouts/  Approvals/    Rules/    Delegations/    Escalations/  AI/    ERPAssistants/    SyncExplainer/    ReportExplainer/    DataCleanup/    AnomalyDetection/  Reports/    Definitions/    Dashboards/    Scheduled/    Exports/
+14. CRM Pro في V5
+14.1 Activities
+كل Lead أو Customer يمكن أن يكون له Activities:
+Call.
+Email.
+Meeting.
+Follow-up.
+Note.
+14.2 Lead Scoring Basic
+Score بسيط يعتمد على:
+source.
+budget.
+activity count.
+response.
+service/product interest.
+لا يدخل ML كامل في V5.
+14.3 Customer Segmentation
+Segments حسب conditions:
+country.
+last order.
+total spend.
+lead source.
+industry.
+15. Sales Pro في V5
+15.1 Price Lists
+تسمح بأسعار مختلفة حسب:
+customer segment.
+B2B customers.
+quantity.
+region.
+15.2 Sales Orders
+Sales Order يصبح كيان بين quotation/order/invoice.
+Flow:
+Quotation accepted→ Sales Order→ Reserve stock→ Invoice→ Fulfillment
+15.3 Credit Limit
+يحذر أو يمنع بيع فوق حد معين حسب الإعداد.
+16. Inventory Pro في V5
+16.1 Stock Transfers
+Flow:
+Create transfer→ Approve optional→ Ship from warehouse→ Receive in target warehouse→ Create stock movements
+16.2 Stock Counts
+جرد المخزون:
+Create count→ Enter counted quantities→ Compare system vs counted→ Approve adjustments→ Create stock movements
+16.3 Batch / Serial Foundation
+V5 يؤسس batch/serial فقط.
+التتبع العميق يدخل V6 للصناعات المتقدمة.
+16.4 Valuation Foundation
+يدعم foundation لـ:
+average cost.
+FIFO لاحقًا.
+لا يدخل accounting valuation كامل إلا تدريجيًا.
+17. Purchasing Pro في V5
+17.1 Purchase Requisition
+الموظف يطلب شراء.
+17.2 RFQ to Suppliers
+إرسال طلب عرض سعر لمورد.
+17.3 Supplier Quotation
+تسجيل عروض الموردين.
+17.4 Goods Receipt
+استلام البضاعة وربطه بالمخزون.
+17.5 Supplier Bill
+فاتورة المورد تدخل AP foundation.
+18. Accounting Pro Foundation في V5
+18.1 AR/AP
+Accounts Receivable:
+Customer invoices.
+Customer aging.
+Payments.
+Accounts Payable:
+Supplier bills.
+Supplier aging.
+Payments.
+18.2 Bank/Cash Foundation
+ليس Bank reconciliation كامل، لكن:
+Bank accounts.
+Cash accounts.
+Payment allocation.
+18.3 Financial Statements Foundation
+Income summary basic.
+Balance sheet foundation.
+Trial balance improved.
+19. Contracts / CLM Foundation في V5
+19.1 Contract Types
+Customer.
+Supplier.
+Employee.
+Partner.
+Legal.
+Lease.
+Service.
+19.2 Contract Flow
+Draft→ Review→ Approval→ Active→ Renewal / Expiry→ Closed
+19.3 Contract Reminders
+Renewal date.
+Expiry date.
+Approval due.
+19.4 Links
+Contract يمكن ربطه بـ:
+Customer.
+Supplier.
+Employee.
+Company.
+Service.
+Legal partner.
+Project لاحقًا.
+20. Helpdesk / ITSM Foundation في V5
+20.1 Ticket Sources
+Customer portal.
+Internal request.
+Email import لاحقًا.
+Kabeeri Mall inquiry.
+System issue.
+20.2 SLA Basic
+response due.
+resolution due.
+overdue indicator.
+20.3 Knowledge Base
+مقالات داخلية أو عامة للدعم.
+21. POS Basic في V5
+21.1 POS Scope
+Register.
+Cashier.
+Open session.
+Add products.
+Complete sale.
+Cash payment.
+Receipt.
+Deduct stock.
+21.2 لا يدخل في V5
+Hardware integrations كاملة.
+Offline mode.
+Advanced returns.
+Loyalty.
+Multi-branch retail advanced.
+22. Integration Hub في V5
+22.1 Connector Registry
+كل connector يسجل:
+provider.
+auth type.
+scopes.
+supported entities.
+sync directions.
+22.2 Connection Flow
+Choose connector→ Add credentials/OAuth→ Test connection→ Configure mappings→ Run initial sync→ Review report→ Schedule sync
+22.3 Sync Directions
+pullpushtwo_way
+22.4 Sync Entities
+customersproductsordersinvoicespaymentssuppliersinventoryemployees
+22.5 Error Handling
+error logs.
+retry.
+skip record.
+mapping correction.
+AI explanation.
+23. Connectors V1 في V5
+23.1 Priority Connectors
+ترتيب الأولوية:
+WooCommerceShopifyOdooZohoQuickBooksXeroDaftraGoogle Sheets / CSVPaymob/Fawry/Tap/Telr حسب السوقShipping provider connector foundation
+23.2 لا يلزم أن تكون كلها كاملة
+المطلوب في V5:
+connector architecture.
+2-3 connectors working بشكل مبدئي.
+الباقي skeleton/roadmap.
+23.3 Recommended V5 Realistic Connectors
+WooCommerce ConnectorShopify Product/Order Import basicQuickBooks/Xero invoice/customer sync basic أو Daftra حسب السوق الأولGoogle Sheets Import/Export connector
+24. Commission Engine في V5
+24.1 Sources
+Kabeeri Mall service request commission.
+Product inquiry/sale commission.
+Featured listing billing.
+Internal marketplace package sale.
+Legal partner verification payout.
+Agency reseller commission.
+24.2 Flow
+Transaction occurs→ Find commission rule→ Calculate commission→ Create commission record→ Add to payout batch→ Approve payout→ Mark paid
+25. Advanced Approvals في V5
+25.1 Approval Rule Examples
+Quotation total > 50,000 → Sales Manager approvalPurchase order > 20,000 → Finance approvalStock adjustment negative > 100 units → Warehouse Supervisor approvalSupplier bill > 30,000 → Accountant Pro approvalContract value > 100,000 → Company Owner approval
+25.2 Delegation
+لو المدير غير متاح، يمكن تفويض موافقات لفترة محددة.
+25.3 Escalation
+لو لم تتم الموافقة خلال SLA، تصعد لشخص أعلى.
+26. AI ERP Assistants في V5
+26.1 AI Report Explainer
+يفسر:
+sales report.
+inventory report.
+AR/AP aging.
+CRM pipeline.
+26.2 AI Sync Error Explainer
+يشرح:
+missing mapping.
+invalid token.
+duplicate SKU.
+invalid tax field.
+permission issue.
+26.3 AI Data Cleanup Suggestions
+يقترح:
+duplicate customers.
+missing emails.
+inconsistent SKUs.
+invalid prices.
+26.4 AI Workflow Suggestions
+يقترح workflows بناءً على نشاط الشركة.
+مثال:
+لاحظت أن أوامر الشراء فوق 20,000 تتكرر. هل تريد إنشاء approval rule؟
+26.5 Safety
+AI في V5 يقترح ويشرح، ولا يطبق تغييرات مالية حساسة بدون approval.
+27. Events في V5
+27.1 CRM Pro Events
+CrmActivityCreatedLeadScoreUpdatedCustomerSegmentCreated
+27.2 Sales Pro Events
+PriceListCreatedSalesOrderCreatedSalesOrderApprovedCreditLimitExceeded
+27.3 Inventory Pro Events
+StockTransferCreatedStockTransferApprovedStockTransferReceivedStockCountStartedStockCountCompletedBatchCreatedSerialAssigned
+27.4 Purchasing Pro Events
+PurchaseRequisitionCreatedPurchaseRequisitionApprovedSupplierRfqCreatedSupplierQuotationReceivedGoodsReceiptCreatedSupplierBillCreated
+27.5 Accounting Events
+SupplierBillApprovedPaymentAllocatedAccountingPeriodClosedAttemptedBankAccountCreated
+27.6 Contract Events
+ContractCreatedContractSubmittedForApprovalContractApprovedContractActivatedContractRenewalDueContractExpired
+27.7 Helpdesk Events
+TicketCreatedTicketAssignedTicketRepliedTicketResolvedSlaBreached
+27.8 POS Events
+PosSessionOpenedPosSaleCompletedPosSessionClosed
+27.9 Integration Events
+ConnectorInstalledConnectionCreatedConnectionTestedSyncJobStartedSyncJobCompletedSyncJobFailedWebhookDeliveredWebhookFailed
+27.10 Commission Events
+CommissionCalculatedPayoutCreatedPayoutApprovedPayoutMarkedPaid
+27.11 AI ERP Events
+AIReportExplainedAISyncErrorExplainedAIDataCleanupSuggestedAIWorkflowSuggested
+28. Listeners في V5
+CreateActivityForCrmActivityRecalculateLeadScoreCheckCreditLimitOnSalesOrderReserveStockOnSalesOrderApprovedCreateStockMovementsForTransferCreateStockAdjustmentFromStockCountCreateSupplierBillFromGoodsReceipt optionalPostJournalEntryFromSupplierBill optionalNotifyContractRenewalDueNotifyTicketAssigneeCheckSlaBreachesDeductStockFromPosSaleLogSyncFailureNotifyIntegrationAdminOnSyncFailureExplainSyncFailureWithAI optionalCalculateCommissionFromMarketplaceTransactionCreatePayoutItemFromCommissionSuggestApprovalRuleFromRepeatedPattern optional
+29. Admin UI Scope في V5
+29.1 CRM Pro
+CRM  Leads  Contacts  Activities  Segments  Pipelines  Lead Scores
+29.2 Sales Pro
+Sales  Quotations  Sales Orders  Price Lists  Discount Rules  Credit Limits
+29.3 Inventory Pro
+Inventory  Warehouses  Stock Balances  Stock Movements  Transfers  Stock Counts  Batches  Serials  Reorder Rules  Valuation
+29.4 Purchasing Pro
+Purchasing  Requisitions  RFQs  Supplier Quotations  Purchase Orders  Goods Receipts  Supplier Bills  Suppliers
+29.5 Accounting Pro Foundation
+Accounting  Chart of Accounts  Journal Entries  Customer Receivables  Supplier Payables  Bank Accounts  Cash Accounts  Payment Allocations  Financial Reports
+29.6 Contracts
+Contracts  All Contracts  Approvals  Renewals  Documents
+29.7 Helpdesk
+Helpdesk  Tickets  Categories  SLA Policies  Knowledge Base
+29.8 POS
+POS  Registers  Sessions  Sales  Receipts
+29.9 Integration Hub
+Integrations  Connectors  Connections  Credentials  Sync Jobs  Mappings  Webhooks  Logs
+29.10 Commissions / Payouts
+Revenue Operations  Commission Rules  Commissions  Payout Accounts  Payouts
+29.11 Approvals
+Approvals  Rules  Requests  Delegations  Escalations
+29.12 Reports
+Reports  Report Builder Basic  Dashboards  Scheduled Reports  Exports
+30. V5 Navigation المقترح
+DashboardCRM  Leads  Activities  SegmentsSales  Quotations  Sales Orders  Price ListsInventory  Warehouses  Transfers  Stock Counts  Batches/SerialsPurchasing  Requisitions  RFQs  Purchase Orders  Goods ReceiptsAccounting  AR/AP  Supplier Bills  Bank/Cash  Journal EntriesContractsHelpdeskPOSIntegrations  Connectors  Connections  Sync Jobs  WebhooksRevenue Ops  Commissions  PayoutsApprovalsReportsAI AssistantsSecuritySystem
+القوائم تظهر حسب الموديولات المفعلة والصلاحيات.
+31. Security في V5
+31.1 Integration Security
+Credentials encrypted.
+Scopes واضحة.
+Logs لكل sync.
+Token rotation foundation.
+Disable connector عند فشل أو خطر.
+31.2 Accounting Security
+Posting journal entries يحتاج صلاحية.
+Supplier bills approval.
+Payment allocations logged.
+Bank/cash accounts restricted.
+31.3 Inventory Security
+Stock adjustments require permission.
+Negative adjustments may require approval.
+Stock movements immutable قدر الإمكان.
+31.4 POS Security
+Cashier limited access.
+Session open/close logged.
+Refunds restricted.
+31.5 Contract Security
+Contract documents private.
+Sensitive access logs.
+Approval required for high-value contracts.
+31.6 Helpdesk Security
+Customer data scoped.
+Internal notes hidden from customers.
+31.7 AI Security
+AI does not post journals.
+AI does not change accounting without approval.
+AI does not push sync changes without preview.
+AI logs all suggestions.
+32. Performance في V5
+32.1 Sync Jobs
+Always queued.
+Chunked.
+Retryable.
+Logs summarized.
+32.2 Reports
+Heavy reports queued.
+Saved filters.
+Date filters required.
+32.3 Inventory
+Use stock_balances.
+Do not recalculate from movements on every page.
+32.4 Helpdesk
+Tickets paginated.
+Messages paginated.
+32.5 POS
+Fast product search.
+Minimal UI latency.
+32.6 AI
+Long AI tasks queued.
+Usage logged.
+33. Testing في V5
+33.1 CRM Pro Tests
+Create activity testLead score calculation testSegment condition test
+33.2 Sales Pro Tests
+Create price list testApply discount rule testCreate sales order testCredit limit exceeded test
+33.3 Inventory Pro Tests
+Create stock transfer testApprove transfer testReceive transfer updates balances testStock count creates adjustment testBatch/serial creation test
+33.4 Purchasing Pro Tests
+Create purchase requisition testApprove requisition testCreate RFQ testReceive supplier quotation testGoods receipt updates stock test
+33.5 Accounting Tests
+Create supplier bill testApprove supplier bill testAllocate payment testAR aging testAP aging test
+33.6 Contract Tests
+Create contract testApprove contract testRenewal reminder testUnauthorized cannot view contract document test
+33.7 Helpdesk Tests
+Create ticket testAssign ticket testReply ticket testSLA breach testInternal note hidden test
+33.8 POS Tests
+Open POS session testComplete POS sale testStock deducted testClose POS session testCashier permission test
+33.9 Integration Tests
+Create connector connection testEncrypt credentials testRun sync job testMapping error testWebhook delivery retry test
+33.10 Commission Tests
+Calculate commission testCreate payout batch testApprove payout testMark payout paid test
+33.11 AI ERP Tests
+Explain sync error testSuggest data cleanup testAI cannot apply accounting change without approval test
+34. Seeders في V5
+CRMProPermissionsSeederSalesProPermissionsSeederInventoryProPermissionsSeederPurchasingProPermissionsSeederAccountingProPermissionsSeederContractsPermissionsSeederHelpdeskPermissionsSeederPOSPermissionsSeederIntegrationHubPermissionsSeederCommissionPermissionsSeederAdvancedApprovalPermissionsSeederDefaultSlaPoliciesSeederDefaultConnectorsSeederDemoContractsSeederDemoHelpdeskTicketsSeederDemoPosRegistersSeederDemoIntegrationConnectionsSeederDemoCommissionRulesSeeder
+35. CLI Commands في V5
+php artisan kabeeri:sync:run {connectionId} {entityType}php artisan kabeeri:sync:retry-failed {syncJobId}php artisan kabeeri:connectors:test {connectionId}php artisan kabeeri:inventory:transfer-receive {transferId}php artisan kabeeri:inventory:stock-count-close {stockCountId}php artisan kabeeri:accounting:aging {companyId}php artisan kabeeri:contracts:check-renewalsphp artisan kabeeri:helpdesk:check-slaphp artisan kabeeri:pos:close-stale-sessionsphp artisan kabeeri:commissions:calculate {sourceType} {sourceId}php artisan kabeeri:payouts:create-batchphp artisan kabeeri:reports:run-scheduled
+36. Build Order العملي لـ V5
+المرحلة 1 — Integration Hub Foundation
+connectorsintegration_connectionscredentials encryptionsync_jobssync_recordsmappingswebhook endpoints
+المرحلة 2 — CRM Pro
+crm activitiessegmentslead scoringfollow-up automation
+المرحلة 3 — Sales Pro
+price listsdiscount rulessales orderscredit limitsapproval thresholds
+المرحلة 4 — Inventory Pro
+stock transfersstock countsbatch/serial foundationreorder rulesvaluation foundation
+المرحلة 5 — Purchasing Pro
+purchase requisitionsRFQssupplier quotationsgoods receiptssupplier bills
+المرحلة 6 — Accounting Pro Foundation
+AR/APbank accountscash accountspayment allocationsaging reportsfinancial statements foundation
+المرحلة 7 — Contracts
+contractscontract documentscontract partiesapproval workflowrenewal reminders
+المرحلة 8 — Helpdesk
+ticketscategoriesSLAmessagesknowledge basecustomer portal foundation
+المرحلة 9 — POS Basic
+registerssessionssalesreceiptsstock deductioncashier permissions
+المرحلة 10 — Commission Engine
+commission rulescommissionspayout accountspayoutspayout approval
+المرحلة 11 — Advanced Approvals
+approval rulesdelegationsescalationsthreshold approvals
+المرحلة 12 — AI ERP Assistants
+report explainersync error explainerdata cleanup suggestionsworkflow suggestionsusage logs
+المرحلة 13 — Reports + Polish
+report definitionssaved filtersdashboard widgetsscheduled reports foundationtestspermissions auditdemosrelease notes
+37. AI Build Prompts لـ V5
+37.1 Integration Connection
+ابني IntegrationConnection model وCredential vault بسيط يشفر credentials، مع tests تؤكد أن البيانات لا تحفظ plain text.
+37.2 Sync Job
+ابني SyncJob runner يقسم السجلات إلى chunks ويسجل sync_records مع status/errors، ولا يوقف كل job بسبب record واحد فاشل.
+37.3 Stock Transfer
+ابني StockTransfer workflow: create, approve, ship, receive، ويحدث stock_balances عبر stock_movements فقط.
+37.4 Supplier Bill
+ابني SupplierBill model مع approval وpayment_status، واربطه بـ AP report basic، مع tests للصلاحيات.
+37.5 Commission Engine
+ابني CommissionCalculator يأخذ source_type/source_id ويطبق أول commission_rule مطابق وينشئ commission record، مع tests للpercentage والفixed.
+37.6 Helpdesk SLA
+ابني CheckSlaBreaches command يبحث عن tickets تجاوزت sla_due_at ويرسل event SlaBreached ويحدث status/metadata.
+37.7 AI Sync Error
+ابني AISyncErrorExplainer service يأخذ sync_job error summary ويخرج explanation وrecommended fixes بدون تعديل بيانات.
+38. Definition of Done لـ V5
+V5 يعتبر مكتملًا فقط إذا:
+Integration Hub يعملCredentials encryptedSync jobs تعمل وتعرض logs2-3 official connectors تعمل مبدئيًاCRM activities/segments/lead scoring تعملSales orders/price lists/discounts تعملCredit limits foundation يعملStock transfers تعملStock counts تعملBatch/serial foundation يعملReorder rules تعملPurchase requisitions/RFQs/goods receipts تعملSupplier bills تعملAR/AP basic reports تعملBank/cash foundation يعملContracts تعمل مع renewal remindersHelpdesk tickets/SLA تعملPOS basic يعمل ويخصم stockCommission engine يعملPayouts تعملAdvanced approvals تعملAI ERP Assistants يشرحون التقارير والأخطاء بدون تنفيذ خطيرReports foundation تعملPermissions/Audit logs تغطي العمليات الحساسةTests أساسية موجودةDemos مكتملةNo critical security/accounting/inventory bugs
+39. V5 Demo النهائي
+39.1 Demo — Integrated Operations
+Lead من Kabeeri Mall→ CRM Activity→ Quotation→ Sales Order→ Stock Reservation→ Invoice→ Payment Allocation→ Report
+39.2 Demo — Procurement to Stock
+Purchase Requisition→ Approval→ RFQ→ Supplier Quotation→ Purchase Order→ Goods Receipt→ Stock Movement→ Supplier Bill
+39.3 Demo — Integration Hub
+Connect WooCommerce أو Shopify→ Sync products/orders→ Mapping error يظهر→ AI يشرح الخطأ→ Admin يصلح mapping→ Sync completes
+39.4 Demo — Contract + Helpdesk
+Customer contract→ Renewal reminder→ Support ticket under SLA→ Agent replies→ Ticket resolved
+39.5 Demo — POS
+Cashier opens session→ sells product→ receipt created→ stock deducted→ session closed
+39.6 Demo — Commissions
+Kabeeri Mall transaction→ commission calculated→ payout batch created→ payout approved→ marked paid
+40. Documentation المطلوبة لـ V5
+ERP Pro GuideCRM Pro GuideSales Pro GuideInventory Pro GuidePurchasing Pro GuideAccounting Pro Foundation GuideContracts GuideHelpdesk GuidePOS Basic GuideIntegration Hub GuideConnector Setup GuideSync Mapping GuideCommission Engine GuidePayouts GuideAdvanced Approvals GuideAI ERP Assistants GuideReports Foundation Guide
+41. V5 Release Gate
+لا ننتقل إلى V6 إلا إذا:
+ERP Pro modules مستقرةIntegration Hub آمن ومستقرConnectors الرسمية الأساسية تعملAccounting foundation لا يحتوي أخطاء خطيرةInventory movements دقيقةPOS لا يكسر المخزونCommissions/Payouts دقيقةAdvanced approvals تعملContracts/Helpdesk يعملانAI Assistants لا ينفذون تغييرات خطيرةReports foundation يعملSecurity/Audit logs مستقرةCommercial demos مكتملة
+42. ما يمهد له V5 في V6
+V5 يمهد لـ V6 عبر:
+ERP Pro → Enterprise ERPIntegration Hub → iPaaS / API ManagementContracts → CLM advancedHelpdesk → ITSM/ESMPOS → Retail ManagementCommissions → Marketplace monetization fullAI ERP Assistants → Multi-agent AI Co-builderReports → BI/Analytics/Data WarehouseAdvanced Approvals → GRC / DOA / SoDConnector SDK → Public Developer Marketplace
+43. أخطاء ممنوعة في V5
+43.1 لا تجعل Integration Credentials plain text
+كل credential حساس يجب تشفيره.
+43.2 لا تجعل sync job يفسد بيانات production بدون preview/mapping
+43.3 لا تبني Accounting كامل بدون مراجعة مالية
+V5 Foundation/Pro تدريجي، ليس نهاية المحاسبة.
+43.4 لا تعدل stock balances مباشرة بدون stock movements
+43.5 لا تسمح لـ POS refunds بدون صلاحية قوية
+43.6 لا تجعل AI يرحل قيود أو يغير أرقام مالية مباشرة
+43.7 لا تدفع payouts بدون approval وسجل واضح
+43.8 لا تفتح Public Developer Marketplace قبل review/signing كامل
+43.9 لا تنفذ reports ضخمة داخل request مباشر
+43.10 لا تخلط Supplier Bill مع Customer Invoice بدون invoice_type واضح
+44. ملخص V5 التنفيذي
+V5 ينجز التالي:
+يرفع Kabeeri من ERP Essentials إلى ERP Proيوسع CRM/Sales/Inventory/Purchasing/Accountingيضيف Contracts وHelpdesk وPOS Basicيفتح Integration Hub وConnectorsيفتح Commission Engine وPayoutsيدعم Advanced Approvalsيدخل AI ERP Assistantsويجهز Kabeeri للنسخة السادسة Enterprise Complete Platform
+القاعدة النهائية:
+V5 هو الإصدار الذي يجعل Kabeeri نظام تشغيل أعمال حقيقيًا قابلًا للتكامل مع السوق، وليس منصة مغلقة.
+45. الخطوة التالية بعد اعتماد V5
+بعد تنفيذ أو اعتماد V5، ننتقل إلى:
+KABEERI V6 — Enterprise Complete Platform
+وفيه تبدأ:
+Enterprise ERP CompleteAdvanced BI/AnalyticsGRC / Risk / ComplianceEnterprise ArchitecturePublic Developer MarketplaceAdvanced AI Co-builderAdvanced Kabeeri MallMulti-vendor CheckoutAdvanced Talent MarketplaceIndustry SolutionsManufacturing / SCM / EAM foundationsEnterprise Security / SSO / SIEMData Warehouse / Lakehouse foundation

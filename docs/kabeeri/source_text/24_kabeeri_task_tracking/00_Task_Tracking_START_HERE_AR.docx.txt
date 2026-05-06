@@ -1,0 +1,10 @@
+KABEERI Task Tracking — ابدأ من هنا
+نظام تحديث تلقائي لتاسكات Codex داخل VS Code
+الفكرة
+Codex يحدّث حالة التاسك تلقائيًا في ملفات JSON بعد كل Prompt. ملف Word للقراءة فقط، أما JSON فهو مصدر الحقيقة للتنفيذ.
+مكان وضع الفولدر
+انسخ فولدر 24_kabeeri_task_tracking كاملًا إلى جذر مشروع Laravel kabeeri-platform.
+الأمر الأول
+php 24_kabeeri_task_tracking/scripts/kbr-task.php list V1
+القاعدة
+Codex يعلّم التاسك codex_done بعد التنفيذ والاختبارات. أنت فقط تضع verified بعد المراجعة.

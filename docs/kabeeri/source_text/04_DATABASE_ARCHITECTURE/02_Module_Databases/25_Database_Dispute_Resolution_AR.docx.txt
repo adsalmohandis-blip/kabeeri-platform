@@ -1,0 +1,1109 @@
+KABEERI Database File 25 — Dispute Resolution Database
+نظام فضّ النزاعات داخل KABEERI
+هذا الملف يصف تصميم قاعدة البيانات الخاص بنظام النزاعات الذي يخدم Kabeeri Mall، Commerce، Talent Marketplace، Rabet، Legal Partner Network، Internal Marketplace، Contracts، Billing، وERP.
+الهدف ليس بناء شاشة شكاوى بسيطة، بل بناء طبقة تشغيل وحوكمة تمنع فقدان الثقة داخل السوق العام، وتحافظ على الأدلة والقرارات والاعتراضات بشكل قابل للتتبع والتصعيد.
+1. لماذا نحتاج Dispute Resolution؟
+Kabeeri ليست CMS فقط؛ المنصة تحتوي على خدمات، منتجات، مواهب، توثيق، عقود، فواتير، عمولات، وMarketplace. لذلك أي تعامل قد يتحول إلى خلاف يحتاج مسارًا واضحًا بدل أن ينتشر داخل الرسائل أو المراجعات فقط.
+• حماية المستخدمين من الخدمات الوهمية أو المنتجات غير المسلّمة.
+• حماية الشركات من تقييمات غير عادلة أو بلاغات كيدية.
+• حفظ الأدلة والرسائل والقرارات قبل أي refund أو suspension.
+• ربط النزاع بالـ order أو service request أو job offer أو verification request أو contract.
+• تغذية Reputation وTrust Score بنتيجة النزاع دون كشف تفاصيل خاصة للعامة.
+• تجهيز V5/V6 للـ contracts/disputes وmulti-vendor commerce وenterprise governance.
+2. نطاق الملف
+هذا الملف يغطي طبقة النزاعات المركزية فقط. لا يكرر جداول Reviews أو Commerce أو Contracts، لكنه يربط بها عبر related_type / related_id وsource references.
+• Disputes core lifecycle.
+• Dispute parties and roles.
+• Messages and evidence.
+• Decision, actions, appeals.
+• SLA, escalation, assignment.
+• Financial holds/refund references.
+• Review/reputation impact.
+• Moderation and legal escalation links.
+• Audit, privacy, export, Portable/Dedicated rules.
+3. أنواع النزاعات المدعومة
+النوع
+مثال
+الموديولات المرتبطة
+service_not_delivered
+خدمة لم تنفذ أو نفذت جزئيًا
+Mall Services / Service Requests / CRM
+product_not_received
+منتج لم يصل أو وصل تالفًا
+Commerce / Orders / Shipping / Mall Products
+payment_or_refund
+خلاف على دفع أو استرداد
+Billing / Commerce / Payments
+unfair_review
+تقييم غير عادل أو مشبوه
+Reviews / Reputation / Moderation
+talent_work_issue
+محترف لم يكمل العمل أو شركة لم تدفع
+Talent / Job Offers / Contracts
+verification_issue
+خلاف على توثيق أو مستندات
+Rabet / Legal Partner Network
+contract_dispute
+خلاف على شروط عقد أو تسليم
+Contracts / ERP Pro
+b2b_dispute
+نزاع بين شركتين داخل B2B network
+Rabet / ERP / Mall
+developer_package_dispute
+خلاف حول package أو support أو refund
+Internal Marketplace / Packages
+policy_violation
+مخالفة سياسة أو محتوى ممنوع
+Moderation / Security / Mall
+4. المبادئ الحاكمة
+• كل نزاع يجب أن يرتبط بسياق واضح: organization_id، company_id، وأحيانًا site_id.
+• لا يتم حذف النزاعات فورًا لأنها مرتبطة بالثقة، الفواتير، المراجعات، الامتثال، والسجلات القانونية.
+• لا يظهر محتوى النزاع للعامة، لكن نتيجته قد تؤثر على Trust Score أو Reputation Score.
+• الأدلة تحفظ عبر Media/DMS ولا تخزن كملفات مباشرة داخل جدول النزاع.
+• القرارات الحساسة مثل refund أو suspension أو badge removal تمر عبر approval/audit عند الحاجة.
+• الطرف الذي يفتح النزاع لا يستطيع التحكم في القرار أو حذف الأدلة بعد إغلاقه.
+• الـ moderators يرون فقط النزاعات المسندة لهم أو التي يملكون صلاحية مراجعتها.
+• Portable/Dedicated instances لا تنشر تفاصيل النزاع إلى Mall، وإنما ترسل status/summary آمن عند اللزوم.
+5. حالات النزاع
+الحالة
+المعنى
+من يغيّرها
+draft
+تم تجهيز النزاع ولم يرسل بعد
+opened_by
+open
+تم فتح النزاع رسميًا
+opened_by / system
+awaiting_response
+ينتظر رد الطرف الآخر
+system/moderator
+under_review
+تحت مراجعة moderator أو team
+moderator
+mediation
+محاولة تسوية بين الأطراف
+moderator
+waiting_evidence
+ينتظر أدلة إضافية
+moderator
+escalated
+تم التصعيد لمنصة/قانوني/إدارة
+moderator/system
+decision_issued
+صدر قرار أولي
+moderator/platform_admin
+action_pending
+ينتظر تنفيذ action مثل refund/suspension
+system
+resolved
+تم حل النزاع
+system/moderator
+appealed
+تم تقديم اعتراض
+party
+closed
+أغلق نهائيًا
+moderator/system
+cancelled
+ألغاه فاتح النزاع قبل المعالجة
+opened_by/system
+rejected
+رفض لعدم الأهلية أو نقص البيانات
+moderator
+6. الجداول الأساسية
+disputes
+الجدول الرئيسي للنزاع. يمثل case واحدة قابلة للتتبع والربط بكيانات مختلفة.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+uuid
+char(26/36)
+نعم
+معرف عام آمن للروابط والتزامن
+organization_id
+bigint FK nullable
+لا
+السياق الأساسي للعميل
+company_id
+bigint FK nullable
+لا
+الشركة المرتبطة بالنزاع إن وجدت
+site_id
+bigint FK nullable
+لا
+الموقع/المتجر المرتبط إن وجد
+opened_by_user_id
+bigint FK
+نعم
+المستخدم الذي فتح النزاع
+against_type
+varchar(100)
+نعم
+نوع الطرف الآخر: company/user/seller/legal_partner/developer/platform
+against_id
+bigint nullable
+لا
+معرف الطرف الآخر عند توفره
+related_type
+varchar(100) nullable
+لا
+الكيان محل النزاع: order/service_request/review/contract/job_offer
+related_id
+bigint nullable
+لا
+معرف الكيان محل النزاع
+dispute_type
+varchar(80)
+نعم
+نوع النزاع
+status
+varchar(50)
+نعم
+حالة النزاع الحالية
+priority
+varchar(50)
+نعم
+low/normal/high/urgent
+severity
+varchar(50)
+لا
+business/security/legal/financial
+summary
+text
+نعم
+ملخص المشكلة
+resolution
+text nullable
+لا
+ملخص الحل النهائي
+assigned_moderator_id
+bigint nullable
+لا
+المراجع الحالي
+sla_due_at
+timestamp nullable
+لا
+موعد الاستجابة أو الحل المتوقع
+opened_at
+timestamp
+نعم
+وقت الفتح
+resolved_at
+timestamp nullable
+لا
+وقت الحل
+closed_at
+timestamp nullable
+لا
+وقت الإغلاق النهائي
+metadata
+json nullable
+لا
+بيانات إضافية
+created_at / updated_at / deleted_at
+timestamps
+نعم
+سجلات النظام
+dispute_parties
+يمثل كل طرف مشارك في النزاع ودوره وحدود رؤيته.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+dispute_id
+bigint FK
+نعم
+النزاع
+party_type
+varchar(80)
+نعم
+user/company/business_profile/legal_partner/platform/developer
+party_id
+bigint nullable
+لا
+معرف الطرف
+user_id
+bigint nullable
+لا
+مستخدم ممثل للطرف
+role
+varchar(50)
+نعم
+complainant/respondent/mediator/moderator/observer
+visibility_level
+varchar(50)
+نعم
+full/limited/evidence_only/decision_only
+response_due_at
+timestamp nullable
+لا
+موعد الرد
+last_seen_at
+timestamp nullable
+لا
+آخر رؤية
+status
+varchar(50)
+نعم
+active/removed/blocked
+metadata
+json nullable
+لا
+تفاصيل إضافية
+created_at / updated_at
+timestamps
+نعم
+سجلات النظام
+dispute_messages
+رسائل داخل النزاع، منفصلة عن Unified Inbox لكن يمكن عكسها هناك.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+uuid
+char(26/36)
+نعم
+معرف آمن
+dispute_id
+bigint FK
+نعم
+النزاع
+sender_user_id
+bigint nullable
+لا
+المرسل
+sender_party_id
+bigint FK nullable
+لا
+الطرف الذي يمثله
+message_type
+varchar(50)
+نعم
+text/system/request_evidence/decision_note
+body
+longtext nullable
+لا
+نص الرسالة
+visibility
+varchar(50)
+نعم
+all_parties/moderators_only/platform_only
+is_system
+boolean
+نعم
+هل الرسالة آلية؟
+created_at / updated_at / deleted_at
+timestamps
+نعم
+سجلات النظام
+dispute_evidence
+الأدلة المرفوعة للنزاع، مرتبطة بـ media_assets أو documents.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+uuid
+char(26/36)
+نعم
+معرف آمن
+dispute_id
+bigint FK
+نعم
+النزاع
+uploaded_by_user_id
+bigint FK
+نعم
+رافع الدليل
+uploaded_by_party_id
+bigint FK nullable
+لا
+الطرف الذي رفع الدليل
+media_asset_id
+bigint nullable
+لا
+ملف في Media
+document_id
+bigint nullable
+لا
+مستند في DMS عند الحاجة
+evidence_type
+varchar(80)
+نعم
+screenshot/document/chat/order_invoice/delivery_proof
+title
+varchar(255) nullable
+لا
+عنوان مختصر
+description
+text nullable
+لا
+شرح الدليل
+visibility
+varchar(50)
+نعم
+all_parties/moderators_only/platform_only
+verification_status
+varchar(50)
+نعم
+pending/verified/rejected/tampered
+metadata
+json nullable
+لا
+checksum أو source info
+created_at / updated_at
+timestamps
+نعم
+سجلات النظام
+dispute_evidence_access_logs
+يسجل من فتح أو حمّل دليلًا حساسًا داخل النزاع.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+dispute_evidence_id
+bigint FK
+نعم
+الدليل
+user_id
+bigint FK nullable
+لا
+المستخدم
+action
+varchar(50)
+نعم
+view/download/share_attempt
+ip_address
+varchar(45) nullable
+لا
+IP
+user_agent
+text nullable
+لا
+المتصفح
+created_at
+timestamp
+نعم
+وقت الوصول
+dispute_decisions
+قرارات moderator/platform الخاصة بالنزاع.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+uuid
+char(26/36)
+نعم
+معرف عام
+dispute_id
+bigint FK
+نعم
+النزاع
+decision_by_user_id
+bigint FK
+نعم
+صاحب القرار
+decision_type
+varchar(80)
+نعم
+refund/partial_refund/no_action/suspend/listing_hide/review_remove
+description
+longtext
+نعم
+شرح القرار
+actions_json
+json nullable
+لا
+إجراءات قابلة للتنفيذ آليًا
+requires_approval
+boolean
+نعم
+هل يحتاج موافقة إضافية؟
+approval_request_id
+bigint nullable
+لا
+رابط approval engine
+effective_at
+timestamp nullable
+لا
+وقت نفاذ القرار
+created_at
+timestamp
+نعم
+وقت الإنشاء
+dispute_actions
+الإجراءات الناتجة عن القرار، مثل refund أو تعليق listing أو تعديل review.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+dispute_id
+bigint FK
+نعم
+النزاع
+decision_id
+bigint FK nullable
+لا
+القرار
+action_type
+varchar(80)
+نعم
+refund/create_credit/hide_listing/suspend_user/adjust_reputation
+target_type
+varchar(100) nullable
+لا
+الكيان المستهدف
+target_id
+bigint nullable
+لا
+معرف الكيان
+status
+varchar(50)
+نعم
+pending/running/completed/failed/cancelled
+performed_by_user_id
+bigint nullable
+لا
+من نفذ الإجراء
+result_json
+json nullable
+لا
+نتيجة التنفيذ
+created_at / updated_at
+timestamps
+نعم
+سجلات النظام
+dispute_appeals
+اعتراض على قرار النزاع.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+uuid
+char(26/36)
+نعم
+معرف عام
+dispute_id
+bigint FK
+نعم
+النزاع
+decision_id
+bigint FK nullable
+لا
+القرار المعترض عليه
+appealed_by_user_id
+bigint FK
+نعم
+مقدم الاعتراض
+reason
+longtext
+نعم
+سبب الاعتراض
+status
+varchar(50)
+نعم
+submitted/under_review/accepted/rejected/closed
+assigned_to_user_id
+bigint nullable
+لا
+مراجع الاعتراض
+result
+longtext nullable
+لا
+نتيجة الاعتراض
+created_at / updated_at / closed_at
+timestamps
+نعم
+سجلات النظام
+dispute_status_history
+سجل تاريخ الحالات لحفظ المسار الكامل.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+dispute_id
+bigint FK
+نعم
+النزاع
+from_status
+varchar(50) nullable
+لا
+الحالة السابقة
+to_status
+varchar(50)
+نعم
+الحالة الجديدة
+changed_by_user_id
+bigint nullable
+لا
+من غير الحالة
+reason
+text nullable
+لا
+سبب التغيير
+metadata
+json nullable
+لا
+تفاصيل إضافية
+created_at
+timestamp
+نعم
+وقت التغيير
+dispute_assignments
+تاريخ إسناد النزاع إلى moderators أو legal reviewers.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+dispute_id
+bigint FK
+نعم
+النزاع
+assigned_to_user_id
+bigint FK
+نعم
+المسند إليه
+assigned_by_user_id
+bigint nullable
+لا
+من أسند
+assignment_type
+varchar(50)
+نعم
+moderator/legal/finance/support/platform_admin
+status
+varchar(50)
+نعم
+active/reassigned/completed/cancelled
+assigned_at
+timestamp
+نعم
+وقت الإسناد
+released_at
+timestamp nullable
+لا
+وقت انتهاء الإسناد
+metadata
+json nullable
+لا
+تفاصيل إضافية
+dispute_sla_policies
+قواعد الاستجابة والحل حسب نوع النزاع والخطة والخطورة.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+organization_id
+bigint nullable
+لا
+قد تكون سياسة خاصة بعميل enterprise
+dispute_type
+varchar(80)
+نعم
+نوع النزاع
+priority
+varchar(50)
+نعم
+الأولوية
+first_response_minutes
+integer
+نعم
+وقت أول رد
+resolution_minutes
+integer
+نعم
+وقت الحل المتوقع
+escalation_minutes
+integer nullable
+لا
+موعد التصعيد
+status
+varchar(50)
+نعم
+active/inactive
+created_at / updated_at
+timestamps
+نعم
+سجلات النظام
+dispute_escalations
+التصعيد لمنصة أو قانوني أو إدارة أو أمن.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+dispute_id
+bigint FK
+نعم
+النزاع
+escalation_type
+varchar(80)
+نعم
+legal/platform_admin/security/finance/executive
+escalated_by_user_id
+bigint nullable
+لا
+من صعّد
+assigned_to_user_id
+bigint nullable
+لا
+المسند إليه
+reason
+text
+نعم
+سبب التصعيد
+status
+varchar(50)
+نعم
+open/handled/closed
+created_at / updated_at / closed_at
+timestamps
+نعم
+سجلات النظام
+dispute_financial_holds
+حجز مبالغ أو عمولات أثناء النزاع بدون خلطه بجدول payments.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+dispute_id
+bigint FK
+نعم
+النزاع
+source_type
+varchar(80)
+نعم
+order/payment/commission/payout/invoice
+source_id
+bigint
+نعم
+معرف المصدر
+amount
+decimal(15,2)
+نعم
+المبلغ المحجوز
+currency_code
+char(3)
+نعم
+العملة
+status
+varchar(50)
+نعم
+held/released/refunded/transferred/cancelled
+released_at
+timestamp nullable
+لا
+وقت فك الحجز
+metadata
+json nullable
+لا
+تفاصيل إضافية
+created_at / updated_at
+timestamps
+نعم
+سجلات النظام
+dispute_reputation_impacts
+أثر النزاع على السمعة أو الثقة بعد الحل.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+dispute_id
+bigint FK
+نعم
+النزاع
+subject_type
+varchar(80)
+نعم
+company/business_profile/professional/seller/developer
+subject_id
+bigint
+نعم
+معرف المتأثر
+impact_type
+varchar(80)
+نعم
+trust_score/reputation_score/review_visibility/badge_status
+impact_value
+json nullable
+لا
+قيمة التأثير
+status
+varchar(50)
+نعم
+pending/applied/reverted
+applied_at
+timestamp nullable
+لا
+وقت التطبيق
+created_at / updated_at
+timestamps
+نعم
+سجلات النظام
+dispute_templates
+قوالب فتح النزاع حسب النوع لتقليل الفوضى.
+الحقل
+النوع
+إلزامي
+الوصف
+id
+bigint PK
+نعم
+المعرف الداخلي
+slug
+varchar(120)
+نعم
+معرف القالب
+name
+varchar(255)
+نعم
+اسم القالب
+dispute_type
+varchar(80)
+نعم
+نوع النزاع
+required_fields_json
+json
+نعم
+الحقول المطلوبة
+required_evidence_json
+json nullable
+لا
+الأدلة المطلوبة
+default_priority
+varchar(50)
+نعم
+الأولوية الافتراضية
+status
+varchar(50)
+نعم
+active/inactive
+created_at / updated_at
+timestamps
+نعم
+سجلات النظام
+7. فهارس وقواعد Unique مقترحة
+الجدول
+الفهارس المهمة
+disputes
+index(organization_id,status), index(company_id,status), index(related_type,related_id), index(against_type,against_id), index(assigned_moderator_id,status), index(opened_at), index(sla_due_at)
+dispute_parties
+index(dispute_id), index(party_type,party_id), unique(dispute_id, party_type, party_id, role) عند الإمكان
+dispute_messages
+index(dispute_id,created_at), index(sender_user_id), index(visibility)
+dispute_evidence
+index(dispute_id), index(uploaded_by_user_id), index(verification_status)
+dispute_decisions
+index(dispute_id), index(decision_by_user_id), index(decision_type)
+dispute_actions
+index(dispute_id,status), index(target_type,target_id), index(action_type)
+dispute_appeals
+index(dispute_id,status), index(appealed_by_user_id)
+dispute_status_history
+index(dispute_id,created_at)
+dispute_financial_holds
+index(source_type,source_id), index(dispute_id,status)
+8. العلاقات مع الأنظمة الأخرى
+النظام
+العلاقة
+Kabeeri Mall
+النزاعات ترتبط بـ mall listings, service requests, product inquiries, seller profiles، وتؤثر على visibility/trust عند الحل.
+Commerce
+النزاع قد يرتبط بـ order/payment/shipping/refund ويفتح financial hold.
+Talent Marketplace
+النزاع قد يرتبط بـ job offer أو professional profile أو company-to-professional work.
+Rabet / Verification
+النزاع قد يؤثر على trust record أو verification status عند إثبات احتيال أو مستند مضلل.
+Reviews & Reputation
+unfair_review disputes يمكن أن تؤدي إلى hide/remove review أو تعديل reputation impact.
+Moderation
+policy_violation disputes قد تفتح moderation case أو escalate إلى legal review.
+Unified Inbox
+dispute messages يمكن أن تظهر كconversation محدودة أو تفتح conversation مرتبطة.
+Billing
+النزاع قد يحجز payout أو commission أو يفتح refund/credit.
+Contracts
+contract_dispute يستند إلى contract records وcontract parties في ERP Pro.
+Documents/DMS
+الأدلة الحساسة تحفظ كمستندات ذات صلاحيات، وليس مجرد media عامة.
+9. ERD مختصر
+erDiagram
+ORGANIZATIONS ||--o{ DISPUTES : owns
+COMPANIES ||--o{ DISPUTES : may_have
+USERS ||--o{ DISPUTES : opens
+DISPUTES ||--o{ DISPUTE_PARTIES : includes
+DISPUTES ||--o{ DISPUTE_MESSAGES : contains
+DISPUTES ||--o{ DISPUTE_EVIDENCE : has
+DISPUTE_EVIDENCE ||--o{ DISPUTE_EVIDENCE_ACCESS_LOGS : audited_by
+DISPUTES ||--o{ DISPUTE_DECISIONS : receives
+DISPUTE_DECISIONS ||--o{ DISPUTE_ACTIONS : triggers
+DISPUTES ||--o{ DISPUTE_APPEALS : may_have
+DISPUTES ||--o{ DISPUTE_STATUS_HISTORY : tracks
+DISPUTES ||--o{ DISPUTE_ASSIGNMENTS : assigned_to
+DISPUTES ||--o{ DISPUTE_ESCALATIONS : escalates
+DISPUTES ||--o{ DISPUTE_FINANCIAL_HOLDS : may_hold
+DISPUTES ||--o{ DISPUTE_REPUTATION_IMPACTS : affects
+10. Dispute Workflow
+Open dispute
+→ Validate entitlement and relation to transaction/context
+→ Create dispute + parties
+→ Request evidence
+→ Notify parties
+→ Assign moderator
+→ Optional financial hold
+→ Mediation / review
+→ Decision
+→ Actions
+→ Optional appeal
+→ Reputation/trust impact
+→ Close and retain records
+11. قواعد الوصول والصلاحيات
+الصلاحية
+الوصف
+dispute.view
+رؤية النزاعات التي يشارك فيها المستخدم أو يديرها.
+dispute.create
+فتح نزاع مرتبط بتعامل موثق.
+dispute.message.send
+إرسال رسالة داخل النزاع.
+dispute.evidence.upload
+رفع أدلة.
+dispute.evidence.view_sensitive
+رؤية أدلة حساسة أو مستندات خاصة.
+dispute.moderate
+مراجعة وإدارة النزاعات.
+dispute.assign
+إسناد النزاع لمراجع.
+dispute.decision.issue
+إصدار قرار.
+dispute.action.execute
+تنفيذ إجراءات مثل refund/suspend/hide.
+dispute.appeal.review
+مراجعة الاعتراضات.
+dispute.legal_escalate
+تصعيد النزاع لقانوني.
+dispute.audit.view
+رؤية السجل الكامل للنزاع.
+12. قواعد الخصوصية
+• النزاع ليس محتوى عامًا، حتى لو كان مرتبطًا بـ Mall Listing عام.
+• الأدلة لا تظهر إلا للأطراف المصرح لهم أو moderators.
+• رسائل النزاع لا ترسل إلى Mall Mirror.
+• يمكن عرض حالة عامة مثل “dispute rate” أو “resolved dispute” داخل trust signals بدون تفاصيل.
+• لا يسمح لطرف بتحميل كل أدلة الطرف الآخر إلا إذا visibility تسمح بذلك.
+• المستندات القانونية أو العقود الخاصة تستخدم DMS permissions وليس media visibility العامة.
+• حذف حساب المستخدم لا يعني حذف النزاعات المرتبطة بفواتير أو مراجعات أو امتثال.
+13. Portable / Dedicated / Frontend Anywhere
+الوضع
+قاعدة التعامل مع النزاعات
+Cloud
+النزاعات داخل قاعدة Kabeeri Cloud ويمكن ربطها مباشرة بـ Mall/Commerce/Talent.
+Frontend Anywhere
+لا تغيير في مصدر النزاع لأن البيانات والـ Control Panel داخل Cloud. الواجهة الخارجية قد تفتح dispute عبر API محدود.
+Portable
+النزاعات التشغيلية بعد الخروج تبقى في self-hosted DB، لكن النزاعات المتعلقة بـ Mall أو trust يمكن مزامنة status آمن للمنصة المركزية.
+Dedicated
+النزاعات داخل Dedicated DB، مع bridge مركزي للـ Mall trust signals وsupport/legal escalation عند الاتفاق.
+Mall Mirror
+لا يحفظ تفاصيل النزاع، فقط مؤشرات آمنة عند الحاجة: dispute_count, dispute_rate, last_resolved_at, trust impact.
+14. Events المقترحة
+Event
+Listeners محتملة
+DisputeOpened
+NotifyParties, AssignModerator, CreateActivityLog, MaybeHoldFunds
+DisputeEvidenceSubmitted
+NotifyModerator, LogSensitiveAccessRequirement
+DisputeMessageSent
+NotifyParticipants, UpdateLastActivity
+DisputeEscalated
+NotifyPlatformAdmin, CreateAuditLog
+DisputeDecisionIssued
+NotifyParties, QueueActions, CreateTrustImpactDraft
+DisputeActionCompleted
+UpdateRelatedEntity, NotifyOwner, LogAudit
+DisputeAppealed
+AssignAppealReviewer, FreezeFinalActionsIfNeeded
+DisputeResolved
+ApplyReputationImpact, ReleaseFinancialHold, CloseConversation
+DisputeClosed
+ArchiveCase, UpdateReports
+15. Laravel Structure
+app/Disputes/
+Models/
+Dispute.php
+DisputeParty.php
+DisputeMessage.php
+DisputeEvidence.php
+DisputeDecision.php
+DisputeAction.php
+DisputeAppeal.php
+Actions/
+OpenDisputeAction.php
+SubmitDisputeEvidenceAction.php
+AssignDisputeModeratorAction.php
+IssueDisputeDecisionAction.php
+ExecuteDisputeActionAction.php
+AppealDisputeDecisionAction.php
+CloseDisputeAction.php
+Policies/
+DisputePolicy.php
+DisputeEvidencePolicy.php
+Services/
+DisputeEligibilityService.php
+DisputeSlaService.php
+DisputeReputationImpactService.php
+Events/
+Listeners/
+Filament/Resources/
+16. API Endpoints مقترحة
+Endpoint
+الغرض
+GET /api/disputes
+قائمة النزاعات حسب الصلاحية والسياق
+POST /api/disputes
+فتح نزاع
+GET /api/disputes/{uuid}
+تفاصيل نزاع
+POST /api/disputes/{uuid}/messages
+إرسال رسالة
+POST /api/disputes/{uuid}/evidence
+رفع دليل
+POST /api/disputes/{uuid}/assign
+إسناد النزاع
+POST /api/disputes/{uuid}/decision
+إصدار قرار
+POST /api/disputes/{uuid}/appeal
+تقديم اعتراض
+POST /api/disputes/{uuid}/close
+إغلاق النزاع
+17. Admin UI Scope
+• Disputes Dashboard: open, overdue, escalated, high priority.
+• Dispute Queue: filters by type/status/priority/moderator.
+• Case View: timeline, parties, messages, evidence, related objects.
+• Decision Panel: suggested actions, required approvals, audit preview.
+• Appeals Panel: appeal reason, previous decision, reviewer notes.
+• Trust Impact Preview: ما الذي سيتغير في reputation/trust قبل التطبيق.
+• Financial Holds: held amounts, source transaction, release/refund actions.
+18. Reporting Metrics
+Metric
+الاستخدام
+open_disputes_count
+عدد النزاعات المفتوحة
+average_resolution_time
+متوسط زمن الحل
+dispute_rate_by_seller
+نسبة النزاعات لكل seller/business
+appeal_rate
+معدل الاعتراضات
+refund_rate_after_dispute
+معدل الاستردادات بعد النزاعات
+moderator_workload
+أحمال عمل المراجعين
+sla_breach_count
+عدد مخالفات SLA
+repeat_dispute_subjects
+كيانات تتكرر حولها النزاعات
+19. Build Order
+المرحلة
+المخرجات
+Phase 1 — Core Case
+disputes, dispute_parties, dispute_status_history, basic policy
+Phase 2 — Messages & Evidence
+dispute_messages, dispute_evidence, access logs, media/DMS integration
+Phase 3 — Assignment & SLA
+assignments, sla policies, escalations
+Phase 4 — Decisions & Actions
+decisions, actions, approvals, audit logs
+Phase 5 — Appeals
+appeals workflow and final closure
+Phase 6 — Financial Holds
+hold/refund references with Commerce/Billing
+Phase 7 — Reputation Impact
+trust/reputation integration and reports
+Phase 8 — Portable/Dedicated Sync
+safe status sync and retention policies
+20. ما يدخل في الإصدارات
+الإصدار
+النطاق المقترح
+V1
+لا يدخل كواجهة؛ فقط مراعاة status/visibility/activity logs.
+V2
+يمكن دعم dispute concept بسيط لطلبات الخدمات/المنتجات إذا لزم.
+V3
+تجهيز tables الأساسية مع Rabet/CRM/Invoices/Tasks.
+V4
+Disputes V1 مع Kabeeri Mall, Talent, Reviews, Legal Partner Network.
+V5
+Contracts disputes, commission/payout holds, ERP Pro links.
+V6
+Advanced multi-vendor disputes, enterprise governance, advanced analytics.
+21. Acceptance Criteria
+• لا يمكن فتح نزاع بدون related object أو وصف واضح وسبب محدد.
+• الأطراف يتم إنشاؤهم تلقائيًا من الكيان المرتبط كلما أمكن.
+• لا يمكن لطرف رؤية evidence غير مصرح له بها.
+• كل تغيير حالة يسجل في dispute_status_history.
+• كل قرار مهم ينشئ audit log.
+• الإجراءات المالية لا تنفذ بدون صلاحية وقرار واضح.
+• يمكن حساب SLA overdue بدقة.
+• يمكن تصدير بيانات النزاع الخاصة بالعميل مع احترام retention/legal limits.
+• لا تصل تفاصيل النزاع إلى Mall Public أو Frontend Anywhere public APIs.
+• النظام يدعم appeal optional بدون كسر القرار الأصلي.
+22. الخلاصة التنفيذية
+Dispute Resolution في Kabeeri هو طبقة ثقة وحوكمة، وليس مجرد جدول شكاوى. يجب أن يرتبط بالـ Marketplace وMall وCommerce وTalent وRabet وContracts وBilling، وأن يحفظ الأدلة والقرارات والتصعيد والاعتراضات بطريقة قابلة للتدقيق.
+القاعدة النهائية: لا سوق عام موثوق بدون Reviews وModeration وDisputes وReputation. وكل نزاع يجب أن يحافظ على الخصوصية، لكنه يترك أثرًا عادلًا على الثقة عند الحاجة.
+KABEERI Database — Dispute Resolution
+powered by ADMIT — Database Architecture

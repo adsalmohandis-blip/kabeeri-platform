@@ -1,0 +1,1584 @@
+KABEERI Database File 33
+Developer Console & SDK Database
+قاعدة بيانات منصة المطورين وواجهة الـ SDK — KABEERI
+هذا الملف يصف تصميم قاعدة البيانات الخاصة بمنصة المطورين داخل KABEERI: حسابات المطورين، مشاريع SDK، مفاتيح API، sandboxes، CLI tokens، التوثيق، API Explorer، شهادات المطورين، وأدوات إرسال الحزم للمراجعة والنشر.
+الملف لا يستبدل Internal Marketplace & Packages Database؛ بل يضيف طبقة Developer Console فوقه. مصدر الحقيقة للحزم والإصدارات والتوقيع والمبيعات يبقى في نظام Marketplace/Packages، أما هذا الملف فينظم تجربة المطور وأدواته وحساباته.
+1. الهدف من Developer Console & SDK Database
+تمكين المطورين والشركاء من بناء Plugins وThemes وModules وConnectors وAI Skills بطريقة منظمة.
+منع تعديل Core مباشرة، وإجبار كل توسعة على استخدام Events وHooks وAPIs وExtension Points.
+إدارة حسابات المطورين والتحقق والشهادات والصلاحيات وسجل النشاط.
+إدارة SDK Projects وSandbox Instances وAPI Explorer وCLI Tokens.
+ربط عملية إرسال الحزم للمراجعة بنظام Internal/Public Marketplace بدون تكرار جداول الحزم.
+تجهيز V6 للـ Public Developer Marketplace وEnterprise Private Marketplace.
+2. موقعه داخل معمارية KABEERI
+Developer Console يجلس فوق Core Kernel وMarketplace/Packages وSecurity وIntegration Hub. لا يمتلك بيانات العملاء التشغيلية، ولا يفتح وصولًا مباشرًا لجداول حساسة؛ بل يمنح المطور أدوات بناء آمنة، مفاتيح scoped، وبيئات اختبار منفصلة.
+Core Kernel
+-> Users / Organizations / Permissions / Audit
+Security & Compliance
+-> API Tokens / Sensitive Logs / Package Security
+Internal Marketplace & Packages
+-> Package Catalog / Versions / Reviews / Signing
+Developer Console & SDK
+-> Developer Accounts / SDK Projects / Sandboxes / Docs / API Explorer
+Integration Hub
+-> Connector SDK / OAuth / Sync Tests
+AI Co-builder
+-> AI Skill SDK / Guardrails / Simulation
+3. ما يدخل وما لا يدخل
+يدخل في هذا الملف
+لا يدخل في هذا الملف
+Developer accounts, profiles, verification, certifications
+Package catalog النهائي أو package installations
+SDK projects, environments, sandboxes, CLI tokens
+تنفيذ business modules نفسها
+API clients, API tokens, API explorer, docs feedback
+Billing/Revenue share التفصيلي للحزم
+Developer submission sessions and links to package submissions
+Marketplace public listing content الكامل
+Developer audit logs, metrics, support tickets
+بيانات العملاء الخاصة أو أسرار التكامالت
+4. المبادئ الحاكمة
+No direct Core modification: المطور لا يعدل ملفات Core مباشرة.
+Manifest first: أي Plugin/Theme/Module/Connector/AI Skill يجب أن يملك manifest واضح.
+Permission disclosure: لا حزمة بدون إعلان صلاحيات وdata scopes.
+Sandbox before production: كل تكامل أو SDK project يجب اختباره في بيئة sandbox.
+Scoped API access: كل API token يجب أن يكون محدودًا بالـ scopes والبيئة.
+Audit by default: كل action للمطور، خصوصًا submission/review/token، يسجل في audit.
+Review/signing before public marketplace: لا نشر عام قبل review pipeline وpackage signing.
+Enterprise private marketplace: الشركات الكبيرة يمكن أن تمتلك نطاق مطورين وحزم خاصة بها.
+5. Database Domains
+Domain
+الجداول الرئيسية
+الغرض
+Developer Identity
+developer_accounts, developer_profiles, developer_organizations
+تعريف المطورين والشركات الناشرة
+Verification & Certification
+developer_verifications, developer_certifications, developer_badges
+الثقة والشهادات
+SDK Projects
+sdk_projects, sdk_environments, sdk_project_members
+مشاريع التطوير والبيئات
+API & CLI
+developer_api_clients, developer_api_tokens, developer_cli_tokens, api_explorer_requests
+الوصول البرمجي والتجارب
+Hooks & Extension Points
+sdk_extension_points, sdk_hook_definitions, sdk_event_subscriptions
+تسجيل نقاط التوسعة
+Submissions
+developer_submission_sessions, developer_submission_links
+ربط الإرسال بمراجعة الحزم
+Docs & Learning
+developer_docs, developer_doc_versions, developer_doc_feedback
+توثيق وتجربة المطور
+Sandbox & Testing
+developer_sandbox_instances, sandbox_seed_sets, sdk_test_runs
+بيئات اختبار محكومة
+Analytics & Support
+developer_metrics_daily, developer_support_tickets, developer_audit_logs
+التحليلات والدعم والتتبع
+6. الجداول الأساسية
+developer_accounts
+يمثل حساب مطور داخل KABEERI، وقد يكون فردًا أو ناشرًا تابعًا لوكالة أو شركة.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح الداخلي
+uuid
+char(26/36)
+للعلاقات العامة والـ API
+user_id
+bigint
+يربط بالمستخدم الحقيقي
+organization_id
+bigint nullable
+لو المطور تابع لمنظمة
+account_type
+varchar(50)
+individual / agency / company / enterprise
+display_name
+varchar(190)
+اسم العرض
+slug
+varchar(190)
+معرف URL
+status
+varchar(50)
+pending / active / suspended / archived
+trust_level
+varchar(50)
+new / verified / certified / enterprise
+primary_email
+varchar(190)
+بريد المطور
+country_id
+bigint nullable
+الدولة
+website_url
+varchar nullable
+موقع المطور
+metadata
+json nullable
+بيانات إضافية
+created_at / updated_at
+timestamps
+تواريخ
+unique(user_id) عندما يكون individual
+index(organization_id, status)
+لا يستخدم كبديل لـ users؛ هو extension profile للمطور.
+developer_profiles
+ملف عام/خاص للمطور يستخدم في صفحة الناشر وDeveloper Marketplace.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_account_id
+bigint
+الحساب
+bio
+longtext nullable
+نبذة
+company_name
+varchar nullable
+اسم الشركة إن وجد
+logo_media_id
+bigint nullable
+شعار
+cover_media_id
+bigint nullable
+غلاف
+public_email
+varchar nullable
+بريد عام
+support_url
+varchar nullable
+رابط دعم
+docs_url
+varchar nullable
+رابط توثيق
+visibility
+varchar(50)
+private / marketplace_public / enterprise_only
+metadata
+json nullable
+بيانات إضافية
+created_at / updated_at
+timestamps
+تواريخ
+لا تعرض بيانات شخصية حساسة بدون موافقة.
+developer_organizations
+كيان ناشر أو فريق تطوير منفصل عن Organization العميل، لكنه قد يرتبط بها.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف عام
+owner_developer_account_id
+bigint
+مالك الفريق
+linked_organization_id
+bigint nullable
+ربط اختياري بـ organization
+name
+varchar
+اسم فريق التطوير
+slug
+varchar
+معرف
+org_type
+varchar
+agency / partner / enterprise_private / open_source
+status
+varchar
+active / suspended / archived
+metadata
+json nullable
+إعدادات
+created_at / updated_at
+timestamps
+تواريخ
+يدعم private publishers وenterprise teams.
+developer_organization_memberships
+عضوية المطور داخل فريق أو ناشر.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_organization_id
+bigint
+الفريق
+developer_account_id
+bigint
+المطور
+role
+varchar
+owner / admin / developer / reviewer / support
+status
+varchar
+invited / active / suspended
+invited_by
+bigint nullable
+الداعي
+joined_at
+timestamp nullable
+تاريخ الانضمام
+metadata
+json nullable
+إضافي
+created_at / updated_at
+timestamps
+تواريخ
+unique(developer_organization_id, developer_account_id).
+developer_verifications
+طلبات تحقق من هوية المطور أو الشركة الناشرة.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+developer_account_id
+bigint nullable
+المطور
+developer_organization_id
+bigint nullable
+فريق الناشر
+verification_type
+varchar
+identity / company / tax / security / enterprise
+status
+varchar
+draft / submitted / under_review / approved / rejected / expired
+submitted_at
+timestamp nullable
+تاريخ الإرسال
+reviewed_by
+bigint nullable
+المراجع
+reviewed_at
+timestamp nullable
+تاريخ المراجعة
+expires_at
+timestamp nullable
+انتهاء
+notes
+longtext nullable
+ملاحظات
+metadata
+json nullable
+إضافي
+created_at / updated_at
+timestamps
+تواريخ
+المستندات نفسها تخزن في document/media systems ولا تحفظ raw داخل هذا الجدول.
+developer_certifications
+شهادات يحصل عليها المطور أو الناشر: Theme Certified, Connector Certified, AI Skill Certified.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_account_id
+bigint nullable
+المطور
+developer_organization_id
+bigint nullable
+الناشر
+certification_key
+varchar
+نوع الشهادة
+level
+varchar
+basic / pro / enterprise
+status
+varchar
+active / expired / revoked
+issued_by
+bigint nullable
+من أصدرها
+issued_at
+timestamp
+تاريخ الإصدار
+expires_at
+timestamp nullable
+انتهاء
+evidence_ref
+varchar nullable
+مرجع دليل/اختبار
+metadata
+json nullable
+إضافي
+تظهر كشارات في Developer Marketplace.
+developer_badges
+شارات عامة مرتبطة بالناشر أو المطور.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+badge_key
+varchar
+verified_partner / certified_developer / security_reviewed
+name
+varchar
+اسم الشارة
+description
+text nullable
+وصف
+icon_media_id
+bigint nullable
+أيقونة
+status
+varchar
+active / retired
+created_at / updated_at
+timestamps
+تواريخ
+developer_badge_assignments
+إسناد الشارات للمطورين أو الناشرين.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+badge_id
+bigint
+الشارة
+assignable_type
+varchar
+developer_account / developer_organization
+assignable_id
+bigint
+الكيان
+status
+varchar
+active / revoked
+assigned_by
+bigint nullable
+المسند
+assigned_at
+timestamp
+تاريخ الإسناد
+revoked_at
+timestamp nullable
+الإلغاء
+index(assignable_type, assignable_id).
+sdk_projects
+مشروع SDK يستخدمه المطور لبناء حزمة أو تكامل أو AI Skill.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف عام
+developer_account_id
+bigint
+صاحب المشروع
+developer_organization_id
+bigint nullable
+فريق المشروع
+name
+varchar
+الاسم
+slug
+varchar
+معرف
+project_type
+varchar
+plugin / theme / module / connector / ai_skill / template / industry_solution
+status
+varchar
+active / archived / suspended
+target_package_id
+bigint nullable
+ربط اختياري بحزمة
+repository_url
+varchar nullable
+المستودع
+default_environment_id
+bigint nullable
+البيئة الافتراضية
+settings
+json nullable
+إعدادات
+created_at / updated_at
+timestamps
+تواريخ
+لا يعني وجود مشروع SDK أنه منشور في marketplace.
+sdk_project_members
+أعضاء مشروع SDK.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+sdk_project_id
+bigint
+المشروع
+developer_account_id
+bigint
+المطور
+role
+varchar
+owner / maintainer / contributor / viewer
+status
+varchar
+active / invited / removed
+created_at / updated_at
+timestamps
+تواريخ
+unique(sdk_project_id, developer_account_id).
+sdk_environments
+بيئات التطوير والاختبار الخاصة بالمشروع.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+sdk_project_id
+bigint
+المشروع
+name
+varchar
+local / sandbox / staging / certification
+environment_type
+varchar
+local / sandbox / staging / review
+kabeeri_version
+varchar nullable
+نسخة Kabeeri المستهدفة
+php_version
+varchar nullable
+نسخة PHP
+region
+varchar nullable
+المنطقة
+status
+varchar
+active / paused / destroyed
+settings
+json nullable
+إعدادات
+created_at / updated_at
+timestamps
+تواريخ
+developer_api_clients
+تعريف تطبيق أو عميل API يستخدمه المطور داخل Developer Console.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+developer_account_id
+bigint
+المطور
+sdk_project_id
+bigint nullable
+المشروع
+name
+varchar
+اسم العميل
+client_type
+varchar
+api_explorer / cli / app / connector_test / sandbox
+client_id
+varchar
+معرف عام
+client_secret_hash
+varchar nullable
+لا تحفظ secret plain text
+allowed_origins
+json nullable
+CORS origins
+redirect_uris
+json nullable
+OAuth redirect URIs
+status
+varchar
+active / revoked / suspended
+created_at / updated_at
+timestamps
+تواريخ
+unique(client_id).
+developer_api_tokens
+Tokens scoped للمطور أو المشروع أو البيئة.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+developer_api_client_id
+bigint
+عميل API
+developer_account_id
+bigint
+المطور
+sdk_project_id
+bigint nullable
+المشروع
+environment_id
+bigint nullable
+البيئة
+token_hash
+varchar
+hash فقط
+name
+varchar
+اسم
+scopes
+json
+الصلاحيات
+status
+varchar
+active / expired / revoked
+last_used_at
+timestamp nullable
+آخر استخدام
+expires_at
+timestamp nullable
+انتهاء
+created_at / updated_at
+timestamps
+تواريخ
+revoked_at
+timestamp nullable
+إلغاء
+ممنوع تخزين token النصي.
+كل token يجب أن يملك scopes.
+developer_cli_tokens
+مفاتيح خاصة بالـ CLI commands مثل package:validate وplugin:create.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_account_id
+bigint
+المطور
+token_hash
+varchar
+hash
+machine_name
+varchar nullable
+اسم الجهاز
+status
+varchar
+active / revoked
+last_used_at
+timestamp nullable
+آخر استخدام
+expires_at
+timestamp nullable
+انتهاء
+created_at / updated_at
+timestamps
+تواريخ
+api_reference_groups
+تصنيف توثيق الـ API.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+group_key
+varchar
+cms / commerce / erp / marketplace / ai
+name
+varchar
+اسم المجموعة
+description
+text nullable
+وصف
+sort_order
+int
+ترتيب
+status
+varchar
+active / hidden
+api_reference_endpoints
+وصف endpoints للـ API Explorer والوثائق.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+api_reference_group_id
+bigint
+المجموعة
+method
+varchar
+GET/POST/PUT/DELETE
+path
+varchar
+المسار
+permission_slug
+varchar nullable
+الصلاحية المطلوبة
+scope_required
+varchar nullable
+API scope
+risk_level
+varchar
+low / medium / high / critical
+is_public
+boolean
+ظاهر في docs
+request_schema
+json nullable
+schema
+response_schema
+json nullable
+schema
+examples
+json nullable
+أمثلة
+status
+varchar
+active / deprecated
+created_at / updated_at
+timestamps
+تواريخ
+لا تعرض endpoints داخلية أو حساسة بدون تصنيف.
+api_explorer_requests
+سجل تجارب المطور عبر API Explorer.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+developer_account_id
+bigint
+المطور
+developer_api_client_id
+bigint nullable
+client
+endpoint_id
+bigint nullable
+endpoint
+environment_id
+bigint nullable
+البيئة
+method
+varchar
+HTTP method
+path
+varchar
+المسار
+status_code
+int nullable
+كود الرد
+response_time_ms
+int nullable
+زمن
+request_hash
+varchar nullable
+hash للطلب
+error_message
+text nullable
+خطأ
+created_at
+timestamp
+تاريخ
+لا تخزن payload حساس raw؛ استخدم masking/hash.
+sdk_extension_points
+نقاط التوسعة الرسمية داخل KABEERI.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+key
+varchar
+مثال: cms.page.sidebar
+name
+varchar
+اسم
+module_key
+varchar
+cms/commerce/erp
+extension_type
+varchar
+hook / event / view_slot / action / filter / contract
+description
+text nullable
+وصف
+risk_level
+varchar
+low/medium/high
+status
+varchar
+active/deprecated
+introduced_version
+varchar nullable
+نسخة
+deprecated_version
+varchar nullable
+إن وجدت
+metadata
+json nullable
+إضافي
+هذه جداول مرجعية يمكن توليد جزء منها من الكود.
+sdk_hook_definitions
+تعريف Hooks التي يمكن للحزم استخدامها.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+extension_point_id
+bigint
+نقطة التوسعة
+hook_name
+varchar
+اسم hook
+signature
+text nullable
+توقيع
+payload_schema
+json nullable
+payload
+return_schema
+json nullable
+return
+sync_mode
+varchar
+sync / async / queued
+permission_required
+varchar nullable
+صلاحية
+status
+varchar
+active / deprecated
+created_at / updated_at
+timestamps
+تواريخ
+sdk_event_subscriptions
+اشتراكات مشروع SDK في Events أثناء التطوير أو الاختبار.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+sdk_project_id
+bigint
+المشروع
+environment_id
+bigint nullable
+البيئة
+event_name
+varchar
+اسم الحدث
+listener_class
+varchar nullable
+الكلاس
+status
+varchar
+active / disabled
+created_at / updated_at
+timestamps
+تواريخ
+لا يستبدل نظام Events الرئيسي؛ يستخدم للتطوير/التوثيق والاختبار.
+sdk_contracts
+عقود Module/Connector/AI Skill التي يجب الالتزام بها.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+contract_key
+varchar
+اسم العقد
+contract_type
+varchar
+module / connector / ai_skill / theme / package
+version
+varchar
+نسخة العقد
+schema
+json nullable
+Schema
+status
+varchar
+active / deprecated
+created_at / updated_at
+timestamps
+تواريخ
+sdk_contract_tests
+اختبارات مطابقة الحزمة للعقود الرسمية.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+sdk_project_id
+bigint
+المشروع
+contract_id
+bigint
+العقد
+environment_id
+bigint nullable
+البيئة
+status
+varchar
+pending / passed / failed / skipped
+results
+json nullable
+النتيجة
+started_at
+timestamp nullable
+بداية
+completed_at
+timestamp nullable
+نهاية
+developer_sandbox_instances
+بيئات Sandbox مؤقتة للمطورين.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+developer_account_id
+bigint
+المطور
+sdk_project_id
+bigint nullable
+المشروع
+environment_id
+bigint nullable
+بيئة SDK
+sandbox_type
+varchar
+cms / commerce / erp / connector / ai_skill / full_demo
+status
+varchar
+provisioning / active / paused / expired / destroyed
+base_url
+varchar nullable
+رابط
+kabeeri_version
+varchar nullable
+نسخة
+expires_at
+timestamp nullable
+انتهاء
+metadata
+json nullable
+إعدادات
+created_at / updated_at
+timestamps
+تواريخ
+Sandbox لا يحتوي بيانات عملاء حقيقية.
+sandbox_seed_sets
+حزم بيانات تجريبية آمنة للـ sandbox.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+key
+varchar
+demo_cms / demo_store / demo_erp
+name
+varchar
+اسم
+description
+text nullable
+وصف
+module_key
+varchar nullable
+الموديول
+data_schema
+json nullable
+بيانات seed
+status
+varchar
+active / retired
+created_at / updated_at
+timestamps
+تواريخ
+sandbox_seed_runs
+تشغيل seed داخل sandbox.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+sandbox_instance_id
+bigint
+sandbox
+seed_set_id
+bigint
+seed
+status
+varchar
+pending / running / completed / failed
+started_at
+timestamp nullable
+بداية
+completed_at
+timestamp nullable
+نهاية
+message
+text nullable
+رسالة
+sdk_test_runs
+اختبارات SDK عامة للحزمة/المشروع.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+sdk_project_id
+bigint
+المشروع
+environment_id
+bigint nullable
+البيئة
+test_type
+varchar
+manifest / security / performance / compatibility / contract / uninstall
+status
+varchar
+pending / running / passed / failed / warning
+score
+decimal nullable
+درجة
+report
+json nullable
+تقرير
+started_at
+timestamp nullable
+بداية
+completed_at
+timestamp nullable
+نهاية
+يربط لاحقًا بـ Package Review Pipeline.
+developer_submission_sessions
+جلسة إرسال من Developer Console قبل تحويلها لمراجعة Marketplace.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+developer_account_id
+bigint
+المطور
+developer_organization_id
+bigint nullable
+الناشر
+sdk_project_id
+bigint
+المشروع
+submission_type
+varchar
+new_package / update / certification / security_review
+status
+varchar
+draft / validating / submitted / linked_to_review / cancelled
+current_step
+varchar nullable
+manifest / permissions / docs / tests / submit
+metadata
+json nullable
+إضافي
+created_at / updated_at
+timestamps
+تواريخ
+لا يمثل قرار النشر؛ القرار في package review pipeline.
+developer_submission_links
+ربط جلسة المطور بجداول Marketplace/Packages.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_submission_session_id
+bigint
+جلسة
+linked_type
+varchar
+package / package_version / package_submission / review_case
+linked_id
+bigint
+المعرف
+created_at
+timestamp
+تاريخ
+يسمح بعدم تكرار package tables.
+developer_docs
+صفحات توثيق المطور.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+doc_key
+varchar
+getting_started / package_manifest
+title
+varchar
+عنوان
+category
+varchar
+SDK / API / Themes / Connectors / AI
+visibility
+varchar
+public / partner / enterprise
+status
+varchar
+draft / published / archived
+current_version_id
+bigint nullable
+آخر نسخة
+created_at / updated_at
+timestamps
+تواريخ
+developer_doc_versions
+نسخ صفحات التوثيق.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_doc_id
+bigint
+الصفحة
+version
+varchar
+نسخة
+content_format
+varchar
+markdown / html
+content
+longtext
+المحتوى
+change_note
+text nullable
+ملاحظة
+published_by
+bigint nullable
+ناشر
+published_at
+timestamp nullable
+تاريخ
+created_at / updated_at
+timestamps
+تواريخ
+developer_doc_feedback
+ملاحظات المطورين على الوثائق.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_doc_id
+bigint
+الصفحة
+developer_account_id
+bigint nullable
+المطور
+rating
+tinyint nullable
+تقييم
+feedback
+text nullable
+تعليق
+status
+varchar
+new / reviewed / resolved
+created_at / updated_at
+timestamps
+تواريخ
+developer_webhooks
+Webhooks خاصة بحساب المطور لاستقبال أحداث review أو install أو payout.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_account_id
+bigint
+المطور
+sdk_project_id
+bigint nullable
+المشروع
+name
+varchar
+اسم
+url
+varchar
+الرابط
+secret_hash
+varchar nullable
+Hash للسر
+events
+json
+الأحداث
+status
+varchar
+active / disabled / failed
+last_delivery_at
+timestamp nullable
+آخر إرسال
+created_at / updated_at
+timestamps
+تواريخ
+لا تحفظ secret كنص واضح.
+developer_webhook_deliveries
+سجل تسليم Webhooks للمطور.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_webhook_id
+bigint
+Webhook
+event_name
+varchar
+الحدث
+status
+varchar
+pending / delivered / failed
+status_code
+int nullable
+HTTP code
+attempts
+int
+عدد المحاولات
+response_time_ms
+int nullable
+زمن
+next_retry_at
+timestamp nullable
+إعادة
+created_at / updated_at
+timestamps
+تواريخ
+developer_support_tickets
+تذاكر دعم المطورين.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+developer_account_id
+bigint
+المطور
+sdk_project_id
+bigint nullable
+المشروع
+subject
+varchar
+عنوان
+category
+varchar
+api / sdk / review / billing / security
+priority
+varchar
+low / normal / high / urgent
+status
+varchar
+open / pending / resolved / closed
+assigned_to
+bigint nullable
+المسؤول
+created_at / updated_at
+timestamps
+تواريخ
+developer_audit_logs
+سجل تدقيق خاص بأفعال المطور.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+uuid
+char
+معرف
+developer_account_id
+bigint nullable
+المطور
+sdk_project_id
+bigint nullable
+المشروع
+actor_user_id
+bigint nullable
+المستخدم
+action
+varchar
+api_token_created / submission_sent / sandbox_created
+subject_type
+varchar nullable
+الكيان
+subject_id
+bigint nullable
+المعرف
+risk_level
+varchar
+low / medium / high / critical
+ip_address
+varchar nullable
+IP
+user_agent
+text nullable
+User agent
+metadata
+json nullable
+إضافي
+created_at
+timestamp
+تاريخ
+الأحداث الحساسة يمكن نسخها أيضًا إلى audit_logs المركزي.
+developer_metrics_daily
+تحليلات يومية للمطورين والمشاريع.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+المفتاح
+developer_account_id
+bigint nullable
+المطور
+developer_organization_id
+bigint nullable
+الناشر
+sdk_project_id
+bigint nullable
+المشروع
+metric_date
+date
+اليوم
+api_calls
+int
+طلبات API
+api_errors
+int
+أخطاء
+sandbox_hours
+decimal nullable
+ساعات sandbox
+package_installs
+int
+تثبيتات
+doc_views
+int
+مشاهدات docs
+support_tickets
+int
+تذاكر
+metadata
+json nullable
+إضافي
+unique(developer_account_id, sdk_project_id, metric_date).
+7. Suggested Status Values
+المجال
+الحالات
+developer_accounts.status
+pending, active, suspended, archived
+developer_verifications.status
+draft, submitted, under_review, approved, rejected, expired
+sdk_projects.status
+active, archived, suspended
+developer_api_tokens.status
+active, expired, revoked
+developer_sandbox_instances.status
+provisioning, active, paused, expired, destroyed
+sdk_test_runs.status
+pending, running, passed, failed, warning
+developer_submission_sessions.status
+draft, validating, submitted, linked_to_review, cancelled
+8. API Scopes المقترحة
+Scope
+الغرض
+ملاحظات أمنية
+developer.profile.read
+قراءة ملف المطور
+منخفض
+developer.project.manage
+إدارة SDK projects
+يحتاج Developer account active
+developer.sandbox.manage
+إنشاء/إزالة sandboxes
+محدود بالاستخدام والخطة
+package.manifest.validate
+فحص manifest
+لا يغير production
+package.submit
+إرسال package review
+يسجل audit
+api.explorer.run
+تشغيل API Explorer
+لا يعمل على بيانات حقيقية بدون sandbox
+docs.feedback.create
+إرسال feedback
+منخفض
+webhook.manage
+إدارة webhooks
+يتطلب secret hash وdelivery logs
+connector.test.run
+اختبار connector
+لا يحفظ credentials plain text
+ai_skill.test.run
+اختبار AI Skill
+يحتاج guardrails وsimulation
+9. ERD
+erDiagram
+USERS ||--o{ DEVELOPER_ACCOUNTS : owns
+DEVELOPER_ACCOUNTS ||--o{ DEVELOPER_PROFILES : has
+DEVELOPER_ACCOUNTS ||--o{ DEVELOPER_VERIFICATIONS : verifies
+DEVELOPER_ACCOUNTS ||--o{ SDK_PROJECTS : creates
+DEVELOPER_ORGANIZATIONS ||--o{ DEVELOPER_ORGANIZATION_MEMBERSHIPS : contains
+DEVELOPER_ACCOUNTS ||--o{ DEVELOPER_ORGANIZATION_MEMBERSHIPS : joins
+SDK_PROJECTS ||--o{ SDK_ENVIRONMENTS : has
+SDK_PROJECTS ||--o{ SDK_PROJECT_MEMBERS : includes
+DEVELOPER_API_CLIENTS ||--o{ DEVELOPER_API_TOKENS : issues
+SDK_PROJECTS ||--o{ DEVELOPER_SANDBOX_INSTANCES : tests_in
+SDK_PROJECTS ||--o{ SDK_TEST_RUNS : validates
+SDK_EXTENSION_POINTS ||--o{ SDK_HOOK_DEFINITIONS : defines
+SDK_PROJECTS ||--o{ SDK_EVENT_SUBSCRIPTIONS : subscribes
+SDK_PROJECTS ||--o{ DEVELOPER_SUBMISSION_SESSIONS : submits
+DEVELOPER_SUBMISSION_SESSIONS ||--o{ DEVELOPER_SUBMISSION_LINKS : links_to_marketplace
+DEVELOPER_DOCS ||--o{ DEVELOPER_DOC_VERSIONS : versions
+DEVELOPER_DOCS ||--o{ DEVELOPER_DOC_FEEDBACK : receives
+DEVELOPER_ACCOUNTS ||--o{ DEVELOPER_AUDIT_LOGS : tracked_by
+10. Developer Onboarding Flow
+User enables Developer Console
+-> developer_account created
+-> developer_profile draft created
+-> optional developer_organization created
+-> accept developer terms
+-> run onboarding checklist
+-> create sdk_project
+-> generate CLI token
+-> create sandbox
+-> validate starter manifest
+-> run sdk_test_run
+-> ready for package submission
+11. Package Submission Flow
+Developer creates SDK project
+-> writes package manifest
+-> package:validate command runs
+-> permissions and data scopes parsed
+-> compatibility matrix checked
+-> sdk_test_runs created
+-> developer_submission_session created
+-> submit to Marketplace review pipeline
+-> developer_submission_links points to package_submission
+-> security review and signing happen in Packages system
+-> result shown in Developer Console
+12. API Explorer Flow
+Developer opens API Explorer
+-> selects sandbox environment
+-> endpoint permission/scope displayed
+-> token scope checked
+-> request sent to sandbox/public test API
+-> response logged in api_explorer_requests
+-> sensitive fields masked
+-> example can be saved to docs/snippet
+13. Sandbox Rules
+Sandbox لا يستخدم بيانات عملاء حقيقية إلا إذا كانت anonymized وبموافقة واضحة.
+كل Sandbox له expiry لتقليل التكلفة.
+كل Connector sandbox يجب أن يستخدم test credentials أو mock provider.
+AI Skill sandbox يجب أن يعمل مع data masking وguardrails.
+Sandbox destruction لا يجب أن يؤثر على package submission history.
+14. Security Requirements
+لا تحفظ API tokens أو CLI tokens أو webhook secrets كنص واضح.
+كل tokens يجب أن تكون scoped ويمكن إلغاؤها.
+كل package submission يجب أن يملك audit trail.
+API Explorer يجب أن يخفي الحقول الحساسة من logs.
+Developer webhooks يجب أن تستخدم HMAC أو secret hash.
+Developer accounts المعلقة لا يمكنها إرسال packages أو إنشاء tokens جديدة.
+Enterprise private marketplace يحتاج approval قبل التثبيت وversion pinning.
+15. Permission Examples
+Permission
+الوصف
+developer.console.view
+دخول Developer Console
+developer.account.manage
+إدارة حساب المطور
+developer.organization.manage
+إدارة فريق الناشر
+sdk.project.create
+إنشاء مشروع SDK
+sdk.project.manage
+إدارة مشروع SDK
+developer.api_token.create
+إنشاء tokens
+developer.api_token.revoke
+إلغاء tokens
+developer.sandbox.create
+إنشاء sandbox
+developer.package.submit
+إرسال package للمراجعة
+developer.docs.manage
+إدارة توثيق المطورين
+developer.certification.review
+مراجعة شهادات المطورين
+developer.support.manage
+إدارة دعم المطورين
+16. Feature Flags
+enable_developer_console
+enable_developer_accounts
+enable_sdk_projects
+enable_developer_cli_tokens
+enable_api_explorer
+enable_developer_sandboxes
+enable_sdk_contract_tests
+enable_developer_docs
+enable_developer_webhooks
+enable_package_submission_from_console
+enable_developer_certifications
+enable_public_developer_marketplace
+enable_enterprise_private_marketplace
+17. Portable / Dedicated / Enterprise Rules
+الوضع
+السلوك
+Cloud
+Developer Console مركزي داخل Kabeeri، ويرتبط بالحزم والسوق الرسمي.
+Frontend Anywhere
+لا يتغير Developer Console؛ الواجهة الخارجية لا تحصل على صلاحيات تطوير.
+Portable
+لا يتم تصدير Developer Console كاملًا؛ يتم تصدير installed packages وmanifests اللازمة للتشغيل.
+Dedicated
+يمكن أن تمتلك enterprise private developer console أو private marketplace مع sync محدود للمراجعات والتحديثات.
+Enterprise
+يدعم private publishers، version pinning، approvals، certifications، وsupport access مضبوط.
+18. Indexes مهمة
+developer_accounts: unique(user_id), unique(slug), index(status, trust_level).
+sdk_projects: unique(developer_account_id, slug), index(project_type, status).
+developer_api_tokens: index(developer_api_client_id, status), index(expires_at).
+api_explorer_requests: index(developer_account_id, created_at), index(endpoint_id, created_at).
+sdk_test_runs: index(sdk_project_id, test_type, status).
+developer_submission_links: index(linked_type, linked_id).
+developer_metrics_daily: unique(developer_account_id, sdk_project_id, metric_date).
+19. Events
+Event
+Trigger
+DeveloperAccountCreated
+عند تفعيل Developer Console
+DeveloperVerificationSubmitted
+عند إرسال تحقق
+SdkProjectCreated
+عند إنشاء مشروع
+DeveloperApiTokenCreated
+عند إنشاء token
+DeveloperApiTokenRevoked
+عند إلغاء token
+SandboxProvisioned
+عند تفعيل sandbox
+SdkTestRunCompleted
+عند انتهاء اختبار
+DeveloperSubmissionSubmitted
+عند إرسال package review
+DeveloperWebhookFailed
+عند فشل webhook
+DeveloperCertificationIssued
+عند إصدار شهادة
+20. CLI Commands المقترحة
+php artisan kabeeri:developer:create-account {userId}
+php artisan kabeeri:sdk:project-create {type} {name}
+php artisan kabeeri:package:validate {path}
+php artisan kabeeri:sdk:test {projectId}
+php artisan kabeeri:sandbox:create {projectId} --type=cms
+php artisan kabeeri:sandbox:destroy {sandboxId}
+php artisan kabeeri:api-docs:generate
+php artisan kabeeri:developer:recalculate-metrics {developerId}
+php artisan kabeeri:developer:webhook-retry {deliveryId}
+21. Acceptance Criteria
+يمكن لمستخدم إنشاء Developer Account بدون إعطائه صلاحيات platform admin.
+يمكن إنشاء SDK Project مع project_type واضح.
+يمكن توليد CLI token وAPI token scoped بدون تخزين النص الواضح.
+يمكن تشغيل package manifest validation قبل الإرسال.
+يمكن إنشاء Sandbox واستخدام Seed آمن ثم إزالته.
+يمكن تسجيل API Explorer requests مع إخفاء البيانات الحساسة.
+يمكن إرسال Package Submission وربطه بمراجعة Marketplace بدون تكرار جداول الحزمة.
+كل أفعال المطور الحساسة تظهر في developer_audit_logs أو audit_logs المركزي.
+Public Developer Marketplace لا يفتح إلا بعد review/signing/certification.
+22. أخطاء ممنوعة
+لا تجعل Developer Console يصل مباشرة إلى بيانات العملاء.
+لا تسمح بحزم بدون manifest أو permission disclosure.
+لا تخزن secrets أو tokens plain text.
+لا تجعل API Explorer يعمل على production data افتراضيًا.
+لا تفتح Public Developer Marketplace قبل review/signing كامل.
+لا تخلط Developer account مع Organization customer account بدون ربط صريح.
+لا تجعل sandbox بلا expiry أو بلا quotas.
+لا تسمح بتثبيت enterprise private packages بدون approval/version pinning.
+23. الخلاصة التنفيذية
+Developer Console & SDK Database هي طبقة تمكين المطورين داخل KABEERI. هدفها جعل المنصة قابلة للتوسع مثل WordPress، لكن بطريقة محكومة وآمنة مثل منصة Enterprise. لذلك تفصل بين تجربة المطور وأدواته من جهة، وبين Marketplace/Packages كمصدر حقيقة للحزم والمراجعات والتوقيع من جهة أخرى.
+القاعدة النهائية: Developer Console يعطي الأدوات والبيئات والتوثيق، Marketplace يعطي النشر والتوزيع والحوكمة، Security يعطي الحدود والتدقيق، وCore يحافظ على الهوية والصلاحيات.
+KABEERI Database File 33 — Developer Console & SDK Database

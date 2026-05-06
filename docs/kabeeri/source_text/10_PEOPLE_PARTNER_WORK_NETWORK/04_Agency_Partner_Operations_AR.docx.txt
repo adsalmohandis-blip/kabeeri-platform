@@ -1,0 +1,53 @@
+KABEERI Agency Partner Operations Architecture
+اعتماد الوكالات وإدارة العملاء والتطبيقات من Dashboard واحد
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. تعريف Kabeeri Agency Partner
+Agency Partner هو كيان شريك معتمد سنويًا، مكوّن من شخص مؤهل أو فريق، يستطيع إدارة عملاء وتطبيقات متعددة داخل Kabeeri Dashboard مخصص.
+• ليس مجرد title فردي.
+• يحتاج Organization/Company وAgency Profile.
+• قد يتكون من App Builders وGrowth Partners وCreators وSupport/Migration badges.
+• يدفع اعتمادًا سنويًا مقابل الثقة والظهور والأدوات، وليس بالضرورة خدمة مدفوعة من المنصة.
+2. شروط الاعتماد
+المسار
+الشروط
+فرد محترف
+App Builder Level 3 + مشاريع ناجحة + تقييمات + Agency Management Test
+فريق صغير
+Owner معتمد + 2 App Builders L2 + شخص Support/Migration + Portfolio
+شركة قائمة
+Business Profile + مستندات + فريق + أعمال سابقة + مراجعة منصة
+تجديد سنوي
+مراجعة جودة + تقييمات + عدم وجود مخالفات خطيرة + سداد رسوم الاعتماد
+3. Agency Dashboard
+القسم
+الوظيفة
+Overview
+مؤشرات العملاء والتطبيقات والمشاريع
+Clients
+قائمة العملاء والعلاقات والصلاحيات
+Apps
+كل التطبيقات المدارة وحالاتها
+Projects
+مشاريع تنفيذ/صيانة/هجرة
+Access Grants
+طلبات وصلاحيات مؤقتة
+Team
+أعضاء الوكالة وقدراتهم
+Client Reports
+تقارير شهرية للعملاء
+Maintenance Notes
+ملاحظات صيانة وتغييرات
+Billing/Commissions
+رسوم/عمولات/إحالات
+Support Tickets
+طلبات العملاء والدعم
+4. صلاحيات الوكالة وحدودها
+• تدير التطبيقات فقط بعد موافقة العميل.
+• لا تدخل Billing إلا بتفويض صريح.
+• لا تغير ملكية التطبيق.
+• لا تشاهد مستندات حساسة إلا بإذن.
+• كل فعل يسجل في activity/audit logs.
+• العميل يستطيع إلغاء الوصول في أي وقت.
+5. Database Concepts
+agency_profilesagency_accreditationsagency_team_membersagency_client_relationshipsagency_managed_appsagency_access_grantsagency_project_requestsagency_client_reportsagency_quality_reviewsagency_subscription_records
+KABEERI — Confidential Product Architecture

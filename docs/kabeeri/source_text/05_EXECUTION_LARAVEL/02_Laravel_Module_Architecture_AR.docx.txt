@@ -1,0 +1,347 @@
+KABEERI Laravel Module Architecture
+معمارية موديولات Laravel لبناء Kabeeri Modular Monolith
+هذا الملف يحول قاعدة البيانات وخريطة العلاقات إلى هيكل كود عملي داخل Laravel، بحيث يعرف المطور أو AI أين يضع كل Model وAction وPolicy وEvent وJob وFilament Resource بدون فوضى أو تكرار.
+1. الهدف من الملف
+• تثبيت هيكل موديولات واضح قبل كتابة كود V1.
+• منع تحول Laravel إلى مجلد app ضخم بلا حدود بين Core وCMS وCommerce وERP.
+• تسهيل العمل بمبدأ: migration واحد، model واحد، policy واحدة، action واحدة، resource واحدة، test واحد.
+• ضمان أن التوسع لاحقًا إلى Packages وMarketplace وDedicated وPortable لا يحتاج إعادة هيكلة جذرية.
+• توفير عقد ثابت بين الموديولات: Events, Actions, Contracts, Policies, Services.
+2. القرار المعماري الأعلى
+يبدأ Kabeeri كـ Modular Monolith داخل Laravel وليس Microservices. الهدف هو فصل منطقي واضح داخل الكود، مع الاحتفاظ بسرعة التطوير وسهولة الاختبار والنشر في المراحل الأولى.
+القرار
+المعنى التنفيذي
+Modular Monolith
+كل الموديولات داخل تطبيق Laravel واحد، لكن بفواصل واضحة في namespaces وservices وevents.
+Core First
+لا يبنى CMS أو Commerce أو ERP بدون Core Identity وPermissions وSites.
+Event-driven Boundaries
+الموديولات لا تستدعي منطق بعضها مباشرة إلا عبر Events أو Contracts أو Actions عامة.
+Filament First
+لوحة الإدارة في V1 تعتمد Filament لتسريع CRUD وPolicies وResources.
+Package-ready
+الهيكل الداخلي يمهد لاحقًا لتحويل الموديولات إلى Packages أو Marketplace extensions.
+3. Stack المعتمد في مرحلة البناء الأولى
+الطبقة
+الاختيار
+Backend
+PHP 8.3+ / Laravel 11 أو 12 / MySQL 8+
+Admin UI
+Filament + Laravel في البداية
+Public Frontend
+Blade Themes + Tailwind CSS + Alpine.js عند الحاجة
+Tests
+Pest أو PHPUnit + Feature Tests + Policy Tests
+Code Quality
+Laravel Pint ثم Larastan لاحقًا
+Queue/Cache
+Database queue/file cache في البداية، Redis-ready لاحقًا
+4. Root Folder Structure المقترح
+يستخدم المشروع هيكلًا واضحًا داخل app/، ولا يعني وجود المجلدات أن كل شيء سيتم بناؤه في V1. وجودها يثبت الحدود ويمنع الفوضى.
+app/  Core/    Auth/    Users/    Organizations/    Permissions/    Sites/    Settings/    FeatureFlags/    Activity/    Media/    Notifications/    Packages/    Localization/  CMS/    Content/    Taxonomies/    SEO/    Themes/    Forms/    Redirects/    Menus/  Rabet/    Companies/    BusinessProfiles/    Verification/    Trust/  Commerce/    Products/    Cart/    Orders/    Customers/    Payments/  ERP/    CRM/    Sales/    Invoicing/    Inventory/    Purchasing/    Accounting/    HR/  Operating/    Workflows/    Search/    Moderation/    Reviews/    Disputes/  Platform/    Cloud/    Billing/    Marketplace/    Mall/    Talent/    Teams/    SecurityCenter/    AI/    Integrations/    DeveloperConsole/  Enterprise/    BI/    GRC/    DataPlatform/    IndustrySolutions/
+5. Module Contract — ما الذي يجب أن يحتويه كل موديول؟
+المجلد
+الاستخدام
+Models/
+Eloquent models الخاصة بالموديول فقط.
+Actions/
+تنفيذ فعل محدد قابل للاختبار مثل CreateSiteAction أو PublishContentEntryAction.
+Services/
+تنسيق عمليات أكبر أو domain services. لا يتحول إلى God Service.
+Policies/
+سياسات الوصول لكل Model مهم.
+Events/
+الأحداث التي يطلقها الموديول بعد حدوث فعل.
+Listeners/
+ردود الفعل على أحداث داخلية أو خارجية.
+Jobs/
+الأعمال الثقيلة أو المؤجلة مثل import أو media processing.
+Enums/
+حالات status/type/visibility/risk_level إن أمكن.
+DTOs/
+نقل بيانات منظمة بين Actions/Services عند الحاجة.
+Http/Requests/
+FormRequest validation لواجهات API أو admin actions.
+Filament/Resources/
+موارد لوحة الإدارة الخاصة بالموديول.
+Database/Factories/
+Factories للاختبارات والبيانات التجريبية.
+Tests/
+Unit/Feature/Policy tests الخاصة بالموديول.
+Contracts/
+واجهات يستهلكها موديول آخر بدل الاستدعاء المباشر.
+Providers/
+ServiceProvider للموديول عند الحاجة.
+Docs/
+ملاحظات تنفيذية وقرارات خاصة بالموديول.
+6. قالب هيكل أي Module
+app/Core/Organizations/  Models/    Organization.php    OrganizationMembership.php  Actions/    CreateOrganizationAction.php    InviteOrganizationMemberAction.php  Policies/    OrganizationPolicy.php    OrganizationMembershipPolicy.php  Events/    OrganizationCreated.php    MemberInvited.php  Listeners/    CreateDefaultOrganizationRoles.php    CreateDefaultOrganizationSettings.php  Services/    OrganizationContext.php    OrganizationPermissionResolver.php  Filament/    Resources/      OrganizationResource.php      OrganizationResource/Pages/      OrganizationResource/RelationManagers/  Http/    Requests/  Tests/    Feature/    Unit/    Policy/  Providers/    OrganizationServiceProvider.php
+7. خريطة موديولات V1
+Module
+Namespace
+محتوى V1
+Core Auth/Users
+app/Core/Auth + app/Core/Users
+Users, UserProfile, Auth, locale/timezone, account status.
+Organizations
+app/Core/Organizations
+Organizations, memberships, invite flow, organization context.
+Permissions
+app/Core/Permissions
+Roles, permissions, role_permission, overrides, PermissionService.
+Sites
+app/Core/Sites
+Sites, domains/subdomains foundation, site settings.
+Settings
+app/Core/Settings
+Scoped settings: platform/organization/company/site/module/user.
+Feature Flags
+app/Core/FeatureFlags
+feature_flags, overrides, FeatureFlagService.
+Activity
+app/Core/Activity
+activity_logs, audit foundation, LogActivityAction.
+Notifications
+app/Core/Notifications
+notifications basic, listeners.
+Media
+app/Core/Media
+media_assets, media_usages, upload/validation.
+CMS Content
+app/CMS/Content
+content_types, content_entries, revisions, publish action.
+CMS Taxonomies
+app/CMS/Taxonomies
+taxonomies, taxonomy_terms, content_term.
+CMS SEO
+app/CMS/SEO
+SEO fields, sitemap basic, robots basic.
+Themes
+app/CMS/Themes
+themes, active theme, Blade rendering.
+Packages Foundation
+app/Core/Packages
+installed_packages, manifest concept, activation/deactivation basic.
+Rabet Foundation
+app/Rabet/*
+companies, business_profiles, verification_requests/documents basic.
+8. موديولات V2 إلى V6 — خريطة نمو تدريجية
+الإصدار
+الموديولات الجديدة/الموسعة
+ملاحظة
+V2
+Forms, Redirects, Menus, WordPress Importer, Commerce Foundation, Services, Tasks Basic
+لا يدخل ERP كامل ولا Mall كامل.
+V3
+CRM Lite, Sales Basic, Invoicing, Inventory, Purchasing, Accounting Starter, Employees, Workflows
+أي مالي/مخزني يحتاج Permission + Audit + Status workflow.
+V4
+Cloud, Billing, Internal Marketplace, Mall V1, Talent V1, Agency, Teams, AI V1, Security Center
+Commercial platform release.
+V5
+ERP Pro, Integration Hub, Connectors, Contracts, Helpdesk, POS, Commission Engine
+توسيع ERP وتشغيل التكامليات.
+V6
+BI, GRC, Enterprise Security, Data Platform, Public Developer Marketplace, Industry Solutions
+Enterprise complete platform.
+9. Naming Conventions
+العنصر
+القاعدة
+مثال
+Model
+PascalCase مفرد
+Organization, ContentEntry, BusinessProfile
+Table
+snake_case جمع
+organizations, content_entries, business_profiles
+Action
+Verb + Entity + Action
+CreateOrganizationAction, PublishContentEntryAction
+Policy
+Model + Policy
+OrganizationPolicy, ContentEntryPolicy
+Event
+Past tense
+OrganizationCreated, ContentPublished
+Listener
+Verb + Object
+LogContentPublished, UpdateSitemap
+Job
+Verb + Object + Job إن لزم
+ProcessMediaUploadJob, RunImportBatchJob
+Permission
+resource.action
+content.publish, organization.members.invite
+Route
+api/v1/{context}/{resource}
+/api/v1/organizations/{organization}/sites
+10. قواعد العلاقات بين الموديولات
+• الموديول يملك Models وTables الخاصة به فقط.
+• لو موديول يحتاج رد فعل من موديول آخر، يطلق Event ولا يستدعي Controller أو Service داخلي مباشرة.
+• المشاركة بين الموديولات تتم عبر Contracts أو Actions عامة أو Events.
+• لا يتم وضع Business Logic داخل Controllers أو Filament Resources.
+• أي Action مهم يجب أن يسجل Activity أو Audit حسب الحساسية.
+• أي فعل له أثر مالي أو أمني أو خصوصية يجب أن يمر عبر Policy/Permission.
+11. Event-driven Boundaries
+القاعدة: Action happens → Event fired → Listeners react → Logs/Notifications/Workflows/Webhooks run.
+Action
+Event
+Listeners مبدئية
+Create Organization
+OrganizationCreated
+CreateDefaultOrganizationRoles, CreateDefaultOrganizationSettings, LogOrganizationCreated
+Create Site
+SiteCreated
+ApplyDefaultTheme, CreateDefaultPages, CreateSiteSeoSettings, LogSiteCreated
+Publish Content
+ContentPublished
+ClearPageCache, UpdateSitemap, LogContentPublished, NotifyEditors
+Upload Media
+MediaUploaded
+GenerateThumbnails, ScanFileBasic, ExtractMetadata, LogMediaUploaded
+Submit Verification
+VerificationSubmitted
+ValidateVerificationDocuments, AssignVerificationReviewer, NotifyCompanyOwner
+Create Order
+OrderCreated
+NotifySeller, ReserveStock, CreateCustomerTimelineEntry
+Invoice Paid
+InvoicePaid
+UpdatePaymentStatus, PostAccountingEntry, NotifyFinanceTeam
+12. Actions vs Services vs Jobs
+النوع
+متى يستخدم؟
+مثال
+Action
+فعل واحد واضح وقابل للاختبار.
+CreateSiteAction, PublishContentEntryAction
+Service
+تنسيق منطق مجال أكبر أو واجهة reusable.
+PermissionService, EntitlementService
+Job
+عمل ثقيل أو مؤجل أو قابل للإعادة.
+ImportWordPressXmlJob, GenerateThumbnailsJob
+Listener
+رد فعل على Event.
+UpdateSitemap, SendWelcomeNotification
+Policy
+قرار سماح/رفض.
+ContentEntryPolicy::publish
+13. Filament Architecture
+Panel/Resource
+الاستخدام
+Platform Admin Panel
+إدارة المنصة: users, organizations, billing, moderation, packages.
+Organization Workspace
+إدارة sites, companies, members, roles, billing, settings.
+Site Admin
+CMS content, media, themes, plugins, SEO.
+Company / Rabet Admin
+business profile, verification, team, trust, documents.
+Commerce Admin
+products, orders, customers, coupons, payments.
+ERP Admin
+CRM, sales, inventory, finance, purchasing, HR.
+في V1 يفضل البدء بلوحة Filament واحدة مع Resources منظمة حسب navigation groups، ثم فصل Panels لاحقًا عند الحاجة.
+14. Policy & Permission Architecture
+• كل Model محوري له Policy: Organization, Site, ContentEntry, MediaAsset, Company, BusinessProfile.
+• لا نعتمد على role ثابت داخل users.
+• PermissionService يحسب السماح من memberships + roles + overrides + context.
+• deny overrides allow.
+• الصلاحيات الحساسة منفصلة: billing.manage, finance.journal.post, verification.approve, plugin.install, ai.apply_sensitive_change.
+• Filament Resources تستدعي Policies ولا تتجاوزها.
+// Example permission check pattern$permissionService->can(    user: $user,    permission: 'content.publish',    context: new SiteContext($site));
+15. Context Objects
+لأن Kabeeri context-first، يفضل إنشاء كائنات سياق صغيرة لتجنب تمرير organization_id/site_id/company_id بشكل عشوائي.
+app/Core/Context/  PlatformContext.php  OrganizationContext.php  CompanyContext.php  SiteContext.php  ModuleContext.php// Examplenew SiteContext(    organization: $organization,    site: $site,    company: $site->company);
+16. Routes & API Structure
+routes/  web.php  api.php  admin.php  public.php// API examplesGET    /api/v1/organizationsPOST   /api/v1/organizations/{organization}/sitesGET    /api/v1/sites/{site}/contentPOST   /api/v1/sites/{site}/content/{entry}/publishPOST   /api/v1/companies/{company}/verificationGET    /api/v1/mall/businesses
+• لا تضع API عامة للبيانات الخاصة بدون scope واضح.
+• الـ public APIs يجب أن تكون visibility-aware وrate-limited.
+• أي API خارجية يجب أن تستخدم token scopes وrequest logging.
+17. Service Providers & Module Registry
+في البداية يمكن تسجيل providers يدويًا. لاحقًا يتم إنشاء ModuleRegistry لقراءة الموديولات المفعلة وتسجيل providers/hooks/routes/settings.
+app/Core/Modules/  ModuleRegistry.php  ModuleServiceProvider.php  Contracts/RegistersPermissions.php  Contracts/RegistersEvents.php  Contracts/RegistersSettings.php// V1 minimal providerclass CmsServiceProvider extends ServiceProvider{    public function boot(): void    {        Event::listen(ContentPublished::class, UpdateSitemap::class);    }}
+18. Package-ready Design
+الموديولات الداخلية ليست Packages خارجية في V1، لكنها يجب أن تكون قابلة للتحول لاحقًا. لذلك يتم الالتزام بـ manifest-like metadata وdeclared permissions وevents بدلاً من تعديل Core مباشرة.
+Package Type
+Laravel Module Equivalent
+Plugin
+app/Core/Packages أو app/CMS/Forms/SEO extension
+Theme
+app/CMS/Themes + resources/views/themes
+Module
+app/ERP/CRM أو app/Commerce/Products
+Connector
+app/Platform/Integrations/Connectors
+AI Skill
+app/Platform/AI/Skills
+Industry Solution
+app/Enterprise/IndustrySolutions
+19. Testing Structure
+tests/  Feature/    Core/      OrganizationTest.php      PermissionTest.php    CMS/      ContentPublishingTest.php    Rabet/      VerificationTest.php  Unit/    Core/      PermissionServiceTest.php    CMS/      SlugGeneratorTest.php  Policy/    OrganizationPolicyTest.php    ContentEntryPolicyTest.php  Integration/    ServiceRequestToLeadTest.php
+• أي Feature جديدة لا تكتمل بدون Unit/Feature/Policy test حسب نوعها.
+• الأولوية الأولى: Auth, Organizations, Permissions, Sites, Content publishing, Media upload, Activity logs, Feature flags.
+• Package tests لاحقًا يجب أن تغطي install/activate/deactivate/update/uninstall.
+20. V1 Build Order داخل الكود
+Sprint
+Module
+Deliverable
+S0
+Project Setup
+Laravel project, Filament, auth starter, tests, base folders.
+S1
+Core Identity
+users, user_profiles, auth, profile tests.
+S2
+RBAC
+roles, permissions, role_permission, overrides, PermissionService.
+S3
+Organizations
+organizations, memberships, create/invite actions, resources.
+S4
+Sites
+sites, site settings, CreateSiteAction, SiteResource.
+S5
+CMS Content
+content types, entries, revisions, taxonomies, publish action.
+S6
+Media
+media assets/usages, upload action, MediaLibraryResource.
+S7
+Themes/Packages
+themes, installed_packages foundation, activation.
+S8
+Activity/Notifications
+logs, notifications, listeners.
+S9
+Rabet Foundation
+companies, business_profiles, verification foundation.
+S10
+Installer/Demo
+settings, feature flags, seeders, system status, demo.
+21. Anti-patterns ممنوعة
+• وضع company_id أو role ثابت داخل users.
+• استدعاء Service داخلي من موديول آخر بدل Event/Contract.
+• Controllers تحتوي business logic.
+• Filament Resources تتجاوز Policies.
+• استخدام JSON بدل علاقات أساسية.
+• بناء ERP أو Marketplace أو AI كامل قبل استقرار V1.
+• فتح Package Marketplace بدون manifest/permissions/review/signing.
+• تنفيذ imports أو media processing داخل request مباشر.
+• أي Action حساس بدون Audit log.
+• أي AI apply بدون plan/preview/approval/rollback foundation.
+22. Checklist قبل بدء كتابة الكود
+• تم اعتماد Database Master Index.
+• تم اعتماد Master ERD / Relationship Map.
+• تم اعتماد Laravel Migration Build Order.
+• تم تحديد أول Wave من migrations.
+• تم إنشاء folder structure الأساسي.
+• تم تحديد أول 5 modules في V1: Auth, Organizations, Permissions, Sites, CMS.
+• تم تجهيز test runner وPint.
+• تم تجهيز Filament admin login.
+• تم الاتفاق أن كل feature تمر بـ: migration → model → policy → action/service → UI/API → tests.
+23. الخلاصة التنفيذية
+هذا الملف يحوّل Kabeeri من رؤية ضخمة إلى هيكل Laravel قابل للبناء تدريجيًا. القاعدة النهائية: ابدأ Modular Monolith صغيرًا، افصل الحدود بوضوح، استخدم Events بدل التشابك، اجعل Policies وTests جزءًا من كل Feature، ولا تفتح التوسعات العامة قبل الحوكمة والأمان.
+KABEERI — Laravel Module Architecture
+Kabeeri — powered by ADMIT

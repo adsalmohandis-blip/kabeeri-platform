@@ -1,0 +1,583 @@
+KABEERI Database File 27 — Moderation System Database
+نظام الإشراف والمراجعة على المحتوى العام داخل Kabeeri
+هذا الملف يصف تصميم قاعدة البيانات الخاصة بطبقة Moderation System، وهي طبقة مركزية تحمي Kabeeri Mall وTalent Marketplace وReviews وMessages وPublic Listings من المحتوى المخالف أو المضلل أو الخطر.
+1. تعريف Moderation System
+Moderation System هو النظام المسؤول عن استقبال البلاغات، مراجعة المحتوى العام، تطبيق قرارات الإخفاء أو التعليق أو الرفض، وإدارة الاعتراضات والتصعيد. لا يمثل هذا النظام مصدر الحقيقة للمحتوى، بل يتحكم في قابلية ظهوره للعامة.
+• يحمي Kabeeri Mall من الشركات المزيفة، الخدمات الوهمية، المنتجات المخالفة، والتقييمات المصطنعة.
+• يحمي Talent Marketplace من الملفات المهنية المضللة أو الرسائل المسيئة.
+• يحمي Reviews/Reputation من التلاعب والتشهير والسبام.
+• يحمي المنصة من نشر بيانات خاصة أو قانونية أو مالية داخل واجهات عامة.
+2. لماذا هذا الملف مهم؟
+أي سوق عام بدون Moderation سيتحول سريعًا إلى مصدر مخاطر: احتيال، محتوى مخالف، إساءة، تسريب بيانات، تلاعب في السمعة، وانخفاض الثقة. لذلك يجب أن تكون moderation foundation جاهزة قبل إطلاق Mall أو Talent بشكل عام.
+3. ما الذي يحتاج Moderation؟
+• Business profiles.
+• Services.
+• Products.
+• Professional profiles.
+• Reviews.
+• Messages.
+• Images and media.
+• Public descriptions.
+• Marketplace listings.
+• Package submissions لاحقًا في Developer Marketplace.
+4. المبادئ الحاكمة
+المبدأ
+المعنى
+Public-first protection
+أي شيء يظهر للعامة يجب أن يكون قابلًا للمراجعة أو البلاغ أو الإيقاف.
+Mirror-safe moderation
+Kabeeri Mall لا يقرأ مباشرة من قاعدة العميل؛ بل يراجع ويعرض Mall Mirror فقط.
+Deny beats publish
+إذا وُجد قرار suspension أو rejection فلا يظهر المحتوى حتى لو المصدر يقول published.
+Human decision for high risk
+القرارات عالية الخطورة لا تعتمد على AI وحده، بل تحتاج Moderator أو Workflow Approval.
+Audit everything
+كل قرار مهم يجب أن يسجل: من قرر؟ متى؟ لماذا؟ وعلى أي كيان؟
+Appeal available
+يجب أن توجد آلية اعتراض للقرارات المؤثرة مثل suspension أو removal.
+5. حدود الملف
+هذا الملف لا يبني Mall كامل ولا Reviews كامل ولا Disputes كامل؛ بل يحدد طبقة الإشراف التي تتكامل معهم. جداول Reviews وDisputes وMall Mirror تبقى في ملفاتها، بينما هذا الملف يحدد البلاغات، queue، المراجعات، الأفعال، القرارات، والاعتراضات.
+6. الجداول الأساسية
+moderation_casesmoderation_reportsmoderation_queue_itemsmoderation_reviewsmoderation_actionsmoderation_decisionsmoderation_appealsmoderation_rulesmoderation_rule_matchesmoderation_flagsmoderation_labelsmoderation_commentsmoderation_attachmentsmoderation_assignment_rulesmoderation_sla_policiesmoderation_trust_impactsmoderation_sync_eventsmoderation_audit_logsblocked_termscontent_safety_policies
+7. moderation_cases
+7.1 moderation_cases
+يمثل Case عام يمكن أن يجمع بلاغًا أو أكثر وقرارًا أو أكثر حول نفس الموضوع.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام آمن
+organization_id nullable
+السياق المالك إذا كان معروفًا
+company_id nullable
+الشركة المرتبطة
+site_id nullable
+الموقع المرتبط
+subject_type
+نوع الكيان: business_profile, service, product, review, message, media, talent_profile, package
+subject_id
+معرف الكيان الأصلي أو mirror entity
+source_type
+cloud, frontend_anywhere, portable, dedicated, manual
+case_type
+user_report, automated_flag, pre_publish_review, post_publish_review, dispute_related
+status
+حالة الـ case
+risk_level
+low, medium, high, critical
+priority
+low, normal, high, urgent
+assigned_moderator_id nullable
+المراجع المسؤول
+opened_by nullable
+مستخدم أو system
+opened_at
+وقت الفتح
+closed_at nullable
+وقت الإغلاق
+final_decision_id nullable
+آخر قرار نهائي
+metadata json nullable
+تفاصيل إضافية
+created_at / updated_at
+timestamps
+القيم المقترحة:
+opentriagedunder_reviewwaiting_for_owneraction_requiredresolvedclosedreopenedescalated
+الفهارس المقترحة:
+index(organization_id, status)index(subject_type, subject_id)index(assigned_moderator_id, status)index(risk_level, priority)index(source_type)
+8. moderation_reports
+8.1 moderation_reports
+بلاغ مستخدم أو نظام عن كيان قابل للمراجعة.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام
+moderation_case_id nullable
+يربط البلاغ بـ case
+reporter_user_id nullable
+المبلّغ، وقد يكون null في البلاغات الآلية
+reportable_type
+نوع الكيان
+reportable_id
+معرف الكيان
+reason
+سبب البلاغ
+message nullable
+نص البلاغ
+status
+حالة البلاغ
+assigned_moderator_id nullable
+المراجع
+ip_address nullable
+للحد من abuse
+user_agent nullable
+للتحليل الأمني
+created_at / updated_at
+timestamps
+القيم المقترحة:
+newlinked_to_casedismissedacceptedduplicateabusive_reportclosed
+الفهارس المقترحة:
+index(reporter_user_id)index(reportable_type, reportable_id)index(status)index(reason)
+9. moderation_queue_items
+9.1 moderation_queue_items
+طابور العمل الذي يظهر للمراجعين، وقد ينشأ من بلاغ أو rule أو publish workflow.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام
+moderation_case_id nullable
+الـ case المرتبط
+subject_type
+نوع الكيان
+subject_id
+معرف الكيان
+queue_type
+نوع الطابور
+status
+حالة العنصر
+priority
+أولوية
+risk_level
+مستوى الخطورة
+assigned_to nullable
+المراجع الحالي
+due_at nullable
+موعد SLA
+locked_by nullable
+من يمسك العنصر للمراجعة
+locked_at nullable
+وقت القفل
+metadata json nullable
+تفاصيل إضافية
+created_at / updated_at
+timestamps
+القيم المقترحة:
+pendingassignedin_reviewwaiting_for_infocompletedcancelledexpired
+الفهارس المقترحة:
+index(queue_type, status)index(assigned_to, status)index(priority, risk_level)index(due_at)
+10. moderation_reviews
+10.1 moderation_reviews
+جلسة مراجعة فعلية يقوم بها Moderator أو Legal/Trust reviewer.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام
+moderation_case_id
+الـ case
+queue_item_id nullable
+عنصر الطابور
+reviewer_user_id
+المراجع
+review_type
+manual, legal, trust, ai_assisted, security
+status
+حالة جلسة المراجعة
+risk_assessment json nullable
+تقييم المخاطر
+notes longtext nullable
+ملاحظات داخلية
+started_at nullable
+بداية المراجعة
+completed_at nullable
+نهاية المراجعة
+created_at / updated_at
+timestamps
+القيم المقترحة:
+startedcompletedcancelledescalatedneeds_second_review
+الفهارس المقترحة:
+index(moderation_case_id)index(reviewer_user_id)index(review_type, status)
+11. moderation_actions
+11.1 moderation_actions
+إجراء تطبيقي على المحتوى أو الحساب أو الظهور العام.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام
+moderation_case_id nullable
+الـ case
+moderation_report_id nullable
+بلاغ محدد إن وجد
+actionable_type
+نوع الكيان المتأثر
+actionable_id
+معرف الكيان
+action_type
+نوع الإجراء
+reason
+سبب الإجراء
+performed_by nullable
+المستخدم أو system
+previous_status nullable
+الحالة السابقة
+new_status nullable
+الحالة الجديدة
+is_reversible boolean default true
+هل يمكن عكسه؟
+reversed_by nullable
+من عكس الإجراء
+reversed_at nullable
+وقت العكس
+metadata json nullable
+تفاصيل إضافية
+created_at
+timestamp
+القيم المقترحة:
+hideunhidesuspendunsuspendrejectapproveremoverestoremark_sensitiverequest_changeslock_commentsdisable_messagingshadow_limitescalateno_action
+الفهارس المقترحة:
+index(actionable_type, actionable_id)index(action_type)index(performed_by)index(created_at)
+12. moderation_decisions
+12.1 moderation_decisions
+قرار نهائي أو مرحلي يصدر عن Moderator أو لجنة/Workflow.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام
+moderation_case_id
+الـ case
+decision_by nullable
+المقرر
+decision_type
+نوع القرار
+decision_status
+حالة القرار
+summary
+ملخص القرار
+actions json nullable
+الإجراءات التي يجب تطبيقها
+policy_references json nullable
+السياسات المرجعية
+requires_appeal_window boolean default false
+هل ينتظر مهلة اعتراض؟
+appeal_deadline_at nullable
+آخر موعد للاعتراض
+decided_at nullable
+وقت القرار
+created_at / updated_at
+timestamps
+القيم المقترحة:
+approve_publishreject_publishhide_contentsuspend_listingremove_contentrestore_contentwarn_ownerno_violationescalate_to_disputeescalate_to_legaltemporary_hold
+الفهارس المقترحة:
+index(moderation_case_id)index(decision_type)index(decided_at)
+13. moderation_appeals
+13.1 moderation_appeals
+اعتراض مالك المحتوى أو المستخدم على قرار moderation.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام
+moderation_case_id
+الـ case
+decision_id
+القرار المعترض عليه
+appealed_by
+مقدم الاعتراض
+status
+حالة الاعتراض
+reason longtext
+سبب الاعتراض
+reviewed_by nullable
+مراجع الاعتراض
+review_notes nullable
+ملاحظات
+result nullable
+نتيجة الاعتراض
+submitted_at
+وقت التقديم
+resolved_at nullable
+وقت الحسم
+created_at / updated_at
+timestamps
+القيم المقترحة:
+submittedunder_reviewacceptedrejectedpartially_acceptedexpiredcancelled
+الفهارس المقترحة:
+index(moderation_case_id)index(appealed_by)index(status)
+14. moderation_rules
+14.1 moderation_rules
+قواعد آلية تساعد في اكتشاف المخاطر، وليست بديلًا عن القرار البشري في الحالات الحساسة.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام
+name
+اسم القاعدة
+rule_key
+مفتاح فريد
+target_type
+business, service, product, review, message, media, talent, package
+rule_type
+blocked_terms, pattern, risk_score, duplicate, velocity, external_signal
+severity
+low, medium, high, critical
+action_on_match
+queue, auto_hide, block_publish, warn, require_manual_review
+conditions json
+شروط القاعدة
+status
+active, inactive, testing
+created_by nullable
+من أنشأها
+created_at / updated_at
+timestamps
+القيم المقترحة:
+activeinactivetestingdeprecated
+الفهارس المقترحة:
+unique(rule_key)index(target_type, status)index(severity)
+15. moderation_rule_matches
+15.1 moderation_rule_matches
+نتيجة تطبيق قاعدة آلية على محتوى محدد.
+الحقل
+الوصف
+id
+Primary key
+moderation_rule_id
+القاعدة
+moderation_case_id nullable
+case تم فتحه
+subject_type
+نوع الكيان
+subject_id
+معرف الكيان
+matched_value nullable
+القيمة التي تسببت في المطابقة
+confidence decimal nullable
+درجة الثقة
+status
+حالة المطابقة
+metadata json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+القيم المقترحة:
+newqueueddismissedconfirmedfalse_positive
+الفهارس المقترحة:
+index(moderation_rule_id)index(subject_type, subject_id)index(status)
+16. moderation_flags / labels
+تستخدم flags للتصنيف السريع داخل الطوابير والبحث والتقارير.
+الجدول
+الحقول الأساسية
+الاستخدام
+moderation_flags
+id, subject_type, subject_id, flag_type, severity, source, expires_at, metadata, created_at
+وسم كيان بأنه يحتاج انتباه أو مراجعة.
+moderation_labels
+id, name, slug, color, description, status, created_at, updated_at
+Labels يستخدمها فريق المراجعة مثل scam_suspected أو verified_needed.
+moderation_case_labels
+id, moderation_case_id, moderation_label_id, created_by, created_at
+ربط labels بالـ case.
+17. moderation_comments / attachments
+الجدول
+الحقول الأساسية
+ملاحظات
+moderation_comments
+id, moderation_case_id, author_user_id, visibility, body, created_at, updated_at
+تعليقات داخلية أو ظاهرة للمالك حسب visibility.
+moderation_attachments
+id, moderation_case_id, uploaded_by, media_asset_id, attachment_type, description, created_at
+أدلة أو صور أو مستندات مرتبطة بالمراجعة.
+18. assignment و SLA
+الجدول
+الحقول الأساسية
+الاستخدام
+moderation_assignment_rules
+id, rule_name, target_type, country_id, language, risk_level, assign_to_role, assign_to_user_id, status
+توزيع cases على فريق أو مراجع محدد.
+moderation_sla_policies
+id, name, case_type, risk_level, response_minutes, resolution_minutes, status
+تحديد زمن الرد والحسم حسب الخطورة.
+moderation_sla_events
+id, moderation_case_id, sla_policy_id, event_type, due_at, completed_at, status
+تتبع الالتزام بالـ SLA.
+19. trust impact
+19.1 moderation_trust_impacts
+يربط قرارات الإشراف بتأثيرها على Trust Score أو Reputation.
+الحقل
+الوصف
+id
+Primary key
+moderation_case_id
+الـ case
+subject_type
+الكيان
+subject_id
+المعرف
+impact_type
+warning, penalty, restore, trust_hold
+score_delta nullable
+تغير في النقاط
+reason
+سبب التأثير
+expires_at nullable
+نهاية أثر مؤقت
+created_at
+timestamp
+القيم المقترحة:
+warningminor_penaltymajor_penaltytrust_holdrestore_scoreno_impact
+الفهارس المقترحة:
+index(subject_type, subject_id)index(moderation_case_id)index(impact_type)
+20. blocked_terms و content_safety_policies
+الجدول
+الحقول الأساسية
+الاستخدام
+blocked_terms
+id, term, language, category, severity, match_type, status, created_at, updated_at
+قائمة ألفاظ أو عبارات ممنوعة أو حساسة.
+content_safety_policies
+id, policy_key, name, applies_to json, rules json, status, version, created_at, updated_at
+سياسات سلامة المحتوى حسب النوع والدولة/اللغة.
+content_safety_policy_versions
+id, policy_id, version, rules json, changed_by, created_at
+نسخ السياسات وتاريخها.
+21. moderation_sync_events
+21.1 moderation_sync_events
+أحداث مزامنة moderation مع Portable أو Dedicated أو Mall Mirror.
+الحقل
+الوصف
+id
+Primary key
+uuid
+معرف عام
+source_type
+cloud, portable, dedicated, frontend_anywhere
+source_id nullable
+معرف المصدر
+event_type
+نوع الحدث
+subject_type
+نوع الكيان
+subject_id nullable
+معرف داخلي
+external_id nullable
+معرف خارجي
+status
+حالة المعالجة
+payload json nullable
+البيانات
+processed_at nullable
+وقت المعالجة
+errors json nullable
+أخطاء
+created_at / updated_at
+timestamps
+القيم المقترحة:
+receivedvalidatedprocessedrejectedfailedretrying
+الفهارس المقترحة:
+index(source_type, source_id)index(subject_type, subject_id)index(event_type, status)
+22. حالات النشر المشتركة
+أي كيان عام يجب أن يدعم قيم status/publication_status التالية أو ما يعادلها:
+draftpending_reviewunder_reviewneeds_changesapprovedpublishedhiddensuspendedrejectedremovedappealedrestored
+لا يجوز أن يكون moderation status منفصلًا بالكامل عن publication_status؛ يجب أن يكون له تأثير حاسم على الظهور العام.
+23. Reasons / Violation Types
+spamscamfake_businessfake_reviewillegal_productprohibited_serviceharassmenthate_or_abuseadult_contentcopyrighttrademarkprivacy_violationsensitive_data_exposureimpersonationlow_qualityduplicatemisleading_claimunsafe_ai_outputexternal_policy_violation
+24. ERD
+erDiagram USERS ||--o{ MODERATION_REPORTS : reports MODERATION_CASES ||--o{ MODERATION_REPORTS : contains MODERATION_CASES ||--o{ MODERATION_QUEUE_ITEMS : queues MODERATION_CASES ||--o{ MODERATION_REVIEWS : reviewed_by MODERATION_CASES ||--o{ MODERATION_DECISIONS : decides MODERATION_CASES ||--o{ MODERATION_ACTIONS : applies MODERATION_CASES ||--o{ MODERATION_APPEALS : appealed_by MODERATION_CASES ||--o{ MODERATION_COMMENTS : discusses MODERATION_CASES ||--o{ MODERATION_ATTACHMENTS : has MODERATION_RULES ||--o{ MODERATION_RULE_MATCHES : detects MODERATION_CASES ||--o{ MODERATION_RULE_MATCHES : may_open MODERATION_CASES ||--o{ MODERATION_TRUST_IMPACTS : affects MODERATION_SLA_POLICIES ||--o{ MODERATION_SLA_EVENTS : tracks
+25. Flows
+25.1 Pre-publish Moderation Flow
+User submits public listing → publication_status = pending_review → moderation_case created → queue item assigned → moderator reviews → decision issued → content published/needs_changes/rejected.
+25.2 User Report Flow
+Visitor reports review/product/service → moderation_report created → existing case checked → queue item created → moderator reviews → action applied → reporter/owner notified.
+25.3 Automated Flag Flow
+Content saved/published → rules engine scans → rule match created → if high risk: block/queue → if low risk: flag only → moderator confirms or dismisses.
+25.4 Appeal Flow
+Owner receives decision → submits appeal → second moderator reviews → accept/reject/partial → actions reversed or confirmed → audit log updated.
+25.5 Mall Mirror Flow
+Source updates public data → Mall Mirror updates as draft/pending → moderation checks → only approved/published appears publicly.
+25.6 Portable/Dedicated Flow
+External instance sends signed public update → validate sync source → create moderation_sync_event → apply rules → update mirror only after policy check.
+26. Permission Model
+moderation.case.viewmoderation.case.assignmoderation.case.reviewmoderation.case.closemoderation.report.viewmoderation.report.managemoderation.action.applymoderation.action.reversemoderation.decision.createmoderation.appeal.reviewmoderation.rule.managemoderation.queue.viewmoderation.queue.managemoderation.sensitive.viewmoderation.trust_impact.applymoderation.audit.view
+الصلاحيات الحساسة مثل suspend/remove/trust_impact يجب أن تكون منفصلة ولا تُمنح تلقائيًا لكل Moderator.
+27. Roles
+الدور
+الصلاحيات
+Platform Moderator
+يراجع محتوى عام ويفتح/يغلق cases ويطبق إجراءات عادية.
+Senior Moderator
+يستطيع suspend/remove/restore ويراجع appeals.
+Trust & Safety Manager
+يدير قواعد الإشراف والسياسات وتأثير الثقة.
+Legal Moderator
+يراجع محتوى قانوني أو توثيق أو claims حساسة.
+Mall Moderator
+يركز على Business/Service/Product listings وreviews.
+Talent Moderator
+يركز على professional profiles/job offers/messages.
+28. Events
+ModerationReportCreatedModerationCaseOpenedModerationQueueItemCreatedModerationReviewStartedModerationDecisionIssuedModerationActionAppliedModerationActionReversedModerationAppealSubmittedModerationAppealResolvedContentSuspendedContentRestoredTrustImpactCreatedModerationRuleMatched
+29. Notifications
+• Notify owner when content enters pending_review إذا كان التأخير متوقعًا.
+• Notify owner when decision requires changes or content is suspended.
+• Notify reporter only with safe generic outcome: reviewed/closed/action_taken، بدون كشف بيانات داخلية.
+• Notify senior moderator when SLA is breached أو risk_level critical.
+30. AI Assistance Rules
+يمكن للـ AI أن يقترح risk score أو يشرح سبب flag أو يلخص أدلة case، لكنه لا يطبق قرارًا عالي الخطورة وحده. كل AI suggestion يجب أن يسجل في audit logs، وأي action مثل suspend/remove يحتاج human approval.
+AI capability
+مسموح؟
+الشرط
+Summarize case evidence
+نعم
+بدون كشف بيانات خارج الصلاحية.
+Suggest risk level
+نعم
+يظهر كمقترح لا كقرار نهائي.
+Auto-hide critical spam
+اختياري
+فقط مع rule واضحة وrollback.
+Suspend verified business
+لا مباشرة
+يحتاج Senior Moderator / Workflow Approval.
+Change trust score
+لا مباشرة
+يحتاج قرار بشري وسجل audit.
+31. Frontend Anywhere Rules
+في Frontend Anywhere مصدر البيانات داخل Kabeeri Cloud، لذلك moderation تعمل داخليًا قبل تحديث Mall Mirror أو snapshots. الواجهة الخارجية لا تستطيع bypass moderation لأنها لا تملك قاعدة البيانات ولا admin logic.
+32. Portable Rules
+في Portable قد يرسل العميل public updates إلى Mall Sync API. هذه التحديثات لا تنشر مباشرة؛ بل تمر عبر validation + moderation rules + consent check. إذا تم suspension داخل Kabeeri Central، يجب أن يغلب على أي حالة published قادمة من النسخة الخارجية.
+33. Dedicated Rules
+في Dedicated يتم تطبيق نفس schema داخل بيئة العميل حسب الحاجة، لكن قرارات الظهور العام في Kabeeri Mall تظل داخل Central Mall Mirror. Dedicated لا يتصل مباشرة بجداول Mall، بل عبر Sync API ومفاتيح موقعة.
+34. Retention & Privacy
+• بلاغات الإساءة والاحتيال تحفظ مدة أطول إذا أثرت على الثقة أو النزاعات.
+• بلاغات false positive يمكن إخفاء تفاصيلها من التقارير العامة.
+• يجب عدم إظهار هوية reporter للمالك إلا إذا كانت السياسة تسمح.
+• المرفقات الحساسة تستخدم Media/DMS permissions ولا تظهر كمرفقات عامة.
+35. Build Order
+Phase 1 — Status foundation- Add publication_status values to public entities.- Add moderation permissions.- Add basic moderation_reports and moderation_queue_items.Phase 2 — Manual moderation- moderation_cases- moderation_reviews- moderation_actions- moderator UIPhase 3 — Mall integration- Connect Business/Service/Product/Talent listing publication to moderation.- Connect reports/flags.- Add notification flow.Phase 4 — Rules and automation- moderation_rules- rule_matches- blocked_terms- SLA policiesPhase 5 — Appeals and trust- decisions- appeals- trust impacts- audit reportsPhase 6 — Portable/Dedicated sync- moderation_sync_events- signed sync enforcement- central override rules
+36. Feature Flags
+enable_moderation_foundationenable_moderation_reportsenable_moderation_queueenable_moderation_actionsenable_moderation_appealsenable_moderation_rulesenable_moderation_ai_assistenable_moderation_slaenable_mall_moderationenable_talent_moderationenable_review_moderationenable_portable_moderation_sync
+37. CLI Commands
+php artisan kabeeri:moderation:queue-stalephp artisan kabeeri:moderation:scan {subjectType} {subjectId}php artisan kabeeri:moderation:apply-decision {decisionId}php artisan kabeeri:moderation:expire-flagsphp artisan kabeeri:moderation:recalculate-trust {subjectType} {subjectId}php artisan kabeeri:moderation:sync-check {sourceId}php artisan kabeeri:moderation:seed-policies
+38. Tests
+• Unauthorized user cannot see moderation queue.
+• Reporter can submit report but cannot see internal notes.
+• Suspended listing does not appear in Mall public search.
+• Published source update from Portable cannot override central suspension.
+• Senior-only action remove/suspend requires correct permission.
+• Appeal can reverse action and restore publication_status.
+• Rule match opens queue item for high-risk content.
+• Audit log is created for every decision and action.
+39. Acceptance Criteria
+• كل كيان عام يمكن وضعه في pending_review أو suspended أو rejected.
+• يمكن إنشاء report لأي listing/review/profile/message عام.
+• يوجد moderation queue قابل للتصفية حسب type/risk/priority/status.
+• كل action حساس مسجل في audit log.
+• Mall لا يعرض محتوى مرفوض أو معلق حتى لو source status = published.
+• يمكن تقديم appeal للقرارات المؤثرة.
+• Portable/Dedicated sync لا يتجاوز consent أو moderation.
+40. ملخص تنفيذي
+Moderation System هو صمام أمان Kabeeri Mall وTalent وReviews. لا يجب إطلاق سوق عام أو محتوى قابل للبلاغ بدون هذه الطبقة. البداية تكون بسيطة: status foundation + reports + queue + actions، ثم تتوسع إلى rules وSLA وappeals وtrust impacts وAI assist. القاعدة الحاكمة: لا ظهور عام بدون visibility + consent + moderation-ready state.
+KABEERI — powered by ADMIT | Database Architecture

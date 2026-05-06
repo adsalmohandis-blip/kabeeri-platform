@@ -1,0 +1,459 @@
+KABEERI — ملحق 13: الاختبارات والجودة وDevOps
+Testing, QA & DevOps Architecture
+هذا الملحق يحدد كيف سيتم اختبار Kabeeri، إدارة جودة الكود، تنظيم الإصدارات، تشغيل البيئات، النسخ الاحتياطي، النشر، مراقبة الأخطاء، وإدارة التطوير خصوصًا إذا كان المؤسس يبني وحده باستخدام AI.
+الهدف:
+منع Kabeeri من التحول إلى مشروع ضخم غير مستقر بسبب كثرة الموديولات والتغييرات والتوليد بالـ AI.
+1. لماذا هذا الملحق مهم؟
+Kabeeri ليست تطبيقًا صغيرًا.
+Kabeeri ستحتوي على:
+CMSCommerceERPRabetKabeeri MallTalent MarketplaceAI Co-builderMarketplacePluginsThemesConnectorsLegal VerificationBillingTeamsWorkflows
+أي خطأ صغير في جزء قد يكسر أجزاء أخرى.
+أمثلة:
+تعديل permissions قد يكشف مستندات قانونية.تعديل orders قد يكسر accounting.تحديث plugin قد يكسر checkout.AI change قد يغير workflow حساس.Migration خاطئة قد تضيع بيانات العملاء.
+لذلك الاختبار والجودة ليسوا رفاهية.
+2. الفلسفة الأساسية
+Kabeeri يجب أن يبنى بأسلوب:
+Testable from V1Observable from V1Backup before risky changesSmall releasesRollback-readyAI-assisted but human-reviewed
+القاعدة:
+أي Feature لا يمكن اختبارها أو تتبعها أو الرجوع عنها تصبح خطرًا على المنصة.
+3. مستويات الاختبار المطلوبة
+3.1 Unit Tests
+تختبر جزءًا صغيرًا من الكود.
+أمثلة:
+حساب الصلاحيات.
+توليد slug.
+حساب Trust Score.
+تطبيق discount.
+فحص visibility.
+أدوات مقترحة
+Pest أو PHPUnit
+3.2 Feature Tests
+تختبر flow كامل داخل النظام.
+أمثلة:
+User creates OrganizationUser creates SiteUser creates PageUser publishes Page
+Business submits verification documentsAdmin reviews requestVerification status changes
+3.3 Policy / Permission Tests
+مهمة جدًا في Kabeeri.
+أمثلة:
+Editor يستطيع تعديل post ولا يستطيع إدارة billing.
+Legal Partner يرى فقط verification request المسند له.
+Employee لا يرى payroll.
+AI لا ينفذ action لا يملكه المستخدم.
+3.4 Integration Tests
+تختبر الربط بين موديولات.
+أمثلة:
+Service Request→ Conversation→ CRM Lead→ Notification
+Order Paid→ Invoice→ Inventory movement→ Accounting entry لاحقًا
+3.5 Browser / End-to-End Tests
+تختبر تجربة المستخدم في المتصفح.
+أمثلة:
+تسجيل الدخول.
+إنشاء موقع.
+نشر صفحة.
+رفع صورة.
+إنشاء منتج.
+checkout basic.
+أدوات محتملة
+Laravel Dusk لاحقًاPlaywright لاحقًا
+في V1 يمكن تأجيل E2E الكامل.
+3.6 Migration Tests
+أي migration يجب أن تعمل على database نظيفة، ولا تكسر بيانات موجودة.
+مهم جدًا بسبب تطور V1 إلى V6.
+3.7 Package Tests
+لـ plugins/themes/modules.
+أي package يجب اختباره عند:
+install.
+activate.
+deactivate.
+update.
+uninstall.
+3.8 Security Tests
+أمثلة:
+unauthorized user cannot access company documents.
+CSRF protection works.
+file upload restrictions work.
+API token scope works.
+sensitive access is logged.
+3.9 AI Safety Tests
+أمثلة:
+AI لا ينشر محتوى بدون content.publish.
+AI لا يعدل payroll بدون approval.
+AI generates plan before applying.
+AI action logs created.
+rollback point exists.
+4. Test Coverage Priorities
+ليس كل شيء يحتاج نفس مستوى الاختبار في البداية.
+4.1 أعلى أولوية
+PermissionsAuthenticationOrganizationsSitesContent publishingMedia uploadBusiness profilesVerification foundationActivity logsFeature flagsBilling foundation لاحقًاAI guardrails لاحقًا
+4.2 أولوية متوسطة
+ThemesPlugins basicFormsRedirectsNotificationsTasksService requests
+4.3 أولوية لاحقة
+Advanced ERPAdvanced AIAdvanced marketplaceEnterprise integrationsBIManufacturing
+5. Test Suites حسب الموديول
+5.1 Core Test Suite
+يشمل:
+Auth.
+Users.
+Organizations.
+Memberships.
+Roles.
+Permissions.
+Settings.
+Feature Flags.
+Activity Logs.
+5.2 CMS Test Suite
+يشمل:
+Content Types.
+Pages.
+Posts.
+Revisions.
+Taxonomies.
+SEO.
+Sitemap.
+Media.
+Themes.
+5.3 Rabet Test Suite
+يشمل:
+Companies.
+Business Profiles.
+Verification Requests.
+Documents.
+Trust records.
+Company Memberships.
+5.4 Mall Test Suite
+يشمل لاحقًا:
+Business listings.
+Services.
+Products.
+Talent listings.
+Reviews.
+Moderation.
+5.5 Commerce Test Suite
+يشمل:
+Products.
+Cart.
+Checkout.
+Orders.
+Payments.
+Coupons.
+Inventory connection.
+5.6 ERP Test Suite
+يشمل:
+CRM.
+Sales.
+Inventory.
+Invoicing.
+Accounting.
+Purchasing.
+HR.
+5.7 AI Test Suite
+يشمل:
+AI plans.
+Risk classification.
+Permissions.
+Approvals.
+Logs.
+Rollback.
+6. QA Checklists
+6.1 Checklist قبل دمج أي Feature
+هل feature لها tests؟هل permissions مضافة؟هل activity log موجود؟هل validation موجود؟هل errors واضحة؟هل migration reversible أو آمنة؟هل docs محدثة؟هل لا تكسر أجزاء أخرى؟
+6.2 Checklist لأي Public Feature
+هل لها visibility؟هل لها moderation status؟هل يمكن الإبلاغ عنها؟هل تظهر بيانات حساسة؟هل SEO مضبوط؟هل تعمل على الموبايل؟
+6.3 Checklist لأي Financial Feature
+هل يوجد audit log؟هل يوجد approval عند الحاجة؟هل لا يمكن الحذف الصامت؟هل rounding صحيح؟هل currency واضحة؟هل permissions دقيقة؟
+6.4 Checklist لأي AI Feature
+هل يقرأ أقل سياق ممكن؟هل يتحقق من الصلاحيات؟هل ينتج plan؟هل يوجد preview؟هل يوجد approval؟هل يوجد log؟هل يوجد rollback؟
+7. Bug Severity Levels
+7.1 Critical
+يكسر النظام أو يسبب تسريب بيانات أو فقد بيانات.
+أمثلة:
+أي مستخدم يرى مستندات شركة أخرى.
+حذف بيانات بدون تأكيد.
+checkout لا يعمل.
+migration تكسر production.
+التعامل
+إصلاح فوري.
+لا release قبل الحل.
+7.2 High
+Feature مهمة لا تعمل أو خطأ أمني متوسط.
+أمثلة:
+permissions خاطئة في شاشة admin.
+media upload يفشل.
+verification status لا يتحدث.
+7.3 Medium
+خطأ يؤثر على تجربة المستخدم لكن له workaround.
+7.4 Low
+تحسين أو مشكلة UI بسيطة.
+8. Git Workflow
+8.1 Branches مقترحة
+maindevelopfeature/*fix/*release/*hotfix/*
+لو تبني وحدك، يمكن تبسيطها:
+maindevfeature/*
+8.2 قواعد main
+لا يدخل main إلا:
+كود يعمل.
+migrations مختبرة.
+tests الأساسية ناجحة.
+لا يوجد critical bug.
+8.3 Commit Naming
+صيغة مقترحة:
+feat: add organization modelfix: correct permission checktest: add content publishing testsrefactor: clean media servicedocs: update V1 setup guide
+9. CI/CD Pipeline
+9.1 CI في البداية
+عند كل push:
+Install dependenciesRun lintingRun testsRun static analysis optionalCheck migrations optionalBuild assets
+9.2 Pipeline لاحقًا
+Security scanPackage validationBrowser testsPerformance smoke testsDeployment to stagingManual approvalDeployment to production
+10. Static Analysis & Code Quality
+10.1 أدوات مقترحة
+PHPStan أو LarastanLaravel PintPest/PHPUnitRector لاحقًا
+10.2 قواعد جودة
+Controllers خفيفة.
+Business logic في Actions/Services.
+Policies لكل Model مهم.
+Events للأفعال المهمة.
+Validation Requests.
+لا SQL raw إلا للضرورة.
+لا hardcoded permissions داخل views فقط.
+11. Environment Strategy
+11.1 Local
+بيئة التطوير على جهازك.
+تشمل:
+Laravel app.
+MySQL.
+Redis optional.
+Mail testing.
+Queue worker.
+Storage.
+11.2 Testing
+بيئة اختبارات منفصلة.
+Database منفصلة.
+Seeders للاختبار.
+Fake mail.
+Fake storage.
+11.3 Staging
+بيئة قبل الإنتاج.
+تستخدم لاختبار:
+updates.
+migrations.
+package install.
+theme changes.
+integrations.
+11.4 Production
+بيئة العملاء.
+لا يتم تجربة features جديدة عليها مباشرة.
+12. Configuration Management
+12.1 .env
+يحتوي على:
+database credentials.
+mail settings.
+storage settings.
+queue settings.
+cache settings.
+AI provider keys.
+payment keys.
+12.2 ممنوع
+commit .env.
+وضع secrets في الكود.
+إرسال secrets للـ AI.
+13. Database Migration Strategy
+13.1 قواعد migrations
+صغيرة وواضحة.
+أسماء دقيقة.
+لا تعتمد على بيانات غير موجودة.
+اختبر rollback عندما يكون ممكنًا.
+migrations الخطيرة تحتاج backup.
+13.2 Data Migrations
+لو migration تعدل بيانات كثيرة:
+اجعلها job أو command منفصل.
+اعمل backup قبلها.
+سجل progress.
+دعم resume إن أمكن.
+14. Seeders & Demo Data
+14.1 لماذا؟
+نحتاج demo ثابت لاختبار المنصة.
+14.2 Seeders مطلوبة V1
+Default rolesDefault permissionsDefault organizationDefault siteDefault content typesDefault pagesDefault themeDemo business profile
+15. Backup Before Risky Operations
+عمليات تحتاج backup أو snapshot:
+Package updateDatabase migration majorAI critical changeBulk importBulk deleteTheme switch on productionWorkflow activation critical
+16. Release Management
+16.1 Release Notes
+كل إصدار يجب أن يحتوي:
+New features.
+Fixes.
+Breaking changes.
+Migration notes.
+Security notes.
+Known issues.
+16.2 Versioning
+نستخدم SemVer:
+MAJOR.MINOR.PATCH
+مثال:
+1.0.01.1.01.1.1
+17. Deployment Strategy
+17.1 Self-hosted
+يحتاج:
+installer.
+update command.
+backup before update.
+migration runner.
+health check.
+17.2 Cloud
+يحتاج لاحقًا:
+automated deployment.
+zero/minimal downtime.
+queue restart.
+cache clear.
+health checks.
+rollback.
+18. Health Checks
+18.1 Health Check يجب أن يفحص
+Application bootDatabase connectionCache connectionQueue statusStorage writableMail configured optionalScheduler runningDisk space
+18.2 V1 Health Page
+صفحة admin بسيطة:
+System Status
+تعرض:
+PHP version.
+Database status.
+Storage status.
+Queue status.
+App version.
+19. Logging & Error Tracking
+19.1 Logs مطلوبة
+Application logsSecurity logsActivity logsImport logsPackage logsAI logs لاحقًاIntegration logs لاحقًا
+19.2 Error Tracking لاحقًا
+يمكن استخدام:
+Sentry.
+Bugsnag.
+OpenTelemetry لاحقًا.
+20. Performance Testing
+20.1 مؤشرات مهمة
+Page render timeAdmin response timeDatabase query countMedia upload timeSearch response timeCheckout response time لاحقًا
+20.2 V1 Performance Goals
+Admin pages لا تكون بطيئة.
+Public page render سريع.
+Cache basic يعمل.
+لا queries كثيرة جدًا في صفحة واحدة.
+21. Accessibility & Responsive QA
+Kabeeri Admin وThemes يجب أن تكون:
+usable على desktop.
+usable على tablet قدر الإمكان.
+responsive للموقع العام.
+RTL-ready.
+readable.
+V1 لا يحتاج كمال، لكن يجب ألا يهمل RTL.
+22. Documentation QA
+أي Feature يجب أن يكون لها:
+وصف.
+طريقة استخدام.
+permissions المطلوبة.
+limitations.
+screenshots إن أمكن.
+خصوصًا:
+installer.
+roles/permissions.
+themes.
+plugins.
+backup.
+import/export.
+23. AI-assisted Development Rules
+بما أن المؤسس سيبني باستخدام AI، يجب اتباع قواعد صارمة.
+23.1 لا تقبل كود AI بدون فهم
+AI يسرع، لكنه قد ينتج:
+ثغرات.
+migrations خطيرة.
+logic خاطئ.
+كود مكرر.
+tests ضعيفة.
+23.2 كل كود AI يجب أن يمر بـ
+ReviewRun testsRun app locallyCheck permissionsCheck migrationsCommit small
+23.3 لا تطلب من AI بناء Module ضخم مرة واحدة
+قسم العمل:
+ModelMigrationPolicyActionControllerViewsTestsDocs
+23.4 Prompts للبناء
+استخدم prompts محددة:
+ابني migration فقط لجدول organizations حسب هذا schema.
+أفضل من:
+ابني منصة Kabeeri كاملة.
+24. Solo Builder Workflow
+24.1 دورة يومية مقترحة
+اختر feature صغيرةاكتب acceptance criteriaاطلب من AI migration/model/testراجع الكودشغل الاختباراتجرب يدويًاسجل notescommit
+24.2 قاعدة 1 Feature في المرة
+لا تبني:
+CMS.
+Commerce.
+Rabet.
+ERP.
+في نفس الأسبوع بدون أساس واضح.
+25. Definition of Done
+أي Feature تعتبر مكتملة فقط إذا:
+الكود مكتوبmigration تعملtests الأساسية موجودةpermissions مضبوطةactivity log عند الحاجةUI قابل للاستخدامvalidation موجودةerrors واضحةdocs مختصرة موجودةلا تكسر existing tests
+26. V1 Testing Requirements
+Must-have
+Auth testsOrganization testsMembership testsPermission testsSite testsContent create/publish testsMedia upload testsActivity log testsFeature flag testsBusiness profile draft testsInstaller smoke test
+Should-have
+Theme activation testPlugin activation testNotification basic testVerification document upload testBackup command test
+Not required in V1
+Full browser automationFull load testingFull security penetration testingFull CI/CD enterprise pipeline
+27. DevOps Roadmap عبر الإصدارات
+V1
+Local dev.
+Basic tests.
+Basic CI.
+Installer.
+Backup command.
+System status page.
+V2
+Import job monitoring.
+Package validation.
+More feature tests.
+Basic staging.
+V3
+Workflow tests.
+ERP essentials tests.
+Verification tests.
+Better queues.
+V4
+Cloud deployment pipeline.
+Automated backups.
+Marketplace package review pipeline.
+Monitoring.
+Error tracking.
+V5
+Integration test harness.
+Connector sandbox.
+Advanced CI.
+Performance monitoring.
+V6
+Enterprise DevOps.
+DR drills.
+Security scans.
+Compliance reports.
+Release channels.
+28. Release Channels
+لاحقًا يمكن دعم:
+StableBetaDeveloper PreviewEnterprise LTS
+V1
+لا نحتاج إلا:
+AlphaPrivate Beta
+29. أخطاء ممنوعة
+29.1 لا تبني بدون tests للصلاحيات
+أكبر خطر في Kabeeri هو تسريب البيانات.
+29.2 لا تشغل migrations خطيرة بدون backup
+29.3 لا تعتمد على AI بدون مراجعة
+29.4 لا تعمل release بدون demo scenario
+29.5 لا تخلط dev وproduction data
+29.6 لا تضع secrets في Git
+29.7 لا تفتح plugin marketplace بدون package validation
+30. الخلاصة التنفيذية
+Kabeeri يحتاج نظام جودة من البداية:
+TestsPoliciesActivity logsBackupsCIHealth checksSmall releasesRollback thinkingAI code review
+القاعدة النهائية:
+السرعة بالـ AI لا تعني الاستعجال؛ السرعة الحقيقية هي بناء صغير مستقر قابل للتوسع.
+31. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق اختياري إضافي:
+ملحق 14 — UI/UX & Admin Navigation Architecture
+إذا أردنا تثبيت تجربة المستخدم ولوحة التحكم قبل V1.

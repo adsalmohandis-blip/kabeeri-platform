@@ -1,0 +1,964 @@
+KABEERI Database File 29
+Kabeeri Agency Platform Database
+نظام قاعدة بيانات منصة الوكالات وإدارة عملاء الوكالة
+هذا الملف يصف تصميم قاعدة البيانات الخاص بطبقة Kabeeri Agency Platform، وهي الطبقة التي تسمح للوكالات بإدارة مواقع ومؤسسات عملائها، متابعة الحالة، تدوين الصيانة، منح العميل وصولًا محدودًا، وتجهيز أساس white-label بدون خلطها مع Cloud أو Billing أو Sites.
+1. تعريف Agency Platform
+Agency Platform هي مساحة تشغيل مخصصة للوكالات التي تدير عدة عملاء ومواقع داخل Kabeeri. الوكالة ليست مالكة بيانات العميل بالضرورة، لكنها قد تملك صلاحيات إدارة أو دعم أو صيانة أو فوترة حسب الاتفاق.
+الوكالة يمكن أن تكون Organization من نوع agency.
+العميل يمكن أن يكون Organization مستقلًا تديره الوكالة بصلاحيات محددة.
+الموقع يظل داخل sites / cloud_sites أو Frontend Anywhere / Dedicated حسب وضع العميل.
+الفوترة تظل داخل Billing، لكن الوكالة قد تكون reseller أو payer أو support provider.
+White-label في V1 هو foundation فقط: logo، portal name، branding fields، وليس multi-tenant agency SaaS كامل.
+2. هدف هذا النظام
+تمكين وكالة من إدارة عدة مواقع وعملاء من لوحة واحدة.
+عرض bulk status overview للمواقع والخطط والصحة والنسخ الاحتياطية والتحديثات.
+تسجيل maintenance notes وclient reports لكل موقع أو عميل.
+دعوة العميل بصلاحيات محددة دون إعطائه وصولًا كاملًا للوكالة.
+ربط خطط الوكالة بالـ Billing وEntitlements وReseller commissions.
+تجهيز white-label foundation للبوابة التي يراها العميل.
+إتاحة handover من الوكالة إلى العميل إذا انتهت العلاقة.
+3. ما هو وليس هو
+البند
+يدخل في Agency Platform V1
+لا يدخل في V1
+Client management
+إدارة clients وclient organizations/sites
+CRM وكالة كامل مستقل
+Access
+client access grants وinvitations
+نظام IAM خارجي كامل
+Maintenance
+maintenance notes وstatus snapshots وbulk operation logs
+DevOps automation كامل لكل مزود
+White-label
+branding fields وclient portal name وlogo
+white-label SaaS كامل بدومينات وفوترة مستقلة لكل وكالة
+Billing
+ربط agency plans وreseller/billing relationships
+نظام محاسبة وكالة كامل
+Reports
+client reports وexports basic
+BI متقدم مخصص للوكالات
+4. يعتمد على ماذا؟
+Core Kernel: users, organizations, organization_memberships, roles, permissions.
+Sites / Cloud: sites, cloud_sites, cloud_domains, backups, health checks.
+Billing: billing_accounts, plans, subscriptions, entitlements, invoices_platform.
+Security: sessions, API tokens, sensitive access logs, audit logs.
+Notifications & Inbox: إشعارات للوكالة والعميل وتقارير الحالة.
+Teams / Collaboration: اختياريًا لقنوات الدعم والتنبيهات.
+Activity/Audit Logs: أي إدارة لموقع عميل أو تغيير صلاحيات يجب تسجيله.
+5. Data Domains
+Agency Identity: ملف الوكالة ونوعها وحالتها ومجالات خدماتها.
+Agency Clients: علاقة الوكالة بالعميل، هل العميل جديد أم Organization موجود.
+Client Sites: المواقع التي تديرها الوكالة لكل عميل.
+Access & Permissions: منح وصول محدد للوكالة أو للعميل.
+Maintenance & Operations: ملاحظات، مراجعات، bulk updates/backups، status snapshots.
+White-label Foundation: branding profile وclient portal settings.
+Billing & Reseller Links: من يدفع؟ ومن يملك الاشتراك؟ وما عمولة الوكالة؟
+Reports & Handover: تقارير العميل وتسليم الإدارة عند انتهاء العلاقة.
+6. الجداول الأساسية
+agency_profiles
+agency_service_offerings
+agency_clients
+agency_client_contacts
+agency_client_sites
+agency_site_status_snapshots
+agency_maintenance_notes
+agency_maintenance_plans
+agency_client_access_grants
+agency_client_invitations
+agency_client_user_roles
+agency_bulk_operations
+agency_bulk_operation_items
+agency_branding_profiles
+agency_client_portals
+agency_billing_relationships
+agency_reseller_commissions
+agency_client_reports
+agency_report_exports
+agency_handover_requests
+agency_access_logs
+agency_settings
+7. agency_profiles
+يمثل ملف الوكالة داخل Kabeeri.
+id
+uuid
+organization_id
+name
+slug
+agency_type default digital_agency
+website_url nullable
+country_id nullable
+city nullable
+status default active
+verification_status default unverified
+white_label_enabled default false
+support_level default standard
+rating_average nullable
+rating_count default 0
+metadata json nullable
+created_at
+updated_at
+aagency_type values:
+digital_agency
+hosting_agency
+marketing_agency
+implementation_partner
+reseller
+managed_service_provider
+enterprise_partner
+status values:
+active
+pending
+suspended
+archived
+Indexes:
+unique(organization_id)
+unique(slug)
+index(status)
+index(agency_type)
+8. agency_service_offerings
+الخدمات التي تقدمها الوكالة داخل Kabeeri أو للظهور التجاري لاحقًا.
+id
+uuid
+agency_profile_id
+service_key
+name
+description nullable
+category nullable
+status default active
+is_public default false
+metadata json nullable
+created_at
+updated_at
+service_key examples:
+site_build
+cloud_management
+wordpress_migration
+commerce_setup
+rabet_verification_support
+seo_maintenance
+content_management
+erp_implementation
+integration_setup
+9. agency_clients
+علاقة الوكالة بعميل معين.
+id
+uuid
+agency_profile_id
+client_organization_id nullable
+client_company_id nullable
+client_name
+client_email nullable
+client_phone nullable
+relationship_type default managed_client
+status default active
+onboarding_status default pending
+primary_contact_user_id nullable
+billing_mode default client_pays
+notes nullable
+metadata json nullable
+created_by nullable
+created_at
+updated_at
+deleted_at nullable
+relationship_type values:
+managed_client
+reseller_client
+implementation_client
+support_only
+maintenance_only
+white_label_client
+billing_mode values:
+client_pays
+agency_pays
+split_billing
+reseller_invoice
+manual_external
+10. agency_client_contacts
+جهات اتصال العميل التي لا تحتاج بالضرورة لحساب مستخدم كامل.
+id
+agency_client_id
+user_id nullable
+name
+email nullable
+phone nullable
+role_title nullable
+is_primary default false
+can_receive_reports default true
+status default active
+metadata json nullable
+created_at
+updated_at
+11. agency_client_sites
+المواقع التي تديرها الوكالة للعميل. لا يكرر بيانات site، بل يربطها بعلاقة الوكالة.
+id
+uuid
+agency_client_id
+site_id
+cloud_site_id nullable
+company_id nullable
+management_scope default full_management
+status default active
+maintenance_status nullable
+last_reviewed_at nullable
+last_backup_checked_at nullable
+last_health_status nullable
+support_priority default normal
+metadata json nullable
+created_at
+updated_at
+management_scope values:
+full_management
+content_only
+technical_only
+billing_only
+support_only
+handover_pending
+maintenance_status values:
+healthy
+needs_review
+update_required
+backup_required
+issue_open
+suspended
+unknown
+Indexes:
+unique(agency_client_id, site_id)
+index(site_id)
+index(status)
+index(maintenance_status)
+12. agency_site_status_snapshots
+لقطات دورية لحالة مواقع العملاء لعرض Bulk Status Overview.
+id
+uuid
+agency_client_site_id
+site_id
+snapshot_at
+health_status
+backup_status nullable
+ssl_status nullable
+domain_status nullable
+subscription_status nullable
+storage_usage_mb nullable
+bandwidth_usage_mb nullable
+pending_updates_count default 0
+open_issues_count default 0
+metadata json nullable
+created_at
+health_status values:
+healthy
+warning
+critical
+unknown
+الغرض:
+- لا نستخدمها كمصدر حقيقة.
+- يمكن إعادة بنائها من Cloud / Billing / Security / Search.
+- مناسبة للوحة Agency Dashboard السريعة.
+13. agency_maintenance_notes
+ملاحظات الصيانة لكل عميل أو موقع.
+id
+uuid
+agency_profile_id
+agency_client_id nullable
+agency_client_site_id nullable
+site_id nullable
+note_type default general
+title
+body longtext nullable
+status default open
+visibility default agency_internal
+created_by nullable
+resolved_by nullable
+resolved_at nullable
+metadata json nullable
+created_at
+updated_at
+note_type values:
+general
+backup
+update
+security
+performance
+content
+client_request
+billing
+handover
+visibility values:
+agency_internal
+client_visible
+platform_visible
+14. agency_maintenance_plans
+خطط صيانة متكررة أو باقات دعم لموقع العميل.
+id
+uuid
+agency_client_id
+agency_client_site_id nullable
+plan_name
+plan_type
+status default active
+frequency nullable
+next_review_at nullable
+last_review_at nullable
+includes_backups default true
+includes_updates default true
+includes_security_checks default true
+includes_reports default false
+metadata json nullable
+created_at
+updated_at
+plan_type values:
+basic_maintenance
+pro_maintenance
+security_care
+content_care
+commerce_care
+custom
+15. agency_client_access_grants
+صلاحيات الوكالة أو العميل على موارد محددة.
+id
+uuid
+agency_profile_id
+agency_client_id
+subject_user_id nullable
+subject_organization_membership_id nullable
+grantee_type
+grantee_id
+resource_type
+resource_id nullable
+permission_set json
+status default active
+granted_by nullable
+granted_at nullable
+expires_at nullable
+revoked_by nullable
+revoked_at nullable
+metadata json nullable
+created_at
+updated_at
+grantee_type values:
+agency_user
+client_user
+agency_team
+external_collaborator
+resource_type values:
+organization
+company
+site
+cloud_site
+billing_account
+report
+support_ticket
+قاعدة مهمة:
+لا نستخدم هذا الجدول بدل RBAC، بل كطبقة agency-specific فوق roles/permissions وتتحقق عبر Policy/AccessService.
+16. agency_client_invitations
+دعوات العميل أو أعضاء الوكالة.
+id
+uuid
+agency_profile_id
+agency_client_id nullable
+email
+name nullable
+invitation_type
+status default pending
+role_template nullable
+resource_type nullable
+resource_id nullable
+invited_by nullable
+accepted_user_id nullable
+sent_at nullable
+accepted_at nullable
+expires_at nullable
+metadata json nullable
+created_at
+updated_at
+invitation_type values:
+client_owner
+client_viewer
+client_editor
+agency_member
+external_contractor
+billing_contact
+17. agency_client_user_roles
+أدوار مبسطة داخل بوابة العميل الخاصة بالوكالة.
+id
+agency_client_id
+user_id
+role_key
+status default active
+created_by nullable
+created_at
+updated_at
+role_key examples:
+client_owner
+client_viewer
+content_approver
+billing_contact
+support_contact
+report_recipient
+18. agency_bulk_operations
+عملية جماعية تنفذها الوكالة على مواقع العملاء.
+id
+uuid
+agency_profile_id
+operation_type
+status default pending
+requested_by nullable
+approved_by nullable
+started_at nullable
+completed_at nullable
+failed_at nullable
+summary nullable
+metadata json nullable
+created_at
+updated_at
+operation_type values:
+bulk_backup
+bulk_update_check
+bulk_health_check
+bulk_report_generate
+bulk_cache_clear
+bulk_security_scan
+bulk_plan_review
+status values:
+pending
+approved
+running
+completed
+partial_failed
+failed
+cancelled
+rolled_back
+19. agency_bulk_operation_items
+كل موقع أو عميل داخل عملية جماعية.
+id
+agency_bulk_operation_id
+agency_client_id nullable
+agency_client_site_id nullable
+site_id nullable
+status default pending
+message nullable
+started_at nullable
+completed_at nullable
+metadata json nullable
+created_at
+updated_at
+20. agency_branding_profiles
+إعدادات white-label foundation للوكالة.
+id
+uuid
+agency_profile_id
+brand_name nullable
+portal_name nullable
+logo_media_id nullable
+favicon_media_id nullable
+primary_color nullable
+secondary_color nullable
+support_email nullable
+support_phone nullable
+website_url nullable
+status default active
+settings json nullable
+created_at
+updated_at
+ملاحظات:
+- لا نخزن CSS كامل في V1.
+- الألوان والشعار والاسم كافية كبداية.
+- الربط بالدومين الكامل يمكن أن يضاف لاحقًا.
+21. agency_client_portals
+بوابة مبسطة للعميل تحت الوكالة.
+id
+uuid
+agency_client_id
+agency_branding_profile_id nullable
+portal_slug
+portal_status default active
+portal_title nullable
+allowed_features json nullable
+last_login_at nullable
+metadata json nullable
+created_at
+updated_at
+allowed_features examples:
+view_site_status
+view_reports
+approve_content
+open_support_request
+view_invoices
+manage_contacts
+22. agency_billing_relationships
+يربط الوكالة بالاشتراك أو حساب الفوترة دون تكرار Billing.
+id
+uuid
+agency_profile_id
+agency_client_id nullable
+billing_account_id nullable
+subscription_id nullable
+relationship_type
+status default active
+starts_at nullable
+ends_at nullable
+metadata json nullable
+created_at
+updated_at
+relationship_type values:
+agreement_owner
+payer
+reseller
+commission_referrer
+support_provider
+implementation_partner
+قاعدة:
+الفواتير الحقيقية تظل في invoices_platform/payments_platform، وهذا الجدول يحدد علاقة الوكالة فقط.
+23. agency_reseller_commissions
+عمولات وكالة أو شريك إعادة بيع مرتبطة بفواتير أو اشتراكات.
+id
+uuid
+agency_profile_id
+agency_client_id nullable
+source_type
+source_id
+commission_type
+amount decimal(15,2)
+currency_code default EGP
+status default pending
+calculated_at nullable
+approved_at nullable
+paid_at nullable
+metadata json nullable
+created_at
+updated_at
+commission_type values:
+subscription_reseller
+implementation_fee
+maintenance_fee
+marketplace_referral
+cloud_referral
+24. agency_client_reports
+تقارير دورية ترسلها الوكالة للعميل.
+id
+uuid
+agency_profile_id
+agency_client_id
+agency_client_site_id nullable
+report_type
+period_start nullable
+period_end nullable
+status default draft
+title
+summary longtext nullable
+metrics json nullable
+created_by nullable
+published_at nullable
+metadata json nullable
+created_at
+updated_at
+report_type values:
+monthly_maintenance
+site_health
+backup_status
+performance_summary
+security_summary
+content_updates
+billing_summary
+custom
+25. agency_report_exports
+تصدير التقرير PDF/DOCX/CSV عند الحاجة.
+id
+agency_client_report_id
+export_type
+status default pending
+file_media_id nullable
+requested_by nullable
+created_at
+updated_at
+export_type values:
+pdf
+docx
+csv
+html
+26. agency_handover_requests
+طلب تسليم إدارة العميل من الوكالة إلى العميل أو وكالة أخرى.
+id
+uuid
+agency_profile_id
+agency_client_id
+handover_type
+status default pending
+requested_by nullable
+approved_by nullable
+target_organization_id nullable
+target_agency_profile_id nullable
+reason nullable
+checklist json nullable
+started_at nullable
+completed_at nullable
+metadata json nullable
+created_at
+updated_at
+handover_type values:
+agency_to_client
+agency_to_agency
+client_termination
+platform_takeover
+status values:
+pending
+approved
+running
+completed
+rejected
+cancelled
+failed
+27. agency_access_logs
+سجل وصول الوكالة لموارد العميل.
+id
+uuid
+agency_profile_id
+agency_client_id nullable
+user_id nullable
+resource_type
+resource_id nullable
+action
+risk_level default low
+ip_address nullable
+user_agent nullable
+metadata json nullable
+created_at
+أمثلة actions:
+client_site_viewed
+client_billing_viewed
+client_access_granted
+maintenance_note_created
+bulk_operation_started
+handover_requested
+28. agency_settings
+إعدادات مرنة للوكالة.
+id
+agency_profile_id
+key
+value json nullable
+value_type default string
+is_encrypted default false
+created_at
+updated_at
+unique(agency_profile_id, key)
+29. Agency Platform ERD
+erDiagram
+ORGANIZATIONS ||--|| AGENCY_PROFILES : may_be
+AGENCY_PROFILES ||--o{ AGENCY_SERVICE_OFFERINGS : offers
+AGENCY_PROFILES ||--o{ AGENCY_CLIENTS : manages
+AGENCY_CLIENTS ||--o{ AGENCY_CLIENT_CONTACTS : has
+AGENCY_CLIENTS ||--o{ AGENCY_CLIENT_SITES : contains
+SITES ||--o{ AGENCY_CLIENT_SITES : managed_as
+AGENCY_CLIENT_SITES ||--o{ AGENCY_SITE_STATUS_SNAPSHOTS : snapshots
+AGENCY_CLIENTS ||--o{ AGENCY_MAINTENANCE_NOTES : has
+AGENCY_CLIENT_SITES ||--o{ AGENCY_MAINTENANCE_NOTES : has
+AGENCY_CLIENTS ||--o{ AGENCY_MAINTENANCE_PLANS : subscribes
+AGENCY_CLIENTS ||--o{ AGENCY_CLIENT_ACCESS_GRANTS : grants
+AGENCY_CLIENTS ||--o{ AGENCY_CLIENT_INVITATIONS : invites
+AGENCY_PROFILES ||--o{ AGENCY_BULK_OPERATIONS : runs
+AGENCY_BULK_OPERATIONS ||--o{ AGENCY_BULK_OPERATION_ITEMS : includes
+AGENCY_PROFILES ||--o{ AGENCY_BRANDING_PROFILES : brands
+AGENCY_CLIENTS ||--o{ AGENCY_CLIENT_PORTALS : exposes
+AGENCY_PROFILES ||--o{ AGENCY_BILLING_RELATIONSHIPS : links
+AGENCY_PROFILES ||--o{ AGENCY_RESELLER_COMMISSIONS : earns
+AGENCY_CLIENTS ||--o{ AGENCY_CLIENT_REPORTS : receives
+AGENCY_CLIENT_REPORTS ||--o{ AGENCY_REPORT_EXPORTS : exports
+AGENCY_CLIENTS ||--o{ AGENCY_HANDOVER_REQUESTS : may_handover
+AGENCY_PROFILES ||--o{ AGENCY_ACCESS_LOGS : logs
+30. Source of Truth Rules
+نوع البيانات
+مصدر الحقيقة
+ملاحظات
+Agency profile
+agency_profiles
+يرتبط بـ organization_id للوكالة.
+Client organization
+organizations
+agency_clients يربط ولا يكرر بيانات العميل.
+Client site
+sites / cloud_sites
+agency_client_sites يربط حالة الإدارة فقط.
+Billing
+billing_accounts / subscriptions
+agency_billing_relationships يوضح علاقة الوكالة.
+Permissions
+roles/permissions + agency_client_access_grants
+لا نعطي agency access بدون scope واضح.
+Reports
+agency_client_reports
+مشتقة من Cloud/Billing/Security/Analytics.
+White-label
+agency_branding_profiles
+Foundation فقط في V1.
+31. Agency Dashboard Flow
+Agency logs in
+→ system checks agency.dashboard.view
+→ loads agency_profile
+→ loads agency_clients
+→ loads agency_client_sites
+→ joins site/cloud/billing status
+→ shows bulk status overview
+→ user opens client site
+→ access grant checked
+→ action logged in agency_access_logs/activity_logs
+32. Add Client Flow
+Agency creates client
+→ agency_client created
+→ optional client_organization created or linked
+→ primary contact created/invited
+→ client portal created if enabled
+→ agency_client_sites added
+→ access grants issued
+→ notification sent
+→ activity logged
+33. Client Access Flow
+Agency invites client user
+→ agency_client_invitation created
+→ user accepts invitation
+→ organization_membership created if needed
+→ agency_client_user_roles assigned
+→ agency_client_access_grants created
+→ permissions resolved by AccessService
+→ every sensitive action logged
+34. Bulk Operation Flow
+Agency selects many client sites
+→ validates permissions per site
+→ creates agency_bulk_operation
+→ creates agency_bulk_operation_items
+→ queued jobs run per item
+→ status snapshots update
+→ report/notification generated
+→ failures stay item-level, not full operation failure
+35. Maintenance Report Flow
+Monthly schedule or manual request
+→ collect site health, backups, updates, notes
+→ create agency_client_report draft
+→ agency reviews
+→ publish to client portal
+→ optional export to PDF/DOCX
+→ notify report recipients
+36. White-label Foundation Flow
+Agency enables white-label entitlement
+→ agency_branding_profile created
+→ logo/name/colors configured
+→ agency_client_portal uses branding
+→ client sees agency-branded portal
+→ Kabeeri ownership/legal footer policy remains configurable by plan
+37. Handover Flow
+Client or agency requests handover
+→ agency_handover_request created
+→ permissions and billing checked
+→ access grants reviewed
+→ client ownership confirmed
+→ agency access revoked or reduced
+→ billing relationship updated
+→ handover completed
+→ audit log created
+38. Permissions المقترحة
+agency.dashboard.view
+agency.profile.manage
+agency.clients.view
+agency.clients.manage
+agency.client_sites.view
+agency.client_sites.manage
+agency.client_access.manage
+agency.maintenance_notes.view
+agency.maintenance_notes.manage
+agency.bulk_operations.run
+agency.reports.view
+agency.reports.publish
+agency.white_label.manage
+agency.billing_relationships.view
+agency.billing_relationships.manage
+agency.handover.request
+agency.handover.approve
+agency.access_logs.view
+39. Roles المقترحة
+Role
+الوصف
+Agency Owner
+يدير الوكالة والعملاء والفوترة والـ white-label.
+Agency Admin
+يدير العملاء والمواقع والفرق حسب الصلاحيات.
+Agency Support Manager
+يرى status وmaintenance notes وreports.
+Agency Technician
+يدير مواقع محددة وعمليات صيانة محدودة.
+Agency Billing Manager
+يرى علاقات الفوترة والعمولات.
+Client Owner
+يرى بوابة العميل ويوافق على الوصول والتقارير.
+Client Viewer
+يرى التقارير وحالة الموقع فقط.
+40. Events
+AgencyProfileCreated
+AgencyClientCreated
+AgencyClientLinkedToOrganization
+AgencyClientSiteAdded
+AgencyClientAccessGranted
+AgencyClientAccessRevoked
+AgencyInvitationSent
+AgencyMaintenanceNoteCreated
+AgencyBulkOperationStarted
+AgencyBulkOperationCompleted
+AgencyReportPublished
+AgencyWhiteLabelUpdated
+AgencyHandoverRequested
+AgencyHandoverCompleted
+AgencyCommissionCalculated
+41. Listeners
+NotifyAgencyOwnerOnClientCreated
+CreateDefaultClientPortal
+CreateAgencyStatusSnapshot
+NotifyClientOnAccessGranted
+LogAgencyClientAccess
+GenerateAgencyMonthlyReport
+CalculateAgencyCommissionFromSubscription
+RevokeAgencyAccessOnHandover
+SyncAgencyDashboardStatus
+CreateClientPortalNotification
+42. Indexes المهمة
+agency_profiles.organization_id unique
+agency_profiles.slug unique
+agency_clients.agency_profile_id
+agency_clients.client_organization_id
+agency_clients.status
+agency_client_sites.agency_client_id
+agency_client_sites.site_id
+agency_client_sites.maintenance_status
+agency_site_status_snapshots.agency_client_site_id + snapshot_at
+agency_client_access_grants.agency_client_id
+agency_client_access_grants.grantee_type + grantee_id
+agency_bulk_operations.agency_profile_id + status
+agency_client_reports.agency_client_id + period_start + period_end
+agency_billing_relationships.billing_account_id
+agency_access_logs.agency_profile_id + created_at
+agency_access_logs.resource_type + resource_id
+43. Admin UI Scope
+Agency
+Dashboard
+Clients
+Client Overview
+Client Sites
+Contacts
+Access
+Reports
+Sites
+Status Overview
+Maintenance Notes
+Bulk Operations
+White-label
+Billing Relationships
+Commissions
+Handover
+Settings
+Access Logs
+44. علاقة Agency Platform بالأنظمة الخمسة
+Mode
+سلوك Agency Platform
+Cloud
+الوضع الأفضل: الوكالة ترى cloud_sites وdomains وbackups وhealth وbilling مباشرة حسب الصلاحيات.
+Frontend Anywhere
+الوكالة تدير الواجهة الخارجية عبر frontend_projects إذا لديها access grant.
+Portable
+بعد خروج العميل، علاقة الوكالة يمكن أن تصبح support_only عبر self_hosted_installation status ولا ترى DB العميل إلا بتصريح.
+Dedicated
+الوكالة قد تدير أو تدعم dedicated tenant، لكن عبر dedicated access policy وليس وصول مباشر دائم.
+Core Kernel
+كل شيء يبدأ من Organization/User/Membership/Permissions ولا توجد وكالة بدون organization.
+45. Security Rules
+لا تحصل الوكالة على صلاحيات عامة على كل بيانات العميل لمجرد أنها agency.
+كل وصول يجب أن يكون scoped by organization/site/company/resource.
+client billing وsecurity logs وprivate documents تحتاج explicit permissions.
+client access grants يجب أن تكون قابلة للإلغاء والانتهاء expires_at.
+كل bulk operation يجب أن يسجل من طلبها وعلى أي مواقع تمت.
+handover يجب أن يراجع access grants والـ billing relationships قبل الإكمال.
+White-label لا يجب أن يخفي التزامات Kabeeri القانونية أو الأمنية إذا الخطة تتطلب ظهورها.
+46. Privacy & Visibility
+ملاحظات agency_internal لا تظهر للعميل.
+ملاحظات client_visible تظهر في Client Portal.
+تقارير العميل لا تظهر إلا للـ contacts أو users المصرح لهم.
+Agency لا ترى Employee evaluations أو payroll أو finance إلا إذا تم منح صلاحيات صريحة من العميل.
+Agency access logs يجب أن تكون قابلة للعرض للعميل في الخطط المتقدمة.
+47. Portable / Dedicated Export Rules
+البيان
+Cloud Export
+Portable Export
+Dedicated
+agency_clients
+تبقى عند الوكالة
+لا تصدر مع العميل إلا كعلاقة support/handover مختصرة
+تبقى في Central/Agency registry
+agency_client_sites
+مرجع إداري
+لا يخرج كملكية للعميل إلا إذا handover
+مرجع support اختياري
+maintenance_notes
+حسب visibility
+client_visible فقط يمكن تصديرها للعميل
+تدار حسب العقد
+access_grants
+تراجع عند التصدير
+تلغى أو تتحول إلى support token
+تتحول إلى dedicated support access
+reports
+يمكن تصديرها
+نعم إذا تخص العميل
+نعم حسب السياسة
+48. Build Order
+Phase 1 — Agency Identity
+agency_profiles
+agency_service_offerings
+agency_settings
+Phase 2 — Clients & Sites
+agency_clients
+agency_client_contacts
+agency_client_sites
+agency_site_status_snapshots
+Phase 3 — Access
+agency_client_invitations
+agency_client_access_grants
+agency_client_user_roles
+policies + permission tests
+Phase 4 — Maintenance
+agency_maintenance_notes
+agency_maintenance_plans
+agency_bulk_operations
+agency_bulk_operation_items
+Phase 5 — White-label & Portal
+agency_branding_profiles
+agency_client_portals
+client portal UI
+Phase 6 — Billing & Reports
+agency_billing_relationships
+agency_reseller_commissions
+agency_client_reports
+agency_report_exports
+Phase 7 — Handover & Audit
+agency_handover_requests
+agency_access_logs
+activity/audit integration
+49. Acceptance Criteria
+Agency Owner يستطيع إنشاء agency profile.
+Agency يستطيع إضافة client وربطه بـ organization/site موجود.
+Agency dashboard يعرض client organizations وclient sites وsite statuses وplans وmaintenance notes وrecent updates.
+Agency يستطيع دعوة العميل بصلاحيات محددة.
+Agency يستطيع تسجيل maintenance note visible أو internal.
+Bulk status overview يعمل بدون تحميل كل تفاصيل المواقع في كل request.
+White-label fields تعمل كبداية: portal name, logo, colors.
+كل وصول لموارد العميل يسجل في agency_access_logs أو audit_logs عند الحساسية.
+Handover request يمكنه إلغاء أو نقل access grants بأمان.
+Billing relationship لا يكرر الفواتير، بل يربط فقط بالـ Billing module.
+50. CLI Commands مقترحة
+php artisan kabeeri:agency:create-profile {organizationId}
+php artisan kabeeri:agency:add-client {agencyProfileId} {organizationId}
+php artisan kabeeri:agency:link-site {agencyClientId} {siteId}
+php artisan kabeeri:agency:refresh-status {agencyProfileId}
+php artisan kabeeri:agency:bulk-health-check {agencyProfileId}
+php artisan kabeeri:agency:generate-report {agencyClientId}
+php artisan kabeeri:agency:handover {agencyClientId}
+php artisan kabeeri:agency:cleanup-expired-access
+51. الخلاصة
+Agency Platform ليست بديلًا لـ Cloud أو Billing أو Sites، بل طبقة إدارة فوقهم. وظيفتها أن تجعل Kabeeri قابلة للبيع للوكاالت التي تدير عدة مواقع وعملاء، مع الحفاظ على ملكية العميل وصلاحياته، وتسجيل كل وصول أو تغيير. في V1 يكفي أن تدعم dashboard، client sites، access، maintenance notes، bulk status، وwhite-label foundation؛ أما automation المتقدم والـ BI والـ reseller accounting الكامل فيأتي لاحقًا.
+KABEERI Database File 29 — Agency Platform Database

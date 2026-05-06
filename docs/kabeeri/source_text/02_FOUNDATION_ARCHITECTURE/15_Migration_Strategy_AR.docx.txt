@@ -1,0 +1,505 @@
+KABEERI — ملحق 15: استراتيجية الهجرة والاستيراد
+Migration Strategy: WordPress / WooCommerce / Shopify / ERP Systems
+هذا الملحق يحدد كيف ستتعامل Kabeeri مع نقل العملاء من أنظمة موجودة إلى Kabeeri، خصوصًا:
+WordPressWooCommerceShopifyOdooZohoQuickBooksXeroDaftraERP/CRM systemsCSV/Excel importsCustom legacy systems
+الهدف:
+جعل الانتقال إلى Kabeeri سهلًا وآمنًا ومقنعًا، مع تقليل خسارة البيانات والـ SEO وتقليل خوف العملاء من الهجرة.
+1. لماذا Migration Strategy مهمة؟
+Kabeeri تستهدف جمهور WordPress وWooCommerce وShopify وERP.
+أغلب العملاء لن يبدأوا من الصفر.
+سيكون لديهم بالفعل:
+موقع.
+محتوى.
+صفحات.
+مقالات.
+صور.
+SEO.
+منتجات.
+طلبات.
+عملاء.
+فواتير.
+بيانات مخزون.
+CRM.
+موظفين.
+تقارير.
+لذلك نجاح Kabeeri يعتمد على سؤال مهم:
+هل أستطيع الانتقال إلى Kabeeri بدون خسارة؟
+2. القاعدة الرئيسية
+الهجرة ليست Import فقط.
+الهجرة عملية كاملة:
+Analyze→ Map→ Import→ Validate→ Preview→ Fix→ Redirect→ Go Live→ Monitor
+أي importer بدون validation وpreview وredirects سيخلق مشاكل كبيرة.
+3. أنواع الهجرة
+3.1 Content Migration
+نقل المحتوى:
+Pages.
+Posts.
+Categories.
+Tags.
+Media.
+Authors.
+Comments optional.
+SEO metadata.
+Menus.
+3.2 Commerce Migration
+نقل بيانات التجارة:
+Products.
+Product categories.
+Product images.
+Variants.
+SKUs.
+Prices.
+Inventory.
+Customers.
+Orders.
+Coupons.
+Reviews.
+Shipping settings.
+Tax settings.
+3.3 Business Migration
+نقل بيانات البزنس:
+Company data.
+Business profile.
+Services.
+Team.
+Customers.
+Suppliers.
+Leads.
+Invoices.
+3.4 ERP Migration
+نقل أو مزامنة بيانات ERP:
+Chart of accounts.
+Customers.
+Suppliers.
+Items.
+Inventory.
+Invoices.
+Payments.
+Employees.
+Projects.
+3.5 Integration Migration
+بدل النقل الكامل، يمكن ربط Kabeeri بالنظام الحالي.
+مثال:
+Kabeeri CMS + Commerceلكن Accounting يبقى في QuickBooks
+أو:
+Kabeeri Mall + Rabetلكن ERP موجود في Odoo
+4. WordPress Migration
+4.1 الهدف
+نقل مواقع WordPress إلى Kabeeri بسهولة.
+4.2 مصادر البيانات
+WordPress XML ExportWordPress REST APIDatabase direct import لاحقًاPlugin-assisted migration لاحقًا
+4.3 V2 البداية المقترحة
+نبدأ بـ:
+WordPress XML Importer
+لأنه الأسهل والأكثر أمانًا.
+4.4 ما يتم استيراده من WordPress
+Content
+Posts.
+Pages.
+Authors.
+Categories.
+Tags.
+Publish dates.
+Slugs.
+Status.
+Excerpts.
+Content HTML.
+Media
+Images.
+Featured images.
+Attachments.
+Alt text إن وجد.
+SEO
+حسب المتاح:
+SEO title.
+SEO description.
+canonical.
+OpenGraph data لاحقًا.
+URLs
+old slug.
+new slug.
+redirect mapping.
+4.5 مشاكل WordPress المتوقعة
+Shortcodes.
+Gutenberg blocks.
+Elementor content.
+WPBakery content.
+Custom post types.
+Custom fields.
+Broken media URLs.
+Plugin-generated SEO.
+Menu structures.
+Permalink formats.
+4.6 WordPress Mapping
+WordPress
+Kabeeri
+post
+ContentEntry type Post
+page
+ContentEntry type Page
+category
+TaxonomyTerm
+tag
+TaxonomyTerm
+attachment
+MediaAsset
+author
+User أو imported author placeholder
+custom post type
+ContentType
+post meta
+Custom fields / metadata
+slug
+slug
+excerpt
+excerpt
+4.7 Shortcodes Strategy
+Shortcodes مشكلة كبيرة.
+نحتاج التعامل معها بثلاث مستويات:
+1. Preserve as plain content2. Convert known shortcodes3. Flag unknown shortcodes for review
+مثال:
+[gallery]→ Kabeeri gallery block لاحقًا
+Unknown shortcode:
+[plugin_special_form id="12"]→ Import warning
+4.8 Gutenberg Strategy
+في البداية:
+نحافظ على HTML قدر الإمكان.
+نرصد blocks غير مدعومة.
+نحول blocks الشائعة لاحقًا.
+لاحقًا:
+Gutenberg block → Kabeeri block/component mapping
+4.9 Elementor Strategy
+Elementor صعب لأنه يعتمد على JSON/shortcodes/widgets.
+الاستراتيجية:
+V2
+استيراد المحتوى كـ HTML قدر الإمكان.
+وضع warning للصفحات المبنية بـ Elementor.
+V6
+Partial Elementor mapping.
+Convert sections/widgets الشائعة.
+AI-assisted rebuild.
+5. SEO Migration
+5.1 الهدف
+تقليل خسارة SEO بعد الانتقال.
+5.2 ما يجب نقله
+Page titles.
+Meta descriptions.
+Slugs.
+Canonical URLs.
+Headings basic.
+Image alt text.
+Redirects.
+Sitemap.
+Robots settings.
+5.3 Redirect Strategy
+كل URL قديم يجب أن يكون له قرار:
+same URLredirect to new URLgone 410manual review
+5.4 Redirect Map
+جدول مقترح:
+redirectsidsite_idsource_pathtarget_pathstatus_codesource_typecreated_atupdated_at
+5.5 SEO Migration Report
+بعد الاستيراد، التقرير يعرض:
+عدد الصفحات المستوردة.
+عدد الروابط التي تغيرت.
+redirects المقترحة.
+missing meta titles.
+missing descriptions.
+broken images.
+unknown shortcodes.
+pages needing manual review.
+6. WooCommerce Migration
+6.1 الهدف
+نقل متاجر WooCommerce إلى Kabeeri Commerce.
+6.2 مصادر البيانات
+WooCommerce CSV ExportWooCommerce REST APIWordPress database direct لاحقًاMigration plugin لاحقًا
+6.3 ما يتم نقله
+Products.
+Categories.
+Tags.
+Images.
+Variations.
+SKUs.
+Prices.
+Sale prices.
+Stock.
+Customers.
+Orders.
+Coupons.
+Product reviews.
+6.4 WooCommerce Mapping
+WooCommerce
+Kabeeri
+product
+Product
+variation
+ProductVariant / SKU
+product_cat
+ProductCategory
+order
+Order
+customer
+Customer
+coupon
+Coupon
+payment method
+Payment method mapping
+shipping method
+Shipping rule mapping
+tax class
+Tax rule mapping
+6.5 ما لا يجب نقله مباشرة في البداية
+Payment tokens.
+Stored cards.
+Sensitive payment data.
+Plugin-specific checkout fields.
+Complex subscriptions.
+Advanced bookings.
+هذه تحتاج mapping خاص أو تمنع.
+6.6 WooCommerce Migration Risks
+Variations معقدة.
+Custom product fields.
+Subscription plugins.
+Booking plugins.
+Marketplace plugins.
+Tax plugins.
+Shipping plugins.
+لذلك يجب إصدار Migration Report قوي.
+7. Shopify Migration
+7.1 الهدف
+جذب بعض عملاء Shopify الذين يريدون تحكمًا أكبر أو تكامل ERP أقوى.
+7.2 مصادر البيانات
+Shopify CSV ExportShopify Admin API
+7.3 ما يتم نقله
+Products.
+Variants.
+Collections.
+Images.
+Customers.
+Orders.
+Pages.
+Blog posts.
+Discounts جزئيًا.
+7.4 Shopify Mapping
+Shopify
+Kabeeri
+Product
+Product
+Variant
+SKU / ProductVariant
+Collection
+ProductCategory / Collection
+Customer
+Customer
+Order
+Order
+Page
+ContentEntry Page
+Blog Article
+ContentEntry Post
+Discount
+Coupon/Discount Rule
+7.5 Shopify لا يدخل مبكرًا
+Shopify migration ليس V1 ولا V2 الأساسي.
+يدخل لاحقًا بعد:
+Commerce stable.
+Orders stable.
+Customers stable.
+Product variants stable.
+غالبًا V5/V6.
+8. Odoo / ERP Migration & Integration
+8.1 الهدف
+ليس دائمًا نقل Odoo بالكامل إلى Kabeeri.
+أحيانًا الأفضل:
+Integrate firstMigrate later if needed
+8.2 Modes
+Mode 1 — Connector only
+Kabeeri يتكامل مع Odoo.
+Mode 2 — Partial migration
+نقل customers/products/invoices فقط.
+Mode 3 — Full migration
+نقل ERP كامل لاحقًا.
+8.3 Entities
+Customers.
+Suppliers.
+Products.
+Inventory.
+Invoices.
+Payments.
+Chart of accounts.
+Employees.
+Projects.
+8.4 ERP Migration Warning
+ERP migration خطيرة.
+لا يجب تنفيذها بدون:
+Data mapping.
+Validation.
+Reconciliation.
+Trial import.
+Approval.
+Backup.
+Consultant review.
+9. CSV / Excel Import Foundation
+9.1 الهدف
+دعم استيراد مرن لأي بيانات.
+9.2 يستخدم في
+Products.
+Customers.
+Employees.
+Services.
+Leads.
+Inventory.
+Suppliers.
+9.3 CSV Import Flow
+Upload file→ Detect columns→ Map columns→ Validate sample→ Preview rows→ Import→ Report errors→ Allow retry
+9.4 Import Mapping UI
+المستخدم يرى:
+CSV column: Product Name→ Kabeeri field: product.name
+10. Import Job Architecture
+10.1 لماذا Jobs؟
+الهجرة قد تستغرق وقتًا طويلًا.
+لذلك يجب أن تكون:
+queued.
+resumable لاحقًا.
+logged.
+reportable.
+10.2 import_jobs
+idorganization_id nullablesite_id nullablecompany_id nullableimport_typesource_systemstatussource_file_media_id nullablestarted_bystarted_atcompleted_atsummary jsonerrors jsonmetadata jsoncreated_atupdated_at
+10.3 import_records
+idimport_job_idsource_id nullablesource_typestatustarget_type nullabletarget_id nullableraw_data jsonerrors jsoncreated_atupdated_at
+11. Migration Validation
+11.1 ما يجب التحقق منه؟
+Required fields.
+Duplicate slugs.
+Missing images.
+Invalid emails.
+Invalid prices.
+Invalid dates.
+Broken URLs.
+Unsupported fields.
+Permission issues.
+11.2 Duplicate Handling
+خيارات:
+SkipUpdate existingCreate newMergeAsk user
+12. Migration Preview
+قبل تنفيذ الاستيراد النهائي، يجب عرض preview.
+مثال:
+سيتم استيراد:120 pages450 posts800 images12 categories36 redirectsتحذيرات:15 shortcodes غير معروفة22 صورة مفقودة4 روابط مكررة
+13. Rollback Strategy
+أي import كبير يجب أن يكون له طريقة rollback.
+13.1 طرق rollback
+Delete imported records by import_job_idRestore backupRevert mapped fieldsDisable imported content
+13.2 قاعدة مهمة
+كل imported record يجب أن يرتبط بـ import_job_id أو migration batch.
+14. Migration Logs
+كل خطوة يجب أن تسجل:
+started.
+item imported.
+item skipped.
+warning.
+error.
+completed.
+15. AI Migration Assistant
+15.1 دور AI
+AI يساعد في:
+تحليل الموقع القديم.
+اقتراح mapping.
+شرح أخطاء import.
+اقتراح redirects.
+إعادة بناء صفحات Elementor.
+تحسين SEO بعد الهجرة.
+كشف missing fields.
+15.2 AI لا ينفذ الهجرة الحساسة وحده
+AI يقترح، لكن المستخدم يوافق.
+16. Migration Health Report
+بعد الهجرة، نحتاج تقرير صحة.
+يحتوي على
+Imported items.
+Failed items.
+Warnings.
+SEO issues.
+Redirect coverage.
+Broken media.
+Broken internal links.
+Unmapped fields.
+Recommended fixes.
+17. Go Live Checklist
+قبل نقل الموقع فعليًا:
+Content importedMedia importedSEO checkedRedirects readySitemap generatedRobots checkedForms testedMenus checkedTheme checkedPerformance testedBackup createdDNS plan readyAnalytics connectedSearch Console updated لاحقًا
+18. Post-migration Monitoring
+بعد go-live:
+404 monitoring.
+Redirect logs.
+Search ranking tracking لاحقًا.
+Order monitoring لو متجر.
+Contact form monitoring.
+Error logs.
+19. Migration Services كمنتج تجاري
+Kabeeri يمكن أن تبيع خدمات migration.
+Packages
+WordPress Migration BasicWordPress Migration ProWooCommerce MigrationShopify MigrationERP Data MigrationSEO Migration AuditAI Rebuild Package
+20. V1 Requirements من هذا الملحق
+Must-have في V1
+import_jobs foundationexport_jobs foundationmedia import-ready architecturecontent model supports slugs/status/dates/authorsredirects concept plannedactivity log for importsbackup before import concept
+Should-have في V1
+CSV import foundationImport UI placeholderImport report structure
+Not required in V1
+WordPress XML importer fullWooCommerce importerShopify importerERP migrationAI migration assistantAdvanced redirect manager
+21. Roadmap عبر الإصدارات
+V1
+Import/export foundation.
+Content model migration-ready.
+Media model migration-ready.
+Redirect concept.
+V2
+WordPress XML Importer.
+Media import.
+SEO meta mapping basic.
+Redirect map basic.
+Migration report.
+CSV import basic.
+V3
+WooCommerce basic import.
+Products/customers/orders import basic.
+CRM lead/customer import.
+Inventory import basic.
+V4
+Migration assistant UI.
+Agency migration tools.
+Bulk migration jobs.
+AI migration suggestions basic.
+V5
+Shopify import basic.
+ERP connector-based migration.
+Odoo/QuickBooks/Zoho sync import.
+Data reconciliation.
+V6
+Advanced migration center.
+Elementor/Gutenberg partial mapping.
+WooCommerce advanced.
+Shopify advanced.
+ERP migration toolkit.
+AI rebuild assistant.
+22. أخطاء ممنوعة
+22.1 لا تستورد بدون preview
+خصوصًا للمتاجر والـ ERP.
+22.2 لا تهمل redirects
+الهجرة بدون redirects قد تدمر SEO.
+22.3 لا تستورد payment sensitive data
+مثل tokens/cards.
+22.4 لا تخلط Customer مع User دائمًا
+Customer قد لا يكون User.
+22.5 لا تبدأ ERP migration قبل validation قوي
+ERP data حساسة جدًا.
+22.6 لا تدعم Elementor full mapping مبكرًا
+ابدأ بالتحذير والـ HTML preservation.
+23. الخلاصة التنفيذية
+Migration في Kabeeri يجب أن تكون:
+آمنةقابلة للمراجعةقابلة للتراجعتحافظ على SEOتعطي تقرير واضحتدعم AI كمساعدلا تستورد بيانات حساسة بدون سياسة
+القاعدة النهائية:
+الهجرة الناجحة ليست نقل البيانات فقط، بل نقل الثقة والظهور والعمليات بدون كسر تجربة العميل.
+24. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق إضافي اختياري:
+ملحق 16 — Localization & Country Packs
+إذا أردنا تثبيت الترجمة والضرائب والتوثيق حسب الدول قبل V1.

@@ -1,0 +1,398 @@
+KABEERI Database File 08
+Kabeeri Media & Files Database
+نظام الميديا والملفات والمستندات
+ملف تفصيلي لقاعدة بيانات Media Library وDocument Management Foundation داخل KABEERI، ليخدم CMS وRabet وVerification وCommerce وERP وCloud وFrontend Anywhere وPortable وDedicated.
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+1. تعريف النظام
+نظام Media & Files هو طبقة مركزية لإدارة كل ملف يرفعه المستخدم أو يولده النظام أو يحتاج أن يظهر في الموقع أو يدخل في مستند رسمي. هذه الطبقة لا تعني الصور فقط، بل تشمل الصور، الفيديوهات، ملفات PDF، المستندات القانونية، المرفقات، ملفات المنتجات، ملفات العقود، وملفات التصدير المؤقتة.
+القاعدة الأساسية: لا نخزن الملفات نفسها داخل قاعدة البيانات. قاعدة البيانات تحفظ metadata، المسارات النسبية، الملكية، الصلاحيات، النسخ، والتحويلات. أما الملف الفعلي فيكون داخل storage disk مناسب.
+2. علاقة هذا الملف بالملفات السابقة
+الملف/النظام
+كيف يعتمد على Media & Files
+Core Kernel
+يحتاج media_assets وmedia_usages كجزء من النواة، مع tenant scoping واضح.
+CMS Database
+يستخدم الصور المميزة، محتوى الصفحات، الميديا العامة، SEO images، وملفات القوالب.
+Rabet / Verification
+يستخدم المستندات القانونية، مستندات التحقق، نسخ المستندات، وسجلات الوصول الحساسة.
+Commerce
+يستخدم صور المنتجات، ملفات الكتالوج، ملفات الفواتير PDF، ومرفقات الطلبات.
+ERP
+يستخدم مستندات الموظفين، العقود، أوامر الشراء، الفواتير، ومرفقات المشاريع.
+Cloud
+يدير التخزين، الحصص، النسخ الاحتياطي، وملفات العملاء داخل Kabeeri Cloud.
+Frontend Anywhere
+يعطي الواجهة الخارجية حق قراءة public media فقط أو static snapshots.
+Portable
+يحتاج تجميع media/public وmedia/private وdocuments داخل export bundle.
+Dedicated
+يستخدم نفس schema، لكن storage/database قد تكون مخصصة للعميل.
+3. الفرق بين Media Library وDocument Management Foundation
+النوع
+الوصف
+أمثلة
+Media Library
+ملفات للاستخدام العام أو التحريري داخل الموقع/المتجر.
+صور صفحات، صور مقالات، صور منتجات، ملفات تحميل عامة، فيديوهات.
+Document Management
+مستندات أعمال لها صلاحيات، نسخ، حالة، انتهاء، أرشفة، وأحياناً اعتماد أو توقيع.
+مستندات قانونية، عقود، فواتير PDF، مستندات موظفين، مستندات تحقق، أدلة نزاعات.
+مهم: يمكن أن يعتمد document_versions على media_assets، لكن document ليس مجرد media_asset. المستند له lifecycle وصلاحيات ومعنى قانوني أو تشغيلي.
+4. مبادئ التصميم
+كل ملف يجب أن يكون tenant-scoped عبر organization_id، وعند الحاجة site_id أو company_id.
+كل ملف عام يجب أن يكون قابل للتخزين على CDN، وكل ملف خاص يجب أن يقدم عبر signed URL أو controller محمي.
+كل وصول لملف sensitive يجب أن يسجل في media_access_logs أو document_access_logs.
+كل ملف يجب أن يكون export-ready من اليوم الأول، باستخدام relative_path وليس URL كامل.
+كل عملية معالجة ثقيلة مثل thumbnails أو virus scan أو metadata extraction يجب أن تعمل في queue.
+لا نعتمد على visibility فقط للأمان؛ يجب وجود Policies وAccess Grants وScopes.
+الأصل لا يتغير عند إنشاء thumbnails أو optimized versions؛ التحويلات تحفظ في media_derivatives.
+5. Storage Modes
+الوضع
+الاستخدام
+ملاحظات
+local
+التطوير وSelf-hosted البسيط.
+جيد في V1، لكن يحتاج مسارات منظمة.
+cloud_storage
+Kabeeri Cloud managed storage.
+يرتبط بالحصة والفوترة والنسخ الاحتياطي.
+s3_compatible
+Object storage عام أو خاص.
+مناسب للتوسع وDedicated.
+private_storage
+مستندات حساسة.
+يجب أن يقدم عبر signed URLs مع logging.
+cdn_public
+ميديا عامة عالية الزيارات.
+لا يستخدم للملفات الخاصة.
+6. هيكل المجلدات المقترح
+يجب تجنب تخزين كل ملفات العملاء في مجلد واحد. الهيكل المقترح:
+organizations/{organization_uuid}/sites/{site_uuid}/media/yyyy/mm/{file_uuid}.{ext}organizations/{organization_uuid}/companies/{company_uuid}/documents/yyyy/mm/{document_uuid}/{version_uuid}.{ext}organizations/{organization_uuid}/exports/{export_uuid}/bundle.ziporganizations/{organization_uuid}/temp/uploads/{upload_session_uuid}/chunk_{n}
+استخدام UUID في المسار أفضل من id الداخلي لأنه يساعد في Portable وDedicated وExternal sync بدون كشف تسلسل قواعد البيانات.
+7. الجداول الأساسية
+المجموعة
+الجداول
+Media Core
+media_assets, media_folders, media_collections, media_collection_items, media_usages, media_tags, media_asset_tag
+Versions & Derivatives
+media_asset_versions, media_derivatives, media_transform_jobs
+Upload & Processing
+media_upload_sessions, media_chunks, media_virus_scans, media_processing_errors
+Access & Security
+media_access_grants, media_signed_links, media_access_logs
+Storage & Quotas
+media_storage_disks, media_storage_policies, media_quotas, media_cleanup_jobs, media_retention_records
+Documents Foundation
+documents, document_versions, document_permissions, document_access_logs, document_status_events, document_expiry_reminders
+8. media_assets
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecompany_id nullableuploaded_by nullablefolder_id nullablediskpathrelative_pathfilenameoriginal_filenamemime_typeextensionsize_byteswidth nullableheight nullableduration_seconds nullablechecksum nullablevisibility default privateasset_typeprocessing_status default pendingis_public_indexable default falsealt_text nullablecaption nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+asset_type: image, video, audio, pdf, document, spreadsheet, archive, vector, othervisibility: public, private, organization_only, company_only, site_only, sensitiveprocessing_status: pending, processing, ready, failed, quarantined
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(company_id)index(uploaded_by)index(visibility)index(asset_type)index(processing_status)unique(uuid)index(checksum)
+ملاحظات:
+path لا يجب أن يكون URL كامل. استخدم relative_path لتسهيل التصدير والانتقال.
+visibility public لا تكفي وحدها؛ public file يجب أن يكون على disk يسمح بالنشر.
+sensitive لا يقدم مباشرة من storage العام.
+9. media_folders
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecompany_id nullableparent_id nullablenameslugfolder_type default mediavisibility default organization_onlycreated_by nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+folder_type: media, documents, product_assets, verification, employee_files, project_files, temporary
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(company_id)index(parent_id)unique(organization_id, parent_id, slug)
+ملاحظات:
+المجلدات تنظيمية ولا يجب أن تكون وحدها مصدر الصلاحيات.
+يمكن استخدامها في UI وPortable export grouping.
+10. media_collections
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecompany_id nullablenameslugcollection_typevisibility default privatecreated_by nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+collection_type: gallery, product_gallery, brand_assets, campaign_assets, document_set, export_set
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(company_id)unique(organization_id, slug)
+11. media_collection_items
+الحقول المقترحة:
+idmedia_collection_idmedia_asset_idsort_order default 0caption nullablecreated_at
+الفهارس المقترحة:
+unique(media_collection_id, media_asset_id)index(media_asset_id)
+12. media_usages
+الحقول المقترحة:
+idmedia_asset_idorganization_id nullableusable_typeusable_idfield_name nullableusage_context nullablecreated_at
+القيم / الحالات المقترحة:
+usage_context: featured_image, content_body, product_image, profile_logo, verification_document, invoice_pdf, attachment, theme_asset
+الفهارس المقترحة:
+index(media_asset_id)index(usable_type, usable_id)index(organization_id)
+ملاحظات:
+هذا الجدول مهم لمعرفة هل يمكن حذف الملف أم ما زال مستخدماً.
+يساعد في Portable export لمعرفة الملفات التابعة لكل module.
+13. media_tags و media_asset_tag
+الحقول المقترحة:
+media_tags: id, organization_id, name, slug, color nullable, created_at, updated_atmedia_asset_tag: media_asset_id, media_tag_id, created_at
+الفهارس المقترحة:
+unique(media_tags.organization_id, media_tags.slug)primary(media_asset_id, media_tag_id)
+14. media_asset_versions
+الحقول المقترحة:
+iduuidmedia_asset_idversion_numberdiskpathrelative_pathsize_byteschecksum nullableuploaded_by nullablechange_note nullablecreated_at
+الفهارس المقترحة:
+index(media_asset_id)unique(media_asset_id, version_number)index(checksum)
+ملاحظات:
+يستخدم عندما يسمح النظام بتبديل الملف مع حفظ النسخة السابقة.
+للصور العادية يمكن تأجيله، لكنه مهم للمستندات والملفات الرسمية.
+15. media_derivatives
+الحقول المقترحة:
+iduuidmedia_asset_idderivative_typediskpathrelative_pathwidth nullableheight nullablesize_bytes nullablemime_type nullablechecksum nullablestatus default readymetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+derivative_type: thumbnail, small, medium, large, webp, avif, preview_pdf, waveform, transcript, poster_frame
+الفهارس المقترحة:
+index(media_asset_id)index(derivative_type)unique(media_asset_id, derivative_type)
+ملاحظات:
+لا تعدل الأصل. كل نسخة محسنة أو thumbnail تحفظ هنا.
+Frontend Anywhere وCDN يمكن أن يعتمدوا على derivatives العامة.
+16. media_transform_jobs
+الحقول المقترحة:
+iduuidorganization_idmedia_asset_idjob_typestatus default pendingattempts default 0started_at nullablecompleted_at nullablefailed_at nullableerror_message nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+job_type: thumbnail, optimize, convert_format, extract_metadata, generate_preview, virus_scan, ocr_laterstatus: pending, running, completed, failed, cancelled
+الفهارس المقترحة:
+index(organization_id)index(media_asset_id)index(status)index(job_type)
+17. media_upload_sessions
+الحقول المقترحة:
+iduuidorganization_idsite_id nullablecompany_id nullableuploaded_byupload_type default singlestatus default pendingexpected_size_bytes nullablereceived_size_bytes default 0original_filename nullablemime_type nullabletarget_folder_id nullableexpires_at nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+upload_type: single, chunked, remote_import, generatedstatus: pending, uploading, completed, failed, expired, cancelled
+الفهارس المقترحة:
+index(organization_id)index(uploaded_by)index(status)index(expires_at)
+ملاحظات:
+مهم للملفات الكبيرة وDedicated/Portable imports.
+بعد اكتمال الجلسة ينشأ media_asset.
+18. media_chunks
+الحقول المقترحة:
+idmedia_upload_session_idchunk_numberpathsize_byteschecksum nullablestatus default uploadedcreated_at
+القيم / الحالات المقترحة:
+status: uploaded, verified, failed, merged, deleted
+الفهارس المقترحة:
+unique(media_upload_session_id, chunk_number)index(status)
+19. media_virus_scans
+الحقول المقترحة:
+iduuidmedia_asset_idscanner_name nullablestatus default pendingresult default unknownsignature_version nullablescanned_at nullablemessage nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+status: pending, scanning, completed, failedresult: clean, infected, suspicious, unknown
+الفهارس المقترحة:
+index(media_asset_id)index(result)index(status)
+ملاحظات:
+في V1 يمكن أن يكون placeholder، لكن schema يجب أن يكون جاهزاً.
+أي ملف infected يجب أن ينتقل إلى processing_status = quarantined.
+20. media_processing_errors
+الحقول المقترحة:
+idmedia_asset_id nullablemedia_transform_job_id nullableerror_code nullablemessageseverity default errorresolved_at nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+severity: warning, error, critical
+الفهارس المقترحة:
+index(media_asset_id)index(media_transform_job_id)index(severity)
+21. media_access_grants
+الحقول المقترحة:
+iduuidmedia_asset_idsubject_typesubject_idpermissionexpires_at nullablecreated_by nullablecreated_atrevoked_at nullable
+القيم / الحالات المقترحة:
+subject_type: user, organization_membership, company_membership, role, public_tokenpermission: view, download, manage, delete
+الفهارس المقترحة:
+index(media_asset_id)index(subject_type, subject_id)index(expires_at)
+ملاحظات:
+يستخدم للملفات الخاصة التي تحتاج مشاركة محددة.
+Deny/Allow الأساسي يأتي من Policy، وهذا الجدول للمنح الاستثنائية.
+22. media_signed_links
+الحقول المقترحة:
+iduuidmedia_asset_idtoken_hashpurposestatus default activemax_uses nullableuses_count default 0expires_atcreated_by nullablecreated_atrevoked_at nullable
+القيم / الحالات المقترحة:
+purpose: preview, download, external_share, verification_review, support_accessstatus: active, expired, revoked, consumed
+الفهارس المقترحة:
+index(media_asset_id)index(status)index(expires_at)unique(token_hash)
+ملاحظات:
+لا تخزن token plain text.
+مهم لـ private documents وLegal Partner review وSupport temporary access.
+23. media_access_logs
+الحقول المقترحة:
+iduuidmedia_asset_idorganization_id nullableactor_user_id nullableaccess_typeaccess_resultip_address nullableuser_agent nullablereason nullablemetadata json nullablecreated_at
+القيم / الحالات المقترحة:
+access_type: view, download, preview, signed_url_created, signed_url_used, deniedaccess_result: allowed, denied, expired, revoked, not_found
+الفهارس المقترحة:
+index(media_asset_id, created_at)index(organization_id, created_at)index(actor_user_id, created_at)index(access_result)
+ملاحظات:
+أي وصول لملف sensitive أو verification/legal يجب تسجيله.
+يساعد في Security Center وCompliance.
+24. media_storage_disks
+الحقول المقترحة:
+iduuidnamedisk_keystorage_typevisibility_scopestatus default activeregion nullablebucket_name_masked nullablebase_url nullableis_default_public default falseis_default_private default falsesettings json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+storage_type: local, s3, s3_compatible, private_s3, cloud_managed, customer_storagevisibility_scope: public, private, sensitive, mixed
+الفهارس المقترحة:
+unique(disk_key)index(storage_type)index(status)
+ملاحظات:
+لا تحفظ secrets هنا. استخدم encrypted settings أو vault reference.
+في Dedicated قد تكون الأقراص خاصة بكل tenant.
+25. media_storage_policies
+الحقول المقترحة:
+iduuidorganization_id nullablesite_id nullablecompany_id nullablepolicy_keymax_file_size_mb nullableallowed_mime_types json nullableblocked_extensions json nullabledefault_disk_key nullablerequires_virus_scan default truerequires_processing default falseretention_days nullablecreated_atupdated_at
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(company_id)unique(organization_id, site_id, company_id, policy_key)
+ملاحظات:
+تتحكم في أنواع الملفات حسب الخطة والموديول.
+مثال: verification_documents لا تقبل إلا PDF/JPG/PNG وبحد حجم مختلف.
+26. media_quotas
+الحقول المقترحة:
+idorganization_idsite_id nullablecompany_id nullablequota_typelimit_bytes nullableused_bytes default 0period_start nullableperiod_end nullablesource_type nullablesource_id nullableupdated_atcreated_at
+القيم / الحالات المقترحة:
+quota_type: storage_total, public_media, private_documents, backup_storage, monthly_bandwidth
+الفهارس المقترحة:
+index(organization_id)index(site_id)index(company_id)unique(organization_id, site_id, company_id, quota_type, period_start)
+ملاحظات:
+Cloud يستخدمها للفوترة والحدود.
+Portable قد يستخدمها في diagnostics فقط.
+27. media_cleanup_jobs و media_retention_records
+الحقول المقترحة:
+media_cleanup_jobs: id, uuid, organization_id, cleanup_type, status, started_at nullable, completed_at nullable, summary json nullable, created_at, updated_atmedia_retention_records: id, organization_id, media_asset_id nullable, document_id nullable, retention_reason, retained_until nullable, status, metadata json nullable, created_at, updated_at
+القيم / الحالات المقترحة:
+cleanup_type: temp_uploads, unused_derivatives, expired_signed_links, deleted_assets_purge, export_temp_filesretention_reason: legal, billing, trust_record, dispute, audit_required, customer_policy
+الفهارس المقترحة:
+index(media_cleanup_jobs.organization_id)index(media_cleanup_jobs.status)index(media_retention_records.organization_id)index(media_retention_records.status)
+28. Document Management Foundation
+Document Management لا يحل محل Media Library، بل يبني عليها. المستند يمكن أن يحتوي على نسخة أو أكثر، وكل نسخة تشير إلى media_asset. المستند نفسه يحمل الحالة، النوع، الصلاحيات، الانتهاء، الأرشفة، والعلاقة بالكيان التشغيلي.
+29. documents
+الحقول المقترحة:
+iduuidorganization_idcompany_id nullablesite_id nullableowner_user_id nullablefolder_id nullabledocument_typetitleslug nullabledescription nullablestatus default draftvisibility default privatecurrent_version_id nullablerelated_type nullablerelated_id nullableexpires_at nullablearchived_at nullablemetadata json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+القيم / الحالات المقترحة:
+document_type: legal_document, verification_document, contract, invoice_pdf, employee_document, policy, procedure, project_file, purchase_document, dispute_evidence, generalstatus: draft, active, pending_review, approved, rejected, expired, archived, lockedvisibility: private, organization_only, company_only, restricted, sensitive
+الفهارس المقترحة:
+index(organization_id)index(company_id)index(site_id)index(owner_user_id)index(document_type)index(status)index(related_type, related_id)index(expires_at)
+ملاحظات:
+current_version_id يشير إلى document_versions.id بعد إنشاء النسخة.
+related_type/related_id يربط المستند بكيان مثل verification_request أو invoice أو employee.
+30. document_versions
+الحقول المقترحة:
+iduuiddocument_idmedia_asset_idversion_numberuploaded_by nullablestatus default activenotes nullablechecksum nullablecreated_at
+القيم / الحالات المقترحة:
+status: active, superseded, rejected, deleted
+الفهارس المقترحة:
+index(document_id)index(media_asset_id)unique(document_id, version_number)
+ملاحظات:
+الميديا الأصلية تحفظ في media_assets، والنسخة القانونية/التشغيلية تحفظ هنا.
+يمكن استخدام media_asset_versions للملف نفسه، لكن document_versions أوضح لدورة حياة المستند.
+31. document_permissions
+الحقول المقترحة:
+iddocument_idsubject_typesubject_idpermissioncreated_by nullableexpires_at nullablecreated_atrevoked_at nullable
+القيم / الحالات المقترحة:
+subject_type: user, role, organization_membership, company_membership, legal_partner_user, departmentpermission: view, download, upload_version, approve, manage, archive
+الفهارس المقترحة:
+index(document_id)index(subject_type, subject_id)index(expires_at)
+ملاحظات:
+لا تستخدم document_permissions كبديل كامل للـ RBAC، بل كطبقة تفصيلية فوقه.
+Legal Partner يجب أن يرى فقط المستندات المسندة له.
+32. document_access_logs
+الحقول المقترحة:
+iduuiddocument_iddocument_version_id nullableactor_user_id nullableaccess_typeaccess_resultip_address nullableuser_agent nullablereason nullablemetadata json nullablecreated_at
+القيم / الحالات المقترحة:
+access_type: view, download, upload_version, approve, reject, archive, restore, permission_grantedaccess_result: allowed, denied, expired, revoked
+الفهارس المقترحة:
+index(document_id, created_at)index(actor_user_id, created_at)index(access_type)index(access_result)
+ملاحظات:
+إلزامي للمستندات القانونية والتحقق والموظفين والمالية.
+33. document_status_events
+الحقول المقترحة:
+iduuiddocument_idfrom_status nullableto_statuschanged_by nullablereason nullablemetadata json nullablecreated_at
+الفهارس المقترحة:
+index(document_id, created_at)index(to_status)
+34. document_expiry_reminders
+الحقول المقترحة:
+iduuiddocument_idreminder_typestatus default pendingremind_atsent_at nullablerecipient_user_id nullablemetadata json nullablecreated_atupdated_at
+القيم / الحالات المقترحة:
+reminder_type: before_expiry, expired, renewal_required, missing_documentstatus: pending, sent, cancelled, failed
+الفهارس المقترحة:
+index(document_id)index(status)index(remind_at)
+ملاحظات:
+مهم لتجديد مستندات التحقق والعقود والتراخيص.
+35. document_links
+الحقول المقترحة:
+iduuiddocument_idlink_typerelated_typerelated_idcreated_by nullablecreated_at
+القيم / الحالات المقترحة:
+link_type: evidence_for, attached_to, generated_from, signed_copy_of, renewal_of
+الفهارس المقترحة:
+index(document_id)index(related_type, related_id)
+36. ERD المقترح
+erDiagram ORGANIZATIONS ||--o{ MEDIA_ASSETS : owns SITES ||--o{ MEDIA_ASSETS : uses COMPANIES ||--o{ MEDIA_ASSETS : uses MEDIA_FOLDERS ||--o{ MEDIA_ASSETS : contains MEDIA_ASSETS ||--o{ MEDIA_USAGES : used_by MEDIA_ASSETS ||--o{ MEDIA_DERIVATIVES : generates MEDIA_ASSETS ||--o{ MEDIA_TRANSFORM_JOBS : processed_by MEDIA_ASSETS ||--o{ MEDIA_ACCESS_LOGS : logged_by MEDIA_ASSETS ||--o{ MEDIA_SIGNED_LINKS : shared_by MEDIA_ASSETS ||--o{ MEDIA_VIRUS_SCANS : scanned_by ORGANIZATIONS ||--o{ DOCUMENTS : owns DOCUMENTS ||--o{ DOCUMENT_VERSIONS : has MEDIA_ASSETS ||--o{ DOCUMENT_VERSIONS : stores_file DOCUMENTS ||--o{ DOCUMENT_PERMISSIONS : grants DOCUMENTS ||--o{ DOCUMENT_ACCESS_LOGS : logged_by DOCUMENTS ||--o{ DOCUMENT_STATUS_EVENTS : changes DOCUMENTS ||--o{ DOCUMENT_EXPIRY_REMINDERS : reminds
+37. Upload Flow
+User uploads file→ validate permission→ validate storage policy→ create media_upload_session→ store file or chunks→ create media_asset→ queue virus scan / metadata extraction / thumbnails→ create media_derivatives→ update processing_status = ready→ create media_usage if linked to object→ log activity
+38. Private File Access Flow
+User requests private file→ resolve media_asset→ check tenant scope→ check policy / role / media_access_grants→ if allowed create short-lived signed URL or stream through controller→ create media_access_log→ if denied create denied log for sensitive assets→ return file
+39. Document Version Flow
+User uploads new document version→ check document permission upload_version→ create media_asset→ create document_version version_number + 1→ mark previous version superseded if needed→ update documents.current_version_id→ create document_status_event→ create document_access_log→ notify reviewers if status requires review
+40. Verification Document Flow
+Company owner submits verification document→ create media_asset visibility=sensitive→ create document document_type=verification_document→ create document_version→ link document to verification_request→ create verification_documents row if module requires compatibility→ legal/internal reviewer sees assigned documents only→ every preview/download is logged
+41. Frontend Anywhere Rules
+الواجهة الخارجية تقرأ فقط media_assets ذات visibility = public أو مشتقات عامة مصرح بها.
+لا تصل إلى private documents أو sensitive files أو verification documents.
+يفضل تقديم public media عبر CDN أو public API scoped.
+أي media في content snapshots يجب أن يكون public_url آمن ولا يكشف مسارات private storage.
+عند تحديث media مستخدمة في صفحة منشورة يتم إطلاق frontend_cache_invalidations.
+42. Portable Export Rules
+media_assets العامة تخرج داخل media/public.
+private files تخرج داخل media/private إذا كانت ضمن نطاق العميل ومسموح تصديرها.
+documents تخرج داخل documents إذا طلب العميل وسمحت الخطة والسياسة.
+export manifest يجب أن يحتوي checksums للملفات المهمة.
+لا تصدر platform secrets أو ملفات تخص عملاء آخرين أو مستندات legal partner غير تابعة للعميل.
+يجب الحفاظ على UUIDs وrelative_path قدر الإمكان لتسهيل restore وMall Sync.
+43. Dedicated Rules
+Dedicated يستخدم نفس الجداول داخل قاعدة العميل، لكن media_storage_disks قد تشير إلى storage مخصص.
+Central Kabeeri لا يحتاج الوصول إلى الملفات الخاصة إلا عبر support access مؤقت وموافق عليه.
+Health report يمكن أن يرسل إحصاءات فقط مثل storage_usage وfailed_jobs بدون بيانات حساسة.
+Backups يجب أن تشمل database + files + document storage حسب سياسة العميل.
+44. Security Requirements
+File validation حسب mime type والحجم والامتداد.
+منع تنفيذ الملفات المرفوعة ككود.
+عدم استخدام original_filename كمسار تخزين مباشر.
+استخدام signed URLs قصيرة المدة للملفات الخاصة.
+تسجيل الوصول إلى sensitive files.
+Virus scan foundation حتى لو بدأ كـ placeholder.
+CORS وpublic API scopes للـ Frontend Anywhere.
+عدم حفظ API keys أو tokens أو secrets كـ plain text في metadata.
+45. Performance Requirements
+Thumbnails وimage optimization في queues.
+استخدام pagination في Media Library.
+فهرسة organization_id وsite_id وcompany_id وasset_type وvisibility.
+عدم تحميل metadata ضخمة بدون حاجة في القوائم.
+استخدام CDN للميديا العامة عالية الزيارات.
+تجميع usage counters بشكل دوري وليس في كل request إن أمكن.
+تنظيف upload sessions المنتهية وderivatives غير المستخدمة عبر cleanup jobs.
+46. Permissions المقترحة
+media.viewmedia.uploadmedia.editmedia.deletemedia.managemedia.download_privatemedia.sharemedia.access_logs.viewmedia.storage.managemedia.quota.viewdocument.viewdocument.uploaddocument.upload_versiondocument.downloaddocument.approvedocument.rejectdocument.archivedocument.manage_permissionsdocument.access_logs.view
+47. Events المقترحة
+MediaUploadedMediaProcessedMediaProcessingFailedMediaDeletedMediaAccessedMediaAccessDeniedMediaSignedLinkCreatedDocumentCreatedDocumentVersionUploadedDocumentApprovedDocumentRejectedDocumentExpiredSensitiveDocumentAccessed
+48. Tests المطلوبة
+User can upload public media under current organization.
+User from Organization A cannot view Organization B private media.
+Site editor can use media only in allowed site scope.
+Private file requires permission or signed link.
+Sensitive file access creates access log.
+Image upload creates thumbnail transform job.
+Document version increments correctly.
+Legal reviewer sees assigned verification documents only.
+Portable export includes tenant media and excludes platform secrets.
+Frontend Anywhere API cannot read private media or draft documents.
+49. Seeders المقترحة
+MediaStorageDisksSeederMediaStoragePoliciesSeederMediaPermissionsSeederDocumentPermissionsSeederDefaultMediaFoldersSeederDemoMediaAssetsSeeder optionalDemoDocumentsSeeder optional
+50. Release Requirements
+media_assets وmedia_usages يعملان داخل Core Kernel.
+Media upload يعمل مع validation وtenant scope.
+Media Library UI تستطيع عرض وفلترة الملفات.
+Private file storage foundation موجودة.
+Thumbnails أو processing jobs foundation موجودة.
+Documents foundation موجودة على الأقل لمستندات التحقق.
+Sensitive access logging يعمل.
+Portable export يستطيع جمع public/private media حسب السياسة.
+Cloud quota foundation يستطيع حساب storage usage.
+اختبارات العزل والصلاحيات الأساسية ناجحة.
+51. الخلاصة
+Media & Files Database ليست مجرد جدول صور. هي طبقة ثقة وأمان وتصدير وتشغيل. إذا صممت بشكل ضعيف ستتعطل مستندات التحقق، Portable export، Frontend Anywhere، Dedicated backups، وملفات ERP. لذلك يجب تثبيتها مبكراً مع Core Kernel وCMS، مع فصل واضح بين media العامة والمستندات الحساسة.
+القاعدة النهائية:
+Media stores files. Documents govern business meaning. Access logs protect trust. Relative paths protect portability.
+KABEERI Database File 08 — Media & Files Database — powered by ADMIT

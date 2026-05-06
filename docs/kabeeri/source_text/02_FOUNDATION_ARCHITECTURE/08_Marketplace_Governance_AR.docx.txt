@@ -1,0 +1,496 @@
+KABEERI — ملحق 8: حوكمة الأسواق Marketplace Governance
+ملحق للملف الرئيسي وملاحق التأسيس والتشغيل والترابط والإصدارات والصلاحيات والـ Workflows والـ AI
+هذا الملف يحدد قواعد بناء وإدارة الأسواق داخل Kabeeri، لأن لدينا نوعين مختلفين تمامًا من الأسواق:
+1. Kabeeri Marketplace   السوق الداخلي لتوسيع المنصة2. Kabeeri Mall   السوق الخارجي العام للجمهور والعملاء
+الهدف:
+منع الفوضى، حماية المستخدمين، تنظيم النشر، ضبط الثقة، وتحديد قواعد البيع والظهور والمراجعة والتوثيق والعمولات.
+1. الفرق الجوهري بين السوقين
+1.1 Kabeeri Marketplace
+سوق داخلي داخل لوحة تحكم Kabeeri.
+يستخدمه:
+Owners.
+Admins.
+Developers.
+Agencies.
+Platform operators.
+يحتوي على:
+Plugins.
+Themes.
+ERP Modules.
+Commerce Apps.
+Connectors.
+AI Skills.
+Templates.
+Industry Solutions.
+Developer Tools.
+هدفه:
+توسيع قدرات Kabeeri
+1.2 Kabeeri Mall
+سوق خارجي ظاهر للجمهور والزوار والعملاء.
+يستخدمه:
+Visitors.
+Customers.
+Businesses.
+Professionals.
+Verified Companies.
+Sellers.
+Service providers.
+يحتوي على:
+Businesses.
+Services.
+Products.
+Talent.
+Rabet verified companies.
+B2B opportunities.
+هدفه:
+اكتشاف الشركات والخدمات والمنتجات والمواهب والتواصل أو الشراء
+2. أسماء السوقين المعتمدة
+2.1 الاسم الداخلي
+Kabeeri Marketplace
+يظهر داخل Admin Dashboard.
+2.2 الاسم الخارجي
+Kabeeri Mall / كبيري مول
+يظهر في واجهة المنصة العامة.
+3. لماذا نحتاج Governance؟
+بدون حوكمة، سيحدث:
+Plugins غير آمنة.
+Themes بطيئة أو مكسورة.
+ERP Modules غير دقيقة.
+AI Skills تصل لبيانات حساسة.
+Businesses مزيفة.
+Services وهمية.
+Products مخالفة.
+Reviews مزيفة.
+Talent profiles غير موثقة.
+Disputes كثيرة.
+انخفاض الثقة في المنصة.
+لذلك كل Marketplace يحتاج:
+Submission rulesReview processVerificationPermissionsModerationRatingsPaymentsCommissionsDisputesSuspension rulesAppeals
+4. Kabeeri Marketplace — السوق الداخلي
+4.1 أنواع العناصر
+PluginThemeERP ModuleCommerce AppConnectorAI SkillTemplateIndustry SolutionDeveloper Tool
+4.2 حالات العنصر
+DraftSubmittedUnder ReviewNeed ChangesApprovedPublishedRejectedSuspendedDeprecatedRemoved
+4.3 أنواع الناشرين
+Official Kabeeri / ADMITVerified PartnerCertified DeveloperPublic Developer لاحقًاPrivate PublisherEnterprise Publisher
+4.4 مستويات الثقة للناشرين
+Level 1 — Official
+من ADMIT/Kabeeri.
+Level 2 — Verified Partner
+شركة أو مطور معتمد.
+Level 3 — Certified Developer
+مطور اجتاز متطلبات فنية.
+Level 4 — Public Developer
+مفتوح لاحقًا لكن مع review صارم.
+Level 5 — Private Enterprise Publisher
+ينشر داخليًا لمؤسسة محددة.
+5. Kabeeri Marketplace Categories
+5.1 Plugins
+أمثلة:
+SEO Pro.
+Forms Pro.
+Redirect Manager.
+Analytics.
+Backup Pro.
+Security Scanner.
+Reviews.
+Newsletter.
+WhatsApp Button.
+5.2 Themes
+أمثلة:
+Business Theme.
+Blog Theme.
+Agency Theme.
+Real Estate Theme.
+Restaurant Theme.
+E-commerce Theme.
+Medical Theme.
+Education Theme.
+5.3 ERP Modules
+أمثلة:
+Finance Suite.
+CRM.
+Sales.
+Inventory.
+Purchasing.
+Accounting.
+HR.
+Payroll.
+Projects.
+Helpdesk.
+Manufacturing.
+5.4 Commerce Apps
+أمثلة:
+Stripe Payments.
+PayPal Payments.
+Paymob.
+Fawry.
+Tap Payments.
+Shipping Rules.
+Abandoned Cart.
+Product Reviews.
+Gift Cards.
+Subscriptions.
+5.5 Connectors
+أمثلة:
+Odoo Connector.
+SAP Business One Connector.
+Dynamics 365 Connector.
+NetSuite Connector.
+Zoho Connector.
+QuickBooks Connector.
+Xero Connector.
+Daftra Connector.
+Shopify Connector.
+WooCommerce Connector.
+5.6 AI Skills
+أمثلة:
+AI SEO Assistant.
+AI Page Builder.
+AI Workflow Builder.
+AI CRM Builder.
+AI Report Builder.
+AI Migration Assistant.
+AI Support Agent.
+5.7 Templates
+أمثلة:
+Landing page templates.
+Invoice templates.
+Email templates.
+Form templates.
+Dashboard templates.
+Workflow templates.
+CRM pipeline templates.
+Report templates.
+5.8 Industry Solutions
+أمثلة:
+Real Estate Solution.
+Construction Solution.
+Clinic Solution.
+School Solution.
+Restaurant Solution.
+Retail Solution.
+Logistics Solution.
+Manufacturing Solution.
+6. صفحة العنصر داخل Kabeeri Marketplace
+كل عنصر يجب أن يحتوي على:
+NameSlugDescriptionPublisherCategoryVersionPriceScreenshotsDemoDocumentationChangelogRequired Kabeeri versionRequired PHP versionDependenciesPermissions requiredData access scopePerformance impactSecurity statusLast updatedSupport policyRefund policyReviewsInstall countCompatibility badges
+7. Package Manifest
+كل Package يجب أن يحتوي manifest واضح.
+مثال:
+{  "name": "kabeeri/paymob-payments",  "type": "commerce_app",  "version": "1.0.0",  "publisher": "ADMIT",  "requires": {    "kabeeri": ">=1.0.0",    "php": ">=8.3"  },  "permissions": [    "commerce.order.view",    "commerce.payment.manage",    "customer.read"  ],  "hooks": [    "PaymentReceived",    "OrderCreated"  ],  "settings": true}
+8. Permission Disclosure
+قبل التثبيت، يجب عرض الصلاحيات بوضوح.
+مثال:
+This package can:- Read orders- Update payment status- Read customer email- Send payment webhooks
+لو الصلاحيات حساسة:
+Warning:This package can access financial/payment data.
+9. Review Process للسوق الداخلي
+9.1 مراحل المراجعة
+Submission→ Automated validation→ Security scan→ Permission review→ Code/package review→ Performance review→ Compatibility test→ Documentation review→ Approval / Need changes / Reject
+9.2 Automated validation
+تفحص:
+manifest.
+version.
+dependencies.
+package structure.
+forbidden files.
+required docs.
+9.3 Security review
+تفحص:
+filesystem access.
+database access.
+external requests.
+secret handling.
+dangerous functions.
+package signing.
+9.4 Performance review
+تفحص:
+query count.
+heavy hooks.
+frontend assets size.
+cache compatibility.
+background jobs.
+9.5 Legal/business review
+مطلوب خصوصًا لـ:
+Tax modules.
+Payroll modules.
+Payment gateways.
+Legal verification modules.
+Regulated industry modules.
+10. Package Signing
+كل package منشور يجب أن يكون signed.
+لماذا؟
+منع التلاعب.
+التأكد من المصدر.
+حماية المستخدمين.
+منع حقن backdoors.
+عناصر التوقيع
+Package hashPublisher signatureVersion signatureVerification timestamp
+11. Installation Governance
+عند التثبيت:
+Check compatibilityCheck signatureShow permissionsCheck plan/licenseCreate backup if neededInstall packageRun migrations if approvedActivate packageLog activity
+12. Update Governance
+عند التحديث:
+Show changelogCheck breaking changesCheck permissions changesCreate backupApply updateRun health checkRollback if failedLog update
+لو الصلاحيات تغيرت:
+Require admin approval again
+13. ERP Module Governance
+ERP Modules أكثر خطورة من plugins العادية.
+قواعد خاصة
+Official أو Verified فقط في البداية.
+مراجعة business logic.
+مراجعة accounting/tax عند الحاجة.
+versioning صارم.
+audit logs.
+no silent data changes.
+Payroll/Tax Modules
+يجب أن تكون localization-specific.
+أمثلة:
+Kabeeri Egypt PayrollKabeeri Saudi PayrollKabeeri UAE PayrollKabeeri Egypt E-InvoiceKabeeri Saudi ZATCA
+14. AI Skill Governance
+AI Skills قد تصل لبيانات حساسة.
+يجب أن توضح:
+البيانات التي تقرأها.
+البيانات التي ترسلها لمزود AI.
+هل تعمل داخل Private AI mode.
+هل تطبق تغييرات أم تقترح فقط.
+risk level.
+required approvals.
+audit logs.
+مثال:
+AI Finance ExplainerReads: financial reportsWrites: noneRisk: Level 1 read-onlyRequires: finance.report.view
+15. Kabeeri Mall — السوق الخارجي
+Kabeeri Mall يضم:
+Business MarketplaceServices MarketplaceProducts MarketplaceTalent Marketplace
+16. Kabeeri Mall Account Types
+VisitorCustomerProfessionalBusiness OwnerVerified BusinessSellerService ProviderLegal PartnerMarketplace ModeratorPlatform Admin
+17. Kabeeri Mall Listing Types
+17.1 Business Listing
+يمثل شركة أو بزنس.
+17.2 Service Listing
+يمثل خدمة يمكن طلبها.
+17.3 Product Listing
+يمثل منتجًا يمكن شراؤه أو الاستفسار عنه.
+17.4 Talent Listing
+يمثل Professional Profile ظاهر.
+18. Listing Statuses
+DraftPending ReviewPublishedFeaturedVerifiedRejectedSuspendedHiddenArchived
+19. Verification Levels داخل Kabeeri Mall
+19.1 Unverified
+بيانات أساسية فقط.
+19.2 Basic Verified
+Email/phone/business identity.
+19.3 Legal Verified
+توثيق بمستندات قانونية.
+19.4 Advanced Verified
+توثيق متقدم بالملاك/التراخيص/المفوض بالتوقيع.
+19.5 Regulated Verified
+للأنشطة الحساسة.
+20. Kabeeri Mall Moderation
+20.1 ما يخضع للمراجعة؟
+Business listings.
+Services.
+Products.
+Talent profiles.
+Reviews.
+Images.
+Messages reported.
+Claims.
+Badges.
+20.2 أسباب الرفض أو التعليق
+Fake businessMisleading serviceProhibited productFraud suspicionCopyright issueOffensive contentUnverified regulated activityRepeated disputesPolicy violation
+20.3 Moderation Actions
+ApproveRejectRequest changesHideSuspendRemoveFlag for legal reviewEscalate to platform admin
+21. Kabeeri Mall Trust System
+الثقة تعتمد على:
+Verification levelReviewsResponse timeCompleted orders/servicesDispute rateRefund rateDocument validityLegal partner verificationAccount ageActivity consistency
+22. Reviews Governance
+22.1 من يستطيع التقييم؟
+عميل اشترى منتج.
+عميل طلب خدمة.
+شركة عملت مع Professional.
+Professional عمل مع شركة.
+مستخدم لديه تعامل موثق.
+22.2 لا نسمح بـ
+Reviews بدون interaction موثق في بعض التصنيفات.
+Review bombing.
+Fake reviews.
+Reviews مقابل رشوة.
+23. Products Marketplace Governance
+23.1 قواعد المنتجات
+كل منتج يحتاج:
+Seller.
+Category.
+Price.
+Availability.
+Status.
+Images.
+Description.
+Shipping/fulfillment info.
+23.2 منتجات ممنوعة أو منظمة
+يجب تحديد policy للمنتجات:
+منتجات مخالفة للقانون.
+منتجات تحتاج ترخيص.
+منتجات طبية/دوائية.
+منتجات مالية.
+منتجات خطرة.
+هذه تحتاج Regulated Verification أو منع كامل حسب الدولة.
+24. Services Marketplace Governance
+24.1 كل خدمة تحتاج
+Provider.
+Category.
+Description.
+Pricing model.
+Delivery time.
+Terms.
+Request flow.
+24.2 خدمات منظمة
+بعض الخدمات تحتاج توثيق خاص:
+Legal services.
+Medical services.
+Financial consulting.
+Real estate brokerage.
+Education/certification.
+25. Talent Marketplace Governance
+25.1 قواعد الظهور
+Professional لا يظهر للعامة تلقائيًا.
+يجب أن يختار:
+PublicVerified companies onlyAnonymous previewHidden
+25.2 قواعد العروض
+لا يمكن إرسال عروض إلا من:
+Verified companies.
+Approved business accounts.
+Companies with good standing.
+25.3 حماية الموظفين
+إخفاء open-to-offers عن صاحب العمل الحالي حسب الإعداد.
+إخفاء بيانات حساسة.
+منع spam offers.
+report company.
+26. Kabeeri Mall Checkout Models
+26.1 Redirect Model
+الزائر يذهب لمتجر البائع.
+أسهل في البداية.
+26.2 Lead Model
+الزائر يرسل request، والبيع يتم خارج المنصة.
+مناسب للخدمات.
+26.3 Unified Cart Model
+Cart موحد عبر عدة sellers.
+أكثر تعقيدًا.
+26.4 Split Checkout Model
+تقسيم الطلب حسب البائعين.
+مناسب لاحقًا.
+26.5 Recommended Roadmap
+V2/V3: Lead + RedirectV4: Products listing basicV5: Commission + seller dashboardV6: Unified/Split checkout
+27. Commission & Monetization Governance
+27.1 مصادر الدخل
+Featured listingsSponsored listingsCommission on salesCommission on service bookingsLead generation feesVerified business subscriptionPremium professional profileLegal verification feesMarketplace developer revenue share
+27.2 Commission Records
+كل عمولة يجب أن ترتبط بـ:
+transaction.
+seller.
+buyer.
+source.
+status.
+settlement.
+28. Dispute Governance
+النزاعات داخل Kabeeri Mall قد تكون بين:
+Customer وBusiness.
+Customer وSeller.
+Company وProfessional.
+Business وLegal Partner.
+Developer وCustomer.
+Buyer وMarketplace.
+28.1 Dispute workflow
+Open dispute→ Submit evidence→ Notify parties→ Mediation→ Decision→ Action→ Appeal optional
+29. Data Governance داخل الأسواق
+29.1 Data ownership
+Business يملك بياناته.
+Professional يملك ملفه المهني.
+Customer يملك بياناته الشخصية.
+Platform يحتفظ بسجلات audit/trust وفق الشروط.
+29.2 Public data
+ما يظهر للعامة يجب أن يكون واضحًا لصاحبه.
+29.3 Deletion limitations
+بعض البيانات لا يمكن حذفها فورًا بسبب:
+invoices.
+disputes.
+legal verification.
+audit logs.
+compliance.
+30. Marketplace Database Requirements
+30.1 Internal Marketplace tables
+marketplace_packagespackage_versionspackage_reviewspackage_permissionspackage_security_scanspackage_installationspackage_update_logspublisher_profilespublisher_verifications
+30.2 Kabeeri Mall tables
+mall_listingsbusiness_profilesservice_listingsproduct_listingstalent_listingslisting_categorieslisting_reviewslisting_reportsfeatured_listingsseller_profilesservice_requestsproduct_inquiriesjob_offersmarketplace_transactionsmarketplace_commissions
+31. Laravel Structure
+app/Marketplace/  Packages/  Publishers/  Reviews/  Security/  Installations/app/Mall/  Businesses/  Services/  Products/  Talent/  Reviews/  Moderation/  Transactions/  Search/
+32. V1 Requirements من هذا الملحق
+Must-have في V1
+installed_packages foundationpackage manifest conceptbusiness_profiles draftvisibility/status fieldsactivity logsfeature flagsbasic categories foundation optional
+Should-have في V1
+publisher concept draftmall listing concept draftmoderation status values
+Not required in V1
+Full internal Marketplace UIFull Kabeeri MallPayments/commissionsPublic developer publishingUnified cartAdvanced moderation
+33. Roadmap عبر الإصدارات
+V1
+Package foundation.
+Theme/plugin local install basic.
+Business Profile draft.
+Listing status foundation.
+V2
+Official plugins only.
+Business directory basic.
+Service listings basic.
+Contact/service requests.
+V3
+Services Marketplace V1.
+Reviews basic.
+Verification basic.
+Rabet trust foundation.
+V4
+Internal Marketplace V1.
+Kabeeri Mall Products basic.
+Talent Marketplace V1.
+Legal Partner Network marketplace.
+Billing for verification/listings.
+V5
+Commission engine.
+Seller dashboard.
+Advanced marketplace analytics.
+ERP/Commerce connectors.
+Contracts/disputes.
+V6
+Open but controlled developer marketplace.
+Full Kabeeri Mall.
+Multi-vendor checkout.
+Sponsored listings.
+Enterprise APIs.
+Advanced trust and moderation.
+34. الأخطاء الممنوعة
+34.1 لا تفتح Marketplace الداخلي للعامة مبكرًا
+قبل package review والتوقيع.
+34.2 لا تسمح بـ AI Skill بدون permission disclosure
+AI Skills خطيرة وقد تصل لبيانات حساسة.
+34.3 لا تفتح Kabeeri Mall بدون moderation
+أي سوق عام يحتاج reporting وmoderation.
+34.4 لا تجعل كل Business يظهر Verified
+التوثيق درجات.
+34.5 لا تطلق Unified Cart مبكرًا
+ابدأ بـ Lead/Redirect ثم توسع.
+34.6 لا تخلط بين Kabeeri Marketplace وKabeeri Mall
+الأول يوسع النظام.
+الثاني يخدم الجمهور.
+35. الخلاصة التنفيذية
+Kabeeri لديه سوقان:
+Kabeeri Marketplace= توسعة المنصة= Plugins / Themes / Modules / Connectors / AI SkillsKabeeri Mall= شبكة أعمال عامة= Businesses / Services / Products / Talent
+كل سوق يحتاج حوكمة مستقلة:
+ReviewVerificationPermissionsModerationBillingDisputesReputationSecurity
+القاعدة النهائية:
+لا Marketplace بدون ثقة، ولا ثقة بدون حوكمة.
+36. الخطوة التالية
+بعد هذا الملحق، يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق اختياري إضافي:
+ملحق 9 — Data Model Master Dictionary
+إذا أردنا توحيد أسماء الكيانات والجداول والحقول قبل V1.

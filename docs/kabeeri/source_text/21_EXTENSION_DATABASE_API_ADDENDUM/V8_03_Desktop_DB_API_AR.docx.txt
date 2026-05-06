@@ -1,0 +1,30 @@
+KABEERI V8 Desktop Offline Client — Database & API Addendum
+KABEERI Professional Knowledge System — v1.6.2
+SQLite Local Tables
+الجدول المحلي
+الغرض
+local_entities
+نسخ محلية من الكيانات
+local_outbox
+عمليات معلقة
+local_sync_state
+حالة المزامنة
+local_conflicts
+تعارضات تحتاج حل
+local_files_queue
+ملفات تنتظر الرفع
+local_api_cache
+كاش للبيانات
+Server Tables / Logs
+الجدول
+الغرض
+desktop_clients
+تعريف أجهزة الديسك توب
+desktop_sync_sessions
+جلسات المزامنة
+desktop_sync_operations
+عمليات واردة للسيرفر
+desktop_conflict_logs
+سجلات التعارضات
+APIs
+POST /api/v1/desktop/clients/registerPOST /api/v1/desktop/sync/pullPOST /api/v1/desktop/sync/pushPOST /api/v1/desktop/files/queueGET  /api/v1/desktop/sync/status

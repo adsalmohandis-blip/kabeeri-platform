@@ -1,0 +1,10 @@
+معمارية نظام تتبع التاسكات
+كيف يعمل النظام داخليًا
+المكونات
+tasks/*.json لتخزين الحالات، scripts/kbr-task.php لتحديث الحالات، logs/task_history.jsonl لسجل الأحداث، reports للتقارير المستقبلية.
+مصدر الحقيقة
+الملفات JSON داخل tasks هي المصدر الأساسي. لا تعتمد على Word للتحديث الآلي.
+حالات التاسك
+pending, in_progress, codex_done, verified, blocked.
+الأمان
+Codex لا يستخدم verify. التحقق النهائي لصاحب المشروع فقط.

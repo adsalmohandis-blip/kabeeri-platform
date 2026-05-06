@@ -1,0 +1,80 @@
+KABEERI Digital Marketing Plugin Suite Architecture
+منظومة بلجنات التسويق الإلكتروني المتكاملة مع CMS وCommerce وCRM وWork Network
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. الفكرة
+Kabeeri Marketing Suite ليست بلجنًا واحدًا، بل منظومة تسويق متكاملة تبدأ من Marketing Core ثم Plugins/Bundles حسب نوع المشروع.
+Marketing Core + SEO + Landing Pages + Lead Capture + CRM + Email/WhatsApp + Campaigns + Coupons + Pixels + Affiliate + Automation + Analytics + AI
+2. Marketing Core
+• تعريف الحملات والقنوات.
+• تتبع UTM ومصادر العملاء.
+• تسجيل conversion events.
+• ربط الزوار بالـ leads/customers.
+• إدارة consent والتتبع.
+• تقارير campaign ROI.
+marketing_campaignsmarketing_channelsmarketing_sourcesmarketing_eventsmarketing_conversionsmarketing_contactsmarketing_segmentsmarketing_attribution_eventsmarketing_campaign_costs
+3. عائلات بلجنات التسويق
+العائلة
+أمثلة
+SEO & Content
+SEO Pro, Schema, OpenGraph, AI SEO
+Landing & Funnels
+Landing Builder, Funnel Lite, Thank You Pages
+Lead Capture
+Forms Pro, Multi-step, Quote Request, Popups
+CRM Marketing
+Lead Scoring, Segmentation, Follow-up Tasks
+Email
+Campaigns, Templates, Newsletter, Drip
+WhatsApp/SMS
+Campaigns, Reminders, Order Updates
+Campaign Manager
+Campaigns, costs, goals, reports
+Promotions
+Coupons, flash sales, referral coupons
+Pixels/Tracking
+Meta Pixel, GA, GTM, TikTok Pixel
+Affiliate
+Referral Links, Growth Partner Tracker, Commission Events
+Retargeting
+Abandoned Cart, Browse Abandonment
+Feeds
+Google Merchant, Meta Catalog, Mall Feed Sync
+Automation
+Event-based marketing workflows
+AI Marketing
+Campaign Planner, Ad Copy, Product Description
+4. Marketing Bundles
+Bundle
+يستخدم في
+الحزم الأساسية
+Business Marketing
+شركات وخدمات
+SEO, Forms, WhatsApp, Analytics, Lead Capture
+Clinic Marketing
+عيادات
+Booking, Reminders, Reviews, WhatsApp, Meta Pixel
+Restaurant Marketing
+مطاعم
+Menu, Offers, QR Menu, Reviews, Local Campaigns
+Ecommerce Marketing
+متاجر
+Coupons, Abandoned Cart, Product Feeds, Email
+Real Estate Marketing
+عقارات
+Landing Pages, Lead Forms, CRM, UTM
+Academy Marketing
+تعليم
+Course Landing, Enrollment, Email Follow-up
+NGO Marketing
+جمعيات
+Donations, Volunteer Forms, Impact Reports
+Affiliate Marketing
+مسوقين
+Referral Links, Partner Storefront, Commission Tracking
+5. Privacy & Consent
+• لا إرسال Email/WhatsApp بدون consent.
+• Unsubscribe وsuppression list إلزاميين.
+• تصدير contacts يحتاج صلاحية عالية وaudit log.
+• Tracking pixels تظهر ضمن cookie/consent settings.
+• البيانات التسويقية tenant-scoped ولا تظهر بين العملاء.
+KABEERI — Confidential Product Architecture

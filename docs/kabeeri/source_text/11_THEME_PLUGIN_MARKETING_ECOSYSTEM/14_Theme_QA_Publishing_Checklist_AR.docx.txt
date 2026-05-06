@@ -1,0 +1,68 @@
+14 — Checklist جودة ونشر الثيمات
+هذا الملف يستخدمه فريق المراجعة وKabeeri Creators قبل نشر أي Theme في المتجر.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+#
+Check
+Required?
+Owner
+1
+Manifest valid
+Yes
+Theme Reviewer
+2
+RTL ready
+Yes
+Theme Reviewer
+3
+Responsive mobile/tablet/desktop
+Yes
+Theme Reviewer
+4
+SEO meta present
+Yes
+Theme Reviewer
+5
+Performance budget respected
+Yes
+Theme Reviewer
+6
+No broken links
+Yes
+Theme Reviewer
+7
+Demo import works
+Yes
+Theme Reviewer
+8
+Demo uninstall/rollback works
+Yes
+Theme Reviewer
+9
+Accessibility basic pass
+Yes
+Theme Reviewer
+10
+Images have alt text
+Yes
+Theme Reviewer
+11
+Theme uses API only
+Yes
+Theme Reviewer
+12
+No business logic in theme
+Yes
+Theme Reviewer
+13
+Mobile profile exists
+Yes
+Theme Reviewer
+14
+Compatibility version set
+Yes
+Theme Reviewer
+15
+License metadata present
+Yes
+Theme Reviewer

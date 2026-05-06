@@ -1,0 +1,26 @@
+TASK TRACKING AUTOMATION — MANDATORYBefore starting any task from this prompt pack, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php start V7 TXXAfter implementation and tests pass, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php done V7 TXX --prompt=XX --tests="php artisan test" --commit=pending --notes="short summary"If blocked, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php block V7 TXX --notes="reason"Codex must not mark tasks as verified. Only the project owner can run:php 24_kabeeri_task_tracking/scripts/kbr-task.php verify V7 TXX --notes="reviewed"Replace TXX and XX with the current task/prompt number. This rule is mandatory and comes before all implementation instructions.
+KABEERI V7 Mobile App Enablement — Codex Prompt Pack
+كل Prompt يبدأ في صفحة جديدة. استخدم Prompt واحد فقط في كل مرة مع Codex.
+KABEERI Professional Knowledge System — v1.6.2
+طريقة الاستخدام
+نفذ Prompt واحد فقط في كل مرة، ثم شغل الاختبارات وراجع التغييرات قبل الانتقال للـ Prompt التالي. لا تعدل النسخ المجمدة إلا بتعليمات صريحة.
+Prompt 00 — V7 Rules and Boundaries
+You are working on KABEERI V7 Mobile App Enablement only.Do not edit V1 directly. Implement additive mobile features only.Use Laravel REST JSON APIs + OpenAPI and Flutter Mobile Shell assumptions.Add tests for every backend feature. Output summary, files changed, commands run, tests, risks.
+Prompt 01 — V7 Readiness Check
+Inspect the project and confirm V1 core APIs, apps/sites, themes foundation, CMS, media, auth, RBAC, and OpenAPI strategy exist or list gaps. Do not add features. Produce a readiness report.
+Prompt 02 — Mobile App Config Tables
+Create additive migrations/models/tests for mobile_app_configs. It stores per App mobile name, logo, colors, enabled tabs, status, and metadata. Do not change sites table except nullable references if absolutely needed.
+Prompt 03 — Mobile Theme Profiles
+Create mobile_theme_profiles for themes. A profile defines tabs, screens, components, required APIs, and mobile layout metadata. Add factory, seeder sample, tests.
+Prompt 04 — Mobile API Manifest
+Create mobile_api_manifests and service to resolve supported endpoints for an app. Do not expose admin/private endpoints. Add tests for public/private separation.
+Prompt 05 — Device Registry
+Implement user_devices and device registration API. Store device id, platform, app id, status, last_seen_at. Add revoke support and tests.
+Prompt 06 — Push Token Registry
+Implement push_tokens table and APIs to register/revoke push tokens. Do not send real push notifications yet. Add tests and redaction rules.
+Prompt 07 — Mobile Public App APIs
+Create read-only mobile endpoints for app config, theme profile, manifest, pages, media. Use existing CMS data. Respect tenant/public visibility.
+Prompt 08 — Mobile Auth APIs
+Implement mobile auth token flow using Sanctum or existing auth strategy. Add tests for login, logout, device revoke, and invalid token.
+Prompt 09 — V7 Release Candidate Check
+Run tests, validate OpenAPI docs, confirm no V1 direct edits, confirm mobile endpoints are scoped and safe, produce V7 readiness report.

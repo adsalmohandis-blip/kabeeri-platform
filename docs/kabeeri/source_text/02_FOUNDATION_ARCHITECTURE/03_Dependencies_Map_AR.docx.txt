@@ -1,0 +1,1112 @@
+KABEERI — ملحق 3: خريطة الترابط والاعتماديات بين أجزاء المنصة
+ملحق للملف الرئيسي + ملحق التأسيس المعماري + ملحق طبقات التشغيل
+هذا الملف يحدد كيف ترتبط أجزاء Kabeeri ببعضها، وما الذي يجب بناؤه قبل ماذا، وما هي الاعتماديات بين:
+Core.
+CMS.
+Rabet Company OS.
+Kabeeri Mall.
+Talent Marketplace.
+Commerce.
+ERP.
+Teams.
+AI Co-builder.
+Legal Verification.
+Billing.
+Notifications.
+Documents.
+Reviews/Reputation.
+Disputes.
+Integrations.
+Marketplace الداخلي.
+النسخ الستة V1 إلى V6.
+الهدف:
+منع بناء موديولات منفصلة غير مترابطة، ومنع إضافة Feature قبل وجود الأساس الذي تعتمد عليه.
+1. القاعدة الرئيسية للترابط
+Kabeeri ليست مجموعة Features منفصلة.
+Kabeeri هي منصة مترابطة بهذه الطريقة:
+Core Identity & Organization  ↓Sites + CMS  ↓Business Profile + Rabet Foundation  ↓Kabeeri Mall + Talent + Commerce  ↓ERP + Teams + Workflows  ↓Cloud + Marketplace + Integrations  ↓AI Co-builder + Enterprise Governance
+أي جزء جديد يجب أن يجيب على سؤالين:
+يعتمد على ماذا؟
+من سيعتمد عليه لاحقًا؟
+2. خريطة الطبقات العامة
+2.1 Platform Core Layer
+هذه طبقة لا يمكن بناء أي شيء بدونها.
+تشمل:
+Users.
+Organizations.
+Sites.
+Companies.
+Memberships.
+Roles.
+Permissions.
+Settings.
+Feature Flags.
+Activity Logs.
+Notifications foundation.
+Media foundation.
+Visibility/Privacy foundation.
+كل شيء في Kabeeri يعتمد عليها.
+2.2 CMS Layer
+تشمل:
+Pages.
+Posts.
+Content Types.
+Taxonomies.
+Media.
+SEO.
+Themes.
+Basic plugins.
+Sitemap.
+Cache.
+تعتمد على:
+Users.
+Organizations.
+Sites.
+Roles/Permissions.
+Media.
+Activity Log.
+Settings.
+Feature Flags.
+2.3 Rabet Company OS Layer
+تشمل:
+Company Profile.
+Company Verification.
+Digital Office.
+Team Setup.
+Tasks.
+Projects.
+Trust Record.
+Performance Visibility.
+B2B Service Exchange.
+تعتمد على:
+Users.
+Organizations.
+Companies.
+Memberships.
+Roles/Permissions.
+Business Profiles.
+Activity Logs.
+Verification foundation.
+Tasks foundation.
+Notifications.
+Documents.
+Reviews/Reputation.
+2.4 Kabeeri Mall Layer
+تشمل الأسواق العامة:
+Business Marketplace.
+Services Marketplace.
+Products Marketplace.
+Talent Marketplace.
+تعتمد على:
+Business Profiles.
+Professional Profiles.
+Products.
+Services.
+Visibility/Privacy.
+Search.
+Reviews/Reputation.
+Moderation.
+Verification.
+Inbox.
+Billing لاحقًا.
+2.5 Commerce Layer
+تشمل:
+Products.
+Cart.
+Checkout.
+Orders.
+Customers.
+Payments.
+Shipping.
+Coupons.
+Product Reviews.
+Inventory connection.
+تعتمد على:
+Organizations.
+Sites.
+Companies optional.
+Business Profiles optional.
+Media.
+Content/SEO.
+Billing optional.
+Notifications.
+Activity Log.
+Products Marketplace لاحقًا.
+2.6 ERP Layer
+تشمل:
+CRM.
+Sales.
+Inventory.
+Purchasing.
+Accounting.
+HR.
+Payroll.
+Projects.
+Helpdesk.
+Manufacturing.
+POS.
+BI.
+تعتمد على:
+Companies.
+Organization Memberships.
+Company Memberships.
+Shared Business Objects.
+Documents.
+Approvals.
+Activity Logs.
+Notifications.
+Billing لاحقًا.
+Commerce في بعض الحالات.
+Teams.
+2.7 AI Co-builder Layer
+تشمل:
+CMS builder.
+Commerce builder.
+Workflow builder.
+ERP setup helper.
+Dashboard builder.
+Migration assistant.
+Developer assistant.
+تعتمد على:
+Permissions.
+Feature Flags.
+Settings.
+Data model metadata.
+Activity Logs.
+Preview/Approval mechanism.
+Rollback/Snapshots.
+AI Change Plans.
+لا يجب أن يطبق AI أي تغيير خطير بدون:
+Plan → Preview → Approval → Apply → Log → Rollback option
+3. Dependency Principles — مبادئ الاعتماديات
+3.1 لا Feature بدون Scope
+أي شيء يجب أن يكون له scope واضح:
+PlatformOrganizationCompanySiteUserModule
+مثال:
+Page تتبع Site.
+Business Profile يتبع Organization أو Company.
+Task تتبع Organization وقد ترتبط بـ Company أو Project.
+Invoice تتبع Company.
+Professional Profile يتبع User.
+3.2 لا Marketplace بدون Moderation
+أي شيء يظهر للعامة يحتاج:
+Visibility.
+Status.
+Moderation readiness.
+Report mechanism لاحقًا.
+لذلك Kabeeri Mall لا يفتح للعامة قبل وجود Moderation foundation.
+3.3 لا Trust بدون Activity Log
+Rabet يعتمد على الثقة.
+الثقة تحتاج سجل أحداث.
+لذلك Activity Log يدخل من V1.
+3.4 لا Verification بدون Documents
+Legal Verification يحتاج مستندات.
+لذلك:
+Verification → يعتمد على Documents/Media + Company + Legal Partner + Audit Log
+3.5 لا Talent Marketplace بدون Privacy
+لأن الموظف يمكن أن يعمل في أكثر من شركة، فلا يمكن إطلاق Talent Marketplace بدون:
+Professional Profile.
+Visibility.
+Privacy Settings.
+Company Memberships.
+Public/private evaluation separation.
+3.6 لا ERP بدون Company
+ERP ليس للموقع، ERP للشركة.
+لذلك أي ERP Module يعتمد على:
+Company.
+Company Memberships.
+Roles.
+Shared Business Objects.
+3.7 لا Commerce كامل بدون Products + Orders + Customers
+Commerce Foundation يحتاج على الأقل:
+Products.
+Product Categories.
+Cart.
+Orders.
+Customers.
+Payment status.
+لكن لا يحتاج ERP كامل في البداية.
+3.8 لا AI Actions بدون Permissions
+AI لا يتجاوز صلاحيات المستخدم.
+إذا كان المستخدم لا يستطيع نشر صفحة، لا يستطيع AI نشرها بدلًا منه.
+4. Core Entities Dependency Map
+4.1 User
+يعتمد على:
+لا شيء تقريبًا.
+يعتمد عليه:
+Organizations.
+Memberships.
+Professional Profiles.
+Content authoring.
+Tasks.
+Reviews.
+Messages.
+Verifications.
+Activity Logs.
+AI actions.
+قاعدة:
+User هو الشخص الحقيقي، ولا يجب ربطه بشركة واحدة فقط.
+4.2 Organization
+يعتمد على:
+User owner.
+يعتمد عليه:
+Sites.
+Companies.
+Memberships.
+Billing.
+Settings.
+Packages.
+Teams.
+Business Profiles.
+ERP Modules.
+قاعدة:
+Organization هي workspace الإداري الأعلى.
+4.3 Site
+يعتمد على:
+Organization.
+Theme optional.
+Company optional.
+يعتمد عليه:
+Pages.
+Posts.
+Media.
+SEO.
+Menus.
+Storefront.
+Public pages.
+Website settings.
+قاعدة:
+Site هو الواجهة الرقمية وليس الكيان التجاري.
+4.4 Company
+يعتمد على:
+Organization.
+User owner/admin.
+يعتمد عليه:
+Rabet.
+Verification.
+Business Profile.
+Team.
+ERP.
+Legal documents.
+B2B exchange.
+Trust score.
+قاعدة:
+Company هو الكيان التجاري الذي يمكن توثيقه وتشغيله.
+4.5 Business Profile
+يعتمد على:
+Organization.
+Company optional.
+Site optional.
+Media.
+Visibility.
+يعتمد عليه:
+Kabeeri Mall Business Marketplace.
+Services Marketplace.
+Reviews.
+Contact requests.
+Service requests.
+Trust badges.
+قاعدة:
+Business Profile هو الظهور العام للبزنس.
+4.6 Professional Profile
+يعتمد على:
+User.
+Skills.
+Privacy settings.
+يعتمد عليه:
+Talent Marketplace.
+Job offers.
+Evaluations.
+Skills graph.
+Work history.
+Reputation score.
+قاعدة:
+Professional Profile لا يساوي User، بل هو واجهة مهنية قابلة للظهور أو الإخفاء.
+4.7 Membership
+يعتمد على:
+User.
+Organization أو Company.
+Role.
+يعتمد عليه:
+Permissions.
+Team.
+Tasks.
+Employee records.
+HR.
+Work history.
+Evaluations.
+قاعدة:
+Membership هي العلاقة بين الفرد والكيان، وليست مجرد role داخل users.
+5. Feature Dependency Map
+5.1 CMS
+يعتمد على
+User.
+Organization.
+Site.
+Permissions.
+Media.
+Settings.
+Activity Log.
+يخدم لاحقًا
+WordPress migration.
+SEO.
+Themes.
+Kabeeri Mall pages.
+Business profiles.
+Commerce content.
+AI page builder.
+ممنوع قبل
+لا توجد موانع، CMS هو من أوائل الأجزاء.
+5.2 WordPress Migration
+يعتمد على
+Sites.
+Content Types.
+Content Entries.
+Media.
+Taxonomies.
+SEO fields.
+Import Jobs.
+Redirects.
+يخدم لاحقًا
+جذب جمهور WordPress.
+إنشاء Business Profile من الموقع.
+Commerce migration لاحقًا.
+ممنوع قبل
+لا يبدأ قبل اكتمال:
+Pages/Posts.
+Media.
+Taxonomies.
+Slugs.
+SEO basic.
+5.3 Business Profile
+يعتمد على
+Organization.
+Company optional.
+Site optional.
+Media.
+Visibility.
+Categories.
+يخدم لاحقًا
+Kabeeri Mall.
+Rabet verification.
+Services marketplace.
+Reviews.
+Contact requests.
+ممنوع قبل
+لا ينشر للعامة قبل:
+Visibility.
+Moderation status.
+Basic profile validation.
+5.4 Rabet Verification
+يعتمد على
+Company.
+Business Profile.
+Documents/Media.
+Verification Requests.
+Legal Partner optional.
+Activity Log.
+Notifications.
+يخدم لاحقًا
+Verified badge.
+Trust score.
+Public Marketplace trust.
+B2B exchange.
+Legal partner network.
+ممنوع قبل
+لا يمكن تفعيل verification حقيقي قبل:
+Company model.
+Document upload.
+Verification status.
+Review workflow basic.
+5.5 Kabeeri Mall Business Marketplace
+يعتمد على
+Business Profiles.
+Search.
+Visibility.
+Verification badge.
+Reviews optional.
+Moderation.
+يخدم لاحقًا
+Leads.
+Service requests.
+B2B discovery.
+Featured listings.
+Billing.
+ممنوع قبل
+لا يفتح للعامة قبل:
+Business Profile status.
+Basic moderation.
+Contact request handling.
+5.6 Services Marketplace
+يعتمد على
+Business Profiles.
+Services.
+Service categories.
+Contact/Request forms.
+Inbox.
+CRM optional.
+يخدم لاحقًا
+Lead generation.
+RFQ.
+Quotes.
+Contracts.
+B2B exchange.
+ممنوع قبل
+لا يبدأ قبل:
+Business Profile.
+Service model.
+Request model.
+5.7 Products Marketplace
+يعتمد على
+Commerce Products.
+Product categories.
+Prices.
+Inventory optional.
+Business Profiles.
+Cart/Checkout strategy.
+يخدم لاحقًا
+Multi-vendor commerce.
+Commission engine.
+Seller dashboard.
+Marketplace cart.
+ممنوع قبل
+لا يبدأ قبل:
+Product model.
+Business/Seller profile.
+Order model.
+5.8 Talent Marketplace
+يعتمد على
+Users.
+Professional Profiles.
+Skills.
+Privacy settings.
+Evaluations.
+Job offer model.
+Company memberships.
+يخدم لاحقًا
+Hiring.
+Freelance offers.
+Multi-company workforce.
+Professional reputation.
+Rabet workforce.
+ممنوع قبل
+لا يفتح للعامة قبل:
+Visibility controls.
+Privacy settings.
+Public/private rating separation.
+5.9 Task Management
+يعتمد على
+Users.
+Organizations.
+Companies optional.
+Projects optional.
+Permissions.
+Notifications.
+Activity Log.
+يخدم لاحقًا
+Rabet Digital Office.
+ERP workflows.
+Team performance.
+Evaluations.
+AI task assignment.
+ممنوع قبل
+لا شيء كبير، لكن يجب وجود users/organizations/permissions.
+5.10 Team Management
+يعتمد على
+Users.
+Organizations.
+Memberships.
+Roles.
+Company memberships.
+يخدم لاحقًا
+Rabet.
+HR.
+Payroll.
+Tasks.
+Evaluations.
+Talent work history.
+ممنوع قبل
+لا يبدأ قبل membership model.
+5.11 Reviews/Reputation
+يعتمد على
+Users.
+Reviewable entities.
+Moderation.
+Activity Log.
+يخدم لاحقًا
+Business trust.
+Professional score.
+Product ratings.
+Legal partner ratings.
+Marketplace ranking.
+ممنوع قبل
+لا تظهر publicly قبل moderation/reporting foundation.
+5.12 Disputes
+يعتمد على
+Users.
+Related objects.
+Messages.
+Documents/evidence.
+Platform moderators.
+يخدم لاحقًا
+Marketplace trust.
+Rabet governance.
+B2B exchange.
+Reviews fairness.
+ممنوع قبل
+لا يبدأ قبل inbox/messages + documents foundation.
+5.13 Billing
+يعتمد على
+Users.
+Organizations.
+Companies optional.
+Plans.
+Payment providers.
+يخدم لاحقًا
+Cloud.
+Pro.
+ERP modules.
+Verification fees.
+Mall commissions.
+Featured listings.
+Developer marketplace.
+ممنوع قبل
+لا يبدأ full billing قبل plan/module structure.
+5.14 Internal Kabeeri Marketplace
+يعتمد على
+Package system.
+Installed packages.
+Feature flags.
+Permissions.
+Billing optional.
+Security review.
+يخدم لاحقًا
+Plugins.
+Themes.
+ERP modules.
+AI Skills.
+Connectors.
+Industry solutions.
+ممنوع قبل
+لا يفتح للعامة قبل:
+Package signing.
+Review process.
+Permission display.
+5.15 ERP CRM
+يعتمد على
+Companies.
+Customers.
+Users.
+Contacts.
+Tasks.
+Inbox optional.
+Business leads.
+يخدم لاحقًا
+Sales.
+Marketing.
+Service requests.
+B2B exchange.
+ممنوع قبل
+لا يبدأ قبل company + business objects foundation.
+5.16 ERP Sales
+يعتمد على
+CRM.
+Customers.
+Products/Services.
+Quotes.
+Company.
+يخدم لاحقًا
+Invoicing.
+Accounting.
+Inventory reservation.
+ممنوع قبل
+لا يبدأ قبل customers/services/products foundation.
+5.17 ERP Inventory
+يعتمد على
+Products/SKUs.
+Warehouses.
+Company.
+يخدم لاحقًا
+Commerce.
+Purchasing.
+Manufacturing.
+Accounting stock valuation.
+ممنوع قبل
+لا يبدأ قبل product/SKU foundation.
+5.18 ERP Accounting
+يعتمد على
+Company.
+Invoices.
+Payments.
+Orders.
+Chart of accounts.
+Currencies.
+Tax.
+يخدم لاحقًا
+Financial reporting.
+Consolidation.
+Treasury.
+Payroll accounting.
+ممنوع قبل
+لا يبدأ accounting كامل قبل:
+Company.
+Invoicing.
+Payments.
+Basic financial settings.
+5.19 AI Co-builder
+يعتمد على
+Metadata عن النظام.
+Permissions.
+Feature flags.
+Activity log.
+Approval flows.
+Snapshots/Rollback.
+يخدم لاحقًا
+CMS building.
+Workflows.
+ERP setup.
+Reports.
+Developer tools.
+ممنوع قبل
+لا ينفذ تغييرات خطيرة قبل:
+Permissions.
+Preview.
+Approval.
+Rollback.
+6. Shared Objects Map — الكيانات المشتركة
+هذه كيانات لا تخص Module واحد فقط.
+6.1 Customer
+يستخدم في:
+Commerce.
+CRM.
+Sales.
+Invoicing.
+Support.
+Kabeeri Mall.
+لا يجب أن يكون customer table خاص بالمتجر فقط.
+6.2 Product
+يستخدم في:
+Commerce.
+Inventory.
+Products Marketplace.
+Sales.
+Purchasing.
+Manufacturing.
+Accounting.
+6.3 Service
+يستخدم في:
+Services Marketplace.
+Sales.
+CRM.
+Rabet B2B.
+Contracts.
+Invoicing.
+6.4 Invoice
+يستخدم في:
+Commerce.
+Sales.
+Accounting.
+Rabet B2B.
+Legal/tax.
+6.5 Task
+يستخدم في:
+Teams.
+Projects.
+Rabet.
+ERP workflows.
+Approvals.
+AI suggestions.
+6.6 Document
+يستخدم في:
+Verification.
+Contracts.
+HR.
+Projects.
+Disputes.
+Accounting.
+Legal.
+6.7 Review
+يستخدم في:
+Business.
+Product.
+Service.
+Professional.
+Legal Partner.
+Developer package.
+7. Event Dependency Map
+Kabeeri يجب أن يكون Event-driven داخليًا.
+7.1 Core Events
+UserRegisteredOrganizationCreatedSiteCreatedCompanyCreatedMemberInvitedMemberJoinedRoleAssignedSettingChanged
+تستخدم في:
+Activity Log.
+Notifications.
+Onboarding.
+Billing.
+7.2 CMS Events
+ContentCreatedContentUpdatedContentPublishedContentArchivedMediaUploadedThemeActivatedPluginActivated
+تستخدم في:
+Activity Log.
+Cache invalidation.
+Notifications.
+SEO updates.
+AI suggestions.
+7.3 Rabet Events
+BusinessProfilePublishedVerificationSubmittedVerificationApprovedVerificationRejectedCompanyVerifiedTrustScoreUpdated
+تستخدم في:
+Kabeeri Mall.
+Notifications.
+Trust badge.
+Activity Log.
+Legal Partner Portal.
+7.4 Mall Events
+ServiceRequestCreatedProductInquiryCreatedBusinessReviewSubmittedProfessionalOfferSentListingReported
+تستخدم في:
+Inbox.
+CRM.
+Notifications.
+Moderation.
+Reputation.
+7.5 Commerce Events
+ProductCreatedOrderCreatedPaymentReceivedOrderCancelledRefundIssuedStockReserved
+تستخدم في:
+Inventory.
+Accounting.
+Notifications.
+CRM.
+Reports.
+7.6 ERP Events
+LeadCreatedQuoteApprovedInvoiceIssuedInvoicePaidPurchaseOrderCreatedStockAdjustedEmployeeJoinedPayrollProcessed
+تستخدم في:
+Accounting.
+Notifications.
+Reports.
+Activity Log.
+Workflows.
+7.7 AI Events
+AIPlanCreatedAIPlanApprovedAIChangeAppliedAIChangeRolledBackAIActionBlocked
+تستخدم في:
+Audit.
+Approval.
+Rollback.
+Security.
+8. Cross-module Workflows — تدفقات العمل بين الموديولات
+8.1 Website to Verified Company
+User creates Organization→ Creates Site→ Creates Business Profile Draft→ Publishes site→ Submits company documents→ Legal review→ Company verified→ Verified badge appears→ Business appears in Kabeeri Mall
+يعتمد على:
+Users.
+Organizations.
+Sites.
+Business Profiles.
+Verification.
+Documents.
+Legal Partners.
+Mall.
+8.2 Service Request to CRM Lead
+Visitor finds service in Kabeeri Mall→ Sends service request→ Conversation created→ Lead created in CRM→ Sales user notified→ Quote created→ Contract optional→ Invoice issued
+يعتمد على:
+Services.
+Business Profile.
+Inbox.
+CRM.
+Sales.
+Invoicing.
+Notifications.
+8.3 Product Purchase to ERP
+Visitor buys product→ Order created→ Payment status updated→ Inventory reserved→ Invoice generated→ Shipping task created→ Accounting entry posted
+يعتمد على:
+Commerce.
+Payments.
+Inventory.
+Invoicing.
+Accounting.
+Tasks.
+8.4 Job Offer to Company Membership
+Company searches Talent Marketplace→ Sends job offer→ Professional accepts→ Contract generated→ Company membership created→ Role assigned→ Onboarding starts→ Tasks assigned
+يعتمد على:
+Talent Marketplace.
+Professional Profile.
+Company.
+Memberships.
+Contracts.
+Onboarding.
+Tasks.
+8.5 Verification Dispute Flow
+Business submits documents→ Legal Partner rejects→ Business opens dispute→ Evidence attached→ Platform moderator reviews→ Decision issued→ Verification status updated
+يعتمد على:
+Verification.
+Legal Partners.
+Documents.
+Disputes.
+Moderation.
+Notifications.
+8.6 AI Build Workflow
+User asks AI to build CRM→ AI reads permissions→ AI creates plan→ User previews objects→ User approves→ AI creates tables/config/workflows→ Activity logged→ Rollback available
+يعتمد على:
+AI.
+Permissions.
+Metadata.
+Feature flags.
+Activity Log.
+Approval.
+Rollback.
+9. Version Dependency Map
+9.1 V1 Dependencies
+V1 يجب أن يبني الأساسات التي تعتمد عليها كل النسخ.
+يجب أن يحتوي
+Users.
+Organizations.
+Memberships.
+Sites.
+Roles.
+Permissions.
+Settings.
+Feature Flags.
+Activity Logs.
+Media.
+CMS.
+Business Profile draft.
+Verification foundation.
+Notifications basic.
+Onboarding basic.
+لا يعتمد على
+Commerce.
+ERP.
+Kabeeri Mall الكامل.
+AI الكامل.
+Cloud.
+9.2 V2 Dependencies
+V2 يعتمد على V1.
+يضيف
+WordPress Migration.
+Commerce Foundation.
+Forms.
+Redirects.
+Business Directory basic.
+Service listing basic.
+Task management basic.
+لا يبدأ قبل
+CMS stable.
+Media stable.
+Sites stable.
+Import/export foundation.
+9.3 V3 Dependencies
+V3 يعتمد على V1 + V2.
+يضيف
+Rabet Verification V1.
+Digital Office basic.
+CRM Lite.
+Sales Basic.
+Inventory Basic.
+Invoicing Basic.
+Accounting Starter.
+Tasks full V1.
+Employee profiles.
+Evaluations basic.
+لا يبدأ قبل
+Companies.
+Memberships.
+Tasks basic.
+Business Profiles.
+Notifications.
+Activity Log.
+9.4 V4 Dependencies
+V4 يعتمد على V1 + V2 + V3.
+يضيف
+Cloud.
+Marketplace الداخلي V1.
+Kabeeri Mall Products basic.
+Talent Marketplace V1.
+Rabet Company OS V1.
+Legal Partner Network V1.
+Billing subscriptions.
+Agency dashboard.
+Security Center.
+لا يبدأ قبل
+Feature flags.
+Billing foundation.
+Package system.
+Moderation foundation.
+Verification foundation.
+9.5 V5 Dependencies
+V5 يعتمد على V4.
+يضيف
+ERP Pro.
+Integration Hub.
+Connectors.
+Contracts.
+Advanced approvals.
+Talent reputation.
+Full team collaboration.
+لا يبدأ قبل
+ERP essentials.
+Billing.
+Documents.
+Inbox.
+Notifications.
+API foundation.
+9.6 V6 Dependencies
+V6 يعتمد على كل ما سبق.
+يضيف
+Complete platform.
+Enterprise governance.
+Full AI Co-builder.
+Full ERP Suite.
+Full Kabeeri Mall.
+Advanced legal trust network.
+Full developer platform.
+Headless mode.
+لا يبدأ قبل
+Stable commercial platform.
+ERP Pro.
+Cloud.
+Marketplace.
+Integrations.
+10. What Must Not Be Built Too Early
+10.1 لا تبني ERP كامل قبل Rabet/Company foundation
+لأن ERP يحتاج Company.
+10.2 لا تبني Talent Marketplace قبل privacy
+لأن البيانات المهنية حساسة.
+10.3 لا تبني Public Mall قبل moderation
+لأن أي محتوى عام يحتاج حماية.
+10.4 لا تبني Marketplace داخلي مفتوح قبل package signing
+لأن plugins/modules قد تكسر المنصة.
+10.5 لا تبني AI actions قبل permissions/rollback
+لأن AI قد يغير بيانات حساسة.
+10.6 لا تبني Cloud قبل self-hosted core مستقر
+لأن Cloud سيضاعف التعقيد.
+11. Dependency Matrix مختصرة
+الجزء
+يعتمد على
+يخدم لاحقًا
+User
+لا شيء
+كل النظام
+Organization
+User
+Sites, Companies, Billing, Teams
+Site
+Organization
+CMS, Commerce, Public pages
+Company
+Organization
+Rabet, ERP, Verification
+Business Profile
+Organization/Company
+Kabeeri Mall, Leads
+Professional Profile
+User
+Talent Marketplace, Offers
+CMS
+Site, Media, Permissions
+WordPress Migration, SEO, AI
+Rabet
+Company, Team, Tasks, Verification
+Trust, B2B, ERP
+Kabeeri Mall
+Profiles, Search, Reviews
+Leads, Sales, Products
+Commerce
+Products, Orders, Customers
+ERP, Marketplace, Accounting
+ERP
+Company, Shared Objects
+Operations, BI, Governance
+Teams
+Users, Memberships, Tasks
+Collaboration, Rabet, HR
+AI
+Permissions, Metadata, Logs
+Co-building, Automation
+Billing
+Organization, Plans
+Cloud, Pro, ERP, Mall
+Verification
+Company, Documents
+Trust Badge, Mall Ranking
+Reviews
+Users, Reviewable Entities
+Reputation, Trust
+Disputes
+Inbox, Documents, Moderation
+Governance, Trust
+Marketplace داخلي
+Packages, Permissions
+Plugins, Modules, Connectors
+12. Database Shared IDs Rules
+12.1 كل جدول مهم يجب أن يحتوي scope
+حسب الحاجة:
+organization_idcompany_idsite_iduser_id
+12.2 لا تستخدم company_id بدل organization_id دائمًا
+لأن بعض الأشياء تخص workspace وليس الشركة القانونية.
+مثال:
+Billing قد يكون على Organization.
+Site قد يكون بدون Company.
+Professional Profile يتبع User.
+12.3 لا تجعل Site هو مركز كل شيء
+لأن ERP وRabet وTeam قد يعملون حتى بدون موقع عام.
+12.4 لا تجعل Company إلزامية في V1
+لأن المستخدم يمكن أن يبدأ بموقع عادي قبل التوثيق.
+13. API Dependency Guidelines
+13.1 API routes يجب أن تعكس scope
+أمثلة:
+/api/v1/organizations/{organization}/sites/api/v1/sites/{site}/content/api/v1/organizations/{organization}/companies/api/v1/companies/{company}/verification/api/v1/business-profiles/{profile}/services/api/v1/professionals/{profile}/offers
+13.2 لا تخلط company وsite في endpoints
+خطأ:
+/api/v1/sites/{site}/employees
+أفضل:
+/api/v1/companies/{company}/members
+لأن الموظفين يتبعون شركة وليس موقعًا.
+14. UI Navigation Dependency
+14.1 لوحة الموقع Site Admin
+تحتوي على:
+Pages.
+Posts.
+Media.
+SEO.
+Theme.
+Site settings.
+14.2 لوحة الشركة Company Admin
+تحتوي على:
+Team.
+Tasks.
+Verification.
+Business Profile.
+CRM.
+Sales.
+ERP.
+14.3 لوحة Kabeeri Mall
+تحتوي على:
+Business listing.
+Services.
+Products.
+Talent.
+Reviews.
+Leads.
+14.4 لوحة Platform Admin
+تحتوي على:
+Users.
+Organizations.
+Verifications.
+Legal Partners.
+Moderation.
+Billing.
+Marketplace.
+15. Practical Solo Builder Dependency Order
+لو المؤسس يبني وحده باستخدام AI، هذا هو الترتيب العملي:
+1. Laravel project2. Users/Auth3. Organizations4. Roles/Permissions5. Sites6. CMS Pages/Posts7. Media8. Settings9. Activity Logs10. Feature Flags11. Business Profile draft12. Verification foundation13. Notifications basic14. Onboarding basic15. Tasks basic16. WordPress Import17. Commerce Lite18. Rabet basic
+لا تقفز إلى:
+ERP.
+Marketplace.
+AI Co-builder.
+Cloud.
+قبل أن يستقر هذا الأساس.
+16. ملخص قرارات الاعتماديات
+يجب اعتماد القرارات التالية:
+User مستقل عن الشركات.Organization هي workspace.Site هو الواجهة.Company هو الكيان التجاري.Business Profile هو الظهور العام.Professional Profile هو الظهور المهني.Membership هي علاقة الفرد بالكيان.Rabet يعتمد على Company + Team + Verification.Kabeeri Mall يعتمد على Profiles + Search + Moderation.ERP يعتمد على Company + Shared Business Objects.AI يعتمد على Permissions + Preview + Approval + Logs.Billing يخدم كل المنصة وليس Cloud فقط.Reviews/Reputation نظام مركزي.Disputes نظام مركزي.Feature Flags أساسية من V1.Activity Log أساس Trust من V1.
+17. جاهزية الانتقال إلى ملف V1
+بعد هذا الملحق، ملف V1 يجب أن يبنى بناءً على هذه الخريطة.
+V1 لا يعني بناء كل شيء.
+V1 يعني بناء الأساس الذي لا يمكن بناء أي شيء بدونه:
+UsersOrganizationsSitesCompanies foundationMembershipsPermissionsCMSMediaSettingsActivity LogFeature FlagsBusiness Profile draftVerification foundationNotifications basicOnboarding basic
+وبعد ذلك يمكن بدء ملف:
+Kabeeri V1 — Core Foundation for CMS + Company OS

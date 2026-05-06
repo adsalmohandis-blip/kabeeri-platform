@@ -1,0 +1,42 @@
+KABEERI Legal Partner Network & Rabet Verification Operations
+شبكة الشركاء القانونيين المعتمدين داخل Rabet لتوثيق الشركات
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. تعريف الشريك القانوني
+Rabet Legal Partner هو مكتب محاماة أو جهة قانونية معتمدة داخل دولة محددة، تعمل بعدد محدود وتراجع أوراق الشركات التي تريد التوثيق عبر Rabet B2B.
+• ليس Freelancer ولا App Builder.
+• يتبع Rabet Verification Operations.
+• خدمة التوثيق مدفوعة.
+• عدد الشركاء محدود في كل دولة لضبط الجودة والثقة.
+• تتم المراجعة وفق قواعد الدولة وCountry Packs.
+2. خدمات التوثيق
+الخدمة
+الوصف
+مدفوعة؟
+Company Verification
+مراجعة هوية الشركة والمستندات
+نعم
+Renewal Verification
+تجديد التوثيق السنوي
+نعم
+Fast Track Review
+مراجعة أسرع برسوم أعلى
+اختياري
+Sector Verification
+توثيق قطاعي لمجالات منظمة
+نعم
+Document Clarification
+طلب توضيحات من العميل
+ضمن الدورة
+3. Workflow التوثيق
+Company submits verification request→ Rabet checks country/requirements→ Assign legal partner→ Partner reviews documents→ Request more information if needed→ Approve / reject / conditional approval→ Trust record updated→ Badge appears if consent and status valid
+4. حوكمة الشركاء القانونيين
+• KYC/KYB للشريك القانوني.
+• اتفاقية سرية ومسؤولية.
+• SLA للمراجعة.
+• Audit logs لكل مشاهدة مستند.
+• تقييم جودة الشريك.
+• إمكانية تعليق الشريك.
+• توزيع عادل للطلبات حسب الدولة والقدرة.
+5. Database Concepts
+legal_partner_profileslegal_partner_accreditationslegal_partner_country_scopesverification_request_assignmentslegal_review_noteslegal_review_decisionslegal_partner_billing_recordslegal_partner_quality_reviews
+KABEERI — Confidential Product Architecture

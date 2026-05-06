@@ -1,0 +1,90 @@
+KABEERI Project Folder Map & Architecture
+خريطة رسمية لفهم كل فولدر داخل الملف الرئيسي، وتتحدث مع كل إضافة فولدر أو ملف جديد.
+Version: v1.6.4 | Status: Approved Documentation Addendum
+هذا الملف جزء من تحديث Freemium & Plans ولا يغير ملفات V1 المجمدة مباشرة. أي تطبيق يتم عبر Addendum أو تاسك واضح في Codex.
+معمارية الملفات
+KBR_v1.6.4 هو الجذر. الفولدرات 00 إلى 16 تمثل النظام الأساسي وخطط V1–V6. الفولدرات 17 إلى 23 تمثل نظام الإضافات والتحديثات. الأرشيف 99 لا يستخدم في التنفيذ.
+رسم المعمارية النصي
+KBR_v1.6.4
+├─ 00_SYSTEM_INDEX
+├─ 01_STRATEGY_AND_BUSINESS
+├─ 02_FOUNDATION_ARCHITECTURE
+├─ 03_RELEASE_SPECS
+├─ 04_DATABASE_ARCHITECTURE
+├─ 05_EXECUTION_LARAVEL
+├─ 06_WORDPRESS_MIGRATION_CENTER
+├─ 07_COMPETITIVE_PRODUCT_MOATS
+├─ 08_DEVELOPER_ECONOMY
+├─ 09_ENGINEERING_STANDARDS
+├─ 10_PEOPLE_PARTNER_WORK_NETWORK
+├─ 11_THEME_PLUGIN_MARKETING_ECOSYSTEM
+├─ 12_EXTERNAL_REFERENCES
+├─ 13_CODING_READY_EXECUTION
+├─ 14_MALL_MARKETPLACE_NETWORK
+├─ 15_VERSION_CODING_PLANS
+├─ 16_CODE_PROPMPTS_TO_CREATE_BY_CODEX
+├─ 17_EXTENSION_GOVERNANCE
+├─ 18_TECHNOLOGY_GOVERNANCE
+├─ 19_EXTENSION_BUSINESS_ARCHITECTURE
+├─ 20_EXTENSION_TECHNICAL_ARCHITECTURE
+├─ 21_EXTENSION_DATABASE_API_ADDENDUM
+├─ 22_EXTENSION_CODEX_PROMPTS
+├─ 23_EXTENSION_ACCEPTANCE_CHECKLISTS
+└─ 99_ARCHIVE_SUPERSEDED
+قاعدة البرومبتات
+برومبتات المنصة الأساسية V1–V6 في فولدر واحد فقط: 16_CODE_PROPMPTS_TO_CREATE_BY_CODEX. برومبتات أي تحديث أو إضافة لاحقة في فولدر واحد فقط: 22_EXTENSION_CODEX_PROMPTS.
+قاعدة التحديثات
+أي ميزة جديدة يجب أن تضاف كحزمة ملفات: Business, Technical, Database/API, Codex Prompt Pack, Acceptance Checklist. لا يتم خلط هذه الملفات مع ملفات V1 المجمدة إلا عبر Addendum واضح.
+Folder Map
+Folder
+Purpose
+00_SYSTEM_INDEX
+فهرس النظام، README، Manifest، Release Notes، خريطة الفولدرات
+01_STRATEGY_AND_BUSINESS
+الرؤية، التسعير، Freemium، GTM، قرارات المنتج التجارية
+02_FOUNDATION_ARCHITECTURE
+المعمارية الأساسية، الصلاحيات، الأمن، الأداء، Data Ownership
+03_RELEASE_SPECS
+مواصفات V1 إلى V6
+04_DATABASE_ARCHITECTURE
+وصف قواعد البيانات، أسماء الداتابيز، Addendums، ERD
+05_EXECUTION_LARAVEL
+Laravel execution، migrations، V1 scope، sprint plans
+06_WORDPRESS_MIGRATION_CENTER
+هجرة WordPress/Plugins/Themes
+07_COMPETITIVE_PRODUCT_MOATS
+ميزات المنافسة والدفاعات التسويقية
+08_DEVELOPER_ECONOMY
+مطورين، ثيمات، بلجنز، اقتصاد Creator
+09_ENGINEERING_STANDARDS
+API، permissions، feature flags، seed demo، standards
+10_PEOPLE_PARTNER_WORK_NETWORK
+Talent، Academy، Work Network، Agency، Legal Partner
+11_THEME_PLUGIN_MARKETING_ECOSYSTEM
+300 themes، plugins، bundles، manifests، marketing suite
+12_EXTERNAL_REFERENCES
+مراجع خارجية وPDFs داعمة
+13_CODING_READY_EXECUTION
+جاهزية التكويد وقوائم القبول العامة
+14_MALL_MARKETPLACE_NETWORK
+Universal Mall، External Sync، Travel، Backoffice Anywhere
+15_VERSION_CODING_PLANS
+خطط تكويد V1–V6
+16_CODE_PROPMPTS_TO_CREATE_BY_CODEX
+برومبتات Codex الرسمية الأساسية V1–V6 فقط
+17_EXTENSION_GOVERNANCE
+قواعد إضافة أي تحديث أو ميزة جديدة وكتابة برومبتاتها
+18_TECHNOLOGY_GOVERNANCE
+قرارات التكنولوجيا: Laravel, Next.js, Flutter, Electron, APIs
+19_EXTENSION_BUSINESS_ARCHITECTURE
+ملفات البزنس الخاصة بالإضافات/الموجات الجديدة
+20_EXTENSION_TECHNICAL_ARCHITECTURE
+ملفات التقنية الخاصة بالإضافات/الموجات الجديدة
+21_EXTENSION_DATABASE_API_ADDENDUM
+ملحقات Database/API للإضافات
+22_EXTENSION_CODEX_PROMPTS
+برومبتات Codex الخاصة بالإضافات والتحديثات الجديدة
+23_EXTENSION_ACCEPTANCE_CHECKLISTS
+قوائم قبول الإضافات والتحديثات
+99_ARCHIVE_SUPERSEDED
+ملفات قديمة مستبدلة لا تستخدم في التنفيذ

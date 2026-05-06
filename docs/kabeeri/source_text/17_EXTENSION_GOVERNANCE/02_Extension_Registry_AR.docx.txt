@@ -1,0 +1,19 @@
+KABEERI Extension Registry
+سجل الإضافات المعتمدة بعد V6 أو خارج نطاق النسخ الأساسية.
+KABEERI Professional Knowledge System — v1.6.2
+Version
+Extension
+Status
+Depends On
+Files
+V7
+Mobile App Enablement Layer
+Approved / Planned
+V1 APIs + Theme/Package foundations
+Business, Technical, DB/API, Prompts, Checklist
+V8
+Desktop Offline Client
+Approved / Planned
+V7 API contracts + Laravel APIs
+Business, Technical, DB/API, Prompts, Checklist
+يجب تحديث هذا السجل مع كل إضافة Vx جديدة، ويعتبر مصدر الحقيقة لمعرفة ما تمت إضافته وأين توجد ملفاته.

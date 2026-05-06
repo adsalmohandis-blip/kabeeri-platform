@@ -1,0 +1,55 @@
+KABEERI / powered by ADMIT
+KABEERI Coding Ready Acceptance Checklist
+قائمة قبول الحزمة قبل بدء التنفيذ
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. قبل كتابة الكود
+البند
+الحالة المطلوبة
+V1 Scope Freeze
+مقروء ومعتمد
+Database Addendum
+الجداول الجديدة مفهومة
+Migration Build Order
+Wave 0-4 جاهزة
+Engineering Standards
+معتمدة
+Permissions Matrix
+قابلة للتحويل إلى seeders
+Feature Flags Matrix
+defaults واضحة
+Seed Data
+demo scenario واضح
+Sprint 1 Plan
+جاهز للتنفيذ
+2. أثناء Sprint 1
+• لا تضف Commerce أو ERP أو Mall.
+• لا تفتح public developer marketplace.
+• لا تبني Theme Store كامل.
+• لا تبني Academy كامل.
+• نفذ foundation فقط حيث يلزم.
+• اكتب tests مع كل wave.
+3. قبول نهاية Sprint 1
+اختبار
+معيار النجاح
+Local setup
+composer install + migrate + seed يعمل
+Login
+demo owner يدخل Filament
+Organization
+إنشاء وتعديل منظمة
+App/Site
+إنشاء تطبيق أولي
+Permissions
+Editor محدود
+Activity log
+يسجل الأحداث
+Tests
+كل tests تمر
+Docs
+README للكود موجود
+4. ممنوعات قبل Sprint 2
+• لا يتم بناء 300 ثيم داخل الكود قبل Theme foundation.
+• لا يتم بناء Marketing Suite قبل Forms/Events foundation.
+• لا يتم بناء Agency Dashboard قبل users/organizations/sites/access grants.
+• لا يتم بناء Affiliate payouts قبل Billing/Commission foundation.

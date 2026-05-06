@@ -1,0 +1,273 @@
+06 — وصف App Recipes للـ 300 ثيم
+كل ثيم يرث Recipe القطاع الخاص به مع إمكانية تخصيص بعض الإعدادات. هذا يمنع تكرار 300 recipe مختلفة بلا داعي.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+01 — شركات وخدمات عامة
+Bundle: Business Starter Bundle
+Required
+Recommended
+Optional
+seo-basic, forms-pro, services-catalog, analytics, whatsapp-contact
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Business Prime, Kabeeri Business Classic, Kabeeri Business Modern, Kabeeri Business Pro, Kabeeri Business Lite, Kabeeri Business Bold, Kabeeri Business Elite, Kabeeri Business Flow, Kabeeri Business Hub, Kabeeri Business Launch
+02 — عيادات ومراكز صحية
+Bundle: Clinic Bundle
+Required
+Recommended
+Optional
+seo-basic, forms-pro, services-catalog, booking-lite, doctors-profiles
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Clinic Prime, Kabeeri Clinic Classic, Kabeeri Clinic Modern, Kabeeri Clinic Pro, Kabeeri Clinic Lite, Kabeeri Clinic Bold, Kabeeri Clinic Elite, Kabeeri Clinic Flow, Kabeeri Clinic Hub, Kabeeri Clinic Launch
+03 — تجميل وسبا وWellness
+Bundle: Beauty Wellness Bundle
+Required
+Recommended
+Optional
+seo-basic, forms-pro, booking-lite, before-after-gallery, reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Beauty Prime, Kabeeri Beauty Classic, Kabeeri Beauty Modern, Kabeeri Beauty Pro, Kabeeri Beauty Lite, Kabeeri Beauty Bold, Kabeeri Beauty Elite, Kabeeri Beauty Flow, Kabeeri Beauty Hub, Kabeeri Beauty Launch
+04 — مطاعم وكافيهات وأغذية
+Bundle: Restaurant Bundle
+Required
+Recommended
+Optional
+seo-basic, menu-builder, table-reservation, qr-menu, whatsapp-contact
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Food Prime, Kabeeri Food Classic, Kabeeri Food Modern, Kabeeri Food Pro, Kabeeri Food Lite, Kabeeri Food Bold, Kabeeri Food Elite, Kabeeri Food Flow, Kabeeri Food Hub, Kabeeri Food Launch
+05 — متاجر إلكترونية عامة
+Bundle: Commerce Starter Bundle
+Required
+Recommended
+Optional
+seo-basic, products, product-categories, cart, orders, coupons-basic
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Store Prime, Kabeeri Store Classic, Kabeeri Store Modern, Kabeeri Store Pro, Kabeeri Store Lite, Kabeeri Store Bold, Kabeeri Store Elite, Kabeeri Store Flow, Kabeeri Store Hub, Kabeeri Store Launch
+06 — أزياء وموضة وإكسسوارات
+Bundle: Fashion Commerce Bundle
+Required
+Recommended
+Optional
+products, variants-basic, size-guide, lookbook, product-reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Fashion Prime, Kabeeri Fashion Classic, Kabeeri Fashion Modern, Kabeeri Fashion Pro, Kabeeri Fashion Lite, Kabeeri Fashion Bold, Kabeeri Fashion Elite, Kabeeri Fashion Flow, Kabeeri Fashion Hub, Kabeeri Fashion Launch
+07 — إلكترونيات وموبايلات وأجهزة
+Bundle: Electronics Commerce Bundle
+Required
+Recommended
+Optional
+products, variants-basic, warranty-info, product-comparison, inventory-basic
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Electronics Prime, Kabeeri Electronics Classic, Kabeeri Electronics Modern, Kabeeri Electronics Pro, Kabeeri Electronics Lite, Kabeeri Electronics Bold, Kabeeri Electronics Elite, Kabeeri Electronics Flow, Kabeeri Electronics Hub, Kabeeri Electronics Launch
+08 — أثاث ومنزل وديكور
+Bundle: Home Furniture Bundle
+Required
+Recommended
+Optional
+products, collections, gallery, quote-request, delivery-rules
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Home Prime, Kabeeri Home Classic, Kabeeri Home Modern, Kabeeri Home Pro, Kabeeri Home Lite, Kabeeri Home Bold, Kabeeri Home Elite, Kabeeri Home Flow, Kabeeri Home Hub, Kabeeri Home Launch
+09 — عقارات وتطوير عقاري
+Bundle: Real Estate Bundle
+Required
+Recommended
+Optional
+property-listings, property-filters, map-listings, lead-capture, crm-lite
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri RealEstate Prime, Kabeeri RealEstate Classic, Kabeeri RealEstate Modern, Kabeeri RealEstate Pro, Kabeeri RealEstate Lite, Kabeeri RealEstate Bold, Kabeeri RealEstate Elite, Kabeeri RealEstate Flow, Kabeeri RealEstate Hub, Kabeeri RealEstate Launch
+10 — مقاولات وتشطيبات ومعمار
+Bundle: Construction Bundle
+Required
+Recommended
+Optional
+projects-portfolio, services-catalog, quote-request, case-studies, rabet-trust-badge
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Construction Prime, Kabeeri Construction Classic, Kabeeri Construction Modern, Kabeeri Construction Pro, Kabeeri Construction Lite, Kabeeri Construction Bold, Kabeeri Construction Elite, Kabeeri Construction Flow, Kabeeri Construction Hub, Kabeeri Construction Launch
+11 — تعليم ومدارس وحضانات
+Bundle: Education Bundle
+Required
+Recommended
+Optional
+programs-catalog, trainers-profiles, enrollment-forms, events-basic, newsletter
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Education Prime, Kabeeri Education Classic, Kabeeri Education Modern, Kabeeri Education Pro, Kabeeri Education Lite, Kabeeri Education Bold, Kabeeri Education Elite, Kabeeri Education Flow, Kabeeri Education Hub, Kabeeri Education Launch
+12 — أكاديميات وكورسات وLMS
+Bundle: LMS Bundle
+Required
+Recommended
+Optional
+courses-catalog, lessons-basic, enrollment-forms, certificates-basic, payments-placeholder
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri LMS Prime, Kabeeri LMS Classic, Kabeeri LMS Modern, Kabeeri LMS Pro, Kabeeri LMS Lite, Kabeeri LMS Bold, Kabeeri LMS Elite, Kabeeri LMS Flow, Kabeeri LMS Hub, Kabeeri LMS Launch
+13 — محاماة ومحاسبة واستشارات
+Bundle: Professional Services Bundle
+Required
+Recommended
+Optional
+services-catalog, consultation-request, secure-file-upload, crm-lite, reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Legal Prime, Kabeeri Legal Classic, Kabeeri Legal Modern, Kabeeri Legal Pro, Kabeeri Legal Lite, Kabeeri Legal Bold, Kabeeri Legal Elite, Kabeeri Legal Flow, Kabeeri Legal Hub, Kabeeri Legal Launch
+14 — وكالات تسويق وتصميم وبرمجة
+Bundle: Agency Bundle
+Required
+Recommended
+Optional
+portfolio, case-studies, quote-request, service-packages, crm-lite
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Agency Prime, Kabeeri Agency Classic, Kabeeri Agency Modern, Kabeeri Agency Pro, Kabeeri Agency Lite, Kabeeri Agency Bold, Kabeeri Agency Elite, Kabeeri Agency Flow, Kabeeri Agency Hub, Kabeeri Agency Launch
+15 — SaaS وتكنولوجيا وتطبيقات
+Bundle: SaaS Bundle
+Required
+Recommended
+Optional
+feature-blocks, pricing-tables, demo-request, knowledge-base-lite, analytics
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri SaaS Prime, Kabeeri SaaS Classic, Kabeeri SaaS Modern, Kabeeri SaaS Pro, Kabeeri SaaS Lite, Kabeeri SaaS Bold, Kabeeri SaaS Elite, Kabeeri SaaS Flow, Kabeeri SaaS Hub, Kabeeri SaaS Launch
+16 — لوجستيات وشحن ونقل
+Bundle: Logistics Bundle
+Required
+Recommended
+Optional
+services-catalog, quote-request, tracking-placeholder, branches, crm-lite
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Logistics Prime, Kabeeri Logistics Classic, Kabeeri Logistics Modern, Kabeeri Logistics Pro, Kabeeri Logistics Lite, Kabeeri Logistics Bold, Kabeeri Logistics Elite, Kabeeri Logistics Flow, Kabeeri Logistics Hub, Kabeeri Logistics Launch
+17 — فنادق وسياحة وحجوزات
+Bundle: Hospitality Bundle
+Required
+Recommended
+Optional
+rooms-tours-catalog, booking-request, packages, availability-calendar, reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Hospitality Prime, Kabeeri Hospitality Classic, Kabeeri Hospitality Modern, Kabeeri Hospitality Pro, Kabeeri Hospitality Lite, Kabeeri Hospitality Bold, Kabeeri Hospitality Elite, Kabeeri Hospitality Flow, Kabeeri Hospitality Hub, Kabeeri Hospitality Launch
+18 — صيانة وخدمات منزلية ومحلية
+Bundle: Local Services Bundle
+Required
+Recommended
+Optional
+services-catalog, booking-lite, service-areas, emergency-cta, reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri LocalServices Prime, Kabeeri LocalServices Classic, Kabeeri LocalServices Modern, Kabeeri LocalServices Pro, Kabeeri LocalServices Lite, Kabeeri LocalServices Bold, Kabeeri LocalServices Elite, Kabeeri LocalServices Flow, Kabeeri LocalServices Hub, Kabeeri LocalServices Launch
+19 — سيارات ومعارض وورش
+Bundle: Automotive Bundle
+Required
+Recommended
+Optional
+vehicle-listings, vehicle-filters, booking-lite, quote-request, crm-lite
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Auto Prime, Kabeeri Auto Classic, Kabeeri Auto Modern, Kabeeri Auto Pro, Kabeeri Auto Lite, Kabeeri Auto Bold, Kabeeri Auto Elite, Kabeeri Auto Flow, Kabeeri Auto Hub, Kabeeri Auto Launch
+20 — بورتفوليو وأفراد ومهنيين
+Bundle: Professional Portfolio Bundle
+Required
+Recommended
+Optional
+portfolio, services-catalog, testimonials, contact-forms, talent-profile-link
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Portfolio Prime, Kabeeri Portfolio Classic, Kabeeri Portfolio Modern, Kabeeri Portfolio Pro, Kabeeri Portfolio Lite, Kabeeri Portfolio Bold, Kabeeri Portfolio Elite, Kabeeri Portfolio Flow, Kabeeri Portfolio Hub, Kabeeri Portfolio Launch
+21 — مجلات ومدونات وأخبار
+Bundle: Magazine Blog Bundle
+Required
+Recommended
+Optional
+blog-pro, authors-pro, categories, related-posts, newsletter
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Magazine Prime, Kabeeri Magazine Classic, Kabeeri Magazine Modern, Kabeeri Magazine Pro, Kabeeri Magazine Lite, Kabeeri Magazine Bold, Kabeeri Magazine Elite, Kabeeri Magazine Flow, Kabeeri Magazine Hub, Kabeeri Magazine Launch
+22 — منظمات وجمعيات وتبرعات
+Bundle: NGO Donations Bundle
+Required
+Recommended
+Optional
+donations-lite, campaigns, volunteer-forms, events-basic, impact-stats
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri NGO Prime, Kabeeri NGO Classic, Kabeeri NGO Modern, Kabeeri NGO Pro, Kabeeri NGO Lite, Kabeeri NGO Bold, Kabeeri NGO Elite, Kabeeri NGO Flow, Kabeeri NGO Hub, Kabeeri NGO Launch
+23 — فعاليات ومؤتمرات وحفلات
+Bundle: Events Bundle
+Required
+Recommended
+Optional
+event-listings, ticketing-lite, schedule, speakers, sponsors
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Events Prime, Kabeeri Events Classic, Kabeeri Events Modern, Kabeeri Events Pro, Kabeeri Events Lite, Kabeeri Events Bold, Kabeeri Events Elite, Kabeeri Events Flow, Kabeeri Events Hub, Kabeeri Events Launch
+24 — Fitness / Gym / Sports
+Bundle: Fitness Bundle
+Required
+Recommended
+Optional
+class-booking, trainers-profiles, membership-plans, schedule, reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Fitness Prime, Kabeeri Fitness Classic, Kabeeri Fitness Modern, Kabeeri Fitness Pro, Kabeeri Fitness Lite, Kabeeri Fitness Bold, Kabeeri Fitness Elite, Kabeeri Fitness Flow, Kabeeri Fitness Hub, Kabeeri Fitness Launch
+25 — زراعة وحيوانات وبيطرة
+Bundle: Agriculture Pets Bundle
+Required
+Recommended
+Optional
+services-catalog, products, booking-lite, delivery-rules, reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri AgriPets Prime, Kabeeri AgriPets Classic, Kabeeri AgriPets Modern, Kabeeri AgriPets Pro, Kabeeri AgriPets Lite, Kabeeri AgriPets Bold, Kabeeri AgriPets Elite, Kabeeri AgriPets Flow, Kabeeri AgriPets Hub, Kabeeri AgriPets Launch
+26 — ماركت بليس ودليل أعمال
+Bundle: Directory Marketplace Bundle
+Required
+Recommended
+Optional
+directory-listings, categories, search, filters, reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Directory Prime, Kabeeri Directory Classic, Kabeeri Directory Modern, Kabeeri Directory Pro, Kabeeri Directory Lite, Kabeeri Directory Bold, Kabeeri Directory Elite, Kabeeri Directory Flow, Kabeeri Directory Hub, Kabeeri Directory Launch
+27 — صفحات هبوط وحملات
+Bundle: Landing Campaign Bundle
+Required
+Recommended
+Optional
+landing-builder, forms-pro, utm-tracker, analytics, thank-you-page
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Landing Prime, Kabeeri Landing Classic, Kabeeri Landing Modern, Kabeeri Landing Pro, Kabeeri Landing Lite, Kabeeri Landing Bold, Kabeeri Landing Elite, Kabeeri Landing Flow, Kabeeri Landing Hub, Kabeeri Landing Launch
+28 — شركاء ومسوقين بالعمولة
+Bundle: Affiliate Partner Bundle
+Required
+Recommended
+Optional
+affiliate-links, partner-storefront, catalog-sharing, commission-events, analytics
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Affiliate Prime, Kabeeri Affiliate Classic, Kabeeri Affiliate Modern, Kabeeri Affiliate Pro, Kabeeri Affiliate Lite, Kabeeri Affiliate Bold, Kabeeri Affiliate Elite, Kabeeri Affiliate Flow, Kabeeri Affiliate Hub, Kabeeri Affiliate Launch
+29 — Kabeeri Work Network / Agency Kits
+Bundle: Work Network Bundle
+Required
+Recommended
+Optional
+professional-profile, badges, service-packages, request-service, reviews
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri WorkNet Prime, Kabeeri WorkNet Classic, Kabeeri WorkNet Modern, Kabeeri WorkNet Pro, Kabeeri WorkNet Lite, Kabeeri WorkNet Bold, Kabeeri WorkNet Elite, Kabeeri WorkNet Flow, Kabeeri WorkNet Hub, Kabeeri WorkNet Launch
+30 — Enterprise / Industry / B2B Portals
+Bundle: Enterprise Portal Bundle
+Required
+Recommended
+Optional
+client-portal, document-upload, service-requests, approvals-basic, access-control
+reviews, newsletter/campaigns, whatsapp, analytics, ai-assistant
+advanced-reports, marketing-automation, mobile-profile-v7
+الثيمات التابعة لهذا القطاع: Kabeeri Enterprise Prime, Kabeeri Enterprise Classic, Kabeeri Enterprise Modern, Kabeeri Enterprise Pro, Kabeeri Enterprise Lite, Kabeeri Enterprise Bold, Kabeeri Enterprise Elite, Kabeeri Enterprise Flow, Kabeeri Enterprise Hub, Kabeeri Enterprise Launch

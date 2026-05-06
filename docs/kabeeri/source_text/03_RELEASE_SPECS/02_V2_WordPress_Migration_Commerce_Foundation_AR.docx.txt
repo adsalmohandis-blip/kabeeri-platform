@@ -1,0 +1,667 @@
+KABEERI V2 — WordPress Migration + Commerce Foundation
+الإصدار الثاني من منصة KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يشرح V2 بالتفصيل بعد بناء V1.
+V2 هو الإصدار الذي يبدأ نقل Kabeeri من مجرد CMS قوي للشركات إلى منصة تستطيع جذب جمهور WordPress وWooCommerce، مع بداية Commerce وBusiness Directory وService Listings.
+الرسالة التنفيذية لـ V2:
+Kabeeri V2 يجعل الانتقال من WordPress ممكنًا، ويضيف أساس التجارة والخدمات بحيث يبدأ الموقع في استقبال عملاء وطلبات حقيقية.
+1. هدف V2
+1.1 الهدف التقني
+بناء طبقة استيراد وهجرة من WordPress، وتوسيع CMS، وإضافة Commerce Foundation، ونماذج Forms، وبداية Business Directory وService Listings.
+1.2 الهدف التجاري
+إقناع جمهور WordPress أن Kabeeri ليس مجرد فكرة جديدة، بل يمكنه استقبال مواقعهم الحالية ونقل محتواهم، ثم منحهم مسارًا للمتجر والخدمات والعملاء.
+1.3 هدف المنتج
+V2 يجب أن يثبت 3 وعود:
+1. يمكنك نقل موقع WordPress إلى Kabeeri.2. يمكنك إنشاء متجر بسيط واستقبال Orders.3. يمكنك عرض بزنس وخدمات واستقبال Service Requests.
+2. V2 يبني على ماذا؟
+V2 لا يبدأ من الصفر.
+يعتمد على V1:
+UsersOrganizationsSitesCMSMediaThemesPlugins foundationBusiness Profile draftVerification foundationActivity LogFeature FlagsImport/Export foundationPermissionsSettings
+إذا لم تكن هذه الأشياء مستقرة في V1، لا يبدأ V2.
+3. ما هو V2؟
+V2 هو:
+WordPress Migration+ CMS Expansion+ Forms+ Redirects+ Commerce Foundation+ Business Directory Basic+ Service Listings Basic+ Task Management Basic
+4. ما ليس V2؟
+V2 ليس:
+WooCommerce كامل.
+Shopify بديل كامل.
+ERP كامل.
+Accounting.
+Full CRM.
+Kabeeri Mall كامل.
+Talent Marketplace.
+Rabet Legal Verification كامل.
+Cloud Billing كامل.
+Marketplace داخلي مفتوح.
+AI Co-builder كامل.
+Multi-vendor checkout.
+Advanced inventory.
+Payroll.
+5. رسالة V2 التسويقية
+5.1 للجمهور العام
+انقل موقعك من WordPress، وابدأ في تحويله إلى موقع أعمال حقيقي يستقبل طلبات وخدمات ومنتجات.
+5.2 لجمهور WordPress
+Kabeeri V2 يعطيك طريق انتقال من WordPress بدون فقد المحتوى والـ SEO، مع أساس أنظف للنمو.
+5.3 لأصحاب الشركات
+موقعك لم يعد مجرد صفحات؛ يمكنك الآن استقبال طلبات خدمات، عرض منتجات، وبناء قاعدة عملاء.
+6. نطاق V2 الرئيسي
+6.1 WordPress Migration
+WordPress XML importer.
+Import pages.
+Import posts.
+Import authors.
+Import categories.
+Import tags.
+Import media.
+Import featured images.
+Preserve slugs.
+Preserve publish dates.
+SEO meta mapping basic.
+Redirect map basic.
+Migration report.
+Unknown shortcode warnings.
+6.2 CMS Expansion
+Custom fields basic.
+Forms basic.
+Redirect manager basic.
+Menus basic.
+Content blocks/components foundation.
+Improved revisions.
+Draft/review workflow improvement.
+6.3 Commerce Foundation
+Products.
+Product categories.
+Product images.
+SKU.
+Price.
+Stock quantity basic.
+Simple cart.
+Basic checkout.
+Orders.
+Order items.
+Customers.
+Coupons basic.
+Manual payment.
+Cash on delivery.
+Bank transfer.
+6.4 Business Directory Basic
+Publish Business Profile.
+Public business directory page.
+Categories.
+Contact button.
+Basic search/filter.
+6.5 Service Listings Basic
+Create services under Business Profile.
+Public service page.
+Service request form.
+Convert service request to conversation placeholder أو lead لاحقًا.
+6.6 Task Management Basic
+Tasks.
+Assignees.
+Status.
+Due date.
+Comments.
+Related object optional.
+7. V2 Feature Flags
+يجب إضافة أو تفعيل flags:
+enable_wordpress_importenable_formsenable_redirectsenable_menusenable_commerce_foundationenable_productsenable_cartenable_ordersenable_customersenable_business_directoryenable_service_listingsenable_service_requestsenable_tasks_basic
+8. V2 User Stories
+8.1 نقل موقع WordPress
+As a site ownerI want to upload a WordPress export fileSo I can migrate my pages, posts, categories, tags, and media into Kabeeri.
+8.2 تقرير الهجرة
+As a site ownerI want to see a migration reportSo I know what was imported, what failed, and what needs review.
+8.3 إنشاء منتج
+As a store managerI want to create a product with price, SKU, image, and stockSo visitors can buy it.
+8.4 شراء منتج
+As a customerI want to add a product to cart and place an orderSo I can buy from the business.
+8.5 إدارة الطلبات
+As a business ownerI want to see orders and update their statusSo I can fulfill customer purchases.
+8.6 عرض الخدمات
+As a business ownerI want to list my servicesSo visitors can request them.
+8.7 طلب خدمة
+As a visitorI want to request a serviceSo the business can contact me.
+8.8 إدارة مهمة
+As a team memberI want to receive and complete tasksSo the company can organize basic work.
+9. Roles الجديدة أو الموسعة في V2
+9.1 Store Manager
+يدير المنتجات والطلبات.
+9.2 Product Manager
+يدير المنتجات فقط.
+9.3 Order Manager
+يرى ويدير الطلبات.
+9.4 Service Manager
+يدير الخدمات وطلبات الخدمات.
+9.5 Task Manager
+ينشئ ويوزع المهام.
+9.6 Migration Manager
+ينفذ imports ويفحص migration reports.
+10. Permissions الجديدة في V2
+10.1 Migration Permissions
+migration.viewmigration.runmigration.rollbackmigration.report.view
+10.2 Forms Permissions
+forms.viewforms.createforms.editforms.deleteforms.submissions.viewforms.submissions.delete
+10.3 Redirects Permissions
+redirects.viewredirects.createredirects.editredirects.delete
+10.4 Menus Permissions
+menus.viewmenus.manage
+10.5 Products Permissions
+commerce.product.viewcommerce.product.createcommerce.product.editcommerce.product.publishcommerce.product.delete
+10.6 Orders Permissions
+commerce.order.viewcommerce.order.managecommerce.order.status.updatecommerce.order.cancel
+10.7 Customers Permissions
+commerce.customer.viewcommerce.customer.createcommerce.customer.editcommerce.customer.delete
+10.8 Coupons Permissions
+commerce.coupon.viewcommerce.coupon.createcommerce.coupon.editcommerce.coupon.delete
+10.9 Service Listing Permissions
+service.viewservice.createservice.editservice.publishservice.deleteservice_request.viewservice_request.manage
+10.10 Task Permissions
+task.viewtask.createtask.edittask.assigntask.commenttask.completetask.delete
+11. قاعدة بيانات V2
+هذا القسم يضيف الجداول الجديدة على V1.
+11.1 import_records
+لتتبع كل عنصر تم استيراده.
+idimport_job_idsource_systemsource_typesource_id nullablesource_slug nullablestatus default pendingtarget_type nullabletarget_id nullableraw_data json nullablewarnings json nullableerrors json nullablecreated_atupdated_at
+status values
+pendingimportedskippedfailedwarningrolled_back
+11.2 migration_mappings
+لربط كيانات المصدر بكيانات Kabeeri.
+idimport_job_idsource_systemsource_typesource_idsource_value nullabletarget_typetarget_id nullabletarget_value nullablemapping_typecreated_atupdated_at
+mapping_type examples
+authorcategorytagmediapostpageurl_redirectcustom_field
+11.3 redirects
+idsite_idsource_pathtarget_pathstatus_code default 301source_type nullableis_active default truehit_count default 0last_hit_at nullablecreated_by nullablecreated_atupdated_at
+status_code values
+301302307410
+11.4 custom_fields
+idsite_id nullableorganization_id nullablefieldable_typefieldable_id nullablenamekeyfield_typeoptions json nullablevalidation_rules json nullabledefault_value nullablesettings json nullablecreated_atupdated_at
+field_type values
+texttextareanumberbooleandatedatetimeselectmulti_selectimagefileurlemailjson
+11.5 custom_field_values
+idcustom_field_idvalueable_typevalueable_idvalue longtext nullablecreated_atupdated_at
+11.6 form_definitions
+idorganization_idsite_id nullablenameslugdescription nullablestatus default activefields jsonsettings json nullablesuccess_message nullablenotification_settings json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+11.7 form_submissions
+idform_definition_idsite_id nullablesubmitted_by_user_id nullablename nullableemail nullablephone nullablestatus default newdata jsonip_address nullableuser_agent nullablesource_url nullablecreated_atupdated_at
+status values
+newreviewedspamarchivedconverted
+11.8 menus
+idsite_idnamesluglocation nullablestatus default activecreated_atupdated_at
+11.9 menu_items
+idmenu_idparent_id nullabletitleurl nullablelinkable_type nullablelinkable_id nullabletarget default selforder_column default 0metadata json nullablecreated_atupdated_at
+Commerce Tables
+11.10 product_categories
+idorganization_idsite_id nullableparent_id nullablenameslugdescription nullableimage_media_id nullablestatus default activeseo_title nullableseo_description nullablecreated_atupdated_at
+11.11 products
+idorganization_idsite_id nullablecompany_id nullablenameslugdescription longtext nullableshort_description nullablesku nullableproduct_type default simplestatus default draftvisibility default publicprice decimal(15,2)sale_price decimal(15,2) nullablecurrency default EGPstock_quantity integer default 0manage_stock boolean default trueis_featured boolean default falsefeatured_media_id nullableseo_title nullableseo_description nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+product_type values
+simpleserviceexternal
+V2 لا يدخل variants المتقدمة.
+11.12 product_category_product
+product_idproduct_category_idcreated_at
+11.13 product_media
+idproduct_idmedia_asset_idorder_column default 0is_primary default falsecreated_at
+11.14 customers
+idorganization_idcompany_id nullablesite_id nullableuser_id nullablecustomer_type default individualnameemail nullablephone nullablecountry nullablecity nullableaddress nullablestatus default activesource nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+ملاحظة
+Customer قد يكون User أو Guest.
+11.15 carts
+idorganization_idsite_id nullableuser_id nullablesession_id nullablecustomer_id nullablestatus default activecurrency default EGPmetadata json nullablecreated_atupdated_atexpires_at nullable
+11.16 cart_items
+idcart_idproduct_idquantity integerunit_price decimal(15,2)total decimal(15,2)metadata json nullablecreated_atupdated_at
+11.17 orders
+idorganization_idsite_id nullablecompany_id nullablecustomer_id nullableorder_numberstatus default pendingpayment_status default unpaidfulfillment_status default unfulfilledcurrency default EGPsubtotal decimal(15,2) default 0discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0shipping_total decimal(15,2) default 0total decimal(15,2) default 0customer_name nullablecustomer_email nullablecustomer_phone nullablebilling_address json nullableshipping_address json nullablenotes nullablemetadata json nullableplaced_at nullablecreated_atupdated_atdeleted_at nullable
+status values
+pendingconfirmedprocessingcompletedcancelledrefunded
+payment_status values
+unpaidpendingpaidfailedrefunded
+fulfillment_status values
+unfulfilledprocessingfulfilledcancelled
+11.18 order_items
+idorder_idproduct_id nullableproduct_namesku nullablequantity integerunit_price decimal(15,2)discount_total decimal(15,2) default 0tax_total decimal(15,2) default 0total decimal(15,2)metadata json nullablecreated_atupdated_at
+11.19 coupons
+idorganization_idsite_id nullablecodedescription nullablediscount_typeamount decimal(15,2)status default activestarts_at nullableends_at nullableusage_limit nullableused_count default 0minimum_order_total decimal(15,2) nullablemetadata json nullablecreated_atupdated_at
+discount_type values
+fixedpercentage
+11.20 payment_methods
+idorganization_idsite_id nullablenamecodetypestatus default activesettings json nullablecreated_atupdated_at
+V2 methods
+cash_on_deliverybank_transfermanual
+11.21 payments
+لو لم تنشأ في V1، تنشأ هنا.
+idorganization_idorder_id nullableinvoice_id nullablecustomer_id nullablepayment_method_id nullableamount decimal(15,2)currency default EGPstatus default pendingprovider nullableprovider_reference nullablepaid_at nullablefailure_reason nullablemetadata json nullablecreated_atupdated_at
+Business/Services Tables
+11.22 business_categories
+idparent_id nullablenameslugdescription nullablestatus default activecreated_atupdated_at
+11.23 service_categories
+idparent_id nullablenameslugdescription nullablestatus default activecreated_atupdated_at
+11.24 service_listings
+idorganization_idcompany_id nullablebusiness_profile_id nullablesite_id nullableservice_category_id nullablenameslugshort_description nullabledescription longtext nullablepricing_type default contactprice_from decimal(15,2) nullableprice_to decimal(15,2) nullablecurrency default EGPdelivery_time nullablestatus default draftvisibility default publicfeatured_media_id nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+pricing_type values
+contactfixedstarts_fromrangecustom_quote
+11.25 service_requests
+idorganization_idcompany_id nullablebusiness_profile_id nullableservice_listing_id nullablecustomer_id nullablenameemail nullablephone nullablecompany_name nullablemessage longtext nullablestatus default newpriority default normalsource_url nullablemetadata json nullableassigned_to nullablecreated_atupdated_at
+status values
+newcontactedqualifiedconvertedclosedspam
+Task Tables
+11.26 tasks
+idorganization_idcompany_id nullablesite_id nullableproject_id nullabletitledescription longtext nullablestatus default todopriority default normalassigned_to nullablecreated_by nullabledue_date nullablerelated_type nullablerelated_id nullablecompleted_at nullablemetadata json nullablecreated_atupdated_atdeleted_at nullable
+status values
+backlogtodoin_progressblockedreviewdonecancelled
+11.27 task_comments
+idtask_iduser_idbody longtextcreated_atupdated_atdeleted_at nullable
+11.28 task_watchers
+task_iduser_idcreated_at
+12. Indexes مهمة في V2
+import_records.import_job_idimport_records.source_system + source_type + source_idredirects.site_id + source_pathcustom_fields.site_id + keyform_definitions.site_id + slugform_submissions.form_definition_idmenus.site_id + slugproducts.organization_idproducts.site_idproducts.slugproducts.skuproducts.statusproducts.visibilityorders.organization_idorders.site_idorders.customer_idorders.order_numberorders.statusorders.payment_statuscustomers.organization_idcustomers.emailservice_listings.organization_idservice_listings.business_profile_idservice_listings.slugservice_requests.organization_idservice_requests.statustasks.organization_idtasks.company_idtasks.assigned_totasks.status
+Composite unique:
+unique(products.site_id, products.slug)unique(orders.organization_id, orders.order_number)unique(coupons.site_id, coupons.code)unique(service_listings.business_profile_id, service_listings.slug)
+13. Laravel Structure المضافة في V2
+app/  Migration/    WordPress/      Actions/      Parsers/      Mappers/      Importers/      Reports/    Models/    Jobs/    Services/  CMS/    Forms/      Models/      Actions/      Policies/    Redirects/      Models/      Actions/    Menus/      Models/      Actions/    CustomFields/      Models/      Actions/  Commerce/    Products/      Models/      Actions/      Policies/    Customers/      Models/      Actions/      Policies/    Cart/      Models/      Actions/      Services/    Orders/      Models/      Actions/      Policies/      Events/    Coupons/      Models/      Actions/    Payments/      Models/      Actions/      Services/  MallFoundation/    BusinessDirectory/      Actions/      Queries/    Services/      Models/      Actions/      Policies/    Requests/      Models/      Actions/      Policies/  Work/    Tasks/      Models/      Actions/      Policies/      Events/
+14. WordPress Importer Architecture
+14.1 Flow
+Upload WordPress XML→ Create import_job→ Parse XML→ Detect authors/categories/tags/media/posts/pages→ Preview summary→ User confirms→ Queue import jobs→ Import records→ Create redirect suggestions→ Generate report
+14.2 Importer Components
+WordPressXmlParserWordPressAuthorMapperWordPressTaxonomyMapperWordPressMediaImporterWordPressContentImporterWordPressSeoMapperWordPressRedirectMapperWordPressMigrationReportBuilder
+14.3 WordPress Content Mapping
+WordPress
+Kabeeri
+post
+ContentEntry type post
+page
+ContentEntry type page
+category
+TaxonomyTerm
+tag
+TaxonomyTerm
+attachment
+MediaAsset
+author
+User أو imported_author metadata
+post meta
+CustomField/metadata
+slug
+slug
+post date
+published_at
+post status
+status
+excerpt
+excerpt
+14.4 WordPress Status Mapping
+WordPress
+Kabeeri
+publish
+published
+draft
+draft
+pending
+review
+private
+draft + private visibility
+trash
+trashed
+14.5 Shortcodes Handling
+V2 لا يحول كل shortcodes.
+السياسة:
+Known shortcodes → convert if simpleUnknown shortcodes → preserve text + warningDangerous/unsupported → flag for review
+Known basic
+[gallery][caption][audio] optional[video] optional
+14.6 Elementor/Gutenberg Handling
+Gutenberg
+Preserve HTML output قدر الإمكان.
+Flag unsupported blocks.
+Elementor
+Preserve content if available.
+Add migration warning.
+Suggest manual/AI rebuild لاحقًا.
+14.7 Migration Report
+يجب أن يعرض:
+Imported pages countImported posts countImported media countImported categories/tagsFailed itemsSkipped itemsWarningsUnknown shortcodesMissing mediaRedirect suggestionsSEO issues
+15. Commerce Foundation Architecture
+15.1 V2 Commerce Philosophy
+V2 Commerce بسيط.
+الهدف ليس منافسة Shopify بالكامل، بل إثبات:
+Product → Cart → Checkout → Order → Customer
+15.2 Product Model
+في V2 ندعم:
+Simple products فقط.
+Product image.
+SKU.
+Price.
+Stock quantity.
+Categories.
+SEO.
+لا ندعم بعد:
+Variants advanced.
+Bundles.
+Subscriptions.
+Bookings.
+Multi-vendor.
+15.3 Cart
+Cart بسيط:
+session-based للزوار.
+user-based للمسجلين.
+add/remove/update quantity.
+coupon apply optional.
+15.4 Checkout
+Checkout بسيط:
+customer info.
+shipping/billing address basic.
+payment method manual/COD/bank transfer.
+create order.
+send notification.
+15.5 Order Numbering
+صيغة مبدئية:
+ORD-{YYYY}{MM}-{sequence}
+مثال:
+ORD-202605-0001
+15.6 Stock Handling
+V2 basic:
+reduce stock عند order confirmed أو paid حسب الإعداد.
+لا يوجد stock movements ledger كامل.
+Stock movements الحقيقي يدخل V3.
+16. Payment Foundation
+16.1 V2 Payment Methods
+Cash on DeliveryBank TransferManual Payment
+16.2 لا يدخل في V2
+Stripe/Paymob/Fawry integrations كاملة.
+Stored cards.
+Refund automation.
+Split payments.
+لكن payment_methods table يجهز لذلك.
+17. Service Listings Architecture
+17.1 الهدف
+الشركات الخدمية تستطيع عرض خدماتها واستقبال طلبات.
+17.2 Service Listing يحتوي
+اسم الخدمة.
+وصف مختصر.
+وصف كامل.
+صورة.
+تسعير.
+مدة تنفيذ.
+Category.
+Request button.
+17.3 Service Request Flow
+Visitor opens service→ fills request form→ service_request created→ notification sent→ optional task created→ activity logged
+18. Business Directory Basic
+18.1 الهدف
+إظهار Business Profiles العامة في قائمة بسيطة داخل Kabeeri.
+18.2 V2 ليس Kabeeri Mall كامل
+هذا مجرد foundation.
+يحتوي على:
+Business profile public page.
+Directory list.
+Category filter.
+Country/city filter basic.
+Contact button.
+18.3 لا يدخل
+Sponsored listings.
+Full ranking.
+Trust score ranking.
+Reviews full.
+Multi-marketplace cart.
+19. Forms Basic
+19.1 لماذا؟
+Forms مهمة لـ:
+Contact pages.
+Service requests.
+Lead capture.
+Newsletter لاحقًا.
+19.2 Form Builder في V2
+بسيط:
+fields JSON.
+required validation.
+submissions list.
+email notification optional.
+19.3 Field Types
+texttextareaemailphonenumberselectcheckboxfile optional
+20. Redirect Manager Basic
+20.1 الهدف
+حماية SEO بعد WordPress Migration.
+20.2 Features
+Create redirect.
+Import redirect suggestions.
+301/302/410.
+Hit count.
+Last hit.
+21. Menus Basic
+21.1 الهدف
+إدارة قوائم الموقع بدل hardcoded navigation.
+21.2 Features
+Create menu.
+Add page/post/custom URL.
+Nested items basic.
+Assign location.
+22. Tasks Basic
+22.1 الهدف
+بداية Company OS بدون بناء Teams كامل.
+22.2 Features
+Create task.
+Assign user.
+Set due date.
+Status.
+Priority.
+Comments.
+Related object.
+22.3 Related objects
+أمثلة:
+service_requestordercontent_entrybusiness_profileverification_request
+23. Events في V2
+23.1 Migration Events
+ImportJobCreatedImportJobStartedImportRecordImportedImportJobCompletedImportJobFailedMigrationWarningDetected
+23.2 Commerce Events
+ProductCreatedProductPublishedCartCreatedOrderCreatedOrderStatusUpdatedPaymentRecordedCouponApplied
+23.3 Service Events
+ServiceListingCreatedServiceListingPublishedServiceRequestCreatedServiceRequestStatusUpdated
+23.4 Task Events
+TaskCreatedTaskAssignedTaskCommentedTaskCompleted
+23.5 CMS Expansion Events
+FormSubmittedRedirectCreatedMenuUpdated
+24. Listeners في V2
+LogImportStartedLogImportCompletedCreateMigrationReportCreateRedirectSuggestionsNotifyImportCompletedIndexProductIfPublishedNotifyOrderCreatedReduceStockOnOrderConfirmedNotifyServiceRequestCreatedCreateTaskForServiceRequest optionalNotifyTaskAssigneeLogTaskCompletedClearMenuCacheLogRedirectCreated
+25. Admin UI Scope في V2
+25.1 Migration Center
+قائمة:
+Migration Center  WordPress Import  Import Jobs  Migration Reports  Redirect Suggestions
+25.2 Commerce Admin Basic
+قائمة:
+Commerce  Products  Product Categories  Orders  Customers  Coupons  Payment Methods  Settings
+25.3 Forms
+Forms  All Forms  Submissions
+25.4 Redirects
+Redirects
+25.5 Menus
+Appearance  Menus
+25.6 Services
+Business  Business Profile  Services  Service Requests
+25.7 Tasks
+Work  Tasks
+26. V2 Navigation المقترح
+DashboardContent  Pages  Posts  Content Types  Categories  TagsMediaFormsAppearance  Themes  MenusPluginsMigration  WordPress Import  Import Jobs  ReportsCommerce  Products  Categories  Orders  Customers  Coupons  Payment MethodsBusiness  Business Profile  Services  Service RequestsTeam & Work  TasksSystem  Activity Log  Redirects  Settings  System Status
+27. Public UI في V2
+27.1 Site Pages
+كما في V1 مع تحسينات.
+27.2 Product Pages
+يجب دعم:
+Product listing page.
+Product detail page.
+Add to cart.
+27.3 Cart Page
+View items.
+Update quantity.
+Remove item.
+Apply coupon optional.
+27.4 Checkout Page
+Customer info.
+Address.
+Payment method.
+Place order.
+27.5 Order Confirmation Page
+Order number.
+Summary.
+Payment instructions.
+27.6 Business Directory Page
+List businesses.
+Filter category/country/city.
+27.7 Service Page
+Service details.
+Request service form.
+28. SEO في V2
+28.1 Migration SEO
+Preserve slugs.
+Map meta title/description.
+Redirect old URLs.
+Report missing SEO.
+28.2 Product SEO
+Products تدعم:
+slugseo_titleseo_descriptioncanonical_url optional
+28.3 Service SEO
+Services تدعم:
+slugseo_title optional لاحقًاseo_description optional لاحقًا
+29. Security في V2
+29.1 Import Security
+Validate XML file.
+Limit file size.
+Sanitize imported HTML.
+Do not execute imported scripts.
+Flag suspicious content.
+29.2 Commerce Security
+Validate checkout input.
+Do not trust cart prices from frontend.
+Recalculate totals server-side.
+Protect order management by permissions.
+29.3 Forms Security
+CSRF.
+Spam protection basic.
+Rate limiting.
+File upload validation.
+29.4 Redirect Security
+Prevent open redirect abuse.
+Validate target paths.
+30. Performance في V2
+30.1 Imports
+Run imports in queue.
+Chunk records.
+Track progress.
+30.2 Product Lists
+Pagination.
+Indexes.
+Cache category pages optional.
+30.3 Cart/Checkout
+Lightweight queries.
+Recalculate totals efficiently.
+30.4 Search
+V2 basic search يمكن أن يظل database-based.
+31. Testing في V2
+31.1 Migration Tests
+WordPress XML parse testImport pages testImport posts testImport categories/tags testImport media testRedirect suggestion testMigration report test
+31.2 Commerce Tests
+Create product testPublish product testAdd to cart testCheckout creates order testOrder totals calculated server-side testCoupon apply testOrder status update permission test
+31.3 Services Tests
+Create service listing testPublish service listing testSubmit service request testNotify business owner test
+31.4 Forms Tests
+Create form testSubmit form testValidation testSpam/rate-limit basic test
+31.5 Tasks Tests
+Create task testAssign task testComment task testComplete task testPermission test
+32. Seeders في V2
+CommercePermissionsSeederCommerceRolesSeederDefaultPaymentMethodsSeederBusinessCategoriesSeederServiceCategoriesSeederDemoProductsSeederDemoServicesSeederDemoTasksSeeder
+33. CLI Commands في V2
+php artisan kabeeri:wordpress:import {file}php artisan kabeeri:import:report {jobId}php artisan kabeeri:redirects:generate {jobId}php artisan kabeeri:commerce:seed-demophp artisan kabeeri:orders:recalculate {orderId}php artisan kabeeri:forms:cleanup-spam
+34. Build Order العملي لـ V2
+المرحلة 1 — Prepare V1 for V2
+تأكد من استقرار V1راجع permissionsراجع media modelراجع import_jobs/export_jobsراجع content slugs
+المرحلة 2 — Redirects + Menus
+redirects tableredirect UImenus tablemenu UIpublic menu rendering
+المرحلة 3 — Forms
+form_definitionsform_submissionsform builder basicsubmission UInotifications
+المرحلة 4 — WordPress Importer
+XML uploadparserpreviewimport pages/postsimport taxonomiesimport mediamigration reportredirect suggestions
+المرحلة 5 — Commerce Products
+product_categoriesproductsproduct mediaproduct admin UIpublic product pages
+المرحلة 6 — Cart & Checkout
+cartscart_itemscart servicecheckout formordersorder_itemsorder confirmation
+المرحلة 7 — Customers + Coupons + Payments Basic
+customerscouponspayment methodsmanual payment flowCOD/bank transfer
+المرحلة 8 — Business Directory + Services
+business categoriespublish business profilepublic directoryservice listingsservice request flow
+المرحلة 9 — Tasks Basic
+taskstask commentstask assigneesnotificationsrelated objects
+المرحلة 10 — Polish + Demo + Tests
+testsdemo importsdemo storedemo servicesbug fixesrelease notes
+35. AI Build Prompts لـ V2
+35.1 WordPress Parser
+ابني WordPressXmlParser في Laravel يقرأ ملف XML ويستخرج posts/pages/categories/tags/attachments بدون حفظ في قاعدة البيانات. أرجع DTOs واضحة واكتب tests.
+35.2 Migration Report
+ابني MigrationReportBuilder يأخذ import_job_id ويجمع عدد imported/failed/warnings لكل source_type ويخرج summary JSON.
+35.3 Product CRUD
+ابني Filament Resource للمنتجات يدعم name, slug, sku, price, sale_price, stock_quantity, status, featured image, categories.
+35.4 Cart Service
+ابني CartService يحتوي addProduct, updateQuantity, removeItem, calculateTotals، ولا يثق بأي سعر من frontend.
+35.5 Checkout
+ابني CheckoutAction يأخذ cart_id وبيانات العميل ويعيد Order مع OrderItems محسوبة server-side.
+35.6 Service Request
+ابني SubmitServiceRequestAction ينشئ service_request ويرسل notification لصاحب البزنس ويسجل activity log.
+36. Definition of Done لـ V2
+V2 يعتبر مكتملًا فقط إذا:
+يمكن رفع WordPress XMLيمكن رؤية preview قبل الاستيراديمكن استيراد pages/posts/categories/tags/mediaيمكن توليد migration reportيمكن إنشاء redirectsيمكن إنشاء forms واستقبال submissionsيمكن إنشاء menus وعرضها في الثيميمكن إنشاء products وعرضها للعامةيمكن إضافة product إلى cartيمكن إتمام checkout وإنشاء orderيمكن إدارة ordersيمكن إنشاء customerيمكن إنشاء coupon basicيمكن تفعيل manual/COD/bank transferيمكن نشر business profile basicيمكن عرض business directory basicيمكن إنشاء servicesيمكن استقبال service requestsيمكن إنشاء tasks وتعيينهاتوجد tests أساسيةتوجد demo scenariosلا توجد critical bugs
+37. V2 Demo النهائي
+37.1 Demo 1 — WordPress Migration
+موقع WordPress بسيط يتم نقله إلى Kabeeri
+يظهر:
+Pages imported.
+Posts imported.
+Categories/tags.
+Media.
+Redirect report.
+SEO fields.
+37.2 Demo 2 — Simple Store
+متجر بسيط يبيع منتجات ويستقبل Orders
+يظهر:
+Products.
+Cart.
+Checkout.
+Order.
+Customer.
+Manual payment.
+37.3 Demo 3 — Service Business
+شركة خدمات تعرض خدماتها وتستقبل Requests
+يظهر:
+Business profile public.
+Service listings.
+Service request.
+Notification.
+Task follow-up.
+38. Documentation المطلوبة لـ V2
+WordPress Migration GuideMigration Report GuideRedirects GuideForms GuideProducts GuideOrders GuideCheckout Setup GuidePayment Methods Basic GuideService Listings GuideTasks Basic Guide
+39. V2 Release Gate
+لا ننتقل إلى V3 إلا إذا:
+WordPress import يعمل لموقع بسيطMigration reports واضحةRedirects تعملForms تعملProducts/orders مستقرةCustomers basic موجودBusiness directory basic يعملService requests تعملTasks basic تعملPermissions مستقرةActivity logs تغطي الأحداث المهمةDemo مكتمل
+40. ما يمهد له V2 في V3
+V2 يمهد لـ V3 عبر:
+Service Requests → CRM LeadsOrders → InvoicesProducts → InventoryCustomers → CRMTasks → Company OSBusiness Directory → Rabet/Kabeeri MallForms → Lead captureRedirects/Import → Migration services
+41. أخطاء ممنوعة في V2
+41.1 لا تبني WooCommerce كامل
+V2 يبدأ Commerce Foundation فقط.
+41.2 لا تبني Payment Gateways معقدة مبكرًا
+ابدأ manual/COD/bank transfer.
+41.3 لا تستورد بدون Preview
+الهجرة بدون preview خطر.
+41.4 لا تهمل redirects
+SEO مهم لجمهور WordPress.
+41.5 لا تجعل Customer = User دائمًا
+Customer قد يكون guest.
+41.6 لا تنفذ imports داخل request مباشر
+استخدم queues.
+41.7 لا تبني inventory ledger كامل في V2
+هذا يدخل V3.
+41.8 لا تفتح Kabeeri Mall كامل
+V2 فقط Business Directory وServices foundation.
+42. ملخص V2 التنفيذي
+V2 ينجز التالي:
+ينقل مواقع WordPress إلى Kabeeriيوسع CMS بالنماذج والقوائم والتحويلاتيبني أساس التجارة: منتجات، سلة، طلبات، عملاءيبني أساس الخدمات: Services وService Requestsيبني بداية العمل الداخلي: Tasks basicويجهز V3 لتحويل الطلبات إلى CRM/Invoices/Inventory/Rabet
+القاعدة النهائية:
+V2 هو الجسر بين Kabeeri كـ CMS وبين Kabeeri كمنصة أعمال تبدأ في استقبال العملاء والطلبات.
+43. الخطوة التالية بعد اعتماد V2
+بعد تنفيذ أو اعتماد V2، ننتقل إلى:
+KABEERI V3 — Business Foundation + ERP Essentials
+وفيه تبدأ:
+CRM LiteSales BasicInventory BasicInvoicing BasicAccounting StarterRabet Verification V1Digital Office basicEmployee profilesEvaluations basicWorkflow Automation V1

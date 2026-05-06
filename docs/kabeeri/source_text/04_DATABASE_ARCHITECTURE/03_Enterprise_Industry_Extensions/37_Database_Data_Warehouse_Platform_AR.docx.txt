@@ -1,0 +1,1002 @@
+KABEERI Database File 37
+Data Warehouse / Data Platform Database
+نظام مستودع البيانات ومنصة البيانات — KABEERI
+هذا الملف يصف قاعدة البيانات الخاصة بطبقة Data Warehouse / Data Platform داخل Kabeeri، وهي الطبقة التي تجمع البيانات التحليلية من CMS وCommerce وERP وMall وAI وBilling وIntegration Hub لتقديم تحليلات Enterprise بدون الضغط على قواعد التشغيل اليومية.
+الهدف ليس استبدال قواعد البيانات التشغيلية، بل بناء طبقة تحليلية مشتقة، قابلة لإعادة البناء، محكومة بالصلاحيات، وقابلة للتوسع مع Cloud وDedicated وPortable.
+1. تعريف Data Warehouse / Data Platform
+Data Warehouse هو مستودع بيانات تحليلي مركزي أو شبه مركزي يحتوي على نسخ مشتقة ومنظمة من البيانات التشغيلية، ويستخدم للتقارير الثقيلة، مؤشرات الأداء، التحليلات التاريخية، المقارنات الزمنية، ومخرجات BI/AI.
+Data Platform هي الطبقة الأوسع التي تشمل مصادر البيانات، عمليات الاستخراج والتحويل والتحميل، قاموس البيانات، جودة البيانات، المارتات التحليلية، الكتالوج، قواعد الملكية، والربط مع أدوات BI خارجية.
+هذه الطبقة تظهر بوضوح في V6 مع BI / Analytics / Data Platform، لكنها يجب أن تُصمم منذ V5 كامتداد آمن لـ Advanced Reporting Foundation.
+2. لماذا نحتاج ملف Database مستقل؟
+التقارير الثقيلة لا يجب أن تعمل مباشرة على جداول التشغيل مثل orders أو journal_entries أو stock_movements.
+الـ dashboards تحتاج cached snapshots حتى لا تتأثر تجربة المستخدم.
+KPI calculations يجب أن تعمل كـ jobs مجدولة، وليس داخل request مباشر.
+Enterprise تحتاج Data Dictionary وBusiness Glossary حتى يفهم المستخدمون معنى الحقول والمؤشرات.
+البيانات القادمة من Cloud وDedicated وPortable تحتاج مصدر موحد للتحليل مع احترام العزل والخصوصية.
+AI Report Explainer وAI Data Quality Assistant يحتاجان طبقة بيانات منظمة وآمنة.
+3. العلاقة مع الملفات السابقة
+الملف/النظام
+العلاقة مع Data Platform
+Core Kernel
+يوفر organization_id, company_id, site_id, user_id, permissions, audit context.
+BI / Analytics Database
+يوفر dashboards/reports/KPIs للمستخدم، بينما Data Platform يوفر طبقة التخزين والتحويل والجودة.
+Integration Hub
+مصدر مهم للبيانات الخارجية وsync logs وfield mapping.
+ERP Essentials / ERP Pro
+مصدر البيانات التشغيلية المالية والمخزنية والمبيعاتية.
+Commerce
+مصدر orders, customers, products, revenue metrics.
+Mall
+مصدر visibility, ranking, seller analytics, leads, reviews, disputes.
+Security/GRC
+تفرض data classification, retention, evidence, export controls.
+Dedicated/Portable
+قد تكون مصادر خارجية للبيانات التحليلية عبر connectors أو scheduled exports.
+4. مبادئ تصميم قاعدة بيانات Data Platform
+المبدأ
+التطبيق
+Derived, not Source of Truth
+المستودع مشتق من قواعد التشغيل. إذا تلف أو احتاج إعادة بناء، يمكن إعادة توليده من المصادر الأصلية.
+Tenant-aware
+كل سجل تحليلي يجب أن يعرف organization_id، وعند الحاجة company_id/site_id، حتى في Dedicated.
+Permission-aware Analytics
+لا يكفي وجود البيانات؛ يجب احترام صلاحيات المستخدم عند عرض dashboards أو export.
+Historical Snapshots
+التقارير تحتاج snapshots زمنية لا تتغير بتغير البيانات التشغيلية لاحقًا.
+Job-based Processing
+التحميل والتحويل والتجميع يتم عبر queued jobs وليس داخل request.
+Data Quality by Design
+كل dataset مهم يجب أن تكون له quality rules وvalidation results.
+Portable/Dedicated Safe
+لا يتم سحب بيانات حساسة من Portable/Dedicated إلا بعقد sync واضح وموافقة.
+5. Data Platform Data Domains
+Source Registry
+Ingestion Jobs
+Raw Landing Tables
+Staging Tables
+Data Marts
+Metric Store
+KPI Store
+Data Dictionary
+Data Quality
+Lineage
+Access Control
+External BI Exports
+AI Analytics Context
+6. الجداول الأساسية
+data_sources
+data_source_connections
+data_ingestion_jobs
+data_ingestion_batches
+data_raw_records
+data_staging_records
+data_transformations
+data_transformation_runs
+data_marts
+data_mart_tables
+data_mart_columns
+data_mart_refresh_jobs
+fact_tables_registry
+dimension_tables_registry
+metric_definitions
+metric_values
+kpi_definitions
+kpi_values
+data_dictionary_terms
+data_dictionary_fields
+business_glossary_terms
+data_ownership_records
+data_lineage_edges
+data_quality_rules
+data_quality_runs
+data_quality_findings
+analytics_snapshots
+warehouse_query_logs
+external_bi_exports
+data_retention_policies
+data_access_policies
+ai_analytics_contexts
+7. data_sources
+يمثل مصدر بيانات تحليلي، سواء كان داخليًا من Kabeeri أو خارجيًا من Dedicated/Portable/ERP/BI tool.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+nullable/indexed
+company_id
+nullable/indexed
+source_key
+varchar unique per organization
+source_type
+internal_module / integration / dedicated / portable / external_file / manual
+source_module
+cms / commerce / erp / mall / billing / ai / integration
+status
+active / paused / failed / archived
+owner_user_id
+nullable
+classification
+public / internal / confidential / sensitive
+metadata
+json nullable
+created_at / updated_at
+timestamps
+8. data_source_connections
+تعريف الاتصال بمصدر البيانات بدون حفظ الأسرار كنص واضح.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+data_source_id
+fk
+connection_type
+database / api / file / webhook / sync_connector
+connection_ref
+vault/encrypted reference
+sync_mode
+pull / push / scheduled_export / manual_upload
+last_success_at
+nullable
+last_failure_at
+nullable
+status
+active / disabled / error
+settings
+json
+created_at / updated_at
+timestamps
+9. data_ingestion_jobs
+Job رئيسي لسحب البيانات من مصدر وتحميلها إلى Raw/Staging.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+indexed
+data_source_id
+fk
+job_type
+full_load / incremental / backfill / replay / test
+status
+pending / running / completed / failed / cancelled
+watermark_from
+nullable
+watermark_to
+nullable
+started_at / completed_at / failed_at
+timestamps nullable
+error_message
+longtext nullable
+created_by
+nullable
+metadata
+json
+10. data_ingestion_batches
+كل ingestion job قد ينتج عدة batches صغيرة لتجنب تحميل ضخم مرة واحدة.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+data_ingestion_job_id
+fk
+batch_number
+integer
+entity_name
+varchar
+records_read
+integer
+records_inserted
+integer
+records_updated
+integer
+records_failed
+integer
+status
+pending / running / completed / failed
+started_at / completed_at
+nullable
+metadata
+json
+11. data_raw_records
+طبقة Raw Landing: تحفظ payload كما وصل تقريبًا لأغراض traceability وإعادة المعالجة.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+indexed
+data_source_id
+fk
+batch_id
+nullable fk
+entity_type
+varchar
+external_id
+nullable
+source_updated_at
+nullable
+payload_hash
+varchar
+payload
+json
+ingestion_status
+new / parsed / rejected
+created_at
+timestamp
+12. data_staging_records
+طبقة Staging بعد تنظيف أولي وتوحيد أسماء الحقول.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+indexed
+data_source_id
+fk
+raw_record_id
+nullable fk
+entity_type
+varchar
+normalized_key
+varchar nullable
+normalized_payload
+json
+validation_status
+valid / warning / invalid
+error_details
+json nullable
+created_at / updated_at
+timestamps
+13. data_transformations
+تعريف قواعد التحويل من staging إلى marts/facts/dimensions.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+nullable
+name
+varchar
+slug
+varchar
+source_entity
+varchar
+target_type
+fact / dimension / mart / metric
+target_name
+varchar
+version
+integer
+status
+draft / active / deprecated
+logic_definition
+json
+created_by
+nullable
+created_at / updated_at
+timestamps
+14. data_transformation_runs
+تشغيل فعلي لقواعد التحويل.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+data_transformation_id
+fk
+organization_id
+indexed
+status
+pending / running / completed / failed
+records_processed
+integer
+records_failed
+integer
+started_at / completed_at
+nullable
+error_message
+longtext nullable
+metadata
+json
+15. data_marts
+Data Mart هو مساحة تحليلية حسب المجال مثل sales_mart أو finance_mart أو mall_mart. لا يخزن كل شيء، بل بيانات منظمة للتقارير والتحليلات.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+nullable للـ global marts
+mart_key
+varchar
+name
+varchar
+domain
+sales / finance / inventory / mall / ai / security / grc
+status
+active / rebuilding / paused / archived
+refresh_frequency
+hourly / daily / weekly / manual
+last_refreshed_at
+nullable
+metadata
+json
+created_at / updated_at
+timestamps
+16. data_mart_tables
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+data_mart_id
+fk
+table_key
+varchar
+table_type
+fact / dimension / aggregate / snapshot
+physical_table_name
+varchar
+description
+nullable
+grain
+json nullable
+status
+active / deprecated
+created_at / updated_at
+timestamps
+17. data_mart_columns
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+data_mart_table_id
+fk
+column_key
+varchar
+display_name
+varchar
+data_type
+string / integer / decimal / date / datetime / boolean / json
+is_dimension
+boolean
+is_metric
+boolean
+is_sensitive
+boolean
+dictionary_field_id
+nullable
+description
+nullable
+created_at / updated_at
+timestamps
+18. fact_tables_registry
+هذا الجدول لا يخزن البيانات نفسها، بل يسجل fact tables المعتمدة وأين توجد. وجوده يمنع الفوضى في أسماء الجداول التحليلية.
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+nullable
+fact_key
+varchar
+physical_table_name
+varchar
+domain
+varchar
+grain
+varchar
+date_column
+varchar nullable
+owner_team
+nullable
+status
+active / deprecated
+created_at / updated_at
+timestamps
+19. dimension_tables_registry
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+nullable
+dimension_key
+varchar
+physical_table_name
+varchar
+domain
+varchar
+natural_key
+varchar nullable
+slowly_changing_type
+none / type1 / type2
+status
+active / deprecated
+created_at / updated_at
+timestamps
+20. Metric Store
+Metric Store يوحد تعريف المقاييس حتى لا يصبح كل dashboard يحسب revenue أو churn أو trust_score بطريقة مختلفة.
+20.1 metric_definitions
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+nullable
+metric_key
+varchar
+name
+varchar
+domain
+sales / finance / mall / support / ai / operations
+calculation_type
+sql / expression / job / external
+calculation_definition
+json
+unit
+currency / count / percentage / duration
+default_grain
+daily / weekly / monthly / custom
+status
+draft / active / deprecated
+owner_user_id
+nullable
+created_at / updated_at
+timestamps
+20.2 metric_values
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+metric_definition_id
+fk
+organization_id
+indexed
+company_id
+nullable
+site_id
+nullable
+period_start / period_end
+date/datetime
+dimension_key
+nullable
+dimension_value
+nullable
+value_decimal
+decimal(20,6) nullable
+value_json
+json nullable
+calculated_at
+timestamp
+source_run_id
+nullable
+21. KPI Store
+KPI يختلف عن Metric: الـ Metric رقم قابل للقياس، أما KPI فهو رقم مرتبط بهدف أو threshold أو target ويدخل في dashboards وalerts.
+21.1 kpi_definitions
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+nullable
+company_id
+nullable
+kpi_key
+varchar
+name
+varchar
+metric_definition_id
+nullable fk
+target_type
+min / max / range / exact
+target_value
+decimal nullable
+warning_threshold
+decimal nullable
+critical_threshold
+decimal nullable
+periodicity
+daily / weekly / monthly / quarterly / yearly
+owner_user_id
+nullable
+status
+active / paused / archived
+created_at / updated_at
+timestamps
+21.2 kpi_values
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+kpi_definition_id
+fk
+organization_id
+indexed
+period_start / period_end
+date
+actual_value
+decimal(20,6)
+target_value
+decimal nullable
+status
+green / amber / red / unknown
+calculated_at
+timestamp
+notes
+nullable
+metadata
+json
+22. Data Dictionary & Business Glossary
+22.1 data_dictionary_terms
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+nullable
+term_key
+varchar
+name
+varchar
+definition
+longtext
+domain
+varchar
+classification
+public / internal / confidential / sensitive
+owner_user_id
+nullable
+status
+draft / approved / deprecated
+approved_by / approved_at
+nullable
+created_at / updated_at
+timestamps
+22.2 data_dictionary_fields
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+term_id
+nullable fk
+organization_id
+nullable
+source_table
+varchar
+source_column
+varchar
+business_name
+varchar
+technical_type
+varchar
+nullable
+boolean
+sensitivity_level
+low / medium / high / restricted
+retention_policy_id
+nullable
+description
+nullable
+created_at / updated_at
+timestamps
+22.3 business_glossary_terms
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+nullable
+glossary_key
+varchar
+name
+varchar
+description
+longtext
+synonyms
+json nullable
+related_terms
+json nullable
+status
+draft / approved / deprecated
+created_at / updated_at
+timestamps
+23. Data Ownership & Lineage
+23.1 data_ownership_records
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+indexed
+subject_type
+dataset / table / field / metric / kpi
+subject_id
+nullable
+owner_type
+user / role / department / company
+owner_id
+nullable
+responsibility
+business_owner / technical_owner / data_steward / approver
+status
+active / inactive
+created_at / updated_at
+timestamps
+23.2 data_lineage_edges
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+nullable
+from_type
+source / raw / staging / mart / metric / report
+from_id
+nullable
+to_type
+source / raw / staging / mart / metric / report
+to_id
+nullable
+transformation_id
+nullable
+lineage_type
+extract / transform / aggregate / join / export
+created_at
+timestamp
+24. Data Quality
+24.1 data_quality_rules
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+nullable
+rule_key
+varchar
+name
+varchar
+scope_type
+source / mart / table / field / metric
+scope_id
+nullable
+rule_type
+not_null / unique / range / freshness / referential / custom
+severity
+info / warning / critical
+rule_definition
+json
+status
+active / paused / archived
+created_at / updated_at
+timestamps
+24.2 data_quality_runs
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+indexed
+rule_id
+nullable
+run_type
+scheduled / manual / before_report / before_export
+status
+running / passed / failed / warning
+records_checked
+integer
+findings_count
+integer
+started_at / completed_at
+nullable
+metadata
+json
+24.3 data_quality_findings
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+data_quality_run_id
+fk
+organization_id
+indexed
+severity
+info / warning / critical
+subject_type
+record / field / metric / dataset
+subject_ref
+varchar nullable
+message
+longtext
+sample_payload
+json nullable
+status
+open / acknowledged / resolved / ignored
+resolved_by / resolved_at
+nullable
+created_at / updated_at
+timestamps
+25. Analytics Snapshots
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+indexed
+company_id / site_id
+nullable
+snapshot_type
+dashboard / report / kpi / mart / executive_summary
+snapshot_key
+varchar
+period_start / period_end
+nullable
+payload
+json
+payload_hash
+varchar
+status
+active / superseded / archived
+created_at
+timestamp
+تستخدم snapshots لتسريع dashboards، وتثبيت نتائج التقارير التاريخية، وتقليل الضغط على mart tables.
+26. Warehouse Query Logs
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+nullable/indexed
+user_id
+nullable
+query_type
+dashboard / report / export / api / ai
+subject_type
+dashboard / report / dataset / metric
+subject_id
+nullable
+duration_ms
+integer nullable
+rows_returned
+integer nullable
+status
+success / failed / denied
+error_message
+nullable
+created_at
+timestamp
+27. External BI Exports
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+indexed
+export_name
+varchar
+export_type
+csv / parquet / api / connector / webhook
+destination_type
+download / s3 / external_bi / data_share
+scope_definition
+json
+status
+draft / active / paused / failed
+last_exported_at
+nullable
+created_by
+nullable
+created_at / updated_at
+timestamps
+28. Data Access Policies
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+organization_id
+nullable
+policy_key
+varchar
+subject_type
+dataset / mart / field / metric / export
+subject_id
+nullable
+role_id
+nullable
+permission_slug
+nullable
+effect
+allow / deny / mask / aggregate_only
+condition_json
+json nullable
+status
+active / inactive
+created_at / updated_at
+timestamps
+Masking مهم للحقول الحساسة مثل salary, payroll, legal documents, bank accounts, personal identity data.
+29. AI Analytics Contexts
+الحقل
+النوع/الملاحظة
+id
+bigint pk
+uuid
+unique
+organization_id
+indexed
+user_id
+nullable
+context_type
+report_explainer / data_quality_assistant / kpi_explainer / anomaly_detection
+source_subject_type
+report / dashboard / kpi / dataset
+source_subject_id
+nullable
+allowed_data_classes
+json
+redaction_applied
+boolean
+prompt_context_hash
+varchar
+status
+prepared / used / expired
+expires_at
+nullable
+created_at
+timestamp
+30. مقترح Data Marts الأولى
+Data Mart
+المصادر
+أمثلة مؤشرات
+sales_mart
+leads, quotations, orders, invoices
+conversion rate, revenue, sales cycle
+commerce_mart
+products, carts, orders, customers
+GMV, average order value, abandoned cart
+finance_mart
+invoices, payments, journals, AP/AR
+cash collected, receivables aging, payable aging
+inventory_mart
+stock_balances, stock_movements, warehouses
+stock turnover, low stock, dead stock
+mall_mart
+mall listings, inquiries, reviews, disputes
+impressions, leads, trust score, dispute rate
+support_mart
+tickets, SLA, conversations
+first response time, resolution time, SLA breach
+ai_mart
+AI sessions, plans, runs, usage
+AI cost, high-risk requests, rollback rate
+security_mart
+security events, sessions, API tokens
+failed logins, MFA coverage, sensitive access
+31. Example Fact / Dimension Model
+لا يجب البدء بكل fact/dimension دفعة واحدة. هذه أمثلة للهيكل المتوقع عند النضج.
+fact_sales_daily- organization_id- company_id- date_id- customer_id- product_id- orders_count- gross_revenue- discount_total- net_revenue- invoices_countdim_customer- organization_id- customer_key- customer_type- country_id- city- first_seen_at- statusdim_product- organization_id- product_key- sku- category_id- product_type- status
+32. Data Platform ERD
+erDiagram DATA_SOURCES ||--o{ DATA_SOURCE_CONNECTIONS : connects DATA_SOURCES ||--o{ DATA_INGESTION_JOBS : loads DATA_INGESTION_JOBS ||--o{ DATA_INGESTION_BATCHES : batches DATA_INGESTION_BATCHES ||--o{ DATA_RAW_RECORDS : produces DATA_RAW_RECORDS ||--o{ DATA_STAGING_RECORDS : normalizes DATA_TRANSFORMATIONS ||--o{ DATA_TRANSFORMATION_RUNS : runs DATA_MARTS ||--o{ DATA_MART_TABLES : contains DATA_MART_TABLES ||--o{ DATA_MART_COLUMNS : defines METRIC_DEFINITIONS ||--o{ METRIC_VALUES : calculates KPI_DEFINITIONS ||--o{ KPI_VALUES : measures DATA_QUALITY_RULES ||--o{ DATA_QUALITY_RUNS : checks DATA_QUALITY_RUNS ||--o{ DATA_QUALITY_FINDINGS : finds DATA_DICTIONARY_TERMS ||--o{ DATA_DICTIONARY_FIELDS : documents DATA_LINEAGE_EDGES }o--|| DATA_TRANSFORMATIONS : traces
+33. Data Flow
+Operational Sources→ data_sources→ data_ingestion_jobs→ raw records→ staging records→ transformations→ data marts→ metric_values / kpi_values→ analytics_snapshots→ dashboards / reports / AI explainers / external BI exports
+34. Cloud / Frontend Anywhere / Portable / Dedicated
+الوضع
+سلوك Data Platform
+Cloud
+أفضل وضع للتحليل لأن البيانات التشغيلية داخل Kabeeri، ويتم ingestion داخليًا من نفس البيئة أو read replica.
+Frontend Anywhere
+لا يتغير مصدر البيانات؛ الواجهة خارجية فقط، والتحليلات تعتمد على Cloud DB ومصادر public API logs.
+Portable
+التحليلات المركزية لا تسحب بيانات تشغيلية إلا إذا فعّل العميل connector/scheduled export؛ Mall analytics قد تستمر من mirror فقط.
+Dedicated
+يمكن تشغيل Data Platform داخل البيئة المخصصة أو إرسال aggregates فقط إلى Central حسب العقد وData Residency.
+35. Privacy & Security Rules
+لا يتم إدخال payroll أو salary أو identity documents في analytics إلا بتصنيف عالي وصلاحيات صريحة.
+أي external BI export يجب أن يمر عبر data_access_policies وexport approvals إذا كان حساسًا.
+AI analytics contexts يجب أن تستخدم redaction/minimization قبل إرسال أي context لمزود خارجي.
+Data dictionary يجب أن يحدد classification لكل field حساس.
+Warehouse query logs يجب أن تسجل من استخرج ماذا ومتى.
+لا يتم إعطاء direct SQL access للمستخدم النهائي في V1/V5؛ report builder يستخدم طبقة آمنة.
+36. Performance Rules
+Data warehouse jobs يجب أن تكون queued ومجزأة.
+Heavy reports queued، ولا تعمل داخل request مباشر.
+Dashboard caching إلزامي للـ executive dashboards.
+KPI calculation jobs مجدولة ويمكن إعادة تشغيلها.
+Aggregations scheduled حسب المجال والباقة.
+Large exports تعمل كـ job مع رابط تحميل مؤقت.
+يفضل استخدام read replicas أو dedicated analytics database في V6.
+37. Feature Flags
+enable_bi_analytics
+enable_data_warehouse_foundation
+enable_data_dictionary
+enable_data_quality
+enable_data_marts
+enable_metric_store
+enable_kpi_store
+enable_external_bi_exports
+enable_ai_report_explainer
+enable_warehouse_jobs
+38. Permissions
+Permission
+الوصف
+data_warehouse.view
+رؤية طبقة المستودع بشكل عام.
+data_warehouse.manage
+إدارة sources/jobs/marts.
+data_source.manage
+إضافة أو تعطيل مصادر البيانات.
+data_ingestion.run
+تشغيل ingestion jobs يدويًا.
+data_mart.view
+رؤية data marts المصرح بها.
+data_mart.manage
+إدارة data mart definitions.
+metric.manage
+إدارة metric definitions.
+kpi.manage
+إدارة KPI definitions/targets.
+data_dictionary.view
+رؤية قاموس البيانات.
+data_dictionary.manage
+تعديل قاموس البيانات.
+data_quality.view
+رؤية نتائج جودة البيانات.
+data_quality.manage
+إدارة قواعد جودة البيانات.
+external_bi.export
+إعداد أو تشغيل export خارجي.
+analytics.ai_explain
+استخدام AI لشرح التقارير والمؤشرات.
+39. Seeders
+DefaultDataSourcesSeeder
+DefaultDataMartsSeeder
+DefaultMetricDefinitionsSeeder
+DefaultKPISeeder
+DefaultDataDictionarySeeder
+DefaultDataQualityRulesSeeder
+BIPermissionsSeeder
+DataPlatformFeatureFlagsSeeder
+40. CLI Commands
+php artisan kabeeri:data-source:test {sourceId}php artisan kabeeri:warehouse:ingest {sourceId} --mode=incrementalphp artisan kabeeri:warehouse:transform {transformationId}php artisan kabeeri:warehouse:refresh-mart {martKey} {organizationId}php artisan kabeeri:bi:calculate-kpis {companyId}php artisan kabeeri:data-quality:run {organizationId}php artisan kabeeri:data-dictionary:scan {organizationId}php artisan kabeeri:analytics:snapshot {dashboardId}php artisan kabeeri:bi:export {exportId}
+41. Acceptance Criteria
+يمكن تعريف data source داخلي لموديول Commerce أو ERP.
+يمكن تشغيل ingestion job بنجاح مع batches وlogs.
+يمكن تحويل staging data إلى data mart بسيط.
+يمكن حساب metric وKPI وتخزين snapshot.
+يمكن تشغيل data quality rule وإظهار findings.
+يمكن ربط field بقاموس بيانات ومالك بيانات.
+يمكن dashboard أن يقرأ من snapshot بدل تشغيل query ثقيل.
+يمكن export خارجي أن يعمل بصلاحيات محددة وسجل واضح.
+AI report explainer لا يرى إلا البيانات المصرح بها والمخففة الحساسية.
+كل jobs الثقيلة queued وتملك retry/error logs.
+42. ما لا يدخل في البداية
+Lakehouse كامل من أول إصدار.
+Real-time streaming لكل الأحداث.
+Self-service SQL مباشر للمستخدمين.
+Machine Learning platform كامل.
+Multi-tenant cross-customer benchmarking بدون موافقات صريحة.
+نسخ كل البيانات الحساسة إلى warehouse بلا تصنيف أو retention.
+43. الخلاصة
+Data Warehouse / Data Platform هي الطبقة التي تجعل Kabeeri Enterprise قابلًا للتحليل والقياس والحوكمة دون قتل قواعد التشغيل اليومية. يجب أن تبدأ صغيرة فوق Advanced Reporting، ثم تتوسع في V6 إلى marts وmetrics وKPIs وdata dictionary وdata quality وexternal BI exports.
+القاعدة: لا dashboard ثقيل من operational tables، لا export بدون policy، لا AI analytics بدون minimization، ولا Data Platform بدون owner وlineage وquality rules.
+KABEERI — Data Warehouse / Data Platform Database

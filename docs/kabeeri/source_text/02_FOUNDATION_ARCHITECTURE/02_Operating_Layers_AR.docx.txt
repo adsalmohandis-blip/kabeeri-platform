@@ -1,0 +1,463 @@
+KABEERI — ملحق 2: طبقات التشغيل والحوكمة الأساسية
+ملحق للملف الرئيسي وملحق التأسيس المعماري
+هذا الملحق يضيف الطبقات التشغيلية التي يجب أخذها في الاعتبار قبل الدخول في ملف V1، لأنها ستؤثر على:
+قاعدة البيانات.
+Laravel structure.
+صلاحيات المستخدمين.
+قابلية التوسع.
+Kabeeri Mall.
+Rabet B2B.
+Talent Marketplace.
+ERP Modules.
+Billing.
+الأمان والامتثال.
+الهدف:
+بناء Kabeeri كمنصة قابلة للنمو، وليس مجرد CMS بميزات كثيرة.
+1. لماذا هذا الملحق مهم؟
+بعد إضافة Kabeeri Mall، Rabet B2B، Talent Marketplace، ERP، AI Co-builder، Legal Verification، أصبح Kabeeri منصة كبيرة جدًا.
+هذه المنصة تحتاج طبقات تشغيل مركزية لا تتبع Module واحد فقط، بل تخدم كل النظام.
+أمثلة:
+Notifications تخدم المهام والتوثيق والطلبات والفواتير.Billing يخدم Cloud وPro وERP وVerification وMarketplace.Reviews تخدم البزنس والخدمات والمنتجات والمواهب.Search يخدم CMS وMall وERP وDMS.Approvals تخدم المحتوى والمالية والموارد البشرية والتوثيق.
+لذلك يجب تصميم هذه الطبقات كـ Core Operating Layers.
+2. قائمة طبقات التشغيل المطلوبة
+1. Billing & Subscriptions2. Notification Center3. Unified Inbox4. Reviews, Ratings & Reputation Engine5. Dispute Resolution System6. Search Engine7. Moderation System8. Consent & Privacy Management9. Document Management Foundation10. Contract System11. Approval Engine12. Audit & Compliance Reports13. Feature Flags / Module Flags14. Onboarding Wizard15. Import / Export Foundation
+3. Billing & Subscriptions System
+3.1 الهدف
+نظام Billing هو طبقة الإيرادات الأساسية في Kabeeri.
+سيخدم:
+Kabeeri Cloud.
+Kabeeri Pro.
+ERP Modules.
+Rabet Verification.
+Kabeeri Mall listings.
+Featured Businesses.
+Marketplace commissions.
+Legal verification fees.
+AI usage.
+Storage limits.
+Team seats.
+Developer marketplace revenue share.
+3.2 المفاهيم الأساسية
+PlanSubscriptionInvoicePaymentPayment MethodAdd-onUsage LimitCommissionRevenue ShareCouponTrialBilling Account
+3.3 أمثلة Plans
+Free / StarterProBusinessAgencyEnterpriseCloud PlanERP PlanRabet Verified PlanMall Seller PlanDeveloper Publisher Plan
+3.4 قاعدة بيانات مقترحة
+billing_accounts
+idorganization_id nullablecompany_id nullableuser_id nullablebilling_typelegal_namebilling_emailcountrycurrencytax_numberstatuscreated_atupdated_at
+plans
+idnameslugdescriptionplan_typepricecurrencybilling_cycletrial_daysfeatures jsonlimits jsonstatuscreated_atupdated_at
+subscriptions
+idbilling_account_idplan_idstatusstarted_attrial_ends_atcurrent_period_startcurrent_period_endcancelled_atrenewal_statusmetadata jsoncreated_atupdated_at
+subscription_items
+idsubscription_iditem_typeitem_idquantityunit_pricemetadata jsoncreated_atupdated_at
+invoices
+idbilling_account_idsubscription_id nullableinvoice_numberstatussubtotaltax_totaldiscount_totaltotalcurrencydue_datepaid_atmetadata jsoncreated_atupdated_at
+invoice_items
+idinvoice_iddescriptionitem_typeitem_id nullablequantityunit_pricetotalmetadata jsoncreated_atupdated_at
+payments
+idinvoice_id nullablebilling_account_idpayment_providerprovider_referenceamountcurrencystatuspaid_atfailure_reasonmetadata jsoncreated_atupdated_at
+commissions
+idsource_typesource_idseller_account_idplatform_amountseller_amounttotal_amountcurrencystatuscreated_atupdated_at
+3.5 Laravel Structure
+app/Core/Billing/  Models/  Actions/  Services/  Events/  Listeners/  Policies/  Http/
+3.6 يدخل V1؟
+في V1 لا نبني Billing كامل.
+لكن نجهز:
+billing_accounts basic.
+plans basic.
+subscriptions basic.
+feature limits foundation.
+4. Notification Center
+4.1 الهدف
+كل الأحداث المهمة في Kabeeri تحتاج إشعارات.
+الإشعارات تخدم:
+Tasks.
+Teams.
+Verification.
+Kabeeri Mall.
+Talent Marketplace.
+Orders.
+Invoices.
+Legal Partners.
+ERP.
+AI changes.
+Security.
+4.2 أنواع الإشعارات
+In-app notificationEmailSMS لاحقًاWhatsApp لاحقًاPush notification لاحقًاWebhook notification
+4.3 أمثلة إشعارات
+تم تعيين مهمة لكتم نشر صفحةتم إرسال طلب خدمة جديدتم رفع مستند توثيقمكتب المحاماة طلب مستند إضافيوصل عرض وظيفة جديدتم قبول عرضكتم إنشاء فاتورةالمخزون منخفضفشل دفع الاشتراكتم تسجيل دخول من جهاز جديد
+4.4 قاعدة بيانات مقترحة
+notifications
+idrecipient_user_idorganization_id nullablecompany_id nullabletypetitlebodyaction_url nullableread_at nullableprioritymetadata jsoncreated_atupdated_at
+notification_preferences
+iduser_idchannelevent_typeenabledsettings jsoncreated_atupdated_at
+notification_deliveries
+idnotification_idchannelstatussent_atfailed_atfailure_reasonprovider_referencemetadata jsoncreated_atupdated_at
+4.5 Laravel Structure
+app/Core/Notifications/  Models/  Actions/  Channels/  Events/  Listeners/  Services/
+4.6 يدخل V1؟
+نعم، foundation بسيط:
+In-app notifications.
+notification preferences basic.
+email notification لاحقًا أو minimal.
+5. Unified Inbox
+5.1 الهدف
+الـ Inbox هو مكان التواصل الخارجي الموحد.
+يختلف عن Kabeeri Teams:
+Kabeeri Teams = تواصل داخلي داخل الشركةUnified Inbox = تواصل خارجي مع عملاء، شركات، مواهب، مكاتب محاماة، زوار
+5.2 مصادر الرسائل
+Contact requests.
+Service requests.
+Product inquiries.
+Job offers.
+Legal verification messages.
+Customer support.
+Marketplace messages.
+B2B RFQs.
+Dispute messages.
+5.3 قاعدة بيانات مقترحة
+conversations
+idorganization_id nullablecompany_id nullableconversation_typesubjectstatuspriorityrelated_type nullablerelated_id nullablecreated_by nullablecreated_atupdated_atclosed_at
+conversation_participants
+idconversation_iduser_id nullableparticipant_typeparticipant_id nullablerolelast_read_atcreated_atupdated_at
+messages
+idconversation_idsender_user_id nullablesender_typebodymessage_typemetadata jsoncreated_atupdated_atdeleted_at
+message_attachments
+idmessage_idmedia_asset_idcreated_at
+5.4 يدخل V1؟
+ليس كاملًا.
+في V1 ممكن نجهز:
+conversations table.
+messages table.
+contact request يتحول لاحقًا إلى conversation.
+6. Reviews, Ratings & Reputation Engine
+6.1 الهدف
+نظام مركزي للتقييمات والسمعة يخدم كل المنصة.
+6.2 يخدم تقييم من؟
+Business Profiles.
+Services.
+Products.
+Professionals.
+Legal Partners.
+Developers.
+Plugins/Modules.
+Sellers.
+Customers لاحقًا.
+6.3 الفرق بين المفاهيم
+Rating = رقم تقييمReview = تعليق مكتوبReputation = نتيجة مركبة من نشاط وتقييم وسلوكTrust Score = درجة ثقة للشركاتProfessional Score = درجة ثقة للأفراد
+6.4 قاعدة بيانات مقترحة
+reviews
+idreviewer_user_idreviewable_typereviewable_idratingtitlebodystatusvisibilitycontext_type nullablecontext_id nullablecreated_atupdated_atdeleted_at
+review_responses
+idreview_iduser_idbodycreated_atupdated_at
+reputation_scores
+idsubject_typesubject_idscore_typescorefactors jsoncalculated_atcreated_atupdated_at
+review_reports
+idreview_idreported_byreasonstatusmoderator_id nullablecreated_atupdated_at
+6.5 يدخل V1؟
+نجهز data model draft فقط، أو نؤجله لـ V2/V3.
+لكن يجب أن نراعيه في BusinessProfile وProfessionalProfile.
+7. Dispute Resolution System
+7.1 الهدف
+منصة فيها خدمات، منتجات، مواهب، توثيق، وعقود تحتاج نظام نزاعات.
+7.2 أنواع النزاعات
+خدمة لم تنفذ.
+منتج لم يصل.
+موظف لم يكمل العمل.
+شركة لم تدفع.
+تقييم غير عادل.
+مشكلة توثيق.
+خلاف على عقد.
+نزاع B2B.
+7.3 قاعدة بيانات مقترحة
+disputes
+idorganization_id nullablecompany_id nullableopened_byagainst_typeagainst_idrelated_type nullablerelated_id nullabledispute_typestatusprioritysummaryresolutionassigned_moderator_id nullableopened_atresolved_atcreated_atupdated_at
+dispute_messages
+iddispute_idsender_user_idbodycreated_atupdated_at
+dispute_evidence
+iddispute_iduploaded_bymedia_asset_iddescriptioncreated_at
+dispute_decisions
+iddispute_iddecision_bydecision_typedescriptionactions jsoncreated_at
+7.4 يدخل V1؟
+لا يدخل كواجهة، لكن يفضل تجهيز concept داخل architecture.
+يمكن إضافة الجداول في V3 أو V4 مع Kabeeri Mall/Rabet.
+8. Search Engine
+8.1 الهدف
+Kabeeri يحتاج بحث موحد.
+8.2 أنواع البحث
+Global SearchAdmin SearchKabeeri Mall SearchTalent SearchERP SearchDocument SearchSite Search
+8.3 المرحلة الأولى
+في البداية:
+MySQL search
+لاحقًا:
+MeilisearchTypesenseElasticsearch/OpenSearch للEnterprise
+8.4 قاعدة بيانات مقترحة
+search_index_records
+idindexable_typeindexable_idorganization_id nullablecompany_id nullablesite_id nullabletitlesummarycontentvisibilitymetadata jsonindexed_atcreated_atupdated_at
+8.5 يدخل V1؟
+V1 يحتاج فقط:
+بحث بسيط داخل Admin.
+تجهيز Searchable interface أو trait.
+9. Moderation System
+9.1 الهدف
+Kabeeri Mall وTalent Marketplace يحتاجان moderation.
+9.2 ما الذي يحتاج moderation؟
+Business profiles.
+Services.
+Products.
+Professional profiles.
+Reviews.
+Messages.
+Images.
+Public descriptions.
+Marketplace listings.
+9.3 قاعدة بيانات مقترحة
+moderation_reports
+idreporter_user_id nullablereportable_typereportable_idreasonmessagestatusassigned_moderator_id nullablecreated_atupdated_at
+moderation_actions
+idmoderation_report_id nullableactionable_typeactionable_idaction_typereasonperformed_bymetadata jsoncreated_at
+moderation_queue
+idsubject_typesubject_idqueue_typeprioritystatusassigned_to nullablecreated_atupdated_at
+9.4 يدخل V1؟
+لا، لكن يجب أن تكون public content statuses جاهزة:
+draftpending_reviewpublishedsuspendedrejected
+10. Consent & Privacy Management
+10.1 الهدف
+إدارة خصوصية المستخدمين والمهنيين والشركات.
+10.2 حالات مهمة
+موظف لا يريد الظهور في Talent Marketplace.
+موظف open to offers لكن لا يريد أن ترى شركته الحالية ذلك.
+بزنس يريد ظهور خدمات معينة فقط.
+شركة تريد إخفاء فريقها.
+مستخدم يريد تصدير بياناته.
+مستخدم يريد حذف بياناته حسب القانون.
+10.3 قاعدة بيانات مقترحة
+privacy_settings
+idsubject_typesubject_idkeyvalue jsoncreated_atupdated_at
+consents
+iduser_idconsent_typestatusversionaccepted_atrevoked_at nullablemetadata jsoncreated_atupdated_at
+data_requests
+iduser_idrequest_typestatusrequested_atcompleted_atnotescreated_atupdated_at
+request_type values
+export_datadelete_datacorrect_datarestrict_processing
+10.4 يدخل V1؟
+نعم بشكل بسيط:
+visibility fields.
+privacy_settings table optional.
+consent for terms/privacy.
+11. Document Management Foundation
+11.1 الهدف
+Media Library ليست كافية للمستندات القانونية والتشغيلية.
+نحتاج Document Management Layer.
+11.2 الفرق بين Media وDMS
+Media = صور وملفات للموقعDMS = مستندات أعمال لها صلاحيات، إصدارات، توقيع، انتهاء، أرشفة
+11.3 أنواع المستندات
+Legal documents.
+Contracts.
+Invoices.
+Employee documents.
+Verification documents.
+Project files.
+Purchase documents.
+Dispute evidence.
+Policies.
+Procedures.
+11.4 قاعدة بيانات مقترحة
+documents
+idorganization_id nullablecompany_id nullablesite_id nullableowner_user_iddocument_typetitledescriptionstatusvisibilitycurrent_version_id nullableexpires_at nullablemetadata jsoncreated_atupdated_atdeleted_at
+document_versions
+iddocument_idmedia_asset_idversion_numberuploaded_bynotescreated_at
+document_permissions
+iddocument_idsubject_typesubject_idpermissioncreated_at
+11.5 يدخل V1؟
+V1 يمكنه الاعتماد على Media، لكن يجب تجهيز DMS لاحقًا.
+يفضل إدخال:
+documents table basic لو التوثيق القانوني داخل V1 foundation.
+12. Contract System
+12.1 الهدف
+Kabeeri يحتاج عقود بسبب:
+Job offers.
+B2B services.
+Employees.
+Freelancers.
+Suppliers.
+Clients.
+Legal verification.
+Projects.
+12.2 قاعدة بيانات مقترحة
+contracts
+idorganization_id nullablecompany_id nullablecontract_typetitlestatusstarts_atends_atcreated_byrelated_type nullablerelated_id nullabletemplate_id nullablemetadata jsoncreated_atupdated_atdeleted_at
+contract_parties
+idcontract_idparty_typeparty_idrolesignature_statussigned_at nullablecreated_atupdated_at
+contract_templates
+idorganization_id nullablenamecontract_typecontentvariables jsonstatuscreated_atupdated_at
+12.3 يدخل V1؟
+لا يدخل كاملًا.
+لكن يجب مراعاته في:
+job offers لاحقًا.
+service requests.
+legal verification.
+Rabet B2B.
+13. Approval Engine
+13.1 الهدف
+موافقات موحدة لكل النظام.
+13.2 أمثلة approvals
+نشر محتوىتعديل خصمإصدار فاتورة كبيرةطلب شراءقبول موظفتوثيق شركةدفع موردإغلاق فترة مالية
+13.3 قاعدة بيانات مقترحة
+approval_workflows
+idorganization_id nullablecompany_id nullablenameslugsubject_typeconditions jsonstatuscreated_atupdated_at
+approval_steps
+idapproval_workflow_idstep_orderapprover_typeapprover_id nullablerole_id nullablecondition jsoncreated_atupdated_at
+approval_requests
+idapproval_workflow_id nullablesubject_typesubject_idrequested_bystatuscurrent_stepcreated_atupdated_atcompleted_at
+approval_actions
+idapproval_request_idaction_byactioncommentcreated_at
+13.4 يدخل V1؟
+V1 يمكن أن يحتوي approval بسيط للمحتوى:
+draft → review → published
+لكن Approval Engine الكامل يدخل لاحقًا.
+14. Audit & Compliance Reports
+14.1 الهدف
+Activity Log يسجل الأحداث، لكن Compliance Reports تحول الأحداث إلى تقارير.
+14.2 تقارير مطلوبة لاحقًا
+تغييرات الصلاحيات.
+تسجيل الدخول.
+تعديلات المحتوى.
+حذف الملفات.
+موافقات مالية.
+تعديلات بيانات بنكية.
+مراجعات قانونية.
+تغييرات التوثيق.
+AI changes.
+Plugin installations.
+14.3 قاعدة بيانات
+يمكن الاعتماد على activity_logs، مع إضافة report definitions لاحقًا.
+compliance_report_templates
+idnameslugdescriptionfilters jsoncolumns jsonstatuscreated_atupdated_at
+compliance_report_runs
+idtemplate_idrequested_bystatusfile_media_id nullablecreated_atcompleted_at
+14.4 يدخل V1؟
+Activity Log يدخل V1.
+Compliance Reports تدخل لاحقًا.
+15. Feature Flags / Module Flags
+15.1 الهدف
+Kabeeri ضخم، لذلك نحتاج تشغيل وإيقاف الميزات حسب الخطة والعميل.
+15.2 أمثلة flags
+enable_commerceenable_rabetenable_kabeeri_mallenable_talent_marketplaceenable_erpenable_aienable_legal_verificationenable_teamsenable_billingenable_public_profiles
+15.3 قاعدة بيانات مقترحة
+feature_flags
+idkeydescriptiondefault_valuestatuscreated_atupdated_at
+feature_flag_overrides
+idfeature_flag_idscope_typescope_idvaluecreated_atupdated_at
+scope_type values
+platformorganizationcompanysiteuserplan
+15.4 يدخل V1؟
+نعم.
+حتى لو بسيط، Feature flags مهم جدًا من البداية.
+16. Onboarding Wizard
+16.1 الهدف
+Kabeeri منصة كبيرة، فلازم أول تجربة تكون موجهة.
+16.2 مسارات onboarding
+أريد بناء موقعأريد بناء متجرأريد توثيق شركتيأريد الظهور في Kabeeri Mallأريد إنشاء ملف مهنيأريد إدارة فريقأريد نقل موقعي من WordPress
+16.3 قاعدة بيانات مقترحة
+onboarding_flows
+idnameslugtarget_typesteps jsonstatuscreated_atupdated_at
+onboarding_progress
+iduser_idorganization_id nullableflow_idcurrent_stepcompleted_steps jsonstatusstarted_atcompleted_atcreated_atupdated_at
+16.4 يدخل V1؟
+نعم، ولو بشكل بسيط:
+Setup wizard بعد التسجيل.
+اختيار نوع البداية.
+إنشاء Organization + Site.
+17. Import / Export Foundation
+17.1 الهدف
+Kabeeri يجب أن يسهل الهجرة من WordPress وغيره.
+17.2 أنواع الاستيراد والتصدير
+WordPress XML.
+CSV import.
+CSV export.
+Products import.
+Customers import.
+Employees import.
+Services import.
+Media import.
+Backup export.
+Data export للمستخدم.
+17.3 قاعدة بيانات مقترحة
+import_jobs
+idorganization_id nullablesite_id nullablecompany_id nullableimport_typestatussource_file_media_id nullablestarted_bystarted_atcompleted_atsummary jsonerrors jsoncreated_atupdated_at
+export_jobs
+idorganization_id nullablesite_id nullablecompany_id nullableexport_typestatusfile_media_id nullablerequested_bystarted_atcompleted_atsummary jsoncreated_atupdated_at
+17.4 يدخل V1؟
+نعم جزئيًا:
+Export basic.
+WordPress import في V2.
+لكن import_jobs/export_jobs foundation يمكن وضعها مبكرًا.
+18. تأثير هذه الطبقات على Laravel Structure
+يجب إضافة مجلدات Core جديدة:
+app/Core/  Billing/  Notifications/  Inbox/  Reviews/  Reputation/  Disputes/  Search/  Moderation/  Privacy/  Documents/  Contracts/  Approvals/  Compliance/  FeatureFlags/  Onboarding/  ImportExport/
+19. ما يدخل V1 من ملحق 2؟
+Must-have in V1
+Notification foundationActivity logFeature flagsOnboarding basicPrivacy/visibility foundationImport/export job foundationSettings foundation
+Should-have in V1
+Inbox data model draftDocuments basicBilling data model draftSearchable trait/interfaceApproval status for content
+Not required in V1 UI
+Full Billing UIFull InboxFull ReviewsFull DisputesFull ModerationFull DMSFull ContractsFull Approval EngineFull Search Engine
+20. تأثير هذه الطبقات على V1
+ملف V1 يجب أن يراعي هذه النقاط:
+لا تنشئ Pages/Posts بدون Activity Log.
+لا تنشئ Business Profile بدون Visibility.
+لا تنشئ Organization بدون Onboarding state.
+لا تنشئ Plugin system بدون Feature Flags.
+لا تنشئ Media فقط بدون التفكير في Documents لاحقًا.
+لا تنشئ Notifications بشكل ad-hoc داخل كل module.
+لا تنشئ Reviews داخل Business فقط؛ اجعلها polymorphic/central.
+لا تنشئ Billing خاص بـ Cloud فقط؛ اجعله عامًا للـ Plans والـ Modules والـ Verification.
+21. ترتيب تنفيذ الطبقات عبر الإصدارات
+V1
+Notifications basic.
+Feature flags.
+Onboarding basic.
+Privacy/visibility.
+Activity log.
+Import/export foundation.
+Search basic.
+V2
+Inbox basic.
+WordPress import jobs.
+Business contact messages.
+Service requests.
+Reviews basic.
+Simple moderation statuses.
+V3
+Reputation engine basic.
+Disputes basic.
+Documents basic.
+Approval flows basic.
+Billing foundation.
+V4
+Billing subscriptions.
+Marketplace commissions.
+Legal verification payments.
+Full notifications.
+Moderation queue.
+Kabeeri Mall reporting.
+V5
+Contracts.
+Advanced approvals.
+Enterprise search.
+Compliance reports.
+DMS advanced.
+Integration logs.
+V6
+Full governance layer.
+Advanced compliance.
+AI-assisted moderation.
+AI-assisted onboarding.
+Advanced reputation and trust scoring.
+Enterprise audit exports.
+22. الخلاصة التنفيذية
+هذه الطبقات ليست Features جانبية.
+هذه هي أنظمة التشغيل التي تجعل Kabeeri قابلًا للنمو:
+Billing = الإيراداتNotifications = التواصل اللحظيInbox = التواصل الخارجيReviews/Reputation = الثقةDisputes = العدالة وحل النزاعاتSearch = قابلية الاكتشافModeration = أمان السوق العامPrivacy = حماية المستخدمينDocuments = المستندات القانونية والتشغيليةContracts = العلاقات الرسميةApprovals = الحوكمةCompliance Reports = الرقابةFeature Flags = التحكم في التوسعOnboarding = تبسيط البدايةImport/Export = الهجرة والمرونة
+وبالتالي، قبل كتابة V1، يجب أن نعتبر هذه الطبقات جزءًا من foundation حتى لو لم تظهر كلها في الواجهة.

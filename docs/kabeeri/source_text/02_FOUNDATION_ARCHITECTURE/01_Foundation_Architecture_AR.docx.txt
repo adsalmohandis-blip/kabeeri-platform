@@ -1,0 +1,640 @@
+KABEERI — ملحق التأسيس المعماري وقاعدة البيانات
+ملحق للملف الرئيسي: KABEERI Platform — الملف الرئيسي الملخص
+هذا الملف يشرح التفاصيل التأسيسية التي يجب تثبيتها قبل كتابة ملف V1 التفصيلي، لأنها ستؤثر مباشرة على:
+تصميم قاعدة البيانات.
+بنية ملفات Laravel.
+نظام الصلاحيات.
+نظام الشركات والمواقع.
+Rabet Company OS.
+Kabeeri Mall.
+Talent Marketplace.
+Legal Verification.
+Plugin/Module architecture.
+قابلية التوسع إلى Commerce وERP لاحقًا.
+الهدف من هذا الملحق:
+منع إعادة بناء النظام من الصفر لاحقًا بسبب قرارات ناقصة في V1.
+1. القاعدة الكبرى
+Kabeeri لا يبدأ كـ CMS فقط.
+V1 يجب أن يكون:
+Core Foundation for CMS + Company OS + Future Commerce + Future ERP
+يعني V1 سيظهر للمستخدم كـ CMS بسيط، لكنه داخليًا يجب أن يحتوي على أساس يسمح بإضافة:
+Rabet Company OS.
+Kabeeri Mall.
+Talent Marketplace.
+Commerce.
+ERP Suites.
+Legal Verification.
+AI Co-builder.
+Cloud.
+Marketplace.
+بدون إعادة هيكلة جذرية لاحقًا.
+2. أهم المفاهيم التي يجب تثبيتها قبل V1
+2.1 User
+الفرد الحقيقي داخل النظام.
+يمكن أن يكون:
+زائر مسجل.
+صاحب موقع.
+صاحب شركة.
+موظف.
+freelancer.
+professional.
+legal partner.
+developer.
+platform admin.
+المهم: المستخدم ليس بالضرورة موظفًا في شركة واحدة فقط.
+المستخدم يمكن أن يكون عضوًا في أكثر من Organization أو Company.
+2.2 Organization
+الـ Organization هي مساحة الإدارة الأساسية.
+ليست بالضرورة شركة موثقة.
+مثال:
+Organization: ADMIT Workspace  ├─ Site: admit.agency  ├─ Site: kabeeri.com  ├─ Company Profile: ADMIT LLC  ├─ Team Members  └─ Billing
+Organization يمكن أن تحتوي على:
+موقع واحد أو أكثر.
+متجر واحد أو أكثر.
+شركة موثقة أو غير موثقة.
+أعضاء فريق.
+إعدادات.
+اشتراكات.
+Modules مفعلة.
+2.3 Site
+الـ Site هو الموقع أو المتجر أو واجهة المحتوى.
+يمكن أن يكون:
+Blog.
+Company website.
+Store.
+Landing page.
+Portal.
+Marketplace storefront.
+كل Site يتبع Organization.
+المهم:
+Site ≠ Company
+الموقع واجهة رقمية.
+الشركة كيان تجاري.
+2.4 Company
+الـ Company هي كيان تجاري داخل Rabet/Kabeeri.
+يمكن أن تكون:
+غير موثقة.
+موثقة جزئيًا.
+موثقة قانونيًا.
+شركة B2B عاملة داخل Kabeeri Mall.
+الـ Company قد يكون لها Site أو أكثر.
+مثال:
+Company: Cairo Marketing Agency  ├─ Main Website  ├─ Services Profile in Kabeeri Mall  ├─ Team Workspace  ├─ CRM  ├─ Projects  └─ Verification Record
+2.5 Business Profile
+هو البروفايل العام للبزنس داخل Kabeeri Mall.
+ليس كل Business Profile موثقًا.
+قد يكون:
+Draft.
+Public.
+Verified.
+Suspended.
+يحتوي على:
+اسم البزنس.
+وصف.
+تصنيف.
+خدمات.
+منتجات.
+بيانات تواصل.
+موقع جغرافي.
+تقييمات.
+trust badge.
+2.6 Professional Profile
+هو الملف المهني للفرد داخل Talent Marketplace.
+المستخدم الواحد له حساب User، وقد يكون له Professional Profile.
+يحتوي على:
+العنوان الوظيفي.
+المهارات.
+الخبرات.
+التقييمات.
+الشركات الحالية والسابقة.
+التوفر.
+visibility settings.
+2.7 Membership
+Membership هي العلاقة بين User وOrganization أو Company.
+لأن الفرد يمكن أن يعمل في أكثر من شركة، لا نضع company_id مباشرة داخل users.
+بدلًا من ذلك نستخدم memberships.
+مثال:
+User: Ahmed  ├─ Membership: Admin in ADMIT  ├─ Membership: Consultant in Company B  └─ Membership: Freelancer in Company C
+كل Membership لها:
+role.
+job title.
+status.
+start date.
+end date.
+permissions.
+contract type.
+visibility.
+2.8 Role & Permission
+الصلاحيات يجب أن تكون foundation من V1.
+نستخدم RBAC أولًا:
+Role-Based Access Control
+ثم لاحقًا نضيف ABAC:
+Attribute-Based Access Control
+مثال Permissions:
+content.createcontent.editcontent.publishmedia.uploadsite.settings.manageorganization.manageteam.invitebusiness_profile.manageverification.submitmall.listing.manage
+2.9 Module / Plugin / Suite / Connector / Theme
+لازم نفرق من البداية:
+النوع
+المعنى
+Core
+أساس النظام لا يمكن تعطيله
+Module
+وظيفة كبيرة داخل النظام
+Suite
+مجموعة Modules مترابطة
+Plugin
+إضافة صغيرة أو وظيفة محددة
+Connector
+تكامل مع منصة خارجية
+Theme
+تصميم الموقع أو المتجر
+Template
+قالب صفحة/فورم/Workflow/Report
+AI Skill
+قدرة إضافية للـ AI Co-builder
+Industry Solution
+Bundle لصناعة معينة
+3. أنواع المستخدمين الأساسية
+3.1 Visitor
+زائر غير مسجل.
+يمكنه:
+تصفح Kabeeri Mall.
+مشاهدة public business profiles.
+مشاهدة services/products/talent حسب visibility.
+إرسال contact request إن كان مسموحًا.
+3.2 Customer
+عميل مسجل.
+يمكنه:
+شراء منتجات.
+طلب خدمات.
+حفظ businesses.
+إرسال reviews.
+متابعة orders/bookings.
+3.3 Professional
+فرد له ملف مهني.
+يمكنه:
+إنشاء Professional Profile.
+الظهور في Talent Marketplace.
+تلقي job offers.
+الانضمام لشركات.
+تنفيذ tasks.
+بناء work history.
+3.4 Business Owner
+صاحب بزنس أو شركة.
+يمكنه:
+إنشاء Organization.
+إنشاء Site.
+إنشاء Business Profile.
+دعوة team members.
+رفع مستندات التوثيق.
+تفعيل modules.
+3.5 Company Admin
+مسؤول داخل شركة.
+يمكنه:
+إدارة الفريق.
+إدارة المهام.
+إدارة company profile.
+إدارة الصلاحيات.
+إدارة الخدمات والمنتجات.
+3.6 Employee / Team Member
+عضو فريق داخل شركة.
+يمكنه حسب الصلاحيات:
+تنفيذ tasks.
+التعليق.
+رفع ملفات.
+تحديث حالة العمل.
+عرض dashboards محددة.
+3.7 Legal Partner
+مكتب محاماة أو مستخدم تابع له.
+يمكنه:
+مراجعة طلبات توثيق.
+طلب مستندات إضافية.
+قبول أو رفض verification.
+إضافة ملاحظات قانونية.
+3.8 Developer
+مطور plugins/themes/modules/connectors.
+يمكنه لاحقًا:
+إنشاء developer profile.
+رفع packages.
+مراجعة status.
+متابعة installs.
+3.9 Platform Admin
+إدارة منصة Kabeeri.
+يمكنها:
+إدارة users.
+إدارة organizations.
+إدارة verifications.
+إدارة marketplace.
+إدارة Kabeeri Mall.
+إدارة billing.
+إدارة moderation.
+4. قاعدة بيانات V1 — الجداول التأسيسية
+هذه ليست كل الجداول النهائية، لكنها الجداول التي يجب التفكير فيها من البداية.
+4.1 users
+يمثل الحساب الأساسي.
+الحقول المقترحة
+idnameemailemail_verified_atphonephone_verified_atpasswordavatar_pathlocaletimezonestatuslast_login_atremember_tokencreated_atupdated_atdeleted_at
+ملاحظات
+لا نضع company_id داخل users.
+لا نضع role واحد ثابت داخل users.
+الصلاحيات تأتي من memberships.
+4.2 user_profiles
+بيانات شخصية عامة غير مرتبطة بالعمل.
+iduser_idbiocountrycitydate_of_birth optionalgender optionalwebsite_urlsocial_links jsonvisibilitycreated_atupdated_at
+4.3 professional_profiles
+ملف مهني للظهور في Talent Marketplace.
+iduser_idheadlinesummaryexperience_yearsavailability_statuswork_preferencehourly_rate_minhourly_rate_maxcurrencylocation_typecountrycitypublic_visibilityopen_to_offersverified_identity_statusverified_work_history_statusrating_averagerating_countreputation_scorecreated_atupdated_at
+public_visibility values
+publicverified_companies_onlyprivateanonymous_preview
+4.4 skills
+قاموس موحد للمهارات.
+idnameslugcategorydescriptionstatuscreated_atupdated_at
+4.5 professional_skill
+ربط المهارات بالملف المهني.
+idprofessional_profile_idskill_idlevelyears_experienceverified_statusendorsement_countevidence_countcreated_atupdated_at
+4.6 organizations
+مساحة الإدارة الأساسية.
+idnameslugowner_user_idstatusplanbilling_statuscountrytimezonelocalesettings jsoncreated_atupdated_atdeleted_at
+status values
+activesuspendedarchivedpending_setup
+4.7 organization_memberships
+العلاقة بين المستخدم والـ Organization.
+idorganization_iduser_idrole_idjob_titlemembership_typestatusstart_dateend_dateinvited_byinvited_ataccepted_atvisibilitymetadata jsoncreated_atupdated_atdeleted_at
+membership_type values
+owneremployee_full_timeemployee_part_timefreelancercontractorconsultantinternexternal_collaboratorlegal_partner_userdeveloper
+status values
+invitedactivepausedendedrevokedrejected
+4.8 companies
+الكيان التجاري المرتبط بـ Rabet.
+idorganization_idlegal_nametrade_nameslugcountrycitylegal_typeregistration_numbertax_numberindustrycompany_sizestatusverification_statusverified_atverification_expires_attrust_scorecreated_atupdated_atdeleted_at
+verification_status values
+not_submittedpending_reviewneed_more_informationunder_legal_reviewverifiedrejectedexpiredsuspendedrevoked
+4.9 company_memberships
+العلاقة بين المستخدم والشركة تحديدًا.
+قد تكون الشركة داخل Organization، لكن هذا الجدول مهم للفصل بين workspace والكيان التجاري.
+idcompany_iduser_idorganization_membership_id nullablerole_idjob_titledepartment_id nullablemanager_user_id nullablecontract_typeemployment_typestatusstart_dateend_datepublic_work_historycreated_atupdated_atdeleted_at
+4.10 departments
+idcompany_idparent_id nullablenameslugdescriptionmanager_user_id nullablestatuscreated_atupdated_at
+4.11 sites
+الموقع أو المتجر.
+idorganization_idcompany_id nullablenameslugdomainsubdomainsite_typestatuslanguagetimezonetheme_id nullablesettings jsoncreated_atupdated_atdeleted_at
+site_type values
+websiteblogstoreportallandingmarketplace_profileinternal_portal
+4.12 roles
+idorganization_id nullablecompany_id nullablenameslugscopeis_systemcreated_atupdated_at
+scope values
+platformorganizationcompanysitemodule
+4.13 permissions
+idnamesluggroupdescriptioncreated_atupdated_at
+أمثلة:
+content.createcontent.editcontent.publishmedia.uploadsite.manageorganization.manageteam.invitecompany.verify.submitbusiness_profile.manage
+4.14 role_permission
+role_idpermission_idcreated_at
+4.15 membership_permission_overrides
+للسماح بصلاحيات إضافية أو منع صلاحية لمستخدم محدد.
+idmembership_typemembership_idpermission_ideffectreasoncreated_bycreated_at
+effect values
+allowdeny
+5. جداول CMS الأساسية
+5.1 content_types
+حتى لو V1 سيبدأ بـ posts/pages، يجب تجهيز الأساس.
+idsite_idnameslugis_systemsupports_seosupports_revisionssupports_categoriessupports_tagssettings jsoncreated_atupdated_at
+5.2 content_entries
+يمثل pages/posts/custom content لاحقًا.
+idsite_idcontent_type_idauthor_user_idtitleslugexcerptcontent longtextstatusvisibilitypublished_atscheduled_atfeatured_media_id nullableseo_titleseo_descriptioncanonical_urlmetadata jsoncreated_atupdated_atdeleted_at
+status values
+draftreviewpublishedscheduledarchivedtrashed
+visibility values
+publicprivatepasswordorganization_onlymembers_onlyverified_companies_only
+5.3 content_revisions
+idcontent_entry_iduser_idtitlecontentmetadata jsoncreated_at
+5.4 taxonomies
+idsite_idnameslugtypehierarchicalsettings jsoncreated_atupdated_at
+5.5 taxonomy_terms
+idtaxonomy_idparent_id nullablenameslugdescriptionseo_titleseo_descriptioncreated_atupdated_at
+5.6 content_term
+content_entry_idterm_idcreated_at
+6. جداول Media
+6.1 media_assets
+idorganization_idsite_id nullableuploaded_bydiskpathfilenamemime_typesizewidth nullableheight nullablealt_textcaptionvisibilitymetadata jsoncreated_atupdated_atdeleted_at
+6.2 media_usages
+مهم لاحقًا لمعرفة أين تستخدم الصورة.
+idmedia_asset_idusable_typeusable_idfield_namecreated_at
+7. جداول Rabet وKabeeri Mall التأسيسية
+7.1 business_profiles
+البروفايل العام داخل Kabeeri Mall.
+idcompany_id nullableorganization_idsite_id nullablenameslugdescriptionshort_descriptionindustrycategory_id nullablecountrycityaddressservice_areas jsonphoneemailwebsite_urllogo_media_id nullablecover_media_id nullablestatusvisibilityverification_badge_statusrating_averagerating_countcreated_atupdated_at
+status values
+draftpending_reviewpublishedsuspendedarchived
+7.2 business_categories
+idparent_id nullablenameslugdescriptioniconstatuscreated_atupdated_at
+7.3 services
+لخدمات Kabeeri Mall لاحقًا، لكن يمكن تجهيز البنية.
+idbusiness_profile_idcompany_id nullablenameslugdescriptionshort_descriptioncategory_id nullablepricing_typeprice_fromprice_tocurrencyduration_estimatestatusvisibilitycreated_atupdated_at
+7.4 service_requests
+طلبات التواصل أو عروض الأسعار.
+idservice_id nullablebusiness_profile_idrequester_user_id nullablenameemailphonemessagestatussourcemetadata jsoncreated_atupdated_at
+8. جداول التوثيق القانوني
+8.1 verification_requests
+idcompany_idrequested_bycountryverification_levelstatusassigned_partner_id nullablesubmitted_atreviewed_atverified_atexpires_atrejection_reasonnotescreated_atupdated_at
+verification_level values
+basiclegaladvancedregulated
+8.2 verification_documents
+idverification_request_idcompany_iddocument_typefile_media_iddocument_numberissued_atexpires_atstatusreview_notescreated_atupdated_at
+document_type examples
+commercial_registrationtax_cardnational_idauthorized_signatorylicenseaddress_proofcompany_contract
+8.3 legal_partners
+مكاتب المحاماة المعتمدة.
+idorganization_id nullablenameslugcountrycitylicense_numbercontact_emailcontact_phonestatusrating_averagereview_countcreated_atupdated_at
+8.4 legal_partner_users
+idlegal_partner_iduser_idrolestatuscreated_atupdated_at
+8.5 country_verification_packs
+idcountrynameversionrequirements jsonsupported_company_types jsonstatuseffective_fromeffective_to nullablecreated_atupdated_at
+9. جداول Tasks وTeam foundation
+9.1 projects
+idorganization_idcompany_id nullablesite_id nullablenameslugdescriptionstatusstart_dateend_datecreated_bycreated_atupdated_at
+9.2 tasks
+idorganization_idcompany_id nullableproject_id nullableparent_id nullabletitledescriptionstatusprioritycreated_byassigned_to nullabledue_datestarted_atcompleted_atrelated_type nullablerelated_id nullablemetadata jsoncreated_atupdated_atdeleted_at
+status values
+backlogtodoin_progressblockedreviewdonecancelled
+9.3 task_comments
+idtask_iduser_idcommentmetadata jsoncreated_atupdated_atdeleted_at
+9.4 task_watchers
+task_iduser_idcreated_at
+9.5 evaluations
+idorganization_idcompany_id nullablereviewer_user_idreviewed_user_idcontext_typecontext_idratingvisibilitycommentcriteria jsoncreated_atupdated_at
+visibility values
+private_companypublic_profileplatform_onlyreviewed_user_only
+10. Activity Log / Audit Log
+هذا جدول أساسي من V1.
+10.1 activity_logs
+idorganization_id nullablecompany_id nullablesite_id nullableactor_user_id nullableactionsubject_typesubject_iddescriptionip_addressuser_agentmetadata jsoncreated_at
+أمثلة actions
+user_logged_inpage_createdpost_publishedmedia_uploadedrole_updatedmember_invitedbusiness_profile_updatedverification_document_uploadedplugin_activatedsetting_changed
+11. Visibility & Privacy Foundation
+أي كيان عام أو شبه عام يجب أن يحتوي visibility.
+القيم الأساسية:
+publicprivateorganization_onlycompany_onlyteam_onlyverified_companies_onlyhiddenunlisted
+11.1 لماذا مهم من V1؟
+لأن لاحقًا لدينا:
+Professional profiles.
+Business profiles.
+Kabeeri Mall.
+Talent Marketplace.
+Company memberships.
+Reviews.
+Work history.
+Legal documents.
+لو لم نؤسس visibility مبكرًا، سنعيد بناء الصلاحيات لاحقًا.
+12. Plugin / Module foundation
+12.1 installed_packages
+جدول عام لأي package مثبت.
+idorganization_id nullablesite_id nullablepackage_typenameslugversionstatussourcepublishermanifest jsonpermissions jsoninstalled_byinstalled_atactivated_atcreated_atupdated_at
+package_type values
+pluginmodulesuiteconnectorthemeai_skilltemplateindustry_solution
+12.2 package_events
+idinstalled_package_ideventstatusmessagemetadata jsoncreated_at
+أمثلة:
+installedactivateddeactivatedupdatedfailedrolled_back
+13. Settings architecture
+13.1 settings
+جدول عام للإعدادات.
+idscope_typescope_idkeyvalue jsontypeis_encryptedcreated_atupdated_at
+scope_type examples
+platformorganizationcompanysitemoduleuser
+14. Laravel structure المقترح
+14.1 الهيكل العام
+app/  Core/    Auth/    Permissions/    Organizations/    Sites/    Settings/    Activity/    Media/    Packages/    Support/  CMS/    Content/    Taxonomies/    SEO/    Themes/  Rabet/    Companies/    Verification/    BusinessProfiles/    Teams/    Tasks/    Trust/  Mall/    Businesses/    Services/    Products/    Talent/    Reviews/  Marketplace/    Plugins/    Modules/    Themes/    Connectors/    AISkills/  Commerce/    Products/    Cart/    Orders/    Payments/    Shipping/  ERP/    CRM/    Sales/    Inventory/    Accounting/    HR/    Purchasing/  AI/    CoBuilder/    Agents/    Prompts/    ChangePlans/  Integrations/    Webhooks/    Connectors/    Sync/
+14.2 لماذا هذا التقسيم؟
+لأنه يمنع خلط كل شيء داخل مجلد Models/Controllers فقط.
+Kabeeri كبير جدًا، لذلك من البداية يجب أن يكون Modular Monolith.
+Modular Monolith أولًاMicroservices لاحقًا إذا احتجنا
+15. Domain-based folders داخل كل Module
+مثال: Rabet/Verification
+app/Rabet/Verification/  Models/    VerificationRequest.php    VerificationDocument.php    LegalPartner.php  Actions/    SubmitVerificationRequest.php    AssignLegalPartner.php    ApproveVerification.php    RejectVerification.php  Policies/    VerificationRequestPolicy.php  Requests/    SubmitVerificationRequestRequest.php  Resources/    VerificationRequestResource.php  Events/    VerificationSubmitted.php    VerificationApproved.php    VerificationRejected.php  Listeners/    UpdateCompanyVerificationStatus.php    LogVerificationActivity.php  Services/    VerificationChecklistService.php  routes.php
+16. Core Models المبدئية
+16.1 User.php
+app/Core/Auth/Models/User.php
+يحتوي علاقات:
+organizations.
+memberships.
+professionalProfile.
+media.
+activityLogs.
+16.2 Organization.php
+app/Core/Organizations/Models/Organization.php
+علاقات:
+owner.
+members.
+sites.
+companies.
+settings.
+packages.
+16.3 Site.php
+app/Core/Sites/Models/Site.php
+علاقات:
+organization.
+company.
+contentEntries.
+media.
+theme.
+settings.
+16.4 Company.php
+app/Rabet/Companies/Models/Company.php
+علاقات:
+organization.
+memberships.
+businessProfile.
+verificationRequests.
+departments.
+projects.
+tasks.
+16.5 BusinessProfile.php
+app/Rabet/BusinessProfiles/Models/BusinessProfile.php
+علاقات:
+company.
+organization.
+services.
+reviews.
+media.
+16.6 ProfessionalProfile.php
+app/Mall/Talent/Models/ProfessionalProfile.php
+علاقات:
+user.
+skills.
+memberships.
+evaluations.
+17. Controllers structure
+يفضل استخدام Actions وControllers خفيفة.
+مثال:
+app/CMS/Content/Http/Controllers/ContentEntryController.phpapp/CMS/Content/Actions/CreateContentEntry.phpapp/CMS/Content/Actions/PublishContentEntry.php
+Controller لا يحتوي business logic ثقيل.
+18. Events foundation
+Kabeeri يجب أن يكون event-driven داخليًا.
+أمثلة:
+ContentEntryCreatedContentEntryPublishedMediaUploadedBusinessProfilePublishedVerificationSubmittedVerificationApprovedOrganizationMemberInvitedTaskAssignedPackageActivated
+كل Event يمكن أن يستخدم لاحقًا في:
+Activity log.
+Notifications.
+Workflows.
+AI suggestions.
+Integrations.
+Webhooks.
+19. Policies من البداية
+كل Model مهم له Policy.
+أمثلة:
+ContentEntryPolicyMediaAssetPolicyOrganizationPolicySitePolicyCompanyPolicyBusinessProfilePolicyVerificationRequestPolicyProfessionalProfilePolicyTaskPolicy
+هذا مهم لأن الصلاحيات ستكون معقدة لاحقًا.
+20. API foundation
+حتى لو Admin في البداية Blade/Livewire، يجب تجهيز API mindset.
+20.1 API versioning
+/api/v1/...
+20.2 أمثلة Routes لاحقًا
+/api/v1/sites/api/v1/content/api/v1/media/api/v1/organizations/api/v1/companies/api/v1/business-profiles/api/v1/professionals/api/v1/tasks
+21. Migrations organization
+يفضل تسمية migrations بوضوح حسب domain.
+أمثلة:
+2026_01_01_000001_create_users_table.php2026_01_01_000010_create_organizations_table.php2026_01_01_000020_create_sites_table.php2026_01_01_000030_create_companies_table.php2026_01_01_000040_create_content_types_table.php2026_01_01_000050_create_content_entries_table.php2026_01_01_000060_create_business_profiles_table.php2026_01_01_000070_create_professional_profiles_table.php2026_01_01_000080_create_activity_logs_table.php
+22. Naming conventions
+22.1 Database
+plural table names.
+snake_case columns.
+foreign keys بصيغة: entity_id.
+polymorphic relations فقط عند الحاجة.
+22.2 Permissions
+صيغة:
+resource.action
+أمثلة:
+content.publishmedia.deletecompany.verify.submittask.assignmall.business.publish
+22.3 Events
+صيغة Past tense:
+ContentPublishedTaskAssignedVerificationApproved
+22.4 Actions
+صيغة فعل واضح:
+CreateContentEntryPublishContentEntrySubmitVerificationRequestAssignTask
+23. ما يدخل V1 من هذا الملحق؟
+V1 لا ينفذ كل شيء، لكنه يجب أن ينفذ الأساس التالي:
+Must-have in V1
+users.
+organizations.
+organization_memberships.
+roles.
+permissions.
+sites.
+content_types.
+content_entries.
+taxonomies.
+media_assets.
+settings.
+activity_logs.
+business_profiles draft.
+verification_requests basic fields.
+verification_documents basic fields.
+installed_packages basic.
+Should-have in V1
+professional_profiles basic.
+tasks basic.
+task_comments basic.
+departments basic.
+company_memberships basic.
+Not in V1
+Full Kabeeri Mall.
+Full Talent Marketplace.
+Full Legal Partner Portal.
+Commerce full.
+ERP full.
+AI Co-builder full.
+Cloud.
+Marketplace public for developers.
+24. قرارات مهمة قبل كتابة الكود
+24.1 هل نستخدم Laravel multi-tenancy package؟
+في البداية لا يفضل تعقيد النظام.
+التوصية:
+Single databaseorganization_id في الجداول المهمةsite_id عند الحاجةcompany_id عند الحاجة
+ثم لاحقًا يمكن دعم enterprise isolation.
+24.2 هل كل Organization لها database منفصل؟
+ليس في البداية.
+هذا سيعقد التطوير جدًا.
+التوصية:
+Shared database with strong scoping
+لاحقًا:
+Enterprise tenants can use isolated databases
+24.3 هل Admin بـ React من البداية؟
+لو البناء فردي باستخدام AI، لا.
+التوصية:
+Laravel + Blade + Livewire/Filament أولًاReact لاحقًا عند الحاجة
+24.4 هل نبني ERP من V1؟
+لا.
+لكن نبني الجداول والعلاقات التي لن تمنع ERP لاحقًا.
+24.5 هل نبني Kabeeri Mall من V1؟
+لا.
+لكن نجهز BusinessProfile وProfessionalProfile وvisibility.
+25. أول Use Case لاختبار V1
+أفضل use case:
+شركة خدمات صغيرة تريد موقعًا رسميًاوتريد لاحقًا التحول إلى Verified Company داخل Rabet
+السيناريو
+صاحب الشركة ينشئ حساب.
+ينشئ Organization.
+ينشئ Site.
+يختار Theme.
+ينشئ Pages.
+ينشر Blog posts.
+يرفع Media.
+يضبط SEO.
+ينشئ Business Profile draft.
+يرفع مستندات توثيق لاحقًا.
+يدعو عضو فريق.
+يرى Activity Log.
+هذا السيناريو يثبت:
+CMS.
+Organization model.
+Site model.
+Team foundation.
+Rabet foundation.
+Verification foundation.
+Future Kabeeri Mall foundation.
+26. مخاطر لو لم ننفذ هذا الأساس
+26.1 لو وضعنا company_id داخل users
+سيفشل دعم:
+موظف في أكثر من شركة.
+Talent Marketplace.
+Freelancers.
+Multi-company.
+26.2 لو لم نضع Organization من البداية
+سيصعب دعم:
+multiple sites.
+teams.
+billing.
+cloud.
+agency dashboard.
+26.3 لو لم نضع visibility من البداية
+سيصعب دعم:
+public/private profiles.
+Talent Marketplace.
+Kabeeri Mall.
+verified-only visibility.
+26.4 لو لم نضع activity_logs من البداية
+سيضعف:
+trust score.
+audit.
+Rabet.
+legal review.
+team accountability.
+26.5 لو لم نفصل Plugin وModule وSuite
+سنخلق فوضى تشبه WordPress plugins.
+27. الخلاصة التنفيذية
+قبل ملف V1 التفصيلي، يجب اعتماد هذه القواعد:
+User ليس تابعًا لشركة واحدةOrganization هي مساحة الإدارةSite هو الواجهة الرقميةCompany هو الكيان التجاريBusiness Profile هو الظهور العام في Kabeeri MallProfessional Profile هو الظهور في Talent MarketplaceMembership هي العلاقة بين الفرد والشركة/المنظمةRBAC أساس الصلاحياتActivity Log أساس الثقةVisibility أساس الخصوصيةModules/Suites أساس التوسع
+بهذا الشكل، V1 لن يكون مجرد CMS صغير، بل سيكون الأساس الحقيقي لمنصة Kabeeri كلها.
+28. الخطوة التالية
+بعد اعتماد هذا الملحق، يتم بناء ملف:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+ويجب أن يعتمد ملف V1 على هذا الملحق في:
+الجداول.
+المجلدات.
+الصلاحيات.
+الـ models.
+الـ policies.
+الـ events.
+الـ activity log.
+الـ organization/site/company separation.

@@ -1,0 +1,1323 @@
+KABEERI Database File 35
+Enterprise Architecture / App Portfolio Database
+قاعدة بيانات معمارية المؤسسة، محفظة التطبيقات، خريطة الأنظمة، خريطة التكاملات، ملكية البيانات، وتحليل أثر التغيير
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+هذا الملف يصف طبقة Enterprise Architecture & App Portfolio داخل Kabeeri كطبقة حوكمة عليا فوق Core وCloud وERP وIntegration Hub وBI وGRC وSecurity، ويهدف إلى معرفة: ما الأنظمة الموجودة؟ من يملكها؟ ما البيانات التي تديرها؟ كيف تتكامل؟ وما أثر أي تغيير قبل تنفيذه؟
+1. تعريف Enterprise Architecture / App Portfolio
+Enterprise Architecture / App Portfolio في Kabeeri هي طبقة تسجيل وتحليل وحوكمة للمنصة والتطبيقات والتكاملات والبيانات والقدرات التجارية. هذه الطبقة لا تبني CMS أو ERP جديدًا، بل تصف وتربط كل ما تم بناؤه حتى يمكن التحكم فيه على مستوى Enterprise.
+Application Portfolio: سجل التطبيقات والموديولات والأنظمة المستخدمة داخل مؤسسة العميل أو داخل Kabeeri نفسها.
+System Catalog: كتالوج الأنظمة والبيئات والمكونات والتقنيات.
+Integration Map: خريطة التكاملات بين الأنظمة والـ APIs والـ webhooks والـ sync jobs.
+Business Capability Map: خريطة القدرات التجارية وربطها بالتطبيقات والموديولات والفرق.
+Data Ownership Map: خريطة مالكي البيانات، Data Stewards، ومصدر الحقيقة لكل مجال بيانات.
+Change Impact Analysis: تحليل أثر التغيير قبل تنفيذ تغييرات على نظام أو API أو جدول أو عملية.
+2. لماذا نحتاج هذا الملف؟
+عند الوصول إلى V6، تصبح Kabeeri منصة واسعة تشمل ERP وBI وGRC وSecurity وDeveloper Marketplace وIndustry Solutions وIntegration Hub. بدون سجل معماري واضح، سيصبح من الصعب معرفة الاعتماديات والتكاملات ومن يملك البيانات وماذا قد ينكسر عند أي تغيير.
+منع فوضى Enterprise Modules عند توسع المنصة.
+مساعدة Enterprise Admin وArchitect وData Manager على فهم المشهد الكامل.
+تسهيل عمليات migration من Cloud إلى Dedicated أو Portable أو العكس.
+ربط GRC وSecurity وBI وIntegration Hub بخريطة واحدة.
+تسريع تحليل أثر التغيير قبل تحديث API أو تعديل جدول أو استبدال Connector.
+تجهيز المنصة لمراجعات Enterprise وAudit وDue Diligence.
+3. القاعدة الرئيسية
+هذه الطبقة Read/Analyze/Govern أكثر من كونها Transactional. أي أنها لا تحل محل الأنظمة الأصلية، ولا تصبح مصدر الحقيقة للطلبات أو الفواتير أو المخزون، بل تسجل وصفًا معماريًا ومؤسسيًا لهذه الأنظمة والبيانات والتكاملات.
+Source of Truth للبيانات التشغيلية يبقى في النظام الأصلي: CMS / Commerce / ERP / Mall / Integration Hub.
+Enterprise Architecture يسجل metadata وrelationships وownership وimpact.
+يجب أن تكون الجداول tenant-scoped عبر organization_id.
+يجب أن تدعم Cloud وDedicated وPortable، مع اختلاف مكان البيانات التشغيلية.
+لا يتم تخزين secrets أو credentials هنا؛ فقط references إلى Vault أو Integration Hub.
+4. ما الذي يدخل في هذا النظام؟
+Application portfolio.
+System catalog.
+Environment catalog.
+System components.
+Application lifecycle.
+Business capability map.
+Process map foundation.
+Data domains.
+Data entities.
+Data ownership assignments.
+Data stewards.
+Integration map.
+System dependencies.
+API dependency map.
+Change impact analysis.
+Architecture decisions.
+Architecture reviews.
+Technology standards.
+Vendor/system references.
+Application costs and usage metrics.
+Enterprise roadmap items.
+5. ما الذي لا يدخل؟
+لا يخزن بيانات ERP التشغيلية مثل journal entries أو invoices أو payroll.
+لا يخزن credentials أو API secrets.
+لا ينفذ sync jobs بنفسه؛ Integration Hub هو المسؤول.
+لا يحل محل GRC لكنه يغذيه بمعلومات الأنظمة والاعتماديات.
+لا يحل محل BI لكنه يوفر business glossary وownership وlineage foundation.
+لا يفتح Public Developer Marketplace؛ هو فقط يصف المكونات المعمارية.
+6. الأدوار الرئيسية
+الدور
+المسؤولية
+Enterprise Architect
+يدير system catalog وcapability map وarchitecture decisions.
+Application Portfolio Manager
+يدير التطبيقات وحالتها وتكاليفها ومالكيها.
+Integration Architect
+يدير integration map والاعتماديات بين الأنظمة.
+Data Manager
+يدير data domains وdata ownership وbusiness glossary.
+Security Officer
+يراجع critical systems وdata classifications وaccess concerns.
+Compliance Manager
+يربط الأنظمة بالالتزامات والضوابط والمراجعات.
+Platform Admin
+يدير إعدادات المنصة العامة والأنظمة الداخلية.
+System Owner
+مالك نظام أو application أو module داخل Organization.
+7. Feature Flags
+enable_enterprise_architecture
+enable_application_portfolio
+enable_system_catalog
+enable_integration_map
+enable_business_capability_map
+enable_data_ownership_map
+enable_change_impact_analysis
+enable_architecture_reviews
+enable_technology_standards
+enable_app_cost_tracking
+enable_portfolio_health_metrics
+8. الجداول الأساسية
+الجدول
+الهدف
+enterprise_applications
+تطبيق أو موديول أو نظام داخل محفظة التطبيقات.
+enterprise_application_versions
+نسخ التطبيقات وحالة كل إصدار.
+enterprise_application_owners
+مالكو التطبيقات ومسؤولوها.
+enterprise_application_lifecycle_events
+أحداث lifecycle للتطبيق.
+enterprise_systems
+أنظمة داخلية أو خارجية أو Dedicated/Portable/Cloud.
+enterprise_system_environments
+production/staging/sandbox/training لكل نظام.
+enterprise_system_components
+مكونات النظام مثل DB/API/Queue/Storage/Worker.
+enterprise_technology_stacks
+التقنيات المستخدمة ومتطلبات الدعم.
+enterprise_vendors
+مزودون أو أنظمة خارجية أو شركاء تقنيون.
+business_capabilities
+قدرات تجارية مثل Sales, Billing, HR, Mall, Verification.
+business_capability_applications
+ربط القدرات بالتطبيقات والموديولات.
+business_processes
+عمليات تجارية عليا.
+business_process_systems
+ربط العمليات بالأنظمة.
+data_domains
+مجالات بيانات مثل Customer, Product, Finance, HR.
+data_entities
+كيانات بيانات داخل كل domain.
+data_ownership_assignments
+مالك البيانات ومصدر الحقيقة.
+data_stewards
+مسؤولو جودة وحوكمة البيانات.
+system_integrations
+تكاملات بين نظامين.
+system_integration_endpoints
+APIs/Webhooks/Queues/Files لكل تكامل.
+system_dependencies
+اعتماد نظام على آخر.
+architecture_decisions
+قرارات معمارية ADR.
+architecture_reviews
+مراجعات معمارية قبل changes.
+change_impact_assessments
+تحليل أثر تغيير.
+change_impact_items
+العناصر المتأثرة بالتغيير.
+portfolio_health_snapshots
+لقطات صحة المحفظة والتكاليف والمخاطر.
+application_cost_records
+تكاليف تطبيق أو نظام.
+application_usage_metrics
+مقاييس الاستخدام.
+9. Application Portfolio Tables
+enterprise_applications
+يمثل تطبيقًا أو موديولًا أو نظامًا مسجلًا داخل محفظة المؤسسة.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+للتكاملات والروابط العامة
+organization_id
+bigint
+Tenant scope
+application_code
+varchar(100)
+كود داخلي ثابت
+name
+varchar(255)
+اسم التطبيق
+slug
+varchar(255)
+unique per organization
+application_type
+varchar(50)
+module / suite / external_system / custom_app / connector / industry_solution
+category
+varchar(80)
+cms / commerce / erp / security / data / integration / mall / ai
+status
+varchar(50)
+planned / active / deprecated / retired / suspended
+criticality
+varchar(50)
+low / medium / high / mission_critical
+owner_user_id
+bigint nullable
+مالك داخلي
+owner_team_name
+varchar nullable
+الفريق المسؤول
+business_owner_user_id
+bigint nullable
+مالك تجاري
+technical_owner_user_id
+bigint nullable
+مالك تقني
+vendor_id
+bigint nullable
+إذا كان النظام خارجي
+module_key
+varchar nullable
+ربط بـ modules
+installed_package_id
+bigint nullable
+ربط بـ package installation
+primary_system_id
+bigint nullable
+النظام الذي يشغله
+description
+longtext nullable
+وصف
+metadata
+json nullable
+تفاصيل مرنة
+created_at/updated_at/deleted_at
+timestamps
+مع soft delete
+enterprise_application_versions
+نسخ التطبيقات والإصدارات المهمة وربطها بالتوافقية والتحديثات.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+enterprise_application_id
+bigint
+FK
+version
+varchar(80)
+1.0.0 أو internal label
+release_channel
+varchar(50)
+stable / beta / lts / enterprise
+status
+varchar(50)
+active / deprecated / vulnerable / retired
+released_at
+timestamp nullable
+تاريخ الإصدار
+supported_until
+date nullable
+نهاية الدعم
+compatibility_matrix
+json nullable
+توافق مع Kabeeri versions / PHP / MySQL
+change_summary
+longtext nullable
+ملخص التغيير
+created_at/updated_at
+timestamps
+enterprise_application_owners
+إسناد مالكي التطبيق حسب الدور والسياق.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+enterprise_application_id
+bigint
+FK
+user_id
+bigint nullable
+مالك فرد
+organization_membership_id
+bigint nullable
+عضوية مرتبطة
+owner_role
+varchar(50)
+business_owner / technical_owner / data_owner / security_owner / support_owner
+status
+varchar(50)
+active / inactive / delegated
+starts_at
+timestamp nullable
+ends_at
+timestamp nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+enterprise_application_lifecycle_events
+أحداث lifecycle للتطبيق مثل إنشاء، تحديث، deprecation، retirement.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+enterprise_application_id
+bigint
+FK
+event_type
+varchar(80)
+created / upgraded / deprecated / retired / ownership_changed / risk_identified
+status_before
+varchar nullable
+status_after
+varchar nullable
+performed_by
+bigint nullable
+User
+event_at
+timestamp
+وقت الحدث
+notes
+longtext nullable
+metadata
+json nullable
+created_at
+timestamp
+10. System Catalog Tables
+enterprise_systems
+كتالوج الأنظمة الداخلية والخارجية وبيئات Kabeeri المختلفة.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+organization_id
+bigint nullable
+قد يكون platform-level أو tenant-level
+system_code
+varchar(100)
+كود النظام
+name
+varchar(255)
+اسم النظام
+system_type
+varchar(80)
+kabeeri_core / cloud / dedicated / portable / external_saas / legacy / data_platform / integration_gateway
+hosting_mode
+varchar(80)
+cloud_managed / frontend_anywhere / portable_self_hosted / dedicated_managed / dedicated_customer_cloud / external
+status
+varchar(50)
+active / planned / deprecated / retired / disconnected
+criticality
+varchar(50)
+low / medium / high / mission_critical
+environment_strategy
+varchar(80)
+single / prod_staging / multi_env
+region
+varchar nullable
+منطقة الاستضافة
+data_residency_country_id
+bigint nullable
+لـ Dedicated / regulated customers
+owner_user_id
+bigint nullable
+vendor_id
+bigint nullable
+description
+longtext nullable
+metadata
+json nullable
+created_at/updated_at/deleted_at
+timestamps
+enterprise_system_environments
+بيئات التشغيل لكل نظام.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+enterprise_system_id
+bigint
+FK
+environment_type
+varchar(50)
+production / staging / sandbox / development / training / dr
+status
+varchar(50)
+active / maintenance / suspended / retired
+base_url
+varchar nullable
+لا يتضمن أسرار
+region
+varchar nullable
+app_version
+varchar nullable
+database_ref
+varchar nullable
+masked/vault reference فقط
+storage_ref
+varchar nullable
+masked reference
+last_seen_at
+timestamp nullable
+health_status
+varchar nullable
+healthy / degraded / down / unknown
+metadata
+json nullable
+created_at/updated_at
+timestamps
+enterprise_system_components
+مكونات النظام مثل database, app, queue, cache, storage, workers.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+enterprise_system_id
+bigint
+FK
+environment_id
+bigint nullable
+FK إلى environment
+component_type
+varchar(50)
+app / database / queue / cache / storage / search / worker / api_gateway / ai_provider
+name
+varchar(255)
+status
+varchar(50)
+active / degraded / retired
+technology_stack_id
+bigint nullable
+FK
+version
+varchar nullable
+criticality
+varchar(50)
+low / medium / high
+metadata
+json nullable
+created_at/updated_at
+timestamps
+enterprise_technology_stacks
+التقنيات والمعايير المعتمدة أو المستخدمة.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint nullable
+platform/global أو tenant
+name
+varchar(255)
+Laravel, MySQL, Redis, S3, Typesense...
+technology_type
+varchar(80)
+language / framework / database / queue / cache / storage / search / ai / integration
+version
+varchar nullable
+support_status
+varchar(50)
+approved / tolerated / deprecated / forbidden
+lifecycle_status
+varchar(50)
+standard / watch / replace / retire
+owner_user_id
+bigint nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+enterprise_vendors
+مزودون تقنيون أو أنظمة خارجية أو شركاء.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint nullable
+name
+varchar(255)
+vendor_type
+varchar(80)
+cloud / payment / shipping / erp / legal / ai / security / analytics / other
+status
+varchar(50)
+active / under_review / suspended / retired
+country_id
+bigint nullable
+security_review_status
+varchar nullable
+pending / approved / rejected
+compliance_notes
+longtext nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+11. Business Capability Map Tables
+business_capabilities
+خريطة القدرات التجارية التي تدعمها التطبيقات.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+organization_id
+bigint nullable
+parent_capability_id
+bigint nullable
+Hierarchy
+code
+varchar(100)
+sales.lead_management
+name
+varchar(255)
+capability_type
+varchar(80)
+core / operational / support / governance / industry
+maturity_level
+varchar(50)
+none / basic / defined / managed / optimized
+strategic_importance
+varchar(50)
+low / medium / high / critical
+status
+varchar(50)
+active / planned / deprecated
+description
+longtext nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+business_capability_applications
+ربط القدرات بالتطبيقات التي تدعمها.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+business_capability_id
+bigint
+FK
+enterprise_application_id
+bigint
+FK
+support_level
+varchar(50)
+primary / supporting / reporting / legacy
+coverage_level
+varchar(50)
+partial / full / planned
+health_status
+varchar nullable
+good / weak / duplicate / gap
+notes
+longtext nullable
+created_at/updated_at
+timestamps
+business_processes
+عمليات تجارية عليا وربطها بالأنظمة والقدرات.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+Tenant scope
+parent_process_id
+bigint nullable
+Hierarchy
+code
+varchar(100)
+name
+varchar(255)
+process_type
+varchar(80)
+sales / procurement / finance / hr / support / compliance / industry
+status
+varchar(50)
+active / draft / deprecated
+owner_user_id
+bigint nullable
+description
+longtext nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+business_process_systems
+يربط العملية بالأنظمة والتطبيقات التي تشارك فيها.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+business_process_id
+bigint
+FK
+enterprise_system_id
+bigint nullable
+FK
+enterprise_application_id
+bigint nullable
+FK
+role_in_process
+varchar(80)
+system_of_record / input / approval / reporting / notification / integration
+sequence_order
+int nullable
+notes
+longtext nullable
+created_at/updated_at
+timestamps
+12. Data Ownership Map Tables
+data_domains
+مجالات بيانات Enterprise مثل Customer, Product, Finance, HR, Trust.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+organization_id
+bigint nullable
+code
+varchar(100)
+customer / product / finance / hr / trust / integration
+name
+varchar(255)
+classification
+varchar(80)
+public / internal / confidential / sensitive / restricted
+status
+varchar(50)
+active / planned / deprecated
+owner_user_id
+bigint nullable
+Data owner
+steward_user_id
+bigint nullable
+Data steward
+description
+longtext nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+data_entities
+كيانات بيانات داخل كل domain، مثل Customer, Invoice, Product, Employee.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+data_domain_id
+bigint
+FK
+organization_id
+bigint nullable
+entity_name
+varchar(255)
+entity_key
+varchar(120)
+invoice, product, employee
+source_table
+varchar nullable
+اسم جدول داخلي إن وجد
+source_module
+varchar nullable
+cms / commerce / erp / rabet / mall
+classification
+varchar(80)
+public / internal / confidential / sensitive / restricted
+retention_policy_id
+bigint nullable
+link to retention/security
+contains_personal_data
+boolean
+contains_financial_data
+boolean
+contains_legal_data
+boolean
+description
+longtext nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+data_ownership_assignments
+تحديد مصدر الحقيقة والمالك لكل كيان بيانات.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+data_entity_id
+bigint
+FK
+source_of_truth_type
+varchar(80)
+kabeeri_cloud / dedicated_db / portable_db / external_system / manual / mall_mirror
+source_of_truth_id
+bigint nullable
+system/application/source id
+owner_user_id
+bigint nullable
+Data owner
+steward_user_id
+bigint nullable
+Data steward
+business_owner_user_id
+bigint nullable
+technical_owner_user_id
+bigint nullable
+quality_responsibility
+varchar nullable
+من يتحمل جودة البيانات
+status
+varchar(50)
+active / contested / deprecated
+notes
+longtext nullable
+created_at/updated_at
+timestamps
+data_stewards
+سجل مسؤولي حوكمة البيانات حسب domain/entity.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+Tenant scope
+user_id
+bigint
+User
+data_domain_id
+bigint nullable
+FK
+data_entity_id
+bigint nullable
+FK
+steward_role
+varchar(80)
+owner / steward / custodian / quality_reviewer
+status
+varchar(50)
+active / inactive
+created_at/updated_at
+timestamps
+13. Integration Map Tables
+system_integrations
+خريطة التكاملات بين الأنظمة.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+organization_id
+bigint nullable
+integration_code
+varchar(120)
+name
+varchar(255)
+source_system_id
+bigint
+FK
+target_system_id
+bigint
+FK
+integration_type
+varchar(80)
+api / webhook / queue / file / database_link / manual / connector / sync_job
+direction
+varchar(50)
+one_way / two_way / event_driven
+status
+varchar(50)
+active / planned / paused / deprecated / broken
+criticality
+varchar(50)
+low / medium / high / mission_critical
+sync_frequency
+varchar nullable
+real_time / hourly / daily / manual
+integration_hub_connection_id
+bigint nullable
+link to Integration Hub
+description
+longtext nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+system_integration_endpoints
+نقاط النهاية والواجهات المستخدمة في كل تكامل.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+system_integration_id
+bigint
+FK
+endpoint_type
+varchar(80)
+rest_api / graphql / webhook / queue_topic / file_drop / db_view
+method
+varchar nullable
+GET/POST/...
+path_masked
+varchar nullable
+لا يخزن secret
+data_format
+varchar nullable
+json / xml / csv / parquet
+auth_type
+varchar nullable
+api_key / oauth / hmac / mtls / none
+rate_limit_notes
+text nullable
+status
+varchar(50)
+active / deprecated / replaced
+metadata
+json nullable
+created_at/updated_at
+timestamps
+system_dependencies
+اعتماد نظام أو تطبيق على آخر.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint nullable
+dependent_type
+varchar(80)
+system / application / component / data_entity
+dependent_id
+bigint
+dependency_type
+varchar(80)
+system / application / component / data_entity / integration
+dependency_id
+bigint
+dependency_nature
+varchar(80)
+runtime / data / reporting / auth / billing / security / compliance
+criticality
+varchar(50)
+low / medium / high / blocking
+status
+varchar(50)
+active / deprecated / removed
+notes
+longtext nullable
+created_at/updated_at
+timestamps
+14. Architecture Decisions & Reviews
+architecture_decisions
+سجل قرارات معمارية ADR.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+organization_id
+bigint nullable
+decision_number
+varchar(80)
+ADR-0001
+title
+varchar(255)
+status
+varchar(50)
+proposed / accepted / superseded / rejected / deprecated
+decision_scope
+varchar(80)
+platform / tenant / system / integration / data / security
+context
+longtext
+لماذا القرار؟
+decision
+longtext
+ما القرار؟
+consequences
+longtext nullable
+الأثر
+alternatives_considered
+json nullable
+related_system_id
+bigint nullable
+related_application_id
+bigint nullable
+created_by
+bigint nullable
+approved_by
+bigint nullable
+approved_at
+timestamp nullable
+created_at/updated_at
+timestamps
+architecture_reviews
+مراجعات معمارية لتغيير أو مشروع أو تكامل.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+organization_id
+bigint nullable
+review_type
+varchar(80)
+new_system / major_change / integration / data_change / security_change / migration
+subject_type
+varchar(80)
+application / system / integration / data_entity / change_request
+subject_id
+bigint nullable
+status
+varchar(50)
+draft / in_review / approved / rejected / needs_changes
+risk_level
+varchar(50)
+low / medium / high / critical
+reviewer_user_id
+bigint nullable
+findings
+json nullable
+decision_summary
+longtext nullable
+approved_at
+timestamp nullable
+created_at/updated_at
+timestamps
+15. Change Impact Analysis Tables
+change_impact_assessments
+تحليل أثر تغيير قبل التنفيذ.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+uuid
+char(26/36)
+organization_id
+bigint nullable
+change_title
+varchar(255)
+change_type
+varchar(80)
+schema_change / api_change / connector_change / package_update / migration / policy_change / decommission
+subject_type
+varchar(80)
+system / application / integration / data_entity / package / table
+subject_id
+bigint nullable
+status
+varchar(50)
+draft / analyzing / completed / approved / rejected / cancelled
+risk_level
+varchar(50)
+low / medium / high / critical
+requested_by
+bigint nullable
+approved_by
+bigint nullable
+planned_at
+timestamp nullable
+summary
+longtext nullable
+rollback_plan
+longtext nullable
+metadata
+json nullable
+created_at/updated_at
+timestamps
+change_impact_items
+العناصر المتأثرة بتغيير معين.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+change_impact_assessment_id
+bigint
+FK
+impacted_type
+varchar(80)
+application / system / integration / data_entity / report / workflow / role / permission / customer_mode
+impacted_id
+bigint nullable
+impact_nature
+varchar(80)
+breaks / changes_behavior / performance / security / compliance / data_quality / migration
+impact_level
+varchar(50)
+low / medium / high / critical
+detected_by
+varchar(50)
+manual / rule / dependency_map / ai_suggestion / test
+mitigation
+longtext nullable
+status
+varchar(50)
+open / mitigated / accepted / rejected
+created_at/updated_at
+timestamps
+16. Portfolio Health, Cost & Metrics
+portfolio_health_snapshots
+لقطات دورية لصحة محفظة التطبيقات.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+organization_id
+bigint
+snapshot_date
+date
+total_applications
+int
+active_applications
+int
+deprecated_applications
+int
+mission_critical_count
+int
+high_risk_count
+int
+duplicate_capability_count
+int
+قدرات مكررة في أكثر من تطبيق
+integration_count
+int
+broken_integration_count
+int
+monthly_cost_total
+decimal(15,2) nullable
+currency_code
+varchar nullable
+metadata
+json nullable
+created_at
+timestamp
+application_cost_records
+تكاليف التطبيقات والأنظمة.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+enterprise_application_id
+bigint nullable
+enterprise_system_id
+bigint nullable
+organization_id
+bigint
+cost_type
+varchar(80)
+license / hosting / support / usage / implementation / maintenance
+amount
+decimal(15,2)
+currency_code
+varchar(10)
+period_start
+date
+period_end
+date
+billing_account_id
+bigint nullable
+link to Billing
+metadata
+json nullable
+created_at/updated_at
+timestamps
+application_usage_metrics
+مقاييس استخدام التطبيقات.
+الحقل
+النوع المقترح
+ملاحظات
+id
+bigint
+Primary key
+enterprise_application_id
+bigint nullable
+enterprise_system_id
+bigint nullable
+organization_id
+bigint
+metric_key
+varchar(100)
+active_users / api_calls / jobs_run / storage_mb
+value
+decimal(18,4)
+unit
+varchar(50)
+period_start
+timestamp
+period_end
+timestamp
+source_type
+varchar nullable
+billing / analytics / integration_hub / manual
+source_id
+bigint nullable
+metadata
+json nullable
+created_at
+timestamp
+17. ERD مختصر
+erDiagram ORGANIZATIONS ||--o{ ENTERPRISE_APPLICATIONS : owns ENTERPRISE_APPLICATIONS ||--o{ ENTERPRISE_APPLICATION_VERSIONS : versions ENTERPRISE_APPLICATIONS ||--o{ ENTERPRISE_APPLICATION_OWNERS : owned_by ENTERPRISE_SYSTEMS ||--o{ ENTERPRISE_SYSTEM_ENVIRONMENTS : has ENTERPRISE_SYSTEMS ||--o{ ENTERPRISE_SYSTEM_COMPONENTS : contains ENTERPRISE_SYSTEMS ||--o{ SYSTEM_INTEGRATIONS : source_or_target BUSINESS_CAPABILITIES ||--o{ BUSINESS_CAPABILITY_APPLICATIONS : supported_by ENTERPRISE_APPLICATIONS ||--o{ BUSINESS_CAPABILITY_APPLICATIONS : supports DATA_DOMAINS ||--o{ DATA_ENTITIES : contains DATA_ENTITIES ||--o{ DATA_OWNERSHIP_ASSIGNMENTS : owned_by SYSTEM_INTEGRATIONS ||--o{ SYSTEM_INTEGRATION_ENDPOINTS : exposes CHANGE_IMPACT_ASSESSMENTS ||--o{ CHANGE_IMPACT_ITEMS : impacts ENTERPRISE_APPLICATIONS ||--o{ APPLICATION_COST_RECORDS : costs ENTERPRISE_APPLICATIONS ||--o{ APPLICATION_USAGE_METRICS : measured_by
+18. Flow: تسجيل تطبيق جديد
+Enterprise Architect أو Platform Admin يفتح Application Portfolio.
+ينشئ enterprise_application مع النوع والحالة والحرجية.
+يربط التطبيق بالنظام الرئيسي enterprise_system إن وجد.
+يحدد business owner وtechnical owner وdata owner.
+يربط التطبيق بالقدرات التجارية business_capabilities.
+يسجل البيانات التي يملكها أو يقرأها data_entities.
+يسجل التكاملات المعروفة system_integrations.
+ينشئ architecture review إذا كان النظام جديدًا أو عالي الخطورة.
+تسجل activity/audit events.
+19. Flow: Change Impact Analysis
+المستخدم يطلب تغييرًا: API change أو schema change أو connector replacement أو package update.
+create change_impact_assessment.
+النظام يقرأ system_dependencies وsystem_integrations وdata_ownership_assignments.
+ينشئ change_impact_items لكل تطبيق أو تقرير أو workflow أو integration متأثر.
+إذا كان impact_level high أو critical، يتطلب architecture_review وapproval.
+بعد الموافقة، يمكن تنفيذ التغيير عبر workflow أو deployment plan.
+تسجل النتائج والـ rollback plan في audit logs.
+20. Flow: Data Ownership Review
+Data Manager يفتح data_domains.
+يراجع data_entities وتصنيفها.
+يحدد source_of_truth لكل entity.
+يعين data owner وdata steward.
+يربط الكيان بالتقارير والتكاملات المتأثرة.
+أي change على source_of_truth يتطلب impact analysis.
+تظهر ownership في BI/Data Dictionary وGRC evidence عند الحاجة.
+21. Cloud / Frontend Anywhere / Portable / Dedicated
+الوضع
+كيف تظهر Enterprise Architecture؟
+Cloud
+الأنظمة والتطبيقات والبيانات داخل Kabeeri Central؛ يمكن تحليل الاعتماديات مباشرة من metadata والأحداث.
+Frontend Anywhere
+الواجهة الخارجية تسجل كنظام أو system environment منفصل، بينما مصدر البيانات يبقى Cloud.
+Portable
+التطبيق الخارجي يسجل كـ enterprise_system من نوع portable_self_hosted، والتكاملات معه عبر mall sync أو support/update channels.
+Dedicated
+البيئة المخصصة تسجل كـ enterprise_system + environments + components، مع ربط health/update/security/billing summaries.
+External ERP/SaaS
+يسجل كنظام خارجي ويرتبط عبر Integration Hub ولا تحفظ أسراره داخل هذا النظام.
+22. العلاقة مع الأنظمة الأخرى
+النظام
+العلاقة
+Core Kernel
+يوفر organization_id وusers وroles وpermissions.
+Integration Hub
+يوفر connections وsync jobs، بينما EA يسجل الخريطة والاعتماديات.
+BI / Analytics
+يستخدم data dictionary وownership وcapability mapping لشرح التقارير.
+GRC
+يستخدم system catalog وcriticality وdata classifications لربط controls والrisks.
+Security
+يعتمد على critical systems وdata classifications وprivileged access.
+Billing
+يربط تكاليف التطبيقات والأنظمة باشتراكات أو contracts.
+Dedicated/Portable
+يعطي EA رؤية للبيئات الخارجية بدون امتلاك بياناتها التشغيلية.
+Developer Console / Marketplace
+packages وSDK projects يمكن تسجيلها كتطبيقات أو components.
+Industry Solutions
+كل solution يمكن تسجيله كتطبيق/حزمة قدرات وربطه بالcapabilities.
+23. Permissions
+enterprise_architecture.view
+enterprise_architecture.manage
+application_portfolio.view
+application_portfolio.manage
+system_catalog.view
+system_catalog.manage
+business_capability.view
+business_capability.manage
+data_ownership.view
+data_ownership.manage
+integration_map.view
+integration_map.manage
+architecture_decision.view
+architecture_decision.manage
+architecture_review.approve
+change_impact.view
+change_impact.run
+change_impact.approve
+portfolio_cost.view
+portfolio_health.view
+24. Events
+EnterpriseApplicationCreated
+EnterpriseApplicationStatusChanged
+EnterpriseSystemRegistered
+SystemEnvironmentHealthChanged
+BusinessCapabilityMapped
+DataOwnershipAssigned
+SystemIntegrationRegistered
+ArchitectureDecisionAccepted
+ArchitectureReviewApproved
+ChangeImpactAssessmentRequested
+ChangeImpactAssessmentCompleted
+CriticalDependencyDetected
+PortfolioHealthSnapshotCreated
+25. Validation Rules
+لا يوجد enterprise_application بدون organization_id إلا إذا كان platform-level مصرحًا.
+لا يوجد mission_critical system بدون owner_user_id وcriticality وhealth status.
+أي integration active يجب أن يكون له source_system_id وtarget_system_id.
+أي data_entity sensitive أو restricted يجب أن يكون له data owner أو steward.
+أي change_impact_assessment high/critical لا يكتمل بدون rollback_plan.
+لا يسمح بحفظ secrets داخل path أو metadata أو endpoint fields.
+أي dependency blocking يجب أن يظهر في impact analysis.
+أي deprecated application يجب أن يكون له replacement أو retirement notes.
+26. Indexes مقترحة
+enterprise_applications: index(organization_id, status), index(application_type), unique(organization_id, slug)
+enterprise_systems: index(organization_id, system_type), index(hosting_mode), index(status)
+enterprise_system_environments: index(enterprise_system_id, environment_type), index(health_status)
+business_capabilities: index(organization_id, parent_capability_id), unique(organization_id, code)
+data_entities: index(data_domain_id), index(classification), index(source_module)
+system_integrations: index(source_system_id), index(target_system_id), index(status), index(criticality)
+system_dependencies: index(dependent_type, dependent_id), index(dependency_type, dependency_id)
+change_impact_items: index(change_impact_assessment_id), index(impacted_type, impacted_id), index(impact_level)
+27. API Endpoints مقترحة
+GET /api/enterprise-architecture/applications
+POST /api/enterprise-architecture/applications
+GET /api/enterprise-architecture/systems
+POST /api/enterprise-architecture/systems
+GET /api/enterprise-architecture/capabilities
+POST /api/enterprise-architecture/capabilities
+GET /api/enterprise-architecture/data-domains
+POST /api/enterprise-architecture/data-ownership
+GET /api/enterprise-architecture/integration-map
+POST /api/enterprise-architecture/change-impact-assessments
+GET /api/enterprise-architecture/change-impact-assessments/{id}
+POST /api/enterprise-architecture/architecture-reviews/{id}/approve
+28. Admin UI Navigation
+Enterprise Architecture  Overview  Application Portfolio  System Catalog  Environments  Components  Integration Map  Business Capabilities  Data Ownership  Architecture Decisions  Architecture Reviews  Change Impact Analysis  Portfolio Health  Costs & Usage  Settings
+29. Reporting & Dashboards
+Application Portfolio Overview: active/deprecated/retired apps.
+Critical Systems Dashboard: mission critical systems and health.
+Integration Risk Dashboard: broken/high-risk integrations.
+Capability Coverage Map: covered/gap/duplicate capabilities.
+Data Ownership Dashboard: domains without owners or stewards.
+Change Impact Dashboard: pending high-risk changes.
+Cost by Application: license/hosting/support/usage.
+Technical Debt Dashboard: deprecated tech stacks and unsupported versions.
+30. AI Assistants داخل Enterprise Architecture
+AI Impact Assistant: يقترح impacted systems بناءً على dependency map.
+AI Data Ownership Assistant: يقترح data owner/steward عند وجود فجوات.
+AI Integration Mapper: يقرأ sync logs ويقترح integration map draft.
+AI Portfolio Cleanup Assistant: يحدد duplicate applications أو deprecated systems.
+AI Architecture Reviewer: يراجع ADR ويطلب missing rollback/security notes.
+أي اقتراح AI هنا لا يطبق تغييرات مباشرة. يجب أن ينتج suggestion أو draft ثم يمر بمراجعة بشرية إذا كان يؤثر على systems أو data ownership أو critical dependencies.
+31. Export / Portable / Dedicated Rules
+Cloud: يمكن تصدير portfolio metadata ضمن export registry إذا وافق العميل.
+Portable: يتم تصدير enterprise_applications وsystem catalog الخاصة بالعميل، مع إزالة references الخاصة بـ Kabeeri Central إذا لم تعد صالحة.
+Dedicated: يتم نقل system catalog إلى البيئة المخصصة أو إبقاء نسخة bridge في Central حسب العقد.
+Frontend Anywhere: تسجل الواجهة الخارجية كنظام أو environment، لكن DB source يبقى Cloud.
+لا يتم تصدير أي secrets أو vault references الحقيقية؛ فقط masked references أو setup instructions.
+32. Security & Compliance Requirements
+تسجيل كل تغييرات ownership وcriticality وdependencies في audit_logs.
+حماية cost data وsystem criticality بصلاحيات منفصلة.
+منع public exposure لأي system endpoint حساس.
+ربط sensitive data domains بـ Security data classification.
+ربط critical systems بـ GRC controls وrisk register.
+إلزام architecture review للتغييرات high/critical.
+عدم حفظ credentials أو tokens أو secrets داخل metadata.
+33. Tests
+Enterprise architect can create application.
+Viewer cannot edit system catalog.
+Mission critical system requires owner.
+Sensitive data entity requires owner or steward.
+Integration requires source and target systems.
+Change impact detects direct dependencies.
+High-risk change requires architecture review.
+Portable export excludes secret references.
+Dedicated system can be linked without exposing credentials.
+Portfolio health snapshot calculates counts correctly.
+34. Release Gate لهذا الملف
+Application portfolio can register applications and ownership.
+System catalog can register cloud/dedicated/portable/external systems.
+Business capability map can link capabilities to apps.
+Data ownership map can identify source of truth.
+Integration map can show source/target dependencies.
+Change impact analysis can list impacted systems/entities/integrations.
+Permissions and audit logs work.
+No secrets are stored.
+Dashboards show portfolio health basics.
+35. الخلاصة التنفيذية
+Enterprise Architecture / App Portfolio Database هي طبقة الوعي المؤسسي داخل Kabeeri. بدونها ستظل المنصة قادرة على التشغيل، لكنها ستفقد القدرة على إدارة التعقيد Enterprise: من يملك التطبيق؟ ما النظام الذي يعتمد على الآخر؟ ما البيانات التي يجب حمايتها؟ وما الذي سيتأثر عند التغيير؟
+القاعدة النهائية: لا تجعل Enterprise مجرد مزيد من الموديولات؛ اجعلها خريطة تحكم وفهم للتطبيقات والأنظمة والبيانات والتكاملات والتغيير.
+KABEERI Database File 35 — Enterprise Architecture / App Portfolio
+KABEERI — powered by ADMIT

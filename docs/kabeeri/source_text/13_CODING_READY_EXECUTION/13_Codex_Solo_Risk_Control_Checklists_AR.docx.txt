@@ -1,0 +1,58 @@
+KABEERI Codex Solo Risk Control Checklists
+قوائم مراجعة لحماية المشروع أثناء العمل الفردي مع Codex
+1. Checklist قبل كل Prompt
+البند
+تم؟
+قرأت آخر سطر في WORKLOG.md
+☐
+تأكدت أن V1 فقط هو نطاق العمل الحالي
+☐
+أنشأت branch منفصل
+☐
+فتحت Prompt واحد فقط
+☐
+أضفت قواعد Prompt 00 في بداية جلسة Codex
+☐
+حددت Acceptance Criteria قبل التنفيذ
+☐
+2. Checklist بعد Codex وقبل قبول التغييرات
+الفحص
+تم؟
+لا توجد features من V2 أو أعلى
+☐
+لم يتم تعديل users بإضافة tenant أو role columns
+☐
+لم يتم تغيير migrations قديمة بلا سبب
+☐
+تمت إضافة tests مناسبة
+☐
+لا يوجد cross-tenant access واضح
+☐
+الكود موزع في Actions/Services وليس controller ضخم
+☐
+الأسماء متوافقة مع Laravel Module Architecture
+☐
+3. Checklist قبل commit
+الأمر/الفحص
+النتيجة
+php artisan test
+☐ Passed / ☐ Failed
+vendor/bin/pint
+☐ Run / ☐ Not needed
+git diff review
+☐ Done
+WORKLOG.md updated
+☐ Done
+Commit message generated
+☐ Done
+4. حالات إيقاف فورية
+الخطر
+الإجراء
+Codex حذف أو عدل ملفات كثيرة خارج نطاق Prompt
+اعمل revert للتغييرات غير المتعلقة بالمهمة
+Codex أدخل Commerce/Mall/AI/Work Network في V1
+اطلب إزالة future scope فورًا
+Codex كسر اختبارات مستقرة
+استخدم Fix Prompt فقط
+Codex طلب أمر destructive
+لا تنفذ إلا بعد مراجعة يدوية

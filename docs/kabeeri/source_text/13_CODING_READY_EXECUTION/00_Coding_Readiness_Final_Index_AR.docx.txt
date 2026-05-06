@@ -1,0 +1,43 @@
+KABEERI / powered by ADMIT
+KABEERI Coding Readiness Final Index
+فهرس البدء في التنفيذ بعد v1.2.0
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. حالة الحزمة
+هذه النسخة v1.2.0 هي أول نسخة Coding-ready. تم تحويل النقاشات الكبيرة حول Work Network وThemes وPlugins وMarketing وAcademy وAgency وAffiliate إلى ملفات تنفيذية، مع تجميد V1 وتحديد ما يدخل الكود أولًا.
+2. ابدأ من هنا
+الترتيب
+الملف
+الغرض
+1
+V1 Scope Freeze
+اعرف ما يدخل وما لا يدخل في V1
+2
+Database v1.1.0 Addendum
+اعرف الجداول الجديدة وتأثيرها
+3
+Laravel Migration Build Order v1.1.0 Update
+اعرف ترتيب migrations
+4
+Engineering Delivery Standards
+قواعد الكود
+5
+API Design Standards
+قواعد API
+6
+Permissions Matrix V1
+الصلاحيات
+7
+Feature Flags Matrix V1
+التفعيل
+8
+Seed Data & Demo Scenario
+الديمو
+9
+V1 Sprint 1 Coding Plan FINAL
+ابدأ التنفيذ
+3. قرار جاهزية التنفيذ
+• لا توجد ملفات استراتيجية ناقصة تمنع بدء الكود.
+• أي أفكار مستقبلية توضع في backlog ولا تدخل V1.
+• الكود يبدأ من Sprint 1 فقط.
+• أي تعديل في الداتابيز بعد بدء الكود يجب أن يضاف إلى Migration Change Log.

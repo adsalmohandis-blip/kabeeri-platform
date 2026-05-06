@@ -1,0 +1,12 @@
+KABEERI V8 Desktop Offline Client — Acceptance Checklist
+KABEERI Professional Knowledge System — v1.6.2
+Offline
+التطبيق يعمل بدون اتصال، ويحفظ التغييرات محليًا في SQLite.
+Sync
+عند عودة الإنترنت يتم إرسال outbox بشكل آمن، مع retry وstatus واضح.
+Security
+التوكنات لا تخزن plain text، لا يتم إرسال بيانات بدون صلاحيات، وكل sync session مسجل.
+Conflict
+عند التعارض تظهر شاشة حل تعارض أو يتم وضع العملية في conflict queue.
+Tests
+اختبارات local outbox، sync push/pull، conflict، file queue، token revoke.

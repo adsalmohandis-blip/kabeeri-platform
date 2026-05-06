@@ -1,0 +1,29 @@
+KABEERI Technology Stack Governance & Decision Records
+قرار التكنولوجيا المستخدمة وأسباب الاختيار.
+KABEERI Professional Knowledge System — v1.6.2
+الطبقة
+القرار
+سبب الاختيار
+Backend
+Laravel API-first Modular Monolith
+قوي في DB/RBAC/Jobs/APIs، وسريع التطوير، ومناسب للبداية والمنصة الكبيرة.
+Admin
+Filament
+إدارة سريعة وقوية فوق Laravel لإدارة Users, Apps, CMS, Packages, Reviews.
+Public Web Themes
+Next.js + React + TypeScript + Tailwind
+فصل frontend/backend، SEO، ثيمات قابلة للبيع، مطورين خارجيين، component ecosystem.
+Mobile V7
+Flutter Mobile Shell
+تطبيق موحد Android/iOS، يقرأ Mobile Theme Profiles وAPI Manifests.
+Desktop V8
+Electron + React + TypeScript + SQLite
+أفضل لـ offline-first، local DB، sync queue، file handling، auto update، وسهولة التطوير.
+APIs
+Laravel REST JSON + OpenAPI
+عقود واضحة للموبايل والديسك توب والمطورين والتكاملات.
+Auth
+Sanctum مبدئيًا، OAuth لاحقًا
+Sanctum للموبايل/SPA الرسمية، OAuth للتكاملات العامة والمطورين لاحقًا.
+قرارات مرفوضة كـ Primary Stack
+Blade/Livewire/Alpine لا تعتمد كثيم عام رئيسي. استخدامها مسموح داخل Admin/Filament أو fallback فقط. Vue/Nuxt لا يعتمد في البداية لتجنب تشتيت الـ ecosystem. Tauri مؤجل كبديل خفيف، وليس اختيار V8 الرئيسي بسبب متطلبات offline-first القوية.

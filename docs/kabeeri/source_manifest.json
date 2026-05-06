@@ -1,0 +1,1818 @@
+[
+  {
+    "source_rel": "00_SYSTEM_INDEX/00_KABEERI_SYSTEM_INDEX_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/00_KABEERI_SYSTEM_INDEX_AR.docx.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".docx",
+    "words": 115,
+    "chars": 1027
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/01_System_Features_Catalog_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/01_System_Features_Catalog_AR.docx.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".docx",
+    "words": 3255,
+    "chars": 22596
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/02_System_Features_Catalog_v1.3.0_Addendum_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/02_System_Features_Catalog_v1.3.0_Addendum_AR.docx.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".docx",
+    "words": 139,
+    "chars": 986
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/03_Project_Folder_Map_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/03_Project_Folder_Map_Architecture_AR.docx.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".docx",
+    "words": 360,
+    "chars": 3456
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/04_Solo_AI_Builder_File_Map_Addendum_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/04_Solo_AI_Builder_File_Map_Addendum_AR.docx.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".docx",
+    "words": 130,
+    "chars": 1076
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/05_Task_Tracking_File_Map_Addendum_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/05_Task_Tracking_File_Map_Addendum_AR.docx.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".docx",
+    "words": 90,
+    "chars": 744
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/06_Project_Folder_Full_Map_v1.6.6_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/06_Project_Folder_Full_Map_v1.6.6_AR.docx.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".docx",
+    "words": 3709,
+    "chars": 31965
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/BUILD_SEQUENCE.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/BUILD_SEQUENCE.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 121,
+    "chars": 846
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/CODING_START_HERE.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/CODING_START_HERE.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 59,
+    "chars": 537
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/CURRENT_VERSION.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/CURRENT_VERSION.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 13,
+    "chars": 96
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/FINAL_CHANGELOG.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/FINAL_CHANGELOG.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 212,
+    "chars": 1633
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST.csv",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST.csv.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".csv",
+    "words": 201,
+    "chars": 15923
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST.json",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST.json.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".json",
+    "words": 1602,
+    "chars": 27304
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.2.csv",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.2.csv.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".csv",
+    "words": 163,
+    "chars": 11311
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.2.json",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.2.json.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".json",
+    "words": 169,
+    "chars": 12481
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.3.csv",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.3.csv.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".csv",
+    "words": 182,
+    "chars": 13653
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.3.json",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.3.json.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".json",
+    "words": 1088,
+    "chars": 20161
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.4.csv",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.4.csv.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".csv",
+    "words": 191,
+    "chars": 14371
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.4.json",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.4.json.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".json",
+    "words": 1142,
+    "chars": 21203
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.5.csv",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.5.csv.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".csv",
+    "words": 201,
+    "chars": 15923
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.5.json",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.5.json.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".json",
+    "words": 1602,
+    "chars": 27304
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.6.csv",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.6.csv.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".csv",
+    "words": 226,
+    "chars": 16303
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/MANIFEST_v1.6.6.json",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/MANIFEST_v1.6.6.json.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".json",
+    "words": 1352,
+    "chars": 25739
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/OPTIONAL_BACKLOG.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/OPTIONAL_BACKLOG.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 87,
+    "chars": 533
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.3.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.3.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 14,
+    "chars": 205
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.4.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.4.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 12,
+    "chars": 72
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.5.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.5.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 30,
+    "chars": 315
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.6.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/PATH_LENGTH_CHECK_v1.6.6.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 13,
+    "chars": 192
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/README.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/README.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 292,
+    "chars": 2634
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.1.0.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.1.0.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 186,
+    "chars": 1322
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.2.0.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.2.0.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 134,
+    "chars": 850
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.2.1.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.2.1.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 127,
+    "chars": 1054
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.3.0.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.3.0.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 85,
+    "chars": 542
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.2.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.2.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 70,
+    "chars": 464
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.3.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.3.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 134,
+    "chars": 822
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.4.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.4.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 97,
+    "chars": 697
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.5.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.5.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 80,
+    "chars": 578
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.6.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/RELEASE_NOTES_v1.6.6.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 72,
+    "chars": 506
+  },
+  {
+    "source_rel": "00_SYSTEM_INDEX/VERSIONING.md",
+    "imported_text": "docs/kabeeri/source_text/00_SYSTEM_INDEX/VERSIONING.md.txt",
+    "top_dir": "00_SYSTEM_INDEX",
+    "extension": ".md",
+    "words": 72,
+    "chars": 556
+  },
+  {
+    "source_rel": "01_STRATEGY_AND_BUSINESS/01_Kabeeri_Platform_Master_Summary_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/01_STRATEGY_AND_BUSINESS/01_Kabeeri_Platform_Master_Summary_AR.docx.txt",
+    "top_dir": "01_STRATEGY_AND_BUSINESS",
+    "extension": ".docx",
+    "words": 5350,
+    "chars": 37829
+  },
+  {
+    "source_rel": "01_STRATEGY_AND_BUSINESS/02_Product_Positioning_GTM_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/01_STRATEGY_AND_BUSINESS/02_Product_Positioning_GTM_AR.docx.txt",
+    "top_dir": "01_STRATEGY_AND_BUSINESS",
+    "extension": ".docx",
+    "words": 2648,
+    "chars": 16831
+  },
+  {
+    "source_rel": "01_STRATEGY_AND_BUSINESS/03_Monetization_Pricing_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/01_STRATEGY_AND_BUSINESS/03_Monetization_Pricing_AR.docx.txt",
+    "top_dir": "01_STRATEGY_AND_BUSINESS",
+    "extension": ".docx",
+    "words": 1855,
+    "chars": 14634
+  },
+  {
+    "source_rel": "01_STRATEGY_AND_BUSINESS/04_Freemium_Plans_Entitlements_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/01_STRATEGY_AND_BUSINESS/04_Freemium_Plans_Entitlements_Architecture_AR.docx.txt",
+    "top_dir": "01_STRATEGY_AND_BUSINESS",
+    "extension": ".docx",
+    "words": 418,
+    "chars": 2677
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/00_CMS_Foundation_Blueprint_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/00_CMS_Foundation_Blueprint_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3168,
+    "chars": 22862
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/01_Foundation_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/01_Foundation_Architecture_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2028,
+    "chars": 22218
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/02_Operating_Layers_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/02_Operating_Layers_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1718,
+    "chars": 17316
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/03_Dependencies_Map_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/03_Dependencies_Map_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2806,
+    "chars": 21818
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/04_Release_Gates_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/04_Release_Gates_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2540,
+    "chars": 19660
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/05_Permissions_Privacy_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/05_Permissions_Privacy_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1931,
+    "chars": 17312
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/06_Event_Workflow_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/06_Event_Workflow_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1579,
+    "chars": 17131
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/07_AI_Cobuilder_Guardrails_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/07_AI_Cobuilder_Guardrails_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1936,
+    "chars": 13856
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/08_Marketplace_Governance_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/08_Marketplace_Governance_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1717,
+    "chars": 14245
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/09_Data_Model_Dictionary_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/09_Data_Model_Dictionary_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2010,
+    "chars": 17827
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/11_Security_Compliance_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/11_Security_Compliance_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1897,
+    "chars": 14396
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/12_Developer_Platform_SDK_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/12_Developer_Platform_SDK_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1576,
+    "chars": 13239
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/13_Testing_QA_DevOps_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/13_Testing_QA_DevOps_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1679,
+    "chars": 12284
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/14_UI_UX_Admin_Navigation_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/14_UI_UX_Admin_Navigation_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1721,
+    "chars": 13097
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/15_Migration_Strategy_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/15_Migration_Strategy_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1514,
+    "chars": 11457
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/16_Localization_Country_Packs_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/16_Localization_Country_Packs_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1298,
+    "chars": 10645
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/17_Performance_Scalability_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/17_Performance_Scalability_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1681,
+    "chars": 12894
+  },
+  {
+    "source_rel": "02_FOUNDATION_ARCHITECTURE/18_Data_Ownership_Hosting_Sync_Decision_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/02_FOUNDATION_ARCHITECTURE/18_Data_Ownership_Hosting_Sync_Decision_AR.docx.txt",
+    "top_dir": "02_FOUNDATION_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3468,
+    "chars": 25213
+  },
+  {
+    "source_rel": "03_RELEASE_SPECS/01_V1_Core_Foundation_CMS_Company_OS_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/03_RELEASE_SPECS/01_V1_Core_Foundation_CMS_Company_OS_AR.docx.txt",
+    "top_dir": "03_RELEASE_SPECS",
+    "extension": ".docx",
+    "words": 2815,
+    "chars": 28958
+  },
+  {
+    "source_rel": "03_RELEASE_SPECS/02_V2_WordPress_Migration_Commerce_Foundation_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/03_RELEASE_SPECS/02_V2_WordPress_Migration_Commerce_Foundation_AR.docx.txt",
+    "top_dir": "03_RELEASE_SPECS",
+    "extension": ".docx",
+    "words": 2942,
+    "chars": 28765
+  },
+  {
+    "source_rel": "03_RELEASE_SPECS/03_V3_Business_Foundation_ERP_Essentials_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/03_RELEASE_SPECS/03_V3_Business_Foundation_ERP_Essentials_AR.docx.txt",
+    "top_dir": "03_RELEASE_SPECS",
+    "extension": ".docx",
+    "words": 3392,
+    "chars": 34214
+  },
+  {
+    "source_rel": "03_RELEASE_SPECS/04_V4_Cloud_Marketplace_Rabet_Mall_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/03_RELEASE_SPECS/04_V4_Cloud_Marketplace_Rabet_Mall_AR.docx.txt",
+    "top_dir": "03_RELEASE_SPECS",
+    "extension": ".docx",
+    "words": 4094,
+    "chars": 42098
+  },
+  {
+    "source_rel": "03_RELEASE_SPECS/05_V5_ERP_Pro_Integration_Hub_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/03_RELEASE_SPECS/05_V5_ERP_Pro_Integration_Hub_AR.docx.txt",
+    "top_dir": "03_RELEASE_SPECS",
+    "extension": ".docx",
+    "words": 4201,
+    "chars": 45328
+  },
+  {
+    "source_rel": "03_RELEASE_SPECS/06_V6_Enterprise_Complete_Platform_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/03_RELEASE_SPECS/06_V6_Enterprise_Complete_Platform_AR.docx.txt",
+    "top_dir": "03_RELEASE_SPECS",
+    "extension": ".docx",
+    "words": 4819,
+    "chars": 51016
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/00_APPROVED_DATABASE_NAMES_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/00_APPROVED_DATABASE_NAMES_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 32,
+    "chars": 313
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/00_APPROVED_PLAN_ENTITLEMENTS_AND_LIMITS_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/00_APPROVED_PLAN_ENTITLEMENTS_AND_LIMITS_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 254,
+    "chars": 1670
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/01_Database_Core_Kernel_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/01_Database_Core_Kernel_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1275,
+    "chars": 13710
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/02_Database_Cloud_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/02_Database_Cloud_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 986,
+    "chars": 11116
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/03_Database_Frontend_Anywhere_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/03_Database_Frontend_Anywhere_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 999,
+    "chars": 10772
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/04_Database_Portable_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/04_Database_Portable_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1002,
+    "chars": 11375
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/05_Database_Dedicated_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/05_Database_Dedicated_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 945,
+    "chars": 10448
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/06_Database_Five_Systems_Integration_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/01_Core_Deployment_Modes/06_Database_Five_Systems_Integration_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1269,
+    "chars": 13451
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/07_Database_CMS_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/07_Database_CMS_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2772,
+    "chars": 27243
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/08_Database_Media_Files_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/08_Database_Media_Files_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2504,
+    "chars": 25896
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/09_Database_Rabet_Verification_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/09_Database_Rabet_Verification_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3462,
+    "chars": 28267
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/10_Database_Commerce_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/10_Database_Commerce_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3530,
+    "chars": 37204
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/11_Database_Mall_Public_Marketplace_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/11_Database_Mall_Public_Marketplace_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3838,
+    "chars": 32549
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/12_Database_Talent_Marketplace_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/12_Database_Talent_Marketplace_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2562,
+    "chars": 26428
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/13_Database_ERP_Essentials_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/13_Database_ERP_Essentials_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 4326,
+    "chars": 33844
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/14_Database_ERP_Pro_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/14_Database_ERP_Pro_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 4966,
+    "chars": 43027
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/15_Database_Integration_Hub_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/15_Database_Integration_Hub_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3658,
+    "chars": 31483
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/16_Database_AI_Cobuilder_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/16_Database_AI_Cobuilder_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 4108,
+    "chars": 34353
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/17_Database_Events_Workflows_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/17_Database_Events_Workflows_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 309,
+    "chars": 2223
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/18_Database_Security_Compliance_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/18_Database_Security_Compliance_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 4202,
+    "chars": 34537
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/19_Database_Internal_Marketplace_Packages_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/19_Database_Internal_Marketplace_Packages_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2901,
+    "chars": 25836
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/20_Database_Localization_Country_Packs_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/20_Database_Localization_Country_Packs_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2964,
+    "chars": 26318
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/21_Database_Migration_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/21_Database_Migration_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 4135,
+    "chars": 33482
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/22_Database_Billing_Subscriptions_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/22_Database_Billing_Subscriptions_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 4232,
+    "chars": 34996
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/23_Database_Notifications_Inbox_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/23_Database_Notifications_Inbox_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 255,
+    "chars": 2074
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/24_Database_Reviews_Reputation_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/24_Database_Reviews_Reputation_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2740,
+    "chars": 22786
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/25_Database_Dispute_Resolution_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/25_Database_Dispute_Resolution_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2806,
+    "chars": 22336
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/26_Database_Search_Engine_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/26_Database_Search_Engine_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3343,
+    "chars": 26802
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/27_Database_Moderation_System_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/27_Database_Moderation_System_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2363,
+    "chars": 20955
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/28_Database_Teams_Collaboration_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/28_Database_Teams_Collaboration_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2822,
+    "chars": 22537
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/29_Database_Agency_Platform_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/29_Database_Agency_Platform_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2718,
+    "chars": 25091
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/30_Database_Onboarding_Wizard_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/30_Database_Onboarding_Wizard_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3161,
+    "chars": 24497
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/31_Database_BI_Analytics_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/31_Database_BI_Analytics_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2288,
+    "chars": 24344
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/32_Database_GRC_Risk_Compliance_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/32_Database_GRC_Risk_Compliance_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 4229,
+    "chars": 38209
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/02_Module_Databases/33_Database_Developer_Console_SDK_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/02_Module_Databases/33_Database_Developer_Console_SDK_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3716,
+    "chars": 29997
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/34_Database_Industry_Solutions_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/34_Database_Industry_Solutions_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3255,
+    "chars": 27467
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/35_Database_Enterprise_Architecture_App_Portfolio_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/35_Database_Enterprise_Architecture_App_Portfolio_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3917,
+    "chars": 33299
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/36_Database_Testing_QA_DevOps_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/36_Database_Testing_QA_DevOps_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3489,
+    "chars": 30491
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/37_Database_Data_Warehouse_Platform_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/37_Database_Data_Warehouse_Platform_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2847,
+    "chars": 22507
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/38_Database_ESG_EHS_Sustainability_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/38_Database_ESG_EHS_Sustainability_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3831,
+    "chars": 31267
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/39_Database_PLM_RD_Engineering_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/03_Enterprise_Industry_Extensions/39_Database_PLM_RD_Engineering_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 2807,
+    "chars": 23919
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/00_Database_Master_Index_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/00_Database_Master_Index_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 3050,
+    "chars": 23503
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/01_Master_ERD_Relationship_Map_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/01_Master_ERD_Relationship_Map_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 1993,
+    "chars": 15342
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/05_Database_v1.1.0_Addendum_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/05_Database_v1.1.0_Addendum_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 646,
+    "chars": 5664
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/06_Database_v1.2.1_Mall_Multi_Catalog_Addendum_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/06_Database_v1.2.1_Mall_Multi_Catalog_Addendum_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 602,
+    "chars": 5471
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/08_Database_v1.3.0_Addendum_External_Sync_Universal_Mall_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/08_Database_v1.3.0_Addendum_External_Sync_Universal_Mall_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 320,
+    "chars": 2981
+  },
+  {
+    "source_rel": "04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/09_Database_v1.6.4_Freemium_Entitlements_Addendum_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/04_DATABASE_ARCHITECTURE/04_Master_Database_Maps/09_Database_v1.6.4_Freemium_Entitlements_Addendum_AR.docx.txt",
+    "top_dir": "04_DATABASE_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 226,
+    "chars": 1652
+  },
+  {
+    "source_rel": "05_EXECUTION_LARAVEL/00_Master_Execution_Plan_Solo_Builder_AI_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/05_EXECUTION_LARAVEL/00_Master_Execution_Plan_Solo_Builder_AI_AR.docx.txt",
+    "top_dir": "05_EXECUTION_LARAVEL",
+    "extension": ".docx",
+    "words": 2697,
+    "chars": 21274
+  },
+  {
+    "source_rel": "05_EXECUTION_LARAVEL/01_Laravel_Migration_Build_Order_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/05_EXECUTION_LARAVEL/01_Laravel_Migration_Build_Order_AR.docx.txt",
+    "top_dir": "05_EXECUTION_LARAVEL",
+    "extension": ".docx",
+    "words": 2206,
+    "chars": 17370
+  },
+  {
+    "source_rel": "05_EXECUTION_LARAVEL/02_Laravel_Module_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/05_EXECUTION_LARAVEL/02_Laravel_Module_Architecture_AR.docx.txt",
+    "top_dir": "05_EXECUTION_LARAVEL",
+    "extension": ".docx",
+    "words": 1684,
+    "chars": 14763
+  },
+  {
+    "source_rel": "05_EXECUTION_LARAVEL/03_V1_Implementation_Blueprint_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/05_EXECUTION_LARAVEL/03_V1_Implementation_Blueprint_AR.docx.txt",
+    "top_dir": "05_EXECUTION_LARAVEL",
+    "extension": ".docx",
+    "words": 2170,
+    "chars": 17439
+  },
+  {
+    "source_rel": "05_EXECUTION_LARAVEL/04_V1_Sprint_1_Coding_Plan_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/05_EXECUTION_LARAVEL/04_V1_Sprint_1_Coding_Plan_AR.docx.txt",
+    "top_dir": "05_EXECUTION_LARAVEL",
+    "extension": ".docx",
+    "words": 397,
+    "chars": 3046
+  },
+  {
+    "source_rel": "05_EXECUTION_LARAVEL/06_Laravel_Migration_Build_Order_v1.1.0_Update_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/05_EXECUTION_LARAVEL/06_Laravel_Migration_Build_Order_v1.1.0_Update_AR.docx.txt",
+    "top_dir": "05_EXECUTION_LARAVEL",
+    "extension": ".docx",
+    "words": 327,
+    "chars": 2908
+  },
+  {
+    "source_rel": "05_EXECUTION_LARAVEL/07_V1_Scope_Freeze_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/05_EXECUTION_LARAVEL/07_V1_Scope_Freeze_AR.docx.txt",
+    "top_dir": "05_EXECUTION_LARAVEL",
+    "extension": ".docx",
+    "words": 306,
+    "chars": 1969
+  },
+  {
+    "source_rel": "05_EXECUTION_LARAVEL/08_V1_Sprint_1_Coding_Plan_FINAL_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/05_EXECUTION_LARAVEL/08_V1_Sprint_1_Coding_Plan_FINAL_AR.docx.txt",
+    "top_dir": "05_EXECUTION_LARAVEL",
+    "extension": ".docx",
+    "words": 269,
+    "chars": 2141
+  },
+  {
+    "source_rel": "06_WORDPRESS_MIGRATION_CENTER/01_WordPress_Migration_Compatibility_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/06_WORDPRESS_MIGRATION_CENTER/01_WordPress_Migration_Compatibility_Architecture_AR.docx.txt",
+    "top_dir": "06_WORDPRESS_MIGRATION_CENTER",
+    "extension": ".docx",
+    "words": 509,
+    "chars": 3581
+  },
+  {
+    "source_rel": "06_WORDPRESS_MIGRATION_CENTER/02_WordPress_Plugin_Theme_Migration_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/06_WORDPRESS_MIGRATION_CENTER/02_WordPress_Plugin_Theme_Migration_Architecture_AR.docx.txt",
+    "top_dir": "06_WORDPRESS_MIGRATION_CENTER",
+    "extension": ".docx",
+    "words": 435,
+    "chars": 3194
+  },
+  {
+    "source_rel": "07_COMPETITIVE_PRODUCT_MOATS/01_Competitive_Differentiation_Product_Moats_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/07_COMPETITIVE_PRODUCT_MOATS/01_Competitive_Differentiation_Product_Moats_AR.docx.txt",
+    "top_dir": "07_COMPETITIVE_PRODUCT_MOATS",
+    "extension": ".docx",
+    "words": 309,
+    "chars": 2108
+  },
+  {
+    "source_rel": "08_DEVELOPER_ECONOMY/01_Theme_Plugin_Developer_Economy_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/08_DEVELOPER_ECONOMY/01_Theme_Plugin_Developer_Economy_Architecture_AR.docx.txt",
+    "top_dir": "08_DEVELOPER_ECONOMY",
+    "extension": ".docx",
+    "words": 2151,
+    "chars": 16034
+  },
+  {
+    "source_rel": "09_ENGINEERING_STANDARDS/01_Engineering_Delivery_Standards_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/09_ENGINEERING_STANDARDS/01_Engineering_Delivery_Standards_AR.docx.txt",
+    "top_dir": "09_ENGINEERING_STANDARDS",
+    "extension": ".docx",
+    "words": 821,
+    "chars": 6409
+  },
+  {
+    "source_rel": "09_ENGINEERING_STANDARDS/02_API_Design_Standards_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/09_ENGINEERING_STANDARDS/02_API_Design_Standards_AR.docx.txt",
+    "top_dir": "09_ENGINEERING_STANDARDS",
+    "extension": ".docx",
+    "words": 191,
+    "chars": 1456
+  },
+  {
+    "source_rel": "09_ENGINEERING_STANDARDS/03_Permissions_Matrix_V1_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/09_ENGINEERING_STANDARDS/03_Permissions_Matrix_V1_AR.docx.txt",
+    "top_dir": "09_ENGINEERING_STANDARDS",
+    "extension": ".docx",
+    "words": 296,
+    "chars": 2135
+  },
+  {
+    "source_rel": "09_ENGINEERING_STANDARDS/04_Feature_Flags_Matrix_V1_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/09_ENGINEERING_STANDARDS/04_Feature_Flags_Matrix_V1_AR.docx.txt",
+    "top_dir": "09_ENGINEERING_STANDARDS",
+    "extension": ".docx",
+    "words": 198,
+    "chars": 1497
+  },
+  {
+    "source_rel": "09_ENGINEERING_STANDARDS/05_Seed_Data_Demo_Scenario_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/09_ENGINEERING_STANDARDS/05_Seed_Data_Demo_Scenario_AR.docx.txt",
+    "top_dir": "09_ENGINEERING_STANDARDS",
+    "extension": ".docx",
+    "words": 165,
+    "chars": 1204
+  },
+  {
+    "source_rel": "10_PEOPLE_PARTNER_WORK_NETWORK/01_User_Partner_Work_Network_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/10_PEOPLE_PARTNER_WORK_NETWORK/01_User_Partner_Work_Network_Architecture_AR.docx.txt",
+    "top_dir": "10_PEOPLE_PARTNER_WORK_NETWORK",
+    "extension": ".docx",
+    "words": 665,
+    "chars": 4436
+  },
+  {
+    "source_rel": "10_PEOPLE_PARTNER_WORK_NETWORK/02_Talent_Marketplace_Public_Professionals_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/10_PEOPLE_PARTNER_WORK_NETWORK/02_Talent_Marketplace_Public_Professionals_AR.docx.txt",
+    "top_dir": "10_PEOPLE_PARTNER_WORK_NETWORK",
+    "extension": ".docx",
+    "words": 301,
+    "chars": 1986
+  },
+  {
+    "source_rel": "10_PEOPLE_PARTNER_WORK_NETWORK/03_Academy_Certification_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/10_PEOPLE_PARTNER_WORK_NETWORK/03_Academy_Certification_Architecture_AR.docx.txt",
+    "top_dir": "10_PEOPLE_PARTNER_WORK_NETWORK",
+    "extension": ".docx",
+    "words": 260,
+    "chars": 1951
+  },
+  {
+    "source_rel": "10_PEOPLE_PARTNER_WORK_NETWORK/04_Agency_Partner_Operations_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/10_PEOPLE_PARTNER_WORK_NETWORK/04_Agency_Partner_Operations_AR.docx.txt",
+    "top_dir": "10_PEOPLE_PARTNER_WORK_NETWORK",
+    "extension": ".docx",
+    "words": 249,
+    "chars": 1838
+  },
+  {
+    "source_rel": "10_PEOPLE_PARTNER_WORK_NETWORK/05_Legal_Partner_Network_Rabet_Verification_Operations_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/10_PEOPLE_PARTNER_WORK_NETWORK/05_Legal_Partner_Network_Rabet_Verification_Operations_AR.docx.txt",
+    "top_dir": "10_PEOPLE_PARTNER_WORK_NETWORK",
+    "extension": ".docx",
+    "words": 210,
+    "chars": 1608
+  },
+  {
+    "source_rel": "10_PEOPLE_PARTNER_WORK_NETWORK/06_Partner_Affiliate_Dropshipping_Commerce_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/10_PEOPLE_PARTNER_WORK_NETWORK/06_Partner_Affiliate_Dropshipping_Commerce_AR.docx.txt",
+    "top_dir": "10_PEOPLE_PARTNER_WORK_NETWORK",
+    "extension": ".docx",
+    "words": 252,
+    "chars": 1935
+  },
+  {
+    "source_rel": "10_PEOPLE_PARTNER_WORK_NETWORK/07_Work_Network_Roles_Capabilities_Matrix_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/10_PEOPLE_PARTNER_WORK_NETWORK/07_Work_Network_Roles_Capabilities_Matrix_AR.docx.txt",
+    "top_dir": "10_PEOPLE_PARTNER_WORK_NETWORK",
+    "extension": ".docx",
+    "words": 447,
+    "chars": 2960
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/01_300_Launch_Themes_Strategy_Taxonomy_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/01_300_Launch_Themes_Strategy_Taxonomy_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 443,
+    "chars": 2632
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/02_Plugin_Module_App_Ecosystem_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/02_Plugin_Module_App_Ecosystem_Architecture_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 384,
+    "chars": 2711
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/03_Digital_Marketing_Plugin_Suite_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/03_Digital_Marketing_Plugin_Suite_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 330,
+    "chars": 2554
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/04_Theme_Plugin_Bundle_Matrix_Overview_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/04_Theme_Plugin_Bundle_Matrix_Overview_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 374,
+    "chars": 2670
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/05_300_Themes_Master_Catalog_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/05_300_Themes_Master_Catalog_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 3556,
+    "chars": 24265
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/06_300_Themes_App_Recipes_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/06_300_Themes_App_Recipes_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 1806,
+    "chars": 16406
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/07_Plugin_Master_Catalog_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/07_Plugin_Master_Catalog_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 1483,
+    "chars": 10939
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/08_Plugin_Bundles_By_Project_Type_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/08_Plugin_Bundles_By_Project_Type_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 596,
+    "chars": 7224
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/09_Theme_Plugin_Mobile_Profile_Matrix_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/09_Theme_Plugin_Mobile_Profile_Matrix_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 731,
+    "chars": 5619
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/10_Theme_Package_Standard_Manifest_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/10_Theme_Package_Standard_Manifest_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 159,
+    "chars": 1146
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/11_Plugin_Package_Standard_Manifest_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/11_Plugin_Package_Standard_Manifest_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 157,
+    "chars": 1052
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/12_Design_System_UI_Components_Library_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/12_Design_System_UI_Components_Library_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 291,
+    "chars": 2009
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/13_Demo_Data_Demo_Importer_Specification_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/13_Demo_Data_Demo_Importer_Specification_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 120,
+    "chars": 815
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/14_Theme_QA_Publishing_Checklist_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/14_Theme_QA_Publishing_Checklist_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 158,
+    "chars": 962
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/15_Plugin_QA_Security_Permission_Checklist_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/15_Plugin_QA_Security_Permission_Checklist_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 143,
+    "chars": 1006
+  },
+  {
+    "source_rel": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM/16_Marketplace_Licensing_Pricing_Revenue_Share_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/11_THEME_PLUGIN_MARKETING_ECOSYSTEM/16_Marketplace_Licensing_Pricing_Revenue_Share_AR.docx.txt",
+    "top_dir": "11_THEME_PLUGIN_MARKETING_ECOSYSTEM",
+    "extension": ".docx",
+    "words": 169,
+    "chars": 1064
+  },
+  {
+    "source_rel": "12_EXTERNAL_REFERENCES/Rabet_B2B_Strategic_Management_Semi_Project.pdf",
+    "imported_text": "docs/kabeeri/source_text/12_EXTERNAL_REFERENCES/Rabet_B2B_Strategic_Management_Semi_Project.pdf.txt",
+    "top_dir": "12_EXTERNAL_REFERENCES",
+    "extension": ".pdf",
+    "words": 7,
+    "chars": 44
+  },
+  {
+    "source_rel": "13_CODING_READY_EXECUTION/00_Coding_Readiness_Final_Index_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/13_CODING_READY_EXECUTION/00_Coding_Readiness_Final_Index_AR.docx.txt",
+    "top_dir": "13_CODING_READY_EXECUTION",
+    "extension": ".docx",
+    "words": 179,
+    "chars": 1032
+  },
+  {
+    "source_rel": "13_CODING_READY_EXECUTION/01_Coding_Ready_Acceptance_Checklist_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/13_CODING_READY_EXECUTION/01_Coding_Ready_Acceptance_Checklist_AR.docx.txt",
+    "top_dir": "13_CODING_READY_EXECUTION",
+    "extension": ".docx",
+    "words": 200,
+    "chars": 1231
+  },
+  {
+    "source_rel": "13_CODING_READY_EXECUTION/02_V1_to_V6_Coding_Roadmap_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/13_CODING_READY_EXECUTION/02_V1_to_V6_Coding_Roadmap_AR.docx.txt",
+    "top_dir": "13_CODING_READY_EXECUTION",
+    "extension": ".docx",
+    "words": 314,
+    "chars": 2150
+  },
+  {
+    "source_rel": "13_CODING_READY_EXECUTION/10_Solo_AI_Builder_Execution_System_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/13_CODING_READY_EXECUTION/10_Solo_AI_Builder_Execution_System_AR.docx.txt",
+    "top_dir": "13_CODING_READY_EXECUTION",
+    "extension": ".docx",
+    "words": 446,
+    "chars": 2827
+  },
+  {
+    "source_rel": "13_CODING_READY_EXECUTION/11_V1_Flexible_Task_Cards_Board_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/13_CODING_READY_EXECUTION/11_V1_Flexible_Task_Cards_Board_AR.docx.txt",
+    "top_dir": "13_CODING_READY_EXECUTION",
+    "extension": ".docx",
+    "words": 702,
+    "chars": 4449
+  },
+  {
+    "source_rel": "13_CODING_READY_EXECUTION/12_Worklog_Session_Templates_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/13_CODING_READY_EXECUTION/12_Worklog_Session_Templates_AR.docx.txt",
+    "top_dir": "13_CODING_READY_EXECUTION",
+    "extension": ".docx",
+    "words": 251,
+    "chars": 1438
+  },
+  {
+    "source_rel": "13_CODING_READY_EXECUTION/13_Codex_Solo_Risk_Control_Checklists_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/13_CODING_READY_EXECUTION/13_Codex_Solo_Risk_Control_Checklists_AR.docx.txt",
+    "top_dir": "13_CODING_READY_EXECUTION",
+    "extension": ".docx",
+    "words": 207,
+    "chars": 1171
+  },
+  {
+    "source_rel": "13_CODING_READY_EXECUTION/WORKLOG_TEMPLATE.md",
+    "imported_text": "docs/kabeeri/source_text/13_CODING_READY_EXECUTION/WORKLOG_TEMPLATE.md.txt",
+    "top_dir": "13_CODING_READY_EXECUTION",
+    "extension": ".md",
+    "words": 98,
+    "chars": 706
+  },
+  {
+    "source_rel": "14_MALL_MARKETPLACE_NETWORK/01_Mall_Multi_Catalog_Network_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/14_MALL_MARKETPLACE_NETWORK/01_Mall_Multi_Catalog_Network_Architecture_AR.docx.txt",
+    "top_dir": "14_MALL_MARKETPLACE_NETWORK",
+    "extension": ".docx",
+    "words": 814,
+    "chars": 5367
+  },
+  {
+    "source_rel": "14_MALL_MARKETPLACE_NETWORK/02_Universal_Mall_Discovery_Network_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/14_MALL_MARKETPLACE_NETWORK/02_Universal_Mall_Discovery_Network_AR.docx.txt",
+    "top_dir": "14_MALL_MARKETPLACE_NETWORK",
+    "extension": ".docx",
+    "words": 437,
+    "chars": 2974
+  },
+  {
+    "source_rel": "14_MALL_MARKETPLACE_NETWORK/03_External_Systems_Sync_Connector_Marketplace_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/14_MALL_MARKETPLACE_NETWORK/03_External_Systems_Sync_Connector_Marketplace_AR.docx.txt",
+    "top_dir": "14_MALL_MARKETPLACE_NETWORK",
+    "extension": ".docx",
+    "words": 370,
+    "chars": 2559
+  },
+  {
+    "source_rel": "14_MALL_MARKETPLACE_NETWORK/04_Backoffice_Anywhere_Admin_For_Existing_Websites_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/14_MALL_MARKETPLACE_NETWORK/04_Backoffice_Anywhere_Admin_For_Existing_Websites_AR.docx.txt",
+    "top_dir": "14_MALL_MARKETPLACE_NETWORK",
+    "extension": ".docx",
+    "words": 239,
+    "chars": 1498
+  },
+  {
+    "source_rel": "14_MALL_MARKETPLACE_NETWORK/05_Travel_Tourism_Mall_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/14_MALL_MARKETPLACE_NETWORK/05_Travel_Tourism_Mall_AR.docx.txt",
+    "top_dir": "14_MALL_MARKETPLACE_NETWORK",
+    "extension": ".docx",
+    "words": 231,
+    "chars": 1591
+  },
+  {
+    "source_rel": "15_VERSION_CODING_PLANS/01_V1_Coding_Plan_Core_MVP_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/15_VERSION_CODING_PLANS/01_V1_Coding_Plan_Core_MVP_AR.docx.txt",
+    "top_dir": "15_VERSION_CODING_PLANS",
+    "extension": ".docx",
+    "words": 206,
+    "chars": 1339
+  },
+  {
+    "source_rel": "15_VERSION_CODING_PLANS/02_V2_Coding_Plan_Migration_Discovery_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/15_VERSION_CODING_PLANS/02_V2_Coding_Plan_Migration_Discovery_AR.docx.txt",
+    "top_dir": "15_VERSION_CODING_PLANS",
+    "extension": ".docx",
+    "words": 187,
+    "chars": 1337
+  },
+  {
+    "source_rel": "15_VERSION_CODING_PLANS/03_V3_Coding_Plan_Business_Operations_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/15_VERSION_CODING_PLANS/03_V3_Coding_Plan_Business_Operations_AR.docx.txt",
+    "top_dir": "15_VERSION_CODING_PLANS",
+    "extension": ".docx",
+    "words": 180,
+    "chars": 1229
+  },
+  {
+    "source_rel": "15_VERSION_CODING_PLANS/04_V4_Coding_Plan_Marketplace_Work_Network_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/15_VERSION_CODING_PLANS/04_V4_Coding_Plan_Marketplace_Work_Network_AR.docx.txt",
+    "top_dir": "15_VERSION_CODING_PLANS",
+    "extension": ".docx",
+    "words": 190,
+    "chars": 1312
+  },
+  {
+    "source_rel": "15_VERSION_CODING_PLANS/05_V5_Coding_Plan_ERP_Pro_Integration_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/15_VERSION_CODING_PLANS/05_V5_Coding_Plan_ERP_Pro_Integration_AR.docx.txt",
+    "top_dir": "15_VERSION_CODING_PLANS",
+    "extension": ".docx",
+    "words": 180,
+    "chars": 1261
+  },
+  {
+    "source_rel": "15_VERSION_CODING_PLANS/06_V6_Coding_Plan_Enterprise_Platform_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/15_VERSION_CODING_PLANS/06_V6_Coding_Plan_Enterprise_Platform_AR.docx.txt",
+    "top_dir": "15_VERSION_CODING_PLANS",
+    "extension": ".docx",
+    "words": 173,
+    "chars": 1230
+  },
+  {
+    "source_rel": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v1_codex_prompt_pack_ar.docx",
+    "imported_text": "docs/kabeeri/source_text/16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v1_codex_prompt_pack_ar.docx.txt",
+    "top_dir": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX",
+    "extension": ".docx",
+    "words": 5522,
+    "chars": 36059
+  },
+  {
+    "source_rel": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v2_codex_prompt_pack_ar.docx",
+    "imported_text": "docs/kabeeri/source_text/16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v2_codex_prompt_pack_ar.docx.txt",
+    "top_dir": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX",
+    "extension": ".docx",
+    "words": 4612,
+    "chars": 36638
+  },
+  {
+    "source_rel": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v3_codex_prompt_pack_ar.docx",
+    "imported_text": "docs/kabeeri/source_text/16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v3_codex_prompt_pack_ar.docx.txt",
+    "top_dir": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX",
+    "extension": ".docx",
+    "words": 4428,
+    "chars": 38277
+  },
+  {
+    "source_rel": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v4_codex_prompt_pack_ar.docx",
+    "imported_text": "docs/kabeeri/source_text/16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v4_codex_prompt_pack_ar.docx.txt",
+    "top_dir": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX",
+    "extension": ".docx",
+    "words": 3250,
+    "chars": 29600
+  },
+  {
+    "source_rel": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v5_codex_prompt_pack_ar.docx",
+    "imported_text": "docs/kabeeri/source_text/16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v5_codex_prompt_pack_ar.docx.txt",
+    "top_dir": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX",
+    "extension": ".docx",
+    "words": 5517,
+    "chars": 36998
+  },
+  {
+    "source_rel": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v6_codex_prompt_pack_ar.docx",
+    "imported_text": "docs/kabeeri/source_text/16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v6_codex_prompt_pack_ar.docx.txt",
+    "top_dir": "16_CODE_PROPMPTS_TO_CREATE_BY_CODEX",
+    "extension": ".docx",
+    "words": 3532,
+    "chars": 29549
+  },
+  {
+    "source_rel": "17_EXTENSION_GOVERNANCE/01_Extension_Development_Governance_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/17_EXTENSION_GOVERNANCE/01_Extension_Development_Governance_AR.docx.txt",
+    "top_dir": "17_EXTENSION_GOVERNANCE",
+    "extension": ".docx",
+    "words": 155,
+    "chars": 1072
+  },
+  {
+    "source_rel": "17_EXTENSION_GOVERNANCE/02_Extension_Registry_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/17_EXTENSION_GOVERNANCE/02_Extension_Registry_AR.docx.txt",
+    "top_dir": "17_EXTENSION_GOVERNANCE",
+    "extension": ".docx",
+    "words": 80,
+    "chars": 533
+  },
+  {
+    "source_rel": "17_EXTENSION_GOVERNANCE/03_File_Folder_Architecture_Rules_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/17_EXTENSION_GOVERNANCE/03_File_Folder_Architecture_Rules_AR.docx.txt",
+    "top_dir": "17_EXTENSION_GOVERNANCE",
+    "extension": ".docx",
+    "words": 124,
+    "chars": 856
+  },
+  {
+    "source_rel": "17_EXTENSION_GOVERNANCE/04_New_Feature_File_Pack_Template_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/17_EXTENSION_GOVERNANCE/04_New_Feature_File_Pack_Template_AR.docx.txt",
+    "top_dir": "17_EXTENSION_GOVERNANCE",
+    "extension": ".docx",
+    "words": 82,
+    "chars": 625
+  },
+  {
+    "source_rel": "17_EXTENSION_GOVERNANCE/05_Progressive_Version_Freeze_Policy_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/17_EXTENSION_GOVERNANCE/05_Progressive_Version_Freeze_Policy_AR.docx.txt",
+    "top_dir": "17_EXTENSION_GOVERNANCE",
+    "extension": ".docx",
+    "words": 107,
+    "chars": 664
+  },
+  {
+    "source_rel": "17_EXTENSION_GOVERNANCE/06_Extension_Codex_Prompt_Rules_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/17_EXTENSION_GOVERNANCE/06_Extension_Codex_Prompt_Rules_AR.docx.txt",
+    "top_dir": "17_EXTENSION_GOVERNANCE",
+    "extension": ".docx",
+    "words": 276,
+    "chars": 1733
+  },
+  {
+    "source_rel": "17_EXTENSION_GOVERNANCE/07_Update_File_Pack_Codex_Workflow_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/17_EXTENSION_GOVERNANCE/07_Update_File_Pack_Codex_Workflow_AR.docx.txt",
+    "top_dir": "17_EXTENSION_GOVERNANCE",
+    "extension": ".docx",
+    "words": 224,
+    "chars": 1569
+  },
+  {
+    "source_rel": "17_EXTENSION_GOVERNANCE/README_EXTENSION_GOVERNANCE.md",
+    "imported_text": "docs/kabeeri/source_text/17_EXTENSION_GOVERNANCE/README_EXTENSION_GOVERNANCE.md.txt",
+    "top_dir": "17_EXTENSION_GOVERNANCE",
+    "extension": ".md",
+    "words": 18,
+    "chars": 147
+  },
+  {
+    "source_rel": "18_TECHNOLOGY_GOVERNANCE/01_Technology_Stack_Governance_Decision_Records_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/18_TECHNOLOGY_GOVERNANCE/01_Technology_Stack_Governance_Decision_Records_AR.docx.txt",
+    "top_dir": "18_TECHNOLOGY_GOVERNANCE",
+    "extension": ".docx",
+    "words": 170,
+    "chars": 1216
+  },
+  {
+    "source_rel": "18_TECHNOLOGY_GOVERNANCE/02_Frontend_Backend_Separation_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/18_TECHNOLOGY_GOVERNANCE/02_Frontend_Backend_Separation_Architecture_AR.docx.txt",
+    "top_dir": "18_TECHNOLOGY_GOVERNANCE",
+    "extension": ".docx",
+    "words": 116,
+    "chars": 803
+  },
+  {
+    "source_rel": "18_TECHNOLOGY_GOVERNANCE/README_TECHNOLOGY_GOVERNANCE.md",
+    "imported_text": "docs/kabeeri/source_text/18_TECHNOLOGY_GOVERNANCE/README_TECHNOLOGY_GOVERNANCE.md.txt",
+    "top_dir": "18_TECHNOLOGY_GOVERNANCE",
+    "extension": ".md",
+    "words": 13,
+    "chars": 138
+  },
+  {
+    "source_rel": "19_EXTENSION_BUSINESS_ARCHITECTURE/V7_01_Mobile_Business_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/19_EXTENSION_BUSINESS_ARCHITECTURE/V7_01_Mobile_Business_AR.docx.txt",
+    "top_dir": "19_EXTENSION_BUSINESS_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 105,
+    "chars": 673
+  },
+  {
+    "source_rel": "19_EXTENSION_BUSINESS_ARCHITECTURE/V8_01_Desktop_Business_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/19_EXTENSION_BUSINESS_ARCHITECTURE/V8_01_Desktop_Business_AR.docx.txt",
+    "top_dir": "19_EXTENSION_BUSINESS_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 72,
+    "chars": 469
+  },
+  {
+    "source_rel": "20_EXTENSION_TECHNICAL_ARCHITECTURE/00_Freemium_Technical_Entitlement_Enforcement_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/20_EXTENSION_TECHNICAL_ARCHITECTURE/00_Freemium_Technical_Entitlement_Enforcement_AR.docx.txt",
+    "top_dir": "20_EXTENSION_TECHNICAL_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 277,
+    "chars": 1913
+  },
+  {
+    "source_rel": "20_EXTENSION_TECHNICAL_ARCHITECTURE/V7_02_Mobile_Technical_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/20_EXTENSION_TECHNICAL_ARCHITECTURE/V7_02_Mobile_Technical_AR.docx.txt",
+    "top_dir": "20_EXTENSION_TECHNICAL_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 81,
+    "chars": 567
+  },
+  {
+    "source_rel": "20_EXTENSION_TECHNICAL_ARCHITECTURE/V8_02_Desktop_Technical_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/20_EXTENSION_TECHNICAL_ARCHITECTURE/V8_02_Desktop_Technical_AR.docx.txt",
+    "top_dir": "20_EXTENSION_TECHNICAL_ARCHITECTURE",
+    "extension": ".docx",
+    "words": 85,
+    "chars": 635
+  },
+  {
+    "source_rel": "21_EXTENSION_DATABASE_API_ADDENDUM/V7_03_Mobile_DB_API_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/21_EXTENSION_DATABASE_API_ADDENDUM/V7_03_Mobile_DB_API_AR.docx.txt",
+    "top_dir": "21_EXTENSION_DATABASE_API_ADDENDUM",
+    "extension": ".docx",
+    "words": 65,
+    "chars": 799
+  },
+  {
+    "source_rel": "21_EXTENSION_DATABASE_API_ADDENDUM/V8_03_Desktop_DB_API_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/21_EXTENSION_DATABASE_API_ADDENDUM/V8_03_Desktop_DB_API_AR.docx.txt",
+    "top_dir": "21_EXTENSION_DATABASE_API_ADDENDUM",
+    "extension": ".docx",
+    "words": 72,
+    "chars": 698
+  },
+  {
+    "source_rel": "22_EXTENSION_CODEX_PROMPTS/00_Extension_Update_Codex_Prompt_Pack_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/22_EXTENSION_CODEX_PROMPTS/00_Extension_Update_Codex_Prompt_Pack_AR.docx.txt",
+    "top_dir": "22_EXTENSION_CODEX_PROMPTS",
+    "extension": ".docx",
+    "words": 444,
+    "chars": 3308
+  },
+  {
+    "source_rel": "22_EXTENSION_CODEX_PROMPTS/01_Freemium_Plans_Entitlements_Codex_Prompt_Pack_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/22_EXTENSION_CODEX_PROMPTS/01_Freemium_Plans_Entitlements_Codex_Prompt_Pack_AR.docx.txt",
+    "top_dir": "22_EXTENSION_CODEX_PROMPTS",
+    "extension": ".docx",
+    "words": 626,
+    "chars": 5455
+  },
+  {
+    "source_rel": "22_EXTENSION_CODEX_PROMPTS/README_CODEX_PROMPTS_EXTENSIONS.md",
+    "imported_text": "docs/kabeeri/source_text/22_EXTENSION_CODEX_PROMPTS/README_CODEX_PROMPTS_EXTENSIONS.md.txt",
+    "top_dir": "22_EXTENSION_CODEX_PROMPTS",
+    "extension": ".md",
+    "words": 18,
+    "chars": 132
+  },
+  {
+    "source_rel": "22_EXTENSION_CODEX_PROMPTS/V7_04_Mobile_Codex_Prompts_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/22_EXTENSION_CODEX_PROMPTS/V7_04_Mobile_Codex_Prompts_AR.docx.txt",
+    "top_dir": "22_EXTENSION_CODEX_PROMPTS",
+    "extension": ".docx",
+    "words": 445,
+    "chars": 3131
+  },
+  {
+    "source_rel": "22_EXTENSION_CODEX_PROMPTS/V8_04_Desktop_Codex_Prompts_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/22_EXTENSION_CODEX_PROMPTS/V8_04_Desktop_Codex_Prompts_AR.docx.txt",
+    "top_dir": "22_EXTENSION_CODEX_PROMPTS",
+    "extension": ".docx",
+    "words": 411,
+    "chars": 3018
+  },
+  {
+    "source_rel": "23_EXTENSION_ACCEPTANCE_CHECKLISTS/00_Freemium_Plans_Entitlements_Acceptance_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/23_EXTENSION_ACCEPTANCE_CHECKLISTS/00_Freemium_Plans_Entitlements_Acceptance_AR.docx.txt",
+    "top_dir": "23_EXTENSION_ACCEPTANCE_CHECKLISTS",
+    "extension": ".docx",
+    "words": 157,
+    "chars": 968
+  },
+  {
+    "source_rel": "23_EXTENSION_ACCEPTANCE_CHECKLISTS/V7_05_Mobile_Acceptance_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/23_EXTENSION_ACCEPTANCE_CHECKLISTS/V7_05_Mobile_Acceptance_AR.docx.txt",
+    "top_dir": "23_EXTENSION_ACCEPTANCE_CHECKLISTS",
+    "extension": ".docx",
+    "words": 67,
+    "chars": 468
+  },
+  {
+    "source_rel": "23_EXTENSION_ACCEPTANCE_CHECKLISTS/V8_05_Desktop_Acceptance_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/23_EXTENSION_ACCEPTANCE_CHECKLISTS/V8_05_Desktop_Acceptance_AR.docx.txt",
+    "top_dir": "23_EXTENSION_ACCEPTANCE_CHECKLISTS",
+    "extension": ".docx",
+    "words": 78,
+    "chars": 497
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/00_Task_Tracking_START_HERE_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/00_Task_Tracking_START_HERE_AR.docx.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".docx",
+    "words": 69,
+    "chars": 474
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/01_Task_Tracking_System_Architecture_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/01_Task_Tracking_System_Architecture_AR.docx.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".docx",
+    "words": 53,
+    "chars": 412
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/02_VS_Code_Commands_Table_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/02_VS_Code_Commands_Table_AR.docx.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".docx",
+    "words": 119,
+    "chars": 1050
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/03_Codex_Auto_Update_Rules_AR.docx",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/03_Codex_Auto_Update_Rules_AR.docx.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".docx",
+    "words": 60,
+    "chars": 350
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/README_TASK_TRACKING.md",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/README_TASK_TRACKING.md.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".md",
+    "words": 101,
+    "chars": 828
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/scripts/kbr-task.php",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/scripts/kbr-task.php.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".php",
+    "words": 594,
+    "chars": 5831
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/TASK_TRACKER_QUICK_PROMPT.md",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/TASK_TRACKER_QUICK_PROMPT.md.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".md",
+    "words": 73,
+    "chars": 632
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/ext_update.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/ext_update.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 256,
+    "chars": 3475
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/freemium.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/freemium.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 364,
+    "chars": 5334
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/v1.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/v1.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 1280,
+    "chars": 18613
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/v2.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/v2.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 1548,
+    "chars": 22538
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/v3.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/v3.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 1542,
+    "chars": 22288
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/v4.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/v4.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 1637,
+    "chars": 23683
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/v5.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/v5.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 1453,
+    "chars": 20947
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/v6.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/v6.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 1659,
+    "chars": 23573
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/v7.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/v7.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 340,
+    "chars": 4624
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/tasks/v8.tasks.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/tasks/v8.tasks.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 338,
+    "chars": 4625
+  },
+  {
+    "source_rel": "24_kabeeri_task_tracking/vscode/tasks.example.json",
+    "imported_text": "docs/kabeeri/source_text/24_kabeeri_task_tracking/vscode/tasks.example.json.txt",
+    "top_dir": "24_kabeeri_task_tracking",
+    "extension": ".json",
+    "words": 54,
+    "chars": 584
+  },
+  {
+    "source_rel": "99_ARCHIVE_SUPERSEDED/Kabeeri_Database_Laravel_Migration_Roadmap_AR_SUPERSEDED.docx",
+    "imported_text": "docs/kabeeri/source_text/99_ARCHIVE_SUPERSEDED/Kabeeri_Database_Laravel_Migration_Roadmap_AR_SUPERSEDED.docx.txt",
+    "top_dir": "99_ARCHIVE_SUPERSEDED",
+    "extension": ".docx",
+    "words": 1641,
+    "chars": 27931
+  },
+  {
+    "source_rel": "99_ARCHIVE_SUPERSEDED/Kabeeri_Database_Master_ERD_Module_Blueprint_AR_SUPERSEDED.docx",
+    "imported_text": "docs/kabeeri/source_text/99_ARCHIVE_SUPERSEDED/Kabeeri_Database_Master_ERD_Module_Blueprint_AR_SUPERSEDED.docx.txt",
+    "top_dir": "99_ARCHIVE_SUPERSEDED",
+    "extension": ".docx",
+    "words": 2628,
+    "chars": 27783
+  },
+  {
+    "source_rel": "99_ARCHIVE_SUPERSEDED/Kabeeri_Database_V1_Exact_Migration_Pack_AR_SUPERSEDED.docx",
+    "imported_text": "docs/kabeeri/source_text/99_ARCHIVE_SUPERSEDED/Kabeeri_Database_V1_Exact_Migration_Pack_AR_SUPERSEDED.docx.txt",
+    "top_dir": "99_ARCHIVE_SUPERSEDED",
+    "extension": ".docx",
+    "words": 1951,
+    "chars": 43909
+  }
+]

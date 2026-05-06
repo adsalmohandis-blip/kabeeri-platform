@@ -1,0 +1,527 @@
+KABEERI — ملحق 7: قواعد وحوكمة AI Co-builder
+ملحق للملف الرئيسي وملاحق التأسيس والتشغيل والترابط والإصدارات والصلاحيات والـ Workflows
+هذا الملف يحدد كيف يعمل Kabeeri AI Co-builder داخل المنصة، وما الذي يستطيع بناؤه، وما الذي لا يستطيع تنفيذه إلا بموافقة، وما الذي يجب منعه تمامًا أو حمايته بإجراءات صارمة.
+الهدف:
+جعل AI داخل Kabeeri قوة بناء حقيقية، وليس مصدر خطر على البيانات أو الصلاحيات أو العمليات المالية والقانونية.
+1. تعريف Kabeeri AI Co-builder
+Kabeeri AI Co-builder ليس Chatbot عاديًا.
+هو مساعد بناء وتعديل داخل النظام يمكنه مساعدة المستخدم في:
+CMSCommerceERPRabetKabeeri MallTalent MarketplaceTeamsWorkflowsDashboardsReportsPluginsThemesModules
+الفكرة:
+المستخدم يصف ما يريد→ AI يفهم السياق→ AI يقترح خطة→ المستخدم يراجع→ النظام يطبق بأمان→ كل شيء يسجل ويمكن الرجوع عنه
+2. القاعدة الذهبية
+لا يوجد AI Action مباشر وخطير.
+أي تعديل مؤثر يجب أن يمر بـ:
+Prompt→ Context Check→ Permission Check→ AI Plan→ Risk Classification→ Preview→ User Approval→ Optional Workflow Approval→ Apply Changes→ Activity Log→ Rollback Point
+3. أنواع AI داخل Kabeeri
+3.1 AI Assistant
+مساعد عام يجيب ويقترح ويشرح.
+أمثلة:
+شرح تقرير.
+اقتراح تحسين SEO.
+تلخيص أداء المبيعات.
+شرح سبب فشل sync.
+3.2 AI Co-builder
+يبني أشياء داخل النظام.
+أمثلة:
+صفحة.
+Form.
+Content Type.
+Dashboard.
+Workflow.
+CRM Pipeline.
+Service Catalog.
+3.3 AI Agent
+مساعد متخصص في مجال معين.
+أمثلة:
+CMS Agent.
+Commerce Agent.
+Finance Agent.
+HR Agent.
+Rabet Agent.
+Migration Agent.
+Developer Agent.
+3.4 AI Skill
+قدرة قابلة للتثبيت أو التفعيل من Marketplace الداخلي.
+أمثلة:
+AI SEO Skill.
+AI Product Description Skill.
+AI Workflow Builder Skill.
+AI CRM Setup Skill.
+AI Finance Explainer Skill.
+4. ماذا يستطيع AI أن يبني؟
+4.1 CMS Builder
+يمكنه:
+إنشاء صفحات draft.
+إنشاء أقسام صفحة.
+إنشاء blog structure.
+اقتراح SEO title/description.
+إنشاء forms.
+إنشاء content types.
+إنشاء taxonomies.
+اقتراح redirects.
+توليد content outlines.
+أمثلة prompts:
+ابني صفحة Landing لشركة عقارات.اعمل Content Type للعقارات فيه السعر والمساحة والموقع والصور.اعمل صفحة تعرض آخر 6 عقارات متاحة.
+4.2 Commerce Builder
+يمكنه:
+إنشاء product drafts.
+إنشاء product categories.
+اقتراح pricing structure.
+إنشاء coupon draft.
+إنشاء email templates.
+اقتراح checkout settings.
+إنشاء product descriptions.
+بناء store dashboard.
+لا ينفذ تغييرات حساسة في الدفع بدون موافقة.
+4.3 Rabet Builder
+يمكنه:
+إنشاء company profile draft.
+اقتراح الهيكل الإداري.
+إنشاء departments.
+إنشاء roles draft.
+إنشاء service catalog.
+اقتراح trust improvement actions.
+تجهيز verification checklist.
+4.4 Kabeeri Mall Builder
+يمكنه:
+تحسين business listing.
+اقتراح categories.
+كتابة service descriptions.
+تحسين product listing.
+اقتراح FAQs.
+اقتراح صور مطلوبة.
+تحليل فرص الظهور.
+4.5 Talent Builder
+يمكنه:
+تحسين professional profile.
+استخراج skills من work history.
+كتابة job description.
+مطابقة أشخاص مع وظائف.
+اقتراح interview questions.
+تلخيص تقييمات الأداء.
+4.6 ERP Builder
+يمكنه:
+إنشاء CRM pipeline draft.
+إنشاء workflow مبيعات.
+اقتراح inventory alerts.
+بناء dashboard مبيعات.
+إنشاء report definitions.
+إعداد approval draft.
+لكن لا يغير accounting/payroll/tax بشكل مباشر بدون approval صارم.
+4.7 Workflow Builder
+يمكنه بناء automation من أمر طبيعي:
+لما العميل يملأ فورم عرض سعر، افتح Lead وابعت إشعار لفريق المبيعات واعمل مهمة متابعة بعد يومين.
+الناتج:
+Trigger.
+Conditions.
+Actions.
+Notifications.
+Logs.
+Disable option.
+4.8 Developer Assistant
+يمكنه:
+توليد plugin skeleton.
+توليد theme skeleton.
+توليد module skeleton.
+اقتراح migrations.
+كتابة tests.
+شرح API.
+توليد docs.
+لكن لا ينشر package في Marketplace بدون review.
+5. مستويات خطورة AI Actions
+5.1 Level 0 — Read-only
+AI يقرأ ويلخص فقط.
+أمثلة:
+لخص أداء المبيعات.
+اشرح سبب انخفاض الزيارات.
+حلل تقييمات العملاء.
+المتطلبات
+Permission للقراءة.
+Logging عند البيانات الحساسة.
+5.2 Level 1 — Draft Creation
+AI ينشئ draft لا يظهر للعامة.
+أمثلة:
+صفحة draft.
+منتج draft.
+workflow draft.
+تقرير draft.
+المتطلبات
+Permission create.
+Activity Log.
+5.3 Level 2 — Low-risk Apply
+AI يطبق تغييرات بسيطة غير حساسة.
+أمثلة:
+تحديث meta description.
+إضافة alt text.
+إنشاء task.
+إنشاء form draft.
+المتطلبات
+Preview.
+User confirmation.
+Activity Log.
+5.4 Level 3 — Sensitive Change
+تغييرات تؤثر على العمل أو الظهور أو الصلاحيات.
+أمثلة:
+نشر صفحة.
+تعديل business profile public.
+إنشاء job offer.
+تعديل workflow.
+تغيير discount.
+تعديل role.
+المتطلبات
+Permission check.
+Full preview.
+Explicit approval.
+Activity Log.
+Rollback.
+5.5 Level 4 — Critical Change
+تغييرات مالية أو قانونية أو أمنية أو جماعية.
+أمثلة:
+حذف بيانات.
+تعديل payroll.
+تعديل tax settings.
+تغيير payment gateway.
+تعديل accounting entries.
+bulk update.
+تثبيت plugin.
+تغيير verification decision.
+المتطلبات
+Permission check.
+Risk warning.
+Approval workflow.
+MFA optional.
+Snapshot.
+Audit Log.
+Rollback if possible.
+5.6 Level 5 — Forbidden / Restricted
+أشياء لا يجب أن ينفذها AI أبدًا مباشرة.
+أمثلة:
+تزوير مستندات.
+تغيير سجلات audit.
+حذف audit logs.
+تجاوز صلاحيات.
+اعتماد توثيق قانوني بدل مكتب محاماة.
+إخفاء نزاع.
+تعديل نتائج تقييمات بدون سياسة.
+إنشاء بيانات مالية كاذبة.
+تعطيل security logging.
+6. AI Permission Model
+6.1 AI يعمل بصلاحيات المستخدم
+AI effective permissions = User permissions within current context
+إذا كان المستخدم لا يملك:
+content.publish
+فالـ AI لا يستطيع نشر المحتوى.
+6.2 AI يحتاج صلاحيات إضافية لبعض القدرات
+أمثلة:
+ai.assistant.useai.plan.createai.change.applyai.workflow.createai.finance.readai.sensitive_action.request
+6.3 AI لا يتجاوز Approval Workflows
+حتى لو المستخدم لديه صلاحية، إذا كان النظام يتطلب approval، يجب تنفيذها.
+مثال:
+Invoice > 50,000→ requires CFO approval
+AI لا يتجاوز ذلك.
+7. AI Context System
+7.1 ما الذي يجب أن يعرفه AI؟
+AI يحتاج سياقًا منضبطًا وليس وصولًا عشوائيًا لكل شيء.
+السياق يشمل:
+User role.
+Current organization.
+Current site.
+Current company.
+Enabled modules.
+Feature flags.
+Permissions.
+Public settings.
+Relevant records فقط.
+Recent activity حسب الصلاحيات.
+7.2 ما الذي لا يجب إرساله للـ AI إلا بإذن؟
+Legal documents.
+Payroll.
+Bank accounts.
+Tax IDs.
+Private evaluations.
+Identity documents.
+Dispute evidence.
+Sensitive contracts.
+7.3 Context Minimization
+القاعدة:
+أرسل أقل سياق يكفي للمهمة.
+لا نرسل database كاملة للـ AI.
+8. AI Change Plan
+أي بناء أو تعديل يجب أن ينتج AI Change Plan.
+8.1 محتوى الخطة
+SummaryObjects to createObjects to updateObjects to deletePermissions neededRisk levelAffected modulesAffected usersRollback availabilityEstimated impact
+8.2 مثال Change Plan
+Prompt:
+اعمل CRM لشركة تسويق رقمي.
+AI Plan:
+سيتم إنشاء:- Pipeline باسم Sales Pipeline- Stages: Lead, Meeting, Proposal, Won, Lost- Fields: budget, source, expected_close_date- Dashboard: Open deals, won deals, conversion rate- Tasks template: Follow-up after 2 daysRisk level: 2Requires: crm.lead.create, crm.pipeline.manageRollback: available
+9. AI Preview System
+قبل التطبيق، يجب أن يرى المستخدم:
+ما الذي سيتغير.
+الشكل قبل/بعد.
+الجداول أو modules المتأثرة.
+الصلاحيات المطلوبة.
+التنبيهات.
+هل يمكن الرجوع؟
+9.1 Preview حسب النوع
+CMS
+Page preview.
+SEO preview.
+URL preview.
+Commerce
+Product preview.
+Price/discount preview.
+Checkout impact.
+ERP
+Workflow diagram.
+Fields created.
+Reports created.
+Permissions
+Role comparison.
+Users affected.
+10. Rollback Rules
+10.1 كل AI Change يجب أن يكون له rollback قدر الإمكان
+أنواع rollback:
+Delete created objectsRestore previous valuesDisable created workflowRestore snapshotRevert package generation
+10.2 لا rollback كامل لبعض الأشياء
+مثال:
+رسالة أرسلت بالفعل.
+فاتورة أرسلت لعميل.
+Payment تم تنفيذه.
+Webhook أرسل لنظام خارجي.
+في هذه الحالات يجب عرض warning قبل التطبيق.
+11. AI Audit Log
+كل شيء يفعله AI يجب أن يسجل.
+11.1 البيانات المسجلة
+user_idorganization_idcompany_idsite_idprompt_summaryai_model/providerrisk_levelplan_idaction_typeobjects_affectedapproval_statusapplied_atrolled_back_atmetadata
+11.2 جداول مقترحة
+ai_change_plans
+iduser_idorganization_id nullablecompany_id nullablesite_id nullablepromptsummaryrisk_levelstatusrequired_permissions jsonaffected_objects jsonplan jsoncreated_atupdated_at
+ai_change_approvals
+idai_change_plan_idapproved_bystatuscommentapproved_atcreated_atupdated_at
+ai_change_logs
+idai_change_plan_iduser_idactionobject_typeobject_idbefore jsonafter jsoncreated_at
+ai_rollback_points
+idai_change_plan_idsnapshot_typesnapshot jsonstatuscreated_atrolled_back_at nullable
+12. AI Agents بالتفصيل
+12.1 CMS Agent
+يقدر
+يبني صفحات.
+يحسن SEO.
+يقترح content types.
+ينشئ forms.
+ممنوع
+نشر صفحات بدون صلاحية.
+حذف محتوى mass delete بدون approval.
+12.2 Commerce Agent
+يقدر
+يقترح products.
+يكتب descriptions.
+يقترح discounts.
+يبني product categories.
+حساس
+تغيير أسعار.
+تغيير checkout.
+تغيير payment settings.
+إصدار refunds.
+12.3 Rabet Agent
+يقدر
+يساعد في company profile.
+يجهز verification checklist.
+يقترح team structure.
+يبني service catalog.
+ممنوع
+اعتماد verification قانوني.
+تعديل legal status بدون reviewer.
+12.4 Finance Agent
+يقدر
+يشرح reports.
+يقترح dashboard.
+يكتشف anomalies.
+يساعد في تصنيف expenses كاقتراح.
+ممنوع أو شديد الحساسية
+ترحيل قيود نهائية بدون approval.
+تعديل chart of accounts مباشرة.
+إغلاق فترة مالية.
+تغيير tax settings.
+12.5 HR Agent
+يقدر
+كتابة job descriptions.
+تلخيص performance.
+اقتراح training plans.
+مطابقة candidates.
+حساس
+تقييم موظف رسمي.
+تعديل salary.
+إنهاء عضوية موظف.
+إصدار payroll.
+12.6 Developer Agent
+يقدر
+توليد code skeleton.
+توليد tests.
+توليد docs.
+اقتراح migrations.
+ممنوع
+نشر package للعامة بدون review.
+تعطيل security checks.
+الوصول لأسرار production.
+13. AI + Workflows
+AI يمكنه اقتراح Workflows، لكنه لا يفعلها مباشرة لو حساسة.
+13.1 مثال
+Prompt:
+أي فاتورة فوق 50,000 لازم يوافق عليها المدير المالي.
+AI يجهز:
+Workflow draft.
+Condition.
+Approver role.
+Notification.
+Audit log.
+ثم:
+Preview → Approval → Activate
+14. AI + Permissions
+AI يجب أن يشرح لماذا لا يستطيع فعل شيء.
+مثال:
+لا أستطيع نشر هذه الصفحة لأن حسابك لا يملك content.publish.يمكنني حفظها كـ draft أو إرسالها للمراجعة.
+15. AI + Marketplace الداخلي
+AI Skills يمكن أن تأتي من Marketplace الداخلي.
+لكن أي AI Skill يجب أن يوضح:
+ما البيانات التي يقرأها.
+ما actions التي ينفذها.
+هل يرسل بيانات لمزود خارجي.
+هل يحتاج موافقة خاصة.
+هل يدعم audit logs.
+16. AI Data Privacy
+16.1 Provider-agnostic AI Layer
+لا يجب ربط النظام بمزود AI واحد.
+نحتاج طبقة:
+AI Provider Interface
+تسمح باستخدام:
+OpenAI.
+Azure OpenAI.
+Anthropic.
+Local models لاحقًا.
+Enterprise private models.
+16.2 Data Processing Modes
+Standard AI ModePrivate AI ModeEnterprise AI ModeLocal/On-prem AI Mode لاحقًا
+16.3 Sensitive Data Masking
+قبل إرسال بيانات حساسة، يجب دعم masking:
+Tax number → maskedBank account → maskedEmployee salary → hidden unless permittedLegal document text → restricted
+17. AI Memory داخل المشروع
+AI يحتاج ذاكرة منظمة، لا ذاكرة عشوائية.
+17.1 Project Memory
+تحتوي على:
+Brand voice.
+Business type.
+Industry.
+Preferred language.
+Country.
+Tax context.
+Design preferences.
+Naming conventions.
+Approved workflows.
+17.2 Memory Permissions
+المستخدم يرى ويعدل ما يتذكره AI عنه أو عن مشروعه.
+جداول مقترحة
+ai_memoriesidscope_typescope_idkeyvalue jsonvisibilitycreated_bycreated_atupdated_at
+18. AI Prompt Library
+Kabeeri يجب أن يحتوي على prompt templates.
+أمثلة:
+Build landing page.
+Create CRM pipeline.
+Create service catalog.
+Generate product descriptions.
+Create workflow.
+Analyze sales report.
+Explain sync error.
+جدول مقترح
+ai_prompt_templatesidnameslugcategoryprompt_templaterequired_context jsonrisk_levelstatuscreated_atupdated_at
+19. AI Testing & Simulation
+قبل تفعيل AI workflows، نحتاج simulation.
+مثال:
+لو فعلنا workflow ده، ماذا سيحدث على آخر 10 طلبات؟
+AI يعرض:
+كم record سيتأثر.
+هل توجد حالات خطر.
+هل توجد permissions ناقصة.
+20. AI Error Handling
+لو فشل AI Action:
+لا يترك النظام في حالة نصف مكتملة.
+يسجل failure.
+يعرض سبب مفهوم.
+يقترح إصلاح.
+يحاول rollback إذا أمكن.
+21. AI Rate Limits & Costs
+لأن AI له تكلفة، يجب ربطه بالخطط.
+21.1 Usage limits
+AI messages per monthAI actions per monthAI tokens/creditsAI generated pagesAI workflow buildsAI report analyses
+21.2 جدول مقترح
+ai_usage_recordsiduser_idorganization_id nullablefeatureproviderinput_tokensoutput_tokenscost_estimatecreated_at
+22. AI في الإصدارات الستة
+V1
+AI غير أساسي.
+يمكن إضافة AI content/SEO helper فقط إن كان سهلًا.
+لا AI Actions خطيرة.
+V2
+AI Migration Assistant basic.
+AI SEO suggestions.
+AI form helper.
+V3
+AI report summaries.
+AI CRM setup suggestions.
+AI workflow suggestions.
+AI commerce setup helper.
+V4
+AI Co-builder V1.
+Build pages/forms/content types/dashboards.
+Preview/approval.
+AI change logs.
+V5
+ERP AI Assistants.
+Sync error explanation.
+Data cleaning assistant.
+Workflow builder.
+Talent matching suggestions.
+V6
+Full AI Co-builder.
+Multi-agent system.
+Developer assistant.
+Enterprise AI governance.
+AI Skills marketplace.
+Advanced rollback.
+23. V1 Requirements من هذا الملحق
+Must-have في V1
+ليس مطلوبًا بناء AI كامل، لكن يجب عدم تصميم النظام بما يمنعه.
+مطلوب تأسيسيًا
+Activity LogsPermissionsFeature FlagsSettingsContent RevisionsImport/Export JobsBasic workflow status
+Should-have في V1
+ai_change_plans table draftai_change_logs table draftAI provider abstraction placeholder
+Not required in V1
+Full AI Co-builderAI AgentsAI Marketplace SkillsAI workflow builderAI rollback UI
+24. الأخطاء الممنوعة
+24.1 لا تجعل AI Super Admin
+AI لا يتجاوز صلاحيات المستخدم.
+24.2 لا تطبق AI changes بدون preview
+حتى لو التغيير بسيط، يجب عرض ما سيتم.
+24.3 لا ترسل بيانات حساسة بدون سياسة
+خصوصًا:
+payroll.
+bank accounts.
+legal documents.
+identity documents.
+private evaluations.
+24.4 لا تجعل AI يقرر توثيق قانوني
+AI يمكنه المساعدة في checklist، لكن القرار لمكتب محاماة أو platform verification workflow.
+24.5 لا تجعل AI يعدل accounting نهائيًا بدون approval
+Finance حساس جدًا.
+25. الخلاصة التنفيذية
+Kabeeri AI Co-builder يجب أن يكون:
+قوي في البناءمحدود بالصلاحياتواضح في الخطةقابل للمراجعةقابل للتراجعمسجل في Audit Logمحمي من البيانات الحساسةقابل للتوسع عبر AI Skills
+القاعدة النهائية:
+AI يقترح ويبني، لكن Kabeeri يحكم وينفذ بأمان.
+26. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق اختياري إضافي:
+ملحق 8 — Marketplace Governance
+إذا أردنا ضبط قواعد Kabeeri Marketplace وKabeeri Mall قبل V1.

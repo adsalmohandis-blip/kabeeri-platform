@@ -1,0 +1,18 @@
+Folder Map Addendum v1.6.6 — Task Tracking
+تحديث خريطة الفولدرات لإضافة نظام التتبع الآلي
+الفولدر الجديد
+تمت إضافة فولدر 24_kabeeri_task_tracking في آخر بنية ملفات الحزمة. هذا الفولدر مخصص بالكامل لتتبع تنفيذ برومبتات Codex تلقائيًا داخل مشروع VS Code.
+المسار
+الغرض
+24_kabeeri_task_tracking/tasks
+ملفات JSON لكل نسخة أو تحديث، وهي مصدر الحقيقة لحالة التاسكات.
+24_kabeeri_task_tracking/scripts
+سكريبت kbr-task.php لتحديث الحالات من Terminal أو Codex.
+24_kabeeri_task_tracking/logs
+سجل JSONL لكل عملية start/done/verify/block.
+24_kabeeri_task_tracking/reports
+مكان تقارير لاحقة لو تم توليد تقارير من JSON.
+24_kabeeri_task_tracking/templates
+قوالب نصية للبرومبتات أو التقارير.
+24_kabeeri_task_tracking/vscode
+أمثلة إعدادات VS Code Tasks، اختيارية.

@@ -1,0 +1,37 @@
+KABEERI V5 Coding Plan — ERP Pro, Integrations & Partner Commerce
+خطة تكويد منفصلة لهذا الإصدار، مهيأة للتحويل إلى Sprint Backlog داخل أداة إدارة المشروع.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. هدف الإصدار
+هذا الملف يحدد ما يتم تكويده في هذا الإصدار فقط، مع منع إدخال ميزات من إصدارات لاحقة إلا كـ feature flags مغلقة أو foundations واضحة.
+2. السبرنتات المقترحة
+السبرنت
+النطاق
+أهم الجداول/الموديولات
+مخرج قابل للاختبار
+Sprint 1
+ERP Pro modules
+finance/sales/inventory/purchasing pro foundation
+ERP pro workflow
+Sprint 2
+Integration Hub
+connectors, mapping, sync jobs, errors
+Sync external catalog
+Sprint 3
+Marketing Suite Advanced
+campaigns, attribution, automation lite
+Campaign ROI dashboard
+Sprint 4
+Affiliate/Partner Commerce
+affiliate links, agreements, commissions
+Referral tracked and commission event
+Sprint 5
+Partner Storefronts
+catalog sharing, multi-merchant storefronts
+Partner promotes merchant catalog
+Sprint 6
+Payouts + Security
+payouts, fraud checks, audit
+Safe commission payout
+3. Release Gate
+لا يعتبر الإصدار جاهزًا إلا بعد نجاح unit/feature/policy tests، ومراجعة الصلاحيات، وتحديث seed data، وتشغيل demo scenario بدون أخطاء.

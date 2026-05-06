@@ -1,0 +1,564 @@
+07 — كتالوج البلجنات والموديولات الرئيسي
+قائمة عائلات البلجنات والموديولات اللازمة لتشغيل الثيمات والقطاعات. كل مجموعة في جدول مستقل لتسهيل القراءة والصيانة.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+Core Utilities
+#
+Package Key
+Publisher Rule
+1
+seo-basic
+Official first / Verified creators later
+2
+seo-pro
+Official first / Verified creators later
+3
+forms-pro
+Official first / Verified creators later
+4
+redirect-manager
+Official first / Verified creators later
+5
+analytics
+Official first / Verified creators later
+6
+cookie-consent
+Official first / Verified creators later
+7
+whatsapp-contact
+Official first / Verified creators later
+8
+reviews-basic
+Official first / Verified creators later
+9
+newsletter
+Official first / Verified creators later
+10
+smtp-mail-settings
+Official first / Verified creators later
+11
+backup-pro
+Official first / Verified creators later
+12
+security-scanner
+Official first / Verified creators later
+13
+media-optimizer
+Official first / Verified creators later
+14
+social-share
+Official first / Verified creators later
+15
+faq-builder
+Official first / Verified creators later
+16
+testimonials
+Official first / Verified creators later
+17
+sitemap-manager
+Official first / Verified creators later
+18
+robots-manager
+Official first / Verified creators later
+19
+search-basic
+Official first / Verified creators later
+20
+maintenance-mode
+Official first / Verified creators later
+CMS & Content
+#
+Package Key
+Publisher Rule
+21
+content-types-pro
+Official first / Verified creators later
+22
+custom-fields-lite
+Official first / Verified creators later
+23
+menus-pro
+Official first / Verified creators later
+24
+blog-pro
+Official first / Verified creators later
+25
+authors-pro
+Official first / Verified creators later
+26
+related-posts
+Official first / Verified creators later
+27
+table-of-contents
+Official first / Verified creators later
+28
+content-blocks-pack
+Official first / Verified creators later
+29
+landing-page-builder
+Official first / Verified creators later
+30
+comments-discussion
+Official first / Verified creators later
+31
+content-workflow
+Official first / Verified creators later
+32
+revision-compare
+Official first / Verified creators later
+33
+content-scheduling
+Official first / Verified creators later
+34
+multilanguage-content
+Official first / Verified creators later
+Design & Theme
+#
+Package Key
+Publisher Rule
+35
+theme-settings-pro
+Official first / Verified creators later
+36
+section-library
+Official first / Verified creators later
+37
+header-builder
+Official first / Verified creators later
+38
+footer-builder
+Official first / Verified creators later
+39
+color-palette-manager
+Official first / Verified creators later
+40
+typography-manager
+Official first / Verified creators later
+41
+demo-importer
+Official first / Verified creators later
+42
+layout-switcher
+Official first / Verified creators later
+43
+icon-packs
+Official first / Verified creators later
+44
+animation-pack
+Official first / Verified creators later
+45
+dark-mode
+Official first / Verified creators later
+46
+rtl-enhancer
+Official first / Verified creators later
+47
+accessibility-tools
+Official first / Verified creators later
+48
+theme-preview-compare
+Official first / Verified creators later
+Marketing
+#
+Package Key
+Publisher Rule
+49
+lead-magnet
+Official first / Verified creators later
+50
+popups
+Official first / Verified creators later
+51
+announcement-bar
+Official first / Verified creators later
+52
+coupon-banner
+Official first / Verified creators later
+53
+campaign-manager-lite
+Official first / Verified creators later
+54
+utm-tracker
+Official first / Verified creators later
+55
+affiliate-link-tracker
+Official first / Verified creators later
+56
+growth-partner-tracker
+Official first / Verified creators later
+57
+newsletter-automation
+Official first / Verified creators later
+58
+meta-pixel
+Official first / Verified creators later
+59
+google-tag-manager
+Official first / Verified creators later
+60
+conversion-events
+Official first / Verified creators later
+61
+ab-testing-lite
+Official first / Verified creators later
+62
+referral-program-lite
+Official first / Verified creators later
+CRM & Leads
+#
+Package Key
+Publisher Rule
+63
+crm-lite
+Official first / Verified creators later
+64
+lead-capture
+Official first / Verified creators later
+65
+lead-source-tracking
+Official first / Verified creators later
+66
+lead-scoring
+Official first / Verified creators later
+67
+lead-assignment
+Official first / Verified creators later
+68
+customer-segmentation
+Official first / Verified creators later
+69
+customer-timeline
+Official first / Verified creators later
+70
+quote-request
+Official first / Verified creators later
+71
+service-request
+Official first / Verified creators later
+72
+contact-inbox
+Official first / Verified creators later
+73
+form-to-task
+Official first / Verified creators later
+74
+form-to-crm
+Official first / Verified creators later
+Booking & Services
+#
+Package Key
+Publisher Rule
+75
+booking-lite
+Official first / Verified creators later
+76
+booking-pro
+Official first / Verified creators later
+77
+service-catalog
+Official first / Verified creators later
+78
+staff-availability
+Official first / Verified creators later
+79
+calendar-sync
+Official first / Verified creators later
+80
+appointment-reminders
+Official first / Verified creators later
+81
+service-packages
+Official first / Verified creators later
+82
+consultation-booking
+Official first / Verified creators later
+83
+class-booking
+Official first / Verified creators later
+84
+event-booking
+Official first / Verified creators later
+85
+tour-booking
+Official first / Verified creators later
+86
+room-booking
+Official first / Verified creators later
+87
+table-reservation
+Official first / Verified creators later
+88
+maintenance-request
+Official first / Verified creators later
+89
+waitlist
+Official first / Verified creators later
+Commerce
+#
+Package Key
+Publisher Rule
+90
+products
+Official first / Verified creators later
+91
+cart
+Official first / Verified creators later
+92
+checkout
+Official first / Verified creators later
+93
+orders
+Official first / Verified creators later
+94
+customers
+Official first / Verified creators later
+95
+coupons-basic
+Official first / Verified creators later
+96
+product-reviews
+Official first / Verified creators later
+97
+variants-basic
+Official first / Verified creators later
+98
+inventory-link
+Official first / Verified creators later
+99
+shipping-rules
+Official first / Verified creators later
+100
+local-delivery
+Official first / Verified creators later
+101
+store-pickup
+Official first / Verified creators later
+102
+abandoned-cart-lite
+Official first / Verified creators later
+103
+gift-cards
+Official first / Verified creators later
+104
+subscriptions-lite
+Official first / Verified creators later
+105
+bundles
+Official first / Verified creators later
+106
+returns-basic
+Official first / Verified creators later
+107
+b2b-catalog
+Official first / Verified creators later
+108
+product-importer
+Official first / Verified creators later
+Payments & Shipping
+#
+Package Key
+Publisher Rule
+109
+paymob
+Official first / Verified creators later
+110
+fawry
+Official first / Verified creators later
+111
+stripe
+Official first / Verified creators later
+112
+paypal
+Official first / Verified creators later
+113
+tap-payments
+Official first / Verified creators later
+114
+myfatoory
+Official first / Verified creators later
+115
+paytabs
+Official first / Verified creators later
+116
+bank-transfer
+Official first / Verified creators later
+117
+cash-on-delivery
+Official first / Verified creators later
+118
+manual-payment
+Official first / Verified creators later
+119
+aramex
+Official first / Verified creators later
+120
+dhl
+Official first / Verified creators later
+121
+fedex
+Official first / Verified creators later
+122
+local-courier
+Official first / Verified creators later
+Industry
+#
+Package Key
+Publisher Rule
+123
+property-listings
+Official first / Verified creators later
+124
+vehicle-listings
+Official first / Verified creators later
+125
+courses-catalog
+Official first / Verified creators later
+126
+lms-lite
+Official first / Verified creators later
+127
+donations-lite
+Official first / Verified creators later
+128
+volunteers
+Official first / Verified creators later
+129
+menu-builder
+Official first / Verified creators later
+130
+doctors-profiles
+Official first / Verified creators later
+131
+trainers-profiles
+Official first / Verified creators later
+132
+directory-listings
+Official first / Verified creators later
+133
+affiliate-storefront
+Official first / Verified creators later
+134
+catalog-sharing
+Official first / Verified creators later
+135
+agency-portfolio
+Official first / Verified creators later
+136
+case-studies
+Official first / Verified creators later
+137
+travel-packages
+Official first / Verified creators later
+138
+trip-itinerary
+Official first / Verified creators later
+139
+event-ticketing-lite
+Official first / Verified creators later
+140
+qr-menu
+Official first / Verified creators later
+141
+before-after-gallery
+Official first / Verified creators later
+ERP Essentials
+#
+Package Key
+Publisher Rule
+142
+crm-suite-lite
+Official first / Verified creators later
+143
+quotations
+Official first / Verified creators later
+144
+invoicing-basic
+Official first / Verified creators later
+145
+inventory-basic
+Official first / Verified creators later
+146
+purchasing-basic
+Official first / Verified creators later
+147
+tasks-basic
+Official first / Verified creators later
+148
+reports-basic
+Official first / Verified creators later
+149
+employee-profiles-basic
+Official first / Verified creators later
+150
+customer-timeline
+Official first / Verified creators later
+151
+finance-lite
+Official first / Verified creators later
+Connectors
+#
+Package Key
+Publisher Rule
+152
+wordpress-importer
+Official first / Verified creators later
+153
+woocommerce-importer-basic
+Official first / Verified creators later
+154
+shopify-connector-basic
+Official first / Verified creators later
+155
+google-sheets-import
+Official first / Verified creators later
+156
+csv-importer
+Official first / Verified creators later
+157
+external-source-registry
+Official first / Verified creators later
+158
+webhook-receiver
+Official first / Verified creators later
+159
+whatsapp-business-basic
+Official first / Verified creators later
+160
+google-analytics
+Official first / Verified creators later
+161
+meta-pixel-connector
+Official first / Verified creators later
+AI Skills
+#
+Package Key
+Publisher Rule
+162
+ai-seo-assistant
+Official first / Verified creators later
+163
+ai-page-builder
+Official first / Verified creators later
+164
+ai-migration-assistant
+Official first / Verified creators later
+165
+ai-product-description
+Official first / Verified creators later
+166
+ai-campaign-planner
+Official first / Verified creators later
+167
+ai-ad-copy-writer
+Official first / Verified creators later
+168
+ai-report-explainer
+Official first / Verified creators later
+169
+ai-form-builder
+Official first / Verified creators later
+170
+ai-translation-assistant
+Official first / Verified creators later
+171
+ai-quality-evaluator
+Official first / Verified creators later

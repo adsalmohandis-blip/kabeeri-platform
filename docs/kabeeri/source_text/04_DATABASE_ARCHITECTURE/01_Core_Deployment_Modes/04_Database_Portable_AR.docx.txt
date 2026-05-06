@@ -1,0 +1,167 @@
+KABEERI Database File 04 — Kabeeri Portable Database
+نظام Kabeeri Portable
+هذا الملف يصف تصميم قاعدة البيانات الخاص بوضع:
+Kabeeri Portable
+وهو الوضع الذي يسمح للعميل بأخذ:
+الكود+ قاعدة البيانات+ الملفات+ الثيمات+ الموديولات+ إعدادات التشغيل
+وتشغيل نسخة كاملة خارج Kabeeri Cloud، مع إمكانية استمرار الظهور داخل Kabeeri Mall عبر Sync Connector.
+1. تعريف Kabeeri Portable
+Kabeeri Portable هو باقة خروج كاملة من Cloud.
+العميل يحصل على نسخة قابلة للتشغيل خارج المنصة:
+Self-hosted Kabeeri instance
+لكن يمكنه اختيار استمرار العلاقة مع Kabeeri عبر:
+Mall SyncVerification continuityTrust profileSupport/updates optional
+2. الهدف من Portable
+الهدف هو تحقيق 3 أشياء:
+2.1 ثقة العميل
+العميل لا يشعر أنه محبوس.
+2.2 قوة تسويقية ضد WordPress/Shopify
+ابدأ Cloud، ولو احتجت تخرج، تقدر تاخد بياناتك وتشغلها بنفسك.
+2.3 استمرار العلاقة مع Kabeeri Mall
+حتى بعد الخروج، يستطيع العميل تحديث بياناته العامة في Mall.
+3. ما الذي يتم تصديره؟
+Portable Export Bundle يحتوي على:
+code packageSQL database dumpmedia archiveprivate documents archive if allowedinstalled modules manifestactive theme manifestsettings filerestore scriptmall sync connector configexport manifest
+4. ما الذي لا يتم تصديره؟
+لا يتم تصدير:
+بيانات عملاء آخرينPlatform internal secretsGlobal billing internalsGlobal package catalog الكاملMall moderation internal dataPlatform security keysLegal partner private data غير متعلق بالعميل
+5. الفرق بين Portable و Dedicated
+Portable
+العميل يشغل بنفسه أو عند مزود خارجي.
+Dedicated
+Kabeeri تدير نسخة مخصصة للعميل.
+6. الجداول الأساسية لنظام Portable
+export_jobsexport_manifeststenant_export_itemsexport_downloadsportable_packagesself_hosted_installationsself_hosted_connection_tokensself_hosted_sync_statusportable_update_channelsportable_update_logsportable_license_keysportable_retention_records
+7. export_jobs
+طلب تصدير للعميل.
+iduuidorganization_idrequested_byexport_typestatus default pendingscope json nullableinclude_private_files boolean default falseinclude_audit_logs boolean default trueinclude_ai_logs boolean default falseinclude_mall_public_data boolean default truestarted_at nullablecompleted_at nullableexpires_at nullablefile_media_id nullableerror_message nullablemetadata json nullablecreated_atupdated_at
+export_type
+full_self_hosteddatabase_onlymedia_onlyfrontend_onlymall_public_datalegal_archive
+status
+pendingapprovedrunningcompletedfailedexpiredcancelleddownloaded
+فهارس
+index(organization_id)index(requested_by)index(status)index(export_type)
+8. export_manifests
+تفاصيل ما تم تصديره.
+iduuidexport_job_idorganization_idmanifest_versionkabeeri_versionphp_version_requiredmysql_version_requiredactive_modules jsoninstalled_packages jsonactive_themes jsontables_exported jsonfiles_exported jsonchecksums json nullablerestore_instructions json nullablecreated_atupdated_at
+9. tenant_export_items
+كل سجل أو جدول دخل في التصدير.
+idexport_job_idorganization_idmodule_key nullabletable_namerecord_id nullablerecord_uuid nullableaction default exportedstatus default successmessage nullablecreated_at
+action
+exportedskippedtransformedanonymizedexcludedfailed
+10. export_downloads
+تتبع تحميل ملف التصدير.
+idexport_job_iddownloaded_byip_address nullableuser_agent nullabledownloaded_atcreated_at
+11. portable_packages
+يمثل حزمة Portable جاهزة.
+iduuidexport_job_idorganization_idpackage_typestatusstorage_diskpackage_pathsize_bytes nullablechecksum nullablepassword_protected default falseexpires_at nullablecreated_atupdated_at
+package_type
+full_bundledatabase_dumpmedia_archivecode_packagemanifest_only
+12. self_hosted_installations
+بعد خروج العميل، يمكن تسجيل النسخة الخارجية.
+iduuidorganization_idcompany_id nullablesite_id nullableinstallation_uuidexternal_base_url nullablestatus default pendingkabeeri_versioninstallation_type default portablelicense_key_id nullablemall_sync_enabled boolean default falselast_seen_at nullablelast_sync_at nullablelast_error_at nullablemetadata json nullablecreated_atupdated_at
+status
+pendingactivedisconnectedstalesuspendedrevokedarchived
+13. self_hosted_connection_tokens
+Tokens آمنة للربط بين النسخة الخارجية وKabeeri.
+idself_hosted_installation_idtoken_hashstatus default activescopes jsonlast_used_at nullableexpires_at nullablecreated_atupdated_atrevoked_at nullable
+scopes
+mall_sync_pushmall_sync_pull_reviewslicense_checkupdate_checksupport_diagnostics
+14. self_hosted_sync_status
+حالة المزامنة مع Mall أو المنصة.
+idself_hosted_installation_idsync_typestatuslast_success_at nullablelast_failure_at nullablelast_error_message nullablerecords_synced integer default 0metadata json nullablecreated_atupdated_at
+sync_type
+business_profileservicesproductstalentreviews_pullinquiries_pulllicense_check
+15. portable_update_channels
+قنوات تحديث النسخ الخارجية.
+idnameslugchannel_typestatus default activemin_supported_version nullablelatest_version nullablerelease_notes_url nullablecreated_atupdated_at
+channel_type
+stablesecurityltsbetaenterprise
+16. portable_update_logs
+idself_hosted_installation_idfrom_version nullableto_versionstatusmessage nullablestarted_at nullablecompleted_at nullablecreated_atupdated_at
+17. portable_license_keys
+مفتاح ترخيص للنسخة الخارجية.
+iduuidorganization_idlicense_key_hashlicense_typestatus default activeissued_atexpires_at nullablemax_sites nullablemax_users nullableallowed_modules json nullablemetadata json nullablecreated_atupdated_atrevoked_at nullable
+license_type
+portable_basicportable_businessportable_enterpriseltsone_timesubscription
+18. portable_retention_records
+ما الذي بقي في Kabeeri بعد خروج العميل.
+idorganization_idexport_job_id nullableretention_typeretention_reasonsubject_typesubject_id nullableretained_until nullablestatus default activemetadata json nullablecreated_atupdated_at
+retention_type
+billing_historylegal_recordtrust_recordmall_mirrorreview_historydispute_recordaudit_required
+19. Portable ERD
+erDiagram    ORGANIZATIONS ||--o{ EXPORT_JOBS : requests    EXPORT_JOBS ||--o{ EXPORT_MANIFESTS : produces    EXPORT_JOBS ||--o{ TENANT_EXPORT_ITEMS : includes    EXPORT_JOBS ||--o{ PORTABLE_PACKAGES : generates    EXPORT_JOBS ||--o{ EXPORT_DOWNLOADS : downloaded_as    ORGANIZATIONS ||--o{ SELF_HOSTED_INSTALLATIONS : may_have    SELF_HOSTED_INSTALLATIONS ||--o{ SELF_HOSTED_CONNECTION_TOKENS : authenticates    SELF_HOSTED_INSTALLATIONS ||--o{ SELF_HOSTED_SYNC_STATUS : tracks    SELF_HOSTED_INSTALLATIONS ||--o{ PORTABLE_UPDATE_LOGS : updates    ORGANIZATIONS ||--o{ PORTABLE_LICENSE_KEYS : licensed_by    ORGANIZATIONS ||--o{ PORTABLE_RETENTION_RECORDS : retains
+20. Portable Export Flow
+Customer requests export→ permission and plan check→ export_job created→ optional approval→ export registry loaded→ data collected by organization_id→ files collected by tenant folder→ transformations applied→ SQL dump generated→ media zip generated→ manifest generated→ bundle created→ customer downloads→ self-hosted installation optionally registers→ cloud data archived/deleted according to policy→ mall sync remains active if enabled
+21. Tenant Export Registry
+يجب أن يكون هناك Registry يحدد جداول كل Module.
+corecmsmediacommercerabeterpteamsaiintegrationsmall_public
+أي Module جديد يجب أن يسجل نفسه في Export Registry.
+مثال منطقي
+core:  organizations  organization_memberships  companies  company_memberships  sitescms:  content_types  content_entries  content_revisions  taxonomies  taxonomy_termscommerce:  products  orders  customers  payments
+22. Portable Database Transformation
+عند التصدير، يمكن أن نحتاج:
+22.1 Keep IDs
+لو النسخة ستكون مستقلة تمامًا، يمكن إبقاء IDs كما هي.
+22.2 Re-map IDs
+لو التصدير يدمج بيانات أو يغير structure، نحتاج mapping.
+22.3 Remove Platform-only references
+مثل:
+platform_subscription_idcloud_site_idbilling internal references
+22.4 Preserve UUIDs
+الـ UUIDs مهمة للتزامن مع Mall.
+23. Portable File Structure
+kabeeri-export-{organization_uuid}/  manifest.json  database/    tenant_dump.sql  media/    public/    private/    documents/  themes/  packages/  config/    .env.example    modules.json    installed_packages.json    mall_sync.json  scripts/    install.sh    restore.sh    repair.sh
+24. manifest.json
+{  "product": "Kabeeri",  "mode": "portable",  "export_version": "1.0",  "kabeeri_version": "1.0.0",  "organization_uuid": "org_xxx",  "exported_at": "2026-05-04T12:00:00Z",  "active_modules": ["core", "cms", "commerce", "rabet"],  "installed_packages": [],  "active_theme": "kabeeri-starter",  "mall_sync": {    "enabled": true,    "source_uuid": "src_xxx"  },  "requires": {    "php": "^8.3",    "mysql": "^8.0"  }}
+25. Portable Restore Commands
+يجب دعم أوامر مثل:
+php artisan kabeeri:portable:restore {path}php artisan kabeeri:portable:repairphp artisan kabeeri:portable:registerphp artisan kabeeri:mall-sync:testphp artisan kabeeri:mall-sync:push --all
+26. Mall Sync بعد Portable
+بعد خروج العميل، مصدر بيانات Mall يصبح:
+self_hosted_installation
+بدل Cloud DB.
+Flow:
+Customer updates product locally→ self-hosted Kabeeri fires event→ MallSyncClient sends signed payload→ Kabeeri validates token→ Mall mirror updates→ sync event logged
+27. Mall Sync Payload Rules
+Portable لا يرسل بيانات خاصة.
+يرسل فقط:
+business public profileservices public dataproducts public datatalent public dataavailability/statuspublic URLs
+لا يرسل:
+orderscustomersinvoicesaccountingprivate inventory costsemployee evaluationsprivate messages
+28. Mall Sync Security
+يجب استخدام:
+HMAC signaturetimestampnonce/replay protectioninstallation_uuidsource_uuidpayload hash
+29. Portable و Updates
+التحديثات الخارجية أصعب.
+يجب دعم:
+update channels.
+security updates.
+version compatibility.
+migration warnings.
+package compatibility checks.
+30. Portable و Support
+Portable يجب أن يكون باقة مدفوعة أعلى لأن الدعم أصعب.
+Support diagnostics يمكن أن يرسل:
+versionphp versionmysql versioninstalled moduleslast errorssync status
+بدون إرسال بيانات حساسة إلا بموافقة.
+31. Portable Retention Policy
+بعد التصدير، ماذا يبقى داخل Kabeeri؟
+يبقى
+billing historyexport job recordportable license recordself-hosted installation recordmall mirror if enabledverification public statustrust records العامةreviews/disputes المتعلقة بالمنصة
+يحذف أو يؤرشف
+private CMS draftsprivate ERP recordsprivate filesinternal messagesoperational tasks
+حسب Terms والاتفاق.
+32. Portable Indexes
+export_jobs.organization_idexport_jobs.statusexport_jobs.export_typetenant_export_items.export_job_idtenant_export_items.table_nameportable_packages.export_job_idself_hosted_installations.organization_idself_hosted_installations.installation_uuidself_hosted_installations.statusportable_license_keys.organization_idportable_license_keys.statusportable_retention_records.organization_id
+33. Portable Security Requirements
+يجب تسجيل Audit عند
+export requestedexport approvedexport completedexport downloadedself-hosted installation registeredmall sync token createdmall sync token revokedcloud operational data deleted
+34. Portable Release Requirements
+Portable يعتبر جاهزًا عندما:
+export_job can be createdexport registry workstenant data can be collectedmedia can be packagedmanifest generatedbundle generateddownload loggedself-hosted installation can registermall sync token can be issuedpublic product/service/business sync workscloud retention record created
+35. الخلاصة
+Kabeeri Portable هو أقوى رسالة ثقة للعميل.
+لكنه ليس الوضع الافتراضي، بل Premium.
+القاعدة النهائية:
+Portable gives full ownership to the customer, while Mall Sync keeps the business connected to Kabeeri’s public ecosystem by consent.

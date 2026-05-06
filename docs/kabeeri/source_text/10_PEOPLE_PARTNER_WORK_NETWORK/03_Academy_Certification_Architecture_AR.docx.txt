@@ -1,0 +1,72 @@
+KABEERI Academy & Certification Architecture
+منظومة التعليم والاختبارات والبادجات التي تفتح وظائف Kabeeri Work Network
+KABEERI Professional Knowledge System — v1.1.0 — 2026-05-05
+1. دور Academy
+Kabeeri Academy هي مصدر الثقة والاعتماد للوظائف الجديدة داخل المنصة. لا يمكن لأي شخص تقديم خدمة حساسة باسم Kabeeri إلا بعد إتمام المسار المناسب.
+Learning Path → Lessons → Quiz → Practical Task → Review → Badge → Capability Enabled → Level Progression
+• تمنع العشوائية في خدمات App Builders.
+• تخلق وظائف للشباب بمسارات واضحة.
+• تحافظ على جودة الوكالات والشركاء.
+• تربط Talent Marketplace بالاعتماد المهني.
+2. المسارات التعليمية الأساسية
+المسار
+مستويات
+يفتح
+Growth Partner Path
+L1-L5
+روابط إحالة، حملات، Partner Storefront لاحقًا
+App Builder Path
+L1-L5
+تنفيذ التطبيقات وتسليمها للعملاء
+Migration Specialist Path
+Badge/L1-L3
+هجرة WordPress وSEO/Redirects
+Support Specialist Path
+Badge/L1-L3
+دعم العملاء والتشخيص
+Creator Path
+L1-L5
+ثيمات وإضافات وقوالب
+Agency Management Path
+L3+
+فتح Agency Partner Dashboard
+Legal Partner Training
+مخصص للمكاتب
+تشغيل Portal مراجعة التوثيق
+Commerce Builder Path
+L1-L4
+إعداد المتاجر والدفع والشحن
+3. أنواع التقييم
+• Quiz نظري قصير.
+• Practical Task داخل Sandbox.
+• Peer/Platform Review للمستويات الأعلى.
+• Project Evidence بعد تسليم مشاريع فعلية.
+• Renewal Exam لبعض الاعتمادات سنويًا.
+4. Badges مقترحة
+Badge
+يظهر على الملف
+يفتح صلاحيات
+Certified App Builder
+نعم
+قبول مشاريع بناء تطبيق
+WordPress Migration Specialist
+نعم
+استلام Migration Projects
+Kabeeri Growth Partner
+نعم
+لوحة إحالات
+Theme Creator Certified
+نعم
+نشر ثيم بعد review
+Plugin Creator Certified
+نعم
+رفع packages للمراجعة
+Commerce Setup Specialist
+نعم
+مشاريع متاجر
+Agency Ready
+داخلي/عام
+طلب Agency Partner
+5. Database Concepts
+academy_coursesacademy_learning_pathsacademy_lessonsacademy_quizzesacademy_practical_tasksacademy_attemptsacademy_badgesuser_badgescapability_requirementscapability_unlockscertification_renewals
+KABEERI — Confidential Product Architecture

@@ -1,0 +1,10 @@
+KABEERI V7 Mobile App Enablement — Technical Architecture
+KABEERI Professional Knowledge System — v1.6.2
+المكونات
+Flutter Mobile Shell→ Reads App Config→ Reads Mobile Theme Profile→ Reads API Manifest→ Calls Laravel REST APIs→ Renders mobile screens
+APIs
+Public content APIs، Auth APIs، Profile APIs، Products/Services/Courses APIs حسب app type، Notifications APIs.
+الأمان
+Sanctum tokens مبدئيًا، rate limits، device registry، push token registry، عدم كشف admin endpoints.
+مبدأ التنفيذ
+V7 additive فقط. لا يعدل migrations القديمة إلا إذا كان عبر Addendum واضح ومقبول.

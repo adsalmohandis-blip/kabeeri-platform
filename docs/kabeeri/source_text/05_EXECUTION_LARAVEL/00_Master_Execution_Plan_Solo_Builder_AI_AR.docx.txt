@@ -1,0 +1,450 @@
+KABEERI — Master Execution Plan for Solo Builder with AI
+خطة التنفيذ الرئيسية لبناء KABEERI بواسطة مؤسس واحد باستخدام الذكاء الاصطناعي
+هذا الملف يحوّل كل ما سبق من:
+ملف رئيسي+ 18 ملحقًا تأسيسيًا+ V1 إلى V6
+إلى خطة تنفيذ عملية قابلة للتطبيق يوميًا وأسبوعيًا.
+الهدف:
+بناء Kabeeri بطريقة منظمة، صغيرة، قابلة للاختبار، قابلة للتوسع، ولا تنهار بسبب ضخامة الرؤية أو الاعتماد العشوائي على AI.
+1. القاعدة الكبرى
+Kabeeri مشروع ضخم جدًا، لكن تنفيذه لا يجب أن يكون ضخمًا في كل خطوة.
+القاعدة:
+Build the smallest stable corethen expand one controlled layer at a time.
+بالعربي:
+ابنِ أصغر نواة مستقرة، ثم أضف طبقة واحدة محكومة في كل مرة.
+2. الهدف العملي من هذه الخطة
+هذه الخطة تجيب على:
+أبدأ من أين؟
+أبني أي جداول أولًا؟
+أبني أي Models؟
+أستخدم AI في ماذا؟
+أراجع كود AI إزاي؟
+أعمل Git commits إزاي؟
+متى أعتبر مرحلة خلصت؟
+متى أنتقل من V1 إلى V2؟
+كيف لا أتوه وسط ERP وMall وAI وMarketplace؟
+3. المنهج التنفيذي
+3.1 لا تبني Kabeeri كله مرة واحدة
+ممنوع:
+ابني Kabeeri كامل بكل الموديولات.
+المطلوب:
+ابني migration واحد.ابني model واحد.ابني policy واحدة.ابني action واحدة.ابني resource واحدة.ابني test واحد.
+3.2 كل Feature تمر بـ 8 خطوات
+1. Define scope2. Write schema3. Create migration4. Create model5. Create policy/permissions6. Create action/service7. Create UI/API8. Write tests + manual check
+3.3 كل يوم له نتيجة صغيرة
+أمثلة نتيجة يومية:
+جدول organizations يعمل.
+إنشاء Organization من UI يعمل.
+صلاحية organization.manage تعمل.
+Page publish يعمل.
+Media upload يعمل.
+وليس:
+بناء CMS كامل.
+بناء ERP كامل.
+4. Stack التنفيذ الموصى به
+4.1 Backend
+PHP 8.3+Laravel 11/12MySQL 8+Redis-readyQueue-ready
+4.2 Admin UI
+التوصية العملية:
+Laravel + Filament
+السبب:
+أسرع لمؤسس واحد.
+CRUD قوي.
+مناسب للـ Admin.
+يقلل تعقيد React في البداية.
+قابل للتطوير لاحقًا.
+4.3 Public Frontend
+Blade ThemesTailwind CSSAlpine.js عند الحاجة
+4.4 Testing
+Pest أو PHPUnitLaravel Feature TestsPolicy Tests
+4.5 Code Quality
+Laravel PintLarastan لاحقًاGitHub Actions أو CI بسيط لاحقًا
+5. Git Strategy للمؤسس الواحد
+5.1 Branches بسيطة
+maindevfeature/{feature-name}fix/{bug-name}
+5.2 قواعد main
+لا يدخل main إلا كود:
+يعملتم تجربته يدويًاله tests أساسيةلا يكسر migrations
+5.3 Commit Format
+feat: add organizations schemafeat: add organization model and policytest: add organization creation testsfix: correct site slug uniquenessrefactor: move content publish logic to action
+5.4 حجم الـ commit
+كل commit يجب أن يكون صغيرًا.
+مثال جيد:
+feat: add sites migration and model
+مثال سيئ:
+feat: add CMS, commerce, CRM, ERP
+6. قواعد استخدام AI في البناء
+6.1 AI مساعد وليس قائدًا
+AI يكتب كود، لكن أنت تحدد:
+المعمارية.
+العلاقات.
+الصلاحيات.
+قواعد الأمان.
+الأولويات.
+6.2 لا تطلب من AI Feature ضخمة
+ممنوع:
+ابني V1 كامل.
+مسموح:
+ابني migration لجدول sites حسب schema التالي مع indexes وsoft deletes.
+6.3 Prompt Pattern القياسي
+استخدم هذا القالب:
+أنت Senior Laravel Developer.أريد تنفيذ جزء محدد فقط.السياق: Kabeeri منصة multi-tenant تعتمد على organization_id/site_id/company_id.المطلوب: [وصف صغير]القواعد:- لا تضف features خارج المطلوب.- استخدم Laravel conventions.- أضف validation حيث يلزم.- احترم permissions/policies.- اكتب test أساسي.- لا تستخدم raw SQL إلا للضرورة.Schema:[ضع schema]
+6.4 مراجعة كود AI
+قبل قبول أي كود AI اسأل:
+هل أضاف شيء خارج المطلوب؟هل كسر naming convention؟هل تجاهل permissions؟هل وضع business logic في controller؟هل migration آمنة؟هل العلاقات صحيحة؟هل هناك N+1؟هل توجد tests؟هل فيه security issue؟
+6.5 قاعدة التقطيع
+أي Feature قسمها إلى:
+MigrationModelPolicyActionFilament ResourceEvents/ListenersTestsDocs
+7. هيكل المجلدات من البداية
+ابدأ بـ Modular Monolith.
+app/  Core/    Auth/    Organizations/    Permissions/    Sites/    Settings/    FeatureFlags/    Activity/    Media/    Notifications/    Packages/    Localization/  CMS/    Content/    Taxonomies/    SEO/    Themes/    Forms/    Redirects/    Menus/  Rabet/    Companies/    BusinessProfiles/    Verification/  Commerce/    Products/    Cart/    Orders/    Customers/  ERP/    CRM/    Sales/    Invoicing/    Inventory/    Purchasing/    Accounting/    HR/  Workflows/  Reports/  AI/  Billing/  Marketplace/  Mall/  Teams/  SecurityCenter/
+في V1 لن تستخدم كل المجلدات، لكن وجود structure واضح يمنع الفوضى.
+8. ترتيب التنفيذ العام عبر النسخ الستة
+Stage 0 — Project SetupStage 1 — V1 Core FoundationStage 2 — V2 Migration + Commerce FoundationStage 3 — V3 Business + ERP EssentialsStage 4 — V4 Cloud + Marketplace + Rabet + MallStage 5 — V5 ERP Pro + Integration HubStage 6 — V6 Enterprise Complete Platform
+لكن عمليًا:
+لا تفكر في V2 قبل أن يعمل Demo V1 كاملًا.
+9. Stage 0 — Project Setup
+9.1 الهدف
+تجهيز بيئة بناء قوية قبل أول Feature.
+9.2 المهام
+Create Laravel projectConfigure databaseInstall FilamentInstall auth starterConfigure Tailwind/RTLConfigure Pest/PHPUnitConfigure Laravel PintCreate base modules foldersCreate .env.exampleCreate READMEInitialize GitCreate dev branch
+9.3 مخرجات Stage 0
+مشروع Laravel يعملAdmin login يعملDatabase connectedTests تعملGit initialized
+9.4 لا تنتقل إلى V1 قبل
+php artisan test يعملphp artisan migrate يعملFilament admin يفتح
+10. V1 Execution Plan — Core Foundation
+10.1 الهدف
+بناء CMS فعلي مع Organization/Site/Company foundation.
+10.2 V1 مقسمة إلى 10 Sprint صغيرة
+V1-S1: Core IdentityV1-S2: RBACV1-S3: OrganizationsV1-S4: SitesV1-S5: CMS ContentV1-S6: MediaV1-S7: ThemesV1-S8: Activity + NotificationsV1-S9: Rabet FoundationV1-S10: Installer + Demo + Tests
+10.3 V1-S1 — Core Identity
+Build
+usersuser_profilesauthemail verification optionallocale/timezone fields
+Tests
+user can registeruser can loginuser has profile
+AI Prompt
+ابني user_profiles migration/model/relation مع User في Laravel، واكتب test يتأكد أن profile ينشأ للمستخدم.
+10.4 V1-S2 — RBAC
+Build
+rolespermissionsrole_permissionmembership_permission_overridesPermissionServicePolicies foundation
+Tests
+role has permissiondeny overrides allowuser without permission cannot access action
+ملاحظات
+هذا Sprint حساس جدًا. لا تستعجل.
+10.5 V1-S3 — Organizations
+Build
+organizationsorganization_membershipsCreateOrganizationActionInviteMemberActionOrganizationResourceMembersResource
+Tests
+user creates organizationcreator becomes ownerowner can invite memberviewer cannot manage organization
+10.6 V1-S4 — Sites
+Build
+sitessite settingsCreateSiteActionSiteResourcedomain/subdomain fields
+Tests
+organization owner can create sitesite slug unique per organizationsite belongs to organization
+10.7 V1-S5 — CMS Content
+Build
+content_typescontent_entriescontent_revisionstaxonomiestaxonomy_termscontent_termPagesResourcePostsResourcePublishContentEntryActionSEO fieldspublic rendering
+Tests
+create pagepublish pagerevision createdpublic page rendersslug unique per site
+10.8 V1-S6 — Media
+Build
+media_assetsmedia_usagesUploadMediaActionMediaLibraryResourcefeatured media relationfile validation
+Tests
+upload imageinvalid file rejectedmedia belongs to organization/sitefeatured image works
+10.9 V1-S7 — Themes
+Build
+themesinstalled_packages foundationdefault themeActivateThemeActionpublic Blade theme rendering
+Tests
+activate themesite renders with active theme
+10.10 V1-S8 — Activity + Notifications
+Build
+activity_logsnotificationsLogActivityActionbasic notification centerlisteners for important events
+Tests
+page publish logs activitymember invite creates notification
+10.11 V1-S9 — Rabet Foundation
+Build
+companiescompany_membershipsbusiness_profilesverification_requestsverification_documentsBusinessProfileResourceVerificationResource basic
+Tests
+create companycreate business profile draftupload verification documentunauthorized user cannot view document
+10.12 V1-S10 — Installer + Demo + Tests
+Build
+countriescurrenciesfeature_flagssettingssystem statusbackup command basicinstaller commandseedersdemo data
+Tests
+installer smoke testsystem status testfeature flag test
+11. V1 Weekly Timeline مقترح
+لو بتبني وحدك باستخدام AI، التقدير العملي:
+Week 1: Stage 0 + Core IdentityWeek 2: RBAC + OrganizationsWeek 3: Sites + SettingsWeek 4: CMS ContentWeek 5: Media + ThemesWeek 6: Activity + NotificationsWeek 7: Rabet FoundationWeek 8: Installer + Demo + Testing + Fixes
+هذه ليست مواعيد إجبارية، لكنها pacing صحي.
+12. V1 Release Gate
+لا تعتبر V1 خلصت إلا إذا:
+Installation worksAdmin login worksOrganization worksSite worksPages/posts workPublic rendering worksMedia worksTheme activation worksRBAC worksActivity logs workBusiness profile draft worksVerification document upload worksSystem status worksTests passDemo complete
+13. V2 Execution Plan — Migration + Commerce Foundation
+13.1 V2 Sprints
+V2-S1: Redirects + MenusV2-S2: FormsV2-S3: WordPress ImporterV2-S4: ProductsV2-S5: Cart + Checkout + OrdersV2-S6: Customers + Coupons + Payments BasicV2-S7: Business Directory + ServicesV2-S8: Tasks Basic + Demo
+13.2 أهم قاعدة
+V2 هو أول اختبار حقيقي لجمهور WordPress.
+لذلك:
+Migration Report أهم من import صامت.Redirects مهمة جدًا.لا تستورد بدون Preview.
+13.3 V2 Release Gate
+WordPress XML import worksMigration report worksRedirects workForms workProducts workCart/checkout/order worksServices/service requests workTasks basic work
+14. V3 Execution Plan — Business + ERP Essentials
+14.1 V3 Sprints
+V3-S1: Company Dashboard + Verification ReviewV3-S2: CRM LiteV3-S3: Sales / QuotationsV3-S4: InvoicingV3-S5: Inventory BasicV3-S6: Purchasing BasicV3-S7: Accounting StarterV3-S8: Employees + EvaluationsV3-S9: Workflows + ApprovalsV3-S10: Reports + Demo
+14.2 أهم قاعدة
+V3 يبدأ التشغيل الحقيقي.
+أي شيء مالي أو مخزني يجب أن يكون له:
+PermissionAudit logStatus workflowNo silent deletion
+14.3 V3 Release Gate
+Service request to lead worksQuotation to invoice worksOrder to invoice worksStock balances/movements workPurchasing flow worksAccounting starter safeEmployee records privateApprovals workReports basic work
+15. V4 Execution Plan — Cloud + Marketplace + Mall
+15.1 V4 Sprints
+V4-S1: Billing + EntitlementsV4-S2: Cloud FoundationV4-S3: Internal MarketplaceV4-S4: Rabet Company OS V1V4-S5: Legal Partner NetworkV4-S6: Kabeeri Mall V1V4-S7: Talent Marketplace V1V4-S8: Agency PlatformV4-S9: Teams V1V4-S10: AI Co-builder V1V4-S11: Security CenterV4-S12: Commercial Demo
+15.2 أهم قاعدة
+V4 تجاري.
+لذلك لا تطلق:
+Cloud بدون billing/entitlementsMall بدون moderationAI بدون approval/rollbackLegal Partner بدون sensitive logsMarketplace بدون permission disclosure
+16. V5 Execution Plan — ERP Pro + Integration Hub
+16.1 V5 Sprints
+V5-S1: Integration Hub FoundationV5-S2: CRM ProV5-S3: Sales ProV5-S4: Inventory ProV5-S5: Purchasing ProV5-S6: Accounting Pro FoundationV5-S7: ContractsV5-S8: HelpdeskV5-S9: POS BasicV5-S10: Commission EngineV5-S11: Advanced ApprovalsV5-S12: AI ERP AssistantsV5-S13: Reports + Demo
+16.2 أهم قاعدة
+Integration Hub خطر جدًا.
+كل Connector يجب أن يلتزم بـ:
+encrypted credentialsscopessync logsmapping previewretryerror reportmanual disconnect
+17. V6 Execution Plan — Enterprise Complete Platform
+17.1 V6 Sprints
+V6-S1: Enterprise SecurityV6-S2: BI/Data FoundationV6-S3: Enterprise FinanceV6-S4: GRCV6-S5: SCM AdvancedV6-S6: Manufacturing FoundationV6-S7: EAM / MaintenanceV6-S8: HCM AdvancedV6-S9: Public Developer MarketplaceV6-S10: Advanced AI Co-builderV6-S11: Advanced Kabeeri MallV6-S12: Industry SolutionsV6-S13: Enterprise ArchitectureV6-S14: Final Hardening
+17.2 أهم قاعدة
+V6 لا يعني فوضى Enterprise.
+كل Enterprise module يظهر فقط إذا:
+plan يسمحfeature flag مفعّلpermissions موجودةmodule installedcountry pack مناسب عند الحاجة
+18. Daily Workflow للمؤسس
+18.1 بداية اليوم
+راجع آخر commitشغل testsاختر Feature واحدة صغيرةاكتب Acceptance Criteriaاطلب من AI جزءًا واحدًا فقطراجع الكودشغل testsجرب يدويًااعمل commitاكتب notes
+18.2 نهاية اليوم
+سجل:
+ما تم؟ما لم يتم؟ما الأخطاء؟ما القرار التالي؟هل في technical debt؟
+19. Acceptance Criteria Template
+قبل أي Feature، اكتب:
+Feature:Scope:Not included:Permissions:Tables affected:Actions:UI screens:Events:Tests:Manual check:Rollback risk:
+مثال:
+Feature: Create SiteScope: organization owner can create site with name, slug, languageNot included: custom domains, cloud provisioningPermissions: site.createTables affected: sitesActions: CreateSiteActionUI: SiteResourceEvents: SiteCreatedTests: owner can create, viewer cannotManual check: site appears in adminRollback risk: low
+20. قواعد Database Migrations
+20.1 Naming
+create_organizations_tablecreate_sites_tableadd_seo_fields_to_content_entries_table
+20.2 ممنوع
+migration ضخمة جدًا.
+تعديل بيانات production بدون backup.
+حذف column بدون خطة.
+تغيير معنى field مستخدم.
+20.3 مطلوب
+indexes من البداية.
+foreign keys عند المناسب.
+nullable بوعي.
+soft deletes للكيانات المهمة.
+21. Rules للـ Models
+كل Model مهم يجب أن يحتوي:
+fillable/guarded واضحcastsrelationshipsscopespolicyfactory لاحقًا
+أمثلة Scopes:
+scopeForOrganizationscopeForSitescopePublishedscopeActivescopeVisible
+22. Rules للـ Controllers / Resources
+22.1 Controllers خفيفة
+لا تضع business logic في controllers.
+استخدم:
+ActionsServicesPoliciesRequests
+22.2 Filament Resources
+كل Resource يجب أن يراعي:
+tenant scope.
+permissions.
+validation.
+search.
+filters.
+pagination.
+23. Rules للـ Actions
+Action يجب أن يكون واضحًا:
+CreateOrganizationActionPublishContentEntryActionUploadMediaAssetActionConvertQuotationToInvoiceAction
+كل Action حساس يجب أن:
+يتحقق من الحالة.
+يحسب server-side.
+يسجل activity/audit.
+يطلق event.
+24. Rules للـ Events
+استخدم Events عند حدوث شيء مهم:
+ContentPublishedOrderCreatedInvoiceIssuedStockAdjustedVerificationApprovedAIChangeApplied
+ولا تستخدم Events لكل تفصيلة صغيرة غير مهمة.
+25. Rules للـ Permissions
+25.1 كل Feature جديدة تسأل
+من يستطيع view؟من يستطيع create؟من يستطيع edit؟من يستطيع delete؟من يستطيع approve؟من يستطيع export؟
+25.2 Permission naming
+module.resource.action
+مثال:
+crm.lead.createfinance.invoice.issueinventory.stock.adjust
+26. Rules للـ Activity / Audit Logs
+26.1 Activity Log
+للأحداث العامة.
+26.2 Audit Log
+للأحداث الحساسة.
+26.3 يجب تسجيل
+role changespermission changesfinancial postingstock adjustmentverification decisionsensitive file viewAI change applypackage installbilling changes
+27. Testing Strategy العملية
+27.1 لا تنتظر نهاية المشروع
+كل Sprint له tests.
+27.2 أقل Tests مقبولة لكل Feature
+happy pathpermission denied pathvalidation error path
+27.3 أهم Tests في Kabeeri
+Permission testsTenant isolation testsFinancial calculation testsInventory movement testsImport testsAI guardrail tests
+28. Manual QA Checklist
+قبل أي merge:
+هل الشاشة تفتح؟هل create يعمل؟هل edit يعمل؟هل delete/disable محكوم؟هل user بلا صلاحية ممنوع؟هل activity log يظهر؟هل mobile/RTL مقبول؟هل errors مفهومة؟
+29. Security Checklist لكل Feature
+هل تحتاج permission؟هل فيها بيانات حساسة؟هل تحتاج audit log؟هل file upload موجود؟هل input sanitized؟هل data scoped by organization/site/company؟هل AI يمكنه الوصول لها؟هل export موجود؟هل يجب تسجيل sensitive access؟
+30. Performance Checklist لكل Feature
+هل القائمة paginated؟هل توجد indexes؟هل هناك N+1؟هل العملية الثقيلة queued؟هل يمكن caching؟هل query scoped؟
+31. Documentation لكل Sprint
+كل Sprint يحتاج ملف notes صغير:
+What was builtTables addedPermissions addedRoutes/resources addedKnown limitationsNext steps
+32. Demo Strategy
+32.1 لا تبنِ بدون Demo
+كل نسخة لها Demo.
+32.2 ترتيب Demos
+V1 Demo: شركة خدمات بموقع كاملV2 Demo: WordPress migration + متجر بسيط + خدماتV3 Demo: Service request → lead → quotation → invoiceV4 Demo: Cloud + verification + Mall + AIV5 Demo: Integration + ERP Pro + commissionsV6 Demo: Enterprise + BI + GRC + AI simulation
+33. Product Scope Control
+33.1 قاعدة لا الآن
+لو ظهرت فكرة جديدة، ضعها في:
+Backlog
+ولا تدخلها في Sprint الحالي.
+33.2 Backlog fields
+IdeaRelated versionImpactUrgencyDependenciesDecision
+34. Backlog الأولي بعد الملفات
+Visual Builder advanced → LaterShopify full migration → V5/V6Payroll full → V6+ country packsManufacturing advanced → V6+Developer marketplace public → V6Multi-vendor checkout → V6Advanced AI agents → V6Mobile apps → after Cloud foundation
+35. Risk Register للمشروع
+35.1 أكبر المخاطر
+Scope creepAI-generated messy codeWeak permissionsPoor tenant isolationNo testsTrying ERP too earlyNo demoNo migration pathNo security logsSlow UI due to huge menus
+35.2 علاجها
+Stick to V1 firstSmall commitsPolicy testsTenant scopesRelease gatesFeature flagsContext-aware UI
+36. Decision Gates
+36.1 Gate قبل كل نسخة
+اسأل:
+هل النسخة السابقة تعمل؟هل demo مكتمل؟هل critical bugs مغلقة؟هل tests الأساسية تمر؟هل database structure مناسب للتوسع؟هل UI غير مربك؟
+36.2 لو الإجابة لا
+لا تنتقل للنسخة التالية.
+37. أول 30 يوم تنفيذ عملي
+Week 1
+Laravel setupFilament setupAuthUsers/ProfileGit workflowTesting setup
+Week 2
+RBACRoles/PermissionsPermissionServicePolicy foundationTests
+Week 3
+OrganizationsMembershipsInvite flow basicOrganization dashboard
+Week 4
+SitesSite settingsCreate site wizardDefault site seed
+بعد أول 30 يوم يجب أن يكون عندك:
+User logs inCreates organizationCreates siteRBAC foundation worksAdmin dashboard exists
+38. أول 60 يوم تنفيذ عملي
+Week 5
+CMS content typesPages/postsPublish flow
+Week 6
+TaxonomiesSEO fieldsPublic rendering
+Week 7
+Media libraryFeatured imageUpload validation
+Week 8
+ThemesDefault themeActivity logsNotifications basic
+بعد 60 يوم يجب أن يكون عندك:
+CMS حقيقي ينشر صفحات ومقالاتMedia worksTheme worksPublic site worksActivity logs work
+39. أول 90 يوم تنفيذ عملي
+Week 9
+CompaniesCompany membershipsBusiness profile draft
+Week 10
+Verification request foundationVerification documentsSensitive/private files
+Week 11
+SettingsFeature flagsSystem statusInstaller commandBackup command basic
+Week 12
+Demo dataTestingBug fixingDocsV1 release candidate
+بعد 90 يوم الهدف:
+V1 قابل للعرض كمنتج أولي قوي
+40. لا تبدأ V2 قبل هذه العلامات
+V1 demo works without developer interventionAdmin can create site and publish pagePublic visitor can view pageMedia worksBusiness profile draft worksPermissions workAt least core tests pass
+41. الملفات التنفيذية التي يجب إنتاجها أثناء V1
+README.mdINSTALLATION.mdARCHITECTURE.mdPERMISSIONS.mdV1_RELEASE_NOTES.mdV1_TEST_PLAN.mdDEMO_SCRIPT.mdAI_PROMPTS.md
+42. AI_PROMPTS.md محتواه
+يحتوي على prompts جاهزة:
+Migration promptModel promptPolicy promptFilament Resource promptAction promptFeature Test promptBug fixing promptRefactor promptSecurity review prompt
+43. Bug Management
+43.1 Bug fields
+TitleSeveritySteps to reproduceExpectedActualAffected moduleRoot causeFixTest added
+43.2 Severity
+Critical: security/data loss/system downHigh: core feature brokenMedium: workaround existsLow: UI/minor
+44. Technical Debt Rules
+لا تسمح للدين التقني أن يتراكم بلا تسجيل.
+كل debt يسجل:
+WhatWhy acceptedRiskWhen to fix
+أمثلة debt مقبولة مؤقتًا:
+DB search instead of search engineManual backup before cloud backupFilament UI before custom UIManual payment before gateway automation
+45. Build vs Buy Rules
+45.1 ابني داخليًا
+Core permissionsTenant scopingCMS content modelRabet identity/trustAI guardrailsMarketplace governance
+45.2 استخدم packages بحذر
+Authentication helpersFilamentPDF generationExcel/CSV importImage processingBackup utilities
+45.3 لا تستخدم package بدون
+maintenance statussecurity checklicense checkLaravel compatibilityexit strategy
+46. Naming Standards
+46.1 Tables
+plural snake_case:
+business_profilesverification_requestscontent_entries
+46.2 Models
+singular StudlyCase:
+BusinessProfileVerificationRequestContentEntry
+46.3 Actions
+verb + noun:
+CreateBusinessProfileDraftPublishContentEntrySubmitVerificationRequest
+46.4 Permissions
+module.resource.action:
+business_profile.managecontent.publishverification.documents.upload
+47. UI Rules
+47.1 لا تعرض كل شيء
+UI يجب أن يكون:
+role-awarepermission-awarefeature-flag-awarecontext-aware
+47.2 V1 UI بسيط
+DashboardContentMediaAppearancePluginsBusinessTeamSystem
+47.3 لا تظهر ERP في V1
+حتى لو الجداول موجودة في الخطة، لا تعرضها قبل وقتها.
+48. خطة الإطلاق التجاري المبكر
+48.1 قبل V1 Demo
+لا تعلن وعود ضخمة.
+اعرض:
+Kabeeri: CMS جديد للشركات، جاهز للنمو.
+48.2 بعد V1
+ابدأ Early Access مع:
+2-3 شركات خدمات1-2 وكالة1 موقع WordPress بسيط للتجربة لاحقًا
+48.3 بعد V2
+ابدأ حملة:
+انتقل من WordPress إلى Kabeeri
+48.4 بعد V4
+ابدأ البيع الحقيقي كـ SaaS:
+Cloud + Rabet + Mall + AI
+49. KPI للمشروع أثناء البناء
+49.1 Technical KPIs
+Tests passingCritical bugs openMigrations count stableAverage feature completion timeNumber of manual QA failures
+49.2 Product KPIs
+Time to create siteTime to publish first pageNumber of steps in onboardingNumber of features hidden by flagsDemo completion rate
+49.3 Commercial KPIs لاحقًا
+Active sitesPublished business profilesWordPress imports completedService requests submittedOrders createdVerified businessesPaid subscriptions
+50. الخطة المختصرة جدًا
+لو عايز أبسط نسخة من كل هذا:
+1. جهز Laravel + Filament + Tests2. ابنِ Users + Organizations + RBAC3. ابنِ Sites4. ابنِ CMS Pages/Posts5. ابنِ Media6. ابنِ Themes7. ابنِ Activity Logs8. ابنِ Business Profile + Verification Foundation9. ابنِ Installer + Demo10. لا تبدأ V2 قبل Demo V1
+51. الخلاصة التنفيذية
+Kabeeri مشروع ضخم، لكن طريقة بنائه يجب أن تكون صغيرة ومنضبطة.
+القاعدة النهائية:
+One feature.One migration.One model.One policy.One action.One UI.One test.One commit.
+بالعربي:
+ميزة واحدة، جدول واحد، موديل واحد، صلاحية واحدة، أكشن واحد، واجهة واحدة، اختبار واحد، وكومِت واحد.
+52. الخطوة التالية العملية
+بعد اعتماد هذا الملف، الخطوة التالية ليست ملف تخطيط جديد.
+الخطوة التالية هي إنشاء:
+KABEERI V1 — Build Checklist & AI Prompt Pack
+وهذا سيكون ملف عملي جدًا يحتوي على:
+Checklist تنفيذ V1 بندًا بندًا.
+Prompts جاهزة لكل Migration.
+Prompts جاهزة لكل Model.
+Prompts جاهزة لكل Policy.
+Prompts جاهزة لكل Filament Resource.
+Prompts جاهزة لكل Test.
+ترتيب commits المقترح.
+وهذا الملف هو أقرب نقطة للبدء الفعلي في الكود.

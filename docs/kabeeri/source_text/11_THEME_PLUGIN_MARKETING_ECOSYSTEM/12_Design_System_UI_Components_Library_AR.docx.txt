@@ -1,0 +1,87 @@
+12 — Design System ومكتبة UI Components
+هذا الملف يحكم الشكل الموحد للثيمات حتى لا تتحول الـ 300 ثيم إلى تصميمات عشوائية أو متضاربة.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+Design Tokens الأساسية
+Colors: primary, secondary, accent, neutral, success, warning, danger.
+Typography: Arabic-first, fallback English, heading/body/label scales.
+Spacing: نظام موحد للحواف والمسافات.
+Radius/Shadow: مستويات ثابتة للبطاقات والأزرار.
+RTL/LTR: كل component يجب أن يدعم الاتجاهين.
+Accessibility: contrast, focus states, semantic HTML.
+Core Components
+Component
+استخدامه
+حالة النشر
+Button
+Reusable across themes
+Required in UI library
+Input
+Reusable across themes
+Required in UI library
+Select
+Reusable across themes
+Required in UI library
+Textarea
+Reusable across themes
+Required in UI library
+Card
+Reusable across themes
+Required in UI library
+Badge
+Reusable across themes
+Required in UI library
+Tabs
+Reusable across themes
+Required in UI library
+Accordion
+Reusable across themes
+Required in UI library
+Modal
+Reusable across themes
+Required in UI library
+Dropdown
+Reusable across themes
+Required in UI library
+Navbar
+Reusable across themes
+Required in UI library
+Footer
+Reusable across themes
+Required in UI library
+Hero
+Reusable across themes
+Required in UI library
+ServicesGrid
+Reusable across themes
+Required in UI library
+ProductCard
+Reusable across themes
+Required in UI library
+CourseCard
+Reusable across themes
+Required in UI library
+BookingForm
+Reusable across themes
+Required in UI library
+ReviewCard
+Reusable across themes
+Required in UI library
+PricingTable
+Reusable across themes
+Required in UI library
+FAQ
+Reusable across themes
+Required in UI library
+CTASection
+Reusable across themes
+Required in UI library
+Gallery
+Reusable across themes
+Required in UI library
+MapBlock
+Reusable across themes
+Required in UI library
+ProfileCard
+Reusable across themes
+Required in UI library

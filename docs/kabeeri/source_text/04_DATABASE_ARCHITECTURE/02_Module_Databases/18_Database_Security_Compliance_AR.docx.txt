@@ -1,0 +1,1756 @@
+KABEERI Database File 18
+Kabeeri Security & Compliance Database
+نظام قاعدة بيانات الأمن والامتثال وحماية البيانات
+هذا الملف يصف قاعدة بيانات طبقة الأمن والامتثال في KABEERI، وهي طبقة عرضية تخدم Core Kernel وCloud وFrontend Anywhere وPortable وDedicated وCMS وCommerce وERP وRabet وMall وAI وIntegration Hub.
+القاعدة: الأمن ليس Feature منفصلة، بل جزء من Core. أي كيان أو موديول جديد يجب أن يجيب: ماذا يقرأ؟ ماذا يكتب؟ ما الصلاحيات؟ هل يحتاج Audit؟ هل يحتوي بيانات حساسة؟ هل يحتاج موافقة؟ وهل يمكن التراجع عنه؟
+1. هدف ملف Security & Compliance Database
+الهدف هو تثبيت طبقة بيانات مركزية للأمن والامتثال قبل تضخم المنصة، بحيث لا يتم بناء الفواتير أو ERP أو AI أو Marketplace أو Legal Verification بدون تتبع أمني وخصوصية وموافقات واضحة.
+تسجيل الدخول والجلسات ومحاولات الدخول ومخاطر الحسابات.
+إدارة MFA والسياسات الأمنية للأدوار الحساسة.
+تسجيل Security Events وSensitive Access Logs وAdmin Actions.
+إدارة API Tokens وWebhook security وscopes وrevocation.
+تصنيف البيانات: public, internal, confidential, restricted.
+حفظ سجلات الخصوصية: consent, data export, deletion, retention.
+إدارة الحوادث الأمنية: detect, triage, contain, investigate, notify, fix, review.
+دعم V4 Security Center ثم V6 Enterprise Security وGRC وSIEM وPrivileged Access.
+2. ما يدخل وما لا يدخل في هذا الملف
+يدخل
+لا يدخل
+MFA, sessions, login attempts, password/security policies
+تنفيذ مزود SSO/SAML بالكامل في V1
+API token registry, scopes, usages, revocation
+تخزين API tokens كنص واضح
+Sensitive access logs وsecurity events وincident reports
+استبدال Activity/Audit Logs الموجودة في Core؛ بل توسيعها
+Privacy consent, data subject requests, retention policies
+تحديد كل قوانين الدول تفصيليًا؛ هذا يكتمل في Country Packs
+Package security reviews وAI security policies
+تنفيذ sandbox كامل للمطورين العامين في V1
+SIEM export foundation وenterprise security policies
+SOC كامل أو DLP متقدم في الإصدارات الأولى
+3. مبادئ التصميم
+Security by Design: كل جدول حساس يبدأ بفكرة التصنيف والصلاحيات والتسجيل.
+Privacy by Design: لا يتم نشر أو مزامنة بيانات عامة بدون Consent واضح.
+Audit by Default: التغيير الحساس والقراءة الحساسة يجب أن يتركا أثرًا.
+Least Privilege: API token أو package أو AI skill يحصل فقط على أقل scopes لازمة.
+Deny Overrides Allow: أي override بالمنع يغلب السماح.
+No Plain Secrets: لا نحفظ password أو API key أو OAuth token كنص واضح.
+Human Approval for Risk: الإجراءات الحساسة تحتاج موافقة أو re-authentication أو MFA.
+4. Security Data Domains
+Domain
+الغرض
+أمثلة جداول
+Identity Security
+حماية الدخول والحسابات والجلسات
+login_attempts, user_sessions, user_security_profiles
+MFA & Policies
+فرض MFA وسياسات كلمة المرور والجلسات
+mfa_factors, mfa_recovery_codes, mfa_policies, password_policies
+Access Logs
+تسجيل القراءة الحساسة والتصرفات الأمنية
+security_events, sensitive_access_logs, admin_action_logs
+API & Webhook Security
+حماية مفاتيح API والـ Webhooks
+api_tokens, api_token_scopes, webhook_endpoints, webhook_deliveries
+Data Protection
+تصنيف البيانات والتشفير والاحتفاظ
+data_classification_labels, object_classifications, retention_policies
+Privacy & Compliance
+موافقات وطلبات تصدير/حذف البيانات
+consent_records, data_subject_requests, compliance_obligations
+Incidents
+إدارة الحوادث الأمنية
+incident_reports, incident_timeline_events, incident_actions
+Enterprise Security
+SSO/SIEM/PAM/DLP foundations
+sso_providers, siem_export_jobs, privileged_access_requests
+AI & Package Security
+حماية AI والحزم والتكاملات
+ai_security_policies, package_security_reviews, vulnerability_findings
+5. Data Classification Model
+يجب أن يحمل كل كيان حساس تصنيفًا مباشرًا أو مشتقًا. التصنيف لا يخص التخزين فقط، بل يتحكم في الظهور، التصدير، السجلات، الإرسال إلى AI، والمزامنة مع Mall.
+التصنيف
+أمثلة
+القواعد
+public
+صفحات منشورة، Business Profile عام، منتجات/خدمات عامة
+قابل للعرض العام والمزامنة مع Mall بعد consent
+internal
+Tasks، Draft content، Team channels
+داخل Organization/Company فقط
+confidential
+Contracts، Customer data، Supplier data، Reports
+صلاحيات خاصة + sensitive access عند القراءة
+restricted
+Legal documents، Payroll، Bank accounts، API secrets، Payment credentials
+تشفير/إخفاء + MFA/re-auth + audit إلزامي
+6. الجداول الأساسية
+user_security_profiles
+ملف أمني مكمل للمستخدم، لا يحل محل users.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف الداخلي
+primary key
+user_id
+bigint
+المستخدم
+unique
+security_level
+varchar(50)
+مستوى أمان الحساب
+normal / elevated / restricted
+mfa_required
+boolean
+هل MFA مطلوب
+حسب السياسات أو الدور
+last_password_changed_at
+timestamp nullable
+آخر تغيير كلمة مرور
+password_expires_at
+timestamp nullable
+انتهاء كلمة المرور
+للمؤسسات
+risk_score
+decimal(5,2)
+درجة خطر الحساب
+تتحدث من أحداث الدخول
+locked_until
+timestamp nullable
+قفل مؤقت للحساب
+metadata
+json nullable
+بيانات إضافية
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+unique(user_id)
+index(security_level)
+index(locked_until)
+login_attempts
+تسجيل محاولات الدخول الناجحة والفاشلة لاكتشاف brute force وsuspicious login.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+primary key
+user_id
+bigint nullable
+المستخدم إن عرف
+index
+email
+varchar nullable
+الإيميل المستخدم في المحاولة
+status
+varchar(50)
+حالة المحاولة
+success / failed / blocked / challenged
+failure_reason
+varchar nullable
+سبب الفشل
+wrong_password / locked / rate_limited
+ip_address
+varchar nullable
+IP
+user_agent
+text nullable
+User agent
+country_code
+varchar nullable
+الدولة
+مشتقة
+risk_score
+decimal(5,2) nullable
+خطر المحاولة
+created_at
+timestamp
+وقت المحاولة
+فهارس وقواعد:
+index(user_id, created_at)
+index(email, created_at)
+index(ip_address, created_at)
+index(status)
+user_sessions
+سجل الجلسات الفعالة أو السابقة؛ يدعم logout from all devices وSecurity Center.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+user_id
+bigint
+المستخدم
+index
+session_id_hash
+varchar
+hash فقط للجلسة
+لا نحفظ session id raw
+organization_id
+bigint nullable
+آخر سياق عمل
+ip_address
+varchar nullable
+IP
+user_agent
+text nullable
+User Agent
+device_name
+varchar nullable
+اسم الجهاز إن أمكن
+status
+varchar(50)
+active / expired / revoked
+last_active_at
+timestamp nullable
+آخر نشاط
+revoked_at
+timestamp nullable
+وقت الإلغاء
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(user_id, status)
+index(last_active_at)
+unique(session_id_hash)
+mfa_factors
+عوامل MFA الخاصة بالمستخدم.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+user_id
+bigint
+المستخدم
+index
+factor_type
+varchar(50)
+نوع العامل
+totp / email_otp / sms_otp / security_key
+label
+varchar nullable
+اسم يظهر للمستخدم
+secret_encrypted
+text nullable
+السر مشفر
+لا plain text
+phone_masked
+varchar nullable
+رقم مخفي
+إن SMS
+email_masked
+varchar nullable
+إيميل مخفي
+إن email OTP
+status
+varchar(50)
+pending / active / revoked
+last_used_at
+timestamp nullable
+آخر استخدام
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(user_id, status)
+index(factor_type)
+ملاحظات:
+MFA إلزامي للأدوار: platform/legal/security والمالية الحساسة لاحقًا.
+mfa_recovery_codes
+أكواد الاسترداد، تحفظ hashed فقط.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+user_id
+bigint
+المستخدم
+code_hash
+varchar
+hash للكود
+used_at
+timestamp nullable
+تاريخ الاستخدام
+created_at
+timestamp
+تاريخ الإنشاء
+فهارس وقواعد:
+index(user_id)
+unique(code_hash)
+security_events
+أحداث أمنية عامة تظهر في Security Center وتغذي alerts وSIEM لاحقًا.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+uuid
+char(26/36)
+معرف خارجي
+organization_id
+bigint nullable
+السياق
+index
+company_id
+bigint nullable
+الشركة
+site_id
+bigint nullable
+الموقع
+user_id
+bigint nullable
+المستخدم
+event_type
+varchar(100)
+نوع الحدث
+MFAEnabled / ApiTokenRevoked / SecurityEventDetected
+severity
+varchar(50)
+low / medium / high / critical
+risk_level
+varchar(50)
+مستوى خطر
+source_type
+varchar nullable
+مصدر الحدث
+auth / api / package / ai / connector
+source_id
+bigint nullable
+معرف المصدر
+ip_address
+varchar nullable
+IP
+user_agent
+text nullable
+User Agent
+metadata
+json nullable
+تفاصيل
+created_at
+timestamp
+وقت الحدث
+فهارس وقواعد:
+index(organization_id, created_at)
+index(user_id, created_at)
+index(event_type)
+index(severity, created_at)
+sensitive_access_logs
+تسجيل قراءة أو تحميل أو تصدير بيانات حساسة.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+uuid
+char(26/36)
+معرف خارجي
+user_id
+bigint
+المستخدم
+organization_id
+bigint nullable
+السياق
+company_id
+bigint nullable
+الشركة
+subject_type
+varchar
+نوع الكيان
+legal_document / contract / payroll / api_secret
+subject_id
+bigint nullable
+معرف الكيان
+action
+varchar(100)
+view / download / export / reveal_secret
+data_classification
+varchar(50)
+confidential / restricted
+reason
+text nullable
+سبب الوصول
+قد يكون مطلوبًا
+ip_address
+varchar nullable
+IP
+user_agent
+text nullable
+User Agent
+created_at
+timestamp
+وقت الوصول
+فهارس وقواعد:
+index(user_id, created_at)
+index(organization_id, created_at)
+index(subject_type, subject_id)
+index(action)
+ملاحظات:
+لا يسجل فقط التعديل؛ قراءة البيانات الحساسة نفسها يجب أن تسجل.
+admin_action_logs
+سجل خاص بإجراءات Platform/Admin الحساسة مع reason field.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+admin_user_id
+bigint
+المسؤول
+organization_id
+bigint nullable
+العميل المتأثر
+action
+varchar(100)
+نوع الإجراء
+subject_type
+varchar nullable
+الكيان
+subject_id
+bigint nullable
+المعرف
+reason
+text
+سبب الإجراء
+required
+approval_id
+bigint nullable
+موافقة مرتبطة
+before
+json nullable
+قبل
+after
+json nullable
+بعد
+ip_address
+varchar nullable
+IP
+created_at
+timestamp
+وقت التنفيذ
+فهارس وقواعد:
+index(admin_user_id, created_at)
+index(organization_id, created_at)
+index(action)
+api_tokens
+مفاتيح API داخلية أو خارجية. لا نحفظ token نفسه.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+uuid
+char(26/36)
+معرف عام
+user_id
+bigint nullable
+مالك فردي
+organization_id
+bigint nullable
+مالك مؤسسي
+site_id
+bigint nullable
+موقع محدد
+name
+varchar
+اسم المفتاح
+token_hash
+varchar
+hash للمفتاح
+unique
+status
+varchar(50)
+active / revoked / expired
+last_used_at
+timestamp nullable
+آخر استخدام
+expires_at
+timestamp nullable
+تاريخ الانتهاء
+revoked_at
+timestamp nullable
+وقت الإلغاء
+created_by
+bigint nullable
+من أنشأه
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+unique(token_hash)
+index(organization_id, status)
+index(user_id, status)
+index(expires_at)
+api_token_scopes
+الصلاحيات الدقيقة للمفتاح.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+api_token_id
+bigint
+المفتاح
+scope
+varchar
+الصلاحية
+read_public_content / create_order / mall_sync_push
+risk_level
+varchar(50)
+مستوى الخطر
+created_at
+timestamp
+وقت الإنشاء
+فهارس وقواعد:
+index(api_token_id)
+unique(api_token_id, scope)
+api_token_usages
+استخدامات API token لأغراض rate limiting والتحقيق.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+api_token_id
+bigint nullable
+المفتاح
+organization_id
+bigint nullable
+السياق
+endpoint
+varchar
+المسار
+method
+varchar(10)
+GET/POST/...
+status_code
+integer
+كود الاستجابة
+response_time_ms
+integer nullable
+زمن الاستجابة
+ip_address
+varchar nullable
+IP
+created_at
+timestamp
+وقت الطلب
+فهارس وقواعد:
+index(api_token_id, created_at)
+index(organization_id, created_at)
+index(endpoint)
+webhook_endpoints
+تعريف Webhooks آمنة للإرسال أو الاستقبال.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+uuid
+char(26/36)
+معرف خارجي
+organization_id
+bigint nullable
+السياق
+name
+varchar
+الاسم
+direction
+varchar(20)
+inbound / outbound
+url
+text nullable
+الرابط
+لـ outbound
+secret_hash
+varchar nullable
+hash للسر
+لا plain
+events
+json
+الأحداث
+status
+varchar(50)
+active / paused / revoked
+created_by
+bigint nullable
+المنشئ
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, status)
+index(direction)
+ملاحظات:
+كل webhook يحتاج signature وtimestamp وreplay protection.
+webhook_deliveries
+محاولات تسليم Webhooks ونتائجها.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+webhook_endpoint_id
+bigint
+الـ webhook
+event_type
+varchar
+نوع الحدث
+payload_hash
+varchar nullable
+hash للـ payload
+status
+varchar(50)
+pending / delivered / failed / retrying
+attempt_count
+integer
+عدد المحاولات
+response_status
+integer nullable
+كود الاستجابة
+response_body_excerpt
+text nullable
+جزء مختصر
+لا بيانات حساسة
+next_retry_at
+timestamp nullable
+موعد إعادة المحاولة
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(webhook_endpoint_id, created_at)
+index(status, next_retry_at)
+data_classification_labels
+تعريف التصنيفات المتاحة للبيانات.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+key
+varchar
+public/internal/confidential/restricted
+unique
+name
+varchar
+اسم ظاهر
+description
+text nullable
+شرح
+requires_sensitive_log
+boolean
+هل يتطلب sensitive access log
+requires_encryption
+boolean
+هل يتطلب تشفير
+ai_share_allowed
+boolean
+هل يمكن إرساله للـ AI
+export_allowed
+boolean
+هل يسمح بالتصدير
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+unique(key)
+object_classifications
+ربط أي object بتصنيف بيانات.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+السياق
+subject_type
+varchar
+نوع الكيان
+subject_id
+bigint
+معرف الكيان
+classification_key
+varchar
+التصنيف
+classified_by
+bigint nullable
+من صنفه
+reason
+text nullable
+سبب التصنيف
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(subject_type, subject_id)
+index(organization_id, classification_key)
+encryption_key_references
+مرجع مفاتيح التشفير وليس المفاتيح نفسها.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+key_ref
+varchar
+مرجع داخل Vault/KMS
+unique
+scope_type
+varchar
+platform / organization / dedicated_environment
+scope_id
+bigint nullable
+معرف النطاق
+purpose
+varchar
+api_secrets / documents / backups
+status
+varchar(50)
+active / rotated / retired
+rotated_at
+timestamp nullable
+آخر تدوير
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+unique(key_ref)
+index(scope_type, scope_id)
+index(purpose, status)
+secret_references
+مرجع لأسرار محفوظة في Vault وليس قيمة السر.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+uuid
+char(26/36)
+معرف خارجي
+organization_id
+bigint nullable
+العميل
+owner_type
+varchar
+connector / package / ai_provider / payment_gateway
+owner_id
+bigint nullable
+المعرف
+secret_type
+varchar
+oauth_token / api_key / webhook_secret
+vault_ref
+varchar
+مرجع Vault
+status
+varchar(50)
+active / rotated / revoked
+last_used_at
+timestamp nullable
+آخر استخدام
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, owner_type)
+index(secret_type, status)
+ملاحظات:
+لا تحفظ القيم السرية في قاعدة البيانات.
+consent_records
+موافقات المستخدم أو العميل على استخدام أو نشر أو مزامنة البيانات.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+السياق
+user_id
+bigint nullable
+المستخدم
+company_id
+bigint nullable
+الشركة
+subject_type
+varchar nullable
+الكيان المرتبط
+subject_id
+bigint nullable
+المعرف
+consent_type
+varchar
+mall_publication / marketing / ai_processing / data_export
+status
+varchar(50)
+active / revoked / expired
+terms_version
+varchar nullable
+نسخة الشروط
+granted_at
+timestamp nullable
+وقت الموافقة
+revoked_at
+timestamp nullable
+وقت السحب
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, consent_type, status)
+index(user_id, consent_type)
+index(subject_type, subject_id)
+privacy_settings
+إعدادات خصوصية مرنة للمستخدم أو الشركة أو المؤسسة.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+السياق
+scope_type
+varchar
+user / company / organization / professional_profile
+scope_id
+bigint
+معرف النطاق
+key
+varchar
+اسم الإعداد
+value
+json
+القيمة
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+unique(scope_type, scope_id, key)
+index(organization_id)
+data_subject_requests
+طلبات الخصوصية مثل export/delete/correction.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+uuid
+char(26/36)
+معرف خارجي
+organization_id
+bigint nullable
+السياق
+requester_user_id
+bigint nullable
+مقدم الطلب
+request_type
+varchar
+export / delete / correct / restrict_processing
+status
+varchar(50)
+pending / verifying / approved / processing / completed / rejected
+verification_status
+varchar nullable
+تأكيد الهوية
+assigned_to
+bigint nullable
+المسؤول
+due_at
+timestamp nullable
+مهلة المعالجة
+completed_at
+timestamp nullable
+وقت الإكمال
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, status)
+index(requester_user_id)
+index(request_type, status)
+data_subject_request_items
+العناصر أو النطاقات التي يشملها طلب الخصوصية.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+data_subject_request_id
+bigint
+الطلب
+subject_type
+varchar
+نوع البيانات
+subject_id
+bigint nullable
+المعرف
+action
+varchar
+exported / deleted / anonymized / skipped
+status
+varchar(50)
+pending / completed / skipped / failed
+message
+text nullable
+توضيح
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(data_subject_request_id)
+index(subject_type, subject_id)
+retention_policies
+سياسات الاحتفاظ حسب نوع البيانات والدولة أو الخطة.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+خاص بعميل أو عام
+country_id
+bigint nullable
+الدولة
+data_type
+varchar
+نوع البيانات
+invoices / audit_logs / legal_documents / disputes
+retention_period_days
+integer
+مدة الاحتفاظ
+delete_action
+varchar
+delete / anonymize / archive
+legal_basis
+text nullable
+سبب قانوني
+status
+varchar(50)
+active / draft / retired
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, data_type)
+index(country_id, data_type)
+retention_holds
+تعليق حذف بيانات بسبب نزاع أو تحقيق أو التزام قانوني.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+السياق
+subject_type
+varchar
+نوع الكيان
+subject_id
+bigint
+المعرف
+hold_reason
+varchar
+legal / dispute / audit / incident
+status
+varchar(50)
+active / released
+placed_by
+bigint nullable
+من وضع التعليق
+released_by
+bigint nullable
+من رفعه
+released_at
+timestamp nullable
+وقت الرفع
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(subject_type, subject_id)
+index(organization_id, status)
+compliance_obligations
+التزامات الامتثال التي تحتاج متابعة.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+العميل
+country_id
+bigint nullable
+الدولة
+module_key
+varchar nullable
+الموديول
+tax / payroll / verification / privacy
+obligation_type
+varchar
+نوع الالتزام
+privacy / tax / e_invoicing / payroll / legal
+title
+varchar
+العنوان
+description
+text nullable
+الوصف
+status
+varchar(50)
+active / retired
+owner_user_id
+bigint nullable
+المسؤول
+due_rule
+json nullable
+قاعدة الاستحقاق
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, obligation_type)
+index(country_id)
+index(module_key)
+compliance_evidence
+أدلة الامتثال المرتبطة بالالتزامات أو التدقيق.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+السياق
+compliance_obligation_id
+bigint nullable
+الالتزام
+evidence_type
+varchar
+document / audit_log / screenshot / report
+subject_type
+varchar nullable
+كيان مرتبط
+subject_id
+bigint nullable
+معرف
+media_asset_id
+bigint nullable
+ملف دليل
+description
+text nullable
+شرح
+collected_by
+bigint nullable
+من جمعه
+collected_at
+timestamp nullable
+وقت الجمع
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id)
+index(compliance_obligation_id)
+index(subject_type, subject_id)
+incident_reports
+بلاغات الحوادث الأمنية أو الاحتيالية.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+uuid
+char(26/36)
+معرف خارجي
+organization_id
+bigint nullable
+العميل المتأثر
+incident_type
+varchar
+account_compromise / data_leak / malicious_package / ai_unsafe_action / connector_breach
+severity
+varchar(50)
+low / medium / high / critical
+status
+varchar(50)
+detected / triage / contained / investigating / resolved / closed
+reported_by
+bigint nullable
+من أبلغ
+assigned_to
+bigint nullable
+المسؤول
+detected_at
+timestamp nullable
+وقت الاكتشاف
+contained_at
+timestamp nullable
+وقت الاحتواء
+resolved_at
+timestamp nullable
+وقت الحل
+summary
+text nullable
+ملخص
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, status)
+index(incident_type)
+index(severity, status)
+incident_timeline_events
+خط زمني للحادث.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+incident_report_id
+bigint
+الحادث
+event_key
+varchar
+detect / triage / contain / notify / fix / review
+description
+text nullable
+الوصف
+actor_user_id
+bigint nullable
+من نفذ
+created_at
+timestamp
+الوقت
+فهارس وقواعد:
+index(incident_report_id, created_at)
+index(event_key)
+incident_actions
+إجراءات معالجة الحادث.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+incident_report_id
+bigint
+الحادث
+action_type
+varchar
+revoke_token / lock_user / disable_package / rotate_secret / notify_customer
+status
+varchar(50)
+pending / running / completed / failed
+assigned_to
+bigint nullable
+المسؤول
+completed_at
+timestamp nullable
+وقت الإكمال
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(incident_report_id, status)
+index(action_type)
+privileged_access_requests
+طلبات دخول دعم أو وصول عالي الحساسية، خصوصًا Dedicated وEnterprise.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+uuid
+char(26/36)
+معرف خارجي
+organization_id
+bigint nullable
+العميل
+requested_by
+bigint
+طالب الوصول
+approved_by
+bigint nullable
+الموافق
+access_reason
+text
+سبب الوصول
+required
+scopes
+json
+الصلاحيات المطلوبة
+status
+varchar(50)
+pending / approved / active / expired / revoked / rejected
+starts_at
+timestamp nullable
+بداية الوصول
+expires_at
+timestamp nullable
+انتهاء الوصول
+approved_at
+timestamp nullable
+وقت الموافقة
+revoked_at
+timestamp nullable
+وقت الإلغاء
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, status)
+index(requested_by)
+index(expires_at)
+security_policies
+تعريف سياسة أمنية عامة أو خاصة بعميل.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+null = platform default
+policy_type
+varchar
+password / mfa / session / ip_allowlist / ai / api_token
+name
+varchar
+اسم السياسة
+settings
+json
+إعدادات السياسة
+status
+varchar(50)
+active / draft / disabled
+created_by
+bigint nullable
+المنشئ
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, policy_type)
+index(status)
+mfa_policy_assignments
+تطبيق سياسة MFA على دور أو نطاق أو موديول.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+security_policy_id
+bigint
+سياسة MFA
+scope_type
+varchar
+platform / organization / role / permission / module
+scope_id
+bigint nullable
+المعرف
+require_for_actions
+json nullable
+أفعال تتطلب MFA
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(security_policy_id)
+index(scope_type, scope_id)
+ip_allowlists
+قيود IP للأدوار أو API tokens أو مؤسسات Enterprise.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+العميل
+scope_type
+varchar
+organization / user / api_token / admin_role
+scope_id
+bigint nullable
+المعرف
+cidr
+varchar
+IP أو CIDR
+status
+varchar(50)
+active / disabled
+description
+text nullable
+شرح
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id)
+index(scope_type, scope_id)
+package_security_reviews
+مراجعات أمنية للحزم قبل النشر أو التثبيت.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+marketplace_package_id
+bigint
+الحزمة
+package_version_id
+bigint nullable
+الإصدار
+review_type
+varchar
+automated / manual / finance / ai / connector
+status
+varchar(50)
+pending / passed / failed / needs_changes
+risk_level
+varchar(50)
+low / medium / high / critical
+reviewed_by
+bigint nullable
+المراجع
+summary
+text nullable
+ملخص
+completed_at
+timestamp nullable
+وقت الانتهاء
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(marketplace_package_id)
+index(package_version_id)
+index(status, risk_level)
+package_security_findings
+نتائج أو مشاكل مراجعة الحزم.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+package_security_review_id
+bigint
+المراجعة
+finding_type
+varchar
+permission / code / dependency / performance / data_access
+severity
+varchar(50)
+low / medium / high / critical
+title
+varchar
+العنوان
+description
+text nullable
+الوصف
+status
+varchar(50)
+open / accepted_risk / fixed / false_positive
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(package_security_review_id)
+index(severity, status)
+ai_security_policies
+سياسات أمن AI لكل مؤسسة أو موديول.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+العميل
+module_key
+varchar nullable
+الموديول
+cms / erp / finance / legal / mall
+allowed_data_classes
+json
+التصنيفات المسموحة
+blocked_data_classes
+json
+التصنيفات الممنوعة
+approval_threshold_level
+integer
+بداية وجوب الموافقة
+external_provider_allowed
+boolean
+هل يسمح بمزود خارجي
+retention_rule
+json nullable
+احتفاظ بالمخرجات
+status
+varchar(50)
+active / disabled
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, module_key)
+index(status)
+ai_sensitive_data_findings
+نتائج اكتشاف بيانات حساسة قبل إرسالها إلى AI أو ضمن prompt.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+السياق
+ai_change_plan_id
+bigint nullable
+الخطة
+finding_type
+varchar
+tax_number / bank_account / salary / api_key / identity_doc
+severity
+varchar(50)
+low / medium / high / critical
+action_taken
+varchar
+masked / blocked / allowed_by_policy
+metadata
+json nullable
+تفاصيل غير حساسة
+created_at
+timestamp
+وقت الاكتشاف
+فهارس وقواعد:
+index(organization_id, created_at)
+index(ai_change_plan_id)
+index(finding_type)
+sso_providers
+أساس SSO/SAML/OAuth للمؤسسات في V6.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint
+المؤسسة
+provider_type
+varchar
+saml / oidc / oauth
+name
+varchar
+اسم المزود
+status
+varchar(50)
+draft / active / disabled
+metadata_url
+text nullable
+SAML metadata URL
+client_id
+varchar nullable
+OIDC client
+لا client_secret raw
+secret_ref_id
+bigint nullable
+مرجع secret
+settings
+json nullable
+إعدادات
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, status)
+index(provider_type)
+siem_export_jobs
+تصدير أحداث أمنية إلى SIEM/SOC.
+الحقل
+النوع المقترح
+الوصف
+ملاحظات
+id
+bigint
+المعرف
+organization_id
+bigint nullable
+المؤسسة
+destination_type
+varchar
+syslog / webhook / s3 / api
+status
+varchar(50)
+pending / running / completed / failed
+period_start
+timestamp
+بداية الفترة
+period_end
+timestamp
+نهاية الفترة
+records_count
+integer default 0
+عدد السجلات
+error_message
+text nullable
+خطأ
+created_at / updated_at
+timestamps
+تواريخ
+فهارس وقواعد:
+index(organization_id, status)
+index(period_start, period_end)
+7. Security Flows
+7.1 Login + MFA Flow
+User submits login→ validate credentials→ create login_attempt→ calculate risk score→ if MFA required: challenge→ if success: create user_session→ create security_event→ show session in Security Center
+7.2 Sensitive Access Flow
+User requests restricted object→ Permission check→ Data classification check→ Re-auth / MFA if required→ Capture reason if policy requires→ create sensitive_access_logs→ return object or deny
+7.3 API Token Flow
+User creates API token→ choose scopes→ check risky scopes→ generate token once→ store token_hash only→ log security_event ApiTokenCreated→ every request validates hash + scope + expiry + revocation→ usage recorded→ token can be revoked immediately
+7.4 Webhook Security Flow
+Event generated→ payload built→ payload_hash calculated→ signature with webhook secret→ delivery created→ retry on failure→ log response excerpt only→ rotate secret if compromised
+7.5 Privacy Data Request Flow
+User submits data request→ verify identity→ create data_subject_request→ determine modules affected→ collect request items→ export/delete/anonymize according to policy→ retention_holds checked→ complete request→ audit log created
+7.6 Incident Management Flow
+Detect→ create incident_report→ Triage→ Contain→ Investigate→ Notify affected parties if needed→ Fix→ Post-incident review→ Improve controls
+7.7 Privileged Support Access Flow
+Support requests access→ customer/platform security admin approves→ temporary scoped access granted→ all actions create admin_action_logs and sensitive_access_logs→ access expires automatically→ report generated
+8. ERD
+erDiagram USERS ||--o{ USER_SECURITY_PROFILES : has USERS ||--o{ LOGIN_ATTEMPTS : attempts USERS ||--o{ USER_SESSIONS : opens USERS ||--o{ MFA_FACTORS : protects USERS ||--o{ SENSITIVE_ACCESS_LOGS : reads ORGANIZATIONS ||--o{ SECURITY_EVENTS : receives ORGANIZATIONS ||--o{ API_TOKENS : issues API_TOKENS ||--o{ API_TOKEN_SCOPES : allows API_TOKENS ||--o{ API_TOKEN_USAGES : records WEBHOOK_ENDPOINTS ||--o{ WEBHOOK_DELIVERIES : delivers ORGANIZATIONS ||--o{ CONSENT_RECORDS : grants ORGANIZATIONS ||--o{ DATA_SUBJECT_REQUESTS : handles DATA_SUBJECT_REQUESTS ||--o{ DATA_SUBJECT_REQUEST_ITEMS : contains ORGANIZATIONS ||--o{ INCIDENT_REPORTS : may_have INCIDENT_REPORTS ||--o{ INCIDENT_TIMELINE_EVENTS : tracks INCIDENT_REPORTS ||--o{ INCIDENT_ACTIONS : remediates ORGANIZATIONS ||--o{ PRIVILEGED_ACCESS_REQUESTS : approves SECURITY_POLICIES ||--o{ MFA_POLICY_ASSIGNMENTS : applies MARKETPLACE_PACKAGES ||--o{ PACKAGE_SECURITY_REVIEWS : reviewed_by PACKAGE_SECURITY_REVIEWS ||--o{ PACKAGE_SECURITY_FINDINGS : finds
+9. Permissions المقترحة
+Permission
+الغرض
+مستوى الخطر
+security.center.view
+عرض Security Center
+medium
+security.events.view
+عرض الأحداث الأمنية
+medium
+security.sensitive_logs.view
+عرض sensitive access logs
+high
+security.mfa.manage
+إدارة MFA
+medium
+security.api_tokens.manage
+إدارة API tokens
+high
+security.policies.manage
+إدارة سياسات الأمن
+critical
+security.incidents.manage
+إدارة الحوادث
+critical
+security.privileged_access.manage
+الموافقة على الوصول العالي
+critical
+security.siem.manage
+إدارة SIEM export
+high
+privacy.requests.manage
+إدارة طلبات الخصوصية
+high
+compliance.evidence.manage
+إدارة أدلة الامتثال
+high
+package.security_review.manage
+مراجعة أمن الحزم
+high
+ai.security_policy.manage
+إدارة سياسات AI
+critical
+10. Feature Flags
+enable_security_center
+enable_mfa_foundation
+enable_sensitive_access_logs
+enable_api_tokens_foundation
+enable_security_events
+enable_privacy_requests
+enable_retention_policies
+enable_incident_management
+enable_package_security_reviews
+enable_ai_security_policies
+enable_privileged_access_requests
+enable_sso_foundation
+enable_siem_export
+11. Indexes الأساسية
+login_attempts: index(email, created_at), index(ip_address, created_at)
+user_sessions: index(user_id, status), unique(session_id_hash)
+security_events: index(organization_id, created_at), index(severity, created_at)
+sensitive_access_logs: index(subject_type, subject_id), index(user_id, created_at)
+api_tokens: unique(token_hash), index(organization_id, status)
+api_token_scopes: unique(api_token_id, scope)
+webhook_deliveries: index(status, next_retry_at)
+consent_records: index(organization_id, consent_type, status)
+data_subject_requests: index(organization_id, status), index(request_type, status)
+incident_reports: index(severity, status), index(incident_type)
+privileged_access_requests: index(organization_id, status), index(expires_at)
+12. العلاقة مع الأنظمة الخمسة
+النظام
+قواعد الأمن والامتثال
+Core Kernel
+RBAC, audit_logs, activity_logs, users, memberships هي الأساس. هذا الملف يضيف طبقات security events وMFA وprivacy.
+Kabeeri Cloud
+Security Center يظهر الجلسات، MFA، API tokens، backups، package risk، admin actions.
+Frontend Anywhere
+API keys scoped، CORS/allowed origins، rate limiting، public data contract، لا وصول للداتا الخاصة.
+Kabeeri Portable
+Export يجب أن يسجل، tokens للمزامنة hashed، لا تصدير platform secrets، retention policy بعد الخروج.
+Kabeeri Dedicated
+Privileged support access، dedicated health/security reports، SIEM، SSO، isolated backups.
+13. العلاقة مع الموديولات
+الموديول
+القاعدة الأمنية
+CMS
+sanitize HTML، file validation، draft/private visibility، content publish audit.
+Media & Files
+private storage، signed temporary URLs، file access logs، sensitive classification.
+Rabet & Verification
+Legal documents restricted، Legal Partner sees assigned requests only، verification decisions audited.
+Commerce
+Payment credentials لا تحفظ raw، order/payment changes audited، customer exports logged.
+Mall
+Moderation، reports، fraud signals، no direct access to tenant private DB.
+Talent
+Professional visibility controls، job offer privacy، no HR evaluation leaks.
+ERP Essentials/Pro
+financial postings، payroll، bank/cash، contracts، stock adjustments require permissions/audit.
+Integration Hub
+credential vault references، scopes، sync logs، mapping preview، retry/error reports.
+AI Co-builder
+least context، masking، plan/preview/approval/rollback، no high-risk action without approval.
+Marketplace Packages
+permission disclosure، signing، review، kill-switch لاحقًا.
+14. Laravel Structure المقترحة
+app/Core/Security/  Auth/  MFA/  Sessions/  ApiTokens/  Webhooks/  Events/  SensitiveAccess/  AdminActions/  Policies/  Incidents/  PrivilegedAccess/app/Core/Compliance/  Privacy/  Consent/  DataRequests/  Retention/  Obligations/  Evidence/  Reports/app/Core/Encryption/  KeyReferences/  SecretReferences/  Vault/app/Core/SecurityCenter/  Dashboards/  Widgets/  Actions/  Resources/
+15. Release Roadmap
+الإصدار
+المطلوب أمنياً
+V1
+Secure auth, RBAC, activity logs, file upload validation, CSRF/XSS protection, basic backup, visibility fields.
+V2
+Import security, plugin permission disclosure basic, contact/request spam protection, redirect/import audit.
+V3
+Verification security, ERP essentials audit, tasks/team access security, sensitive access logs basic.
+V4
+Security Center, MFA foundation, sessions, API tokens, cloud backup, package signing, legal partner access control.
+V5
+Connector security, credentials vault references, advanced approvals, contract security, ERP audit reports.
+V6
+Enterprise security, SSO/SAML/OAuth, SIEM/SOC export, privileged access, GRC evidence, DLP foundation.
+16. أخطاء ممنوعة
+بناء النظام بدون RBAC من البداية.
+حفظ API keys أو OAuth tokens أو payment credentials كنص واضح.
+جعل الملفات القانونية أو payroll public أو على public disk.
+السماح للـ AI برؤية كل شيء أو تنفيذ تغييرات حساسة بدون approval.
+السماح للـ plugins/packages بصلاحيات واسعة بدون manifest وpermission disclosure.
+بناء Billing أو ERP أو Finance بدون audit traceability.
+ترك Platform Admin بدون reason field وadmin action log.
+تجاهل retention/legal holds أثناء deletion أو export.
+Webhook بدون signature/timestamp/replay protection.
+17. Definition of Done
+Security Center يعرض MFA status وactive sessions وAPI tokens وrecent events وsensitive logs.
+MFA يعمل ويمكن فرضه على platform/legal/security roles.
+كل API token له scopes وhash وlast_used وrevocation.
+Sensitive access log يتسجل عند رؤية legal/payroll/contracts/API secrets.
+Data classifications موجودة ويمكن ربطها بأي object.
+Consent records وdata subject requests يعملون كأساس للخصوصية.
+Incident reports لها workflow واضح من detect إلى post-incident review.
+Package security review موجود قبل التوسع في Marketplace العام.
+AI security policy تمنع إرسال restricted data أو high-risk apply بدون موافقة.
+Portable/Dedicated/Frontend Anywhere لا يكسرون الأمن أو الخصوصية أو Mall consent.
+KABEERI — powered by ADMIT | Database Security & Compliance Architecture

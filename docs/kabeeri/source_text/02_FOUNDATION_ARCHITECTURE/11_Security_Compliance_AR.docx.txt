@@ -1,0 +1,542 @@
+KABEERI — ملحق 11: معمارية الأمن والامتثال
+Security & Compliance Architecture
+هذا الملحق يحدد قواعد الأمن والامتثال وحماية البيانات داخل Kabeeri، لأن المنصة ستتعامل مع بيانات حساسة جدًا:
+مواقع ومحتوى.
+شركات موثقة.
+مستندات قانونية.
+موظفين ومهنيين.
+تقييمات وأداء.
+فواتير ومدفوعات.
+ERP وAccounting وHR.
+Kabeeri Mall.
+Rabet B2B.
+Legal Verification.
+AI Co-builder.
+Plugins/Modules/Connectors.
+الهدف:
+بناء Kabeeri كمنصة موثوقة وآمنة من البداية، وليس إضافة الأمن بعد حدوث المشاكل.
+1. القاعدة الرئيسية
+الأمن في Kabeeri ليس Feature.
+الأمن يجب أن يكون جزءًا من الـ Core.
+Security by DesignPrivacy by DesignAudit by DefaultLeast PrivilegeDefense in Depth
+أي جزء جديد في Kabeeri يجب أن يجيب على:
+ما البيانات التي يقرأها؟ما البيانات التي يكتبها؟ما الصلاحيات المطلوبة؟هل يحتاج audit log؟هل يحتوي بيانات حساسة؟هل يحتاج encryption؟هل يظهر للعامة؟هل يستخدم AI أو تكامل خارجي؟هل يحتاج موافقة؟هل يمكن التراجع عنه؟
+2. التهديدات الرئيسية التي يجب الحماية منها
+2.1 تهديدات المستخدمين
+سرقة حساب.
+كلمات مرور ضعيفة.
+Session hijacking.
+Brute-force login.
+صلاحيات زائدة.
+موظف يرى بيانات لا تخصه.
+موظف سابق يحتفظ بوصول للنظام.
+2.2 تهديدات الشركات والبيانات
+تسريب مستندات قانونية.
+تسريب بيانات موظفين.
+تسريب payroll أو salary.
+تعديل فواتير بدون صلاحية.
+حذف بيانات مهمة.
+تعديل بيانات شركة موثقة.
+إخفاء نزاعات أو تقييمات.
+2.3 تهديدات Marketplace الداخلي
+Plugin ضار.
+Theme يحتوي كود خطر.
+Connector يسرّب بيانات.
+AI Skill يصل لبيانات حساسة.
+Package غير موقع.
+تحديث يكسر النظام.
+2.4 تهديدات Kabeeri Mall
+Business مزيف.
+منتجات مخالفة.
+خدمات وهمية.
+Reviews مزيفة.
+Spam messages.
+احتيال في الخدمات.
+سرقة بيانات العملاء.
+2.5 تهديدات AI
+AI يتجاوز صلاحيات المستخدم.
+إرسال بيانات حساسة لمزود خارجي.
+تنفيذ تغييرات بدون موافقة.
+حذف أو تعديل بيانات خطيرة.
+توليد إعدادات خاطئة للـ finance أو payroll.
+2.6 تهديدات التكاملات الخارجية
+Webhook مزيف.
+API keys مكشوفة.
+Connector غير موثوق.
+Sync خاطئ يفسد البيانات.
+replay attacks.
+3. طبقات الأمن الأساسية
+Kabeeri يعتمد على Defense in Depth:
+AuthenticationAuthorizationVisibility / PrivacySensitive Data ControlsAudit LogsEncryptionRate LimitingInput ValidationPackage SecurityAI GuardrailsBackup & RecoveryMonitoringCompliance
+4. Authentication Security
+4.1 تسجيل الدخول
+يجب دعم:
+Email/password.
+Password reset آمن.
+Email verification.
+Phone verification لاحقًا.
+MFA.
+Login rate limiting.
+Device/session management.
+Suspicious login detection.
+4.2 MFA
+MFA يجب أن يكون:
+اختياريًا للمستخدمين العاديين في البداية.
+إلزاميًا لـ Platform Admins.
+إلزاميًا لـ Legal Partners.
+إلزاميًا لـ Finance/Payroll critical roles لاحقًا.
+إلزاميًا عند تنفيذ critical AI action لاحقًا.
+أنواع MFA
+Authenticator appEmail OTP في البداية إن لزمSMS OTP لاحقًا بحذرRecovery codes
+4.3 Session Security
+Session timeout.
+Remember me controlled.
+Logout from all devices.
+Device list.
+IP/user-agent tracking.
+Re-authentication for critical actions.
+5. Authorization Security
+5.1 RBAC من البداية
+Role-Based Access Control يجب أن يدخل V1.
+يعتمد على:
+UserMembershipRolePermissionContext
+5.2 ABAC لاحقًا
+Attribute-Based Access Control يدخل لاحقًا عند الحاجة.
+أمثلة:
+Invoice amount > 50,000 يحتاج CFOEmployee can view tasks assigned to their department onlyLegal Partner can view assigned verification requests only
+5.3 Deny Overrides Allow
+إذا كان هناك تعارض:
+deny يغلب allow
+5.4 Sensitive Permissions
+الصلاحيات الحساسة يجب أن تكون منفصلة:
+billing.managefinance.journal.postpayroll.processcompany.verification.approveplugin.installai.change.applysecurity.settings.managelegal_documents.view
+6. Data Classification
+كل بيانات في Kabeeri يجب تصنيفها.
+6.1 Public Data
+يمكن أن تظهر للعامة.
+أمثلة:
+Public pages.
+Public business profile.
+Public services.
+Public product listings.
+6.2 Internal Data
+داخل Organization أو Company.
+أمثلة:
+Tasks.
+Internal comments.
+Team channels.
+Draft content.
+6.3 Confidential Data
+تحتاج صلاحيات خاصة.
+أمثلة:
+Contracts.
+Private evaluations.
+Customer data.
+Supplier data.
+Business reports.
+6.4 Restricted Data
+أعلى حساسية.
+أمثلة:
+Legal documents.
+Identity documents.
+Tax numbers.
+Bank accounts.
+Payroll.
+Accounting entries.
+Payment credentials.
+API secrets.
+Dispute evidence.
+7. Encryption Strategy
+7.1 Encryption in Transit
+كل الاتصالات يجب أن تستخدم HTTPS.
+في Cloud:
+SSL تلقائي.
+Redirect HTTP to HTTPS.
+HSTS لاحقًا.
+7.2 Encryption at Rest
+بعض البيانات يجب تشفيرها في قاعدة البيانات أو storage:
+API keys.
+Payment credentials.
+OAuth tokens.
+Bank account data.
+Sensitive verification metadata.
+AI provider keys.
+7.3 File Encryption
+المستندات الحساسة يمكن أن تحتاج:
+Private storage disk.
+Signed temporary URLs.
+Access logging.
+Optional encryption.
+أمثلة:
+Legal documents.
+Contracts.
+Payroll files.
+Dispute evidence.
+8. Audit Logging
+8.1 Activity Log vs Audit Log
+Activity Log
+يسجل أحداث تشغيلية عامة.
+مثال:
+Page publishedTask completedMember invited
+Audit Log
+يسجل أحداث حساسة أو قانونية أو أمنية.
+مثال:
+Role changedLegal document viewedPayroll exportedPayment gateway changedAI applied critical change
+8.2 ما يجب تسجيله دائمًا؟
+Login/logout.
+Failed login.
+Role changes.
+Permission changes.
+Sensitive file view/download.
+Verification decisions.
+Billing changes.
+Plugin install/update.
+AI changes.
+Financial postings.
+Payroll actions.
+Data export.
+Account deletion requests.
+8.3 Audit Log Fields
+idactor_user_idorganization_id nullablecompany_id nullablesite_id nullableactionsubject_typesubject_idrisk_levelip_addressuser_agentbefore json nullableafter json nullablemetadata jsoncreated_at
+8.4 Audit Log Rules
+لا يحذف من الواجهة العادية.
+لا يعدل يدويًا.
+retention policy واضحة.
+export مسموح للأدوار المخولة.
+platform admins لا يجب أن يخفوا أثرهم.
+9. Sensitive Access Logging
+مش كل القراءة تحتاج log، لكن قراءة البيانات الحساسة تحتاج.
+أمثلة:
+عرض مستند قانوني.
+تحميل عقد.
+رؤية payroll.
+تصدير customers.
+رؤية API keys.
+عرض dispute evidence.
+جدول مقترح
+sensitive_access_logsiduser_idsubject_typesubject_idactionreason nullableip_addressuser_agentcreated_at
+10. Input Validation & Sanitization
+10.1 CMS Content
+XSS protection.
+HTML sanitization.
+Allowed tags policy.
+URL validation.
+Upload validation.
+10.2 Forms
+CSRF protection.
+Spam protection.
+Rate limits.
+File validation.
+Field validation.
+10.3 API
+Request validation.
+Typed DTOs إن أمكن.
+Rate limiting.
+Auth tokens.
+Payload size limits.
+11. File Upload Security
+11.1 قواعد الرفع
+السماح بأنواع محددة.
+منع تنفيذ الملفات المرفوعة.
+فحص mime type.
+تحديد الحجم.
+تخزين الملفات خارج public مباشرة عند الحساسية.
+توليد أسماء آمنة.
+فحص basic للملفات لاحقًا.
+11.2 Public vs Private Files
+Public files
+صور الموقع.
+public media.
+Private files
+مستندات قانونية.
+عقود.
+HR documents.
+dispute evidence.
+12. API Security
+12.1 API Tokens
+يجب دعم:
+Token scopes.
+Expiration.
+Revocation.
+Last used tracking.
+IP restrictions لاحقًا.
+12.2 OAuth لاحقًا
+للتكاملات الخارجية.
+12.3 Webhook Security
+كل webhook يحتاج:
+Signature.
+Timestamp.
+Replay protection.
+Secret rotation.
+Logging.
+13. Connector Security
+Connectors خطيرة لأنها تربط أنظمة خارجية.
+يجب أن تدعم:
+Credentials vault.
+OAuth tokens encrypted.
+Least-scope integration permissions.
+Sync logs.
+Error logs.
+Manual disconnect.
+Data mapping review.
+14. Plugin / Package Security
+14.1 Package Signing
+كل package يجب أن يكون signed قبل التثبيت من Marketplace.
+14.2 Permission Disclosure
+كل package يجب أن يوضح:
+ماذا يقرأ.
+ماذا يكتب.
+ما الأحداث التي يستمع لها.
+هل يتصل بخارج النظام.
+هل يحتاج صلاحيات مالية أو شخصية.
+14.3 Package Review
+Automated scan.
+Security review.
+Performance review.
+Compatibility review.
+Manual review للـ ERP/Finance/AI.
+14.4 Dangerous Packages
+أي package يطلب:
+direct database access.
+filesystem write.
+finance access.
+payroll access.
+AI sensitive access.
+يحتاج review مشدد.
+15. AI Security
+15.1 AI لا يتجاوز الصلاحيات
+AI يعمل بصلاحيات المستخدم الحالي.
+15.2 AI Data Minimization
+لا ترسل للـ AI إلا أقل بيانات لازمة.
+15.3 Sensitive Data Masking
+بيانات حساسة يجب أن تمسح أو تخفى قبل إرسالها لمزود AI:
+Tax numbers.
+Bank accounts.
+Salaries.
+Identity documents.
+API keys.
+15.4 AI Change Safety
+أي تغيير مؤثر يجب أن يمر بـ:
+PlanPreviewApprovalApplyAudit LogRollback
+16. Kabeeri Mall Security
+16.1 Business Verification
+حماية من الشركات المزيفة عبر:
+email/phone verification.
+legal verification.
+business documents.
+legal partner network.
+16.2 Moderation
+report listing.
+report review.
+report user.
+moderation queue.
+suspension.
+appeal.
+16.3 Fraud Signals
+لاحقًا:
+تكرار شكاوى.
+مراجعات مزيفة.
+business data mismatch.
+payment disputes.
+suspicious traffic.
+17. Talent Marketplace Security
+17.1 حماية المحترفين
+profile visibility settings.
+open-to-offers privacy.
+block company.
+report offer.
+spam protection.
+17.2 حماية الشركات
+verified professionals.
+work history validation.
+dispute records.
+reputation score.
+18. Rabet Security
+Rabet يعتمد على الثقة، لذلك يجب حماية:
+Company verification.
+Trust record.
+Digital office.
+Team roles.
+Work history.
+Evaluations.
+Disputes.
+قواعد
+لا تعديل trust records بدون log.
+لا حذف verification history.
+لا تغيير legal status بدون permission.
+لا إخفاء dispute بدون moderation.
+19. ERP Security
+ERP يحتوي بيانات حساسة.
+19.1 Finance
+فصل صلاحيات إنشاء الفاتورة عن اعتمادها.
+منع حذف القيود المالية بعد posting.
+audit لكل تعديل.
+approval للمبالغ الكبيرة.
+19.2 Payroll
+وصول محدود جدًا.
+MFA للأدوار الحساسة.
+audit لكل export.
+country-specific compliance.
+19.3 Inventory
+stock adjustment يحتاج صلاحية.
+حركات المخزون لا تحذف بسهولة.
+audit لكل movement.
+20. Backup Strategy
+20.1 Backup Types
+Database backupFiles backupConfiguration backupPackage version snapshotAI change snapshot
+20.2 Backup Frequency
+Self-hosted
+Manual backup في V1.
+Scheduled backup لاحقًا.
+Cloud
+Daily backup على الأقل.
+Retention حسب الخطة.
+On-demand backup قبل updates.
+20.3 Backup Security
+تشفير backups الحساسة.
+منع public access.
+retention policy.
+restore testing.
+21. Disaster Recovery
+21.1 مفاهيم
+RPO = أقصى بيانات يمكن فقدهاRTO = أقصى وقت للتعافي
+21.2 Roadmap
+V1
+Manual backup/restore.
+V4 Cloud
+Automated backups.
+One-click restore.
+Staging restore.
+V6 Enterprise
+DR plans.
+Multi-region optional.
+Enterprise RPO/RTO.
+22. Monitoring & Observability
+22.1 ما يجب مراقبته؟
+Errors.
+Failed jobs.
+Queue health.
+Slow queries.
+Login failures.
+Payment failures.
+Sync failures.
+AI failures.
+Package update failures.
+Webhook failures.
+22.2 Logs
+Application logsSecurity logsAudit logsIntegration logsAI logsBilling logs
+23. Compliance Foundation
+Kabeeri يجب أن يكون جاهزًا لمتطلبات الامتثال حسب السوق.
+23.1 Privacy
+consent records.
+data export requests.
+deletion requests.
+privacy settings.
+visibility controls.
+23.2 Records Retention
+بعض البيانات يجب الاحتفاظ بها:
+invoices.
+audit logs.
+verification records.
+legal documents.
+disputes.
+يجب تحديد retention policies لاحقًا حسب الدولة.
+23.3 Country-specific Compliance
+خاصة في:
+Taxes.
+E-invoicing.
+Payroll.
+Legal verification.
+Data residency.
+24. Security Incident Management
+24.1 Incident Types
+Account compromiseData leakMalicious packagePayment fraudVerification fraudAI unsafe actionConnector breachDDoS / abuse
+24.2 Incident Workflow
+Detect→ Triage→ Contain→ Investigate→ Notify affected parties if needed→ Fix→ Post-incident review→ Improve controls
+25. Admin Security
+25.1 Platform Admin Separation
+لا يوجد Admin واحد لكل شيء إلا Super Admin محدود جدًا.
+أدوار:
+Platform Super AdminPlatform Support AdminPlatform Billing AdminPlatform Verification AdminPlatform Moderation AdminPlatform Security AdminPlatform Marketplace Reviewer
+25.2 Admin Actions
+كل admin action حساس يحتاج:
+MFA.
+audit log.
+reason field.
+optional approval.
+26. Security Database Requirements
+26.1 Required tables
+activity_logsaudit_logs optional separatesensitive_access_logslogin_attempts optionalapi_tokenswebhook_endpointswebhook_deliveriessecurity_eventsbackup_jobsrestore_jobsincident_reportsconsent_recordsdata_requests
+27. Laravel Structure
+app/Core/Security/  Auth/  MFA/  Audit/  AccessLogs/  Encryption/  ApiTokens/  Webhooks/  Incidents/app/Core/Compliance/  Privacy/  DataRequests/  Retention/  Reports/app/Core/Backup/  Jobs/  Actions/  Services/
+28. V1 Requirements من هذا الملحق
+Must-have في V1
+Secure authPassword hashingEmail verification optionalLogin rate limitingRBAC foundationPolicies for core modelsActivity logsFile upload validationCSRF protectionXSS sanitizationSQL injection protection via ORMBasic backupFeature flagsSensitive visibility fields
+Should-have في V1
+MFA foundationAPI token foundationSensitive access log tablePrivate file storage supportSecurity event logBackup/restore jobs foundation
+Not required في V1
+Full SIEM integrationEnterprise SSOPAMAdvanced DLPMulti-region DRAdvanced malware scanningFull compliance automation
+29. Roadmap عبر الإصدارات
+V1
+Auth security.
+RBAC.
+Activity logs.
+Secure uploads.
+Basic backup.
+Security foundations.
+V2
+Import security.
+Plugin permission disclosure.
+Safe updates basic.
+Contact/request spam protection.
+V3
+Verification security.
+ERP essentials audit.
+Team/task access security.
+Basic sensitive access logs.
+V4
+Security Center.
+MFA.
+Cloud backup.
+Package signing.
+Marketplace security review.
+Legal partner access control.
+V5
+Connector security.
+API credentials vault.
+Advanced approvals.
+Contracts security.
+ERP audit reports.
+V6
+Enterprise governance.
+SSO/SAML/OAuth.
+SIEM/SOC integration.
+DR plans.
+Compliance exports.
+Advanced monitoring.
+30. أخطاء ممنوعة
+30.1 لا تؤجل الصلاحيات
+لو تم بناء النظام بدون RBAC من البداية، سيكون إصلاحه مكلفًا جدًا.
+30.2 لا تجعل الملفات الحساسة public
+أي مستند قانوني أو عقد أو payroll يجب أن يكون private.
+30.3 لا تسمح للـ plugins بحرية مطلقة
+هذا سيكرر مشكلة فوضى WordPress.
+30.4 لا تجعل AI يرى كل شيء
+AI يجب أن يحصل على سياق محدود.
+30.5 لا تجعل Platform Admin غير مراقب
+كل admin action يجب أن يسجل.
+30.6 لا تبني Billing أو ERP بدون Audit
+الماليات تحتاج traceability.
+31. Security Checklist لكل Feature جديدة
+قبل قبول أي Feature:
+هل تحتاج authentication؟هل تحتاج permission جديد؟هل تحتوي بيانات حساسة؟هل تحتاج visibility؟هل تحتاج audit log؟هل تحتاج rate limit؟هل تحتاج encryption؟هل تظهر للعامة؟هل يمكن الإبلاغ عنها؟هل يستطيع AI الوصول لها؟هل تحتاج backup/rollback؟
+32. الخلاصة التنفيذية
+الأمن في Kabeeri يجب أن يكون من البداية وليس لاحقًا.
+القاعدة النهائية:
+No sensitive data without access controlNo critical action without auditNo plugin without permissionsNo AI action without guardrailsNo marketplace without moderationNo ERP without traceabilityNo Cloud without backup
+33. الخطوة التالية
+بعد هذا الملحق يمكن الانتقال إلى:
+Kabeeri V1 — Core Foundation for CMS + Company OS
+أو إنشاء ملحق اختياري إضافي:
+ملحق 12 — Developer Platform & SDK Architecture
+إذا أردنا تثبيت تجربة المطورين قبل V1.

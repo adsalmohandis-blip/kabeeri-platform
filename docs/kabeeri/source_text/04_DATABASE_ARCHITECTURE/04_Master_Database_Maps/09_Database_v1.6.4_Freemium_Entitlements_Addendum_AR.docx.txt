@@ -1,0 +1,46 @@
+KABEERI Database v1.6.4 Addendum — Freemium Plans & Entitlements
+ملحق داتابيز لتثبيت نموذج Freemium والحدود والترقيات والاستخدام.
+Version: v1.6.4 | Status: Approved Documentation Addendum
+هذا الملف جزء من تحديث Freemium & Plans ولا يغير ملفات V1 المجمدة مباشرة. أي تطبيق يتم عبر Addendum أو تاسك واضح في Codex.
+قاعدة التصميم
+لا يتم تغيير معنى جداول Billing السابقة. هذا الملحق يوضح الجداول أو الحقول التي يجب تفعيلها/إضافتها لإدارة Freemium بشكل قابل للتنفيذ.
+مصدر الحقيقة
+plans وplan_versions وplan_entitlements هي مصدر الحقيقة لخطة العميل. feature_flags ليست بديلًا عن entitlements.
+علاقة الاستخدام بالحدود
+أي مورد محدود يجب أن ينتج Usage Record ثم Usage Aggregate، ويتم فحصه عبر EntitlementService قبل السماح بالعملية أو إظهار upgrade trigger.
+علاقة Free App
+التطبيق المجاني هو Site/App عادي داخل organization، لكنه محكوم بخطة Free وحدودها. لا توجد جداول منفصلة للتطبيق المجاني إلا إذا ظهرت حاجة تنفيذية لاحقًا.
+الجداول والكيانات المطلوبة
+Table / Entity
+Purpose
+Owner Module
+plans
+تعريف الخطط: Free, Pro, Business, Agency, Enterprise
+billing
+plan_versions
+نسخ الخطط حتى لا تتغير شروط عميل قديم فجأة
+billing
+plan_entitlements
+قائمة entitlements والقيم الافتراضية لكل خطة
+billing
+plan_limits
+حدود عددية مثل apps/storage/pages
+billing
+subscription_entitlements
+نسخة entitlements الفعلية للعميل بعد الاشتراك أو العرض
+billing
+usage_records
+تسجيل الاستخدام مثل upload/app/page/ai_credit
+billing
+usage_aggregates
+تجميع الاستخدام الشهري أو اليومي
+billing
+upgrade_triggers
+تسجيل سبب ظهور دعوة الترقية
+growth/billing
+fair_use_events
+أحداث إساءة الاستخدام أو تجاوز المعدلات
+security/billing
+plan_change_history
+سجل تغييرات الخطة والترقية والتخفيض
+billing/audit

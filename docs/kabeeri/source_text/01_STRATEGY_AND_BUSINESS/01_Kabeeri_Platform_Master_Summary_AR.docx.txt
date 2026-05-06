@@ -1,0 +1,1391 @@
+KABEERI Platform — الملف الرئيسي الملخص
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+1. الفكرة العامة
+Kabeeri ليست CMS فقط، وليست منصة متجر فقط، وليست ERP فقط.
+Kabeeri هي منصة رقمية متكاملة تجمع بين:
+CMS+ Commerce+ ERP Suite+ Team Collaboration+ AI Co-builder+ Cloud+ Self-hosted+ Marketplace+ Integration Hub+ Developer Platform
+الهدف النهائي: بناء منصة واحدة تستطيع الشركات استخدامها لبناء المواقع، المتاجر، إدارة المحتوى، إدارة العملاء، المبيعات، المخزون، الفواتير، المحاسبة، الموارد البشرية، المشاريع، فرق العمل، والتكامل مع أنظمة ERP الموجودة في السوق.
+2. الرسالة الاستراتيجية
+بالعربي
+Kabeeri منصة مواقع ومتاجر وERP من ADMIT، تجمع حرية WordPress، وقوة Shopify، ونظام ERP متكامل، مع مساعد AI يبني ويعدل معك داخل النظام.
+بالإنجليزي
+Kabeeri is a modern CMS, commerce, and ERP platform powered by ADMIT — combining the freedom of WordPress, the selling power of Shopify, a modular ERP suite, and an AI co-builder for business operations.
+3. لماذا Kabeeri؟
+السوق فيه أنظمة قوية، لكن كل نظام يحل جزءًا واحدًا:
+النظام
+قوته
+مشكلته
+WordPress
+CMS مرن، ثيمات، بلجنز، Self-hosted
+بطء، فوضى بلجنز، أمان، تحديثات مخيفة
+Shopify
+متجر SaaS قوي وسهل
+مغلق نسبيًا، تحكم أقل، محتوى أقل قوة، تكاليف apps
+WooCommerce
+تجارة داخل WordPress
+ثقيل، يعتمد على إضافات كثيرة، مشاكل أداء
+Odoo
+ERP modular واسع
+ليس موجهًا أساسًا للمواقع والمحتوى وتجربة التسويق
+Slack
+تواصل فرق ممتاز
+منفصل عن بيانات العمل والعمليات
+Airtable
+بناء apps وworkflows بسرعة
+ليس CMS + Commerce + ERP كامل
+Kabeeri يربط هذه العوالم في منصة واحدة.
+4. الفلسفة الأساسية
+4.1 WordPress-friendly وليس WordPress clone
+Kabeeri يجب أن يكون مألوفًا لجمهور WordPress:
+PHP.
+MySQL.
+Themes.
+Plugins.
+Hooks.
+Pages.
+Posts.
+Media Library.
+Installer.
+Self-hosted.
+لكن بدون مشاكل WordPress:
+لا فوضى بلجنز.
+لا تحديثات تكسر الموقع بدون rollback.
+لا أداء ضعيف افتراضيًا.
+لا اعتماد على plugins خارجية للوظائف الأساسية.
+لا صلاحيات مطلقة للإضافات.
+4.2 Shopify power بدون Shopify lock-in
+Kabeeri يجب أن يدعم:
+Products.
+Cart.
+Checkout.
+Orders.
+Payments.
+Shipping.
+Discounts.
+Store analytics.
+POS لاحقًا.
+لكن مع:
+Self-hosted option.
+Cloud option.
+تحكم أكبر.
+عربي وRTL من البداية.
+بوابات دفع محلية.
+4.3 ERP modular داخل النظام
+ERP يكون داخل Kabeeri كـ Suites وModules رسمية، وليس كود ضخم داخل Core.
+التركيب الصحيح:
+Suites  → Modules    → Sub-modules      → Features
+مثال:
+Kabeeri Finance Suite  → General Ledger  → Accounts Payable  → Accounts Receivable  → Cash & Bank  → Fixed Assets  → Tax  → Financial Reports
+4.4 AI Co-builder
+Kabeeri يجب أن يحتوي على AI Assistant يبني ويعدل مع المستخدم.
+ليس مجرد Chatbot، بل Co-builder يستطيع إنشاء:
+Pages.
+Content Types.
+Forms.
+Stores.
+Products.
+Dashboards.
+CRM pipelines.
+Workflows.
+ERP objects.
+Reports.
+Permissions.
+Plugins skeleton.
+Theme skeleton.
+مع:
+Prompt→ AI Plan→ Preview→ User Approval→ Apply Changes→ Activity Log→ Undo/Rollback
+5. شكل المنصة النهائي
+Kabeeri Core  ├─ CMS Suite  ├─ Commerce Suite  ├─ ERP Suite  ├─ Team Collaboration Suite  ├─ AI Co-builder  ├─ Marketplace  ├─ Integration Hub  ├─ Cloud Platform  ├─ Self-hosted Pro  ├─ Developer Platform  └─ Enterprise Governance
+6. التقنيات المقترحة
+المرحلة الفردية / Solo Builder
+لو سيتم البناء بواسطة شخص واحد باستخدام AI، فالاختيار العملي:
+Backend: PHP 8.3+ / LaravelAdmin: Laravel Blade + Livewire أو Filament كبدايةDatabase: MySQLFrontend Templates: Blade-like templatesCache: File ثم Redis لاحقًاQueue: Database queue ثم Redis لاحقًاStorage: Local ثم S3 لاحقًاBuild: ViteTesting: Pest/PHPUnit
+المرحلة المتقدمة
+Admin UI: React/TypeScript أو Inertia عند الحاجةCloud: Managed infrastructureSearch: Meilisearch/Typesense لاحقًاAnalytics: Internal + integrationsAI: Provider-agnostic AI layer
+7. لماذا Laravel وليس Node.js كـ Core؟
+لأن Kabeeri يستهدف جمهور WordPress أولًا، وجمهور WordPress قريب من:
+PHP + MySQL + Self-hosted + Plugins + Themes
+Laravel يعطي بنية حديثة مع الحفاظ على قرب التكنولوجيا من السوق المستهدف.
+Node.js يستخدم في:
+Build tools.
+Frontend assets.
+بعض tooling.
+SDKs لاحقًا.
+لكن Core يبدأ بـ Laravel.
+8. الإصدارات الستة
+الخطة النهائية مقسمة إلى 6 ملفات تفصيلية:
+V1: CMS Core FoundationV2: WordPress Migration + Commerce FoundationV3: Business Foundation + ERP EssentialsV4: Cloud + Marketplace + Agency PlatformV5: ERP Pro + Integration HubV6: Complete CMS + Commerce + ERP Platform
+9. ملخص V1 — CMS Core Foundation
+الهدف
+بناء أول نسخة قابلة للتنصيب والاستخدام كمنافس WordPress بسيط.
+تشمل
+Installer.
+Admin Dashboard.
+Auth.
+Users/Roles.
+Pages.
+Posts.
+Categories/Tags.
+Media Library.
+SEO basic.
+Sitemap.
+Cache basic.
+Backup basic.
+Theme system basic.
+Plugin system basic.
+Activity log.
+لا تشمل
+ERP.
+Commerce كامل.
+Cloud.
+Marketplace.
+Visual Builder كامل.
+AI Co-builder كامل.
+النتيجة
+Kabeeri Alpha / Private Beta: CMS قابل للتنصيب.
+10. ملخص V2 — WordPress Migration + Commerce Foundation
+الهدف
+جعل Kabeeri بديلًا عمليًا لمواقع WordPress وWooCommerce الصغيرة.
+تشمل
+WordPress XML Importer.
+Media import.
+Redirect map.
+SEO migration basic.
+Custom Content Types.
+Forms.
+Redirects.
+Commerce Foundation.
+Products.
+Cart.
+Checkout basic.
+Orders.
+Customers.
+Coupons basic.
+Cash on Delivery.
+Bank transfer.
+Theme system V2.
+Plugin permissions V2.
+Developer CLI basic.
+النتيجة
+Public Beta موجهة لجمهور WordPress والوكالات.
+11. ملخص V3 — Business Foundation + ERP Essentials
+الهدف
+إضافة أول طبقة ERP داخل Kabeeri كموديولز رسمية بسيطة.
+تشمل
+Shared Business Objects.
+CRM Lite.
+Sales Basic.
+Inventory Basic.
+Invoicing Basic.
+Accounting Starter.
+Purchasing Basic.
+Reports Basic.
+Workflow Automation V1.
+Commerce Pro V1.
+Business Webhooks.
+Business Roles.
+Object-linked discussions basic.
+النتيجة
+Kabeeri يصبح CMS + Commerce + Business Platform للشركات الصغيرة.
+12. ملخص V4 — Cloud + Marketplace + Agency Platform
+الهدف
+تحويل Kabeeri إلى منتج تجاري قابل للبيع.
+تشمل
+Kabeeri Cloud.
+Self-hosted Pro Licensing.
+Marketplace V1.
+Package signing.
+Plugin review system.
+Safe updates advanced.
+Staging.
+Organizations.
+Agency Dashboard.
+Security Center.
+Backup Pro.
+Advanced Media.
+Analytics Plugin.
+Theme Builder V1.
+Visual Builder V1.
+Kabeeri Teams V1.
+AI Co-builder V1.
+النتيجة
+Commercial Launch.
+13. ملخص V5 — ERP Pro + Integration Hub
+الهدف
+تحويل Kabeeri إلى منصة أعمال قوية للشركات الصغيرة والمتوسطة.
+تشمل
+CRM Pro.
+Sales Pro.
+Inventory Pro.
+WMS V1.
+Purchasing Pro.
+Accounting Basic Complete.
+HR Basic.
+Projects.
+Helpdesk.
+POS Basic.
+Integration Hub V1.
+ERP Connectors V1.
+Workflow Automation Pro.
+Team Collaboration Advanced.
+ERP AI Assistants.
+النتيجة
+Kabeeri يصبح Business Platform حقيقي مع تكاملات خارجية.
+14. ملخص V6 — Complete Platform
+الهدف
+الوصول إلى منصة كاملة: CMS + Commerce + ERP + Cloud + Marketplace + AI + Enterprise.
+تشمل
+WordPress Migrator V2 Advanced.
+WooCommerce migration.
+Shopify importer لاحقًا.
+Commerce Complete.
+ERP Suite Complete.
+Finance Advanced.
+HR Pro.
+Payroll Modular.
+Manufacturing/MRP.
+Warehouse Advanced.
+BI Dashboards.
+Enterprise Connectors.
+Marketplace V2.
+Plugin Sandbox.
+Performance Engine Complete.
+SEO Complete.
+Multilingual Complete.
+Visual Builder Complete.
+Theme Builder Complete.
+Enterprise Governance.
+Observability.
+Developer Platform Complete.
+Headless Mode.
+Full AI Co-builder.
+Full Team Collaboration Suite.
+النتيجة
+Kabeeri تصبح منصة مواقع ومتاجر وERP متكاملة.
+15. Enterprise ERP Suites المعتمدة
+القائمة المرجعية للـ ERP سيتم تنفيذها كسلسلة Suites، وليس 200 plugin مستقل.
+أهم Suites
+Kabeeri Finance Suite.
+Kabeeri Procurement Suite.
+Kabeeri Inventory & Warehouse Suite.
+Kabeeri Sales & Billing Suite.
+Kabeeri CRM & Customer Experience Suite.
+Kabeeri HCM Suite.
+Kabeeri Manufacturing & Quality Suite.
+Kabeeri Supply Chain & Logistics Suite.
+Kabeeri Projects & Contracting Suite.
+Kabeeri Asset, Maintenance & Facilities Suite.
+Kabeeri Legal, GRC & Compliance Suite.
+Kabeeri Document, Workflow & Service Suite.
+Kabeeri Master Data & Data Governance Suite.
+Kabeeri BI, Analytics & AI Suite.
+Kabeeri Integration & Automation Suite.
+Kabeeri Security, IAM & Operations Suite.
+Kabeeri ESG, EHS & Sustainability Suite.
+Kabeeri PLM, R&D & Engineering Suite.
+Kabeeri Retail & Omnichannel Suite.
+Kabeeri Industry Modules Suite.
+Kabeeri Enterprise IT Management Suite.
+Kabeeri Localization, Privacy & Records Suite.
+Kabeeri Advanced Digital Operations Suite.
+16. Kabeeri Teams
+Kabeeri Teams هو جزء التعاون الداخلي.
+لا يستهدف نسخ Slack بالكامل، لكنه يربط التواصل بالعمل الفعلي:
+Channels.
+Direct Messages.
+Threads.
+Mentions.
+Tasks from messages.
+Approvals from chat.
+Object-linked discussions.
+Activity feed.
+System alert channels.
+أهم تمييز:
+Slack = دردشة عامةKabeeri Teams = دردشة مرتبطة بالطلبات والعملاء والفواتير والمشاريع والمحتوى
+17. Kabeeri AI Co-builder
+AI داخل Kabeeri ليس مجرد مساعد كتابة.
+هو Co-builder يبني النظام مع المستخدم:
+يبني صفحات.
+يبني متاجر.
+يبني CRM.
+يبني workflows.
+يبني dashboards.
+يقترح reports.
+يساعد في migration.
+يساعد المطور في plugins/themes/modules.
+لكن كل شيء يخضع لـ:
+Permissions.
+Preview.
+Approval.
+Audit log.
+Rollback.
+18. Rabet B2B Company OS — طبقة تحويل الموقع إلى شركة موثقة
+إضافة Rabet B2B تجعل Kabeeri أقوى بكثير؛ لأنها تضيف طبقة تحول أي موقع أو متجر من مجرد واجهة رقمية إلى شركة موثقة قابلة للتشغيل والتوسع والتعامل B2B.
+الفكرة الأساسية:
+أي موقع داخل Kabeeriيمكن أن يترقى عند الطلب إلى:Verified Company+ Digital Office+ Team Operations+ B2B Profile+ Trust Record+ Service/Business Marketplace Presence
+يعني ليس كل مستخدم يحتاج Rabet من البداية. لكنه يكون Option / Upgrade يضاف حسب الطلب.
+18.1 ما هو Rabet داخل Kabeeri؟
+Rabet يصبح موديول استراتيجي داخل Kabeeri باسم:
+Kabeeri Rabet Company OS
+أو:
+Rabet B2B Layer powered by Kabeeri
+وظيفته:
+تحويل الموقع إلى شركة موثقة.
+بناء Digital Office للشركة.
+إدارة الفريق والأدوار.
+ربط التواصل بالمهام والمشاريع.
+توفير تاريخ نشاط موثق.
+بناء سمعة مهنية.
+فتح الباب للتعامل B2B داخل Marketplace.
+18.2 لماذا Rabet مهم؟
+Rabet يعالج مشكلة حقيقية: شركات كثيرة تبدأ كموقع أو متجر أو فريق صغير، لكنها تحتاج أن تبدو وتعمل كشركة محترفة بدون تكلفة مكتب كامل.
+Rabet يضيف:
+الثقة.
+التوثيق.
+الهيكل الإداري.
+إدارة الفريق.
+إدارة المهام.
+سجل نشاط.
+تقييمات.
+قابلية التعامل مع شركات أخرى.
+هذا يربط بين:
+Website→ Business Profile→ Verified Company→ Digital Office→ B2B Marketplace→ ERP/Operations
+18.3 علاقة Rabet بفكرة Kabeeri العامة
+Kabeeri يبني الموقع والمتجر والنظام.
+Rabet يعطي الكيان التجاري هوية تشغيلية موثقة.
+Kabeeri CMS = الواجهة والمحتوىKabeeri Commerce = البيع والطلباتKabeeri ERP = العمليات الداخليةKabeeri Teams = التعاونKabeeri Public Marketplace = الظهور للجمهورRabet B2B = الاعتراف والثقة والتشغيل كشركة
+18.4 مسار ترقية أي موقع إلى شركة موثقة
+داخل لوحة Kabeeri، يظهر خيار:
+Upgrade to Verified Company with Rabet
+أو بالعربي:
+حوّل موقعك إلى شركة موثقة عبر Rabet
+الخطوات
+إنشاء أو ربط Organization.
+إدخال بيانات الشركة.
+رفع الوثائق القانونية.
+التحقق من الهوية التجارية.
+إعداد الهيكل الإداري.
+إضافة الفريق.
+ضبط الصلاحيات.
+إنشاء Digital Office.
+تفعيل Activity & Trust Record.
+نشر Public Business Profile.
+تفعيل الظهور في B2B Marketplace.
+18.5 مستويات Rabet داخل Kabeeri
+ليس كل بزنس يحتاج نفس العمق. لذلك نقسمه إلى مستويات:
+Level 0 — Normal Website
+موقع أو متجر عادي.
+بدون توثيق شركة.
+بدون Digital Office.
+Level 1 — Business Profile
+صفحة بزنس عامة.
+بيانات تواصل.
+خدمات.
+منتجات.
+نموذج تواصل.
+Level 2 — Verified Business
+توثيق قانوني.
+Badge موثوق.
+تقييمات.
+ظهور أقوى في Marketplace.
+Level 3 — Digital Office
+فريق.
+أدوار.
+صلاحيات.
+مهام.
+مشاريع.
+تواصل داخلي.
+Activity log.
+Level 4 — Company OS
+CRM.
+Sales.
+Invoicing.
+HR basic.
+Performance dashboards.
+Dispute handling.
+Reputation records.
+Level 5 — B2B Operating Company
+تقدم خدمات لشركات أخرى.
+تستقبل Leads من marketplace.
+تنشئ عروض أسعار.
+تدير عقود.
+تدخل في B2B exchange.
+18.6 Rabet Modules
+Rabet لا يكون شاشة واحدة، بل مجموعة موديولات مترابطة:
+1. Company Verification
+Legal documents.
+Commercial registration.
+Tax ID.
+Authorized representative.
+Address verification.
+Verification status.
+Verified badge.
+2. Company Profile
+Public profile.
+Company description.
+Industry.
+Services.
+Products.
+Team size.
+Locations.
+Certifications.
+Portfolio.
+3. Team Setup
+Owners.
+Managers.
+Employees.
+Freelancers.
+Contractors.
+Roles.
+Permissions.
+Onboarding.
+4. Digital Office
+Company dashboard.
+Departments.
+Teams.
+Tasks.
+Projects.
+Internal communication.
+Linked discussions.
+File areas.
+5. Work Execution
+Tasks.
+Projects.
+Workflows.
+Deadlines.
+Assignees.
+Reviews.
+Status tracking.
+6. Trust Record
+Activity history.
+Completed projects.
+Verified team actions.
+Client evaluations.
+Internal evaluations.
+Dispute records.
+Reputation score.
+7. B2B Service Exchange
+List company services.
+Receive RFQs.
+Send quotations.
+Negotiate.
+Create contracts.
+Start projects.
+Invoice.
+Collect payment.
+8. Dispute Management
+Dispute cases.
+Evidence files.
+Communication history.
+Resolution status.
+Platform moderation.
+9. Performance Visibility
+Team performance.
+Task completion.
+Project progress.
+Response times.
+Client satisfaction.
+Service delivery metrics.
+18.7 Legal Verification Partner Network — شبكة مكاتب المحاماة المعتمدة
+نظام التوثيق داخل Rabet لا يجب أن يعتمد فقط على مراجعة داخلية من المنصة. لكي يصبح التوثيق قويًا ومعترفًا به، يتم تفعيل شبكة مكاتب محاماة معتمدة داخل كل دولة يعمل فيها النظام.
+الفكرة:
+Kabeeri / Rabet+ Accredited Law Offices+ Country-specific Verification Rules+ Legal Document Review+ Verified Business Badge+ Audit Trail
+هذا يجعل Rabet Trust Layer أكثر مصداقية، لأن توثيق الشركة يتم بواسطة جهات قانونية محلية معتمدة ومتفهمة لقوانين الدولة.
+لماذا مكاتب المحاماة؟
+لأن كل دولة تختلف في:
+شكل السجل التجاري.
+شكل البطاقة الضريبية.
+متطلبات التوقيع.
+المستندات المطلوبة للشركات.
+صلاحيات المفوض بالتوقيع.
+قوانين العمل والتعاقد.
+قواعد الفواتير والضرائب.
+متطلبات الخصوصية وحفظ البيانات.
+لذلك لا يصلح أن يكون التوثيق العالمي موحدًا بنفس الطريقة في كل الدول.
+أنواع شركاء التوثيق
+Accredited Law OfficeLegal Verification PartnerTax Verification PartnerCompliance PartnerNotary / Documentation Partner حسب الدولة
+دور مكتب المحاماة المعتمد
+مراجعة المستندات القانونية.
+التأكد من وجود الشركة قانونيًا.
+التأكد من بيانات الممثل القانوني.
+مراجعة السجل التجاري أو ما يعادله.
+مراجعة البطاقة الضريبية أو ما يعادلها.
+التحقق من صلاحية المفوض بالتوقيع.
+مراجعة عقود أو مستندات عند الحاجة.
+إصدار نتيجة تحقق داخل النظام.
+رفع ملاحظات قانونية للعميل.
+تحديث حالة التوثيق عند انتهاء أو تغير مستند.
+دورة التوثيق المقترحة
+Business submits documents→ Rabet validates required fields→ Assigned legal partner reviews→ Partner requests missing data if needed→ Partner approves / rejects / flags→ Rabet issues verification badge→ Audit log stores full review trail→ Periodic re-verification
+حالات التوثيق
+Not SubmittedPending ReviewNeed More InformationUnder Legal ReviewVerifiedRejectedExpiredSuspendedRevoked
+درجات التوثيق
+ليس كل توثيق بنفس القوة. نقسمه إلى مستويات:
+Basic Verification
+Email.
+Phone.
+Business name.
+Basic identity.
+Legal Verification
+سجل تجاري.
+بطاقة ضريبية.
+ممثل قانوني.
+عنوان.
+مستندات قانونية أساسية.
+Advanced Verification
+مراجعة عقود.
+مراجعة ملاك/شركاء.
+مراجعة صلاحيات التوقيع.
+تحقق من النشاط.
+تحقق من التراخيص القطاعية.
+Regulated Verification
+للأنشطة الحساسة حسب الدولة، مثل:
+medical.
+education.
+finance.
+legal services.
+real estate brokerage.
+logistics.
+pharma.
+Country Verification Packs
+كل دولة يكون لها حزمة قواعد توثيق مستقلة:
+Egypt Verification PackSaudi Arabia Verification PackUAE Verification PackQatar Verification PackKuwait Verification PackJordan Verification Pack
+كل Pack يحتوي على:
+المستندات المطلوبة.
+أنواع الشركات المدعومة.
+أسماء الحقول القانونية.
+صلاحية المستندات.
+شروط التجديد.
+متطلبات الضرائب والفواتير.
+قائمة الشركاء القانونيين المعتمدين.
+Marketplace خاص بمكاتب المحاماة
+داخل Kabeeri يمكن أن يوجد Partner Directory خاص بالمكاتب المعتمدة:
+Law office profile.
+Countries served.
+Specializations.
+Verification services.
+Average review time.
+Rating.
+Approved status.
+Pricing model.
+لكن لا يجب أن يكون أي مكتب قادرًا على تقديم خدمة التوثيق إلا بعد اعتماده من ADMIT/Kabeeri.
+Legal Partner Portal
+مكاتب المحاماة تحتاج لوحة خاصة:
+طلبات توثيق جديدة.
+مستندات العميل.
+Checklist حسب الدولة.
+Approve / Reject / Request info.
+ملاحظات قانونية.
+سجل مراجعة.
+SLA.
+Billing.
+Reports.
+Revenue Model
+نظام التوثيق يفتح مصدر دخل جديد:
+رسوم توثيق أول مرة.
+رسوم إعادة توثيق سنوية.
+نسبة من خدمة مكتب المحاماة.
+اشتراك Verified Business.
+توثيق سريع Premium.
+توثيق قطاعي Regulated.
+حماية Kabeeri قانونيًا
+يجب توضيح أن Kabeeri توفر منصة وإجراءات توثيق، وأن الرأي/المراجعة القانونية تتم بواسطة المكتب المعتمد حسب الدولة. كما يجب وجود شروط استخدام واضحة ومسؤوليات محددة لكل طرف.
+العلاقة بالـ Trust Score
+توثيق مكتب المحاماة يؤثر على Trust Score:
+Legal documents verified       + scoreTax information verified       + scoreAuthorized signer verified     + scoreExpired documents              - scoreDispute unresolved             - scoreRepeated rejected verification - score
+أين يدخل في الإصدارات؟
+V1
+Verification status field.
+Business documents model.
+Manual admin review basic.
+V2
+Public business profile shows verification status.
+Upload legal documents.
+Internal verification checklist.
+V3
+Legal Verification Partner Network V1.
+Partner portal basic.
+Country verification packs basic.
+Verified badge.
+V4
+Accredited law office marketplace.
+SLA tracking.
+Paid verification.
+Re-verification reminders.
+V5
+Advanced verification.
+Sector-specific verification.
+Compliance partner integrations.
+Contract review workflows.
+V6
+Full legal trust network.
+Multi-country verification rules.
+Enterprise-grade compliance verification.
+API for verification partners.
+Legal/compliance dashboards.
+18.8 علاقة Rabet بالـ Public Marketplace
+Rabet هو الذي يعطي المصداقية للـ Public Marketplace.
+بدون Rabet، السوق العام مجرد دليل شركات.
+مع Rabet، السوق يصبح:
+Verified Business Network
+أي بزنس موثق يظهر بوضوح:
+Verified badge.
+Trust score.
+Response rate.
+Completed projects.
+Service categories.
+Reviews.
+Dispute status إن وجد.
+Legal verification status.
+18.8 علاقة Rabet بالـ ERP
+عندما يترقى الموقع إلى شركة موثقة، يمكن تفعيل ERP Modules تدريجيًا:
+Verified Business→ CRM→ Sales→ Invoicing→ Accounting→ HR→ Projects→ Procurement→ Full ERP
+Rabet يصبح البوابة التي تجعل الشركة جاهزة تنظيميًا لاستخدام ERP.
+18.9 علاقة Rabet بـ Kabeeri Teams
+Rabet يحتاج Teams كجزء أساسي:
+Company channels.
+Department channels.
+Project discussions.
+Task comments.
+Approval discussions.
+Internal announcements.
+Alerts.
+لكن Rabet يضيف فوق Teams:
+Company structure.
+Role accountability.
+Verified work history.
+Evaluation records.
+Professional reputation.
+18.10 علاقة Rabet بـ AI Co-builder
+AI يمكن أن يساعد الشركة في الترقية إلى Rabet:
+إنشاء company profile.
+اقتراح الهيكل الإداري.
+إعداد departments.
+إعداد roles.
+بناء workflows.
+إنشاء service catalog.
+كتابة وصف الخدمات.
+اقتراح KPIs.
+تجهيز onboarding للفريق.
+مثال Prompt:
+حوّل موقعي إلى شركة تسويق موثقة فيها فريق مبيعات، فريق تنفيذ، CRM، خدمات، ونظام عروض أسعار.
+الناتج:
+Company profile.
+Team structure.
+Service catalog.
+CRM pipeline.
+Quotation workflow.
+Public marketplace listing.
+Internal tasks.
+Performance dashboard.
+18.11 علاقة Rabet بالـ Cloud وSelf-hosted
+Rabet يعمل مع نوعين:
+داخل Kabeeri Cloud
+verification مباشر.
+profile sync.
+marketplace visibility.
+trust records centralized.
+B2B exchange كامل.
+خارج Kabeeri Cloud / Self-hosted
+يحتاج اتصال بالـ central trust network.
+verification data محفوظ مركزيًا.
+profile يظهر في Public Marketplace.
+بعض بيانات الشركة تبقى محلية حسب الخصوصية.
+18.12 قواعد المنتج الخاصة بـ Rabet
+أي ميزة داخل Rabet يجب أن تحقق واحدًا من هذه:
+تزيد الثقة.
+تقلل تكلفة التشغيل.
+توضح المسؤوليات.
+تحسن المتابعة.
+تدعم التوثيق والسمعة.
+تفتح تعامل B2B موثوق.
+إذا لم تحقق ذلك، تؤجل.
+18.13 أين يدخل Rabet في الإصدارات الستة؟
+V1
+Organization model basic.
+Business profile draft.
+Users/Roles.
+Activity log.
+V2
+Public business profile.
+Basic business directory.
+Contact requests.
+Service listing basic.
+V3
+Company verification V1.
+Digital Office basic.
+Team setup.
+Tasks/projects integration.
+CRM integration.
+Early trust record.
+V4
+Rabet Company OS V1.
+Verified badge.
+B2B service marketplace.
+RFQ/Quotation workflow.
+Reputation basic.
+Dispute management basic.
+V5
+Advanced Company OS.
+Contracts.
+Service delivery workflows.
+Performance dashboards.
+B2B exchange.
+ERP integration.
+Verified freelancers/contractors.
+V6
+Full Rabet B2B Network.
+Multi-company collaboration.
+Cross-company workflows.
+Advanced trust scoring.
+Legal/compliance integrations.
+B2B marketplace maturity.
+Company-to-company contracts.
+Enterprise-grade governance.
+18.14 لماذا هذا تطور مهم جدًا؟
+لأن Kabeeri بدون Rabet يبني مواقع ومتاجر وأنظمة.
+لكن Kabeeri مع Rabet يسمح لأي موقع أن يتحول تدريجيًا إلى شركة موثقة وكيان B2B قابل للتعامل.
+Website Builder→ Business Builder→ Company OS→ B2B Network
+وهذا يخلق مسار نمو طبيعي لأي مستخدم:
+Start as websiteGrow into storeUpgrade into verified businessOperate as companySell services/products in marketplaceUse ERP to scale
+18.15 الرسالة التسويقية
+عربي
+مع Rabet، أي موقع على Kabeeri يمكنه أن يتحول إلى شركة موثقة لها مكتب رقمي، فريق، عمليات، سجل ثقة، ووجود في سوق B2B.
+English
+With Rabet, any Kabeeri website can grow into a verified company with a digital office, team operations, trust records, and B2B marketplace presence.
+19. Kabeeri Mall — السوق العام الخارجي
+Kabeeri Mall / كبيري مول هو الاسم الرسمي المقترح لكل الأسواق العامة الظاهرة للزوار والعملاء داخل واجهة Kabeeri.
+التمييز مهم:
+Kabeeri Marketplace= السوق الداخلي للبلجنز، الثيمات، الموديولات، Connectors، وAI SkillsKabeeri Mall= السوق العام الخارجي للبزنس، الخدمات، المنتجات، والمواهب
+بالتالي، Kabeeri Mall يضم:
+Business Marketplace.
+Services Marketplace.
+Products Marketplace / Cart.
+Talent Marketplace.
+Verified Businesses.
+Rabet B2B verified companies.
+External businesses connected to Kabeeri.
+الرسالة المختصرة:
+Kabeeri Mall هو واجهة الاكتشاف والشراء والتواصل داخل Kabeeri، حيث يجد الزائر شركات موثقة، خدمات، منتجات، ومواهب، سواء كانت داخل Kabeeri Cloud أو خارجها.
+هذه إضافة استراتيجية مهمة جدًا.
+بجانب Marketplace الداخلي الخاص بالبلجنز والثيمات والموديولات، يجب أن يحتوي Kabeeri على Marketplace عام ظاهر للزوار في واجهة المنصة العامة.
+يعني سيكون لدينا نوعان من Marketplace:
+1. Internal Platform Marketplace   للبلجنز، الثيمات، الموديولات، AI Skills، Connectors2. Public Business Marketplace   للبزنس، الخدمات، المنتجات، والتواصل بين الزوار والشركات
+18.1 الفرق بين السوقين
+النوع
+المستخدم
+يحتوي على
+الهدف
+Internal Marketplace
+مالك الموقع / المدير / المطور
+Plugins, Themes, ERP Modules, Connectors, AI Skills
+توسيع قدرات Kabeeri
+Public Marketplace
+الزائر / العميل النهائي
+Businesses, Services, Products
+اكتشاف شركات وخدمات ومنتجات والتواصل أو الشراء
+18.2 Public Business Marketplace
+هذا marketplace يعرض البزنس المشتركة في Kabeeri، سواء كانت:
+مستضافة داخل Kabeeri Cloud.
+مستخدمة Kabeeri Self-hosted ومتصلة بالمنصة.
+بزنس خارجي غير مستضاف عندنا لكنه مسجل وموثق.
+الهدف:
+الزائر يقدر يبحث عن شركة أو بزنس محتاجه ويتواصل معه مباشرة.
+أمثلة:
+شركة تسويق.
+عيادة.
+مطعم.
+مدرسة.
+شركة مقاولات.
+متجر إلكتروني.
+مكتب محاماة.
+شركة شحن.
+مصنع.
+مركز تدريب.
+بيانات صفحة البزنس
+كل بزنس له Public Profile يحتوي على:
+اسم الشركة.
+الشعار.
+وصف مختصر.
+التصنيف.
+الموقع الجغرافي.
+مناطق الخدمة.
+طرق التواصل.
+ساعات العمل.
+الخدمات.
+المنتجات.
+التقييمات.
+الشهادات / التوثيق.
+رابط الموقع.
+زر تواصل.
+زر طلب عرض سعر.
+زر حجز موعد.
+زر زيارة المتجر.
+18.3 Services Marketplace
+سوق للخدمات المقدمة من كل البزنس المشتركة.
+الزائر يستطيع البحث عن خدمة بدل البحث عن شركة.
+أمثلة خدمات:
+تصميم مواقع.
+حملات إعلانية.
+استشارات قانونية.
+كشف طبي.
+صيانة منزلية.
+شحن دولي.
+تصميم داخلي.
+تدريب موظفين.
+خدمات محاسبية.
+استشارات ERP.
+صفحة الخدمة
+كل خدمة تحتوي على:
+اسم الخدمة.
+مقدم الخدمة.
+الوصف.
+السعر أو يبدأ من.
+مدة التنفيذ.
+المنطقة.
+التصنيف.
+التقييمات.
+الأسئلة الشائعة.
+زر طلب الخدمة.
+زر طلب عرض سعر.
+زر حجز موعد.
+18.4 Products Marketplace / Cart
+سوق أو كارت عام للمنتجات المتاحة عبر كل البزنس المشتركة.
+يعني Kabeeri لا يدير متجر كل شركة فقط، بل يستطيع عرض منتجات متعددة من شركات مختلفة في واجهة marketplace عامة.
+أمثلة منتجات:
+منتجات تجزئة.
+كورسات رقمية.
+منتجات طبية مصرح بها.
+منتجات مطاعم.
+منتجات مصانع.
+منتجات عقارية كقوائم عرض.
+منتجات B2B.
+خصائص Products Marketplace
+بحث عن المنتجات.
+تصنيفات.
+فلاتر.
+مقارنة.
+تقييمات.
+توفر المخزون.
+السعر.
+البائع.
+الشحن.
+طرق الدفع.
+إضافة إلى cart.
+Checkout موحد أو توجيه لمتجر البائع.
+18.5 Cloud وExternal Businesses
+يجب أن يدعم Public Marketplace نوعين من البزنس:
+1. Businesses داخل Kabeeri Cloud
+بياناتهم متزامنة مباشرة.
+المنتجات والخدمات تحدث تلقائيًا.
+الطلبات يمكن أن تدخل مباشرة في Kabeeri Commerce/ERP.
+2. Businesses خارج Kabeeri Cloud
+إما Self-hosted Kabeeri.
+أو بزنس خارجي مسجل فقط.
+أو متصل عبر API/Connector.
+مستويات الربط:
+Listing فقطListing + ContactListing + ServicesListing + ProductsFull Commerce SyncFull ERP/CRM Sync
+18.6 أنواع الحسابات داخل Public Marketplace
+Visitor.
+Customer.
+Business Owner.
+Service Provider.
+Seller.
+Verified Business.
+Partner.
+Marketplace Admin.
+18.7 Verification & Trust
+لأن السوق عام، الثقة مهمة جدًا.
+يجب دعم:
+Business verification.
+Documents verification.
+Phone/email verification.
+Address verification.
+Verified badge.
+Reviews moderation.
+Report business.
+Report product/service.
+Fraud detection لاحقًا.
+18.8 Monetization
+Public Marketplace يضيف مصادر دخل جديدة:
+Featured listings.
+Sponsored businesses.
+Commission on sales.
+Commission on service bookings.
+Lead generation fees.
+Verified business subscription.
+Premium business profile.
+Marketplace ads.
+B2B subscription plans.
+18.9 علاقته بالـ ERP وCRM
+الميزة القوية أن أي lead أو order أو booking من Public Marketplace يدخل مباشرة في نظام الشركة.
+مثال:
+Visitor searches for accounting service→ finds verified accounting firm→ requests quote→ lead created in firm CRM→ notification to sales team→ quotation created→ invoice issued→ payment tracked
+مثال منتج:
+Visitor buys product from marketplace→ order created→ inventory reserved→ invoice generated→ shipping workflow starts→ accounting entry posted
+18.10 علاقته بـ Kabeeri Teams
+أي تواصل من Marketplace يمكن أن يفتح نقاش داخلي:
+New lead channel alert.
+Service request discussion.
+Product order discussion.
+Complaint thread.
+Quote approval.
+18.11 علاقته بـ AI Co-builder
+AI يمكن أن يساعد البزنس في إنشاء بروفايله العام:
+كتابة وصف الشركة.
+إنشاء قائمة خدمات.
+تحسين SEO للبروفايل.
+اقتراح تصنيفات.
+توليد FAQs.
+تحليل فرص الظهور في marketplace.
+تحسين وصف المنتجات.
+18.12 مراحل التنفيذ
+V1
+لا يتم بناء Public Marketplace.
+نجهز فقط:
+Business profile data model basic.
+Organization model.
+Public profile concept.
+V2
+Business directory basic.
+Public business profiles.
+Contact request forms.
+Service listing basic.
+V3
+Services Marketplace.
+Lead generation.
+CRM integration.
+Reviews basic.
+Verification basic.
+V4
+Products Marketplace basic.
+Multi-business product listing.
+Marketplace cart strategy.
+Seller dashboard basic.
+Featured listings.
+V5
+Full marketplace operations.
+Commission engine.
+Service booking.
+Product sync.
+External business connectors.
+Marketplace analytics.
+V6
+Complete Public Business Marketplace.
+Unified or split checkout.
+Advanced verification.
+Sponsored listings.
+AI recommendations.
+Multi-vendor operations.
+B2B marketplace features.
+Enterprise marketplace APIs.
+18.13 لماذا هذه إضافة ضخمة؟
+لأن Kabeeri لن يكون فقط أداة للشركات، بل يمكن أن يصبح شبكة اكتشاف أعمال وخدمات ومنتجات.
+WordPress = websitesShopify = storesOdoo = operationsSlack = teamsAirtable = appsKabeeri = websites + stores + operations + teams + AI + public business network
+18.14 الرسالة التسويقية
+عربي
+Kabeeri لا يساعد الشركات على بناء مواقعها ومتاجرها وأنظمتها فقط، بل يفتح لها واجهة سوق عامة ليجدها العملاء، يطلبوا خدماتها، يشتروا منتجاتها، ويتواصلوا معها مباشرة.
+English
+Kabeeri does not only help businesses run their websites, stores, and operations — it also gives them a public marketplace where customers can discover, contact, book, and buy from them.
+19. Workforce Management & Talent Marketplace — إدارة الفريق وسوق الموظفين
+إضافة إدارة الفريق وسوق الموظفين تجعل Rabet/Kabeeri لا يدير الشركات فقط، بل يدير علاقة الأفراد بالشركات داخل المنصة.
+الفكرة الأساسية:
+كل فرد داخل Kabeeri له Professional Profileوكل شركة لها Team Workspaceوالفرد يمكن أن يعمل مع أكثر من شركةوالشركات تستطيع البحث عن المواهب وإرسال عروض عمل
+هذا يحول Kabeeri إلى:
+Company OS+ Workforce Network+ Verified Talent Marketplace
+وهو متوافق مع فكرة Rabet الأصلية التي تستهدف الشركات والمهنيين المستقلين/العاملين عن بعد، وتؤكد أن المنصة تساعد الشركات على إدارة فرقها وأدوارها ومهامها وتقييم الأداء داخل بيئة موثقة. كما يذكر ملف Rabet أن المستقلين أو العاملين بدوام جزئي/كامل يمكنهم الانضمام للشركات وتنفيذ المهام وبناء سجل مهني موثق داخل المنصة.
+19.1 إدارة المهام الكاملة
+يجب أن يحتوي Kabeeri/Rabet على نظام Task Management كامل وليس مجرد checklist.
+المكونات
+Tasks.
+Subtasks.
+Checklists.
+Assignees.
+Watchers.
+Due dates.
+Priorities.
+Labels.
+Statuses.
+Dependencies.
+Attachments.
+Comments.
+Mentions.
+Time tracking.
+Approvals.
+Recurring tasks.
+Task templates.
+Task automation.
+طرق العرض
+List view.
+Board/Kanban view.
+Calendar view.
+Timeline view.
+Workload view.
+My tasks.
+Team tasks.
+Project tasks.
+Company tasks.
+ربط المهام بالنظام
+كل مهمة يمكن أن ترتبط بـ:
+Page.
+Post.
+Product.
+Order.
+Customer.
+Invoice.
+Project.
+Ticket.
+Purchase order.
+Contract.
+Employee.
+Service request.
+مثال:
+Order #1082→ Task: Confirm payment→ Task: Prepare shipment→ Task: Follow up with customer
+19.2 إدارة الفريق الكاملة
+كل شركة داخل Kabeeri لها Team Management متكامل.
+المكونات
+Team members.
+Departments.
+Roles.
+Job titles.
+Permissions.
+Reporting lines.
+Onboarding.
+Offboarding.
+Work status.
+Availability.
+Workload.
+Employment type.
+Company membership history.
+أنواع العضوية داخل الشركة
+OwnerCo-founderEmployee full-timeEmployee part-timeFreelancerContractorConsultantInternAgency memberExternal collaborator
+علاقة الفرد بالشركة
+أي فرد يمكن أن يكون عضوًا في أكثر من شركة داخل Kabeeri.
+مثال:
+Ahmed  ├─ Marketing Manager at Company A  ├─ Freelance Consultant at Company B  └─ Part-time Content Lead at Company C
+كل علاقة لها:
+Company.
+Role.
+Job title.
+Start date.
+End date.
+Status.
+Contract type.
+Permissions.
+Evaluation.
+Work history.
+Visibility settings.
+19.3 ملف الموظف داخل Kabeeri
+كل فرد له ملف مهني مركزي داخل Kabeeri.
+Employee / Professional Profile يحتوي على:
+الاسم.
+الصورة.
+العنوان الوظيفي.
+نبذة مختصرة.
+الموقع.
+اللغات.
+المهارات.
+سنوات الخبرة.
+الشهادات.
+التعليم.
+الخبرات السابقة.
+الشركات الحالية.
+الشركات السابقة.
+نوع العمل المفضل.
+التوفر.
+معدل الساعة أو الراتب المتوقع اختياريًا.
+Portfolio.
+Links.
+تقييمات.
+Badges.
+Verified identity status.
+Verified work history.
+بيانات داخلية لا تظهر للجميع
+الراتب.
+العقود.
+مستندات الهوية.
+ملاحظات HR.
+تقييمات داخلية خاصة.
+disciplinary records إن وجدت.
+payroll data.
+هذه تظهر فقط حسب الصلاحيات.
+19.4 تقييم أفراد الفريق
+يجب أن يكون هناك نظام تقييم متعدد الطبقات.
+أنواع التقييم
+تقييم من المدير.
+تقييم من زملاء العمل.
+تقييم من العميل.
+تقييم بعد إتمام مشروع.
+تقييم بعد انتهاء عقد.
+تقييم داخلي خاص بالشركة.
+تقييم عام يظهر في Talent Marketplace.
+مؤشرات الأداء
+Task completion rate.
+On-time delivery.
+Response time.
+Quality score.
+Collaboration score.
+Client satisfaction.
+Reliability score.
+Dispute rate.
+Rehire rate.
+Skill endorsements.
+مهم جدًا
+ليس كل تقييم يظهر للعامة.
+نحتاج فصل بين:
+Private Company EvaluationPublic Professional RatingVerified Work Record
+19.5 Talent Marketplace — سوق الموظفين والمواهب
+بجانب Marketplace البزنس والخدمات والمنتجات، نحتاج Marketplace خاص بالأفراد والموظفين.
+الهدف:
+أي شركة داخل Kabeeri تستطيع البحث عن أشخاص بمهارات معينة وإرسال عرض وظيفة أو تعاون لهم.
+ما الذي يظهر في Talent Marketplace؟
+الاسم أو public display name.
+الصورة اختيارية.
+العنوان الوظيفي.
+المهارات.
+الخبرة.
+التوفر.
+نوع العمل المطلوب.
+الموقع/remote.
+اللغات.
+التقييم العام.
+Badges.
+الشركات التي عمل معها إن كانت public.
+Portfolio.
+Verified profile badge.
+البحث والفلاتر
+Skill.
+Job title.
+Industry.
+Location.
+Remote/Hybrid/On-site.
+Availability.
+Rating.
+Experience level.
+Hourly rate/range.
+Languages.
+Verified only.
+Worked with verified companies.
+19.6 عروض الوظائف والتعاون
+أي شركة تستطيع إرسال عرض لشخص.
+أنواع العروض
+Full-time job offer.
+Part-time offer.
+Freelance project.
+Consulting engagement.
+Temporary contract.
+Internship.
+Board/advisor role.
+دورة العرض
+Company finds professional→ Sends offer→ Professional reviews→ Negotiation/messages→ Accept / reject→ Contract generated→ Membership created→ Onboarding starts→ Tasks/projects assigned
+بيانات العرض
+Company.
+Job title.
+Role.
+Work type.
+Duration.
+Compensation.
+Responsibilities.
+Required skills.
+Start date.
+Confidentiality terms.
+Contract template.
+19.7 الخصوصية والتحكم في الظهور
+لأن الموظف قد يعمل في أكثر من شركة، الخصوصية مهمة جدًا.
+إعدادات الظهور
+Public.
+Visible to verified companies only.
+Hidden from current employer.
+Open to offers.
+Not looking.
+Anonymous until interest.
+Show skills only.
+Show full profile after request.
+منع التعارض
+Conflict of interest rules.
+Non-compete flag.
+Company confidentiality settings.
+Approval required before joining competitor.
+Private work history.
+19.8 ربط الموظفين بـ HR وPayroll وERP
+عندما ينضم فرد لشركة، يتم ربطه بالأنظمة:
+Professional Profile→ Company Membership→ HR Employee Record→ Role & Permissions→ Tasks & Projects→ Payroll/Contract→ Evaluation→ Work History
+هذا يمنع تكرار البيانات ويجعل كل شخص له هوية مهنية واحدة داخل المنصة.
+19.9 Skills Graph
+نحتاج Skills Graph موحد داخل Kabeeri.
+يحتوي على:
+Skill names.
+Skill categories.
+Skill levels.
+Endorsements.
+Verified skills.
+Skill tests لاحقًا.
+Skill evidence من المشاريع.
+AI skill extraction من work history.
+مثال:
+Skill: Laravel  Level: Advanced  Evidence: 8 completed projects  Endorsed by: 4 managers  Verified by: test/certificate
+19.10 Reputation System للأفراد
+كل Professional له Reputation Score، لكن يجب أن يكون عادلًا وشفافًا.
+عوامل إيجابية
+Completed projects.
+Positive evaluations.
+Verified skills.
+On-time delivery.
+Rehire by companies.
+Long-term company memberships.
+No unresolved disputes.
+عوامل سلبية
+Unresolved disputes.
+Repeated late delivery.
+Contract violations.
+Fake skills.
+Abandoned tasks.
+حماية من الظلم
+حق الرد.
+dispute review.
+تقييمات خاصة لا تنشر للعامة.
+منع review bombing.
+وزن أعلى للشركات verified.
+19.11 علاقة Talent Marketplace بالـ Public Marketplace
+لدينا الآن 4 أسواق عامة/شبه عامة:
+Business MarketplaceServices MarketplaceProducts MarketplaceTalent Marketplace
+الفرق:
+السوق
+يعرض ماذا؟
+Business Marketplace
+شركات وبزنس موثقة
+Services Marketplace
+خدمات مقدمة من شركات أو محترفين
+Products Marketplace
+منتجات من متاجر وشركات
+Talent Marketplace
+أفراد ومهارات وموظفين ومهنيين
+19.12 علاقة Talent Marketplace بـ Rabet
+Rabet يعطي السياق المؤسسي.
+Talent Marketplace يعطي شبكة الأشخاص.
+Rabet = Company-first operating environmentTalent Marketplace = Verified professional network
+ولا نريد تحويله إلى Freelancer marketplace عشوائي.
+الفرق أن الشخص يمكن أن يظهر كمحترف، لكن العمل المنظم يتم داخل شركة أو عقد أو مشروع موثق.
+19.13 AI داخل إدارة الفريق والمواهب
+AI يساعد في:
+اقتراح توزيع المهام.
+اكتشاف ضغط العمل.
+تقييم الأداء من البيانات.
+اقتراح الشخص الأنسب لمهمة.
+كتابة job description.
+مطابقة المرشحين مع الوظائف.
+تلخيص أداء الموظف.
+اقتراح خطة تطوير مهارات.
+استخراج المهارات من المشاريع.
+كشف تضارب الصلاحيات.
+أمثلة:
+مين أفضل شخص في الفريق يمسك حملة السوشيال الجديدة؟
+اعمل Job Offer لمصمم UI/UX part-time لمدة 3 شهور.
+قيّم أداء فريق المبيعات الشهر ده بناءً على المهام والصفقات والتأخير.
+19.14 أين يدخل في الإصدارات؟
+V1
+Users.
+Roles.
+Basic team members.
+Activity log.
+Task comments basic إن أمكن.
+V2
+Basic task management.
+User profile.
+Mentions.
+Company membership basic.
+V3
+Full task management V1.
+Employee profile.
+Team structure.
+Basic evaluations.
+Work history basic.
+V4
+Talent Marketplace V1.
+Public professional profiles.
+Job offers basic.
+Visibility settings.
+Company-to-professional messaging.
+V5
+Advanced evaluations.
+Skills graph.
+Contract workflow.
+Multi-company memberships.
+Reputation scoring.
+HR/Payroll integration.
+V6
+Complete Workforce Network.
+AI talent matching.
+Skill verification.
+Advanced privacy controls.
+Cross-company work history.
+Enterprise workforce analytics.
+19.15 الرسالة التسويقية
+عربي
+Kabeeri لا يدير الشركات فقط، بل يبني شبكة مواهب موثقة: كل موظف له ملف مهني وتقييمات ومهارات، ويمكنه العمل مع أكثر من شركة، بينما تستطيع الشركات اكتشاف المواهب وإرسال عروض عمل داخل نفس المنصة.
+English
+Kabeeri does not only manage companies — it builds a verified workforce network where professionals have profiles, skills, ratings, and multi-company work history, while companies can discover talent and send job offers inside the platform.
+20. نموذج العمل التجاري
+المنتجات
+Kabeeri Community / CoreKabeeri ProKabeeri CloudKabeeri ERP SuiteKabeeri EnterpriseKabeeri Marketplace
+الإيرادات
+Cloud subscriptions.
+Pro licenses.
+ERP module licenses.
+Enterprise contracts.
+Marketplace revenue share.
+Implementation services.
+Support plans.
+Training.
+19. خطة البناء لو مؤسس واحد يستخدم AI
+لا يجب محاولة بناء كل شيء مرة واحدة.
+الترتيب الفردي العملي:
+Solo V0: PrototypeSolo V1: Usable CMSSolo V2: WordPress-FriendlySolo V3: Commerce LiteSolo V4: Business LiteSolo V5: Commercial ReadySolo V6: Platform Expansion
+أول 30 يوم يجب أن ينتج عنها Demo حقيقي:
+Laravel project.
+Admin login.
+Pages.
+Posts.
+Media.
+SEO.
+Sitemap.
+Theme starter.
+Cache basic.
+Backup basic.
+20. الأولويات الحقيقية
+لو الوقت محدود، الترتيب يكون:
+Core CMS stable.
+WordPress migration.
+Admin experience.
+Performance built-in.
+Safe updates.
+Commerce foundation.
+CRM + Inventory + Invoicing.
+Cloud.
+Marketplace.
+Accounting.
+Integration Hub.
+ERP Pro.
+Enterprise.
+AI advanced.
+21. تعريف نجاح Kabeeri
+Kabeeri تنجح عندما يستطيع العميل أن يقول:
+أقدر أبني موقع كامل.
+أقدر أنقل من WordPress بدون خسارة SEO كبيرة.
+أقدر أشغل متجر بدل WooCommerce أو Shopify في بعض الشرائح.
+أقدر أدير العملاء والمبيعات والمخزون والفواتير.
+أقدر أستخدم ERP داخلي أو أربط ERP خارجي.
+أقدر أستخدم Cloud أو Self-hosted.
+أقدر أركب plugins/themes/modules بأمان.
+أقدر أعمل تحديثات بدون خوف.
+أقدر أدير عدة مواقع ومتاجر كوكالة.
+أقدر أستخدم AI يبني ويعدل معي.
+22. ملخص الخطة النهائية
+V1: CMS Core FoundationV2: WordPress Migration + Commerce FoundationV3: Business Foundation + ERP EssentialsV4: Cloud + Marketplace + Agency PlatformV5: ERP Pro + Integration HubV6: Complete CMS + Commerce + ERP Platform
+الملفات القادمة:
+Kabeeri V1 — CMS Core Foundation.
+Kabeeri V2 — WordPress Migration + Commerce Foundation.
+Kabeeri V3 — Business Foundation + ERP Essentials.
+Kabeeri V4 — Cloud + Marketplace + Agency Platform.
+Kabeeri V5 — ERP Pro + Integration Hub.
+Kabeeri V6 — Complete Platform.

@@ -1,0 +1,889 @@
+KABEERI Database File 19
+Kabeeri Internal Marketplace & Packages Database
+نظام Kabeeri Marketplace الداخلي، الحزم، البلجنز، الثيمات، الموديوالت، التوقيع، المراجعة، التثبيت، التحديث، وحوكمة الناشرين.
+البند
+التفاصيل
+النطاق
+Internal Marketplace / Package System / Developer Package Governance
+يعتمد على
+Core Kernel, Permissions, Feature Flags, Billing optional, Security Review, Events
+يدعم لاحقًا
+Plugins, Themes, ERP Modules, Commerce Apps, Connectors, AI Skills, Templates, Industry Solutions
+المرحلة الأولى
+V4 Internal Marketplace V1: official packages only
+المبدأ الحاكم
+لا تثبيت بدون manifest، ولا صلاحيات مخفية، ولا تحديث بدون compatibility/security check
+1. تعريف نظام Kabeeri Marketplace الداخلي
+Kabeeri Marketplace هو السوق الداخلي داخل لوحة التحكم، وليس Kabeeri Mall العام. وظيفته توسيع المنصة عبر حزم رسمية أو معتمدة مثل البلجنز والثيمات والموديوالت والتكاملات وAI Skills، مع حوكمة تمنع فوضى إضافات WordPress وتمنع وصول الحزم لبيانات حساسة بدون تصريح.
+في V4 يبدأ النظام كـ Internal Marketplace V1 بحزم رسمية فقط، ثم يتوسع في V5 إلى private packages وrevenue share، ثم في V6 إلى Public Developer Marketplace بعد اكتمال review/signing/certification.
+2. لماذا يحتاج Marketplace Database مستقل؟
+• لأن package ليس مجرد ملف كود؛ بل كيان له ناشر، إصدار، صلاحيات، اعتماديات، حالة مراجعة، توقيع، تنصيب، تحديث، وإزالة.
+• لأن الحزمة قد تصل إلى بيانات حساسة مثل orders أو payments أو legal documents أو AI actions.
+• لأن التثبيت يجب أن يمر عبر permission disclosure وcompatibility checks وsecurity review.
+• لأن التحديث أو الإزالة قد يكسر الموقع أو يغير schema أو يحذف بيانات.
+• لأن النظام سيحتاج لاحقًا revenue share وdeveloper payouts وprivate enterprise marketplace.
+3. الفرق بين Kabeeri Marketplace و Kabeeri Mall
+العنصر
+Kabeeri Marketplace
+Kabeeri Mall
+المكان
+داخل Dashboard/Admin
+واجهة عامة للجمهور
+المستخدمون
+Owners, Admins, Developers, Agencies, Platform Operators
+Visitors, Customers, Businesses, Professionals, Sellers
+المحتوى
+Plugins, Themes, Modules, Connectors, AI Skills, Templates
+Businesses, Services, Products, Talent, B2B Opportunities
+الهدف
+توسيع قدرات Kabeeri بأمان
+اكتشاف الشركات والخدمات والمنتجات والمواهب
+الخطر الرئيسي
+كود أو حزمة تكسر المنصة أو تصل لبيانات حساسة
+احتيال، تقييمات مزيفة، منتجات/خدمات مخالفة
+4. نطاق هذا الملف
+4.1 يدخل في هذا الملف
+• Package catalog الداخلي.
+• Publishers وpublisher trust levels.
+• Package manifests, versions, dependencies, compatibility.
+• Package permissions وdata access scopes.
+• Package signing وsecurity reviews.
+• Review submissions وreview pipeline.
+• Installations, activations, updates, uninstall records.
+• Package events وactivity/audit logs.
+• Ratings/reviews الداخلية للحزم.
+• Revenue share وpayout foundation للأجيال القادمة.
+• Private Marketplace للـ Enterprise لاحقًا.
+4.2 لا يدخل في هذا الملف
+• Kabeeri Mall العام الخاص بالشركات والخدمات والمنتجات والمواهب.
+• Commerce orders/cart/checkout الخاصة بالعميل النهائي.
+• Connector sync jobs التفصيلية؛ مكانها Integration Hub Database.
+• AI prompt/plan/apply logs التفصيلية؛ مكانها AI Co-builder Database.
+• ERP tables الخاصة بالمحاسبة والمخزون والمشتريات.
+5. Dependency Rules
+لا يفتح Internal Marketplace قبل وجود Package Foundation وPermissions وFeature Flags وSecurity Review foundation. ولا يفتح Public Developer Marketplace قبل package signing وreview process وpermission display.
+يعتمد على
+سبب الاعتماد
+Core Kernel
+organizations, users, memberships, roles, permissions, modules
+Package Foundation
+installed_packages / package manifest concept / activation-deactivation
+Feature Flags
+تفعيل marketplace أو أنواع حزم معينة تدريجيًا
+Billing optional
+paid packages, subscriptions, revenue share لاحقًا
+Security Center
+package security status, sensitive access logs, signing
+Events & Workflows
+PackageInstalled, PackageUpdated, PackageReviewSubmitted
+Activity/Audit Logs
+تسجيل install/update/uninstall والقرارات الحساسة
+6. Data Domains
+النطاق
+الجداول
+Catalog
+marketplace_packages, marketplace_package_categories, package_tags
+Publishers
+marketplace_publishers, publisher_users, publisher_trust_levels
+Versions & Manifest
+package_versions, package_manifests, package_dependencies, package_compatibility
+Permissions & Risk
+package_permissions, package_data_scopes, package_risk_assessments
+Review & Security
+package_review_submissions, package_review_steps, package_security_reviews, package_signatures
+Install & Update
+package_installations, package_installation_permissions, package_update_logs, package_uninstall_records
+Assets & Docs
+package_assets, package_screenshots, package_documents, package_changelogs
+Commercial
+package_prices, package_revenue_shares, package_payout_records
+Enterprise Private
+private_marketplaces, private_marketplace_packages, private_package_approvals
+7. Package Types
+package_type
+الوصف
+أمثلة
+plugin
+إضافة صغيرة تضيف وظيفة محددة
+SEO Pro, Forms Pro, Analytics
+theme
+تصميم واجهة الموقع أو المتجر
+Business Theme, Store Theme
+module
+وظيفة كبيرة داخل النظام
+CRM, Inventory, Helpdesk
+suite
+مجموعة Modules مترابطة
+Finance Suite, HCM Suite
+commerce_app
+تطبيق تجاري أو دفع أو شحن
+Paymob, Fawry, Shipping Rules
+connector
+تكامل مع نظام خارجي
+Odoo, Shopify, QuickBooks
+ai_skill
+قدرة AI قابلة للتفعيل
+AI SEO, AI Workflow Builder
+template
+قالب صفحة أو نموذج أو تقرير
+Landing page, Invoice template
+industry_solution
+حل صناعي جاهز
+Real Estate, Clinic, School
+developer_tool
+أداة للمطورين أو الوكالات
+CLI Helper, API Explorer
+8. Package Status Model
+status
+المعنى
+draft
+مسودة لم تنشر بعد
+submitted
+تم إرسالها للمراجعة
+under_review
+تحت المراجعة
+needs_changes
+تحتاج تعديلات
+approved
+معتمدة للنشر
+published
+متاحة في Marketplace
+rejected
+مرفوضة
+suspended
+موقوفة مؤقتًا
+deprecated
+قديمة ولا يوصى بتثبيتها
+removed
+محذوفة من السوق
+9. الجداول الأساسية
+9.1 marketplace_publishers
+يمثل الناشر: رسمي، شريك موثق، مطور معتمد، ناشر خاص، أو ناشر Enterprise.
+id
+uuid
+organization_id nullable
+user_id nullable
+publisher_name
+slug
+publisher_type default official
+trust_level default level_1
+verification_status default not_required
+status default active
+website_url nullable
+support_email nullable
+metadata json nullable
+created_at
+updated_at
+deleted_at nullable
+publisher_type: official, verified_partner, certified_developer, public_developer, private_publisher, enterprise_publisher
+9.2 publisher_users
+يربط مستخدمين بحساب الناشر مع أدوار داخلية.
+id
+publisher_id
+user_id
+role
+status default active
+created_by nullable
+created_at
+updated_at
+role: owner, admin, developer, support, finance, reviewer
+9.3 publisher_trust_levels
+تعريف مستويات الثقة للناشرين.
+id
+level_key
+name
+description nullable
+requires_verification boolean default false
+allows_public_submission boolean default false
+allows_paid_packages boolean default false
+requires_manual_review boolean default true
+created_at
+updated_at
+9.4 marketplace_package_categories
+id
+uuid
+parent_id nullable
+name
+slug
+package_type nullable
+status default active
+sort_order default 0
+metadata json nullable
+created_at
+updated_at
+9.5 marketplace_packages
+الكيان الرئيسي للحزمة داخل Kabeeri Marketplace.
+id
+uuid
+publisher_id
+category_id nullable
+package_key
+name
+slug
+package_type
+short_description nullable
+description longtext nullable
+current_version_id nullable
+status default draft
+visibility default internal
+risk_level default low
+is_official boolean default false
+is_featured boolean default false
+requires_review boolean default true
+install_count integer default 0
+rating_average decimal(3,2) nullable
+rating_count integer default 0
+support_policy nullable
+documentation_url nullable
+metadata json nullable
+created_by nullable
+created_at
+updated_at
+deleted_at nullable
+فهارس: unique(package_key), unique(slug), index(package_type), index(status), index(risk_level), index(publisher_id)
+9.6 package_versions
+كل إصدار من package يجب أن يكون سجلًا مستقلًا حتى يمكن rollback وcompatibility tracking.
+id
+uuid
+package_id
+version
+version_code nullable
+status default draft
+release_type default stable
+kabeeri_min_version nullable
+kabeeri_max_version nullable
+php_min_version nullable
+laravel_min_version nullable
+requires_migration boolean default false
+requires_restart boolean default false
+artifact_media_id nullable
+artifact_path nullable
+checksum nullable
+signature_id nullable
+submitted_at nullable
+approved_at nullable
+published_at nullable
+created_at
+updated_at
+release_type: stable, beta, security, lts, hotfix
+9.7 package_manifests
+نسخة parsed من manifest، ولا يسمح بحزمة بدون manifest.
+id
+package_version_id
+manifest_version
+raw_manifest json
+name
+type
+version
+publisher_name nullable
+requires json nullable
+permissions json nullable
+hooks json nullable
+events json nullable
+settings_schema json nullable
+install_scripts json nullable
+uninstall_policy json nullable
+metadata json nullable
+created_at
+updated_at
+مثال manifest يحتوي على: name, type, version, publisher, requires, permissions, hooks, settings.
+9.8 package_permissions
+الصلاحيات التي تطلبها الحزمة ويجب عرضها قبل التثبيت.
+id
+package_version_id
+permission_slug
+permission_group nullable
+access_level default read
+risk_level default low
+reason nullable
+is_required boolean default true
+created_at
+updated_at
+access_level: read, create, update, delete, manage, execute
+9.9 package_data_scopes
+يوضح نطاق البيانات التي يمكن للحزمة الوصول إليها.
+id
+package_version_id
+scope_key
+scope_type
+risk_level default low
+description nullable
+requires_explicit_approval boolean default false
+created_at
+updated_at
+أمثلة scope_key: read_orders, update_payment_status, read_customer_email, create_webhooks, read_public_content.
+9.10 package_dependencies
+id
+package_version_id
+dependency_type
+dependency_key
+version_constraint nullable
+is_required boolean default true
+created_at
+updated_at
+dependency_type: package, module, php_extension, kabeeri_version, country_pack, integration
+9.11 package_conflicts
+id
+package_version_id
+conflict_type
+conflict_key
+reason nullable
+severity default warning
+created_at
+updated_at
+9.12 package_compatibility
+جدول compatibility matrix.
+id
+package_version_id
+kabeeri_version_range nullable
+php_version_range nullable
+database_engine nullable
+supported_languages json nullable
+rtl_support default true
+supported_modes json nullable
+cloud_supported default true
+portable_supported default false
+dedicated_supported default true
+frontend_anywhere_supported default false
+created_at
+updated_at
+9.13 package_assets
+id
+package_id
+package_version_id nullable
+asset_type
+media_asset_id nullable
+url nullable
+title nullable
+sort_order default 0
+created_at
+updated_at
+asset_type: icon, screenshot, demo_video, documentation, changelog_file, license_file
+9.14 package_changelogs
+id
+package_version_id
+change_type
+title
+description nullable
+created_at
+updated_at
+change_type: added, changed, fixed, security, breaking, deprecated
+9.15 package_signatures
+توقيع أو hash للحزمة. في V4 يكفي signature_hash foundation، ثم يتوسع لاحقًا.
+id
+uuid
+package_version_id
+signature_hash
+signing_method nullable
+signed_by nullable
+signed_at nullable
+status default valid
+metadata json nullable
+created_at
+updated_at
+status: valid, invalid, expired, revoked, pending
+9.16 package_security_reviews
+نتائج الفحص الأمني للحزمة.
+id
+uuid
+package_version_id
+review_type
+status default pending
+risk_level default low
+findings_count integer default 0
+critical_findings integer default 0
+reviewed_by nullable
+started_at nullable
+completed_at nullable
+summary nullable
+metadata json nullable
+created_at
+updated_at
+review_type: static_scan, manual_review, dependency_scan, permission_review, performance_review, ai_safety_review
+9.17 package_security_findings
+id
+security_review_id
+severity
+finding_code
+title
+description nullable
+file_path nullable
+line_number nullable
+status default open
+resolved_at nullable
+created_at
+updated_at
+9.18 package_review_submissions
+طلب مراجعة لإصدار حزمة.
+id
+uuid
+package_id
+package_version_id
+publisher_id
+submitted_by
+submission_type default initial
+status default submitted
+current_step nullable
+submitted_at
+decision_by nullable
+decision_at nullable
+decision_reason nullable
+metadata json nullable
+created_at
+updated_at
+status: submitted, under_review, needs_changes, approved, rejected, cancelled
+9.19 package_review_steps
+id
+review_submission_id
+step_key
+step_order
+assigned_to nullable
+status default pending
+started_at nullable
+completed_at nullable
+decision nullable
+notes nullable
+created_at
+updated_at
+step_key: manifest_validation, permission_review, security_review, compatibility_review, docs_review, final_approval
+9.20 package_review_comments
+id
+review_submission_id
+step_id nullable
+author_user_id
+comment
+visibility default internal
+created_at
+updated_at
+9.21 package_installations
+تثبيت package داخل organization/site/company.
+id
+uuid
+organization_id
+company_id nullable
+site_id nullable
+package_id
+package_version_id
+installation_scope default site
+status default installed
+installed_by nullable
+installed_at nullable
+activated_at nullable
+deactivated_at nullable
+last_updated_at nullable
+settings json nullable
+metadata json nullable
+created_at
+updated_at
+deleted_at nullable
+status: installed, active, inactive, update_available, failed, suspended, removed
+9.22 package_installation_permissions
+Snapshot من الصلاحيات التي وافق عليها المستخدم وقت التثبيت.
+id
+package_installation_id
+permission_slug
+access_level
+risk_level
+approved_by nullable
+approved_at nullable
+created_at
+updated_at
+9.23 package_installation_events
+id
+uuid
+package_installation_id
+event_type
+status
+performed_by nullable
+message nullable
+metadata json nullable
+created_at
+event_type: installed, activated, deactivated, updated, rollback, uninstall_requested, uninstalled, failed
+9.24 package_update_logs
+id
+uuid
+package_installation_id
+from_version_id nullable
+to_version_id
+status default pending
+started_by nullable
+started_at nullable
+completed_at nullable
+failed_at nullable
+rollback_supported default true
+rollback_version_id nullable
+message nullable
+metadata json nullable
+created_at
+updated_at
+9.25 package_uninstall_records
+تسجل قرار الإزالة وسياسة البيانات.
+id
+uuid
+package_installation_id
+requested_by
+uninstall_policy
+data_action
+export_before_delete boolean default false
+status default pending
+confirmed_at nullable
+completed_at nullable
+message nullable
+metadata json nullable
+created_at
+updated_at
+data_action: deactivate_only, keep_data, remove_settings, delete_data_after_confirmation, export_then_delete
+9.26 package_reviews
+تقييمات داخلية للحزم من مستخدميها. لا تستخدم كبديل security review.
+id
+uuid
+package_id
+organization_id nullable
+user_id nullable
+rating integer
+title nullable
+body nullable
+status default published
+created_at
+updated_at
+9.27 package_usage_stats
+id
+package_id
+package_version_id nullable
+period_start
+period_end
+install_count default 0
+active_install_count default 0
+update_count default 0
+error_count default 0
+created_at
+updated_at
+9.28 package_prices
+أسعار الحزم لاحقًا. في V4 يمكن تركها empty أو official/free.
+id
+package_id
+pricing_model default free
+price decimal(15,2) default 0
+currency_code default EGP
+billing_cycle nullable
+trial_days integer default 0
+status default active
+created_at
+updated_at
+pricing_model: free, one_time, subscription, usage_based, enterprise_quote
+9.29 package_revenue_shares
+id
+package_id
+publisher_id
+platform_share_percent decimal(5,2)
+publisher_share_percent decimal(5,2)
+status default active
+starts_at nullable
+ends_at nullable
+created_at
+updated_at
+9.30 package_payout_records
+id
+uuid
+publisher_id
+package_id nullable
+amount decimal(15,2)
+currency_code default EGP
+status default pending
+period_start nullable
+period_end nullable
+paid_at nullable
+metadata json nullable
+created_at
+updated_at
+9.31 private_marketplaces
+Marketplace خاص بالـ Enterprise أو وكالة أو عميل كبير.
+id
+uuid
+organization_id
+name
+slug
+status default active
+requires_approval default true
+settings json nullable
+created_at
+updated_at
+9.32 private_marketplace_packages
+id
+private_marketplace_id
+package_id
+package_version_id nullable
+status default available
+created_at
+updated_at
+9.33 private_package_approvals
+id
+uuid
+organization_id
+package_id
+package_version_id
+requested_by
+approved_by nullable
+status default pending
+reason nullable
+approved_at nullable
+created_at
+updated_at
+10. ERD
+erDiagram
+MARKETPLACE_PUBLISHERS ||--o{ MARKETPLACE_PACKAGES : publishes
+MARKETPLACE_PACKAGES ||--o{ PACKAGE_VERSIONS : has
+PACKAGE_VERSIONS ||--|| PACKAGE_MANIFESTS : defines
+PACKAGE_VERSIONS ||--o{ PACKAGE_PERMISSIONS : requests
+PACKAGE_VERSIONS ||--o{ PACKAGE_DATA_SCOPES : accesses
+PACKAGE_VERSIONS ||--o{ PACKAGE_DEPENDENCIES : depends_on
+PACKAGE_VERSIONS ||--o{ PACKAGE_SECURITY_REVIEWS : scanned_by
+PACKAGE_VERSIONS ||--o{ PACKAGE_SIGNATURES : signed_by
+PACKAGE_VERSIONS ||--o{ PACKAGE_REVIEW_SUBMISSIONS : submitted_as
+PACKAGE_REVIEW_SUBMISSIONS ||--o{ PACKAGE_REVIEW_STEPS : contains
+MARKETPLACE_PACKAGES ||--o{ PACKAGE_INSTALLATIONS : installed_as
+PACKAGE_INSTALLATIONS ||--o{ PACKAGE_INSTALLATION_PERMISSIONS : approved_permissions
+PACKAGE_INSTALLATIONS ||--o{ PACKAGE_UPDATE_LOGS : updated_by
+PACKAGE_INSTALLATIONS ||--o{ PACKAGE_UNINSTALL_RECORDS : removed_by
+PRIVATE_MARKETPLACES ||--o{ PRIVATE_MARKETPLACE_PACKAGES : includes
+11. Install Flow
+Open package page
+→ Check feature flag / entitlement
+→ Check package status = published
+→ Check compatibility with Kabeeri/PHP/modules/country packs
+→ Show permissions and data scopes
+→ Risk classification
+→ User confirms install
+→ Queue install job if migrations/scans needed
+→ Create package_installation
+→ Store approved permission snapshot
+→ Activate package
+→ Fire PackageInstalled event
+→ Create activity/audit log
+12. Update Flow
+New package version published
+→ Compatibility check per installation
+→ Security review status checked
+→ Show changelog and new permissions
+→ If new sensitive permissions: require approval
+→ Create backup if package changes schema or code
+→ Run update job
+→ Update package_installations.package_version_id
+→ Log package_update_logs
+→ Fire PackageUpdated event
+→ Rollback if failed and rollback_supported = true
+13. Uninstall Flow
+User requests uninstall
+→ Show uninstall policy from manifest
+→ Choose data_action
+→ Require explicit confirmation if delete data
+→ Optional export package data
+→ Deactivate package
+→ Remove settings or keep data based on policy
+→ Create package_uninstall_record
+→ Fire PackageUninstalled event
+→ Audit log if sensitive data affected
+14. Review Pipeline
+الخطوة
+الهدف
+الناتج
+manifest_validation
+التأكد من وجود manifest صحيح
+accepted/rejected with errors
+permission_review
+مراجعة permissions وdata scopes
+risk level + required disclosure
+dependency_review
+فحص requires/conflicts
+compatibility result
+security_review
+فحص static/dependency/manual
+findings + approval/block
+performance_review
+فحص impact وslow hooks
+performance budget status
+docs_review
+توفر documentation/support/changelog
+docs status
+final_approval
+قرار النشر
+approved/published أو rejected
+15. Permission Disclosure Rules
+• يجب عرض كل package_permissions وpackage_data_scopes قبل install أو update.
+• إذا أضاف update صلاحيات جديدة، يجب طلب موافقة جديدة.
+• الصلاحيات الحساسة مثل finance, payroll, legal documents, API secrets تتطلب review أعلى وربما workflow approval.
+• الواجهة لا تكتفي باسم permission؛ يجب عرض سبب الحاجة والبيانات التي ستقرأها أو تكتبها الحزمة.
+• لا يسمح بتثبيت package بصلاحية access_admin أو manage_permissions إلا في حالات رسمية محدودة وبـ audit logs.
+16. Risk Levels
+risk_level
+المعنى
+المتطلبات
+low
+قراءة بيانات عامة أو إعدادات بسيطة
+permission disclosure فقط
+medium
+إنشاء/تعديل بيانات تشغيلية غير حساسة
+موافقة admin + activity log
+high
+وصول إلى orders/payments/customers أو webhooks
+security review + audit log
+critical
+finance/payroll/legal/API secrets أو تنفيذ كود عالي التأثير
+manual review + workflow approval + restricted install
+17. Security Rules
+• ممنوع direct core modification.
+• ممنوع hidden external calls غير معلنة في manifest.
+• ممنوع stealing data أو bypassing permissions.
+• ممنوع تعطيل audit logs أو sensitive access logs.
+• ممنوع حفظ secrets داخل manifest أو settings غير مشفرة.
+• أي package تستخدم webhooks أو external API يجب أن تعلن ذلك في manifest.
+• أي package تحتاج finance/payroll/legal documents/API secrets تحتاج مراجعة صريحة.
+18. Feature Flags
+enable_internal_marketplace
+enable_official_packages_only
+enable_package_manifest_validation
+enable_package_permission_disclosure
+enable_package_security_review
+enable_package_signing_foundation
+enable_package_compatibility_checks
+enable_package_update_queue
+enable_private_marketplace
+enable_paid_packages
+enable_revenue_share
+enable_public_developer_marketplace
+19. Permissions
+marketplace.package.view
+marketplace.package.install
+marketplace.package.update
+marketplace.package.uninstall
+marketplace.package.review
+marketplace.package.publish
+marketplace.package.suspend
+marketplace.publisher.manage
+marketplace.private.manage
+package.permission.approve_sensitive
+package.security.review
+package.revenue.view
+package.payout.manage
+20. Events
+PackageSubmitted
+PackageReviewStarted
+PackageApproved
+PackageRejected
+PackagePublished
+PackageSuspended
+PackageInstalled
+PackageActivated
+PackageDeactivated
+PackageUpdated
+PackageUpdateFailed
+PackageUninstallRequested
+PackageUninstalled
+PackageSecurityFindingCreated
+PackageSensitivePermissionApproved
+21. CLI Commands
+php artisan kabeeri:package:validate {path}
+php artisan kabeeri:package:scan {packageVersionId}
+php artisan kabeeri:package:sign {packageVersionId}
+php artisan kabeeri:marketplace:submit {packageId}
+php artisan kabeeri:marketplace:review {submissionId}
+php artisan kabeeri:marketplace:publish {packageVersionId}
+php artisan kabeeri:marketplace:install {packageId} {organizationId}
+php artisan kabeeri:marketplace:update {installationId}
+php artisan kabeeri:marketplace:uninstall {installationId}
+php artisan kabeeri:marketplace:recalculate-stats
+22. Cloud / Frontend Anywhere / Portable / Dedicated
+الوضع
+قاعدة الحزم
+Kabeeri Cloud
+التثبيت والتحديث يتم من Marketplace مركزي مع checks كاملة.
+Frontend Anywhere
+الحزمة تؤثر على backend/API داخل Cloud، وليس على الواجهة الخارجية إلا عبر snapshots/webhooks.
+Portable
+يجب تصدير installed packages وmanifest وversions وsettings ضمن portable bundle.
+Dedicated
+يمكن السماح بقنوات تحديث خاصة وprivate marketplace وupdate windows.
+23. Portable Export Rules
+• يجب تضمين installed_packages أو package_installations الخاصة بالعميل.
+• يجب تضمين package manifests وactive versions وsettings.
+• لا يتم تصدير global marketplace catalog بالكامل.
+• لا يتم تصدير platform signing private keys أو review internal data.
+• Portable instance يمكنها check updates عبر license/update channel إذا اختار العميل استمرار العلاقة.
+24. Dedicated Rules
+• Dedicated يمكن أن يمتلك private marketplace خاص بالعميل.
+• التحديثات تمر عبر dedicated_update_windows.
+• الحزم التي تحتاج support access يجب أن تسجل sensitive access logs.
+• يمكن تفعيل version pinning لمنع التحديث التلقائي في بيئات Enterprise.
+25. Billing & Revenue Share
+في V4 يمكن أن تكون الحزم official/free فقط. في V5 يبدأ revenue share وprivate packages. في V6 يمكن فتح public developer marketplace مع subscriptions/certification/payouts.
+المرحلة
+النموذج التجاري
+V4
+Official packages only، بدون public paid marketplace
+V5
+Private packages، Connector SDK، revenue share، partner payouts
+V6
+Public developer marketplace، package subscriptions، certification badges، developer analytics
+26. Testing Requirements
+• Browse package test.
+• Install official package test.
+• Permission disclosure required test.
+• Package compatibility fail test.
+• Package security review blocks critical finding test.
+• Update adds new permission requires approval test.
+• Uninstall keeps data unless confirmed delete test.
+• Package install creates activity/audit log test.
+• Private marketplace approval test.
+• Portable export includes package manifest/settings test.
+27. Seeders
+MarketplacePackageTypesSeeder
+MarketplaceCategoriesSeeder
+PublisherTrustLevelsSeeder
+MarketplacePermissionsSeeder
+OfficialPackagesSeeder
+PackageRiskLevelsSeeder
+PackageReviewStepsSeeder
+PackageSecurityRulesSeeder
+DemoOfficialPluginsSeeder
+DemoOfficialThemesSeeder
+28. Build Order
+المرحلة
+الجداول/المخرجات
+1
+marketplace_publishers, marketplace_package_categories
+2
+marketplace_packages, package_versions, package_manifests
+3
+package_permissions, package_data_scopes, package_dependencies, compatibility
+4
+package_signatures, package_security_reviews, package_review_submissions
+5
+package_installations, installation_permissions, installation_events
+6
+package_update_logs, uninstall_records
+7
+package_assets, changelogs, docs
+8
+private marketplace and commercial foundation لاحقًا
+29. Acceptance Criteria
+• يمكن عرض package page داخل Dashboard.
+• يمكن رؤية permissions وrisk level قبل install.
+• لا يمكن تثبيت package غير published أو غير compatible.
+• كل install/update/uninstall يسجل activity log.
+• كل صلاحية حساسة تحتاج approval أو security review.
+• يمكن إيقاف package أو تعليقها مركزيًا.
+• يمكن تصدير package state مع Portable bundle بدون تسريب platform secrets.
+• يمكن تشغيل official package install flow في V4 بدون فتح public marketplace.
+30. أخطاء ممنوعة
+• فتح Public Developer Marketplace قبل signing/review/permission display.
+• السماح بحزم بدون manifest.
+• السماح بحزم بدون صلاحيات معلنة.
+• تثبيت حزم تصل للبيانات الحساسة بدون approval.
+• عدم تسجيل install/update/uninstall في activity/audit logs.
+• خلط Kabeeri Marketplace الداخلي مع Kabeeri Mall العام.
+• إزالة package وحذف بياناتها بدون تأكيد صريح أو export option.
+• تحديث package بإصدار جديد يكسر compatibility بدون تحذير أو rollback.
+31. الخلاصة التنفيذية
+Kabeeri Internal Marketplace هو العمود الفقري لتوسعة المنصة. لكنه لا يجب أن يبدأ كسوق عام مفتوح، بل كسوق داخلي رسمي ومتحكم فيه. قاعدة البيانات يجب أن تحفظ catalog وversions وmanifest وpermissions وreview/security/signing وinstall/update/uninstall state، حتى تكون Kabeeri قابلة للتوسعة مثل WordPress لكن محكومة وآمنة مثل Enterprise platform.
+KABEERI Database File 19 — Internal Marketplace & Packages
+KABEERI / Kabeeri / kabeeri — powered by ADMIT

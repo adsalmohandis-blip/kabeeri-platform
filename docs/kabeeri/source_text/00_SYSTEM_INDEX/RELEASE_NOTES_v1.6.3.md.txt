@@ -1,0 +1,23 @@
+# KABEERI Knowledge System v1.6.3 — Theme & Plugin Ecosystem Completion
+
+## Added
+- Full 300 Themes Master Catalog.
+- 300 Themes App Recipes.
+- Plugin Master Catalog.
+- Plugin Bundles by Project Type.
+- Theme / Plugin / Mobile Profile Matrix.
+- Theme Package Standard & Manifest.
+- Plugin Package Standard & Manifest.
+- Design System & UI Components Library.
+- Demo Data & Demo Importer Specification.
+- Theme QA Publishing Checklist.
+- Plugin QA Security Permission Checklist.
+- Marketplace Licensing, Pricing & Revenue Share Rules.
+- Extension Codex Prompt Rules.
+- Extension Update Codex Prompt Pack.
+- Updated Project Folder Map Architecture.
+
+## Rules
+- V1 remains frozen because coding has started.
+- New documents are additive and do not rewrite V1.
+- V2–V6 remain editable until each version enters coding freeze.

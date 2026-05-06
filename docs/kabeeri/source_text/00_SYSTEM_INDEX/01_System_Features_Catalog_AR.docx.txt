@@ -1,0 +1,1014 @@
+KABEERI — كتالوج خصائص النظام
+Features Catalog for Companies, Individuals, Partners, Developers, and Work Network
+الإصدار: v1.2.0 — ملف مرجعي قبل بدء Coding
+الغرض من هذا الملف: تجميع خصائص Kabeeri التي تقدمها للشركات والأفراد والشركاء والمطورين في جداول واضحة يمكن استخدامها في التخطيط، التسويق، بناء صفحات الموقع، تحديد الباقات، وكتابة متطلبات التنفيذ.
+ملخص المنظومة
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات
+بناء تطبيقات ومواقع ومتاجر
+CMS، ثيمات، بلجنات، تجارة، CRM، ERP، Rabet، Mall، تسويق، تقارير.
+V1–V6
+الأفراد
+حساب شخصي ومواهب وفرص عمل
+Talent Marketplace، Work Network، Academy، Badges، App Builder، Growth Partner.
+V2–V6
+المطورين والمبدعين
+اقتصاد الثيمات والإضافات
+Creator Profiles، Developer Console، Theme/Plugin Store، Revenue Share، SDK Docs.
+V4–V6
+الوكالات
+Agency Partner
+اعتماد سنوي، لوحة عملاء وتطبيقات، فريق، صلاحيات مؤقتة، تقارير.
+V4–V6
+الشركاء القانونيين
+Rabet Legal Partner
+مكاتب محاماة معتمدة لكل دولة لمراجعة التوثيق المدفوع.
+V4–V6
+المسوقين
+Growth Partner Network
+روابط إحالة، عمولات، Partner Storefront، Catalog Sharing، Payouts.
+V2–V6
+1. خصائص الهوية والحسابات والملكية
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الأفراد والشركات
+حساب شخصي موحد
+كل شخص له حساب واحد يمكنه استخدامه كعميل، محترف، مسوق، باني تطبيقات، مطور، أو عضو في وكالة.
+V1
+الأفراد
+الملف الشخصي
+ملف أساسي يحتوي بيانات المستخدم، الصورة، اللغة، البلد، الإعدادات، الأمن، والخصوصية.
+V1
+الأفراد
+Professional Profile
+ملف مهني عام للمواهب والمستقلين يعرض المهارات والأعمال والتقييمات والتوفر.
+V2
+الشركات
+Organization / Customer Account
+حساب العميل الأعلى الذي يملك التطبيقات والشركات والأعضاء والاشتراكات.
+V1
+الشركات
+Company / Business Account
+ملف الشركة أو النشاط التجاري داخل حساب العميل، مع بيانات قانونية وتشغيلية.
+V1
+الشركات
+Business Profile
+واجهة عامة للشركة يمكن أن تظهر في Kabeeri Mall وRabet B2B.
+V1/V2
+الأفراد والشركات
+تعدد التطبيقات
+المستخدم أو الشركة يمكنه امتلاك أكثر من تطبيق: موقع، متجر، بوابة، صفحة هبوط، أو تطبيق خدمات.
+V1
+الأفراد والشركات
+Kabeeri App
+الاسم التجاري لأي موقع أو متجر أو بوابة داخل المنصة، مع بقاء الاسم التقني Site في النظام.
+V1
+الأفراد والشركات
+عضويات متعددة
+نفس الشخص يمكن أن يكون عضوًا في أكثر من منظمة أو شركة أو فريق وكالة.
+V1
+الأفراد والشركات
+صلاحيات حسب السياق
+صلاحيات مختلفة حسب كونه مالك منظمة، مدير تطبيق، موظف، باني تطبيقات، أو مسوق.
+V1
+2. خصائص بناء التطبيقات والمواقع CMS
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات والأفراد
+إنشاء تطبيق جديد
+إنشاء موقع أو متجر أو بوابة أو صفحة هبوط من داخل منصة Kabeeri.
+V1
+الشركات والأفراد
+Pages & Posts
+إدارة الصفحات والمقالات والمحتوى الأساسي.
+V1
+الشركات والأفراد
+Content Types
+بنية قابلة للتوسع لأنواع محتوى مخصصة مثل خدمات، مشاريع، أطباء، عقارات، دورات.
+V1/V2
+الشركات والأفراد
+Media Library
+رفع وإدارة الصور والملفات والمستندات مع visibility وصلاحيات.
+V1
+الشركات والأفراد
+Menus
+إدارة القوائم وروابط التنقل.
+V2
+الشركات والأفراد
+SEO Basic
+حقول SEO الأساسية، الروابط، meta title/description، sitemap وrobots foundation.
+V1/V2
+الشركات والأفراد
+Forms Basic/Pro
+إنشاء نماذج تواصل وطلبات خدمة وتحويل الردود إلى leads أو notifications.
+V2/V3
+الشركات والأفراد
+Redirect Manager
+إدارة تحويلات 301/302 لحماية SEO خاصة بعد الهجرة.
+V2
+الشركات والأفراد
+Demo Importer
+استيراد ديمو الثيم والصفحات والبلوكات والإعدادات المناسبة للمشروع.
+V2
+الشركات والأفراد
+Theme Settings
+إعدادات ألوان، خطوط، شعار، هيدر، فوتر، وأقسام الصفحة.
+V1/V2
+الشركات والأفراد
+Visual Builder Lite
+محرر بصري لاحق لبناء الصفحات والأقسام بدون كود.
+V3/V4
+الشركات والأفراد
+Revision & Publishing Workflow
+حفظ نسخ المحتوى والمراجعة قبل النشر.
+V2/V3
+3. خصائص الثيمات ومتجر التصميم
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات والأفراد
+Theme Store
+متجر رسمي للثيمات داخل Kabeeri مع ثيمات مجانية ومدفوعة وPremium.
+V2
+الشركات والأفراد
+300 Launch Themes
+خطة إطلاق 300 ثيم مقسمة على 30 نوع مشروع × 10 ثيمات لكل نوع.
+V2/V3
+الشركات والأفراد
+Theme Categories & Filters
+فلترة حسب المجال، نوع التطبيق، السعر، اللغة، RTL، Commerce، Booking، Rabet، LMS، Donations.
+V2
+الشركات والأفراد
+Theme App Recipe
+كل ثيم يقترح البلجنات المطلوبة والموصى بها والاختيارية حسب نوع المشروع.
+V2
+الشركات والأفراد
+Theme Families
+عائلات ثيمات قابلة لتوليد Presets كثيرة بجودة موحدة.
+V2/V3
+الشركات والأفراد
+RTL / Arabic Ready
+الثيمات الرسمية تدعم العربية واتجاه RTL من البداية.
+V1/V2
+الشركات والأفراد
+Performance Score
+تقييم أداء للثيم قبل التثبيت.
+V2
+الشركات والأفراد
+Accessibility Ready
+معايير إتاحة أساسية للألوان، النصوص، العناوين، وحجم التفاعل.
+V2/V3
+الشركات والأفراد
+Recommended App Builders
+عند اختيار ثيم يمكن عرض بناة تطبيقات متخصصين فيه.
+V3
+المطورين والمبدعين
+Theme Publishing
+مبدعو كبيري يمكنهم نشر ثيمات بعد مراجعة وتوقيع واعتماد.
+V4/V6
+4. خصائص البلجنات والموديولات والـ App Ecosystem
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات والأفراد
+Plugin Store
+متجر إضافات وموديولات رسمي ومنظم.
+V2/V4
+الشركات والأفراد
+Plugin Bundles
+حزم جاهزة مثل Business Starter، Clinic، Restaurant، Commerce، LMS، NGO، Affiliate.
+V2/V3
+الشركات والأفراد
+Required/Recommended/Optional Packages
+كل مشروع يعرف ما يحتاجه من إضافات أساسية أو اختيارية.
+V2
+الشركات والأفراد
+Package Manifest
+كل إضافة لها manifest يوضح الصلاحيات والاعتماديات والتوافق والإصدار.
+V1/V2
+الشركات والأفراد
+Package Permissions Disclosure
+المنصة تعرض صلاحيات الإضافة قبل تثبيتها.
+V2/V4
+الشركات والأفراد
+Compatibility Check
+فحص توافق البلجن مع نسخة Kabeeri والثيم والموديولات.
+V2
+الشركات والأفراد
+Package Signing
+توقيع الحزم الرسمية والمعتمدة لضمان الأمان.
+V4/V6
+الشركات والأفراد
+Official Packages First
+البداية بحزم رسمية فقط ثم فتح المطورين تدريجيًا.
+V1/V4
+المطورين
+Developer Submission Workflow
+إرسال بلجن أو ثيم للمراجعة والاختبار قبل النشر.
+V4/V6
+الشركات
+ERP Suites
+ERP ليس Plugin صغير، بل Suites منظمة مثل CRM، Sales، Inventory، Finance، HR، Helpdesk.
+V3/V6
+5. خصائص WordPress Migration
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات والأفراد
+WordPress XML Importer
+استيراد الصفحات والمقالات والتصنيفات والوسوم والمؤلفين من WordPress.
+V2
+الشركات والأفراد
+Media Import
+استيراد الصور والوسائط والصور البارزة من WordPress.
+V2
+الشركات والأفراد
+SEO Preservation
+نقل SEO title/description/canonical قدر الإمكان.
+V2
+الشركات والأفراد
+Redirect Map
+إنشاء خريطة تحويلات لحماية الروابط القديمة والـ SEO.
+V2
+الشركات والأفراد
+Migration Preview
+استيراد إلى staging preview قبل النشر النهائي.
+V2/V3
+الشركات والأفراد
+Migration Readiness Score
+تقييم جاهزية الهجرة للمحتوى والميديا والثيم والبلجنات والـ SEO.
+V2/V3
+الشركات والأفراد
+Plugin Compatibility Report
+اكتشاف بلجنات WordPress واستبدال المعروف منها بميزات Kabeeri أو Adapters.
+V2/V3
+الشركات والأفراد
+Theme Visual Preservation
+استخراج الألوان والخطوط والشعار والقوائم للحفاظ على شكل الموقع قدر الإمكان.
+V2/V3
+الشركات والأفراد
+AI Rebuild Assistant
+إعادة بناء صفحات WordPress بشكل أنظف داخل Kabeeri بعد موافقة المستخدم.
+V4/V6
+الشركات والأفراد
+WooCommerce Migration
+نقل المنتجات والعملاء والطلبات والكوبونات بعد استقرار Commerce.
+V3/V4
+6. خصائص التجارة الإلكترونية والخدمات
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات
+Products Catalog
+إدارة المنتجات، الصور، الأسعار، التصنيفات، SKUs.
+V2
+الشركات
+Cart & Checkout
+سلة شراء وcheckout أساسي مع طرق دفع يدوية أو محلية.
+V2/V3
+الشركات
+Orders Management
+إدارة الطلبات وحالاتها وربطها بالعملاء والمخزون والفواتير.
+V2/V3
+الشركات
+Customers
+إدارة العملاء وسجل الطلبات والتواصل.
+V2/V3
+الشركات
+Coupons & Promotions
+كوبونات وعروض وخصومات.
+V2/V3
+الشركات
+Shipping Rules
+قواعد الشحن والتوصيل المحلي والاستلام من الفرع.
+V3/V4
+الشركات
+Payment Gateways
+ربط Paymob/Fawry/Stripe/PayPal/Tap/MyFatoorah وغيرها تدريجيًا.
+V3/V5
+الشركات
+Service Catalog
+عرض الخدمات وباقات الخدمة وطلبات الخدمة.
+V2
+الشركات
+Booking Lite/Pro
+حجز مواعيد للعيادات، الاستشارات، المطاعم، السياحة، الفعاليات.
+V3/V4
+الشركات
+Donations
+تبرعات وحملات للمنظمات والجمعيات.
+V3/V4
+الشركات
+LMS Lite
+كورسات، تسجيل، مدربين، شهادات مبدئية.
+V3/V4
+الشركات
+Partner Storefront
+واجهة مسوق تعرض منتجات/خدمات تجار آخرين بموافقة وعمولة.
+V4/V5
+7. خصائص التسويق الإلكتروني
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات والأفراد
+Marketing Core
+تعريف الحملات والمصادر والـ UTM والتحويلات والجماهير.
+V2/V3
+الشركات والأفراد
+Campaign Manager
+إدارة حملات تسويقية وربطها بصفحات هبوط ونماذج وكوبونات وتقارير.
+V3
+الشركات والأفراد
+Landing Pages & Funnels
+صفحات هبوط ومسارات تحويل وقوالب حملات.
+V2/V3
+الشركات
+Lead Capture
+تحويل النماذج إلى جهات اتصال وLeads مع تتبع المصدر.
+V2/V3
+الشركات
+Email Marketing
+قوائم بريد، قوالب، حملات، إلغاء اشتراك، تقارير.
+V3/V4
+الشركات
+WhatsApp / SMS Marketing
+رسائل واتساب/SMS للتذكيرات والمتابعة والحملات وفق consent.
+V3/V4
+الشركات
+Pixels & Tracking
+Meta Pixel، Google Analytics، GTM، conversion events.
+V2/V3
+الشركات
+Affiliate / Referral Marketing
+روابط إحالة، كوبونات مسوقين، تتبع عمولات، تقارير.
+V3/V5
+الشركات
+Abandoned Cart
+استرجاع السلة المتروكة عبر البريد أو واتساب أو كوبون.
+V3/V4
+الشركات
+Product Feeds
+Feeds لـ Google Merchant وMeta Catalog وKabeeri Mall.
+V4/V5
+الشركات
+Marketing Automation
+أتمتة متابعة leads والطلبات والحجوزات والتقييمات.
+V4/V5
+الشركات
+AI Marketing Assistant
+اقتراح حملات، نصوص إعلانات، SEO، landing pages، تقارير تسويق.
+V4/V6
+8. خصائص Rabet B2B والتوثيق والثقة
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات
+Rabet Business Profile
+ملف بزنس موثق يعرض بيانات الشركة والثقة والخدمات.
+V3/V4
+الشركات
+Company Verification
+طلب توثيق الشركة ومراجعة المستندات حسب الدولة.
+V3/V4
+الشركات
+Trust Record
+سجل ثقة يعكس التوثيق والتقييمات والنزاعات والالتزام.
+V3/V4
+الشركات
+Verified Badge
+شارة توثيق تظهر في الموقع وKabeeri Mall حسب الموافقة.
+V4
+الشركات
+Rabet Digital Office
+إدارة شركة عن بعد مع فريق ومهام وتوثيق وشفافية.
+V3/V4
+الشركات
+Legal Partner Review
+مكاتب محاماة معتمدة تراجع أوراق التوثيق.
+V4
+الشركات
+Verification Fees
+خدمة التوثيق مدفوعة ويمكن أن تختلف حسب الدولة ونوع الشركة.
+V4
+الشركات
+Dispute & Trust Rules
+قواعد نزاعات وتأثير على الثقة والسمعة.
+V4/V5
+الشركات والأفراد
+Public Trust Signals
+عرض إشارات الثقة العامة فقط دون بيانات خاصة.
+V4
+9. خصائص Talent Marketplace
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الأفراد
+Talent Profile
+ملف عام للمواهب والمستقلين يعرض المهارات والخبرة والأعمال والتقييمات.
+V2/V3
+الأفراد
+Public Browsing
+الزائر يمكنه تصفح الملفات العامة دون اشتراك.
+V2/V3
+الأفراد والشركات
+Contact Requires Free Account
+التواصل مع المحترف يتطلب إنشاء حساب شخصي مجاني.
+V2/V3
+الأفراد
+Skills & Portfolio
+عرض المهارات والبورتفوليو والأعمال السابقة.
+V2/V3
+الأفراد
+Availability
+إظهار التوفر للعمل الحر أو دوام جزئي أو عن بعد.
+V3
+الأفراد
+Professional Badges
+بادجات من Academy أو Work Network أو Rabet حسب الاعتماد.
+V3/V4
+الشركات
+Talent Search
+بحث وفلترة المواهب حسب المهارات والبلد واللغة والتقييم والتوفر.
+V3
+الشركات
+Hiring Requests
+إرسال طلب تواصل أو فرصة عمل إلى محترف.
+V3/V4
+الأفراد والشركات
+No Service Commission by Default
+المنصة لا تأخذ نسبة على تنفيذ الخدمات بين الطرفين في البداية.
+Policy
+الأفراد
+Premium Visibility
+ترقية اختيارية للظهور الأعلى والتحليلات والشارات.
+V4
+10. خصائص Kabeeri Work Network
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الأفراد
+Growth Partner
+مسوق/شريك نمو يجلب عملاء أو يروج منتجات وخدمات ويحصل على عمولات.
+V2/V4
+الأفراد
+App Builder
+باني تطبيقات كبيري يبني المواقع والمتاجر للعميل باستخدام الثيمات والبلجنات.
+V2/V3
+الأفراد
+Migration Specialist
+تخصص إضافي لنقل WordPress/WooCommerce إلى Kabeeri.
+V3
+الأفراد
+Support Specialist
+تخصص إضافي للدعم والإعدادات والتدريب.
+V3/V4
+الأفراد
+Commerce Builder
+تخصص لبناء المتاجر وإعداد المنتجات والدفع والشحن.
+V3/V4
+الأفراد
+SEO & Content Specialist
+تخصص تحسين محتوى وSEO وحملات محتوى.
+V3/V4
+الأفراد
+Automation Builder
+تخصص بناء workflows وأتمتة تشغيلية.
+V4/V5
+الأفراد
+Integration Specialist
+تخصص ربط الأنظمة الخارجية والـ connectors.
+V5
+الأفراد
+Capabilities System
+نفس الشخص يمكنه امتلاك أكثر من قدرة مع مستويات مختلفة.
+V2
+الأفراد والشركات
+Hire App Builder Flow
+العميل يختار يبني بنفسه أو يستعين بباني تطبيقات معتمد.
+V3
+الأفراد والشركات
+Project Workspace
+مشروع تنفيذ داخل المنصة بين العميل والباني مع milestones وصلاحيات مؤقتة.
+V3/V4
+11. خصائص Kabeeri Academy
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الأفراد
+Learning Paths
+مسارات تعليم لكل وظيفة: App Builder، Growth Partner، Creator، Migration، Support.
+V2
+الأفراد
+Quizzes & Practical Tests
+اختبارات نظرية وعملية قبل فتح القدرات.
+V2/V3
+الأفراد
+Badges
+بادجات تظهر في الملف بعد إكمال المسار والاختبار.
+V2/V3
+الأفراد
+Levels
+مستويات لكل قدرة: Learner، Approved، Verified، Certified، Expert.
+V3
+الأفراد
+Certification Renewal
+تجديد الاعتمادات أو ترقيتها حسب الأداء والتعلم.
+V4
+الشركات
+Trusted Hiring Signal
+الشركات ترى مستوى الشخص وبادجاته قبل الاستعانة به.
+V3
+الشركات والأفراد
+Academy Content Library
+محتوى تعليمي رسمي لتقليل الأخطاء وتوحيد الجودة.
+V2/V3
+12. خصائص Kabeeri Agency Partner
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الوكالات والشركات
+Agency Partner Accreditation
+اعتماد سنوي للوكالات أو الفرق القادرة على تنفيذ تطبيقات للعملاء.
+V4
+الوكالات
+Agency Dashboard
+لوحة تجمع العملاء والتطبيقات والمشاريع والصلاحيات والفريق والتقارير.
+V4
+الوكالات
+Managed Clients
+إدارة كل عملاء الوكالة في مكان واحد.
+V4
+الوكالات
+Managed Apps
+إدارة وتعديل التطبيقات التي تفوضها الشركات للوكالة.
+V4
+الوكالات
+Team Capabilities
+كل عضو في الوكالة له قدرات ومستويات وبادجات.
+V4
+الوكالات والشركات
+Controlled Client Access
+صلاحيات مؤقتة ومحددة للتعديل دون الوصول للبيانات الحساسة.
+V4
+الوكالات
+Client Reports
+تقارير دورية للعملاء عن الأداء والصيانة والتحديثات.
+V4/V5
+الوكالات
+Annual Subscription
+اعتماد الوكالة يمكن أن يكون باشتراك سنوي.
+Policy/V4
+الوكالات
+White-label Foundation
+أساسيات white-label لاحقًا للوكالات الكبيرة.
+V5/V6
+13. خصائص المطورين والمبدعين Creator / Developer Economy
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الأفراد والشركات
+Kabeeri Creator Profile
+ملف للمبدعين يعرض الثيمات والإضافات والقوالب والأعمال.
+V3/V4
+المطورين
+Developer Console
+لوحة للمطورين لإدارة مشاريع SDK والـ API clients والـ submissions.
+V4/V6
+المطورين
+Theme Creator
+إنشاء ثيمات ونشرها بعد مراجعة.
+V4/V6
+المطورين
+Plugin Creator
+تطوير إضافات وموديولات وفق SDK وmanifest وصلاحيات.
+V4/V6
+المطورين
+Template Creator
+إنشاء قوالب صفحات وsections وbusiness kits.
+V4/V6
+المطورين
+AI Skill Creator
+بناء مهارات AI قابلة للتفعيل داخل المنصة.
+V6
+المطورين
+Publisher Account
+حساب ناشر للحزم والثيمات والبلجنات.
+V4/V6
+المطورين
+Revenue Share
+مشاركة أرباح من بيع الثيمات والإضافات.
+V4/V6
+المطورين
+Certifications
+اعتماد مطور/ناشر موثوق حسب اختبارات ومراجعات.
+V4/V6
+المطورين
+Developer Docs
+توثيق تطوير الثيمات والبلجنات والـ SDK والـ hooks والأحداث.
+V2/V4
+14. خصائص الشركاء والمسوقين بالعمولة
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الأفراد
+Kabeeri Growth Partner Profile
+ملف مسوق معتمد داخل Talent/Mall يعرض مستواه وأداءه.
+V2/V3
+الأفراد
+Affiliate Links
+روابط إحالة لتتبع العملاء الذين دخلوا عن طريق المسوق.
+V2/V3
+الأفراد والشركات
+Attribution Tracking
+تسجيل first touch/last touch وربط التحويل بالمسوق.
+V3
+الأفراد والشركات
+Partner Agreements
+اتفاق بين التاجر والمسوق لترويج منتجات/خدمات بنسبة محددة.
+V4
+الأفراد
+Partner Storefront
+تطبيق مسوق يعرض كتالوجات مسموح بها من تجار مختلفين.
+V4/V5
+الشركات
+Catalog Sharing
+التاجر يسمح بمشاركة منتجات/خدمات معينة مع مسوقين.
+V4/V5
+الأفراد
+Commission Events
+تسجيل عمولات على leads أو orders أو subscriptions أو bookings.
+V4/V5
+الأفراد
+Partner Payouts
+مدفوعات المسوقين والشركاء مع hold/refund/fraud checks.
+V5
+الشركات والأفراد
+Dropshipping-like Fulfillment
+المسوق يسوق فقط، والتنفيذ والشحن والتواصل من التاجر الأصلي.
+V5
+15. خصائص Kabeeri Mall وMarketplace العام
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات
+Business Listings
+ظهور الشركات في مول كبيري حسب الموافقة والتوثيق.
+V4
+الشركات
+Services Listings
+عرض الخدمات العامة القابلة للاكتشاف.
+V4
+الشركات
+Product Listings
+عرض منتجات عامة دون كشف بيانات تشغيلية خاصة.
+V4
+الأفراد
+Talent Listings
+ظهور محترفين ومواهب في السوق العام.
+V3/V4
+الشركات والأفراد
+Reviews & Ratings
+تقييمات عامة مع حوكمة ومراجعة.
+V4
+الشركات والأفراد
+Featured Listings
+إعلانات أو ظهور مميز داخل Mall.
+V4/V5
+الشركات والأفراد
+Moderation Queue
+مراجعة المحتوى العام والبلاغات قبل/بعد النشر.
+V4
+الشركات والأفراد
+Dispute Resolution
+إدارة النزاعات المرتبطة بالطلبات والتقييمات والخدمات.
+V4/V5
+الشركات
+RFQ / Service Inquiries
+طلبات عروض وخدمات بين الشركات لاحقًا.
+V5/V6
+الشركات والأفراد
+Mall Mirror Data
+Mall يستخدم نسخة عامة مختارة ولا يقرأ قواعد بيانات العملاء مباشرة.
+Architecture
+16. خصائص ERP وCompany OS
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات
+CRM Lite / Pro
+Leads، Contacts، Pipelines، Activities، Timeline، Segmentation.
+V3/V5
+الشركات
+Sales Basic / Pro
+Quotations، Sales Orders، Price Lists، Discounts، Approvals.
+V3/V5
+الشركات
+Invoicing
+فواتير عملاء، PDF، حالات دفع، تحويل من order/quotation.
+V3
+الشركات
+Inventory
+مخازن، أرصدة، حركات، تحويلات، تنبيهات مخزون.
+V3/V5
+الشركات
+Purchasing
+موردين، أوامر شراء، استلام مخزون، RFQ لاحقًا.
+V3/V5
+الشركات
+Accounting Starter / Pro
+Chart of accounts، AR/AP، journals، تقارير مالية أساسية.
+V3/V5
+الشركات
+Tasks & Projects
+مهام ومشاريع ومتابعة أساسية.
+V2/V3
+الشركات
+Employee Profiles
+ملفات موظفين، أقسام، مدير، مستندات، تقييمات أساسية.
+V3
+الشركات
+Helpdesk / ITSM
+تذاكر، SLA، تصنيفات، تعيين، معرفة أساسية.
+V5
+الشركات
+POS Basic
+جلسات كاشير، بيع سريع، إيصال، خصم مخزون.
+V5
+الشركات
+Contracts / CLM
+سجلات عقود، أطراف، مستندات، موافقات، تجديدات.
+V5
+الشركات
+Advanced Approvals
+موافقات متعددة المراحل، تعليقات، SLA، escalation.
+V5
+17. خصائص التكامل والبيانات والاستضافة
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات
+Kabeeri Cloud
+استضافة وإدارة كاملة للتطبيق والبيانات والتحديثات والنسخ الاحتياطية.
+V4
+الشركات
+Frontend Anywhere
+استضافة الواجهة خارج Kabeeri مع بقاء البيانات واللوحة داخل Cloud.
+V4/V5
+الشركات
+Portable Export
+تصدير كامل للتشغيل self-hosted مع استمرار Mall Sync اختياريًا.
+V5
+الشركات
+Dedicated
+بيئة مخصصة بقاعدة بيانات وتخزين منفصل للعملاء الكبار.
+V6
+الشركات
+Integration Hub
+Connector registry، connections، sync jobs، field mapping، webhooks.
+V5
+الشركات
+Official Connectors
+WordPress، WooCommerce، Shopify، Odoo، Zoho، QuickBooks، Xero، Daftra، Sheets.
+V5
+الشركات
+Sync Logs & Error Handling
+سجلات مزامنة، أخطاء، retries، conflict resolution.
+V5
+الشركات
+Backups
+نسخ احتياطي قبل تغييرات خطيرة وقبل التصدير والاستعادة.
+V1/V4
+الشركات
+Data Ownership
+فصل operational private data عن public mirror وplatform relationship data.
+Architecture
+18. خصائص الذكاء الاصطناعي
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات والأفراد
+AI Co-builder
+مساعد يبني صفحات ونماذج وworkflows وتقارير بعد خطة ومراجعة وموافقة.
+V4/V6
+الشركات والأفراد
+AI Page Builder
+اقتراح أو بناء صفحات من وصف أو من موقع قديم.
+V4
+الشركات
+AI Migration Assistant
+تحليل هجرة WordPress وshortcodes والثيم والـ SEO.
+V4/V6
+الشركات
+AI Report Explainer
+شرح التقارير والأرقام والتنبيهات.
+V5/V6
+الشركات
+AI CRM Assistant
+اقتراح follow-up وتقييم leads.
+V5
+الشركات
+AI Workflow Builder
+اقتراح workflows وموافقات وأتمتة.
+V5/V6
+الشركات
+AI Marketing Assistant
+اقتراح حملات ونصوص وإعلانات ورسائل.
+V4/V6
+الشركات والأفراد
+Guarded Write Actions
+أي تغيير حساس يحتاج preview وapproval وlog وrollback.
+V4/V6
+الشركات والأفراد
+Rollback Points
+نقاط رجوع قبل تطبيق تغييرات AI.
+V4/V6
+19. خصائص الأمن والخصوصية والحوكمة
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات والأفراد
+RBAC
+أدوار وصلاحيات متعددة حسب organization/company/app/module.
+V1
+الشركات والأفراد
+Activity Logs
+سجل أحداث عام: من فعل ماذا ومتى.
+V1
+الشركات
+Audit Logs
+سجل أحداث حساسة مثل صلاحيات، فواتير، توثيق، AI changes.
+V1/V3
+الشركات والأفراد
+MFA
+مصادقة متعددة العوامل لاحقًا.
+V4/V6
+الشركات
+Sensitive Access Logs
+تسجيل الدخول إلى ملفات أو بيانات حساسة.
+V4/V6
+الشركات والأفراد
+Consent Management
+موافقات للنشر والتسويق وMall وprivacy.
+V2/V4
+الشركات
+Data Retention Policies
+سياسات احتفاظ وحذف وأرشفة.
+V4/V6
+الشركات
+GRC
+سياسات، مخاطر، ضوابط، تدقيق داخلي، أدلة.
+V6
+الشركات
+Enterprise Security
+SSO/SAML، SIEM، DLP، session policies للعملاء الكبار.
+V6
+20. خصائص التقارير والتحليلات والفوترة
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات
+Reports Basic
+تقارير مبيعات، طلبات، مخزون، leads، مهام، توثيق.
+V3
+الشركات
+Advanced Reporting
+تعريف تقارير، saved filters، scheduled reports، dashboard widgets.
+V5
+الشركات
+BI / Analytics
+Dashboards، KPIs، data marts، data quality، warehouse foundation.
+V6
+الشركات
+Marketing Analytics
+تحويلات، مصادر، حملات، ROAS، leads، affiliate reports.
+V3/V5
+الشركات والأفراد
+Billing Accounts
+حساب فوترة للمنظمة أو الشركة أو الفرد أو الوكالة.
+V2/V4
+الشركات والأفراد
+Plans & Subscriptions
+خطط Freemium/Pro/Cloud/Portable/Dedicated/Agency/Talent.
+V2/V4
+الشركات والأفراد
+Entitlements
+حقوق تجارية تحدد المزايا والحدود لكل خطة.
+V2
+الشركات والأفراد
+Usage Records
+تسجيل استخدام storage، AI، bandwidth، sync، emails.
+V4
+الشركات والأفراد
+Platform Invoices
+فواتير Kabeeri للعميل منفصلة عن فواتير العميل لعملائه.
+V4
+الأفراد والشركاء
+Partner Payouts
+مدفوعات للمسوقين والمطورين والشركاء حسب العمولة أو المبيعات.
+V5
+21. خصائص Freemium والنمو والانتشار
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الأفراد والشركات
+Free / Community Entry
+دخول مجاني أو منخفض التكلفة لجذب مستخدمي WordPress والشباب والمشاريع الصغيرة.
+Strategy
+الأفراد والشركات
+Free Themes
+جزء كبير من الثيمات مجاني لزيادة الانتشار.
+V2
+الأفراد والشركات
+Freemium Plugins
+إضافات مجانية مع مزايا Pro لاحقًا.
+V2/V3
+الأفراد
+Free Personal Account
+حساب شخصي مجاني للتصفح والتواصل وبناء ملف مهني.
+V1/V2
+الأفراد
+Income Opportunities
+فرص دخل كشريك نمو، باني تطبيقات، متخصص هجرة، دعم، مبدع، أو وكالة.
+V2/V4
+الشركات
+Build Yourself or Hire
+الشركة تختار بناء التطبيق بنفسها أو عبر باني تطبيقات/وكالة.
+V3
+الشركات والأفراد
+Kabeeri Academy as Growth Engine
+تعليم الشباب وتأهيلهم يخلق قوة توزيع وتنفيذ للمنصة.
+V2/V4
+الشركات والأفراد
+Theme/Plugin Economy
+اقتصاد ثيمات وإضافات مشابه WordPress/Envato لكن بحوكمة أفضل.
+V4/V6
+22. خصائص Enterprise وIndustry المستقبلية
+المستفيد
+الخاصية
+ماذا تقدم؟
+المرحلة / الحالة
+الشركات الكبرى
+Industry Solutions
+حزم قطاعية مثل عقارات، عيادات، مدارس، مطاعم، لوجستيات، تصنيع.
+V6
+الشركات الكبرى
+Manufacturing Foundation
+BOM، عمليات، أوامر إنتاج، MRP، quality checks.
+V6
+الشركات الكبرى
+SCM / Logistics Advanced
+تخطيط توريد، demand forecasting، logistics، fleet.
+V6
+الشركات الكبرى
+EAM / Maintenance
+أصول، صيانة وقائية، أوامر عمل، قطع غيار.
+V6
+الشركات الكبرى
+HCM Advanced
+توظيف، حضور، إجازات، تدريب، self-service، payroll foundation.
+V6
+الشركات الكبرى
+ESG / EHS / Sustainability
+مؤشرات استدامة، حوادث EHS، انبعاثات، تقارير.
+V6+
+الشركات الكبرى
+PLM / R&D
+منتجات هندسية، BOM، ECR/ECO، تجارب، مستندات فنية.
+V6+
+الشركات الكبرى
+Enterprise Architecture / App Portfolio
+System catalog، integration map، capability map، impact analysis.
+V6
+ملاحظات تنفيذية
+• هذا الملف لا يستبدل ملفات الداتابيز أو الـ Laravel Build Order؛ بل يلخص الخصائص على مستوى المنتج.
+• المرحلة V1 يجب أن تبقى محدودة: Core، Users، Organizations، Apps/Sites، CMS، Media، Themes basic، Package foundation، Onboarding، وWordPress migration foundation.
+• كل خاصية مرتبطة بـ Plans / Entitlements / Feature Flags قبل تفعيلها تجاريًا.
+• أي خاصية تتعامل مع بيانات حساسة أو أموال أو توثيق أو AI write actions يجب أن تمر عبر RBAC وAudit Logs وApprovals.
+• Theme Store وPlugin Store وWork Network وAcademy هي محركات نمو وتسويق، لكنها تُفتح تدريجيًا بعد استقرار الأساس.
+KABEERI Features Catalog — v1.2.0

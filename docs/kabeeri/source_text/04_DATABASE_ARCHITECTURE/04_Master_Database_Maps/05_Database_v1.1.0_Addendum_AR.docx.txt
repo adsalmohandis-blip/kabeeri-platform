@@ -1,0 +1,161 @@
+KABEERI / powered by ADMIT
+KABEERI Database v1.1.0 Addendum
+تحديث تنفيذي لجداول Work Network وAcademy وAffiliate وTheme/Plugin وMarketing Suite
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. هدف هذا الملحق
+هذا الملحق يحول توسعات v1.1.0 إلى جداول تنفيذية واضحة قبل كتابة migrations. لا يستبدل ملفات الداتابيز السابقة، بل يضيف طبقة Coding-ready فوقها حتى لا تضيع كيانات Work Network وAcademy وAffiliate وTheme Recipes وMarketing Suite أثناء التنفيذ.
+• كل جدول جديد يجب أن يكون tenant-scoped عند الحاجة عبر organization_id.
+• كل كيان يظهر للعامة يجب أن يحترم visibility وpublication_status.
+• كل قدرة مهنية أو شراكة لا تفتح إلا بعد Academy / verification / approval حسب النوع.
+• كل عمولة أو إحالة يجب أن تمر عبر attribution event قابل للتدقيق.
+2. مجموعات الجداول الجديدة
+المجموعة
+الجداول الأساسية
+تعتمد على
+User Capabilities
+user_capabilities, capability_definitions, capability_levels, capability_status_events
+users, user_profiles
+Academy
+academy_courses, academy_learning_paths, academy_enrollments, academy_assessments, academy_certifications, professional_badges
+users, media_assets
+Work Network
+work_network_profiles, app_builder_profiles, growth_partner_profiles, work_network_service_listings
+users, professional_profiles, reviews
+Agency Partner
+agency_accreditations, agency_team_capabilities, agency_managed_apps, agency_client_access_grants
+organizations, sites, users
+Legal Partner
+legal_partner_accreditations, legal_partner_country_scopes, legal_partner_review_capacity
+companies, verification_requests
+Affiliate / Partner Commerce
+affiliate_programs, affiliate_links, attribution_events, partner_agreements, partner_storefronts, catalog_sharing_rules
+users, organizations, products, services
+Themes & Plugins
+theme_app_recipes, plugin_bundles, theme_plugin_bundle_matrix, package_install_recipes
+packages, themes, sites
+Marketing Suite
+marketing_campaigns, marketing_contacts, marketing_events, marketing_conversions, marketing_segments
+forms, crm_leads, orders, customers
+3. User Capabilities
+الـ capability هي عنوان عملي يمكن إضافته لملف الشخص بعد تعلم واختبار واعتماد. لا يتم إنشاء حساب جديد لكل وظيفة؛ نفس user يمكن أن يحمل أكثر من capability.
+الجدول
+الغرض
+أهم الحقول
+capability_definitions
+تعريف كل وظيفة قابلة للتفعيل
+id, key, name, category, requires_academy, requires_review, status
+capability_levels
+مستويات كل وظيفة
+id, capability_key, level_number, label, requirements_json, unlocked_features_json
+user_capabilities
+قدرات المستخدم الفعلية
+id, user_id, capability_key, level_number, status, approved_at, revoked_at
+capability_status_events
+تاريخ تغييرات القدرة
+id, user_capability_id, event_type, actor_user_id, reason, created_at
+4. Academy & Badges
+Kabeeri Academy هي بوابة فتح القدرات المهنية. أي App Builder أو Growth Partner أو Migration Specialist لا يظهر كمعتمد إلا بعد learning path واختبار.
+الجدول
+الغرض
+ملاحظات
+academy_courses
+الكورسات
+يدعم free/pro/internal
+academy_learning_paths
+مسارات الوظائف
+مثال: App Builder Level 1
+academy_enrollments
+تسجيل المستخدم في مسار
+يرتبط بـ user_id
+academy_assessments
+الاختبارات النظرية والعملية
+quiz/practical/review
+academy_certifications
+الشهادات النهائية
+تفتح capability أو level
+professional_badges
+الشارات العامة على الملف
+تظهر في Talent/Mall/Work Network
+5. Agency Partner
+Agency Partner هو Organization/Company مع اعتماد سنوي وفريق. ليس مجرد مستخدم فردي. يمكنه إدارة تطبيقات عملائه عبر صلاحيات محددة ومؤقتة.
+الجدول
+الغرض
+agency_accreditations
+اعتماد الوكالة السنوي وحالته
+agency_team_capabilities
+قدرات أعضاء فريق الوكالة
+agency_managed_apps
+التطبيقات التي تديرها الوكالة
+agency_client_access_grants
+صلاحيات الوصول لتطبيقات العملاء
+agency_client_reports
+تقارير العملاء الدورية
+agency_service_packages
+باقات تنفيذ الوكالة
+6. Affiliate / Partner Commerce
+هذه الطبقة تدعم Growth Partners وPartner Storefronts بدون نقل ملكية المنتجات. التاجر الأصلي يملك المنتج/الخدمة، والشريك يعرضها بتصريح ويحصل على عمولة.
+الجدول
+الغرض
+affiliate_programs
+برامج الإحالة/العمولة
+affiliate_links
+روابط تسويق فريدة
+attribution_events
+أحداث التتبع first_touch/last_touch/conversion
+partner_agreements
+اتفاق التاجر والشريك
+partner_storefronts
+تطبيق واجهة المسوق
+partner_storefront_items
+العناصر المعروضة في واجهة المسوق
+catalog_sharing_rules
+قواعد مشاركة الكتالوج
+partner_commission_events
+الأحداث المالية للعمولات
+partner_payout_holds
+فترة الحجز ومكافحة الاحتيال
+7. Theme Recipes & Plugin Bundles
+الثيم لا يحتوي البلجنات داخله. الثيم يحتوي App Recipe يحدد required/recommended/optional packages حسب نوع المشروع.
+الجدول
+الغرض
+theme_app_recipes
+وصفة التطبيق لكل ثيم
+theme_recipe_packages
+حزم مطلوبة/مقترحة/اختيارية
+plugin_bundles
+حزم جاهزة مثل Clinic Bundle أو Commerce Starter
+plugin_bundle_items
+محتويات كل bundle
+theme_plugin_bundle_matrix
+ربط 300 ثيم بالحزم
+theme_industry_taxonomy
+تصنيف المجالات والفلاتر
+8. Marketing Suite
+Marketing Core يسجل الحملات والمصادر والأحداث والتحويلات، ويتكامل مع Forms وCRM وCommerce وAffiliate.
+الجدول
+الغرض
+marketing_campaigns
+تعريف الحملات
+marketing_channels
+القنوات التسويقية
+marketing_contacts
+جهات الاتصال التسويقية
+marketing_contact_consents
+موافقات البريد/واتساب/SMS
+marketing_events
+أحداث تتبع عامة
+marketing_conversions
+تحويلات قابلة للقياس
+marketing_segments
+شرائح الجمهور
+marketing_automation_runs
+تشغيل أتمتة التسويق
+marketing_campaign_reports
+ملخصات الأداء
+9. قواعد التنفيذ
+• أي جدول جديد له بيانات عميل يجب أن يحتوي organization_id أو يرتبط بسجل يحتويه.
+• أي جدول public profile يجب أن يحتوي visibility وpublication_status.
+• أي token أو رابط إحالة لا يخزن secret كنص واضح؛ نخزن hash أو code آمن.
+• أي payout أو commission لا يصبح payable قبل انتهاء hold_period وrefund window.
+• أي theme/package recipe لا يثبت حزمة مدفوعة بدون entitlement check واضح.

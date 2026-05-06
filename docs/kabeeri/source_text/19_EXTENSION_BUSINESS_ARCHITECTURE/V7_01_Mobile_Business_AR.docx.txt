@@ -1,0 +1,19 @@
+KABEERI V7 Mobile App Enablement — Business Architecture
+KABEERI Professional Knowledge System — v1.6.2
+الفكرة
+إتاحة تجربة موبايل لأي تطبيق داخل Kabeeri بدون بناء 300 تطبيق منفصل. كل Theme يحصل على Mobile Theme Profile، وكل App يحصل على API Manifest.
+القيمة التجارية
+رفع قيمة كل تطبيق وثيم، فتح باقات مدفوعة للموبايل، دعم App Builders والوكالات، وزيادة ولاء العملاء.
+النموذج
+العنصر
+الوصف
+Mobile Shell
+تطبيق Flutter عام قابل للتخصيص
+Mobile Theme Profile
+وصفة UI للموبايل مرتبطة بالثيم
+API Manifest
+قائمة endpoints المطلوبة لكل تطبيق
+Brand Config
+ألوان وشعار واسم التطبيق
+نطاق V7
+Flutter shell، mobile APIs، device registry، push tokens، mobile preview، بدون تغيير V1 مباشرة.

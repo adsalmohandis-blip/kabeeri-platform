@@ -1,0 +1,17 @@
+# KABEERI Release Notes v1.6.5 — Solo AI Builder Execution System
+
+## Purpose
+This update adds a flexible execution layer for a solo builder using AI/Codex with variable daily working time.
+
+## Added
+- 10_Solo_AI_Builder_Execution_System_AR.docx
+- 11_V1_Flexible_Task_Cards_Board_AR.docx
+- 12_Worklog_Session_Templates_AR.docx
+- 13_Codex_Solo_Risk_Control_Checklists_AR.docx
+- WORKLOG_TEMPLATE.md
+
+## Rules
+- V1 remains the active coding scope.
+- Use one Codex prompt at a time.
+- Use WORKLOG.md in the Laravel repo to resume after breaks.
+- Do not start V2 until V1 is stable.

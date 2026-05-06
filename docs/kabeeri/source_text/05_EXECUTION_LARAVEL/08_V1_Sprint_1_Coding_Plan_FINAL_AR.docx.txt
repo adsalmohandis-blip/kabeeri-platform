@@ -1,0 +1,50 @@
+KABEERI / powered by ADMIT
+KABEERI V1 Sprint 1 Coding Plan FINAL
+خطة التنفيذ الأولى الجاهزة للكود
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. هدف Sprint 1
+هدف أول Sprint هو تثبيت مشروع Laravel + Filament + Core migrations + Auth + Organizations + Sites/Apps skeleton + أول test suite. لا نبني CMS كامل في Sprint 1.
+2. مدة Sprint
+المدة المقترحة: 5 إلى 7 أيام عمل. إذا كان المؤسس يعمل وحده بالـ AI، يمكن تمديدها إلى 10 أيام.
+3. Tasks بالتفصيل
+اليوم
+المهام
+مخرجات القبول
+Day 1
+إنشاء Laravel project، Git، env، DB، Pint/Pest، Filament install
+project boots + test command works
+Day 2
+Core migrations: users profiles countries currencies organizations memberships
+migrate:fresh passes
+Day 3
+Roles/permissions/settings/feature_flags/activity_logs
+seed permissions works
+Day 4
+Models + relationships + factories + basic policies
+unit/feature tests pass
+Day 5
+Filament panel + Organization resource + Site/App resource skeleton
+admin can view/create organization and app
+Day 6
+Seeders + demo organization + first QA render of admin screens
+demo login works
+Day 7
+Stabilization, README, backup script, CI smoke
+release candidate Sprint 1
+4. أول migrations في Sprint 1
+create_user_profiles_tablecreate_countries_tablecreate_currencies_tablecreate_organizations_tablecreate_organization_memberships_tablecreate_companies_tablecreate_company_memberships_tablecreate_sites_tablecreate_roles_tablecreate_permissions_tablecreate_role_permission_tablecreate_membership_role_assignments_tablecreate_settings_tablecreate_feature_flags_tablecreate_feature_flag_overrides_tablecreate_activity_logs_tablecreate_audit_logs_table
+5. Tests المطلوبة
+• User can create organization.
+• Organization owner can create app/site.
+• Editor cannot manage billing/roles.
+• Activity log is created after important actions.
+• Feature flag service returns default + override correctly.
+• Database migrations rollback and migrate cleanly.
+6. Definition of Done
+• Project runs locally with one command documented.
+• migrate:fresh --seed works.
+• Pest/PHPUnit tests pass.
+• Filament admin loads.
+• Demo user can login.
+• No feature outside Sprint 1 scope was added.

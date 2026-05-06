@@ -1,0 +1,3 @@
+# Path Length Check v1.6.4
+
+Max path length inside zip: 127 characters.

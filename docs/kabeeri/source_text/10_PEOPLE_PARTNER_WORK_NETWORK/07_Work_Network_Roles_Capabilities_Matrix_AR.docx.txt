@@ -1,0 +1,92 @@
+KABEERI Work Network Roles & Capabilities Matrix
+مصفوفة الوظائف والقدرات داخل منظومة كبيري، مع توزيعها على Talent Marketplace وWork Network وCreator Network وAgency وRabet.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. القاعدة الحاكمة
+كل مستخدم له User واحد فقط، ويمكن أن يفعّل أكثر من Capability على ملفه العام بعد التعليم والاختبار والاعتماد.
+Talent Marketplace عام للمواهب ولا يعني أن الشخص معتمد للعمل داخل Kabeeri Work Network.
+Work Network يضم الوظائف المرتبطة بتنفيذ وتسويق ودعم ونمو تطبيقات Kabeeri.
+Agency Partner كيان مؤسسي له فريق وDashboard واعتماد سنوي، وليس مجرد لقب شخصي.
+2. مصفوفة الأدوار
+الدور
+المجموعة
+ماذا يفعل؟
+شرط التفعيل
+إصدار التفعيل
+Kabeeri Growth Partner / شريك نمو كبيري
+Work Network
+إدخال عملاء، روابط إحالة، حملات، Partner Storefront لاحقًا
+Academy: Growth Level 1 + قواعد التسويق والخصوصية
+V2 foundation / V4 commerce
+Kabeeri App Builder / باني تطبيقات كبيري
+Work Network
+بناء تطبيقات العملاء باستخدام الثيمات والبلجنات وتسليمها
+App Builder Level 1 ثم عملي + مراجعة
+V2 profile / V3 projects
+Kabeeri Migration Specialist
+Capability فوق App Builder
+هجرة WordPress/WooCommerce، redirects، SEO، visual QA
+App Builder L2 + Migration test
+V3
+Kabeeri Support Specialist
+Capability فوق App Builder
+دعم إعدادات العملاء، تذاكر، تدريب، troubleshooting
+App Builder L1 + Support path
+V3/V4
+Kabeeri Commerce Builder
+Capability
+إعداد المتاجر، المنتجات، الدفع، الشحن، checkout
+Commerce path + demo store test
+V3
+Kabeeri SEO & Content Specialist
+Capability
+SEO، محتوى، صفحات هبوط، مدونات، redirects
+SEO/Content path
+V2/V3
+Kabeeri Automation Builder
+Capability متقدمة
+workflows، approvals، CRM follow-up، notifications
+Workflow path + practical task
+V4/V5
+Kabeeri Integration Specialist
+Capability متقدمة
+connectors، feeds، APIs، mapping، sync errors
+Integration Hub path + security test
+V5
+Kabeeri Creator / مبدع كبيري
+Creator Network
+ثيمات، بلجنات، قوالب، AI Skills، Industry Kits
+Developer docs + package review
+V3 beta / V4 marketplace
+Kabeeri Theme Creator
+Creator Specialty
+تصميم ونشر ثيمات ومجموعات واجهات
+Theme SDK path + QA review
+V4
+Kabeeri Plugin Creator
+Creator Specialty
+تطوير إضافات آمنة بصلاحيات معلنة
+Plugin SDK path + security review
+V4/V5
+Kabeeri Agency Partner
+Partner Entity
+وكالة معتمدة تدير عملاء وتطبيقات متعددة
+اعتماد سنوي + فريق مؤهل + dashboard
+V4
+Rabet Legal Partner
+Legal Partner Network
+مكتب محاماة معتمد لمراجعة توثيق الشركات
+اعتماد محدود حسب الدولة + legal workflow
+V4
+Kabeeri Trainer
+Academy/Work Network
+تدريب المستخدمين وApp Builders
+Academy trainer path + review
+V4/V5
+Kabeeri Quality Reviewer
+Partner/Internal
+مراجعة جودة التطبيقات قبل الإطلاق
+Senior App Builder + QA path
+V5
+3. نموذج الملف الواحد متعدد القدرات
+مثال: المستخدم يمكن أن يظهر كـ Graphic Designer في Talent Marketplace، وفي نفس الوقت يحصل على Badge App Builder Level 2 وGrowth Partner Level 1 وMigration Specialist بعد اجتياز مسارات Academy.

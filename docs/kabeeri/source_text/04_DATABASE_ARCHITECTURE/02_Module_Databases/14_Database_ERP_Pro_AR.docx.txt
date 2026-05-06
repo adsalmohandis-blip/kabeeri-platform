@@ -1,0 +1,1557 @@
+KABEERI Database File 14 — Kabeeri ERP Pro Database
+نظام ERP Pro + Advanced Operations + Commission + POS + Helpdesk + Contracts
+هذا الملف يصف تصميم قاعدة البيانات الخاص بمرحلة ERP Pro في Kabeeri، وهي المرحلة التي توسع ERP Essentials إلى نظام تشغيل أعمق للشركات النامية، مع دعم العقود، الدعم الفني، نقاط البيع، العمولات، المدفوعات للشركاء، التقارير المتقدمة، والربط المنضبط مع Integration Hub.
+ملاحظة مهمة: هذا الملف لا يستبدل ملف ERP Essentials، بل يبني فوقه. أي جدول موجود في Essentials يظل هو المصدر الأساسي، بينما يضيف ERP Pro جداول تفصيلية أو طبقات أعمق حوله.
+1. الهدف من ERP Pro Database
+الهدف هو تحويل Kabeeri من أساس تشغيل للشركات الصغيرة إلى طبقة ERP Pro قابلة للاستخدام من شركات نامية لديها عمليات مبيعات ومخزون ومشتريات ومحاسبة ودعم وعقود ونقاط بيع وعلاقات شركاء أكثر تعقيدًا.
+توسيع CRM Lite إلى CRM Pro مع pipelines متعددة، activities، segmentation، وlead scoring.
+توسيع Sales Basic إلى Sales Pro مع price lists، discount rules، sales orders، credit limits، وapproval thresholds.
+توسيع Inventory Basic إلى Inventory Pro مع transfers، lots/serials، valuation، counts، reorder rules، وapproval controls.
+توسيع Purchasing Basic إلى Requisitions، RFQs، supplier quotations، goods receipts، supplier bills، وsupplier performance.
+إضافة Accounting Pro Foundation بدون الوصول بعد إلى Enterprise finance الكامل.
+إضافة Contracts / CLM Foundation، Helpdesk / ITSM Foundation، POS Basic، Commission Engine، وPartner Payouts.
+تجهيز جداول التوافق مع Integration Hub بدون خلط جداول الـ connectors داخل ERP نفسه.
+2. موقع ERP Pro داخل خريطة Kabeeri
+ERP Pro يعتمد على استقرار Core Kernel، Organizations، Companies، Users، Permissions، Activity/Audit Logs، Billing/Entitlements، Commerce Foundation، ERP Essentials، Workflows/Approvals، وIntegration Hub foundation.
+الطبقة
+ماذا تقدم لـ ERP Pro
+Core Kernel
+الهوية، الملكية، العضويات، الصلاحيات، الإعدادات، السجلات، الملفات.
+Commerce
+Products, Orders, Customers, Payments كمدخلات للمبيعات والمخزون والفواتير.
+ERP Essentials
+Leads, Contacts, Quotations, Invoices, Warehouses, Stock Movements, Suppliers, PO basics, Chart of Accounts starter.
+Workflows
+Approval requests, workflow runs, escalation, delegation.
+Integration Hub
+Connectors, sync jobs, credentials vault references, field mapping.
+Billing
+خطة العميل، entitlements، حدود الاستخدام، العمولات والمدفوعات للمنصة.
+Mall / Rabet
+مصادر طلبات وفرص وثقة وعمولات وظهور عام، لكن بدون خلط بيانات التشغيل الخاصة في السوق العام.
+3. ما يدخل في ERP Pro وما لا يدخل
+يدخل في هذا الملف
+لا يدخل في هذا الملف
+CRM Pro / Sales Pro / Inventory Pro / Purchasing Pro
+Manufacturing كامل، MRP كامل، Payroll كامل.
+Accounting Pro Foundation
+Financial consolidation، Treasury، Advanced tax/e-invoicing الكامل.
+Contracts / CLM Foundation
+Legal case management الكامل.
+Helpdesk / ITSM Foundation
+Contact center enterprise الكامل.
+POS Basic
+POS Enterprise متعدد الأجهزة والـ offline الكامل.
+Commission Engine + Partner Payouts
+Marketplace settlement الكامل متعدد الدول.
+Advanced Approvals + Reporting Foundation
+BI/Lakehouse الكامل.
+Integration reference links
+Connector SDK وجداول الاتصال الأصلية؛ هذه في ملف Integration Hub.
+4. مبادئ تصميم ERP Pro Database
+كل الجداول التشغيلية يجب أن تكون scoped بـ organization_id، ومعظمها company_id.
+لا يتم حفظ أسرار التكامل داخل ERP Pro؛ أي credentials تكون في Vault/Integration Hub عبر reference فقط.
+أي عملية مالية أو مخزنية مؤثرة يجب أن تكتب في audit_logs أو domain-specific logs.
+الـ UUID إلزامي للكيانات التي قد تنتقل بين Cloud / Portable / Dedicated أو تظهر في Integration mappings.
+الجداول التي تولد قيودًا مالية أو مخزنية لا يتم حذفها فعليًا إلا وفق سياسات retention؛ الأفضل soft delete أو status.
+أي اعتماد على Mall أو Rabet أو External Connector يجب أن يتم عبر reference أو sync event وليس علاقة DB مباشرة مع مصدر خارجي.
+الفواتير التجارية للعميل لا تختلط مع invoices_platform الخاصة بفوترة Kabeeri نفسها.
+Accounting Pro هنا foundation؛ لا نفتح enterprise accounting كامل قبل V6.
+5. الأعمدة القياسية المقترحة
+أي جدول ERP Pro مهم يفضل أن يحتوي الأعمدة التالية أو أغلبها حسب الحاجة:
+الحقل
+ملاحظات
+id
+مفتاح داخلي سريع.
+uuid
+لـ API والتصدير والتكامل والمطابقة بين الأنظمة.
+organization_id
+إلزامي لكل بيانات العميل.
+company_id
+إلزامي في أغلب جداول ERP لأن التشغيل مرتبط بشركة.
+site_id
+اختياري إذا كان السجل مرتبطًا بمتجر/موقع.
+status
+حالة تشغيلية واضحة.
+created_by / updated_by
+للتتبع والمراجعة.
+approved_by / approved_at
+للكيانات التي تمر بموافقات.
+metadata json
+للبيانات المرنة غير الأساسية للبحث.
+created_at / updated_at / deleted_at
+timestamps وsoft delete عند الحاجة.
+6. نطاق الجداول العامة في ERP Pro
+المجموعة
+الجداول الرئيسية
+CRM Pro
+crm_pipelines, crm_pipeline_stages, crm_deals, crm_deal_activities, crm_lead_scores, crm_segments, crm_segment_members, crm_email_templates
+Sales Pro
+price_lists, price_list_items, discount_rules, sales_orders, sales_order_items, customer_credit_limits, sales_approval_thresholds
+Inventory Pro
+stock_transfers, stock_transfer_items, inventory_lots, inventory_serial_numbers, inventory_valuations, stock_counts, stock_count_items, reorder_rules
+Purchasing Pro
+purchase_requisitions, purchase_requisition_items, supplier_rfqs, supplier_quotations, goods_receipts, supplier_bills, supplier_performance_records
+Accounting Pro Foundation
+bank_accounts, cash_accounts, payment_allocations, journal_posting_rules, financial_statement_definitions, financial_statement_lines, ar_ap_aging_snapshots
+Contracts / CLM
+contracts, contract_parties, contract_documents, contract_milestones, contract_renewal_reminders, contract_object_links
+Helpdesk / ITSM
+support_tickets, ticket_categories, ticket_slas, ticket_assignments, ticket_comments, ticket_status_logs, knowledge_base_articles
+POS Basic
+pos_locations, pos_registers, pos_sessions, pos_orders, pos_order_items, pos_payments, pos_receipts, pos_cash_movements
+Commission + Payouts
+commission_rules, commission_events, commission_calculations, partner_accounts, payout_batches, payout_items, payout_methods
+Advanced Approvals
+approval_policies, approval_policy_steps, approval_requests, approval_actions, approval_delegations, approval_escalations
+Advanced Reporting
+report_definitions, saved_report_filters, scheduled_report_jobs, report_exports, dashboard_widgets
+ERP Integration References
+external_reference_links, erp_sync_statuses
+7. CRM Pro
+CRM Pro يوسع CRM Lite إلى إدارة فرص ومراحل وأنشطة وتقسيم عملاء وتقييم فرص. الجداول هنا لا تلغي leads/contacts الموجودة في Essentials، بل تضيف طبقة pipeline وdeal management فوقها.
+crm_pipelines
+يمثل مسارات مبيعات متعددة داخل الشركة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+معرف داخلي ومعرف عام.
+organization_id, company_id
+نطاق الملكية.
+name, slug
+اسم ومسار pipeline.
+pipeline_type
+sales, service, partner, renewal.
+status
+active, archived.
+is_default
+لتحديد المسار الافتراضي.
+settings json
+قواعد عرض وترتيب.
+created_by, created_at, updated_at, deleted_at
+تتبع.
+unique(company_id, slug)
+index(organization_id, company_id, status)
+crm_pipeline_stages
+مراحل داخل pipeline.
+الحقل
+الغرض / ملاحظات
+id, uuid
+crm_pipeline_id
+المسار التابع له.
+name, slug
+اسم المرحلة.
+stage_order
+ترتيب المرحلة.
+probability_percent
+احتمالية الإغلاق.
+is_won_stage, is_lost_stage
+مراحل نهاية.
+status
+active, archived.
+metadata json
+crm_deals
+فرصة بيع متقدمة قد تنشأ من lead أو customer أو service request.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+pipeline_id, stage_id
+المسار والمرحلة الحالية.
+lead_id nullable
+ربط اختياري بـ lead من Essentials.
+customer_id nullable
+ربط بالعميل.
+contact_id nullable
+جهة الاتصال.
+owner_user_id nullable
+مسؤول الفرصة.
+title
+عنوان الفرصة.
+amount decimal(15,2) nullable
+قيمة متوقعة.
+currency_code
+عملة.
+probability_percent nullable
+احتمالية.
+expected_close_date nullable
+تاريخ إغلاق متوقع.
+status
+open, won, lost, archived.
+lost_reason nullable
+سبب خسارة.
+source_type/source_id nullable
+مصدر الفرصة.
+metadata json
+index(company_id, status)
+index(owner_user_id)
+index(stage_id)
+index(expected_close_date)
+crm_deal_activities
+أنشطة مرتبطة بالفرص: مكالمات، اجتماعات، متابعة، بريد.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+deal_id
+الفرصة.
+activity_type
+call, meeting, email, task, note.
+subject
+عنوان النشاط.
+body nullable
+ملاحظات.
+assigned_to nullable
+المسؤول.
+due_at nullable
+موعد.
+completed_at nullable
+وقت الإكمال.
+status
+pending, completed, cancelled.
+created_by
+crm_lead_scores
+تقييم أولي أو محسوب للـ leads أو deals.
+الحقل
+الغرض / ملاحظات
+id
+organization_id, company_id
+subject_type
+lead أو deal أو customer.
+subject_id
+معرف السجل.
+score
+رقم التقييم.
+score_type
+manual, rule_based, ai_suggestion.
+reason json nullable
+أسباب التقييم.
+calculated_at
+وقت الحساب.
+crm_segments
+شرائح عملاء أو leads لأغراض متابعة وتسويق.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+name, slug
+segment_type
+customer, lead, mixed.
+rules json nullable
+قواعد ديناميكية.
+status
+active, archived.
+created_by
+crm_segment_members
+أعضاء الشريحة.
+الحقل
+الغرض / ملاحظات
+id
+crm_segment_id
+member_type
+customer, lead, contact.
+member_id
+added_by nullable
+added_at
+crm_email_templates
+قوالب بريدية للمبيعات والمتابعة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+name, slug
+template_type
+follow_up, quote, renewal, support_handoff.
+subject
+body longtext
+variables json nullable
+status
+draft, active, archived.
+created_by
+8. Sales Pro
+Sales Pro يضيف إدارة قوائم الأسعار والخصومات وأوامر البيع وحدود ائتمان العملاء. عروض الأسعار والفواتير الأساسية موجودة في Essentials؛ هنا نضيف بنية تشغيل أكثر دقة.
+price_lists
+قوائم أسعار حسب السوق أو العميل أو العملة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+name, slug
+currency_code
+applies_to_type nullable
+all, customer_group, customer, channel.
+applies_to_id nullable
+المعرف عند الحاجة.
+valid_from, valid_to nullable
+status
+draft, active, expired, archived.
+created_by
+price_list_items
+أسعار المنتجات/الخدمات داخل قائمة سعر.
+الحقل
+الغرض / ملاحظات
+id
+price_list_id
+item_type
+product, service, package.
+item_id
+unit_price decimal(15,2)
+min_quantity nullable
+currency_code
+metadata json nullable
+discount_rules
+قواعد خصم متقدمة على العروض أو الطلبات.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+name
+rule_type
+percentage, fixed, tiered, b2b, seasonal.
+conditions json
+شروط التطبيق.
+discount_value decimal(15,4)
+max_discount_amount nullable
+priority default 0
+status
+active, inactive, archived.
+starts_at, ends_at nullable
+sales_orders
+أمر بيع بعد اعتماد عرض سعر أو طلب متجر.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id, site_id nullable
+customer_id nullable
+quotation_id nullable
+مصدر من Essentials.
+commerce_order_id nullable
+مصدر من Commerce.
+order_number
+رقم أمر البيع.
+status
+draft, confirmed, partially_fulfilled, fulfilled, cancelled, closed.
+currency_code
+subtotal, discount_total, tax_total, total
+قيم مالية.
+expected_delivery_date nullable
+created_by, confirmed_by, confirmed_at nullable
+metadata json nullable
+unique(company_id, order_number)
+index(customer_id)
+index(status)
+sales_order_items
+بنود أمر البيع.
+الحقل
+الغرض / ملاحظات
+id
+sales_order_id
+item_type
+product, service, custom.
+item_id nullable
+description
+quantity decimal(15,3)
+unit_price decimal(15,2)
+discount_total decimal(15,2)
+tax_total decimal(15,2)
+line_total decimal(15,2)
+warehouse_id nullable
+للمخزون.
+metadata json nullable
+customer_credit_limits
+حدود ائتمان العميل للمبيعات الآجلة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+customer_id
+currency_code
+credit_limit decimal(15,2)
+current_exposure decimal(15,2)
+يحسب أو يخزن كsnapshot.
+status
+active, suspended, archived.
+approved_by nullable
+approved_at nullable
+review_due_at nullable
+sales_approval_thresholds
+حدود الموافقات للمبيعات والخصومات والائتمان.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+threshold_type
+discount, order_total, credit_limit, margin.
+min_value nullable
+max_value nullable
+currency_code nullable
+approval_policy_id nullable
+يربط بـ Advanced Approvals.
+status
+active, inactive.
+metadata json nullable
+9. Inventory Pro
+Inventory Pro يوسع المخزون الأساسي إلى تحويلات، تتبع batch/lot/serial، جرد، تقييم مخزون، إعادة طلب، وموافقات على التسويات.
+stock_transfers
+تحويل مخزون بين مستودعات.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+transfer_number
+from_warehouse_id
+to_warehouse_id
+status
+draft, pending_approval, approved, in_transit, received, cancelled.
+requested_by, approved_by nullable
+requested_at, approved_at nullable
+shipped_at, received_at nullable
+metadata json nullable
+unique(company_id, transfer_number)
+stock_transfer_items
+بنود تحويل المخزون.
+الحقل
+الغرض / ملاحظات
+id
+stock_transfer_id
+product_id
+variant_id nullable
+quantity decimal(15,3)
+lot_id nullable
+serial_id nullable
+from_stock_movement_id nullable
+to_stock_movement_id nullable
+inventory_lots
+تتبع batch/lot للمنتجات.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+product_id
+variant_id nullable
+lot_number
+manufactured_at nullable
+expires_at nullable
+status
+active, blocked, expired, depleted.
+metadata json nullable
+unique(company_id, product_id, lot_number)
+inventory_serial_numbers
+تتبع serial number للوحدات الفردية.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+product_id
+variant_id nullable
+serial_number
+warehouse_id nullable
+status
+available, sold, reserved, returned, scrapped.
+current_owner_type/id nullable
+عميل أو مخزن أو أصل.
+metadata json nullable
+inventory_valuations
+لقطات تقييم المخزون.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+valuation_date
+warehouse_id nullable
+product_id nullable
+valuation_method
+fifo, weighted_average, standard_cost.
+quantity_on_hand decimal(15,3)
+unit_cost decimal(15,4)
+total_value decimal(15,2)
+source_type/source_id nullable
+stock_counts
+عملية جرد مخزون.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+warehouse_id
+count_number
+status
+draft, counting, submitted, approved, adjusted, cancelled.
+started_by, approved_by nullable
+started_at, completed_at nullable
+metadata json nullable
+stock_count_items
+بنود الجرد والفروقات.
+الحقل
+الغرض / ملاحظات
+id
+stock_count_id
+product_id
+variant_id nullable
+system_quantity decimal(15,3)
+counted_quantity decimal(15,3)
+difference_quantity decimal(15,3)
+adjustment_movement_id nullable
+reorder_rules
+قواعد إعادة الطلب.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+warehouse_id nullable
+product_id
+variant_id nullable
+min_quantity decimal(15,3)
+max_quantity nullable
+reorder_quantity decimal(15,3)
+preferred_supplier_id nullable
+status
+active, inactive.
+metadata json nullable
+10. Purchasing Pro
+Purchasing Pro يضيف دورة شراء أوسع من مجرد Purchase Order: طلب شراء، RFQ، عروض موردين، اعتماد، استلام، فاتورة مورد، وتقييم مورد.
+purchase_requisitions
+طلب شراء داخلي قبل إصدار PO.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+requisition_number
+requested_by
+department_id nullable
+status
+draft, submitted, approved, rejected, converted, cancelled.
+needed_by nullable
+approval_request_id nullable
+يربط بـ approvals.
+created_at, updated_at
+unique(company_id, requisition_number)
+purchase_requisition_items
+بنود طلب الشراء.
+الحقل
+الغرض / ملاحظات
+id
+purchase_requisition_id
+item_type
+product, service, custom.
+item_id nullable
+description
+quantity decimal(15,3)
+estimated_unit_cost nullable
+preferred_supplier_id nullable
+supplier_rfqs
+طلب عروض أسعار من موردين.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+rfq_number
+purchase_requisition_id nullable
+status
+draft, sent, receiving_quotes, closed, cancelled.
+sent_at nullable
+due_at nullable
+created_by
+supplier_quotations
+عرض سعر مقدم من مورد.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+supplier_id
+supplier_rfq_id nullable
+quotation_number nullable
+status
+received, under_review, accepted, rejected, expired.
+currency_code
+subtotal, tax_total, total
+valid_until nullable
+metadata json nullable
+goods_receipts
+استلام بضائع من أمر شراء.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+receipt_number
+purchase_order_id nullable
+supplier_id nullable
+warehouse_id
+status
+draft, received, partially_received, cancelled.
+received_by nullable
+received_at nullable
+goods_receipt_items
+بنود الاستلام.
+الحقل
+الغرض / ملاحظات
+id
+goods_receipt_id
+product_id
+variant_id nullable
+ordered_quantity nullable
+received_quantity decimal(15,3)
+lot_id nullable
+serials json nullable
+stock_movement_id nullable
+supplier_bills
+فاتورة مورد كأساس AP.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+supplier_id
+purchase_order_id nullable
+goods_receipt_id nullable
+bill_number
+status
+draft, posted, partially_paid, paid, void.
+currency_code
+subtotal, tax_total, total, paid_total, balance_due
+issued_at, due_date nullable
+journal_entry_id nullable
+عند الترحيل المحاسبي.
+supplier_performance_records
+قياسات أداء مورد.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+supplier_id
+period_start, period_end
+on_time_delivery_rate nullable
+quality_score nullable
+price_score nullable
+notes nullable
+metadata json nullable
+11. Accounting Pro Foundation
+هذه ليست محاسبة Enterprise كاملة، لكنها تضيف AP/AR أفضل، حسابات بنكية/نقدية، تخصيص مدفوعات، قواعد ترحيل، وتعريفات قوائم مالية أساسية.
+bank_accounts
+حسابات بنكية للشركة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+account_name
+bank_name nullable
+currency_code
+account_number_masked nullable
+لا تحفظ بيانات حساسة واضحة.
+iban_masked nullable
+chart_account_id nullable
+ربط بدليل الحسابات.
+status
+active, inactive, archived.
+metadata json nullable
+cash_accounts
+خزائن نقدية أو صناديق POS.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+name
+currency_code
+location_id nullable
+chart_account_id nullable
+status
+active, inactive.
+metadata json nullable
+payment_allocations
+تخصيص المدفوعات على فواتير عملاء أو موردين.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+payment_type
+customer_payment, supplier_payment, refund, adjustment.
+payment_id nullable
+مرجع لجدول مدفوعات.
+target_type
+customer_invoice, supplier_bill, sales_order.
+target_id
+amount decimal(15,2)
+currency_code
+allocated_at
+created_by nullable
+journal_posting_rules
+قواعد ترحيل من العمليات إلى قيود محاسبية.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+event_type
+invoice_posted, supplier_bill_posted, pos_sale_closed, stock_valuation.
+conditions json nullable
+debit_account_id
+credit_account_id
+status
+active, inactive.
+metadata json nullable
+financial_statement_definitions
+تعريفات تقارير مالية أساسية.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+statement_type
+balance_sheet, income_statement, cash_flow_basic.
+name
+status
+draft, active, archived.
+created_by
+financial_statement_lines
+سطور تعريف التقرير المالي.
+الحقل
+الغرض / ملاحظات
+id
+financial_statement_definition_id
+parent_id nullable
+line_order
+label
+calculation_type
+account_sum, formula, section_total.
+accounts json nullable
+formula nullable
+display_settings json nullable
+ar_ap_aging_snapshots
+لقطات أعمار الديون للعملاء والموردين.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+aging_type
+ar, ap.
+snapshot_date
+subject_type
+customer, supplier.
+subject_id
+current_amount
+days_1_30, days_31_60, days_61_90, days_over_90
+أعمدة buckets.
+currency_code
+12. Contracts / CLM Foundation
+CLM Foundation يدير سجلات العقود ودورة حياتها وربطها بالعملاء والموردين والموظفين والخدمات والتوثيق، بدون التحول إلى legal case management كامل.
+contracts
+سجل العقد الرئيسي.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+contract_number
+title
+contract_type
+customer, supplier, employee, service, legal, partnership.
+status
+draft, under_review, approved, active, expired, terminated, archived.
+start_date, end_date nullable
+renewal_type nullable
+none, manual, auto.
+value_amount nullable
+currency_code nullable
+owner_user_id nullable
+approval_request_id nullable
+metadata json nullable
+unique(company_id, contract_number)
+contract_parties
+أطراف العقد.
+الحقل
+الغرض / ملاحظات
+id
+contract_id
+party_type
+company, customer, supplier, employee, external_party.
+party_id nullable
+party_name nullable
+role
+client, vendor, employer, employee, partner.
+metadata json nullable
+contract_documents
+ربط مستندات العقد بنظام الملفات.
+الحقل
+الغرض / ملاحظات
+id, uuid
+contract_id
+document_media_id nullable
+أو document_id من File/Document module.
+document_type
+draft, signed, amendment, attachment.
+version_label nullable
+uploaded_by nullable
+visibility
+private, company_only, restricted.
+created_at
+contract_milestones
+مواعيد أو التزامات داخل العقد.
+الحقل
+الغرض / ملاحظات
+id, uuid
+contract_id
+name
+due_date nullable
+status
+pending, completed, missed, cancelled.
+amount nullable
+metadata json nullable
+contract_renewal_reminders
+تذكيرات التجديد والانتهاء.
+الحقل
+الغرض / ملاحظات
+id
+contract_id
+remind_at
+recipient_user_id nullable
+status
+pending, sent, cancelled.
+sent_at nullable
+contract_object_links
+ربط العقد بأي كيان تشغيلي.
+الحقل
+الغرض / ملاحظات
+id
+contract_id
+linked_type
+customer, supplier, employee, service, quotation, invoice, verification_request.
+linked_id
+relationship_type
+governs, supports, renews, references.
+created_at
+13. Helpdesk / ITSM Foundation
+Helpdesk Foundation يدير التذاكر، التصنيفات، SLA، التعيين، التعليقات، وسجل الحالة، مع بوابة عملاء وKnowledge Base foundation.
+ticket_categories
+تصنيفات التذاكر.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+name, slug
+parent_id nullable
+default_sla_id nullable
+status
+active, archived.
+metadata json nullable
+ticket_slas
+قواعد SLA.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+name
+priority
+low, normal, high, urgent.
+first_response_minutes nullable
+resolution_minutes nullable
+business_hours json nullable
+status
+active, inactive.
+support_tickets
+التذكرة الرئيسية.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id, site_id nullable
+ticket_number
+customer_id nullable
+requester_user_id nullable
+requester_email nullable
+category_id nullable
+sla_id nullable
+subject
+description longtext nullable
+priority
+low, normal, high, urgent.
+status
+new, open, pending, resolved, closed, cancelled.
+assigned_to nullable
+source_type
+portal, email, mall_inquiry, internal, api.
+first_response_due_at nullable
+resolution_due_at nullable
+resolved_at nullable
+unique(company_id, ticket_number)
+index(status, priority)
+index(assigned_to)
+ticket_assignments
+تاريخ تعيين التذاكر.
+الحقل
+الغرض / ملاحظات
+id
+ticket_id
+assigned_to
+assigned_by nullable
+assigned_at
+reason nullable
+ticket_comments
+تعليقات التذكرة داخلية أو للعميل.
+الحقل
+الغرض / ملاحظات
+id, uuid
+ticket_id
+author_user_id nullable
+comment_type
+public_reply, internal_note, system_event.
+body longtext
+visibility
+customer_visible, internal_only.
+created_at, updated_at
+ticket_status_logs
+سجل انتقالات حالة التذاكر.
+الحقل
+الغرض / ملاحظات
+id
+ticket_id
+from_status nullable
+to_status
+changed_by nullable
+changed_at
+reason nullable
+knowledge_base_articles
+مقالات معرفة أساسية للدعم.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id nullable, site_id nullable
+title, slug
+body longtext
+category_id nullable
+status
+draft, published, archived.
+visibility
+public, customer_only, internal.
+created_by, published_at nullable
+14. POS Basic
+POS Basic يتيح بيع سريع داخل فرع أو نقطة بيع مع جلسات كاشير، مدفوعات نقدية، خصم مخزون، وإيصال PDF/طباعة بسيطة.
+pos_locations
+مواقع/فروع نقاط البيع.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+name
+warehouse_id nullable
+المخزن المرتبط.
+cash_account_id nullable
+الخزنة المرتبطة.
+status
+active, inactive.
+metadata json nullable
+pos_registers
+جهاز أو كاشير register.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+pos_location_id
+name
+register_code
+status
+active, inactive, maintenance.
+settings json nullable
+pos_sessions
+جلسة بيع يبدأها كاشير ويغلقها.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id
+pos_register_id
+cashier_user_id
+opening_cash decimal(15,2)
+closing_cash nullable
+status
+open, closing, closed, voided.
+opened_at, closed_at nullable
+metadata json nullable
+pos_orders
+طلب POS.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id, site_id nullable
+pos_session_id
+order_number
+customer_id nullable
+status
+draft, paid, refunded, void.
+subtotal, discount_total, tax_total, total
+currency_code
+commerce_order_id nullable
+لو تم إنشاء order مشترك.
+sales_order_id nullable
+لو رُبط بأمر بيع.
+created_at
+pos_order_items
+بنود طلب POS.
+الحقل
+الغرض / ملاحظات
+id
+pos_order_id
+product_id
+variant_id nullable
+quantity decimal(15,3)
+unit_price decimal(15,2)
+line_total decimal(15,2)
+stock_movement_id nullable
+pos_payments
+مدفوعات POS.
+الحقل
+الغرض / ملاحظات
+id, uuid
+pos_order_id
+payment_method
+cash, card, wallet, mixed.
+amount decimal(15,2)
+currency_code
+status
+pending, paid, failed, refunded.
+provider_reference nullable
+paid_at nullable
+pos_receipts
+إيصالات POS.
+الحقل
+الغرض / ملاحظات
+id, uuid
+pos_order_id
+receipt_number
+pdf_media_id nullable
+printed_at nullable
+emailed_at nullable
+metadata json nullable
+pos_cash_movements
+حركات نقدية داخل جلسة POS.
+الحقل
+الغرض / ملاحظات
+id, uuid
+pos_session_id
+movement_type
+cash_in, cash_out, opening, closing, adjustment.
+amount decimal(15,2)
+reason nullable
+created_by
+created_at
+15. Commission Engine + Partner Payouts
+محرك العمولات يخدم Kabeeri Mall، Service Booking، Package Marketplace revenue share، Legal Partner payouts، Agency reseller commission، وأي اتفاق شراكة. لا يتم خلطه مع فواتير العميل لعملائه.
+partner_accounts
+حساب شريك أو بائع أو مكتب قانوني أو وكالة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id nullable
+حساب الشريك إن كان لديه Organization.
+company_id nullable
+partner_type
+seller, agency, legal_partner, developer, service_provider.
+display_name
+status
+pending, active, suspended, archived.
+currency_code default EGP
+payout_hold_days default 0
+metadata json nullable
+commission_rules
+قواعد حساب العمولة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id nullable
+قد تكون قاعدة platform أو خاصة.
+rule_scope
+mall, service_booking, package, legal_review, agency_reseller.
+partner_type nullable
+calculation_type
+percentage, fixed, tiered.
+rate decimal(8,4) nullable
+fixed_amount nullable
+conditions json nullable
+status
+active, inactive.
+starts_at, ends_at nullable
+commission_events
+حدث تجاري يستحق عمولة محتملة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id nullable
+partner_account_id nullable
+event_type
+mall_lead, service_booking, package_sale, verification_review, reseller_subscription.
+source_type
+order, invoice, subscription, verification_request, package_purchase.
+source_id
+gross_amount decimal(15,2)
+currency_code
+event_status
+pending, eligible, reversed, ignored.
+occurred_at
+commission_calculations
+نتيجة حساب عمولة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+commission_event_id
+commission_rule_id nullable
+partner_account_id
+commission_amount decimal(15,2)
+currency_code
+status
+pending, approved, payable, paid, reversed.
+calculated_at
+approved_by nullable
+payout_methods
+طرق دفع للشركاء بدون حفظ أسرار حساسة واضحة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+partner_account_id
+method_type
+bank_transfer, wallet, manual.
+label
+details_masked json nullable
+status
+active, inactive.
+created_at, updated_at
+payout_batches
+دفعة مدفوعات للشركاء.
+الحقل
+الغرض / ملاحظات
+id, uuid
+batch_number
+currency_code
+status
+draft, approved, processing, paid, failed, cancelled.
+total_amount decimal(15,2)
+scheduled_at nullable
+processed_at nullable
+approved_by nullable
+payout_items
+بنود دفعة دفع.
+الحقل
+الغرض / ملاحظات
+id, uuid
+payout_batch_id
+partner_account_id
+payout_method_id nullable
+amount decimal(15,2)
+currency_code
+status
+pending, paid, failed, held.
+commission_calculation_ids json nullable
+ربط متعدد.
+failure_reason nullable
+16. Advanced Approvals
+Advanced Approvals عامة وتخدم Sales/Purchasing/Inventory/Contracts/Finance. يمكن نقل بعض هذه الجداول لاحقًا إلى ملف Workflows، لكن ERP Pro يحتاجها بوضوح.
+approval_policies
+سياسة موافقة حسب نوع العملية والشروط.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id nullable
+name
+subject_type
+quotation, sales_order, purchase_requisition, supplier_bill, stock_adjustment, contract.
+conditions json nullable
+status
+active, inactive, archived.
+priority default 0
+created_by
+approval_policy_steps
+خطوات السياسة.
+الحقل
+الغرض / ملاحظات
+id
+approval_policy_id
+step_order
+approver_type
+user, role, manager, department_head, finance, dynamic.
+approver_id nullable
+required_action
+approve, review, acknowledge.
+sla_minutes nullable
+is_parallel default false
+approval_requests
+طلب موافقة فعلي.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id nullable
+approval_policy_id nullable
+subject_type, subject_id
+الكيان المطلوب اعتماده.
+requested_by
+status
+pending, approved, rejected, cancelled, expired.
+current_step_order nullable
+requested_at, completed_at nullable
+metadata json nullable
+approval_actions
+أفعال الموافقة من المستخدمين.
+الحقل
+الغرض / ملاحظات
+id, uuid
+approval_request_id
+step_order
+actor_user_id
+action
+approved, rejected, commented, delegated.
+comment nullable
+acted_at
+approval_delegations
+تفويض مؤقت للموافقات.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id nullable
+delegator_user_id
+delegate_user_id
+scope json nullable
+starts_at, ends_at
+status
+active, expired, revoked.
+created_by
+approval_escalations
+تصعيد عند تجاوز SLA.
+الحقل
+الغرض / ملاحظات
+id, uuid
+approval_request_id
+from_user_id nullable
+to_user_id nullable
+reason
+status
+pending, notified, resolved.
+escalated_at
+17. Advanced Reporting Foundation
+هذه الجداول لا تمثل BI كامل، لكنها تسمح بتعريف تقارير، فلاتر محفوظة، جدولة تصدير، وDashboard widgets داخل ERP Pro.
+report_definitions
+تعريف تقرير قابل لإعادة الاستخدام.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id nullable, company_id nullable
+report_key
+name
+domain
+sales, inventory, purchasing, accounting, helpdesk, contracts, commissions.
+query_type
+builder, sql_safe_view, aggregate, external_source.
+definition json
+مصدر وحقول التقرير.
+status
+draft, active, archived.
+created_by
+saved_report_filters
+فلاتر محفوظة للمستخدم أو الفريق.
+الحقل
+الغرض / ملاحظات
+id, uuid
+report_definition_id
+user_id nullable
+organization_id, company_id nullable
+name
+filters json
+visibility
+private, team, company.
+created_at, updated_at
+scheduled_report_jobs
+جدولة إرسال أو تصدير تقارير.
+الحقل
+الغرض / ملاحظات
+id, uuid
+report_definition_id
+saved_filter_id nullable
+schedule_rule
+cron أو صيغة داخلية.
+recipient_users json nullable
+delivery_method
+email, notification, export_only.
+status
+active, paused, failed.
+last_run_at nullable, next_run_at nullable
+report_exports
+ملفات تصدير تقارير.
+الحقل
+الغرض / ملاحظات
+id, uuid
+report_definition_id
+requested_by nullable
+format
+csv, xlsx, pdf.
+status
+pending, running, completed, failed, expired.
+file_media_id nullable
+started_at, completed_at nullable
+dashboard_widgets
+Widgets في لوحات ERP.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id nullable
+dashboard_key
+widget_type
+metric, chart, table, list.
+title
+source_report_definition_id nullable
+settings json
+sort_order default 0
+status
+active, hidden.
+created_by nullable
+18. ERP Integration References
+Integration Hub له ملف مستقل. ERP Pro لا يخزن credentials ولا connector internals. لكنه يحتاج جداول reference لربط كيانات ERP بسجلات خارجية.
+external_reference_links
+ربط كيان ERP بكيان خارجي.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id nullable
+local_type
+customer, product, invoice, supplier_bill, sales_order, payment.
+local_id
+external_system
+odoo, zoho, quickbooks, xero, shopify, woocommerce, daftra, custom.
+external_object_type
+external_object_id
+external_url nullable
+last_synced_at nullable
+sync_status
+linked, pending, failed, stale, disconnected.
+metadata json nullable
+erp_sync_statuses
+حالة مزامنة مختصرة لكل نطاق ERP.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id nullable
+sync_domain
+crm, sales, inventory, purchasing, accounting, pos.
+connector_key nullable
+status
+healthy, warning, failed, paused.
+last_success_at nullable
+last_failure_at nullable
+last_error_message nullable
+metadata json nullable
+19. AI ERP Assistants — حدود هذا الملف
+V5 يضيف AI ERP Assistants مثل شرح التقارير، شرح أخطاء المزامنة، اقتراح تنظيف البيانات، اقتراح متابعة CRM، شرح تنبيهات المخزون، واكتشاف شذوذ فواتير بشكل أساسي. لكن جداول prompts/plans/approvals/rollback يجب أن تكون في ملف AI Co-builder Database. داخل ERP Pro نحتاج فقط references ونتائج قابلة للمراجعة.
+erp_ai_insights
+نتائج أو اقتراحات AI مرتبطة بكيان ERP.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id, company_id nullable
+insight_type
+report_explanation, anomaly, cleanup_suggestion, follow_up_suggestion, stock_alert_explanation.
+subject_type, subject_id nullable
+risk_level
+low, medium, high.
+title
+summary longtext
+status
+suggested, accepted, dismissed, expired.
+ai_plan_id nullable
+مرجع لملف AI Co-builder.
+created_at, updated_at
+20. ERP Pro ERD مبسط
+الرسم التالي يوضح العلاقات العليا. التفاصيل الدقيقة لكل مجموعة موجودة في الجداول أعلاه.
+erDiagram ORGANIZATIONS ||--o{ COMPANIES : owns COMPANIES ||--o{ CRM_PIPELINES : has CRM_PIPELINES ||--o{ CRM_PIPELINE_STAGES : contains CRM_PIPELINES ||--o{ CRM_DEALS : tracks CRM_DEALS ||--o{ CRM_DEAL_ACTIVITIES : has COMPANIES ||--o{ SALES_ORDERS : issues SALES_ORDERS ||--o{ SALES_ORDER_ITEMS : contains COMPANIES ||--o{ STOCK_TRANSFERS : moves STOCK_TRANSFERS ||--o{ STOCK_TRANSFER_ITEMS : contains COMPANIES ||--o{ PURCHASE_REQUISITIONS : requests PURCHASE_REQUISITIONS ||--o{ PURCHASE_REQUISITION_ITEMS : contains COMPANIES ||--o{ SUPPLIER_BILLS : receives COMPANIES ||--o{ CONTRACTS : manages CONTRACTS ||--o{ CONTRACT_PARTIES : has CONTRACTS ||--o{ CONTRACT_DOCUMENTS : stores COMPANIES ||--o{ SUPPORT_TICKETS : handles SUPPORT_TICKETS ||--o{ TICKET_COMMENTS : discusses COMPANIES ||--o{ POS_SESSIONS : operates POS_SESSIONS ||--o{ POS_ORDERS : creates POS_ORDERS ||--o{ POS_PAYMENTS : paid_by PARTNER_ACCOUNTS ||--o{ COMMISSION_CALCULATIONS : earns PAYOUT_BATCHES ||--o{ PAYOUT_ITEMS : pays APPROVAL_POLICIES ||--o{ APPROVAL_POLICY_STEPS : defines APPROVAL_REQUESTS ||--o{ APPROVAL_ACTIONS : records
+21. Flows تشغيلية أساسية
+21.1 Sales Order Flow
+Lead أو Deal ينضج داخل CRM Pipeline.
+Quotation يتم إنشاؤه في Essentials أو Sales module.
+عند قبول العرض يتم إنشاء sales_order.
+إذا تخطى الخصم أو الإجمالي threshold يتم إنشاء approval_request.
+بعد الاعتماد يتم تأكيد sales_order.
+يتم حجز المخزون أو إنشاء stock movement حسب availability.
+يمكن تحويل sales_order إلى invoice أو ربطه بـ customer invoice.
+كل خطوة مهمة تسجل في activity_logs وaudit_logs عند الحاجة.
+21.2 Purchase Requisition to Supplier Bill Flow
+Employee ينشئ purchase_requisition.
+Approval policy تحدد مسار الموافقة.
+بعد الموافقة يمكن إنشاء RFQ أو PO.
+Supplier quotation يتم تسجيله واختيار العرض المقبول.
+Goods receipt يسجل الاستلام ويولد stock movements.
+Supplier bill يسجل AP ويصبح قابلًا للترحيل المحاسبي.
+Payment allocation يربط المدفوعات بفواتير المورد.
+21.3 POS Basic Flow
+Cashier يفتح pos_session على register محدد.
+يضيف المنتجات إلى pos_order.
+النظام يخصم المخزون عند الدفع أو الإغلاق حسب الإعداد.
+pos_payment يسجل الكاش أو طريقة الدفع.
+pos_receipt يصدر PDF أو رقم إيصال.
+عند إغلاق الجلسة يتم إنشاء ملخص نقدي وقد يتم إنشاء journal draft.
+21.4 Commission and Payout Flow
+حدث تجاري يحصل: booking، package sale، legal review، reseller subscription.
+commission_event يسجل الحدث وقيمته.
+CommissionService يبحث عن commission_rule المناسب.
+commission_calculation تنشأ بحالة pending أو approved.
+بعد فترة hold تصبح payable.
+payout_batch يجمع المستحقات.
+payout_items تسجل المدفوعات للشركاء وتحدث الحالة.
+22. Events المقترحة
+Event
+متى يحدث
+Listeners محتملة
+DealWon
+عند إغلاق deal بنجاح.
+CreateSalesOrder, NotifySalesManager, UpdateReports
+SalesOrderConfirmed
+عند اعتماد أمر بيع.
+ReserveStock, CreateActivityLog, TriggerApprovalIfNeeded
+StockTransferReceived
+عند استلام تحويل.
+CreateStockMovements, UpdateInventoryValuation
+PurchaseRequisitionApproved
+بعد الموافقة.
+CreateRFQOrPO, NotifyPurchasing
+SupplierBillPosted
+عند ترحيل فاتورة مورد.
+UpdateAP, CreateJournalEntryDraft
+ContractRenewalDue
+عند اقتراب التجديد.
+NotifyOwner, CreateTask
+TicketSlaBreached
+عند تجاوز SLA.
+EscalateTicket, NotifyManager
+PosSessionClosed
+عند غلق جلسة POS.
+CreateCashSummary, UpdateReports
+CommissionBecamePayable
+عند انتهاء hold.
+AddToPayoutQueue
+23. Permissions المقترحة
+المجموعة
+Permissions
+CRM Pro
+crm.pipeline.manage, crm.deal.view, crm.deal.manage, crm.segment.manage
+Sales Pro
+sales.order.view, sales.order.create, sales.order.confirm, sales.discount.approve, sales.credit_limit.manage
+Inventory Pro
+inventory.transfer.create, inventory.transfer.approve, inventory.lot.manage, inventory.serial.manage, inventory.count.approve, inventory.valuation.view
+Purchasing Pro
+purchasing.requisition.create, purchasing.requisition.approve, purchasing.rfq.manage, purchasing.supplier_bill.post
+Accounting Pro
+accounting.bank_account.manage, accounting.payment.allocate, accounting.journal_rule.manage, accounting.statement.view
+Contracts
+contract.view, contract.create, contract.approve, contract.document.view_sensitive
+Helpdesk
+helpdesk.ticket.view, helpdesk.ticket.assign, helpdesk.ticket.resolve, helpdesk.kb.manage
+POS
+pos.session.open, pos.sale.create, pos.refund, pos.session.close
+Commission
+commission.rule.manage, commission.calculation.approve, payout.batch.manage, payout.release
+Approvals
+approval.policy.manage, approval.request.approve, approval.delegate
+24. Audit Requirements
+تغيير حدود ائتمان العميل يجب أن يسجل audit_logs قبل/بعد.
+تأكيد sales_order كبير أو خصم حساس يجب أن يسجل approval + audit.
+تسويات مخزون أو stock counts approved يجب أن تسجل قبل/بعد.
+ترحيل supplier bill أو journal posting rule يجب أن يسجل audit.
+فتح أو إغلاق POS session يجب أن يسجل activity، وأي cash adjustment يسجل audit.
+تغيير commission rule أو payout release يجب أن يسجل audit عالي المخاطر.
+الاطلاع على contract documents الحساسة يجب أن يسجل sensitive access log إذا كانت مصنفة restricted.
+25. Data Ownership Modes
+الوضع
+قواعد ERP Pro
+Kabeeri Cloud
+كل الجداول داخل Cloud DB مع tenant scoping. Backups وusage records داخل Cloud.
+Frontend Anywhere
+لا تتغير قاعدة ERP. الواجهة الخارجية لا تصل إلى ERP private data. يمكن فقط catalog/forms/orders public حسب scopes.
+Kabeeri Portable
+يجب تسجيل جداول ERP Pro داخل Tenant Export Registry. يتم تصدير بيانات الشركة التشغيلية حسب الخطة والموافقة.
+Kabeeri Dedicated
+نفس schema داخل Dedicated DB. Central Kabeeri يحتفظ فقط بعلاقة billing/license/sync/health، وليس تفاصيل ERP الخاصة.
+Mall Sync
+لا يرسل ERP Pro بيانات مالية أو مخزنية خاصة إلى Mall. يرسل فقط public products/services/status إذا كان هناك consent.
+26. Tenant Export Registry لـ ERP Pro
+عند دعم Portable أو Dedicated migration، يجب تسجيل جداول ERP Pro في export registry حسب domain، حتى لا تضيع العلاقات أو تظهر بيانات غير مسموحة.
+Domain
+Tables
+crm_pro
+crm_pipelines, crm_pipeline_stages, crm_deals, crm_deal_activities, crm_lead_scores, crm_segments, crm_segment_members, crm_email_templates
+sales_pro
+price_lists, price_list_items, discount_rules, sales_orders, sales_order_items, customer_credit_limits, sales_approval_thresholds
+inventory_pro
+stock_transfers, stock_transfer_items, inventory_lots, inventory_serial_numbers, inventory_valuations, stock_counts, stock_count_items, reorder_rules
+purchasing_pro
+purchase_requisitions, purchase_requisition_items, supplier_rfqs, supplier_quotations, goods_receipts, goods_receipt_items, supplier_bills, supplier_performance_records
+accounting_pro
+bank_accounts, cash_accounts, payment_allocations, journal_posting_rules, financial_statement_definitions, financial_statement_lines, ar_ap_aging_snapshots
+contracts
+contracts, contract_parties, contract_documents, contract_milestones, contract_renewal_reminders, contract_object_links
+helpdesk
+ticket_categories, ticket_slas, support_tickets, ticket_assignments, ticket_comments, ticket_status_logs, knowledge_base_articles
+pos
+pos_locations, pos_registers, pos_sessions, pos_orders, pos_order_items, pos_payments, pos_receipts, pos_cash_movements
+commissions
+partner_accounts, commission_rules, commission_events, commission_calculations, payout_methods, payout_batches, payout_items
+27. Performance and Indexing Notes
+كل الجداول التشغيلية يجب أن تفهرس organization_id + company_id + status.
+جداول sales_orders وsupport_tickets وcontracts تحتاج unique(company_id, number).
+crm_deals تحتاج index(stage_id), index(owner_user_id), index(expected_close_date).
+Inventory tables تحتاج فهارس product_id, warehouse_id, lot_id, serial_number.
+Financial snapshots يمكن أن تكون derived/rebuildable لتخفيف الحساب المباشر.
+report_exports وscheduled_report_jobs يجب أن تعمل عبر queue jobs.
+public dashboards لا تقرأ مباشرة من جداول مالية كبيرة؛ تستخدم aggregates أو snapshots.
+جداول audit والlogs لا تستخدم في UI اليومية إلا بفلاتر وتواريخ واضحة.
+28. Migration from ERP Essentials to ERP Pro
+تفعيل feature flags الخاصة بـ ERP Pro لكل شركة أو plan.
+إنشاء default crm_pipeline وdefault stages من بيانات leads الحالية.
+ربط quotations الحالية بـ sales_orders فقط عند الحاجة، وليس migration إلزامي.
+تحويل warehouses الأساسية لتدعم transfers وcounts بدون تغيير identifiers.
+ربط suppliers وpurchase_orders الحالية بدورة requisition/RFQ اختياريًا.
+إنشاء chart/accounting rules بشكل draft حتى يراجعها finance user.
+إنشاء approval_policies افتراضية منخفضة المخاطر وتعطيل الحساسة حتى يراجعها admin.
+عدم تفعيل POS أو Commission Engine تلقائيًا إلا عبر entitlement.
+29. Feature Flags المقترحة
+Feature Flag
+الغرض
+enable_crm_pro
+تفعيل CRM Pro.
+enable_sales_pro
+تفعيل Sales Pro.
+enable_inventory_pro
+تفعيل Inventory Pro.
+enable_purchasing_pro
+تفعيل Purchasing Pro.
+enable_accounting_pro_foundation
+تفعيل Accounting Pro Foundation.
+enable_contracts_foundation
+تفعيل CLM Foundation.
+enable_helpdesk_foundation
+تفعيل Helpdesk.
+enable_pos_basic
+تفعيل POS Basic.
+enable_commission_engine
+تفعيل العمولات.
+enable_partner_payouts
+تفعيل مدفوعات الشركاء.
+enable_advanced_approvals
+تفعيل موافقات متقدمة.
+enable_advanced_reports_foundation
+تفعيل التقارير المتقدمة.
+enable_ai_erp_assistants
+تفعيل مساعدات AI في ERP.
+30. Acceptance Criteria
+يمكن إنشاء أكثر من sales pipeline وإضافة deals وتحريكها بين stages.
+يمكن إنشاء sales order وربطه بquotation أو commerce order، ثم اعتماده حسب threshold.
+يمكن تنفيذ stock transfer بين مخزنين مع تسجيل حركات واضحة.
+يمكن تنفيذ stock count وتحويل الفروقات إلى adjustment بعد موافقة.
+يمكن إنشاء purchase requisition ثم RFQ ثم supplier quotation ثم goods receipt ثم supplier bill.
+يمكن تسجيل bank/cash accounts وتخصيص مدفوعات على AR/AP.
+يمكن إنشاء contract مع parties/documents/renewal reminders وربطه بعميل أو مورد.
+يمكن إنشاء support ticket مع SLA وتعيين وتعليقات وسجل حالة.
+يمكن فتح POS session وإنشاء POS order ودفع نقدي وإغلاق الجلسة.
+يمكن حساب commission من حدث تجاري ثم إدخاله في payout batch.
+كل العمليات الحساسة لديها permissions واختبارات Policy واضحة.
+كل جداول ERP Pro مدرجة في export registry أو معلن أنها لا تُصدر.
+31. علاقة هذا الملف بالملفات التالية
+الملف التالي / المرتبط
+العلاقة
+Integration Hub Database
+يحمل جداول connectors, credentials vault references, sync jobs, field mappings, webhooks.
+AI Co-builder Database
+يحمل prompts, AI plans, approvals, rollback, AI logs، ويشير ERP Pro إليه عبر ai_plan_id.
+Events & Workflows Database
+قد يوسع approval/workflow tables إلى محرك عام لكل المنصة.
+Security & Compliance Database
+يحمل MFA, sensitive access logs, policy controls, consent/privacy records.
+ERP Enterprise / V6 Database
+يوسع هذا الملف إلى multi-company advanced, budgeting, fixed assets, tax packs, manufacturing, SCM, HCM, BI/GRC.
+نهاية ملف Kabeeri ERP Pro Database.
+KABEERI Database File 14 — ERP Pro Database

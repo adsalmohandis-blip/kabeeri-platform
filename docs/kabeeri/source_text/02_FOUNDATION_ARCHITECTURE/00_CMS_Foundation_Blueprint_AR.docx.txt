@@ -1,0 +1,834 @@
+KABEERI CMS — powered by ADMIT
+1. الرؤية المختصرة
+KABEERI هو CMS حديث يبني على أفضل ما في WordPress، لكنه يعالج مشاكله البنيوية من البداية: الأداء، الأمان، جودة الإضافات، تجربة المطور، تجربة المحرر، التحديثات، والاعتمادية.
+الشعار الداخلي للمنتج:
+كل مرونة WordPress، بدون فوضى WordPress.
+أو:
+CMS سريع، آمن، قابل للتوسع، ومصمم للمؤسسات والمبدعين من أول يوم.
+2. الاسم والهوية
+الصيغ الرسمية
+KABEERI: للاستخدام كاسم علامة رئيسي في الشعارات والعناوين الكبرى.
+Kabeeri: للاستخدام داخل النصوص والجمل.
+kabeeri: للاستخدام التقني: package names, CLI, domain paths, commands.
+powered by ADMIT: توضع كعلامة ثقة أو endorsement.
+قواعد الاستخدام
+في الواجهة: Kabeeri
+في الشعار: KABEERI
+في الأوامر: kabeeri
+في footer أو صفحات النظام: Kabeeri — powered by ADMIT
+أمثلة أوامر CLI
+kabeeri new my-sitekabeeri servekabeeri plugin install seo-prokabeeri theme install corporatekabeeri migrate wordpress ./export.xmlkabeeri deploy
+3. المشكلة التي نحلها
+WordPress قوي بسبب الإيكوسيستم والسهولة، لكنه يعاني من مشاكل متكررة:
+الإضافات تعمل بصلاحيات واسعة بدون sandbox حقيقي.
+الأداء يعتمد غالبًا على caching وplugins خارجية.
+نظام البيانات مرن جدًا لكنه غير typed، مما يصعب بناء تطبيقات كبيرة منظمة.
+التحديثات قد تكسر الموقع بسبب تضارب plugins/themes.
+تجربة التطوير مشتتة بين PHP hooks وملفات theme وREST وblocks.
+الأمن يعتمد بشدة على جودة إضافات الطرف الثالث.
+تجربة التحرير قوية لكنها معقدة لكثير من المستخدمين.
+الهجرة إلى بديل صعبة بسبب الاعتماد على plugins وSEO URLs وmedia وmetadata.
+Kabeeri يجب أن يعالج هذه النقاط كميزات أصلية وليست إضافات لاحقة.
+4. وعد المنتج
+Kabeeri يجب أن يقدم:
+سرعة أصلية بدون الاعتماد على عشرات إضافات الأداء.
+أمان مدمج وامتدادات بصلاحيات محددة.
+نظام محتوى typed وسهل للمطورين وغير المطورين.
+تحرير صفحات مرن مثل WordPress blocks لكن أبسط وأكثر انضباطًا.
+Marketplace منظم لا يسمح بإضافات عشوائية تكسر النظام.
+تحديثات آمنة مع staging وrollback تلقائي.
+هجرة سهلة من WordPress.
+قابلية استخدام للمواقع الصغيرة والمؤسسات الكبيرة.
+5. الجمهور المستهدف
+المرحلة الأولى
+شركات تريد مواقع سريعة وآمنة.
+وكالات تصميم وتطوير مواقع.
+أصحاب مواقع WordPress متضررين من البطء أو الاختراقات أو تضارب البلجنز.
+فرق محتوى تحتاج Workflow واضح.
+المرحلة الثانية
+SaaS websites.
+E-commerce content layer.
+Publishers ومجلات إلكترونية.
+Enterprise internal portals.
+6. المبادئ الأساسية
+6.1 Core صغير وقوي
+لا نضع كل شيء داخل core. core يحتوي على:
+Auth
+Users/Roles/Permissions
+Content Engine
+Theme Engine
+Plugin Runtime
+Media
+Routing
+API
+Cache
+Updates
+Admin UI
+Migration Tools
+أي شيء آخر يكون module أو plugin رسمي.
+6.2 Extension-first لكن Controlled
+Kabeeri يجب أن يكون قابلًا للتوسيع مثل WordPress، لكن مع قيود أمان واضحة:
+permissions manifest
+sandbox أو isolation
+version compatibility
+dependency declaration
+performance budget
+security scan
+signed packages
+6.3 Typed Content
+بدل الاعتماد الكثيف على postmeta غير المنظم، كل content type يجب أن يكون له schema.
+مثال:
+{  "type": "Article",  "fields": {    "title": { "type": "string", "required": true },    "body": { "type": "richtext" },    "coverImage": { "type": "media" },    "author": { "type": "relation", "to": "User" },    "publishedAt": { "type": "datetime", "index": true }  }}
+6.4 API-first
+كل شيء في Kabeeri يجب أن يكون متاحًا عبر API رسمي:
+Admin UI يستخدم نفس API.
+Mobile apps تستخدم نفس API.
+Integrations تستخدم نفس API.
+Frontend منفصل أو مدمج حسب اختيار المستخدم.
+6.5 Performance by Default
+الأداء ليس plugin. الأداء جزء من core:
+page cache
+object cache
+query cache
+image optimization
+lazy loading
+asset bundling
+CDN integration
+edge-ready rendering
+background jobs
+6.6 Safe Updates
+كل تحديث يجب أن يمر بمراحل:
+compatibility check
+backup snapshot
+staging apply
+smoke tests
+production apply
+rollback if failed
+7. المعمارية المقترحة
+7.1 الطبقات الرئيسية
+Client / Browser / Apps        ↓Frontend Renderer        ↓Routing Layer        ↓Content API / Admin API        ↓Service Layer        ↓Content Engine / Plugin Runtime / Theme Engine        ↓Database + Cache + Storage + Search
+7.2 مكونات Core
+المكون
+الوظيفة
+Kernel
+تحميل النظام وإدارة lifecycle
+Router
+إدارة routes للواجهة والـ API
+Auth
+login, sessions, tokens, SSO
+RBAC/ABAC
+صلاحيات تفصيلية
+Content Engine
+content types, entries, revisions
+Media Engine
+uploads, transforms, CDN
+Plugin Runtime
+تشغيل الإضافات بصلاحيات محددة
+Theme Engine
+layouts, templates, design tokens
+Admin UI
+لوحة التحكم
+API Gateway
+REST/GraphQL optional
+Cache Manager
+caching داخلي
+Job Queue
+tasks, emails, imports, updates
+Update Manager
+تحديثات آمنة
+Marketplace Client
+تحميل plugins/themes
+Migration Engine
+استيراد WordPress وغيره
+Observability
+logs, metrics, traces
+8. نظام الملفات المقترح
+kabeeri/  app/    content-types/    routes/    policies/    workflows/  core/    kernel/    auth/    content/    media/    plugins/    themes/    cache/    updates/    api/  extensions/    plugins/    themes/    blocks/  storage/    media/    cache/    logs/    backups/  config/    site.json    database.json    security.json    marketplace.json  public/    assets/    index.php or server entry  migrations/  tests/
+ملحوظة: لو المنتج سيكون Node/TypeScript، نستبدل index.php بـ server entry. لو سيكون PHP/Laravel، نستخدم PHP entry. القرار التقني يحتاج حسم مبكر.
+9. نموذج البيانات
+9.1 الكيانات الأساسية
+Site
+User
+Role
+Permission
+ContentType
+Entry
+Field
+Revision
+MediaAsset
+Taxonomy
+Term
+Menu
+Redirect
+Plugin
+Theme
+Block
+Workflow
+AuditLog
+9.2 قاعدة بيانات مقترحة
+نبدأ بـ PostgreSQL كخيار قوي بسبب:
+JSONB
+indexing قوي
+full text search مقبول
+relational integrity
+أفضل للـ typed content من MySQL التقليدي
+لكن يجب دعم MySQL لاحقًا لو هدفنا مهاجمة سوق WordPress الاستضافي.
+9.3 الفرق عن WordPress
+WordPress يعتمد كثيرًا على:
+wp_posts
+wp_postmeta
+wp_options
+wp_users
+wp_terms
+Kabeeri يجب أن يتجنب تحويل كل شيء إلى key-value عشوائي. نستخدم schemas وindexes.
+10. Content Engine
+10.1 أنواع المحتوى
+كل نوع محتوى له:
+name
+slug
+fields
+validation
+permissions
+workflow
+API exposure
+search settings
+SEO settings
+10.2 الحقول الأساسية
+Text
+Rich Text
+Markdown
+Number
+Boolean
+DateTime
+Media
+Relation
+Repeater
+Component/Block
+JSON
+Location
+Select
+Multi-select
+10.3 المراجعات والنسخ
+كل Entry يجب أن يدعم:
+draft
+published
+scheduled
+archived
+revision history
+compare revisions
+restore revision
+author attribution
+11. Editor Experience
+Kabeeri يحتاج محرر قوي لكنه أقل فوضى من Gutenberg.
+11.1 أنواع التحرير
+Content editor للكتابة structured.
+Page builder محدود ومنضبط.
+Theme layout editor للمطور أو المصمم.
+Block editor للمكونات المتكررة.
+11.2 مبادئ المحرر
+لا نترك المستخدم يكسر التصميم بسهولة.
+التصميم يتحكم به theme tokens.
+المحتوى منفصل عن العرض قدر الإمكان.
+blocks لها schema وصلاحيات.
+preview سريع ودقيق.
+11.3 Blocks
+كل block له:
+{  "name": "HeroSection",  "version": "1.0.0",  "fields": {    "headline": { "type": "string", "required": true },    "subtitle": { "type": "text" },    "image": { "type": "media" },    "cta": { "type": "link" }  },  "permissions": [],  "performanceBudget": {    "maxJsKb": 20,    "maxCssKb": 10  }}
+12. Plugin System
+12.1 هدف نظام البلجنز
+نريد مرونة WordPress، لكن بدون خطر أن أي plugin يسيطر على النظام بالكامل.
+12.2 Manifest إلزامي
+كل plugin يجب أن يحتوي على:
+{  "name": "kabeeri-seo",  "displayName": "Kabeeri SEO",  "version": "1.0.0",  "publisher": "ADMIT",  "requires": {    "kabeeri": ">=1.0.0",    "php": ">=8.2"  },  "permissions": [    "content.read",    "content.write",    "settings.seo.write"  ],  "hooks": [    "content.beforePublish",    "render.head"  ],  "routes": [    "/admin/seo"  ]}
+12.3 أنواع البلجنز
+النوع
+أمثلة
+Official Plugins
+SEO, Forms, Analytics, Backup
+Integration Plugins
+Stripe, Mailchimp, HubSpot
+UI Plugins
+Admin widgets, editor blocks
+Data Plugins
+Import/export, sync
+Commerce Plugins
+Catalog, checkout, payments
+Security Plugins
+WAF integration, malware scan
+12.4 قيود البلجنز
+لا يسمح للبلجن بتعديل ملفات core.
+لا يسمح بتنفيذ database queries مباشرة إلا عبر API أو capability خاصة.
+لا يسمح بإضافة JS/CSS بدون performance budget.
+لا يسمح بجمع بيانات المستخدم بدون disclosure.
+لا يسمح بتعطيل التحديثات الأمنية.
+كل package يجب أن يكون signed.
+12.5 Hooks لكن typed
+بدل hooks عشوائية strings فقط، نستخدم typed events:
+on("content.beforePublish", async (event) => {  // event.entry typed});
+أو في PHP:
+Kabeeri::on('content.beforePublish', function (BeforePublishEvent $event) {    // typed event});
+13. Theme System
+13.1 هدف الثيمات
+الثيم يتحكم في العرض والتصميم، وليس في business logic.
+13.2 Theme Manifest
+{  "name": "kabeeri-corporate",  "displayName": "Corporate",  "version": "1.0.0",  "author": "ADMIT",  "requires": {    "kabeeri": ">=1.0.0"  },  "supports": [    "darkMode",    "rtl",    "responsiveImages",    "visualEditor"  ],  "designTokens": "tokens.json",  "templates": "templates/"}
+13.3 Theme Structure
+theme/  kabeeri.theme.json  tokens.json  templates/    home.html    page.html    article.html    archive.html  components/    header.html    footer.html    card.html  assets/    css/    js/    images/
+13.4 قيود الثيمات
+لا business logic داخل theme.
+لا database access مباشر.
+لا تحميل assets ضخمة بدون budget.
+يجب دعم responsive افتراضيًا.
+يجب دعم RTL لو السوق عربي.
+يجب أن يعلن theme عن compatibility.
+14. Marketplace
+14.1 لماذا Marketplace مهم؟
+WordPress كسب السوق بسبب الإيكوسيستم. Kabeeri يحتاج Marketplace من البداية، حتى لو صغير.
+14.2 قواعد Marketplace
+كل plugin/theme يمر بـ:
+identity verification للناشر.
+automated security scan.
+dependency scan.
+performance scan.
+permission review.
+manual review للإصدارات الأولى.
+signed release.
+compatibility matrix.
+14.3 صفحة كل Plugin/Theme
+يجب أن تعرض:
+السعر
+الناشر
+الصلاحيات المطلوبة
+compatible versions
+changelog
+security status
+performance impact
+reviews
+install count
+support policy
+refund policy للمدفوع
+14.4 أنواع التوزيع
+Free
+Paid one-time
+Subscription
+Enterprise license
+Private marketplace للمؤسسات
+15. Security Architecture
+15.1 مبادئ الأمن
+least privilege
+secure by default
+no direct file editing in production
+signed updates
+MFA للمديرين
+audit logs
+rate limiting
+CSRF protection
+XSS protection
+SQL injection prevention عبر query builder/ORM
+secret management
+15.2 Roles & Permissions
+بدل roles عامة فقط، نحتاج permissions تفصيلية:
+content.article.create
+content.article.publish
+content.article.delete
+media.upload
+media.delete
+users.invite
+settings.seo.edit
+plugins.install
+plugins.activate
+theme.change
+15.3 Audit Log
+يسجل:
+تسجيل الدخول
+تغيير كلمة المرور
+نشر محتوى
+حذف محتوى
+تثبيت plugin
+تحديث plugin
+تغيير theme
+تعديل settings
+failed login attempts
+16. Performance Architecture
+16.1 Performance by Default
+Kabeeri يجب أن يشحن بـ:
+server-side cache
+edge cache support
+static generation للصفحات المناسبة
+image resizing
+WebP/AVIF conversion
+CSS/JS optimization
+database indexes تلقائية حسب schema
+slow query logging
+plugin performance budgets
+16.2 قياس الأداء
+كل صفحة تعرض للمدير:
+TTFB
+render time
+DB queries
+cache hit/miss
+plugin impact
+asset weight
+image issues
+17. تحديثات آمنة
+17.1 Update Flow
+Check update  ↓Read changelog  ↓Compatibility scan  ↓Backup snapshot  ↓Apply in staging  ↓Run smoke tests  ↓Apply production  ↓Monitor  ↓Rollback if failed
+17.2 Rollback
+أي تحديث يجب أن يكون قابلًا للرجوع:
+core rollback
+plugin rollback
+theme rollback
+database migration rollback إن أمكن
+18. WordPress Migration Engine
+هذه أهم ميزة لدخول السوق.
+18.1 ما الذي يجب استيراده؟
+posts
+pages
+custom post types
+categories
+tags
+taxonomies
+users
+media
+menus
+comments
+redirects
+SEO metadata
+slugs/URLs
+featured images
+Gutenberg blocks قدر الإمكان
+ACF fields قدر الإمكان
+WooCommerce لاحقًا
+18.2 مراحل الهجرة
+Upload WordPress export أو connect مباشرة.
+Scan الموقع.
+Detect content types.
+Map fields.
+Import media.
+Import content.
+Preserve URLs.
+Generate redirects.
+Preview migrated site.
+Launch checklist.
+18.3 تقرير الهجرة
+بعد الهجرة، Kabeeri يعرض:
+imported successfully
+skipped items
+unsupported plugins
+broken media
+redirect map
+SEO warnings
+manual actions required
+19. Admin Dashboard
+19.1 الأقسام الأساسية
+Overview
+Content
+Media
+Pages
+Navigation
+Forms
+SEO
+Analytics
+Users
+Roles
+Plugins
+Themes
+Marketplace
+Settings
+Security
+Performance
+Updates
+Backups
+Logs
+19.2 Dashboard ذكي
+يعرض:
+content awaiting review
+security alerts
+plugin updates
+performance warnings
+broken links
+SEO issues
+traffic summary
+failed jobs
+20. SEO مدمج
+بدل الاعتماد الكامل على plugin مثل Yoast، Kabeeri يجب أن يقدم SEO core:
+title/meta description
+canonical URLs
+XML sitemap
+robots.txt management
+Open Graph
+Twitter cards
+schema.org structured data
+redirects
+broken links scan
+image alt warnings
+slug management
+noindex rules
+SEO المتقدم يكون Plugin رسمي.
+21. Media System
+21.1 المميزات
+folders/collections
+alt text required option
+image focal point
+auto resizing
+WebP/AVIF
+CDN support
+duplicate detection
+usage tracking: أين تُستخدم الصورة؟
+media replace without changing URL
+22. Forms System
+Forms مهمة جدًا لأن WordPress يعتمد على plugins لها.
+Kabeeri يجب أن يملك Forms رسمي:
+form builder
+validations
+spam protection
+email notifications
+webhook submissions
+CRM integrations
+file uploads
+consent fields
+submissions dashboard
+23. Multisite / Multi-tenant
+بدل WordPress Multisite المعقد، نصمم multi-tenant من البداية.
+23.1 Use cases
+agencies تدير عدة مواقع.
+enterprise عندها brands مختلفة.
+SaaS يعطي مواقع لعملائه.
+23.2 المطلوب
+Organizations
+Projects/Sites
+shared users
+per-site permissions
+shared themes/plugins
+centralized billing
+centralized updates
+24. Developer Experience
+24.1 SDK
+لو Node/TypeScript:
+import { definePlugin } from '@kabeeri/sdk';export default definePlugin({  name: 'seo-helper',  permissions: ['content.read'],  setup(app) {    app.on('content.beforePublish', async (event) => {      // SEO checks    });  }});
+لو PHP:
+use Kabeeri\Plugin\Plugin;return Plugin::define([    'name' => 'seo-helper',    'permissions' => ['content.read'],    'setup' => function ($app) {        $app->on('content.beforePublish', function ($event) {            // SEO checks        });    }]);
+24.2 أدوات المطور
+CLI
+local dev server
+plugin generator
+theme generator
+schema generator
+tests
+linting
+type checking
+docs
+examples
+25. خيارات التقنية
+Option A: PHP/Laravel
+مناسب لو نريد استهداف سوق WordPress والاستضافات التقليدية.
+مميزات:
+قريب من سوق WordPress.
+سهل الاستضافة.
+Laravel قوي.
+PHP 8.2+ جيد جدًا.
+عيوب:
+frontend/editor الحديث يحتاج build stack.
+sandbox plugins أصعب.
+Option B: Node/TypeScript
+مناسب لو نريد CMS حديث API-first.
+مميزات:
+types ممتازة.
+ecosystem حديث.
+plugin SDK typed.
+مناسب للـ headless والـ realtime.
+عيوب:
+الاستضافة أصعب من PHP للمستخدم التقليدي.
+يحتاج DevOps أكثر.
+Option C: Hybrid
+Core API بـ Node/TypeScript، وrenderer أو deploy targets متعددة.
+مناسب لمنتج SaaS قوي، لكنه أعقد.
+التوصية الأولية
+لو الهدف SaaS حديث ومنافسة قوية: TypeScript + PostgreSQL + React Admin + API-first.
+لو الهدف استبدال WordPress على نفس بيئة الاستضافة: PHP 8.2+ / Laravel + PostgreSQL/MySQL + React Admin.
+26. MVP المقترح
+MVP 1 — Core CMS
+Auth
+Users/Roles
+Content Types
+Entries
+Media
+Pages
+Basic Theme Engine
+Admin UI
+REST API
+Basic SEO
+Backup
+Updates foundation
+MVP 2 — WordPress Migration
+WordPress XML import
+media import
+posts/pages/categories/tags
+URLs preservation
+SEO meta import
+redirect map
+MVP 3 — Marketplace Foundation
+plugin manifest
+install/activate/deactivate
+official plugins فقط
+theme install
+package signing
+MVP 4 — Performance & Security
+page cache
+image optimization
+audit logs
+MFA
+update rollback
+plugin permission screen
+27. Plugins رسمية يجب إطلاقها مبكرًا
+Kabeeri SEO
+Kabeeri Forms
+Kabeeri Analytics
+Kabeeri Backup
+Kabeeri Redirects
+Kabeeri Security
+Kabeeri WordPress Migrator
+Kabeeri Commerce Lite لاحقًا
+Kabeeri Multilingual لاحقًا
+28. Themes رسمية يجب إطلاقها مبكرًا
+KABEERI Starter
+KABEERI Business
+KABEERI Blog
+KABEERI Agency
+KABEERI Documentation
+KABEERI Landing
+كل theme يجب أن يدعم:
+RTL
+responsive
+accessibility
+dark mode optional
+performance budget
+design tokens
+29. ما يجب ألا نكرره من WordPress
+لا global state فوضوي.
+لا direct plugin file editing من لوحة التحكم.
+لا plugins بدون صلاحيات معلنة.
+لا database schema عشوائي لكل شيء.
+لا تحديثات بدون rollback.
+لا admin UI مزدحم.
+لا اعتماد كامل على community plugins للوظائف الأساسية.
+لا تحميل assets عشوائي في كل الصفحات.
+لا السماح للثيم بإدارة business logic.
+30. نقاط تميز تسويقية
+Faster than WordPress by default.
+Secure extensions with permissions.
+Built-in SEO, cache, forms, and backups.
+Safe updates with rollback.
+WordPress migration in minutes.
+Clean admin for teams.
+Typed content model.
+Marketplace with verified plugins.
+Arabic/RTL first-class support.
+Powered by ADMIT.
+31. Positioning Statement
+Kabeeri is a modern CMS powered by ADMIT, built for teams who need the flexibility of WordPress without plugin chaos, slow performance, unsafe updates, and legacy architecture.
+بالعربي:
+Kabeeri هو CMS حديث من ADMIT، يعطيك مرونة WordPress لكن بأداء أسرع، أمان أعلى، تحديثات آمنة، وإضافات منظمة لا تكسر موقعك.
+32. Launch Strategy
+32.1 المرحلة الأولى: مغلق / Private Beta
+5 إلى 10 مواقع حقيقية.
+focus على agencies.
+migrate مواقع WordPress موجودة.
+قياس الأداء قبل/بعد.
+جمع feedback.
+32.2 المرحلة الثانية: Public Beta
+Marketplace محدود.
+Docs كاملة.
+WordPress migration wizard.
+official starter themes.
+32.3 المرحلة الثالثة: Commercial Launch
+SaaS plans.
+Agency plan.
+Enterprise plan.
+Private marketplace.
+priority support.
+33. Pricing مبدئي
+SaaS
+Free trial
+Starter
+Business
+Agency
+Enterprise
+Self-hosted
+Community edition
+Pro license
+Enterprise license
+Marketplace
+revenue share على paid plugins/themes
+verified publisher fees
+private marketplace fees
+34. مؤشرات نجاح المنتج
+زمن إنشاء موقع جديد.
+زمن الهجرة من WordPress.
+نسبة نجاح الهجرة.
+متوسط TTFB.
+عدد plugins المثبتة لكل موقع.
+عدد الأعطال بعد التحديث.
+عدد rollback events.
+plugin crash isolation success.
+content publish time.
+retention للوكالات.
+35. قرار مهم جدًا
+يجب حسم 4 قرارات قبل كتابة الكود:
+هل Kabeeri SaaS فقط، self-hosted فقط، أم الاثنين؟
+هل core سيكون PHP/Laravel أم Node/TypeScript؟
+هل سننافس WordPress مباشرة للمواقع العادية أم نبدأ بـ agencies والمؤسسات؟
+هل Marketplace مفتوح من البداية أم official-only في أول سنة؟
+التوصية:
+نبدأ بـ SaaS + optional self-hosted enterprise لاحقًا.
+TypeScript + PostgreSQL لو الهدف منتج حديث طويل المدى.
+نستهدف agencies ومواقع WordPress البطيئة أولًا.
+Marketplace يكون official/verified-only في البداية.
+36. أول 90 يوم
+الشهر الأول
+product requirements
+architecture decisions
+database schema
+admin UI prototype
+content type builder
+auth/RBAC
+الشهر الثاني
+entries editor
+media library
+page rendering
+theme starter
+REST API
+cache foundation
+الشهر الثالث
+WordPress importer v1
+SEO basic
+forms basic
+backup/snapshot
+deployment prototype
+private beta sites
+37. استراتيجية كسب جمهور WordPress
+هدف Kabeeri ليس أن يقول لمجتمع WordPress: “اترك كل ما تعرفه”. الهدف أن يقول لهم:
+نفس العقلية التي تحبها في WordPress، لكن ببنية أسرع، أأمن، وأنظف.
+37.1 مبدأ الانتقال الناعم
+يجب أن يشعر مطور WordPress أن أغلب المفاهيم مألوفة:
+في WordPress
+في Kabeeri
+Plugins
+Plugins
+Themes
+Themes
+Hooks
+Typed Hooks / Events
+Shortcodes
+Blocks / Components
+Custom Post Types
+Content Types
+Taxonomies
+Taxonomies / Collections
+Media Library
+Media Library
+wp-admin
+Kabeeri Admin
+functions.php
+theme setup file لكن منظم
+plugin header
+plugin manifest
+template hierarchy
+template resolver
+REST API
+REST API built-in
+الفكرة: لا نلغي قاموس WordPress بالكامل، بل نعيد تصميمه بشكل modern ومنظم.
+37.2 التكنولوجيا الأقرب لجمهور WordPress
+التوصية النهائية:
+Backend/Core CMS: PHP 8.3+ / LaravelAdmin Dashboard: React + TypeScriptDatabase: MySQL + PostgreSQLCache/Queue: Redis optionalTemplates: Blade-like syntax أو Kabeeri TemplatesPlugins: PHP plugins + JSON manifestThemes: HTML/Blade + theme.json-like configCLI: kabeeri command
+37.3 لماذا PHP/Laravel؟
+لأن جمهور WordPress يعرف PHP، والاستضافات تدعمه، والوكالات تملك مطورين PHP بالفعل. Laravel يعطي بنية حديثة بدون أن نبتعد عن السوق المستهدف.
+Kabeeri يجب أن يكون:
+مألوفًا لمطور WordPress.
+أسهل في التنظيم من WordPress.
+أقوى في الأمان من WordPress.
+أسرع بدون تركيب 10 plugins.
+قابلًا للاستضافة بسهولة.
+37.4 لا نستخدم Node.js كـ core في البداية
+Node.js ممتاز، لكن لو جعلناه core سنخسر جزءًا من جمهور WordPress التقليدي بسبب:
+اختلاف بيئة التشغيل.
+صعوبة self-hosting لبعض العملاء.
+احتياج DevOps أكبر.
+بعده عن خبرة مطوري WordPress.
+لكن نستخدم Node.js في:
+build tools
+admin frontend
+theme asset compilation
+developer tooling
+optional headless SDK لاحقًا
+37.5 تجربة مطور WordPress داخل Kabeeri
+مثال Plugin في Kabeeri يجب أن يبدو مألوفًا لكن منظمًا:
+<?phpuse KabeeriPluginPlugin;use KabeeriEventsContentBeforePublish;return Plugin::define([    'name' => 'admit-seo-helper',    'displayName' => 'ADMIT SEO Helper',    'version' => '1.0.0',    'permissions' => [        'content.read',        'content.update',        'seo.update'    ],    'setup' => function ($app) {        $app->on(BeforePublish::class, function (BeforePublish $event) {            // Validate SEO fields before publishing        });    }]);
+يشبه WordPress في فكرة hooks، لكنه أفضل لأنه:
+typed.
+permissions واضحة.
+manifest واضح.
+قابل للفحص قبل التثبيت.
+لا يتحكم في النظام بالكامل بدون إذن.
+37.6 تجربة Theme قريبة من WordPress
+الثيم يجب أن يكون بسيطًا:
+my-theme/  theme.json  templates/    home.kabeeri.php    page.kabeeri.php    article.kabeeri.php  components/    header.kabeeri.php    footer.kabeeri.php  assets/    app.css    app.js
+مثال template:
+<x-layout>    <x-header />    <main>        <h1>{{ entry.title }}</h1>        <div>{{ entry.content }}</div>    </main>    <x-footer /></x-layout>
+37.7 أهم رسالة تسويقية لجمهور WordPress
+لا نقول:
+نحن لسنا WordPress.
+بل نقول:
+بنينا Kabeeri لأننا نحب فكرة WordPress، لكننا تعبنا من البطء، الاختراقات، تضارب البلجنز، والتحديثات المخيفة.
+رسائل مباشرة:
+بدون فوضى البلجنز.
+بدون بطء افتراضي.
+بدون تحديثات تكسر الموقع.
+بدون dashboard مزدحم.
+بدون الاعتماد على 15 plugin لأساسيات الموقع.
+هجرة سهلة من WordPress.
+PHP-friendly وagency-friendly.
+37.8 ميزات يجب تسميتها بأسماء مألوفة
+لا نستخدم أسماء تقنية غريبة في البداية. استخدم أسماء قريبة:
+الاسم الأفضل
+بدلًا من
+Plugins
+Extensions فقط
+Themes
+Design Packages
+Content Types
+Schemas فقط
+Media Library
+Assets Manager
+Hooks
+Event Bus فقط
+Admin Dashboard
+Control Studio فقط
+يمكن استخدام المصطلح الحديث داخليًا، لكن الواجهة والتسويق يجب أن يكونا مألوفين.
+37.9 أول Plugin Marketplace
+في البداية، لا نفتح marketplace عشوائيًا. نطلق official/verified plugins فقط:
+Kabeeri SEO
+Kabeeri Forms
+Kabeeri Cache
+Kabeeri Backup
+Kabeeri Security
+Kabeeri Analytics
+Kabeeri Redirects
+Kabeeri WordPress Migrator
+كل plugin يظهر للمستخدم مع:
+الصلاحيات المطلوبة.
+تأثير الأداء.
+توافق النسخة.
+آخر تحديث.
+تقييم الأمان.
+37.10 أهم Product Promise
+Kabeeri يحافظ على ما يحبه الناس في WordPress: PHP، الثيمات، البلجنز، لوحة سهلة، وهجرة بسيطة — لكنه يعالج ما يكرهونه: البطء، الاختراقات، تضارب الإضافات، وتحديثات تكسر الموقع.
+38. الخلاصة
+Kabeeri لا يجب أن يكون نسخة WordPress جديدة. يجب أن يكون CMS حديثًا يتعلم من WordPress:
+يحتفظ بالمرونة.
+يحتفظ بسهولة الاستخدام.
+يحتفظ بفكرة الإضافات والثيمات.
+يحتفظ بقربه من PHP ومطوري WordPress.
+لكنه يضيف أمانًا حقيقيًا، أداءً افتراضيًا، بنية typed، تحديثات آمنة، وتجربة تطوير منظمة.
+أقوى مدخل للسوق:
+هاجر من WordPress إلى Kabeeri، واحتفظ بالمحتوى والروابط والـ SEO، واحصل على أداء وأمان أفضل من أول يوم.

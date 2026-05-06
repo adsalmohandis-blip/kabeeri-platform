@@ -1,0 +1,175 @@
+KABEERI Database File 02 — Kabeeri Cloud Database
+نظام Kabeeri Cloud
+هذا الملف يصف تصميم قاعدة البيانات الخاص بوضع:
+Kabeeri Cloud Managed
+وهو الوضع الافتراضي للمنصة، حيث تكون:
+الواجهة+ لوحة التحكم+ قاعدة البيانات+ الملفات+ التحديثات+ الموديولات+ Mall Sync+ AI+ Billing
+كلها مُدارة داخل Kabeeri Cloud.
+1. هدف Kabeeri Cloud Database
+هدف نظام Cloud هو توفير بيئة SaaS مُدارة بالكامل تسمح للعميل أن يبدأ بسرعة بدون إدارة Hosting أو DB أو تحديثات.
+يجب أن يدعم:
+إنشاء مواقع Cloud.
+ربط Domains.
+إدارة SSL status.
+خطط وأسعار.
+اشتراكات.
+حدود استخدام.
+تخزين ملفات.
+نسخ احتياطي.
+Health checks.
+Entitlements.
+Mall integration داخلي مباشر.
+الانتقال لاحقًا إلى Frontend Anywhere أو Portable أو Dedicated.
+2. موقع Cloud داخل المعمارية العامة
+Kabeeri Cloud يعتمد على Core Kernel.
+Core Kernel→ Organization→ Site→ Company→ Cloud Site→ Subscription→ Entitlements→ Usage→ Backups→ Mall Mirror
+3. مبادئ تصميم Cloud
+3.1 Cloud هو Default Mode
+كل عميل جديد يبدأ غالبًا في Cloud.
+3.2 Cloud لا يمنع الخروج
+رغم أن البيانات داخل المنصة، يجب أن تكون قابلة للتصدير لاحقًا.
+3.3 Cloud هو أفضل تكامل مع Mall
+لأن بيانات العميل موجودة أصلًا داخل Kabeeri.
+3.4 Cloud يحتاج Billing/Entitlements قوي
+حتى لا تصبح تكلفة التشغيل مفتوحة.
+4. Cloud Data Domains
+جداول Cloud تنقسم إلى:
+Cloud ProvisioningDomainsBackupsBillingPlansSubscriptionsUsageEntitlementsCloud HealthCloud LimitsCloud Events
+5. الجداول الأساسية لنظام Cloud
+cloud_sitescloud_domainscloud_backupscloud_health_checkscloud_resource_usagecloud_deployment_eventsbilling_accountsplansplan_featuressubscriptionssubscription_itemsusage_recordsentitlementsaccount_entitlementsinvoices_platformpayments_platform
+6. cloud_sites
+يمثل نسخة موقع مُدارة داخل Kabeeri Cloud.
+iduuidorganization_idsite_idcompany_id nullablecloud_status default provisioningregion nullableenvironment default productionprimary_domain nullablesubdomain nullablestorage_quota_mb nullablebandwidth_quota_mb nullablecurrent_storage_mb default 0current_bandwidth_mb default 0last_health_check_at nullableprovisioned_at nullablesuspended_at nullablearchived_at nullablemetadata json nullablecreated_atupdated_at
+cloud_status
+provisioningactivesuspendedfailedarchivedpending_exportmigrated_to_dedicatedmigrated_to_portable
+environment
+productionstagingdevelopment
+فهارس
+unique(site_id)unique(subdomain)index(organization_id)index(company_id)index(cloud_status)index(primary_domain)
+7. cloud_domains
+الدومينات المرتبطة بموقع Cloud.
+iduuidorganization_idcloud_site_idsite_iddomainis_primary default falseverification_status default pendingssl_status default pendingdns_records json nullableverification_token nullableverified_at nullablessl_issued_at nullablessl_expires_at nullablelast_checked_at nullablecreated_atupdated_at
+verification_status
+pendingverifiedfailedexpired
+ssl_status
+pendingissuedfailedexpirednot_required
+فهارس
+unique(domain)index(cloud_site_id)index(site_id)index(verification_status)index(ssl_status)
+8. cloud_backups
+نسخ احتياطية لموقع أو شركة أو Organization.
+iduuidorganization_idsite_id nullablecompany_id nullablebackup_typebackup_scopestatus default pendingdiskpath nullablesize_bytes nullablechecksum nullablestarted_by nullablestarted_at nullablecompleted_at nullableexpires_at nullablerestore_supported default truemetadata json nullablecreated_atupdated_at
+backup_type
+manualscheduledbefore_updatebefore_exportbefore_restore
+backup_scope
+siteorganizationcompanyfiles_onlydatabase_onlyfull
+status
+pendingrunningcompletedfailedexpireddeleted
+9. cloud_health_checks
+idcloud_site_idcheck_typestatusresponse_time_ms nullablemessage nullablechecked_atmetadata json nullablecreated_at
+check_type
+httpdatabasequeuestoragessldomainbackup
+10. cloud_resource_usage
+تسجيل استخدام الموارد.
+idorganization_idsite_id nullablecloud_site_id nullableusage_typequantity decimal(15,3)unitperiod_startperiod_endsource nullablemetadata json nullablecreated_at
+usage_type
+storage_mbbandwidth_mbpage_viewsai_actionsemails_sentsync_eventsbackup_storage_mb
+11. cloud_deployment_events
+iduuidorganization_idcloud_site_idevent_typestatusmessage nullabletriggered_by nullablemetadata json nullablecreated_at
+event_type
+site_provisioneddomain_addedssl_issuedbackup_createdsite_suspendedsite_reactivatedexport_startedmigration_to_portable_started
+12. billing_accounts
+حساب فوترة للعميل.
+iduuidorganization_id nullablecompany_id nullableuser_id nullablebilling_type default organizationlegal_name nullablebilling_emailcountry_id nullablecurrency_code default EGPtax_number nullablestatus default activemetadata json nullablecreated_atupdated_at
+billing_type
+organizationcompanyindividualagencyenterpriselegal_partner
+13. plans
+خطط Cloud.
+iduuidnameslugplan_typeprice decimal(15,2) default 0currency_code default EGPbilling_cycle default monthlytrial_days integer default 0is_public default truestatus default activesort_order default 0metadata json nullablecreated_atupdated_at
+plan_type
+cloudfrontend_anywhereportablededicatedagencyenterprisemallai
+14. plan_features
+تفاصيل خصائص كل Plan.
+idplan_idfeature_keyvalue jsonvalue_type default booleancreated_atupdated_at
+أمثلة
+max_sites = 3max_storage_mb = 5000enable_commerce = trueenable_mall_sync = trueenable_ai = trueenable_portable_export = false
+15. subscriptions
+اشتراك العميل.
+iduuidbilling_account_idplan_idstatus default activestarted_at nullabletrial_ends_at nullablecurrent_period_start nullablecurrent_period_end nullablecancelled_at nullablerenewal_status default autometadata json nullablecreated_atupdated_at
+status
+trialingactivepast_duecancelledexpiredsuspended
+16. subscription_items
+بنود إضافية داخل الاشتراك.
+idsubscription_iditem_typeitem_id nullablequantity integer default 1unit_price decimal(15,2) default 0metadata json nullablecreated_atupdated_at
+item_type
+sitestorage_addonai_creditsmall_featured_listingmodulesupport_plan
+17. usage_records
+الاستخدام العام داخل Cloud.
+iduuidorganization_id nullablecompany_id nullablesite_id nullablesubscription_id nullableusage_typequantity decimal(15,3)unitsource_type nullablesource_id nullablerecorded_atmetadata json nullablecreated_at
+18. entitlements
+تعريفات الحقوق التجارية.
+idkeydescription nullablevalue_type default booleancreated_atupdated_at
+أمثلة
+enable_cmsenable_commerceenable_rabetenable_mall_syncenable_ai_cobuildermax_sitesmax_productsmax_team_membersmax_storage_mb
+19. account_entitlements
+الحقوق المطبقة على حساب فوترة.
+idbilling_account_identitlement_keyvalue jsonsource_type nullablesource_id nullableexpires_at nullablecreated_atupdated_at
+20. invoices_platform
+فواتير منصة Kabeeri نفسها.
+يجب عدم خلطها مع فواتير العميل لعملائه.
+iduuidbilling_account_idsubscription_id nullableinvoice_numberstatus default draftpayment_status default unpaidcurrency_code default EGPsubtotal decimal(15,2)tax_total decimal(15,2) default 0discount_total decimal(15,2) default 0total decimal(15,2)issued_at nullabledue_date nullablepaid_at nullablemetadata json nullablecreated_atupdated_at
+21. payments_platform
+مدفوعات العميل للمنصة.
+iduuidbilling_account_idinvoice_platform_id nullableamount decimal(15,2)currency_code default EGPstatus default pendingpayment_method nullableprovider nullableprovider_reference nullablepaid_at nullablefailure_reason nullablemetadata json nullablecreated_atupdated_at
+22. Cloud ERD
+erDiagram    ORGANIZATIONS ||--o{ CLOUD_SITES : owns    SITES ||--|| CLOUD_SITES : hosted_as    CLOUD_SITES ||--o{ CLOUD_DOMAINS : has    CLOUD_SITES ||--o{ CLOUD_BACKUPS : has    CLOUD_SITES ||--o{ CLOUD_HEALTH_CHECKS : checked_by    ORGANIZATIONS ||--o{ BILLING_ACCOUNTS : bills    BILLING_ACCOUNTS ||--o{ SUBSCRIPTIONS : has    PLANS ||--o{ SUBSCRIPTIONS : chosen    PLANS ||--o{ PLAN_FEATURES : includes    BILLING_ACCOUNTS ||--o{ ACCOUNT_ENTITLEMENTS : receives    BILLING_ACCOUNTS ||--o{ INVOICES_PLATFORM : charged    INVOICES_PLATFORM ||--o{ PAYMENTS_PLATFORM : paid_by
+23. Cloud Module Dependency Chart
+flowchart TD    A[Core Kernel] --> B[Organizations]    B --> C[Sites]    C --> D[Cloud Sites]    D --> E[Domains]    D --> F[Backups]    D --> G[Health Checks]    B --> H[Billing Accounts]    H --> I[Subscriptions]    I --> J[Plans]    J --> K[Entitlements]    K --> L[Feature Access]    D --> M[Mall Mirror Internal Sync]
+24. Cloud Provisioning Flow
+User registers→ creates organization→ chooses plan→ billing account created→ subscription created→ entitlements applied→ site created→ cloud_site created→ subdomain reserved→ default theme applied→ health check runs→ site becomes active
+25. Domain Flow
+User adds custom domain→ cloud_domains record created→ verification token generated→ DNS instructions shown→ verification check runs→ SSL status updated→ domain becomes active
+26. Backup Flow
+Manual or scheduled backup→ cloud_backups record created→ queue job runs→ database/files snapshot created→ checksum stored→ user notified
+27. Entitlement Check Flow
+أي Feature مهمة يجب أن تمر عبر:
+EntitlementService
+مثال:
+Can organization create another site?Can site enable commerce?Can user export portable bundle?Can business publish in Mall?
+28. Cloud و Kabeeri Mall
+في Cloud الوضع الأفضل لأن البيانات داخل المنصة.
+لذلك Mall Sync يكون داخليًا:
+BusinessProfileUpdated→ update mall mirrorProductPublished→ update mall listingServicePublished→ update mall service listing
+لا نحتاج API خارجي إلا عند الانتقال إلى Portable أو External systems.
+29. Cloud و Export Readiness
+أي Cloud customer يجب أن يكون قابلًا للتحول إلى:
+Frontend AnywherePortableDedicated
+لذلك cloud_sites يحتوي على status يسمح بـ:
+pending_exportmigrated_to_portablemigrated_to_dedicated
+30. Cloud Data Retention
+عند مغادرة العميل Cloud:
+يبقى في Cloud
+billing historyplatform invoicesmall mirror if agreedtrust/verification public recordslegal records required by termsexport job history
+يمكن حذفه أو أرشفته
+private CMS dataprivate ERP dataprivate filesinternal messagesoperational tasks
+31. Security Requirements
+Cloud يحتاج:
+tenant isolation.
+billing permissions.
+domain ownership validation.
+backup access restrictions.
+audit logs for export/backup/restore.
+sensitive file protection.
+API token control.
+32. Performance Requirements
+يجب دعم
+domain lookup cachesite settings cacheentitlement cachepublic page cachebackup jobs in queuehealth checks in queueusage aggregation jobs
+33. Cloud Indexes المهمة
+cloud_sites.organization_idcloud_sites.site_idcloud_sites.cloud_statuscloud_domains.domaincloud_domains.verification_statuscloud_backups.organization_idcloud_backups.site_idbilling_accounts.organization_idsubscriptions.billing_account_idsubscriptions.statususage_records.organization_id + usage_typeaccount_entitlements.billing_account_id + entitlement_key
+34. Cloud Release Requirements
+Kabeeri Cloud يعتبر جاهزًا عندما:
+Cloud site can be createdSubdomain can be reservedCustom domain can be addedDomain verification foundation worksBackup job foundation worksBilling account worksSubscription worksEntitlements apply limitsUsage records are createdCloud health status worksCloud customer can be prepared for export later
+35. الخلاصة
+Kabeeri Cloud هو الوضع الافتراضي والأقوى تكامليًا.
+لكنه لا يجب أن يكون قفصًا.
+القاعدة النهائية:
+Cloud gives the best experience, but the database must remain export-ready from day one.

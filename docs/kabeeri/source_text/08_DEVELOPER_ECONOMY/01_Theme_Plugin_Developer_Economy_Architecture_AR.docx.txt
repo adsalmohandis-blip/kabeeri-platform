@@ -1,0 +1,367 @@
+KABEERI
+Theme, Plugin & Developer Economy Architecture
+معمارية اقتصاد الثيمات والإضافات والمطورين — KABEERI
+ملف استراتيجي/معماري مكمّل للحزمة النهائية
+الغرض من هذا الملف
+هذا الملف يثبت أن Kabeeri ليست مجرد CMS أو منصة مواقع، بل منصة Freemium مفتوحة تبني حولها اقتصادًا من الثيمات والإضافات والمطورين المعتمدين، مع حوكمة وأمان أفضل من فوضى إضافات WordPress.
+يعالج الملف: نموذج Freemium، متجر الثيمات، إطلاق 200 ثيم، مطوري Kabeeri، ملفات الناشرين، الوثائق، المراجعة، العمولات، علاقة المطورين بـ Rabet وKabeeri Mall، وتسمية الموقع/المتجر كتطبيق داخل المنصة.
+فهرس مختصر
+1. القرار الاستراتيجي
+2. المصطلحات الرسمية
+3. نموذج Freemium
+4. Kabeeri Apps
+5. Kabeeri Design Market
+6. استراتيجية إطلاق 200 ثيم
+7. فلاتر متجر الثيمات
+8. معمارية الثيم
+9. معمارية الإضافات والحزم
+10. Kabeeri Creators
+11. Developer Docs
+12. Workflow النشر والمراجعة
+13. Revenue Share
+14. علاقة Rabet وMall
+15. الجداول المقترحة
+16. Laravel Modules
+17. Roadmap V1–V6
+18. Acceptance Criteria
+19. Anti-patterns
+1. القرار الاستراتيجي
+القرار: يجب أن تعمل Kabeeri كنظام Freemium Ecosystem من البداية، وليس كمنتج مغلق. الهدف ليس فقط تقديم CMS أفضل، بل إنشاء سوق ثيمات وإضافات ومطورين وشركات شريكة حول المنصة.
+Core مجاني أو منخفض التكلفة لجذب جمهور WordPress.
+Theme Store رسمي من أول إصدار تجاري، مع ثيمات مجانية ومدفوعة.
+Plugin/App Store تدريجي يبدأ بالحزم الرسمية ثم الناشرين المعتمدين ثم السوق العام.
+Developer/Creator Profile رسمي لكل شخص أو شركة تطور ثيمات أو إضافات.
+كل حزمة تمر عبر Manifest + Permissions + Review + Signing + Compatibility checks.
+المطورون يظهرون كجزء من منظومة Rabet B2B وKabeeri Mall عبر ملفات عامة موثقة.
+2. المصطلحات الرسمية
+المصطلح
+الاستخدام
+التعريف
+Kabeeri App / تطبيق كبيري
+واجهة المستخدم
+أي موقع أو متجر أو بوابة أو Landing Page داخل المنصة. تقنيًا يمكن أن يبقى جدول sites في V1.
+Site
+الكود وقاعدة البيانات
+الاسم التقني في V1 للواجهة الرقمية؛ يظهر للمستخدم باسم App.
+Kabeeri Creator / مبدع كبيري
+تجاري
+شخص أو شركة تصنع ثيمات أو إضافات أو قوالب أو AI Skills أو Industry Kits.
+Kabeeri Developer
+تقني
+مطور يستخدم SDK وDocs لبناء Packages.
+Kabeeri Certified Creator
+ثقة واعتماد
+مبدع اجتاز التحقق والاختبارات ويستطيع نشر منتجات مدفوعة.
+Publisher Account
+Marketplace
+الحساب الذي يملك حق نشر ثيمات أو إضافات أو قوالب.
+Design Market
+Theme ecosystem
+متجر الثيمات والقوالب والـ UI kits والـ section kits.
+Package Store
+Plugin ecosystem
+متجر الإضافات والموديولات والـ connectors والـ AI skills.
+3. نموذج Freemium
+نموذج Freemium هو أداة انتشار، وليس مجرد خطة مجانية. يجب أن يجعل المستخدم يبدأ بسهولة ثم ينمو إلى خطط مدفوعة عبر الثيمات، الإضافات، Cloud، Commerce، Rabet، Mall، AI، وERP.
+المستوى
+يشمل
+الهدف
+Kabeeri Community
+CMS basic, Pages, Posts, Media, SEO basic, free themes, self-hosted أو cloud starter
+الانتشار وجذب جمهور WordPress وبناء مجتمع مطورين.
+Kabeeri Pro
+Pro themes, Forms Pro, Advanced SEO, Backup Pro, Security Center basic, Commerce Lite
+تحويل المستخدمين الجادين إلى دخل مدفوع.
+Kabeeri Cloud / Business
+Hosting, SSL, CDN, backups, monitoring, support, managed updates
+بيع تجربة مُدارة للشركات والوكالات.
+Kabeeri Creator / Publisher
+Developer profile, SDK access, docs, sandbox, submission pipeline
+تحفيز المطورين لبناء النظام البيئي.
+Kabeeri Enterprise
+Dedicated, GRC, SSO, private marketplace, advanced support
+الشركات الكبيرة والقطاعات المنظمة.
+4. Kabeeri Apps
+داخل الواجهة، يجب أن نسمي الموقع أو المتجر أو البوابة باسم تطبيق. المستخدم لا يحتاج أن يعرف الفارق التقني بين website وstore وportal؛ هو يدير “تطبيقات” داخل حسابه.
+User→ Organization / Customer Account  → Company / Business Account    → Kabeeri Apps      - Website App      - Store App      - Blog App      - Portal App      - Landing App      - Mall Seller App
+تقنيًا في V1 نستمر في استخدام جدول sites لتقليل إعادة التصميم.
+في الواجهة: Sites = Apps.
+في Data Dictionary يجب إضافة قاعدة: Kabeeri App هو الاسم التجاري للـ Site.
+5. Kabeeri Design Market
+متجر الثيمات يجب أن يكون منتجًا واضحًا وليس مجرد صفحة داخل Marketplace. الاسم المقترح: Kabeeri Design Market لأنه سيشمل الثيمات والقوالب وSection Kits وUI Blocks، وليس الثيمات فقط.
+Themes: ثيم كامل لتطبيق Kabeeri.
+Starter Themes: ثيمات مجانية رسمية.
+Pro Themes: ثيمات مدفوعة أو ضمن خطط Pro.
+Industry Presets: إعدادات وتصاميم حسب المجال.
+Page Templates: صفحات جاهزة.
+Section Kits: أقسام جاهزة مثل Hero, Pricing, Team, Services.
+Business Kits: ثيم + صفحات + forms + content types + dashboard hints.
+6. استراتيجية إطلاق 200 ثيم
+الهدف “200 ثيم عند الإطلاق” ممتاز تسويقيًا، لكن يجب تنفيذه بطريقة scalable. لا نحتاج 200 ثيم مكتوب يدويًا بالكامل؛ الأفضل بناء 20 Theme Engines/Base Themes × 10 Industry Presets.
+20 Base Themes× 10 Industry Presets= 200 Launch-ready Themes
+الطبقة
+الوصف
+Base Theme
+ثيم رئيسي عالي الجودة: Business, Agency, Store, Clinic, Real Estate, Portfolio...
+Industry Preset
+تغيير demo content، colors، typography، sections، icons، images placeholders حسب المجال.
+Demo Data
+بيانات تجريبية قابلة للاستيراد عند إنشاء التطبيق.
+Theme Variant
+المنتج الذي يظهر للمستخدم كأنّه ثيم مستقل في المتجر.
+مجالات الإطلاق المقترحة
+Real Estate
+Restaurants
+Clinics
+Law Firms
+Agencies
+Construction
+Education
+E-commerce
+Fashion
+Beauty
+Logistics
+Hotels
+Consultants
+SaaS
+Portfolio
+Non-profit
+News / Magazine
+Automotive
+Events
+Fitness
+7. فلاتر متجر الثيمات
+فلترة متجر الثيمات ليست واجهة فقط؛ هي taxonomy يجب أن تنعكس في قاعدة البيانات والـ manifest حتى يستطيع المستخدم الوصول للثيم المناسب بسرعة.
+فلتر
+أمثلة
+Industry
+Real Estate, Clinic, Restaurant, Agency, School, Hotel
+App Type
+Website, Store, Blog, Portal, Landing
+Price
+Free, Pro, Paid, Subscription
+Language / RTL
+Arabic, English, RTL ready, multilingual
+Commerce Ready
+Catalog, Cart, Checkout, Product pages
+Rabet Ready
+Business Profile, Trust Badge, Verification widgets
+Mall Ready
+Public listing integration, service cards, contact actions
+Performance Score
+A, B, C حسب budget
+Accessibility
+WCAG basic, keyboard friendly, alt-ready
+Developer
+Official, Certified Creator, Agency Partner
+Compatibility
+Kabeeri version, required modules, dependencies
+8. معمارية الثيم
+الثيم في Kabeeri يجب أن يكون آمنًا ومنظمًا. لا يسمح للثيم بالوصول المباشر إلى قاعدة البيانات أو تنفيذ business logic. الثيم مسؤول عن العرض، القوالب، assets، blocks، وtheme settings.
+theme/  theme.json  screenshots/  assets/    css/    js/    images/  templates/    page.blade.php    post.blade.php    archive.blade.php    store-product.blade.php  sections/    hero.blade.php    services-grid.blade.php    testimonials.blade.php  demo/    content.json    media-manifest.json  lang/    ar.json    en.json
+Theme Manifest
+{  "name": "kabeeri/business-starter",  "type": "theme",  "version": "1.0.0",  "publisher": "kabeeri-official",  "industries": ["agency", "consulting", "services"],  "app_types": ["website", "landing"],  "rtl_ready": true,  "commerce_ready": false,  "requires": {"kabeeri": "^1.0", "modules": ["cms", "media"]},  "performance_budget": {"css_kb": 150, "js_kb": 120},  "permissions": []}
+9. معمارية الإضافات والحزم
+الإضافات داخل Kabeeri يجب أن تكون Packages لا تعدل Core مباشرة. أي Plugin أو Module أو Connector أو AI Skill يجب أن يعلن الصلاحيات والاعتماديات والـ hooks/events التي يستخدمها.
+Package Type
+أمثلة
+Plugin
+SEO Pro, Forms Pro, Cookie Consent, Analytics, WhatsApp Button
+Theme
+Business Theme, Store Theme, Real Estate Theme
+Module
+CRM, Inventory, Helpdesk, HR
+Suite
+Finance Suite, HCM Suite, Retail Suite
+Connector
+QuickBooks, Shopify, Google Sheets, Payment Gateway
+AI Skill
+SEO Skill, Product Description Skill, Workflow Builder Skill
+Template
+Landing page, pricing page, service page
+Industry Solution
+Real Estate Kit, Clinic Kit, School Kit
+10. Kabeeri Creators
+الاسم المقترح للمطورين والمصممين والوكالات التي تبني على Kabeeri هو: Kabeeri Creators / مبدعو كبيري. الاسم أوسع من Developer لأنه يشمل مصمم الثيمات وصانع القوالب والوكالة ومطور الإضافات.
+المستوى
+الوصف
+الصلاحيات
+Registered Creator
+مستخدم مسجل فتح ملف Creator.
+قراءة docs، إنشاء sandbox project.
+Verified Creator
+تم التحقق من الهوية أو الشركة.
+إرسال حزم للمراجعة.
+Certified Developer
+اجتاز اختبار SDK/Theme/Plugin.
+نشر حزم مجانية بعد المراجعة.
+Trusted Publisher
+سجل جودة وامتثال جيد.
+نشر مدفوعات، تحديثات أسرع.
+Official Partner
+شريك معتمد رسميًا.
+ظهور أعلى، revenue share خاص، co-marketing.
+Enterprise Solution Partner
+يبني حلولًا قطاعية ومؤسسية.
+Private marketplace، مشاريع Enterprise.
+11. Developer Docs
+لا يمكن بناء اقتصاد مطورين بدون وثائق. يجب أن تبدأ docs بسيطة ثم تتوسع. الوثائق لا تنتظر Public Marketplace؛ تبدأ من V1/V2 حتى لو الحزم الرسمية فقط.
+Getting Started
+Theme Development
+Plugin Development
+Package Manifest
+Permissions Manifest
+Hooks & Events
+Blade Theme Structure
+Assets & Build
+Settings Pages
+Filament Admin Extensions
+Content Blocks
+Commerce Extensions
+AI Skills
+Testing Packages
+Security Requirements
+Marketplace Submission
+Review Process
+Revenue & Payouts
+Versioning & Compatibility
+12. Workflow النشر والمراجعة
+Creator creates package→ Local tests→ Manifest validation→ Upload to Developer Console→ Automated checks   - dependency check   - permissions review   - security scan   - performance budget   - RTL/accessibility for themes   - license scan→ Manual review→ Signing→ Publish to Theme/Package Store→ Update monitoring→ Reviews and support obligations
+الحالة
+الوصف
+draft
+الحزمة ما زالت عند الناشر.
+submitted
+تم إرسالها للمراجعة.
+under_review
+في المراجعة الفنية/الأمنية.
+needs_changes
+تحتاج تعديلات.
+approved
+معتمدة لكن لم تنشر بعد.
+published
+منشورة في السوق.
+suspended
+موقوفة بسبب مشكلة.
+deprecated
+قديمة لا يُنصح باستخدامها.
+removed
+تمت إزالتها.
+13. Revenue Share
+اقتصاد المطورين يحتاج نموذج دخل واضح. يجب أن يدعم النظام الثيمات المجانية والمدفوعة والاشتراكات والحزم ضمن خطط Pro والعمولات.
+نوع الدخل
+الوصف
+One-time purchase
+شراء ثيم أو إضافة مرة واحدة.
+Subscription
+اشتراك شهري/سنوي لحزمة أو مجموعة ثيمات.
+Bundle
+مجموعة ثيمات أو Business Kits.
+Pro entitlement
+ثيمات/إضافات ضمن خطة Kabeeri Pro.
+Agency license
+رخصة للوكالات لاستخدام الثيم في عدة تطبيقات.
+Enterprise private package
+حزم خاصة لعملاء Enterprise.
+يجب أن يربط revenue share مع Billing وCommission Engine وPartner Payouts.
+لا يتم دفع أرباح لحزمة إلا بعد اجتياز review وlicense validation.
+يجب دعم refunds وchargebacks وتأثيرها على payouts.
+14. علاقة Rabet وMall
+مطورو Kabeeri ليسوا مجرد بائعين داخل متجر؛ هم جزء من شبكة B2B. لذلك يجب أن يظهر Creator كفرد أو شركة داخل Kabeeri Mall/Rabet حسب نوعه.
+Individual Creator:User→ Professional Profile→ Developer Profile→ Publisher Account→ Creator Public Page in Kabeeri MallCompany Creator:Organization→ Company→ Business Profile→ Publisher Account→ Agency/Studio Page in Kabeeri Mall
+Creator الفرد يظهر في مساحة المواهب/الأفراد كمبدع كبيري.
+Creator الشركة تظهر كـ Business Profile داخل Mall ويمكن أن تكون موثقة عبر Rabet.
+الحزم المنشورة تظهر في Marketplace وترتبط بملف الناشر العام.
+15. الجداول المقترحة
+هذا القسم يضيف Addendum على ملفات Developer Console وInternal Marketplace وBilling وMall، ولا يكرر الجداول الموجودة. إذا كان جدول موجودًا، يتم توسيعه لا تكراره.
+developer_profilescreator_profilespublisher_accountspublisher_team_memberspublisher_verificationsdeveloper_certificationsdeveloper_skill_badgesdeveloper_docs_pagesdeveloper_sandbox_projectstheme_categoriestheme_industriestheme_demo_sitestheme_demo_importstheme_filter_facetstheme_filter_valuestheme_preview_assetsdesign_market_itemsdesign_market_item_versionsdesign_market_collectionsbusiness_kitsbusiness_kit_itemspackage_revenue_rulespublisher_payout_accountspublisher_payout_recordsmarketplace_submission_reviewsmarketplace_license_reviewsmarketplace_quality_scorescreator_public_profiles
+تفاصيل بعض الجداول
+الجدول
+الغرض
+يعتمد على
+developer_profiles
+ملف المطور التقني داخل المنصة.
+users, professional_profiles
+publisher_accounts
+حساب الناشر الذي يملك حق نشر الحزم.
+users/organizations/companies
+creator_profiles
+الملف التجاري العام لمبدع كبيري.
+developer_profiles, business_profiles
+theme_industries
+تصنيف الثيمات حسب المجال.
+countries/localization optional
+theme_demo_sites
+روابط وبيانات معاينة الثيم.
+sites, media_assets
+design_market_items
+العناصر المعروضة في Design Market.
+packages/themes/templates
+business_kits
+باقة تشغيل حسب المجال: ثيم + صفحات + forms + إعدادات.
+cms, workflows, forms, themes
+marketplace_quality_scores
+درجات الأداء والأمان والجودة لكل حزمة.
+testing, security, reviews
+16. Laravel Modules
+يجب عدم خلط Developer Economy داخل CMS فقط. الأفضل إنشاء Modules واضحة، بعضها يبدأ لاحقًا كـ feature flags.
+app/  Modules/    Developer/      Models/      Actions/      Services/      Policies/      Filament/    Marketplace/      Models/      Review/      Publishing/    ThemeStore/      Catalog/      Filters/      DemoImport/    PackageRuntime/      Manifest/      Permissions/      Installer/    CreatorEconomy/      Profiles/      Certifications/      Revenue/      Payouts/
+17. Roadmap V1–V6
+الإصدار
+ما يدخل
+V1
+Theme system basic, package foundation, official starter themes, no public submissions.
+V2
+Theme Store browsing, official themes only, WordPress theme/plugin awareness, 50–100 official themes/presets.
+V3
+200 official themes/presets, plugin store official packages, developer docs alpha, creator profiles private beta.
+V4
+Internal Marketplace V1, verified publishers beta, paid themes/plugins, package signing foundation, reviews.
+V5
+Connector SDK, partner payouts, revenue share, package analytics, agency/partner selling.
+V6
+Public Developer Marketplace, certification, private enterprise marketplace, Envato-style ecosystem.
+18. Acceptance Criteria
+يمكن للمستخدم إنشاء Kabeeri App جديد واختيار ثيم مناسب حسب المجال.
+يظهر Theme Store بفلاتر Industry/App Type/Price/RTL/Commerce Ready/Developer/Rating.
+يوجد على الأقل 20 Base Themes قابلة لإنتاج 200 theme variants عبر presets.
+يمكن لمبدع كبيري إنشاء Developer/Creator profile وPublisher account.
+لا يمكن نشر Theme أو Plugin بدون Manifest وReview وSigning.
+كل Theme يعلن compatibility وRTL وperformance budget وsupported app types.
+كل Plugin يعلن permissions وdependencies وevents/hooks المستخدمة.
+يظهر Creator الفرد أو الشركة في Kabeeri Mall/Rabet حسب نوعه وموافقته.
+Developer docs تحتوي الحد الأدنى لبناء Theme وPlugin رسمي.
+Revenue share وPayouts قابلة للتوسع لاحقًا دون تغيير جذري.
+19. Anti-patterns ممنوعة
+فتح Public Developer Marketplace قبل وجود review/signing/security checks.
+السماح لأي Theme بتنفيذ business logic أو access مباشر لقاعدة البيانات.
+السماح لأي Plugin بطلب صلاحيات واسعة بدون Manifest واضح.
+وعد السوق بتحويل كل WordPress theme/plugin تلقائيًا 100%.
+نشر ثيمات من مصادر خارجية داخل Marketplace بدون license review.
+خلط Kabeeri Mall العام مع Internal Package Marketplace بدون فصل واضح.
+اعتبار المطور مجرد user عادي بدون Developer Profile وPublisher Account.
+استخدام مصطلحات متضاربة: Site/App/Project بدون Data Dictionary update.
+إطلاق 200 ثيم رديء الجودة بدل 20 base themes قوية مع presets منظمة.
+الاعتماد على AI في توليد ثيمات/إضافات منشورة بدون human review.
+20. قرارات يجب تحديثها في الحزمة
+الملف
+التحديث المطلوب
+Data Model Dictionary
+إضافة: Kabeeri App = user-facing label for Site، وإضافة Creator/Publisher concepts.
+Monetization Pricing
+توضيح Theme Store وRevenue Share وCreator plans.
+Marketplace Governance
+إضافة Design Market وCreator certification وreview rules.
+Developer Platform SDK
+توسيع docs للثيمات والـ templates وBusiness Kits.
+V1/V2/V4 Release Specs
+ربط Theme Store وofficial themes وDeveloper beta بالـ release gates.
+Database Developer Console SDK
+إضافة أو ربط developer_profiles وpublisher_accounts وcertifications.
+Internal Marketplace Packages Database
+إضافة Theme Store facets وrevenue/payout extensions.
+21. القرار النهائي
+Kabeeri يجب أن تصبح Freemium Ecosystem: يبدأ المستخدم مجانًا أو بتكلفة منخفضة، يختار تطبيقًا وثيمًا مناسبًا، ثم ينمو عبر الثيمات والإضافات والـ Cloud وRabet وCommerce وMall. المطورون والمصممون والوكالات يجب أن يتحولوا إلى Kabeeri Creators مع ملفات عامة واعتماد وتوثيق وفرصة دخل، لكن تحت حوكمة أقوى من WordPress.
+الجملة التسويقية المقترحة: Kabeeri is a freemium business platform with a safer theme and plugin economy — the freedom of WordPress, with stronger governance, trust, and growth paths.
+بالعربي: كبيري تجمع حرية ووردبريس واقتصاد الثيمات والإضافات، لكن بأمان وحوكمة وثقة ومسار نمو أقوى للشركات والمطورين.
+KABEERI — Theme, Plugin & Developer Economy Architecture

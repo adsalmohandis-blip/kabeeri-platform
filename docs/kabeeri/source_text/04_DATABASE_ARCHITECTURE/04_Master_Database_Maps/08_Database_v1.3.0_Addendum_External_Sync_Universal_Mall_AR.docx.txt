@@ -1,0 +1,59 @@
+KABEERI Database v1.3.0 Addendum — External Sync, Universal Mall & Backoffice Anywhere
+ملحق داتابيز تنفيذي يضيف جداول ومفاهيم v1.3.0 الناتجة عن توسيع Kabeeri Mall والتكامل مع الأنظمة الخارجية.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. هدف الملحق
+هذا الملحق لا يستبدل ملفات الداتابيز السابقة، بل يضيف الجداول والعلاقات المطلوبة لدعم Universal Mall، External Systems Sync، Backoffice Anywhere، Travel & Tourism Mall، وMall catalogs الجديدة.
+2. الجداول الجديدة المقترحة
+الجدول
+الغرض
+أهم الحقول
+external_sync_sources
+مصادر خارجية موحدة: WordPress/WooCommerce/Shopify/ERP/LMS/Feed/API
+organization_id, source_type, external_base_url, status, last_sync_at, consent_status
+external_connector_configs
+إعدادات connector بدون أسرار واضحة
+connector_key, scopes, connection_ref, schedule, mapping_profile_id
+external_feed_imports
+رفع أو قراءة feeds من CSV/XML/JSON/Sheets
+source_id, feed_url/file_media_id, status, records_seen, records_imported
+mall_catalogs
+تعريف أقسام المول: products/services/courses/travel/talent/business/jobs/partners/themes/events/deals/rfq/assets
+catalog_key, status, visibility, moderation_policy
+mall_mirror_courses
+مرآة الكورسات والتدريبات
+course_name, provider, price_from, enrollment_url, source_id, publication_status
+mall_mirror_trips
+مرآة الرحلات السياحية
+trip_name, destination, duration, price_from, available_seats, source_id
+mall_mirror_events
+مرآة الفعاليات
+event_name, date, venue/online, ticket_url, source_id
+mall_mirror_jobs_projects
+فرص العمل والمشاريع والطلبات
+request_type, budget_range, skills, company_id, status
+mall_mirror_deals
+العروض والصفقات والكوبونات
+deal_title, discount, valid_until, source_id
+mall_mirror_assets_properties
+العقارات والأصول والمعدات
+asset_type, location, price, availability, source_id
+backoffice_connections
+ربط Backoffice Kabeeri بموقع/متجر خارجي
+organization_id, app_id/site_id, external_url, mode, status
+connector_sync_jobs
+عمليات المزامنة المجدولة
+source_id, sync_type, status, started_at, completed_at, error
+connector_sync_records
+كل سجل تمت مزامنته أو تخطيه
+job_id, entity_type, external_id, mirror_id, action, status
+catalog_publication_consents
+موافقات نشر كتالوج حسب النوع
+organization_id, catalog_key, status, granted_by, revoked_at
+3. قواعد Source of Truth
+البيانات التشغيلية الأصلية تبقى في مصدرها: Kabeeri App أو External System أو Backoffice.
+Kabeeri Mall يعرض فقط Mall Mirror/Public Mirror بعد موافقة ونشر ومراجعة.
+External connector لا يملك صلاحية افتراضية للوصول للطلبات أو العملاء أو البيانات المالية الخاصة.
+Backoffice Anywhere يمكن أن يكون مصدر إدارة داخلي، لكن النشر العام يمر عبر catalog consent.
+4. إدراج في Migration Waves
+V2: external_sync_sources, mall_catalogs, catalog_publication_consents. V3: courses/trips mirrors, backoffice_connections. V4: jobs/projects, partners, events/deals. V5: RFQ/assets and advanced sync records. V6: connector marketplace and custom SDK tables.

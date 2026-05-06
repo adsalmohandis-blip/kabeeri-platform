@@ -1,0 +1,1770 @@
+KABEERI Database File 36
+Testing / QA / DevOps Operational Database
+قاعدة بيانات التشغيل الخاصة بالاختبارات، الجودة، الإصدارات، النشر، النسخ الاحتياطي، المراقبة، الحوادث، وعمليات المراجعة قبل الإطلاق داخل KABEERI.
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+فهرس الملف
+1. تعريف Testing / QA / DevOps Operational Database
+2. الهدف من النظام
+3. القاعدة الرئيسية
+4. نطاق البيانات
+5. الجداول الأساسية
+6. تفاصيل الجداول
+7. ERD
+8. Flows التشغيلية
+9. Quality Gates وDefinition of Done
+10. AI Code Review
+11. Backup / Rollback / DR
+12. Monitoring / Incidents
+13. Cloud / Portable / Dedicated
+14. Indexes
+15. Permissions
+16. Events
+17. Feature Flags
+18. Build Order
+19. أخطاء ممنوعة
+20. الخلاصة التنفيذية
+1. تعريف Testing / QA / DevOps Operational Database
+هذا الملف يصف قاعدة البيانات التشغيلية التي تحفظ حالة الجودة والتجارب والنشر والتحديثات والنسخ الاحتياطية والحوادث والمراقبة داخل Kabeeri. هذه الطبقة لا تبني المزايا نفسها، لكنها تضمن أن أي ميزة يمكن اختبارها، تتبعها، نشرها، مراقبتها، والرجوع عنها عند الحاجة.
+النظام يخدم كل الموديولات: Core، CMS، Commerce، ERP، Rabet، Mall، Talent، AI، Integration، Marketplace، Cloud، Portable، وDedicated.
+لا يحل محل GitHub Actions أو Sentry أو أدوات CI الخارجية، لكنه يحفظ السجل التشغيلي داخل Kabeeri ويجعل القرارات قابلة للمراجعة.
+كل release أو deployment أو migration أو package update أو AI critical change يجب أن يترك سجلا واضحا.
+كل اختبار أو فشل أو rollback أو incident يجب أن يكون قابلا للبحث والربط بالنسخة والموديول والعميل والبيئة.
+2. الهدف من النظام
+منع تحول Kabeeri إلى مشروع ضخم غير مستقر بسبب كثرة الموديولات والتغييرات والتوليد بالذكاء الاصطناعي.
+توفير سجل مركزي للـ test runs وQA gates وrelease approvals وdeployment history.
+تتبع البيئة التي ظهر فيها الخطأ: local أو testing أو staging أو production أو dedicated أو portable.
+تأكيد أن أي عملية خطيرة مثل migration major أو package update أو AI critical change لها backup/rollback plan.
+دعم Release Gates من V1 إلى V6، ومنع الانتقال إلى إصدار جديد بدون نتائج جودة واضحة.
+توفير أساس لـ Enterprise DevOps لاحقا: DR drills، security scans، compliance reports، release channels، وsupport runbooks.
+3. القاعدة الرئيسية
+Testable from V1
+Observable from V1
+Backup before risky changes
+Small releases
+Rollback-ready
+AI-assisted but human-reviewed
+أي Feature لا يمكن اختبارها أو تتبعها أو الرجوع عنها تصبح خطرا على المنصة، خصوصا في الصلاحيات، الفواتير، التوثيق، الهجرة، التحديثات، والذكاء الاصطناعي.
+4. نطاق البيانات
+المجال
+الجداول
+الغرض
+Environments
+devops_environments, environment_config_snapshots, environment_health_snapshots
+تعريف البيئات وحالتها وإعداداتها غير السرية.
+Testing
+test_suites, test_cases, test_case_steps, test_runs, test_run_cases, test_failures
+تشغيل الاختبارات وتسجيل النتائج والفشل.
+QA Gates
+qa_gate_definitions, qa_gate_checks, qa_gate_runs, qa_gate_results
+منع release/deployment بدون شروط جودة.
+Releases
+release_channels, releases, release_notes, release_artifacts, release_approvals
+إدارة الإصدارات، الملاحظات، الملفات، والموافقات.
+Deployments
+deployment_pipelines, deployment_runs, deployment_steps, deployment_events
+تتبع النشر وخطواته ونتائجه.
+Code Quality
+code_quality_runs, static_analysis_findings, lint_runs, dependency_scan_runs
+تحليل جودة الكود والتبعيات.
+AI Review
+ai_code_review_requests, ai_code_review_findings, ai_generated_code_logs
+مراجعة كود AI قبل الدمج.
+Backups/Rollback
+backup_verification_runs, restore_test_runs, rollback_plans, rollback_runs
+تأكيد النسخ والرجوع عند الخطر.
+Monitoring/Incidents
+monitoring_checks, monitoring_events, incidents, incident_updates, incident_postmortems
+المراقبة والحوادث والتحقيقات.
+Performance/A11y/Docs
+performance_test_runs, accessibility_qa_runs, documentation_qa_records
+اختبارات الأداء والوصولية والتوثيق.
+DR/Runbooks
+runbooks, dr_drills, operational_checklists
+تشغيل الطوارئ وخطط الاستجابة.
+5. الجداول الأساسية
+devops_environments
+environment_config_snapshots
+environment_health_snapshots
+test_suites
+test_cases
+test_case_steps
+test_runs
+test_run_cases
+test_failures
+qa_gate_definitions
+qa_gate_checks
+qa_gate_runs
+qa_gate_results
+release_channels
+releases
+release_notes
+release_artifacts
+release_approvals
+deployment_pipelines
+deployment_runs
+deployment_steps
+deployment_events
+code_quality_runs
+static_analysis_findings
+dependency_scan_runs
+lint_runs
+ai_code_review_requests
+ai_code_review_findings
+ai_generated_code_logs
+migration_safety_checks
+backup_verification_runs
+restore_test_runs
+rollback_plans
+rollback_runs
+monitoring_checks
+monitoring_events
+incidents
+incident_updates
+incident_postmortems
+performance_test_runs
+accessibility_qa_runs
+documentation_qa_records
+runbooks
+dr_drills
+operational_checklists
+operational_checklist_items
+6. تفاصيل الجداول
+devops_environments
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+Primary key
+uuid
+char(26/36)
+نعم
+للربط الخارجي
+organization_id
+bigint nullable
+لا
+فارغ للبيئات العامة
+environment_key
+varchar(100)
+نعم
+local/testing/staging/production/dedicated/portable
+environment_type
+varchar(50)
+نعم
+local, testing, staging, production, sandbox, dedicated, portable
+status
+varchar(50)
+نعم
+active/maintenance/retired
+app_version
+varchar(50)
+لا
+آخر نسخة تعمل
+base_url
+varchar(255)
+لا
+للبيئات التي لها URL
+managed_by
+varchar(50)
+لا
+kabeeri/customer/agency
+metadata
+json nullable
+لا
+معلومات إضافية
+created_at / updated_at
+timestamps
+نعم
+environment_config_snapshots
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+devops_environment_id
+bigint
+نعم
+snapshot_hash
+varchar(128)
+نعم
+app_version
+varchar(50)
+لا
+php_version
+varchar(50)
+لا
+mysql_version
+varchar(50)
+لا
+queue_driver
+varchar(50)
+لا
+cache_driver
+varchar(50)
+لا
+storage_driver
+varchar(50)
+لا
+features_enabled
+json nullable
+لا
+secrets_present_flags
+json nullable
+لا
+نحفظ وجود السر فقط وليس قيمته
+created_by
+bigint nullable
+لا
+created_at
+timestamp
+نعم
+test_suites
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+key
+varchar(100)
+نعم
+core_tests/cms_tests/commerce_tests
+name
+varchar(150)
+نعم
+module_key
+varchar(100) nullable
+لا
+core/cms/commerce/erp
+suite_type
+varchar(50)
+نعم
+unit/feature/policy/integration/browser/security/ai/migration/package
+status
+varchar(50)
+نعم
+active/deprecated
+owner_team
+varchar(100) nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+test_cases
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+test_suite_id
+bigint
+نعم
+case_key
+varchar(150)
+نعم
+unique داخل suite
+title
+varchar(255)
+نعم
+description
+longtext nullable
+لا
+risk_level
+varchar(50)
+نعم
+low/medium/high/critical
+priority
+varchar(50)
+نعم
+must/should/could
+automation_status
+varchar(50)
+نعم
+manual/automated/planned
+permission_sensitive
+boolean
+نعم
+status
+varchar(50)
+نعم
+active/deprecated
+created_at / updated_at
+timestamps
+نعم
+test_case_steps
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+test_case_id
+bigint
+نعم
+step_order
+int
+نعم
+action
+longtext
+نعم
+expected_result
+longtext nullable
+لا
+test_data
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+test_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+devops_environment_id
+bigint nullable
+لا
+release_id
+bigint nullable
+لا
+deployment_run_id
+bigint nullable
+لا
+suite_id
+bigint nullable
+لا
+trigger_type
+varchar(50)
+نعم
+manual/ci/scheduled/pre_release/pre_deployment/post_deployment
+status
+varchar(50)
+نعم
+pending/running/passed/failed/cancelled
+started_by
+bigint nullable
+لا
+started_at
+timestamp nullable
+لا
+completed_at
+timestamp nullable
+لا
+total_cases
+int default 0
+نعم
+passed_cases
+int default 0
+نعم
+failed_cases
+int default 0
+نعم
+metadata
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+test_run_cases
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+test_run_id
+bigint
+نعم
+test_case_id
+bigint
+نعم
+status
+varchar(50)
+نعم
+passed/failed/skipped/blocked
+duration_ms
+int nullable
+لا
+failure_message
+longtext nullable
+لا
+logs_ref
+varchar(255) nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+test_failures
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+test_run_case_id
+bigint
+نعم
+failure_type
+varchar(50)
+نعم
+assertion/error/timeout/environment/data/permission/security
+severity
+varchar(50)
+نعم
+low/medium/high/critical
+message
+longtext
+نعم
+stack_trace_ref
+varchar(255) nullable
+لا
+لا نحفظ stack ضخم في DB دائما
+linked_issue_url
+varchar(255) nullable
+لا
+resolved_at
+timestamp nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+qa_gate_definitions
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+key
+varchar(100)
+نعم
+v1_release_gate/cloud_deploy_gate/package_publish_gate
+name
+varchar(150)
+نعم
+gate_scope
+varchar(50)
+نعم
+release/deployment/package/migration/ai_change
+status
+varchar(50)
+نعم
+active/inactive
+required_for_environment
+varchar(50) nullable
+لا
+staging/production
+metadata
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+qa_gate_checks
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+qa_gate_definition_id
+bigint
+نعم
+check_key
+varchar(150)
+نعم
+tests_passed/security_scan_passed/backup_exists
+check_type
+varchar(50)
+نعم
+test_suite/code_quality/security/backup/manual/approval/performance
+is_required
+boolean
+نعم
+minimum_status
+varchar(50)
+لا
+passed/warning
+configuration
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+qa_gate_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+qa_gate_definition_id
+bigint
+نعم
+subject_type
+varchar(100)
+نعم
+release/deployment/package_submission/ai_change_plan
+subject_id
+bigint
+نعم
+status
+varchar(50)
+نعم
+pending/running/passed/failed/waived
+requested_by
+bigint nullable
+لا
+approved_by
+bigint nullable
+لا
+waiver أو موافقة
+started_at
+timestamp nullable
+لا
+completed_at
+timestamp nullable
+لا
+metadata
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+qa_gate_results
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+qa_gate_run_id
+bigint
+نعم
+qa_gate_check_id
+bigint
+نعم
+status
+varchar(50)
+نعم
+passed/failed/warning/skipped
+message
+longtext nullable
+لا
+evidence_type
+varchar(100) nullable
+لا
+test_run/code_quality_run/backup_verification
+evidence_id
+bigint nullable
+لا
+created_at
+timestamp
+نعم
+release_channels
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+name
+varchar(100)
+نعم
+Stable/Beta/Developer Preview/Enterprise LTS
+slug
+varchar(100)
+نعم
+channel_type
+varchar(50)
+نعم
+alpha/private_beta/stable/lts/beta
+status
+varchar(50)
+نعم
+active/inactive
+min_supported_version
+varchar(50) nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+releases
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+release_channel_id
+bigint nullable
+لا
+version
+varchar(50)
+نعم
+SemVer
+release_type
+varchar(50)
+نعم
+major/minor/patch/security/hotfix
+status
+varchar(50)
+نعم
+draft/testing/approved/released/rolled_back/deprecated
+target_version_scope
+varchar(50)
+لا
+v1/v2/v3/v4/v5/v6
+created_by
+bigint nullable
+لا
+approved_by
+bigint nullable
+لا
+released_at
+timestamp nullable
+لا
+metadata
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+release_notes
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+release_id
+bigint
+نعم
+note_type
+varchar(50)
+نعم
+feature/fix/breaking_change/migration/security/known_issue
+title
+varchar(255)
+نعم
+body
+longtext nullable
+لا
+module_key
+varchar(100) nullable
+لا
+sort_order
+int default 0
+نعم
+created_at / updated_at
+timestamps
+نعم
+deployment_pipelines
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+key
+varchar(100)
+نعم
+cloud_production/self_hosted_update/dedicated_update
+name
+varchar(150)
+نعم
+deployment_scope
+varchar(50)
+نعم
+cloud/self_hosted/portable/dedicated/package
+status
+varchar(50)
+نعم
+active/inactive
+configuration
+json nullable
+لا
+لا أسرار
+created_at / updated_at
+timestamps
+نعم
+deployment_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+deployment_pipeline_id
+bigint
+نعم
+release_id
+bigint nullable
+لا
+devops_environment_id
+bigint nullable
+لا
+organization_id
+bigint nullable
+لا
+لـ dedicated/tenant updates
+status
+varchar(50)
+نعم
+pending/running/completed/failed/rolled_back/cancelled
+triggered_by
+bigint nullable
+لا
+started_at
+timestamp nullable
+لا
+completed_at
+timestamp nullable
+لا
+rollback_run_id
+bigint nullable
+لا
+metadata
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+deployment_steps
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+deployment_run_id
+bigint
+نعم
+step_key
+varchar(100)
+نعم
+backup/migrate/cache_clear/queue_restart/health_check
+step_order
+int
+نعم
+status
+varchar(50)
+نعم
+pending/running/completed/failed/skipped
+started_at
+timestamp nullable
+لا
+completed_at
+timestamp nullable
+لا
+message
+longtext nullable
+لا
+metadata
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+code_quality_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+tool
+varchar(100)
+نعم
+Pint/PHPStan/Larastan/Rector/Pest
+module_key
+varchar(100) nullable
+لا
+release_id
+bigint nullable
+لا
+commit_hash
+varchar(100) nullable
+لا
+status
+varchar(50)
+نعم
+pending/running/passed/failed/warning
+issues_count
+int default 0
+نعم
+started_at
+timestamp nullable
+لا
+completed_at
+timestamp nullable
+لا
+report_ref
+varchar(255) nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+static_analysis_findings
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+code_quality_run_id
+bigint
+نعم
+severity
+varchar(50)
+نعم
+info/low/medium/high/critical
+rule_key
+varchar(150) nullable
+لا
+file_path
+varchar(255) nullable
+لا
+line_number
+int nullable
+لا
+message
+longtext
+نعم
+status
+varchar(50)
+نعم
+open/ignored/resolved
+created_at / updated_at
+timestamps
+نعم
+ai_code_review_requests
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+requested_by
+bigint nullable
+لا
+module_key
+varchar(100) nullable
+لا
+change_type
+varchar(100)
+نعم
+migration/model/policy/action/controller/view/test/docs
+subject_ref
+varchar(255) nullable
+لا
+PR/commit/file
+risk_level
+varchar(50)
+نعم
+low/medium/high/critical
+status
+varchar(50)
+نعم
+pending/reviewed/blocked/approved
+created_at / updated_at
+timestamps
+نعم
+ai_code_review_findings
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+ai_code_review_request_id
+bigint
+نعم
+finding_type
+varchar(100)
+نعم
+security/permission/migration/test/architecture/performance
+severity
+varchar(50)
+نعم
+low/medium/high/critical
+message
+longtext
+نعم
+recommendation
+longtext nullable
+لا
+status
+varchar(50)
+نعم
+open/accepted/ignored/resolved
+created_at / updated_at
+timestamps
+نعم
+migration_safety_checks
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+migration_name
+varchar(255)
+نعم
+release_id
+bigint nullable
+لا
+environment_id
+bigint nullable
+لا
+backup_required
+boolean
+نعم
+backup_verified
+boolean
+نعم
+rollback_tested
+boolean
+نعم
+destructive_change_detected
+boolean
+نعم
+status
+varchar(50)
+نعم
+pending/passed/failed/waived
+notes
+longtext nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+backup_verification_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+backup_subject_type
+varchar(100)
+نعم
+cloud_backup/dedicated_backup/manual_backup
+backup_subject_id
+bigint
+نعم
+status
+varchar(50)
+نعم
+pending/running/verified/failed
+checksum_verified
+boolean
+نعم
+restore_supported
+boolean
+نعم
+verified_by
+bigint nullable
+لا
+verified_at
+timestamp nullable
+لا
+message
+longtext nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+restore_test_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+backup_verification_run_id
+bigint nullable
+لا
+environment_id
+bigint nullable
+لا
+sandbox/staging restore
+status
+varchar(50)
+نعم
+pending/running/passed/failed
+data_counts
+json nullable
+لا
+checksum_results
+json nullable
+لا
+started_at
+timestamp nullable
+لا
+completed_at
+timestamp nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+rollback_plans
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+subject_type
+varchar(100)
+نعم
+release/deployment/migration/package_update/ai_change
+subject_id
+bigint
+نعم
+rollback_strategy
+varchar(100)
+نعم
+restore_backup/revert_migration/redeploy_previous/manual_steps
+plan_body
+longtext
+نعم
+approved_by
+bigint nullable
+لا
+status
+varchar(50)
+نعم
+draft/approved/used/deprecated
+created_at / updated_at
+timestamps
+نعم
+rollback_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+rollback_plan_id
+bigint
+نعم
+triggered_by
+bigint nullable
+لا
+reason
+longtext nullable
+لا
+status
+varchar(50)
+نعم
+pending/running/completed/failed/cancelled
+started_at
+timestamp nullable
+لا
+completed_at
+timestamp nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+monitoring_checks
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+environment_id
+bigint nullable
+لا
+check_key
+varchar(150)
+نعم
+app/database/queue/cache/storage/ssl/scheduler/disk
+check_type
+varchar(100)
+نعم
+health/availability/performance/security
+status
+varchar(50)
+نعم
+active/inactive
+thresholds
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+monitoring_events
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+monitoring_check_id
+bigint nullable
+لا
+environment_id
+bigint nullable
+لا
+status
+varchar(50)
+نعم
+ok/warning/critical/recovered
+response_time_ms
+int nullable
+لا
+message
+longtext nullable
+لا
+metadata
+json nullable
+لا
+checked_at
+timestamp
+نعم
+created_at
+timestamp
+نعم
+incidents
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+incident_number
+varchar(50)
+نعم
+title
+varchar(255)
+نعم
+severity
+varchar(50)
+نعم
+sev1/sev2/sev3/sev4
+status
+varchar(50)
+نعم
+open/investigating/mitigated/resolved/closed
+environment_id
+bigint nullable
+لا
+affected_module
+varchar(100) nullable
+لا
+started_at
+timestamp nullable
+لا
+resolved_at
+timestamp nullable
+لا
+owner_user_id
+bigint nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+incident_updates
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+incident_id
+bigint
+نعم
+update_type
+varchar(50)
+نعم
+status/investigation/mitigation/customer_update/internal_note
+body
+longtext
+نعم
+posted_by
+bigint nullable
+لا
+created_at
+timestamp
+نعم
+incident_postmortems
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+incident_id
+bigint
+نعم
+root_cause
+longtext nullable
+لا
+impact_summary
+longtext nullable
+لا
+what_went_well
+longtext nullable
+لا
+what_went_wrong
+longtext nullable
+لا
+action_items
+json nullable
+لا
+status
+varchar(50)
+نعم
+draft/reviewed/final
+created_at / updated_at
+timestamps
+نعم
+performance_test_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+environment_id
+bigint nullable
+لا
+scenario_key
+varchar(150)
+نعم
+public_page/admin_dashboard/checkout/search/import
+status
+varchar(50)
+نعم
+passed/failed/warning
+avg_response_ms
+int nullable
+لا
+p95_response_ms
+int nullable
+لا
+db_query_count
+int nullable
+لا
+memory_mb
+decimal(10,2) nullable
+لا
+report_ref
+varchar(255) nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+accessibility_qa_runs
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+subject_type
+varchar(100)
+نعم
+admin/theme/public_page
+subject_id
+bigint nullable
+لا
+rtl_ready
+boolean
+نعم
+desktop_usable
+boolean
+نعم
+tablet_usable
+boolean
+نعم
+mobile_responsive
+boolean
+نعم
+issues_count
+int default 0
+نعم
+status
+varchar(50)
+نعم
+passed/failed/warning
+created_at / updated_at
+timestamps
+نعم
+documentation_qa_records
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+subject_type
+varchar(100)
+نعم
+feature/module/release/installer/plugin
+subject_id
+bigint nullable
+لا
+has_description
+boolean
+نعم
+has_usage_steps
+boolean
+نعم
+has_permissions
+boolean
+نعم
+has_limitations
+boolean
+نعم
+status
+varchar(50)
+نعم
+complete/incomplete/outdated
+reviewed_by
+bigint nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+runbooks
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+title
+varchar(255)
+نعم
+runbook_type
+varchar(100)
+نعم
+incident/deployment/rollback/backup/restore/security/dr
+module_key
+varchar(100) nullable
+لا
+body
+longtext
+نعم
+status
+varchar(50)
+نعم
+draft/active/deprecated
+created_at / updated_at
+timestamps
+نعم
+dr_drills
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+environment_id
+bigint nullable
+لا
+drill_type
+varchar(100)
+نعم
+restore_test/failover/backup_integrity/incident_simulation
+status
+varchar(50)
+نعم
+planned/running/passed/failed
+scheduled_at
+timestamp nullable
+لا
+completed_at
+timestamp nullable
+لا
+findings
+json nullable
+لا
+created_at / updated_at
+timestamps
+نعم
+operational_checklists
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+uuid
+char(26/36)
+نعم
+checklist_type
+varchar(100)
+نعم
+go_live/pre_release/post_migration/security_review
+title
+varchar(255)
+نعم
+status
+varchar(50)
+نعم
+draft/active/deprecated
+created_at / updated_at
+timestamps
+نعم
+operational_checklist_items
+الحقل
+النوع المقترح
+إلزامي
+ملاحظات
+id
+bigint
+نعم
+operational_checklist_id
+bigint
+نعم
+item_key
+varchar(150)
+نعم
+label
+varchar(255)
+نعم
+is_required
+boolean
+نعم
+sort_order
+int default 0
+نعم
+created_at / updated_at
+timestamps
+نعم
+7. ERD مبسط
+erDiagram    DEVOPS_ENVIRONMENTS ||--o{ ENVIRONMENT_CONFIG_SNAPSHOTS : snapshots    DEVOPS_ENVIRONMENTS ||--o{ ENVIRONMENT_HEALTH_SNAPSHOTS : health    TEST_SUITES ||--o{ TEST_CASES : contains    TEST_CASES ||--o{ TEST_CASE_STEPS : has    TEST_SUITES ||--o{ TEST_RUNS : runs    TEST_RUNS ||--o{ TEST_RUN_CASES : includes    TEST_RUN_CASES ||--o{ TEST_FAILURES : may_fail    QA_GATE_DEFINITIONS ||--o{ QA_GATE_CHECKS : defines    QA_GATE_DEFINITIONS ||--o{ QA_GATE_RUNS : executed_as    QA_GATE_RUNS ||--o{ QA_GATE_RESULTS : produces    RELEASE_CHANNELS ||--o{ RELEASES : publishes    RELEASES ||--o{ RELEASE_NOTES : documents    RELEASES ||--o{ DEPLOYMENT_RUNS : deployed_by    DEPLOYMENT_PIPELINES ||--o{ DEPLOYMENT_RUNS : executes    DEPLOYMENT_RUNS ||--o{ DEPLOYMENT_STEPS : has    RELEASES ||--o{ CODE_QUALITY_RUNS : checks    CODE_QUALITY_RUNS ||--o{ STATIC_ANALYSIS_FINDINGS : produces    AI_CODE_REVIEW_REQUESTS ||--o{ AI_CODE_REVIEW_FINDINGS : finds    BACKUP_VERIFICATION_RUNS ||--o{ RESTORE_TEST_RUNS : verifies_restore    ROLLBACK_PLANS ||--o{ ROLLBACK_RUNS : used_by    MONITORING_CHECKS ||--o{ MONITORING_EVENTS : emits    INCIDENTS ||--o{ INCIDENT_UPDATES : has    INCIDENTS ||--o{ INCIDENT_POSTMORTEMS : closes_with    RUNBOOKS ||--o{ DR_DRILLS : guides    OPERATIONAL_CHECKLISTS ||--o{ OPERATIONAL_CHECKLIST_ITEMS : contains
+8. Flows التشغيلية
+8.1 Pre-release Gate Flow
+1. Developer creates release draft
+2. Run unit/feature/policy/security/package tests
+3. Run code quality checks
+4. Run migration safety checks
+5. Create release notes
+6. Run QA gate
+7. If passed → approve release
+8. If failed → block release until fixed
+8.2 Deployment Flow
+1. Select release and environment
+2. Verify QA gate passed
+3. Create deployment_run
+4. Create backup if risky
+5. Run migration steps
+6. Clear cache / restart queue
+7. Run health checks
+8. Run smoke tests
+9. Mark deployment completed or failed
+10. If failed → execute rollback plan
+8.3 AI-generated Code Review Flow
+1. AI generates code suggestion
+2. Create ai_code_review_request
+3. Run static analysis
+4. Run permission/migration/test review
+5. Human reviews findings
+6. Only approved small change can be committed
+7. Run tests locally/CI before merge
+8.4 Major Migration Safety Flow
+1. Migration detected as risky/destructive
+2. Create migration_safety_check
+3. Require backup verification
+4. Require rollback test where possible
+5. Run in staging first
+6. Approve production window
+7. Record progress and result
+8.5 Incident Flow
+1. Monitoring event becomes critical
+2. Create incident
+3. Assign owner
+4. Post investigation updates
+5. Mitigate or rollback
+6. Resolve incident
+7. Create postmortem
+8. Create action items and link to backlog
+8.6 Go-live Checklist Flow
+1. Create operational checklist from template
+2. Mark required items: content, media, SEO, redirects, forms, backups, DNS, analytics, error logs
+3. Block launch if critical items missing
+4. Approve go-live
+5. Start post-launch monitoring
+9. Quality Gates وDefinition of Done
+الكود مكتوب ومنظم في Actions/Services وليس business logic داخل Controllers.
+الموديل الحساس له Policy واختبارات permission.
+المigrations تعمل على قاعدة جديدة ولا تكسر بيانات موجودة.
+الـ validation والأخطاء واضحة.
+Activity/Audit log موجود للفعل المهم.
+النسخة لها release notes: features, fixes, breaking changes, migration notes, security notes, known issues.
+كل deployment production له health checks وrollback plan.
+كل package update أو AI critical change أو bulk import/delete له backup أو snapshot قبل التنفيذ.
+لا ينتقل release gate إلا إذا مرّت الاختبارات الأساسية ولم توجد critical findings مفتوحة.
+10. AI Code Review
+كل كود يولده AI يجب أن يمر بـ Review ثم tests ثم manual check.
+AI لا يبني Module ضخم مرة واحدة؛ العمل يقسم إلى Migration ثم Model ثم Policy ثم Action ثم UI/API ثم Tests ثم Docs.
+لا يتم قبول كود AI يغير permissions أو migrations أو billing أو verification أو AI guardrails بدون مراجعة بشرية.
+يجب تسجيل finding إذا وجد AI احتمالية تسريب بيانات أو ضعف صلاحيات أو migration مدمرة أو test coverage ضعيف.
+القرار النهائي في ai_code_review_requests يكون: approved أو blocked أو requires_changes.
+11. Backup / Rollback / DR
+Backup مطلوب قبل: package update، major migration، AI critical change، bulk import، bulk delete، theme switch on production، critical workflow activation.
+الـ backup لا يعتبر صالحا إلا إذا مر backup_verification_run.
+Enterprise يحتاج restore_test_runs دورية وليس مجرد وجود ملفات backup.
+Rollback plan يجب أن يكون معروفا قبل deployment وليس بعد الفشل.
+DR drills تظهر في V6 مع enterprise DevOps وcompliance reports وrelease channels.
+12. Monitoring / Incidents
+Health checks الأساسية: app boot, database, cache, queue, storage, scheduler, mail optional, disk space, SSL.
+Monitoring لا يقتصر على uptime؛ يجب مراقبة queue failures، failed imports، package install failures، AI usage limits، sync errors، checkout errors، search latency.
+كل incident له severity وowner وupdates وpostmortem/action items.
+Monitoring events يمكن أن تطلق notifications أو create incident أو rollback suggestion حسب القاعدة.
+13. Cloud / Portable / Dedicated
+المجال
+الجداول
+الغرض
+Cloud
+deployment_runs + cloud health/checks + backup verification
+Kabeeri تدير النشر والنسخ والمراقبة مركزيا.
+Frontend Anywhere
+public API checks + cache invalidation checks + external frontend uptime
+اختبار الواجهة الخارجية والكاش والـ API scopes.
+Portable
+portable update tests + license/update check + optional sync tests
+العميل يدير التشغيل، لكن Kabeeri يمكنها تسجيل حالة التحديث والمزامنة والدعم.
+Dedicated
+dedicated deployment windows + health reports + support access + DR drills
+بيئة منفصلة تحتاج نافذة تحديث ونسخ ومراقبة مخصصة.
+14. Indexes مهمة
+devops_environments.environment_key
+devops_environments.environment_type + status
+test_runs.status + started_at
+test_runs.release_id
+test_run_cases.test_run_id + status
+test_failures.severity + status
+qa_gate_runs.subject_type + subject_id
+qa_gate_runs.status
+releases.version
+releases.status + release_channel_id
+deployment_runs.release_id + status
+deployment_runs.environment_id + started_at
+code_quality_runs.commit_hash
+static_analysis_findings.severity + status
+ai_code_review_requests.risk_level + status
+migration_safety_checks.migration_name
+monitoring_events.environment_id + checked_at
+monitoring_events.status + checked_at
+incidents.severity + status
+incidents.started_at
+15. Permissions مقترحة
+devops.environment.view
+devops.environment.manage
+qa.test.view
+qa.test.run
+qa.failure.manage
+qa.gate.manage
+release.view
+release.create
+release.approve
+deployment.view
+deployment.run
+deployment.rollback
+code_quality.view
+ai_code_review.manage
+backup.verify
+restore.test.run
+incident.view
+incident.manage
+runbook.manage
+dr_drill.run
+16. Events مقترحة
+TestRunStarted
+TestRunCompleted
+TestRunFailed
+QaGatePassed
+QaGateFailed
+ReleaseApproved
+ReleasePublished
+DeploymentStarted
+DeploymentCompleted
+DeploymentFailed
+RollbackStarted
+RollbackCompleted
+CodeQualityFailed
+AiCodeReviewBlocked
+BackupVerificationFailed
+RestoreTestFailed
+MonitoringCriticalEventDetected
+IncidentOpened
+IncidentResolved
+PostmortemCompleted
+17. Feature Flags
+enable_devops_operational_database
+enable_qa_gate_engine
+enable_release_channels
+enable_deployment_tracking
+enable_code_quality_tracking
+enable_ai_code_review_tracking
+enable_backup_verification
+enable_restore_testing
+enable_incident_management
+enable_dr_drills
+enable_performance_qa
+enable_accessibility_qa
+18. Build Order
+المرحلة 1 — Environments + System Status
+devops_environments
+environment_config_snapshots
+environment_health_snapshots
+system status UI
+المرحلة 2 — Testing Registry
+test_suites
+test_cases
+test_runs
+test failures UI
+المرحلة 3 — QA Gates
+qa_gate_definitions
+qa_gate_checks
+qa_gate_runs
+release gate integration
+المرحلة 4 — Releases
+release_channels
+releases
+release_notes
+release approvals
+المرحلة 5 — Deployments
+deployment_pipelines
+deployment_runs
+deployment_steps
+health checks
+المرحلة 6 — Code Quality + AI Review
+code_quality_runs
+static_analysis_findings
+ai_code_review_requests
+ai findings
+المرحلة 7 — Backups + Rollback
+backup verification
+restore tests
+rollback plans
+rollback runs
+المرحلة 8 — Monitoring + Incidents
+monitoring checks/events
+incidents
+postmortems
+runbooks
+المرحلة 9 — Enterprise Hardening
+DR drills
+performance tests
+accessibility QA
+documentation QA
+compliance exports
+19. أخطاء ممنوعة
+لا تشغل migrations خطيرة بدون backup وmigration_safety_check.
+لا تعتمد على AI code بدون review وتشغيل tests.
+لا تعمل release بدون scenario demo وrelease notes.
+لا تخلط dev data مع production data.
+لا تضع secrets في Git أو في DB كنص واضح.
+لا تفتح plugin/package updates بدون package validation وrollback plan.
+لا تعتبر وجود backup كافيا بدون restore test على الأقل في الإصدارات الحساسة.
+لا تجعل CI الخارجي هو مصدر السجل الوحيد؛ يجب حفظ operational summary داخل Kabeeri.
+لا تسمح بwaive للـ QA gate بدون سبب وapproval وسجل audit.
+لا تقيس الأداء بعد فوات الأوان؛ سجله من البداية ولو بأهداف بسيطة.
+20. الخلاصة التنفيذية
+قاعدة بيانات Testing / QA / DevOps ليست رفاهية في Kabeeri؛ هي طبقة حماية تشغيلية تمنع انهيار الرؤية الكبيرة بسبب تغييرات صغيرة غير مختبرة. تبدأ بسيطة في V1 مع test runs وsystem status وbackup command، ثم تتوسع في V4 إلى cloud pipeline وmonitoring وpackage review، وفي V6 إلى Enterprise DevOps وDR drills وsecurity scans وcompliance reports وrelease channels. السرعة بالذكاء الاصطناعي لا تعني الاستعجال؛ السرعة الحقيقية هي بناء صغير مستقر قابل للاختبار والرجوع عنه.
+ملحوظة توافق مع الملفات السابقة
+متوافق مع فلسفة Testing, QA & DevOps: Testable from V1, Observable from V1, Backup before risky changes, Small releases, Rollback-ready, AI-assisted but human-reviewed.
+متوافق مع V1: Auth/Organization/Membership/Permission/Site/Page/Media/Activity/Feature Flag tests + installer smoke test + backup command.
+متوافق مع V4: Cloud deployment pipeline، automated backups، monitoring، error tracking، package review pipeline، Security Center tests.
+متوافق مع V6: Enterprise DevOps، DR drills، security scans، compliance reports، release channels، load/security testing، support runbooks.
+KABEERI — Database File 36 — Testing / QA / DevOps Operational Database
+Kabeeri — powered by ADMIT

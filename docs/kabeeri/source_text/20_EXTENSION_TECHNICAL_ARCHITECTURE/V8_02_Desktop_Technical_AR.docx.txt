@@ -1,0 +1,8 @@
+KABEERI V8 Desktop Offline Client — Technical Architecture
+KABEERI Professional Knowledge System — v1.6.2
+التكنولوجيا
+Electron + React + TypeScript + SQLite. تم اختيار Electron بدل Tauri لأن المطلوب Offline-first عميق، Local DB، File queues، Sync engine، Auto-update، وسهولة تطوير/تصحيح.
+المكونات
+Electron Main Process├── SQLite Local Database├── Local Outbox Queue├── Sync Engine├── File Upload Queue├── Conflict Resolver├── Secure Token Storage└── Auto Update LayerReact UI└── Desktop screens using shared API client
+قاعدة العمل
+Local-first, server-authoritative: المستخدم يشتغل محليًا، لكن Laravel API هو الحكم النهائي عند المزامنة.

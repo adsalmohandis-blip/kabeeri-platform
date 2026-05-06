@@ -1,0 +1,1016 @@
+KABEERI Database File 15 — Kabeeri Integration Hub Database
+نظام Integration Hub + Connector Registry + Sync Engine + Webhooks
+هذا الملف يصف تصميم قاعدة البيانات الخاص بـ Kabeeri Integration Hub، وهي الطبقة التي تربط Kabeeri بأنظمة خارجية مثل WordPress، WooCommerce، Shopify، Odoo، Zoho، QuickBooks، Xero، Daftra، Google Sheets/CSV، بوابات الدفع، مزودي الشحن، وأي نظام مخصص لاحقًا.
+ملاحظة مهمة: Integration Hub لا يعني فتح وصول عشوائي لقواعد البيانات. كل اتصال يجب أن يكون عبر Connector معلن، صلاحيات واضحة، Credential Vault، Mapping Preview، Sync Logs، Retry Rules، وAudit.
+1. هدف Integration Hub Database
+الهدف من هذا النظام هو توفير طبقة ربط آمنة ومنظمة بين Kabeeri والأنظمة الخارجية، بحيث يستطيع العميل مزامنة البيانات أو استيرادها أو إرسالها بدون خلط المسؤوليات أو كشف الأسرار أو إفساد البيانات التشغيلية.
+تسجيل connectors الرسمية والخاصة والمخصصة.
+إدارة connections لكل Organization أو Company أو Site.
+حفظ مراجع credentials بشكل آمن بدون تخزين plain text داخل الجداول العادية.
+تعريف field mappings بين كيان Kabeeri والكيان الخارجي.
+تشغيل sync jobs يدوية أو مجدولة أو event-driven.
+تسجيل sync logs والأخطاء والمحاولات وإتاحة retry آمن.
+استقبال webhooks من أنظمة خارجية والتحقق من التوقيع قبل المعالجة.
+دعم preview / dry run قبل تطبيق تغييرات production.
+ربط نتائج المزامنة بـ Activity Logs وAudit Logs وAI error explanation.
+تجهيز Connector SDK V1 بدون فتح Public Developer Marketplace بالكامل.
+2. موقع Integration Hub داخل Kabeeri
+Integration Hub يبدأ في V5 فوق ERP Pro، لكنه يعتمد على Core وPermissions وAudit وBilling وWorkflows. لا يبدأ إذا كانت الصلاحيات أو الفواتير أو المخزون أو الأمان غير مستقرة.
+الطبقة
+علاقتها بـ Integration Hub
+Core Kernel
+Users, Organizations, Companies, Sites, Permissions, Settings, Activity/Audit Logs.
+Security Center
+MFA, API tokens, sensitive logs, credential vault references, rate limits.
+ERP Pro
+مصادر ووجهات CRM, Sales, Inventory, Purchasing, Accounting, Helpdesk, Contracts.
+Commerce
+Products, Customers, Orders, Payments, Shipping data sync.
+CMS / Migration
+WordPress/WooCommerce import and content migration sources.
+Billing / Entitlements
+يفتح أو يغلق connectors حسب الخطة والاستخدام.
+Events / Workflows
+Integration events, Sync events, advanced approvals, webhook triggers.
+AI ERP Assistants
+شرح أخطاء sync واقتراح mapping/data cleanup بدون تنفيذ خطير تلقائي.
+3. ما يدخل في هذا الملف وما لا يدخل
+يدخل في Integration Hub Database
+لا يدخل في هذا الملف
+Connector Registry, Connections, Credentials Vault References
+تفاصيل تنفيذ SDK البرمجية أو كود كل connector.
+Sync Jobs, Sync Logs, Sync Errors, Retry Queue
+Migration UI الكامل أو أدوات ETL Enterprise المتقدمة.
+Field Mapping, Value Mapping, Conflict Rules
+BI/Data Warehouse الكامل.
+Webhook Endpoints, Deliveries, Incoming Events
+Public Developer Marketplace العام؛ هذا V6.
+Manual/Scheduled/Event-driven Sync
+حفظ كلمات المرور أو API secrets plain text.
+Connection Health, Rate Limits, Usage
+تشغيل sync بدون permissions/audit.
+External Reference Links
+تعريف جداول ERP الأصلية مثل invoices أو products؛ موجودة في ملفاتها.
+4. مبادئ تصميم Integration Hub
+No credential plain text: أي secret أو token أو password تحفظ كـ encrypted secret أو vault reference فقط.
+Scope-first: كل connection لها scopes تحدد ماذا تقرأ وماذا تكتب.
+Mapping before sync: لا يسمح لأي sync production بدون field mapping أو default mapping واضح.
+Preview before apply: البيانات القادمة من نظام خارجي يجب أن تمر بـ dry run / preview للكيانات الحساسة.
+Idempotency: أي webhook أو sync event يجب أن يمكن تكراره بدون إنشاء duplicated records.
+Audit by default: أي sync يغير بيانات ERP أو Commerce أو Finance يسجل audit.
+Error visibility: أخطاء المزامنة تظهر للمستخدم، ولا تختفي في logs داخلية فقط.
+Retry with limits: retry rules محددة مع backoff وmax attempts، وليس loop مفتوح.
+Disconnect safely: العميل يستطيع تعطيل connection بدون كسر البيانات المحلية.
+No direct DB access: لا connector يقرأ/يكتب قاعدة Kabeeri مباشرة خارج Service/API contracts.
+Tenant scoped: كل job أو mapping أو webhook مرتبط بـ organization_id، ومعه company_id/site_id عند الحاجة.
+External IDs preserved: يجب حفظ external_id وexternal_system للمطابقة وحل التعارضات.
+5. أنواع التكامُل المدعومة
+النوع
+الوصف
+أمثلة
+Import
+جلب بيانات من نظام خارجي إلى Kabeeri.
+WordPress posts, Shopify products, Odoo customers.
+Export
+إرسال بيانات من Kabeeri إلى نظام خارجي.
+Invoices to QuickBooks, products to Google Sheets.
+Two-way Sync
+مزامنة اتجاهين مع قواعد تضارب.
+Customers, products, inventory balances.
+Webhook Inbound
+استقبال حدث من الخارج.
+PaymentSucceeded, ShopifyOrderCreated.
+Webhook Outbound
+إرسال حدث من Kabeeri للخارج.
+InvoiceIssued, OrderPaid.
+API Pull
+Kabeeri يجلب بيانات بجدولة.
+Xero invoices, Zoho leads.
+API Push
+Kabeeri يرسل تغييرات عند الأحداث.
+New customer to CRM.
+CSV/Sheet Sync
+استيراد أو مزامنة عبر ملفات أو Google Sheets.
+Products, price lists, leads.
+6. الجداول الأساسية
+المجموعة
+الجداول
+Connector Registry
+connectors, connector_versions, connector_capabilities, connector_required_scopes, connector_entity_support
+Connections
+integration_connections, connection_scopes, connection_settings, connection_health_checks
+Credentials
+credential_vault_references, oauth_authorizations, oauth_token_events
+Mappings
+integration_entity_mappings, integration_field_mappings, integration_value_mappings, integration_transform_rules
+Sync Engine
+sync_jobs, sync_job_items, sync_logs, sync_errors, sync_retry_queue, sync_conflicts, sync_previews
+Webhooks
+webhook_endpoints, webhook_subscriptions, webhook_deliveries, incoming_webhook_events, webhook_signatures
+External References
+external_object_links, external_id_aliases
+Limits / Usage
+integration_rate_limits, integration_usage_records
+Operations
+integration_runs, integration_run_steps, integration_notifications
+7. Connector Registry
+connectors
+يسجل connector كتعريف عام قابل للاستخدام في Kabeeri.
+الحقل
+الغرض / ملاحظات
+id, uuid
+معرف داخلي وعام.
+key
+مثال: shopify, woocommerce, odoo, quickbooks, xero, daftra.
+name
+اسم ظاهر.
+connector_type
+cms, commerce, erp, accounting, crm, payment, shipping, sheet, custom.
+publisher_type
+official, verified_partner, private, custom.
+status
+draft, active, deprecated, suspended, archived.
+risk_level
+low, medium, high, critical.
+auth_type
+api_key, oauth2, basic, hmac, custom, file_upload.
+is_official
+هل رسمي من Kabeeri/ADMIT.
+settings_schema json nullable
+Schema للإعدادات العامة.
+metadata json nullable
+بيانات مرنة.
+created_at, updated_at
+unique(key)
+index(connector_type, status)
+index(risk_level)
+connector_versions
+إصدارات connector وتوافقها.
+الحقل
+الغرض / ملاحظات
+id, uuid
+connector_id
+connector التابع.
+version
+semver.
+status
+draft, active, deprecated, blocked.
+min_kabeeri_version nullable
+أقل نسخة مدعومة.
+max_kabeeri_version nullable
+أعلى نسخة إن وجدت.
+release_notes nullable
+ملاحظات.
+manifest json
+تعريف version manifest.
+checksum nullable
+للتحقق.
+created_at, updated_at
+unique(connector_id, version)
+connector_capabilities
+قدرات connector.
+الحقل
+الغرض / ملاحظات
+id
+connector_id
+capability_key
+read_products, write_orders, sync_customers, receive_webhooks.
+direction
+read, write, two_way, webhook_in, webhook_out.
+risk_level
+low, medium, high.
+description nullable
+created_at
+connector_required_scopes
+الصلاحيات المطلوبة لتفعيل قدرة معينة.
+الحقل
+الغرض / ملاحظات
+id
+connector_id
+capability_key
+القدرة المرتبطة.
+permission_slug
+مثال commerce.product.view أو finance.invoice.issue.
+scope_level
+organization, company, site.
+is_sensitive default false
+created_at
+connector_entity_support
+الكيانات التي يدعمها connector.
+الحقل
+الغرض / ملاحظات
+id
+connector_id
+entity_type
+product, order, customer, invoice, payment, inventory, lead, service, article.
+external_entity_name
+اسم الكيان في النظام الخارجي.
+supports_import default false
+supports_export default false
+supports_two_way default false
+supports_webhooks default false
+default_mapping json nullable
+8. Connections
+integration_connections
+اتصال فعلي بين Organization/Company/Site ونظام خارجي.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+نطاق العميل.
+company_id nullable
+شركة محددة إن وجدت.
+site_id nullable
+موقع/متجر محدد إن وجد.
+connector_id
+تعريف connector.
+connector_version_id nullable
+الإصدار المستخدم.
+name
+اسم داخلي للاتصال.
+status
+pending, active, paused, failed, disconnected, revoked.
+environment
+production, sandbox, test.
+external_account_name nullable
+اسم الحساب الخارجي الظاهر.
+external_account_id nullable
+معرف الحساب الخارجي.
+credential_ref_id nullable
+مرجع credential_vault_references.
+last_connected_at nullable
+last_sync_at nullable
+last_error_at nullable
+created_by nullable
+metadata json nullable
+created_at, updated_at, deleted_at nullable
+index(organization_id, status)
+index(company_id)
+index(site_id)
+index(connector_id)
+connection_scopes
+Scopes الممنوحة للاتصال.
+الحقل
+الغرض / ملاحظات
+id
+integration_connection_id
+scope_key
+read_products, write_inventory, read_customers.
+permission_slug nullable
+ربط بصلاحية Kabeeri.
+status
+active, revoked.
+granted_by nullable
+granted_at nullable
+revoked_at nullable
+connection_settings
+إعدادات connection غير سرية.
+الحقل
+الغرض / ملاحظات
+id
+integration_connection_id
+key
+مثال default_warehouse_id, sync_currency, timezone.
+value json nullable
+value_type
+string, boolean, integer, json.
+is_encrypted default false
+يفضل الأسرار في credential vault لا هنا.
+created_at, updated_at
+unique(integration_connection_id, key)
+connection_health_checks
+فحوصات صحة الاتصال.
+الحقل
+الغرض / ملاحظات
+id, uuid
+integration_connection_id
+check_type
+auth, api_ping, permissions, webhook, rate_limit, mapping.
+status
+healthy, warning, failed.
+response_time_ms nullable
+message nullable
+checked_at
+metadata json nullable
+9. Credentials & OAuth
+لا تحفظ هذه الجداول الأسرار كـ plain text. تحفظ فقط vault_ref أو hash أو masked metadata. التنفيذ الفعلي للتشفير يكون عبر Secret Manager / Vault / encrypted storage.
+credential_vault_references
+مرجع آمن للـ credentials.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+company_id nullable, site_id nullable
+integration_connection_id nullable
+credential_type
+api_key, oauth_token, basic_auth, hmac_secret, private_key.
+vault_provider
+internal_encrypted, cloud_vault, customer_vault.
+vault_ref
+مرجع إلى السر، وليس السر نفسه.
+label
+اسم ظاهر.
+status
+active, expired, revoked, rotated.
+last_rotated_at nullable
+expires_at nullable
+metadata_masked json nullable
+بيانات مقنعة فقط.
+created_by nullable
+created_at, updated_at, revoked_at nullable
+oauth_authorizations
+حالة OAuth authorization.
+الحقل
+الغرض / ملاحظات
+id, uuid
+integration_connection_id
+provider
+shopify, quickbooks, xero, zoho, google.
+external_user_id nullable
+external_account_id nullable
+scopes json
+Scopes الممنوحة من النظام الخارجي.
+token_credential_ref_id nullable
+مرجع الـ token في vault.
+refresh_credential_ref_id nullable
+مرجع refresh token.
+status
+pending, active, expired, revoked, failed.
+authorized_at nullable
+expires_at nullable
+last_refresh_at nullable
+oauth_token_events
+أحداث token refresh/revocation.
+الحقل
+الغرض / ملاحظات
+id, uuid
+oauth_authorization_id
+event_type
+authorized, refreshed, refresh_failed, revoked, expired.
+status
+success, failed.
+message nullable
+created_at
+10. Mapping Layer
+Mapping Layer تمنع sync عشوائي. كل كيان خارجي يجب أن يعرف كيف يتحول إلى كيان Kabeeri، وكيف يتم تحويل الحقول والقيم والـ enums والعملات والتواريخ.
+integration_entity_mappings
+تعريف mapping بين كيان خارجي وكيان Kabeeri.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+company_id nullable, site_id nullable
+integration_connection_id
+local_entity_type
+product, order, customer, invoice, payment, inventory_movement, lead.
+external_entity_type
+اسم الكيان الخارجي.
+direction
+import, export, two_way.
+conflict_strategy
+local_wins, external_wins, newest_wins, manual_review, field_level.
+status
+draft, active, paused, archived.
+last_validated_at nullable
+created_by nullable
+metadata json nullable
+index(integration_connection_id, local_entity_type)
+index(status)
+integration_field_mappings
+ربط الحقول بين النظامين.
+الحقل
+الغرض / ملاحظات
+id, uuid
+entity_mapping_id
+local_field
+مثال products.name.
+external_field
+مثال title.
+direction
+import, export, both.
+is_required default false
+transform_rule_id nullable
+default_value json nullable
+validation_rules json nullable
+status
+active, inactive.
+sort_order default 0
+integration_value_mappings
+تحويل قيم محددة مثل statuses أو payment methods.
+الحقل
+الغرض / ملاحظات
+id, uuid
+field_mapping_id
+local_value
+مثال paid.
+external_value
+مثال completed.
+direction
+import, export, both.
+status
+active, inactive.
+created_at, updated_at
+integration_transform_rules
+قواعد تحويل متقدمة قابلة للمراجعة.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+name
+rule_type
+format_date, currency_convert, concat, split, lookup, custom_safe.
+config json
+إعداد التحويل.
+risk_level
+low, medium, high.
+status
+draft, active, archived.
+created_by nullable
+11. Sync Engine
+sync_jobs
+عملية مزامنة رئيسية.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+company_id nullable, site_id nullable
+integration_connection_id
+entity_mapping_id nullable
+job_type
+manual, scheduled, webhook, event_triggered, retry, initial_import, dry_run.
+direction
+import, export, two_way.
+status
+pending, running, completed, completed_with_errors, failed, cancelled.
+mode
+preview, apply.
+started_by nullable
+started_at nullable, completed_at nullable, failed_at nullable
+records_total default 0
+records_processed default 0
+records_created default 0
+records_updated default 0
+records_failed default 0
+error_message nullable
+metadata json nullable
+index(organization_id, status)
+index(integration_connection_id)
+index(started_at)
+sync_job_items
+كل سجل داخل sync job.
+الحقل
+الغرض / ملاحظات
+id, uuid
+sync_job_id
+local_entity_type nullable
+local_entity_id nullable
+external_entity_type nullable
+external_entity_id nullable
+operation
+create, update, delete, skip, conflict, validate.
+status
+pending, success, failed, skipped, conflict.
+payload_hash nullable
+before_snapshot json nullable
+after_snapshot json nullable
+error_message nullable
+processed_at nullable
+sync_logs
+Logs عامة لكل job أو item.
+الحقل
+الغرض / ملاحظات
+id, uuid
+sync_job_id nullable
+sync_job_item_id nullable
+level
+debug, info, warning, error, critical.
+message
+context json nullable
+created_at
+sync_errors
+أخطاء قابلة للعرض والحل.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+integration_connection_id nullable
+sync_job_id nullable
+sync_job_item_id nullable
+error_code
+mapping_missing, auth_failed, validation_failed, rate_limited, conflict.
+severity
+low, medium, high, critical.
+message
+suggested_fix nullable
+ai_explanation_id nullable
+مرجع لنتيجة AI إن وجدت.
+status
+open, ignored, resolved, retrying.
+resolved_by nullable, resolved_at nullable
+created_at, updated_at
+sync_retry_queue
+صف محاولات إعادة التشغيل.
+الحقل
+الغرض / ملاحظات
+id, uuid
+sync_job_id nullable
+sync_job_item_id nullable
+integration_connection_id
+retry_reason
+attempt_number default 0
+max_attempts default 3
+next_attempt_at nullable
+status
+pending, running, exhausted, cancelled, completed.
+last_error_message nullable
+created_at, updated_at
+sync_conflicts
+تعارضات تحتاج قرار.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+integration_connection_id
+entity_mapping_id nullable
+local_entity_type, local_entity_id nullable
+external_entity_type, external_entity_id nullable
+conflict_type
+field_changed_both, missing_required_field, deleted_local, deleted_external.
+local_snapshot json nullable
+external_snapshot json nullable
+status
+open, resolved, ignored.
+resolution_strategy nullable
+local_wins, external_wins, merge, skip.
+resolved_by nullable, resolved_at nullable
+sync_previews
+نتيجة dry run قبل التطبيق.
+الحقل
+الغرض / ملاحظات
+id, uuid
+sync_job_id
+summary json
+عدد created/updated/skipped/conflicts.
+sample_changes json nullable
+عينات للعرض.
+risk_level
+low, medium, high.
+requires_approval default false
+approved_by nullable, approved_at nullable
+created_at, updated_at
+12. Webhooks
+webhook_endpoints
+نقاط استقبال webhooks داخل Kabeeri.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+integration_connection_id
+endpoint_key
+مسار أو key داخلي.
+url_path
+المسار النسبي.
+status
+active, paused, revoked.
+secret_ref_id nullable
+مرجع secret للتحقق من التوقيع.
+allowed_events json nullable
+last_received_at nullable
+created_at, updated_at
+webhook_subscriptions
+اشتراكات outbound webhooks من Kabeeri للخارج.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+company_id nullable, site_id nullable
+integration_connection_id nullable
+name
+target_url
+events json
+OrderPaid, InvoiceIssued, ProductUpdated.
+secret_ref_id nullable
+status
+active, paused, failed, revoked.
+created_by nullable
+created_at, updated_at
+webhook_deliveries
+محاولات إرسال webhooks للخارج.
+الحقل
+الغرض / ملاحظات
+id, uuid
+webhook_subscription_id
+event_type
+subject_type, subject_id nullable
+payload_hash nullable
+status
+pending, sent, failed, retrying, cancelled.
+http_status nullable
+response_body_preview nullable
+attempt_number default 0
+next_attempt_at nullable
+sent_at nullable
+created_at, updated_at
+incoming_webhook_events
+أحداث واردة من الأنظمة الخارجية.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id nullable
+integration_connection_id nullable
+webhook_endpoint_id nullable
+external_event_id nullable
+لـ idempotency.
+event_type
+payload_hash
+payload json nullable
+يمكن حفظ payload بعد تنقية البيانات الحساسة.
+signature_valid default false
+status
+received, validated, processed, failed, ignored, duplicate.
+received_at
+processed_at nullable
+error_message nullable
+unique(webhook_endpoint_id, external_event_id) عند توفر external_event_id
+webhook_signatures
+نتائج فحص التوقيع.
+الحقل
+الغرض / ملاحظات
+id
+incoming_webhook_event_id
+signature_type
+hmac_sha256, provider_header, oauth.
+is_valid
+checked_at
+message nullable
+13. External Object Links
+external_object_links
+ربط أي كيان Kabeeri بسجل خارجي.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+company_id nullable, site_id nullable
+integration_connection_id
+local_type
+product, order, customer, invoice, lead, ticket, supplier_bill.
+local_id
+external_entity_type
+external_id
+external_url nullable
+last_synced_at nullable
+sync_status
+linked, pending, failed, stale, disconnected.
+metadata json nullable
+created_at, updated_at
+unique(integration_connection_id, local_type, local_id, external_entity_type)
+index(external_id)
+external_id_aliases
+Aliases عندما يتغير external_id أو يوجد أكثر من معرف.
+الحقل
+الغرض / ملاحظات
+id
+external_object_link_id
+alias_type
+legacy_id, uuid, sku, email, provider_ref.
+alias_value
+status
+active, retired.
+created_at
+14. Rate Limits & Usage
+integration_rate_limits
+حدود استخدام لكل connection أو connector.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+integration_connection_id nullable
+limit_type
+requests_per_minute, jobs_per_day, records_per_job, webhook_deliveries.
+limit_value integer
+window_seconds integer nullable
+status
+active, paused.
+created_at, updated_at
+integration_usage_records
+سجل استخدام للتكاملات لأغراض billing/monitoring.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+integration_connection_id nullable
+usage_type
+api_request, synced_record, webhook_received, webhook_sent, sync_job, ai_error_explanation.
+quantity decimal(15,3)
+unit
+request, record, job, event.
+period_start, period_end
+metadata json nullable
+created_at
+15. Operational Runs
+integration_runs
+Run عام لعملية تكامل قد تحتوي عدة steps.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+integration_connection_id nullable
+run_type
+setup, health_check, initial_sync, scheduled_sync, webhook_processing, disconnect.
+status
+pending, running, completed, failed, cancelled.
+started_by nullable
+started_at nullable, completed_at nullable
+summary json nullable
+integration_run_steps
+خطوات run.
+الحقل
+الغرض / ملاحظات
+id
+integration_run_id
+step_key
+validate_auth, load_mapping, fetch_data, transform, preview, apply, notify.
+step_order
+status
+pending, running, completed, failed, skipped.
+message nullable
+started_at nullable, completed_at nullable
+metadata json nullable
+integration_notifications
+إشعارات مرتبطة بالتكاملات.
+الحقل
+الغرض / ملاحظات
+id, uuid
+organization_id
+integration_connection_id nullable
+recipient_user_id nullable
+notification_type
+sync_failed, auth_expired, mapping_required, conflict_open, sync_completed.
+title
+body nullable
+status
+pending, sent, read, dismissed.
+created_at, updated_at
+16. الجداول حسب Connector V1
+Connector
+كيانات البداية
+اتجاه أولي مقترح
+WordPress
+pages, posts, media, authors, categories, tags, SEO metadata
+Import / migration ثم optional sync محدود
+WooCommerce
+products, customers, orders, coupons, stock
+Import ثم two-way محدود للمنتجات/المخزون
+Shopify
+products, collections, customers, orders, inventory levels
+Import + product/order sync
+Odoo
+customers, products, invoices, inventory, chart/accounts optional
+Two-way بحذر مع mapping preview
+Zoho CRM
+leads, contacts, deals, activities
+Two-way CRM
+Zoho Books
+customers, invoices, payments, bills
+Accounting import/export محدود
+QuickBooks
+customers, invoices, payments, accounts, bills
+Accounting sync مع audit قوي
+Xero
+contacts, invoices, payments, accounts
+Accounting sync
+Daftra
+customers, invoices, inventory, payments
+Regional accounting/ERP sync
+Google Sheets / CSV
+products, customers, leads, price lists
+Import/export + validation
+Payment Gateways
+payment status, refunds, transaction references
+Webhook inbound + status sync
+Shipping Providers
+shipments, tracking numbers, delivery status
+API push/pull + webhooks
+17. Sync Flow
+أي sync حقيقي يجب أن يمر بالخطوات التالية:
+التحقق من entitlement: هل الخطة تسمح بالـ connector؟
+التحقق من permissions: هل المستخدم يملك صلاحية إنشاء/تشغيل sync؟
+فحص connection health وcredential status.
+تحميل entity mapping وfield mapping.
+تشغيل preview أو dry run للكيانات الحساسة.
+عرض summary/errors/conflicts للمستخدم عند الحاجة.
+الحصول على approval إذا كان sync عالي المخاطر.
+تشغيل apply mode عبر queue.
+تسجيل sync_job_items لكل record.
+إنشاء external_object_links أو تحديثها.
+تسجيل Activity/Audit Logs وإشعار المسؤول.
+فتح retry_queue أو sync_errors إذا فشل جزء من العملية.
+Sync Flow:User/Admin starts sync→ EntitlementService check→ PermissionService check→ Connection health check→ Load mappings→ Dry run / preview→ Approval if high risk→ Queue sync job→ Process records idempotently→ Create/update external links→ Log activity/audit→ Notify owner→ Retry or conflict review if needed
+18. Webhook Inbound Flow
+استقبال request على webhook endpoint.
+تحديد connection من endpoint_key أو headers.
+التحقق من HMAC/OAuth/provider signature.
+فحص idempotency عبر external_event_id أو payload_hash.
+إنشاء incoming_webhook_event.
+تحويله إلى sync_job أو domain event.
+تسجيل log وnotification عند الفشل أو الحاجة لتدخل.
+19. Conflict Resolution Rules
+نوع التعارض
+المثال
+القرار الافتراضي
+field_changed_both
+سعر المنتج تغير في Shopify وKabeeri
+manual_review أو field_level strategy.
+missing_required_field
+فاتورة خارجية بدون customer مطابق
+sync_errors + mapping required.
+deleted_local
+السجل حذف داخل Kabeeri لكنه موجود خارجيًا
+لا يعاد إنشاؤه تلقائيًا إلا بسياسة واضحة.
+deleted_external
+السجل حذف خارجيًا لكنه موجود داخل Kabeeri
+mark stale أو manual review.
+duplicate_match
+أكثر من customer بنفس email
+conflict open + user selection.
+financial_difference
+Invoice total مختلف
+high risk + approval required.
+inventory_difference
+Stock balance مختلف
+لا يعدل مباشرة بدون stock movement.
+20. Security Requirements
+لا تحفظ API keys أو OAuth tokens كـ plain text.
+كل connector يعلن scopes قبل التفعيل.
+أي وصول لـ finance أو payroll أو legal documents أو bank accounts يحتاج صلاحية صريحة.
+كل webhook incoming يتحقق من signature.
+كل outbound webhook يستخدم secret أو signature.
+كل sync عالي المخاطر يحتاج preview وربما approval.
+كل فشل authentication أو credential refresh يسجل security event.
+rate limiting على public/inbound endpoints.
+إلغاء connection يجب أن يوقف webhooks ويمنع jobs جديدة.
+support diagnostics لا يرسل أسرار أو بيانات حساسة بدون consent.
+21. Permissions المقترحة
+Permission
+الغرض
+integration.view
+رؤية صفحة التكامُل.
+integration.connection.create
+إنشاء اتصال جديد.
+integration.connection.manage
+تعديل/إيقاف/حذف اتصال.
+integration.credentials.manage
+إدارة credentials أو إعادة الربط.
+integration.mapping.manage
+إدارة field/value mappings.
+integration.sync.run
+تشغيل sync يدوي.
+integration.sync.preview
+تشغيل preview/dry run.
+integration.sync.approve
+اعتماد sync عالي المخاطر.
+integration.webhook.manage
+إدارة webhooks.
+integration.logs.view
+عرض logs/errors.
+integration.conflict.resolve
+حل تعارضات sync.
+integration.disconnect
+فصل الاتصال.
+22. Feature Flags المقترحة
+enable_integration_hub
+enable_connector_sdk_v1
+enable_official_connectors
+enable_oauth_connections
+enable_credentials_vault_foundation
+enable_sync_jobs
+enable_sync_preview
+enable_field_mapping
+enable_webhook_inbound
+enable_webhook_outbound
+enable_retry_queue
+enable_conflict_resolution_basic
+enable_ai_sync_error_explainer
+enable_google_sheets_csv_connector
+enable_accounting_connectors_foundation
+enable_commerce_connectors_foundation
+23. Entitlements / Plan Limits
+Entitlement
+مثال قيمة
+enable_integration_hub
+true/false
+max_integration_connections
+3 / 10 / unlimited
+max_sync_jobs_per_day
+50 / 500 / custom
+max_records_per_sync_job
+1000 / 10000 / custom
+enable_accounting_connectors
+true/false
+enable_two_way_sync
+true/false
+enable_custom_connectors
+enterprise فقط
+enable_private_connector_sdk
+enterprise/agency
+enable_ai_sync_explanations
+حسب credits
+webhook_delivery_limit
+حسب الخطة
+24. Audit Events
+Event
+متى يسجل
+integration_connection_created
+عند إنشاء connection.
+integration_connection_disconnected
+عند الفصل.
+credential_added_or_rotated
+عند إضافة/تدوير credential ref.
+sync_preview_created
+عند تشغيل dry run.
+sync_job_started
+عند بدء job.
+sync_job_failed
+عند فشل job.
+sync_job_completed
+عند الاكتمال.
+sync_conflict_resolved
+عند حل تعارض.
+webhook_received
+عند استقبال webhook.
+webhook_signature_failed
+عند فشل التوقيع.
+high_risk_sync_approved
+عند اعتماد sync عالي المخاطر.
+25. ERD مبسط
+erDiagram CONNECTORS ||--o{ CONNECTOR_VERSIONS : versions CONNECTORS ||--o{ CONNECTOR_CAPABILITIES : supports CONNECTORS ||--o{ CONNECTOR_REQUIRED_SCOPES : requires CONNECTORS ||--o{ CONNECTOR_ENTITY_SUPPORT : maps ORGANIZATIONS ||--o{ INTEGRATION_CONNECTIONS : owns CONNECTORS ||--o{ INTEGRATION_CONNECTIONS : connected_as INTEGRATION_CONNECTIONS ||--o{ CONNECTION_SCOPES : grants INTEGRATION_CONNECTIONS ||--o{ CONNECTION_SETTINGS : configures INTEGRATION_CONNECTIONS ||--o{ CREDENTIAL_VAULT_REFERENCES : uses INTEGRATION_CONNECTIONS ||--o{ OAUTH_AUTHORIZATIONS : authorizes INTEGRATION_CONNECTIONS ||--o{ INTEGRATION_ENTITY_MAPPINGS : maps INTEGRATION_ENTITY_MAPPINGS ||--o{ INTEGRATION_FIELD_MAPPINGS : fields INTEGRATION_FIELD_MAPPINGS ||--o{ INTEGRATION_VALUE_MAPPINGS : values INTEGRATION_CONNECTIONS ||--o{ SYNC_JOBS : runs SYNC_JOBS ||--o{ SYNC_JOB_ITEMS : processes SYNC_JOBS ||--o{ SYNC_LOGS : logs SYNC_JOBS ||--o{ SYNC_ERRORS : errors SYNC_JOBS ||--o{ SYNC_PREVIEWS : previews SYNC_JOB_ITEMS ||--o{ SYNC_CONFLICTS : conflicts INTEGRATION_CONNECTIONS ||--o{ WEBHOOK_ENDPOINTS : receives WEBHOOK_ENDPOINTS ||--o{ INCOMING_WEBHOOK_EVENTS : receives WEBHOOK_SUBSCRIPTIONS ||--o{ WEBHOOK_DELIVERIES : sends INTEGRATION_CONNECTIONS ||--o{ EXTERNAL_OBJECT_LINKS : links
+26. CLI Commands المقترحة
+php artisan kabeeri:integration:health {connectionId}php artisan kabeeri:integration:sync {connectionId} --entity=products --mode=previewphp artisan kabeeri:integration:sync {connectionId} --entity=orders --mode=applyphp artisan kabeeri:integration:retry {syncJobId}php artisan kabeeri:integration:disconnect {connectionId}php artisan kabeeri:integration:rotate-credential {connectionId}php artisan kabeeri:integration:validate-mapping {entityMappingId}php artisan kabeeri:webhooks:deliver-pendingphp artisan kabeeri:webhooks:replay {incomingWebhookEventId}php artisan kabeeri:connectors:validate-manifest {connectorKey}php artisan kabeeri:connectors:seed-official
+27. Testing Checklist
+اختبار أن Connector Registry يتحقق من manifest وrequired scopes.
+اختبار أن Connection لا ينشأ بدون entitlement وpermission مناسبين.
+اختبار أن Credentials لا تحفظ كنص واضح داخل قاعدة البيانات.
+اختبار أن فشل OAuth token refresh ينشئ sync_error أو security event ظاهر.
+اختبار أن Sync Preview يعرض أعداد create/update/skip/conflict.
+اختبار أن High-risk sync لا يطبق بدون approval.
+اختبار أن Webhook يرفض signature غير صحيح.
+اختبار أن Duplicate webhook event يتم تجاهله بطريقة idempotent.
+اختبار أن Retry Queue تحترم max attempts وbackoff.
+اختبار أن غياب Mapping يمنع production sync.
+اختبار أن مزامنة المخزون تنشئ stock movement ولا تعدل balance مباشرة.
+اختبار أن Accounting sync يسجل audit events.
+اختبار أن Disconnect يوقف jobs المستقبلية ويعطل webhook endpoints.
+اختبار أن أوضاع Portable وDedicated تحفظ external_object_links عبر UUIDs.
+اختبار أن Rate limits تمنع إساءة استخدام endpoints.
+28. Portable / Dedicated / Frontend Anywhere Considerations
+الوضع
+قاعدة Integration Hub
+Cloud
+في وضع Cloud: كل connections وsync jobs داخل Cloud DB، والـ credentials تكون داخل vault مركزي أو encrypted storage.
+Frontend Anywhere
+في وضع Frontend Anywhere: الواجهة الخارجية لا تحصل على Integration credentials؛ أي form أو order يذهب إلى Kabeeri Public API ثم يعالجه Integration Hub داخليًا.
+Portable
+في وضع Portable: يمكن تصدير mappings وexternal links، لكن credentials تحتاج إعادة تسجيل أو portable vault منفصل. Mall Sync يستمر عبر self-hosted token منفصل.
+Dedicated
+في وضع Dedicated: يمكن تشغيل Integration Hub داخل Dedicated DB مع central registry محدود، أو hybrid حيث يبقى billing/license/connector catalog مركزيًا.
+Mall Sync
+في Mall Sync: لا يتصل Mall مباشرة بالتكاملات الخارجية؛ يعتمد على Mall Mirror أو Mall Sync API.
+29. أخطاء ممنوعة
+ممنوع حفظ credentials كنص واضح plain text.
+ممنوع تشغيل sync production بدون mapping preview.
+ممنوع تعديل stock_balances مباشرة بدل stock movements.
+ممنوع تغيير قيود مالية أو فواتير بدون audit وapproval عند الحاجة.
+ممنوع قبول Webhook بدون signature validation.
+ممنوع تشغيل Retry loop مفتوح بدون max attempts.
+ممنوع أن يطلب Connector scopes أكثر مما يحتاج.
+ممنوع إتاحة custom connector بدون review أو private approval.
+ممنوع إخفاء أخطاء sync عن المستخدم.
+ممنوع خلط invoices_platform الخاصة بفوترة Kabeeri مع فواتير العملاء التجارية.
+ممنوع السماح لـ AI أن يصلح mapping أو يطبق sync عالي المخاطر بدون موافقة.
+30. ترتيب التنفيذ المقترح
+المرحلة
+المخرجات
+S1 — Connector Registry
+إضافة connectors وversions وcapabilities وscopes وseeders رسمية.
+S2 — Connections + Credentials
+إضافة integration_connections وconnection_scopes وcredential vault references وOAuth foundation.
+S3 — Mapping Layer
+إضافة entity/field/value mappings مع validation واضح.
+S4 — Sync Preview
+إضافة dry run وsync_previews وsample changes وrisk classification.
+S5 — Sync Apply
+إضافة sync_jobs وsync_job_items وsync_logs وexternal links.
+S6 — Errors + Retry
+إضافة sync_errors وretry_queue وconflict resolution basic.
+S7 — Webhooks
+إضافة incoming/outbound webhooks وsignatures وdeliveries.
+S8 — Official Connectors V1
+تأسيس WooCommerce/Shopify/QuickBooks/Xero/Zoho/Daftra connectors.
+S9 — AI Error Explanation
+استخدام AI لشرح الأخطاء فقط؛ بدون dangerous auto-fix.
+S10 — Demo
+ربط Shopify أو WooCommerce، مزامنة products/orders، إظهار mapping error، إصلاحه، ثم إكمال sync.
+31. الخلاصة التنفيذية
+Integration Hub هو طبقة خطرة ومهمة في Kabeeri V5. قيمته أنه يسمح للعميل بربط Kabeeri بأنظمته الحالية بدل إجباره على النقل الكامل فورًا. لكنه يجب أن يبنى بأمان شديد: scopes، vault، mapping preview، sync logs، retry، conflict resolution، audit، وفصل واضح بين connectors وبين جداول ERP/Commerce الأصلية.
+القاعدة النهائية: No integration without scopes, no sync without mapping, no sensitive write without audit, no credential plain text, no dangerous apply without preview and approval.
+KABEERI Database File 15 — Integration Hub Database — powered by ADMIT

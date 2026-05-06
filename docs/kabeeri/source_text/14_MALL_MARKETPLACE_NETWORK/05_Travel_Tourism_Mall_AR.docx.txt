@@ -1,0 +1,52 @@
+KABEERI Travel & Tourism Mall Architecture
+قسم مستقل داخل Kabeeri Mall للرحلات الداخلية والخارجية والسياحة والعمرة والفنادق والبرامج السياحية.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. الأقسام
+القسم
+الوصف
+Domestic Trips
+رحلات داخلية: شرم، دهب، الأقصر، أسوان، سيوة، الساحل
+International Trips
+تركيا، دبي، السعودية، أوروبا، شرق آسيا، أفريقيا
+Hajj & Umrah
+برامج عمرة وحج، مستويات فنادق، مستندات مطلوبة
+Tour Packages
+برامج 3/5/7 أيام، جدول رحلة، سعر يبدأ من
+Corporate / Educational Trips
+رحلات شركات ومدارس وجامعات
+Medical Tourism
+سياحة علاجية ومراكز طبية وفنادق
+Adventure Trips
+سفاري، غوص، تخييم، تسلق
+Travel Agencies
+شركات سياحة موثقة وRabet Trust
+Tour Guides
+مرشدين سياحيين ومحترفين
+Hotel & Transport Packages
+فنادق وانتقالات وتأجير سيارات
+2. بيانات الرحلة
+الحقل
+المعنى
+trip_name / slug
+اسم الرحلة ورابطها العام
+domestic_or_international
+داخلي أو خارجي
+destination_country / city
+الدولة والمدينة
+duration_days / dates
+المدة والتواريخ
+price_from / currency
+السعر من والعملة
+included / excluded
+الخدمات المشمولة وغير المشمولة
+hotel_level / transportation
+مستوى الفندق ونوع الانتقال
+available_seats / deadline
+المقاعد المتاحة وموعد الحجز
+required_documents / visa_required
+المستندات والتأشيرة
+agency / trust_status
+شركة السياحة وحالة التوثيق
+3. الحزمة المطلوبة
+Travel & Tourism Bundle = Travel Packages + Tour Booking Request + Itinerary Builder + Seat Availability + Document/Visa Checklist + WhatsApp Booking + Reviews + Travel Agency Profile + Deals & Offers + Rabet Trust Badge.

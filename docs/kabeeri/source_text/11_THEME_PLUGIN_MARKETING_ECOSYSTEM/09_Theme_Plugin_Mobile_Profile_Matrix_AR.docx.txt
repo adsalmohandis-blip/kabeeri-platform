@@ -1,0 +1,190 @@
+09 — Matrix الثيمات والبلجنات وبروفايل الموبايل
+يربط هذا الملف بين نوع المشروع، حزمة البلجنات، بروفايل الموبايل، والـ APIs المطلوبة استعدادًا لـ V7.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+نوع المشروع
+App Type
+Bundle
+Mobile Profile Tabs
+API Manifest
+ملاحظات
+شركات وخدمات عامة
+website
+Business Starter Bundle
+home, about, services, contact
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+عيادات ومراكز صحية
+service
+Clinic Bundle
+home, services, booking, reviews, contact
+app.profile, services, booking.requests, reviews
+Mobile Profile V7 مطلوب لكل Theme Family
+تجميل وسبا وWellness
+service
+Beauty Wellness Bundle
+home, services, booking, reviews, contact
+app.profile, services, booking.requests, reviews
+Mobile Profile V7 مطلوب لكل Theme Family
+مطاعم وكافيهات وأغذية
+service/commerce
+Restaurant Bundle
+menu, offers, order/request, branches
+app.profile, services, booking.requests, reviews
+Mobile Profile V7 مطلوب لكل Theme Family
+متاجر إلكترونية عامة
+store
+Commerce Starter Bundle
+home, products, cart, orders, account
+app.profile, products, cart, orders, customers
+Mobile Profile V7 مطلوب لكل Theme Family
+أزياء وموضة وإكسسوارات
+store
+Fashion Commerce Bundle
+home, products, cart, orders, account
+app.profile, products, cart, orders, customers
+Mobile Profile V7 مطلوب لكل Theme Family
+إلكترونيات وموبايلات وأجهزة
+store
+Electronics Commerce Bundle
+home, products, cart, orders, account
+app.profile, products, cart, orders, customers
+Mobile Profile V7 مطلوب لكل Theme Family
+أثاث ومنزل وديكور
+store/catalog
+Home Furniture Bundle
+home, catalog, quote, gallery, contact
+app.profile, products, cart, orders, customers
+Mobile Profile V7 مطلوب لكل Theme Family
+عقارات وتطوير عقاري
+directory/service
+Real Estate Bundle
+listings, filters, map, inquiry
+listings, search, reviews, claim.requests
+Mobile Profile V7 مطلوب لكل Theme Family
+مقاولات وتشطيبات ومعمار
+website/service
+Construction Bundle
+home, projects, quote, services
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+تعليم ومدارس وحضانات
+education
+Education Bundle
+programs, trainers, enroll, events
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+أكاديميات وكورسات وLMS
+lms
+LMS Bundle
+courses, lessons, certificates, profile
+app.profile, courses, lessons, enrollments
+Mobile Profile V7 مطلوب لكل Theme Family
+محاماة ومحاسبة واستشارات
+website/service
+Professional Services Bundle
+home, projects, quote, services
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+وكالات تسويق وتصميم وبرمجة
+agency
+Agency Bundle
+portfolio, services, quote, team
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+SaaS وتكنولوجيا وتطبيقات
+website/saas
+SaaS Bundle
+features, pricing, demo, docs
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+لوجستيات وشحن ونقل
+service
+Logistics Bundle
+home, services, booking, reviews, contact
+app.profile, services, booking.requests, reviews
+Mobile Profile V7 مطلوب لكل Theme Family
+فنادق وسياحة وحجوزات
+booking
+Hospitality Bundle
+packages, availability, booking, reviews
+app.profile, packages, availability, booking.requests
+Mobile Profile V7 مطلوب لكل Theme Family
+صيانة وخدمات منزلية ومحلية
+service
+Local Services Bundle
+home, services, booking, reviews, contact
+app.profile, services, booking.requests, reviews
+Mobile Profile V7 مطلوب لكل Theme Family
+سيارات ومعارض وورش
+catalog/service
+Automotive Bundle
+listings, filters, booking, contact
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+بورتفوليو وأفراد ومهنيين
+portfolio
+Professional Portfolio Bundle
+profile, portfolio, services, contact
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+مجلات ومدونات وأخبار
+content
+Magazine Blog Bundle
+feed, categories, authors, search
+cms.pages, cms.posts, search
+Mobile Profile V7 مطلوب لكل Theme Family
+منظمات وجمعيات وتبرعات
+ngo
+NGO Donations Bundle
+campaigns, donate, volunteer, impact
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+فعاليات ومؤتمرات وحفلات
+events
+Events Bundle
+events, tickets, schedule, speakers
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+Fitness / Gym / Sports
+booking
+Fitness Bundle
+packages, availability, booking, reviews
+app.profile, packages, availability, booking.requests
+Mobile Profile V7 مطلوب لكل Theme Family
+زراعة وحيوانات وبيطرة
+service/store
+Agriculture Pets Bundle
+services, products, booking, delivery
+app.profile, services, booking.requests, reviews
+Mobile Profile V7 مطلوب لكل Theme Family
+ماركت بليس ودليل أعمال
+directory
+Directory Marketplace Bundle
+browse, search, filters, reviews
+listings, search, reviews, claim.requests
+Mobile Profile V7 مطلوب لكل Theme Family
+صفحات هبوط وحملات
+landing
+Landing Campaign Bundle
+offer, form, thank-you
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+شركاء ومسوقين بالعمولة
+partner_storefront
+Affiliate Partner Bundle
+catalog, deals, tracking, commissions
+catalog.public, affiliate.links, partner.stats
+Mobile Profile V7 مطلوب لكل Theme Family
+Kabeeri Work Network / Agency Kits
+work_network
+Work Network Bundle
+profile, badges, services, requests
+app.profile, cms.pages, forms, media
+Mobile Profile V7 مطلوب لكل Theme Family
+Enterprise / Industry / B2B Portals
+portal
+Enterprise Portal Bundle
+dashboard, requests, documents, messages
+profile, documents, requests, notifications
+Mobile Profile V7 مطلوب لكل Theme Family

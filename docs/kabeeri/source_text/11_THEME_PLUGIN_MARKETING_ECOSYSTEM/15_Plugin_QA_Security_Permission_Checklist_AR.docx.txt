@@ -1,0 +1,68 @@
+15 — Checklist جودة وأمان البلجنات
+هذا الملف يحكم مراجعة أي Plugin أو Module أو Connector قبل النشر أو التفعيل.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+#
+Check
+Risk Area
+Required?
+1
+Manifest valid
+Security/Quality
+Yes
+2
+Permissions declared
+Security/Quality
+Yes
+3
+Dependencies declared
+Security/Quality
+Yes
+4
+No hidden data access
+Security/Quality
+Yes
+5
+Migrations additive/safe
+Security/Quality
+Yes
+6
+Uninstall safe
+Security/Quality
+Yes
+7
+Audit logs for sensitive actions
+Security/Quality
+Yes
+8
+Rate limits if API exposed
+Security/Quality
+Yes
+9
+Tests included
+Security/Quality
+Yes
+10
+Security scan pass
+Security/Quality
+Yes
+11
+Performance impact documented
+Security/Quality
+Yes
+12
+Compatibility matrix updated
+Security/Quality
+Yes
+13
+No secrets logged
+Security/Quality
+Yes
+14
+Marketplace signing required
+Security/Quality
+Yes
+15
+Support policy present
+Security/Quality
+Yes

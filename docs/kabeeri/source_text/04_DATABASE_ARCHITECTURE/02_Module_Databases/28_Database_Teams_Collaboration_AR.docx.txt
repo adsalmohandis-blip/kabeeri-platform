@@ -1,0 +1,736 @@
+KABEERI Database File 28
+Kabeeri Teams / Collaboration Database
+قاعدة بيانات Kabeeri Teams والتعاون الداخلي المرتبط بالعمل
+1. تعريف Kabeeri Teams
+Kabeeri Teams هو نظام التعاون الداخلي داخل Kabeeri، لكنه ليس نسخة كاملة من Slack. هدفه ربط المحادثات بالعمل الفعلي داخل المنصة: العملاء، الطلبات، الفواتير، المشاريع، التوثيق، المحتوى، المنتجات، الدعم، الموافقات، والتنبيهات النظامية.
+القاعدة الأساسية: كل محادثة مهمة يجب أن تعرف السياق الذي تخدمه: Organization أو Company أو Site أو Object محدد داخل CMS / Commerce / ERP / Rabet / Mall.
+2. الهدف من قاعدة بيانات Teams
+تمكين القنوات الداخلية والرسائل المباشرة داخل Organization وCompany.
+ربط النقاشات بسجلات العمل مثل Order أو Invoice أو Lead أو Task أو Project أو Verification Request.
+تحويل رسالة إلى Task أو Approval أو Follow-up بدون نسخ البيانات بين الأنظمة.
+إرسال System Alerts من الموديولات مثل orders, verification, billing, security, support.
+حماية الخصوصية والصلاحيات بحيث لا يرى المستخدم إلا قنوات وسياقات مسموحة له.
+تجهيز النظام للتوسع لاحقًا إلى Collaboration Advanced في V5 وFull Team Collaboration Suite في V6.
+3. ما يدخل في V1
+Channels.
+Direct Messages.
+Threads basic.
+Mentions.
+Files basic.
+Task from message.
+System alert channels.
+Approvals notifications.
+Object-linked discussions basic.
+Read receipts basic.
+Notification routing.
+4. ما لا يدخل في V1
+Voice / Video.
+Full Slack replacement.
+Apps داخل Teams.
+Advanced search داخل Teams.
+Full external guest collaboration.
+Enterprise eDiscovery الكامل.
+Data residency per-channel.
+Chat bots marketplace المفتوح.
+5. مبادئ التصميم
+Work-linked collaboration: المحادثات تخدم كيان عمل أو سياقًا واضحًا.
+Context-first permissions: صلاحية رؤية الرسالة لا تأتي من Teams فقط، بل من السياق المرتبط بها.
+Tenant-scoped by default: كل شيء يحتوي organization_id، وعند الحاجة company_id / site_id.
+No private data leakage: لا تظهر محادثات payroll أو finance أو legal documents إلا بصلاحيات صريحة.
+Messages are records: لا يتم حذف الرسائل الحساسة حذفًا صامتًا؛ يجب وجود revisions/logs أو retention policy.
+Attachments use Media/Files layer: Teams لا يخزن الملفات نفسها، بل يربط بـ media_assets أو documents.
+Notifications are routed: mentions وsystem alerts تمر عبر Notification Center.
+6. Data Domains
+Domain
+الغرض
+Workspace & Channels
+تنظيم مساحات التعاون والقنوات والأعضاء.
+Conversations & Messages
+المحادثات، الرسائل، threads، direct messages.
+Mentions & Notifications
+الإشارات والتنبيهات وقواعد الإرسال.
+Attachments & Files
+ربط الرسائل بملفات موجودة في Media/Files.
+Tasks & Approvals
+تحويل الرسائل إلى مهام أو طلبات موافقة.
+Object Links
+ربط محادثة أو رسالة بكائن عمل داخل النظام.
+System Alerts
+قنوات تلقائية للتنبيهات من الموديولات.
+Read/Presence/Preferences
+حالة القراءة، الحضور، تفضيلات المستخدم.
+Retention & Audit
+سياسات الاحتفاظ وسجلات الوصول والتصدير.
+7. الجداول الأساسية
+team_workspaces
+team_channels
+team_channel_members
+team_channel_permissions
+team_conversations
+team_conversation_participants
+team_messages
+team_message_revisions
+team_threads
+team_message_mentions
+team_message_reactions
+team_message_attachments
+team_read_receipts
+team_pins
+team_saved_items
+team_object_links
+team_tasks_from_messages
+team_approval_links
+team_system_alert_channels
+team_alert_rules
+team_presence_states
+team_user_preferences
+team_retention_policies
+team_access_logs
+team_exports
+8. team_workspaces
+يمثل مساحة تعاون داخل Organization أو Company. يمكن أن تكون workspace عامة للمنظمة أو خاصة بشركة أو مشروع لاحقًا.
+الحقل
+الملاحظات
+id
+Primary key
+uuid
+للاستخدام في API والتصدير
+organization_id
+إجباري
+company_id nullable
+لو المساحة مرتبطة بشركة
+site_id nullable
+لو المساحة مرتبطة بموقع
+name
+slug
+workspace_type
+organization / company / project / support / agency
+status default active
+created_by nullable
+settings json nullable
+metadata json nullable
+created_at / updated_at / deleted_at
+القيم المقترحة:
+workspace_type: organization, company, project, support, agency, platform_internal
+status: active, paused, archived, suspended
+ملاحظات:
+unique(organization_id, company_id, slug)
+كل قناة يجب أن تنتمي إلى workspace.
+9. team_channels
+قناة داخل Workspace. قد تكون قناة عامة، خاصة، system alert، أو قناة مرتبطة بكائن عمل.
+الحقل
+الملاحظات
+id
+uuid
+organization_id
+workspace_id
+company_id nullable
+site_id nullable
+name
+slug
+description nullable
+channel_type
+public / private / system_alert / object_linked / department / project
+visibility default workspace
+workspace / private / company_only / system_only
+is_default boolean default false
+is_readonly boolean default false
+linked_object_type nullable
+مثال: order, invoice, project
+linked_object_id nullable
+created_by nullable
+status default active
+settings json nullable
+created_at / updated_at / deleted_at
+القيم المقترحة:
+channel_type: public, private, system_alert, object_linked, department, project
+status: active, archived, locked, deleted
+ملاحظات:
+system_alert channels قد تكون readonly.
+object_linked channels يجب أن تفحص صلاحيات الكائن المرتبط.
+10. team_channel_members
+عضوية المستخدمين داخل القنوات.
+الحقل
+الملاحظات
+id
+channel_id
+user_id
+organization_membership_id nullable
+company_membership_id nullable
+member_role default member
+owner / admin / member / guest / bot
+status default active
+joined_at nullable
+last_read_at nullable
+muted_until nullable
+notification_level default all
+all / mentions / none
+created_at / updated_at
+القيم المقترحة:
+member_role: owner, admin, member, guest, bot
+status: invited, active, muted, removed, left
+ملاحظات:
+unique(channel_id, user_id)
+لا يكفي وجود العضوية؛ يجب فحص صلاحيات السياق أيضًا.
+11. team_channel_permissions
+صلاحيات مخصصة على مستوى القناة عندما لا يكفي role العام.
+الحقل
+الملاحظات
+id
+channel_id
+permission_slug
+team.message.send مثلا
+effect
+allow / deny
+subject_type
+role / user / membership
+subject_id
+reason nullable
+created_by nullable
+created_at
+القيم المقترحة:
+effect: allow, deny
+ملاحظات:
+deny يغلب allow في القنوات الحساسة.
+لا تستخدم هذه الجدول بدل RBAC الأساسي؛ هو override محلي.
+12. team_conversations
+يمثل conversation داخل قناة أو رسالة مباشرة أو thread أو نقاش مرتبط بكائن.
+الحقل
+الملاحظات
+id
+uuid
+organization_id
+workspace_id nullable
+channel_id nullable
+conversation_type
+channel / direct / group_dm / thread / object_discussion / system
+subject nullable
+status default active
+linked_object_type nullable
+linked_object_id nullable
+created_by nullable
+last_message_id nullable
+last_message_at nullable
+metadata json nullable
+created_at / updated_at / archived_at nullable
+القيم المقترحة:
+conversation_type: channel, direct, group_dm, thread, object_discussion, system
+status: active, archived, locked, deleted
+ملاحظات:
+DM لا يحتاج channel_id.
+object_discussion يجب أن يرتبط بكائن عمل واضح.
+13. team_conversation_participants
+المشاركون في Conversation، خصوصًا DMs وobject discussions.
+الحقل
+الملاحظات
+id
+conversation_id
+user_id
+participant_role default member
+status default active
+joined_at nullable
+left_at nullable
+last_read_message_id nullable
+last_read_at nullable
+created_at / updated_at
+القيم المقترحة:
+participant_role: owner, member, guest, bot
+status: active, left, removed, muted
+ملاحظات:
+unique(conversation_id, user_id)
+14. team_messages
+رسائل Teams الأساسية.
+الحقل
+الملاحظات
+id
+uuid
+organization_id
+workspace_id nullable
+channel_id nullable
+conversation_id
+parent_message_id nullable
+للـ thread أو reply
+sender_user_id nullable
+sender_type default user
+user / system / bot / ai
+message_type default text
+text / file / system / task / approval / alert
+body longtext nullable
+body_format default markdown
+plain / markdown / rich
+status default sent
+is_edited boolean default false
+is_pinned boolean default false
+linked_object_type nullable
+linked_object_id nullable
+metadata json nullable
+sent_at nullable
+edited_at nullable
+deleted_at nullable
+created_at / updated_at
+القيم المقترحة:
+message_type: text, file, system, task, approval, alert, ai_summary
+status: draft, sent, hidden, deleted, failed
+ملاحظات:
+لا تحفظ الملفات داخل الرسالة؛ استخدم attachments.
+رسائل system/alert قد تكون readonly.
+15. team_message_revisions
+تاريخ تعديلات الرسائل.
+الحقل
+الملاحظات
+id
+message_id
+edited_by nullable
+old_body longtext nullable
+new_body longtext nullable
+edit_reason nullable
+created_at
+ملاحظات:
+يستخدم عندما تكون الرسائل مرتبطة بسياقات حساسة مثل finance, verification, disputes.
+16. team_threads
+تمثيل thread اختياري لتجميع replies حول رسالة أصلية.
+الحقل
+الملاحظات
+id
+uuid
+organization_id
+conversation_id
+root_message_id
+reply_count default 0
+last_reply_at nullable
+status default active
+created_at / updated_at
+القيم المقترحة:
+status: active, locked, archived
+ملاحظات:
+يمكن الاكتفاء بـ parent_message_id في V1، لكن هذا الجدول يساعد في performance لاحقًا.
+17. team_message_mentions
+الإشارات داخل الرسائل.
+الحقل
+الملاحظات
+id
+message_id
+mentioned_type
+user / channel / role / team / object
+mentioned_id nullable
+mention_text
+@ahmed أو #orders
+notification_created boolean default false
+created_at
+القيم المقترحة:
+mentioned_type: user, channel, role, team, object
+ملاحظات:
+mentions تولد Notifications حسب تفضيلات المستخدم والصلاحيات.
+18. team_message_reactions
+ردود فعل بسيطة على الرسائل.
+الحقل
+الملاحظات
+id
+message_id
+user_id
+reaction
+emoji أو key
+created_at
+ملاحظات:
+unique(message_id, user_id, reaction)
+19. team_message_attachments
+ربط الرسائل بملفات Media/Files.
+الحقل
+الملاحظات
+id
+message_id
+media_asset_id nullable
+document_id nullable
+لو موجود من Document Management
+attachment_type
+media / document / link / generated_report
+display_name nullable
+visibility default inherited
+created_by nullable
+created_at
+القيم المقترحة:
+attachment_type: media, document, link, generated_report
+visibility: inherited, channel, private, sensitive
+ملاحظات:
+الملفات الحساسة تحتاج signed links وسجلات وصول.
+لا يتم تصدير private documents في Portable إلا حسب policy.
+20. team_read_receipts
+قراءة الرسائل وحساب unread.
+الحقل
+الملاحظات
+id
+message_id
+conversation_id
+user_id
+read_at
+created_at
+ملاحظات:
+يمكن الاستغناء عنها في V1 لو تم استخدام last_read_message_id، لكنها أفضل للتحليلات وcompliance.
+21. team_pins
+تثبيت رسائل داخل قناة أو conversation.
+الحقل
+الملاحظات
+id
+message_id
+channel_id nullable
+conversation_id nullable
+pinned_by
+pinned_at
+created_at
+22. team_saved_items
+حفظ رسائل للمستخدم لاستخدامه الشخصي.
+الحقل
+الملاحظات
+id
+user_id
+message_id
+note nullable
+created_at
+ملاحظات:
+هذه بيانات شخصية للمستخدم وتحتاج privacy/export rules.
+23. team_object_links
+ربط المحادثات والرسائل بكائنات عمل داخل Kabeeri.
+الحقل
+الملاحظات
+id
+organization_id
+conversation_id nullable
+message_id nullable
+object_type
+order / invoice / lead / project / task / content_entry / verification_request
+object_id
+link_type
+discussion / alert / decision / evidence / approval
+created_by nullable
+created_at
+القيم المقترحة:
+link_type: discussion, alert, decision, evidence, approval, follow_up
+ملاحظات:
+هذا الجدول هو سبب وجود Teams داخل Kabeeri وليس مجرد دردشة عامة.
+24. team_tasks_from_messages
+تحويل رسالة إلى مهمة أو ربطها بمهمة موجودة.
+الحقل
+الملاحظات
+id
+message_id
+task_id nullable
+من نظام Tasks/ERP
+created_by
+assigned_to nullable
+status default created
+created_at / updated_at
+القيم المقترحة:
+status: created, linked, failed, cancelled
+ملاحظات:
+لا يكرر بيانات المهمة؛ فقط يحفظ الرابط والمصدر.
+25. team_approval_links
+ربط رسالة أو thread بطلب موافقة.
+الحقل
+الملاحظات
+id
+message_id nullable
+conversation_id nullable
+approval_request_id
+status default active
+created_by nullable
+created_at / updated_at
+القيم المقترحة:
+status: active, completed, cancelled
+ملاحظات:
+Approvals من الشات لا يعني الموافقة برسالة عادية؛ القرار الرسمي يبقى في approval_decisions.
+26. team_system_alert_channels
+تعريف قنوات تنبيه نظامية مرتبطة بموديولات.
+الحقل
+الملاحظات
+id
+organization_id
+workspace_id
+channel_id
+module_key
+commerce / billing / verification / security
+alert_key
+orders, verification, billing, security, support
+status default active
+created_at / updated_at
+القيم المقترحة:
+alert_key examples: orders, verification, billing, security, support, ai, cloud, integrations
+ملاحظات:
+يمكن إنشاء قنوات افتراضية عند تفعيل Teams لشركة.
+27. team_alert_rules
+قواعد إرسال تنبيهات من الموديولات إلى القنوات.
+الحقل
+الملاحظات
+id
+organization_id
+channel_id
+event_name
+OrderCreated مثلا
+conditions json nullable
+message_template nullable
+status default active
+created_at / updated_at
+ملاحظات:
+ترتبط بمحرك Events & Workflows، ولا يجب أن تنشئ الموديولات رسائل عشوائيًا بدون rule.
+28. team_presence_states
+حالة حضور المستخدم في Teams.
+الحقل
+الملاحظات
+id
+user_id
+organization_id nullable
+status
+online / away / busy / offline
+custom_status nullable
+last_seen_at nullable
+expires_at nullable
+created_at / updated_at
+القيم المقترحة:
+status: online, away, busy, offline, invisible
+29. team_user_preferences
+تفضيلات Teams لكل مستخدم داخل Organization.
+الحقل
+الملاحظات
+id
+user_id
+organization_id
+preferences json
+notification levels, mute settings, display options
+created_at / updated_at
+ملاحظات:
+يفضل عدم تخزين كل تفضيل كعمود حتى لا تتضخم الجداول مبكرًا.
+30. team_retention_policies
+سياسات الاحتفاظ برسائل Teams.
+الحقل
+الملاحظات
+id
+organization_id
+scope_type
+workspace / channel / conversation / default
+scope_id nullable
+retention_days nullable
+delete_mode
+soft_delete / anonymize / archive / keep_forever
+legal_hold boolean default false
+status default active
+created_at / updated_at
+القيم المقترحة:
+delete_mode: soft_delete, anonymize, archive, keep_forever
+ملاحظات:
+لا تطبق retention على رسائل legal hold أو disputes أو audit-sensitive بدون policy.
+31. team_access_logs
+سجلات وصول للمحادثات والملفات الحساسة.
+الحقل
+الملاحظات
+id
+organization_id
+user_id nullable
+action
+view_conversation / download_attachment / export_messages
+subject_type
+conversation / message / attachment / channel
+subject_id
+ip_address nullable
+user_agent nullable
+metadata json nullable
+created_at
+ملاحظات:
+تستخدم خصوصًا للقنوات المرتبطة بـ legal, finance, HR, security.
+32. team_exports
+طلبات تصدير محادثات Teams لأغراض قانونية أو Portable أو Enterprise.
+الحقل
+الملاحظات
+id
+uuid
+organization_id
+requested_by
+export_scope
+channel / conversation / workspace / organization
+scope_id nullable
+status default pending
+file_media_id nullable
+started_at nullable
+completed_at nullable
+expires_at nullable
+metadata json nullable
+created_at / updated_at
+القيم المقترحة:
+status: pending, approved, running, completed, failed, expired, cancelled
+ملاحظات:
+قد يحتاج approval قبل تصدير محادثات تحتوي بيانات حساسة.
+33. ERD مبسط
+erDiagram ORGANIZATIONS ||--o{ TEAM_WORKSPACES : owns TEAM_WORKSPACES ||--o{ TEAM_CHANNELS : contains TEAM_CHANNELS ||--o{ TEAM_CHANNEL_MEMBERS : has TEAM_CHANNELS ||--o{ TEAM_CONVERSATIONS : hosts TEAM_CONVERSATIONS ||--o{ TEAM_MESSAGES : contains TEAM_MESSAGES ||--o{ TEAM_MESSAGE_MENTIONS : mentions TEAM_MESSAGES ||--o{ TEAM_MESSAGE_ATTACHMENTS : attaches TEAM_MESSAGES ||--o{ TEAM_TASKS_FROM_MESSAGES : creates TEAM_MESSAGES ||--o{ TEAM_APPROVAL_LINKS : links TEAM_CONVERSATIONS ||--o{ TEAM_OBJECT_LINKS : discusses TEAM_CHANNELS ||--o{ TEAM_SYSTEM_ALERT_CHANNELS : receives TEAM_CHANNELS ||--o{ TEAM_ALERT_RULES : routes
+34. Default Channels Flow
+Company activates Teams V1.
+Create team_workspace for company.
+Create default channels: #general, #orders, #verification, #billing, #security, #support.
+Add company owner/admins as channel admins.
+Create team_system_alert_channels for module alerts.
+Create notification routing rules.
+Log activity: teams_workspace_created and channels_created.
+35. Message Flow
+User opens allowed channel or DM.
+Backend checks organization/company/site permissions and channel membership.
+Message is stored in team_messages.
+Mentions are parsed into team_message_mentions.
+Attachments are stored through Media/Files and linked in team_message_attachments.
+Notifications are created for mentioned users or channel subscribers.
+Search index receives a safe indexed copy according to visibility.
+36. Task from Message Flow
+User selects message and chooses Create Task.
+System checks task.create permission in the linked context.
+Task is created in Tasks/ERP module.
+team_tasks_from_messages stores message_id → task_id.
+Message gets system reply: task created.
+Activity log records task_created_from_message.
+37. Approval from Chat Flow
+A quotation, purchase request, verification step, or AI plan requires approval.
+Workflow creates approval_request.
+Teams posts an approval message in the linked channel/thread.
+Approver clicks approve/reject; decision is written to approval_decisions, not only team_messages.
+team_approval_links keeps the link between message and approval request.
+Final decision triggers workflow event and audit log.
+38. System Alert Flow
+Event occurs: OrderCreated, InvoiceOverdue, VerificationNeedsInfo, SecurityEventDetected.
+Event listener checks team_alert_rules.
+System creates team_messages with sender_type = system.
+Mentions or notification rules trigger Notification Center.
+If channel is readonly, only system/bot messages are allowed.
+39. Object-linked Discussion Rules
+أي نقاش مرتبط بفاتورة يجب أن يفحص finance/invoice permissions.
+أي نقاش مرتبط بتوثيق قانوني يجب أن يفحص verification/document permissions.
+أي نقاش مرتبط بتقييم موظف لا يظهر في channels العامة.
+أي object discussion يتم أرشفته مع object history ولا يحذف بصمت.
+team_object_links هو الرابط الرسمي بين الدردشة والعمل.
+40. Permissions المقترحة
+Permission
+المعنى
+team.workspace.view
+رؤية workspace
+team.workspace.manage
+إدارة workspace
+team.channel.view
+رؤية القنوات المسموحة
+team.channel.create
+إنشاء قناة
+team.channel.manage
+إدارة القناة
+team.channel.archive
+أرشفة القناة
+team.message.send
+إرسال رسالة
+team.message.edit_own
+تعديل الرسالة الخاصة
+team.message.delete_own
+حذف الرسالة الخاصة
+team.message.delete_any
+حذف أي رسالة بإذن إداري
+team.files.upload
+رفع ملف في Teams
+team.mentions.use
+استخدام mentions
+team.task.create_from_message
+إنشاء مهمة من رسالة
+team.approval.respond
+الرد على موافقة من Teams
+team.export.request
+طلب تصدير محادثات
+team.audit.view
+رؤية سجلات الوصول
+41. Roles المقترحة
+Team Workspace Owner: يدير workspace والقنوات الافتراضية.
+Channel Admin: يدير قناة محددة وأعضائها.
+Team Member: يرسل رسائل ويشارك في القنوات المسموحة.
+Guest / External Collaborator: وصول محدود لقنوات محددة فقط.
+System Bot: يرسل alerts من الموديولات.
+Compliance Viewer: يرى exports/access logs حسب policy.
+42. علاقة Teams مع Notification Center
+mentions تولد notification للعضو المذكور.
+system alerts قد تظهر في Teams وNotification Center معًا.
+DMs يمكن أن تعتمد على نفس مفهوم conversations لكن بواجهة Teams.
+التنبيهات الخارجية مثل email/push لا تخرج مباشرة من Teams؛ تمر عبر Notification Delivery.
+43. علاقة Teams مع Search
+رسائل Teams يمكن فهرستها في search index خاص داخلي فقط.
+لا يتم فهرسة القنوات الخاصة للعامة أو Mall.
+أي نتيجة search يجب أن تفحص membership + context permission.
+Advanced search ليس جزءًا من V4، لكن تصميم الفهرسة يسمح به لاحقًا.
+44. علاقة Teams مع AI
+AI يمكنه تلخيص thread إذا كان المستخدم يملك صلاحية قراءة كل الرسائل.
+AI لا يستخدم رسائل finance/legal/hr الحساسة بدون data classification check.
+AI-generated summary يتم تخزينه كرسالة ai_summary أو كمرفق تقرير حسب السياسة.
+أي Action من AI داخل Teams يظل خاضعًا لـ Plan/Preview/Approval/Rollback.
+45. علاقة Teams مع Portable / Dedicated / Frontend Anywhere
+النظام
+القواعد
+Cloud
+Teams يعمل بالكامل داخل Kabeeri Cloud ويستخدم نفس DB وMedia وNotifications.
+Frontend Anywhere
+الواجهة العامة خارجية؛ Teams لا يخرج، لأن Admin/DB داخل Cloud.
+Portable
+يمكن تصدير Teams حسب policy. الرسائل الحساسة قد تستثنى أو تؤرشف. يجب الحفاظ على UUIDs للروابط.
+Dedicated
+Teams يعمل داخل Dedicated DB، مع إمكانية إرسال usage/security summaries فقط للمركز.
+Mall Sync
+Teams لا يرسل محادثات خاصة إلى Mall. فقط leads/inquiries العامة تمر عبر Inbox/Mall حسب consent.
+46. Indexes مقترحة
+team_channels: index(organization_id, workspace_id, status), unique(workspace_id, slug).
+team_channel_members: unique(channel_id, user_id), index(user_id, status).
+team_conversations: index(organization_id, channel_id, last_message_at), index(linked_object_type, linked_object_id).
+team_messages: index(conversation_id, created_at), index(parent_message_id), index(sender_user_id, created_at).
+team_message_mentions: index(mentioned_type, mentioned_id), index(message_id).
+team_object_links: index(object_type, object_id), index(conversation_id), index(message_id).
+team_read_receipts: unique(message_id, user_id), index(conversation_id, user_id).
+47. Security Requirements
+كل قراءة رسالة تمر عبر TeamAccessService.
+القنوات الخاصة لا تعتمد على UI hiding فقط.
+attachments الحساسة تستخدم signed URLs وسجلات access.
+delete_any يحتاج صلاحية صريحة ويسجل audit log.
+export conversations يحتاج approval في القنوات الحساسة.
+legal/finance/hr channels يمكن فرض retention وlegal hold.
+system bot لا يستطيع إرسال رسالة في قناة غير مصرح بها module-wise.
+48. Feature Flags
+enable_teams_v1
+enable_team_channels
+enable_team_direct_messages
+enable_team_threads
+enable_team_mentions
+enable_team_file_attachments
+enable_task_from_message
+enable_approvals_from_chat
+enable_system_alert_channels
+enable_team_object_discussions
+enable_team_exports
+enable_team_ai_summaries_later
+49. Build Order
+Create team_workspaces and team_channels.
+Create team_channel_members and permissions checks.
+Create team_conversations and team_messages.
+Add mentions and notifications integration.
+Add file attachments through Media/Files.
+Add threads basic.
+Add task from message.
+Add approval links.
+Add system alert channels and event rules.
+Add object-linked discussions.
+Add retention/access logs/export foundation.
+50. Acceptance Criteria
+يمكن إنشاء workspace لشركة وقنوات افتراضية.
+يمكن إرسال رسالة داخل channel أو DM.
+يمكن عمل thread على رسالة.
+mentions تنشئ notifications صحيحة.
+يمكن إرفاق ملف عبر media_assets.
+يمكن تحويل رسالة إلى Task.
+يمكن ربط رسالة بـ Approval Request.
+system alerts تظهر في قنوات مثل #orders و#verification و#billing و#security.
+المستخدم لا يرى قناة أو رسالة خارج صلاحياته.
+الحذف والتصدير والقنوات الحساسة تسجل audit/access logs.
+51. أخطاء ممنوعة
+بناء بديل كامل لـ Slack في V4.
+تخزين الملفات داخل جدول الرسائل بدل Media/Files.
+إظهار رسائل finance/legal/hr في search أو channels عامة.
+السماح بالموافقة من رسالة عادية بدون approval_decisions.
+استخدام team_channel_members فقط بدل فحص صلاحيات الكائن المرتبط.
+حذف رسائل حساسة بدون retention/audit.
+إرسال محادثات Teams إلى Mall Sync.
+52. الخلاصة التنفيذية
+قاعدة بيانات Kabeeri Teams يجب أن تبني تعاونًا داخليًا مرتبطًا بالعمل، لا دردشة عامة منفصلة. أهم قيمة هي أن كل قناة ورسالة يمكن ربطها بسياق حقيقي داخل Kabeeri: طلب، عميل، فاتورة، مشروع، توثيق، محتوى، أو تنبيه أمني. لذلك Teams يعتمد على Core permissions وNotifications وMedia وEvents/Workflows وTasks/Approvals، ويمهد لاحقًا لـ Team Collaboration Advanced في V5 وFull Team Collaboration Suite في V6.
+KABEERI — powered by ADMIT | Database Architecture

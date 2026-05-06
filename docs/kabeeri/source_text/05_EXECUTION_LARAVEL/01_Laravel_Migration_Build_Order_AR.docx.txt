@@ -1,0 +1,560 @@
+KABEERI — Laravel Migration Build Order
+ترتيب بناء قواعد البيانات والتحويل إلى Laravel Migrations
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+الإصدار: 1.0 — التاريخ: 4 مايو 2026 — المرحلة التالية بعد Database Master Index وMaster ERD
+هذا الملف ليس قاموس بيانات جديد، بل ملف تنفيذي لترتيب بناء جداول Kabeeri في Laravel بطريقة تمنع تضارب العلاقات وتقلل إعادة البناء. يعتمد على ملفات Database السابقة، خصوصًا Core Kernel وCloud وFrontend Anywhere وPortable وDedicated وملف التكامل بين الأنظمة الخمسة وMaster ERD.
+1. الهدف من هذا الملف
+الهدف هو تحويل قاعدة البيانات الكبيرة إلى ترتيب عملي قابل للتنفيذ داخل Laravel Migrations. بدون هذا الملف قد يبدأ التنفيذ بجداول متقدمة قبل تأسيس الهوية والملكية والصلاحيات، مما يسبب إعادة هيكلة لاحقة.
+• تحديد أول جدول يُبنى وآخر جدول يُؤجل.
+• تحديد waves واضحة بدل بناء كل شيء دفعة واحدة.
+• تحديد قواعد foreign keys وnullable وindexes وUUID/ULID.
+• منع التكرار بين الملفات: billing، media، audit، sync، settings.
+• تجهيز V1 للتنفيذ بدون إدخال ERP/AI/Mall كامل قبل وقته.
+• تسهيل العمل مع AI code generation عبر تعليمات ثابتة لا تتغير كل مرة.
+2. القاعدة الحاكمة
+كل migration يجب أن يجيب على أربعة أسئلة قبل كتابته:
+• هل الجدول Global أم Tenant-scoped؟
+• هل يحتاج organization_id أو site_id أو company_id؟
+• هل سيُصدّر في Portable أو Dedicated migration؟
+• هل هذا الجدول Source of Truth أم Mirror/Cache/Derived؟
+أي جدول لا يجيب على هذه الأسئلة لا يدخل التنفيذ.
+3. المبادئ العامة قبل كتابة migrations
+المبدأ
+القرار التنفيذي
+السبب
+Shared DB أولًا
+ابدأ بـ Shared Database + Tenant Scoping
+أبسط للمؤسس الواحد، ويخدم V1/V2 بدون تعقيد قواعد منفصلة.
+Organization هو Tenant
+كل بيانات العميل ترتبط مباشرة أو غير مباشر بـ organization_id
+للتصدير، الصلاحيات، الفوترة، وMall Sync.
+User لا يملك company_id
+ممنوع users.company_id أو users.role
+نفس المستخدم قد يكون في أكثر من Organization/Company.
+UUID/ULID لكل كيان مهم
+id داخلي سريع + uuid خارجي ثابت
+مهم للـ API وPortable وMall Sync.
+Mirror لا يساوي Source
+Mall Mirror وSearch Index وBI Snapshots جداول مشتقة
+يمكن إعادة بنائها ولا تكون مصدر الحقيقة.
+Security by default
+الجداول الحساسة تحتاج audit_logs أو sensitive_access_logs
+المنصة ستتعامل مع ERP وLegal وPayroll وAI.
+No Plain Secrets
+أي token أو key أو credential يُخزن hash أو vault reference فقط
+حماية التكاملات والواجهات الخارجية.
+4. المعايير القياسية للأعمدة
+الجدول التالي يمثل القالب القياسي لأي Business Entity مهم في Kabeeri. لا يلزم استخدام كل الأعمدة في كل جدول، لكن يجب عدم مخالفة الفلسفة العامة.
+العمود
+متى يستخدم؟
+ملاحظات
+id
+كل الجداول تقريبًا
+bigint unsigned primary key داخلي.
+uuid
+كل كيان مهم أو قابل للتصدير/المزامنة
+ULID أو UUID؛ لا يستخدم مكان id داخليًا.
+organization_id
+كل بيانات العميل
+nullable فقط للجداول global أو قبل ربط الكيان بعميل.
+company_id
+عند وجود كيان تجاري محدد
+لا يغني عن organization_id إذا كان الجدول tenant-scoped.
+site_id
+عند ارتباط البيانات بموقع أو متجر
+مهم للـ CMS وCommerce وFrontend Anywhere.
+status
+كل كيان له دورة حياة
+indexed varchar(50).
+visibility
+أي كيان قد يظهر للعامة
+public/private/organization_only/company_only/hidden.
+metadata json
+بيانات مرنة غير أساسية للبحث
+لا تستخدم بدل العلاقات.
+created_by / updated_by
+الجداول التي يحررها مستخدمون
+FK إلى users.id nullable.
+deleted_at
+الجداول القابلة للاسترجاع
+لا يستخدم في audit أو ledger critical إلا بقرار واضح.
+5. قواعد UUID / ULID
+• الأفضل استخدام ULID بطول 26 حرفًا للكيانات الجديدة لأنه sortable ومناسب للروابط العامة.
+• يجب وجود unique index على uuid في الجداول المهمة.
+• لا تستخدم uuid كـ foreign key داخلي إلا عند الحاجة في sync أو external references.
+• في Portable وMall Sync، يجب الحفاظ على UUIDs وعدم إعادة توليدها أثناء التصدير.
+• أي public API أو webhook payload يستخدم uuid وليس id.
+6. قواعد Foreign Keys
+نوع العلاقة
+القرار
+مثال
+Core ownership
+FK حقيقي مع restrict أو cascade محدود
+organization_memberships.organization_id -> organizations.id
+Content to Site
+FK حقيقي غالبًا
+content_entries.site_id -> sites.id
+Audit logs
+لا تعتمد cascade delete
+actor_user_id nullable للحفاظ على التاريخ.
+Polymorphic subject
+لا تستخدم FK
+subject_type + subject_id في activity_logs.
+Mirror tables
+FK nullable أو reference soft
+mall_mirror_products.external_id / source_id.
+External systems
+لا FK
+external_object_links تحفظ external ids.
+Portable/Dedicated registry
+FK مركزي مع nullable عند الانفصال
+self_hosted_installations.organization_id.
+7. استراتيجية Nullable
+• organization_id غير nullable في Tenant Tables بعد مرحلة التأسيس.
+• company_id nullable لأن بعض المواقع أو المحتوى قد يتبع Organization فقط.
+• site_id nullable في جداول الشركة/ERP لأنها لا تعتمد دائمًا على موقع.
+• billing_account_id nullable في البداية ثم يثبت بعد إنشاء billing flow.
+• external_id nullable في البداية ثم يملأ عند الربط بتكامل خارجي.
+• deleted_at nullable فقط للجداول التي تقبل soft delete.
+8. استراتيجية الفهارس Indexes
+النمط
+الفهارس المطلوبة
+Tenant queries
+index(organization_id), index(organization_id, status), index(organization_id, created_at)
+Site CMS
+index(site_id, status), index(site_id, slug), unique(site_id, slug) حسب النوع
+Company ERP
+index(company_id, status), index(company_id, created_at)
+Public lookup
+unique(slug) أو unique(scope, slug) حسب السياق
+Sync
+index(source_id, external_id), index(last_synced_at), index(sync_status)
+Audit
+index(actor_user_id), index(subject_type, subject_id), index(created_at)
+Search/BI logs
+partition لاحقًا أو index(created_at) مع retention
+9. Build Waves — الخريطة التنفيذية العليا
+كل Wave يجب أن تنتهي بتشغيل migrations على قاعدة نظيفة، ثم rollback، ثم seed بسيط، ثم test smoke. لا تنتقل للـ Wave التالية قبل ثبات السابقة.
+Wave
+النطاق
+أمثلة الجداول
+ملاحظات
+Wave 00
+Reference & Platform Basics
+countries, currencies, platform enums/seeds
+لا يعتمد على tenant.
+Wave 01
+Users & Profiles
+users, user_profiles
+لا تضف organization_id داخل users.
+Wave 02
+Ownership Core
+organizations, organization_memberships, companies, company_memberships, sites
+أساس كل المنصة.
+Wave 03
+RBAC
+roles, permissions, role_permission, assignments, overrides
+يجب أن تكون context-first.
+Wave 04
+Settings, Flags, Logs, Modules
+settings, feature_flags, activity_logs, audit_logs, modules, module_installations
+تشغيل الموديولات والتتبع.
+Wave 05
+Media Foundation
+media_assets, media_usages, document foundation
+يلزم قبل CMS/Rabet.
+Wave 06
+Billing & Entitlements Foundation
+billing_accounts, plans, subscriptions, entitlements, usage_records
+يلزم لـ Cloud وPortable/Dedicated.
+Wave 07
+Cloud Foundation
+cloud_sites, cloud_domains, cloud_backups, health_checks
+الوضع الافتراضي.
+Wave 08
+CMS Foundation
+content_types, content_entries, revisions, taxonomies, menus, SEO, redirects
+V1/V2 CMS.
+Wave 09
+Rabet & Verification
+business_profiles, verification_requests, legal_partner tables, trust_records
+قبل Mall الكامل.
+Wave 10
+Commerce Foundation
+products, carts, orders, customers, coupons, payments
+V2 ثم يتصل بالـ ERP في V3.
+Wave 11
+Mall Mirror & Sync
+mall_publication_consents, mall_sync_sources, mall_mirror_*
+Mirror فقط وليس Source.
+Wave 12
+Events & Workflows
+events, listener runs, workflow definitions/runs, approvals
+قبل AI/ERP advanced.
+Wave 13
+Notifications & Inbox
+conversations, messages, notifications delivery
+يتصل بالأحداث.
+Wave 14
+Security & Compliance Base
+sessions, MFA, API tokens, sensitive logs, consent
+قبل أي external sync.
+Wave 15
+Frontend Anywhere / Portable / Dedicated Registries
+frontend_projects, export_jobs, self_hosted_installations, dedicated_tenants
+بعد Cloud/Billing/Core.
+Wave 16
+Search, Reviews, Moderation, Disputes
+search_indexes, reviews, moderation_cases, disputes
+قبل توسعة Mall العامة.
+Wave 17
+ERP Essentials
+CRM, sales, invoicing, inventory, purchasing, accounting starter, employee profiles
+V3.
+Wave 18
+ERP Pro & Advanced Ops
+contracts, helpdesk, POS, commission, payouts, advanced approvals
+V5.
+Wave 19
+Integration Hub
+connectors, connections, mappings, sync jobs/logs, webhooks
+V5.
+Wave 20
+AI Co-builder
+ai sessions, plans, previews, approvals, runs, rollback points
+بعد permissions/workflows/security.
+Wave 21
+Analytics, GRC, Data Platform, Enterprise
+BI, GRC, data warehouse, EA, industry solutions
+V6 وما بعده.
+10. V1 First Build — أول 40 Migration مقترحة
+هذه ليست كل جداول V1، لكنها أول سلسلة آمنة للبناء. الهدف الوصول إلى تسجيل مستخدم، إنشاء Organization، إنشاء Site، إدارة roles/permissions، رفع Media، إنشاء Content، وتسجيل Activity.
+الترتيب
+Migration
+الغرض
+000001
+create_countries_table
+Global reference
+000002
+create_currencies_table
+Global reference
+000003
+create_users_table
+Identity
+000004
+create_user_profiles_table
+Identity
+000005
+create_organizations_table
+Tenant root
+000006
+create_organization_memberships_table
+Tenant membership
+000007
+create_companies_table
+Business account
+000008
+create_company_memberships_table
+Company membership
+000009
+create_sites_table
+Digital channel
+000010
+create_permissions_table
+RBAC catalog
+000011
+create_roles_table
+RBAC scoped roles
+000012
+create_role_permission_table
+RBAC pivot
+000013
+create_membership_role_assignments_table
+Context role assignment
+000014
+create_membership_permission_overrides_table
+Allow/Deny overrides
+000015
+create_settings_table
+Scoped settings
+000016
+create_feature_flags_table
+Feature flags
+000017
+create_feature_flag_overrides_table
+Flags per scope
+000018
+create_activity_logs_table
+General activity
+000019
+create_audit_logs_table
+Sensitive audit
+000020
+create_notifications_table
+Basic notifications
+000021
+create_modules_table
+Logical modules
+000022
+create_module_installations_table
+Tenant module activation
+000023
+create_media_assets_table
+Media metadata
+000024
+create_media_usages_table
+Media polymorphic usage
+000025
+create_content_types_table
+CMS typed content
+000026
+create_content_entries_table
+Pages/posts/general content
+000027
+create_content_revisions_table
+Version history
+000028
+create_taxonomies_table
+Categories/tags containers
+000029
+create_taxonomy_terms_table
+Categories/tags
+000030
+create_content_term_table
+Content taxonomy pivot
+000031
+create_menus_table
+Site menus
+000032
+create_menu_items_table
+Menu tree
+000033
+create_seo_metadata_table
+SEO polymorphic metadata
+000034
+create_redirects_table
+Redirect manager foundation
+000035
+create_themes_table
+Theme catalog foundation
+000036
+create_theme_settings_table
+Theme settings
+000037
+create_installed_packages_table
+Package foundation
+000038
+create_business_profiles_table
+Rabet/Mall draft profile
+000039
+create_verification_requests_table
+Verification foundation
+000040
+create_verification_documents_table
+Document links for verification
+11. قواعد تسمية ملفات Laravel Migrations
+• استخدم أسماء واضحة: create_organizations_table وليس create_orgs_table.
+• لا تجمع أكثر من جدولين مرتبطين جدًا داخل migration واحد إلا pivot صغير.
+• أسماء pivot تكون مفهومة: role_permission وليس permission_role إذا تم اعتمادها مبكرًا.
+• أي migration لتعديل لاحق يجب أن يشرح السبب في اسم الملف: add_visibility_to_business_profiles_table.
+• لا تستخدم أسماء مبهمة مثل create_core_tables أو update_fields.
+12. أمثلة Laravel Schema Patterns
+النماذج التالية إرشادية لاستخدام نفس الأسلوب في كل migration.
+Schema::create('organizations', function (Blueprint $table) {
+$table->id();
+$table->ulid('uuid')->unique();
+$table->foreignId('owner_user_id')->constrained('users')->restrictOnDelete();
+$table->string('name');
+$table->string('slug')->unique();
+$table->string('account_type', 50)->default('business')->index();
+$table->string('status', 50)->default('active')->index();
+$table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();
+$table->string('locale', 10)->default('ar');
+$table->string('timezone', 64)->default('Africa/Cairo');
+$table->json('settings')->nullable();
+$table->json('metadata')->nullable();
+$table->timestamps();
+$table->softDeletes();
+});
+نمط Tenant Table:
+$table->foreignId('organization_id')->constrained()->cascadeOnDelete();
+$table->foreignId('company_id')->nullable()->constrained()->nullOnDelete();
+$table->foreignId('site_id')->nullable()->constrained()->nullOnDelete();
+$table->string('status', 50)->default('draft')->index();
+$table->string('visibility', 50)->nullable()->index();
+$table->index(['organization_id', 'status']);
+$table->index(['organization_id', 'created_at']);
+13. Seeders المطلوبة مع أول Waves
+Seeder
+المحتوى
+متى؟
+CountrySeeder
+EG, SA, AE, QA, KW, JO مبدئيًا
+Wave 00
+CurrencySeeder
+EGP, SAR, AED, USD, EUR
+Wave 00
+PermissionSeeder
+أول صلاحيات Core/CMS/Rabet
+Wave 03
+SystemRoleSeeder
+Platform Super Admin, Organization Owner, Site Admin, Editor
+Wave 03
+FeatureFlagSeeder
+enable_cms, enable_rabet_foundation, enable_media, enable_packages_foundation
+Wave 04
+ModuleSeeder
+core, cms, media, rabet, commerce, billing
+Wave 04
+DefaultThemeSeeder
+kabeeri-starter theme foundation
+Wave 08
+14. ترتيب بناء Models بعد migrations
+المرحلة
+Models
+ملاحظات
+Core 1
+User, UserProfile, Organization, OrganizationMembership
+ابدأ بالعلاقات الأساسية.
+Core 2
+Company, CompanyMembership, Site
+بعد تثبيت Organization.
+RBAC
+Role, Permission, RoleAssignment, PermissionOverride
+Policy tests مبكرًا.
+System
+Setting, FeatureFlag, ActivityLog, AuditLog, ModuleInstallation
+تستخدمها كل الموديولات.
+Media
+MediaAsset, MediaUsage
+قبل CMS/Rabet.
+CMS
+ContentType, ContentEntry, ContentRevision, Taxonomy, Menu
+لا تبني محرر معقد أولًا.
+Rabet
+BusinessProfile, VerificationRequest, VerificationDocument
+foundation فقط.
+15. ترتيب بناء Policies
+Policies يجب أن تبدأ مبكرًا جدًا لأن كل نظام في Kabeeri يعتمد على context-first permissions.
+الترتيب
+Policy
+أول permissions مطلوبة
+1
+OrganizationPolicy
+organization.view, organization.manage, organization.member.invite
+2
+SitePolicy
+site.view, site.create, site.manage
+3
+ContentEntryPolicy
+content.view, content.create, content.edit, content.publish
+4
+MediaAssetPolicy
+media.view, media.upload, media.delete
+5
+BusinessProfilePolicy
+business_profile.view, business_profile.edit, business_profile.publish
+6
+VerificationRequestPolicy
+verification.submit, verification.review, verification.approve
+7
+BillingPolicy
+billing.view, billing.manage
+8
+PackagePolicy
+package.install, package.activate, package.update
+16. Test Gates لكل Wave
+Gate
+يجب أن يثبت
+Migration fresh
+php artisan migrate:fresh يعمل بدون أخطاء.
+Rollback
+php artisan migrate:rollback يعمل للـ batch الأخير.
+Seed
+seeders الأساسية تعمل ولا تكرر records.
+Model factory
+كل Model أساسي له factory بسيطة عند الحاجة.
+Policy smoke
+اختبار user له صلاحية وآخر لا يملكها.
+Tenant isolation
+User في Organization A لا يرى بيانات Organization B.
+Export readiness
+الجداول tenant-scoped يمكن جمعها بـ organization_id.
+17. Migration Anti-patterns ممنوعة
+• ممنوع إضافة company_id أو organization_id أو role داخل users.
+• ممنوع بناء ERP قبل company_memberships وpermissions وactivity_logs.
+• ممنوع بناء AI apply actions قبل approvals وaudit logs وrollback points.
+• ممنوع Mall يقرأ من جداول العميل مباشرة؛ لازم Mall Mirror.
+• ممنوع حفظ API keys أو tokens أو credentials plain text.
+• ممنوع استخدام JSON بدل جداول علاقات أساسية مثل memberships أو roles.
+• ممنوع جدول واحد ضخم اسمه settings يحل محل configuration المنظمة كلها.
+• ممنوع حذف audit logs أو ledger records بـ cascade من جدول user.
+18. Module-by-Module Migration Notes
+Module
+يبنى بعد
+ملاحظات تنفيذية
+CMS
+Core + Media + RBAC
+ابدأ Content Types + Entries قبل Page Builder.
+Commerce
+Core + Sites + Media + CMS basic
+Products/Orders أولًا، ثم Payments/Shipping لاحقًا.
+Rabet
+Core + Companies + Media + Activity
+Verification documents لا تحفظ ملفات داخل DB.
+Mall
+Rabet + Commerce optional + Moderation
+يعتمد على Mirror وConsent.
+Talent
+Users + Professional Profiles + Privacy
+لا تخلط EmployeeProfile مع ProfessionalProfile.
+ERP Essentials
+Companies + Commerce + Workflows + Documents
+ابدأ CRM/Invoices/Inventory starter.
+Integration Hub
+Security + Events + External Links
+credentials vault references فقط.
+AI Co-builder
+Permissions + Workflows + Audit + Rollback
+Plan/Preview قبل Apply.
+Portable
+Core + Export Registry + Billing
+يحتاج UUIDs ثابتة وmanifest.
+Dedicated
+Core + Billing + Cloud + Sync
+Central registry فقط، بيانات التشغيل في Dedicated DB.
+19. Build Waves حسب Releases
+Release
+Migration Waves المسموحة
+ممنوعات
+V1
+00 إلى 09 جزئيًا
+Commerce كامل، ERP، Mall كامل، AI كامل.
+V2
+CMS Expansion + Commerce Foundation + Migration
+ERP كامل، Cloud Billing كامل، AI كامل.
+V3
+ERP Essentials + Rabet OS Foundation + Workflows basic
+ERP Pro، Integration Hub كامل، Mall advanced.
+V4
+Cloud + Billing + Mall V1 + Talent V1 + AI V1 + Agency + Teams
+ERP Pro كامل، Public Developer Marketplace.
+V5
+ERP Pro + Integration Hub + Commission + Helpdesk + POS
+Enterprise Security كامل، BI/Lakehouse كامل.
+V6
+Enterprise ERP + BI/Data Platform + GRC + Public Marketplace + Industry
+لا يعني اكتمال كل دولة وكل صناعة 100%.
+20. Checklist قبل كتابة أول Migration
+• تثبيت Laravel version وPHP version وMySQL version.
+• تحديد ULID أم UUID وتنفيذ helper موحد.
+• تثبيت timezone الافتراضي Africa/Cairo واللغة الافتراضية ar.
+• تحديد أسماء permissions الأولى.
+• تحديد أول roles system.
+• تحديد هل softDeletes يستخدم في كل جدول أم حسب النوع.
+• تثبيت conventions للأعمدة: status, visibility, metadata, created_by, updated_by.
+• إنشاء tests للموجة الأولى قبل التوسع.
+21. الخلاصة التنفيذية
+ابدأ صغيرًا لكن لا تبدأ ضيقًا. أول migrations يجب أن تبني نواة تسمح بـ CMS + Company OS + Future Commerce + Future ERP + Cloud/Portable/Dedicated بدون إعادة بناء. لا تدخل أي موجة متقدمة قبل ثبات الموجات التي تعتمد عليها.
+الملف التالي بعد هذا يجب أن يكون Laravel Module Architecture، لأنه سيحوّل هذه الموجات إلى مجلدات Models / Policies / Actions / Services / Events / Jobs / Filament Resources / Tests.
+KABEERI Laravel Migration Build Order — powered by ADMIT

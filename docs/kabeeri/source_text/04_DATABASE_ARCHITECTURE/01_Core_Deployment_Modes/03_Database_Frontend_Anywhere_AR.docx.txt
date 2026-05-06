@@ -1,0 +1,199 @@
+KABEERI Database File 03 — Kabeeri Frontend Anywhere Database
+نظام Kabeeri Frontend Anywhere
+هذا الملف يصف تصميم قاعدة البيانات الخاص بوضع:
+Kabeeri Frontend Anywhere
+وهو وضع يسمح للعميل أن يستضيف الواجهة العامة لموقعه في أي مكان يريده، مع بقاء:
+Control PanelDatabaseCMSCommerceERPAIMall Sync
+داخل Kabeeri Cloud.
+1. تعريف Frontend Anywhere
+Frontend Anywhere يعني:
+العميل يملك حرية استضافة الواجهة العامة خارج Kabeeriلكن مصدر البيانات ولوحة التحكم يظلان داخل Kabeeri Cloud
+أمثلة الواجهة:
+Static HTML export.
+Next.js frontend.
+Nuxt frontend.
+Astro frontend.
+Custom frontend.
+CDN-hosted frontend.
+Agency-built frontend.
+2. هدف هذا النظام
+الهدف هو إعطاء العميل مرونة كبيرة في الواجهة بدون تحميله عبء إدارة Backend وDatabase.
+هذا الوضع مناسب جدًا لـ:
+وكالات التصميم.
+مواقع محتوى عالية الأداء.
+شركات تريد Frontend مخصص.
+عملاء يريدون استضافة الواجهة على CDN خاص.
+مواقع تحتاج أداء عالي لكن Admin مُدار.
+3. ما الذي يبقى داخل Kabeeri؟
+داخل Kabeeri Cloud يبقى:
+usersorganizationssitescompaniescms dataproductsservicesorders if enabledforms submissionsbusiness profilemall syncAIbillingsecurityaudit logs
+4. ما الذي يخرج؟
+يخرج فقط:
+frontend buildstatic assetspublic rendering layerpublic domain hosting
+ولا يخرج:
+databaseadmin panelprivate filesERP backendAPI secretscontrol logic
+5. لماذا نحتاج Database Design خاص؟
+لأن Frontend Anywhere يحتاج تتبع:
+الواجهات الخارجية.
+API keys.
+static builds.
+deployment status.
+webhooks.
+public API scopes.
+cache invalidation.
+sync status.
+external domains.
+frontend version.
+6. الجداول الأساسية
+frontend_projectsfrontend_deploymentsfrontend_domainsfrontend_api_keysfrontend_api_scopesfrontend_buildsfrontend_webhooksfrontend_cache_invalidationsfrontend_content_snapshotsexternal_site_connectionspublic_api_requests
+7. frontend_projects
+يمثل مشروع واجهة خارجية مرتبطًا بموقع Kabeeri.
+iduuidorganization_idsite_idcompany_id nullablenameslugfrontend_typestatus default activehosting_provider nullablerepository_url nullableframework nullablepublic_base_url nullablesettings json nullablecreated_by nullablecreated_atupdated_atdeleted_at nullable
+frontend_type
+static_exportheadless_nextheadless_nuxtheadless_customagency_customcdn_static
+status
+activepauseddisconnectedarchived
+فهارس
+index(organization_id)index(site_id)unique(site_id, slug)index(status)
+8. frontend_deployments
+كل نشر للواجهة الخارجية.
+iduuidfrontend_project_iddeployment_typestatus default pendingversion_label nullablecommit_hash nullablebuild_id nullabledeployment_url nullablestarted_by nullablestarted_at nullablecompleted_at nullablefailed_at nullableerror_message nullablemetadata json nullablecreated_atupdated_at
+deployment_type
+manualwebhookauto_on_publishscheduledrollback
+status
+pendingbuildingdeployingcompletedfailedrolled_back
+9. frontend_domains
+الدومينات الخاصة بالواجهة الخارجية.
+iduuidfrontend_project_iddomainis_primary default falseverification_status default pendingssl_status nullableexternal_dns_required default trueverified_at nullablelast_checked_at nullablemetadata json nullablecreated_atupdated_at
+الفرق عن cloud_domains
+cloud_domains لدومينات مستضافة داخل Kabeeri Cloud.
+frontend_domains لدومينات واجهة مستضافة خارج Kabeeri.
+10. frontend_api_keys
+مفاتيح API للواجهة الخارجية.
+iduuidorganization_idsite_idfrontend_project_idnamekey_hashstatus default activelast_used_at nullableexpires_at nullablecreated_by nullablecreated_atupdated_atrevoked_at nullable
+ملاحظات أمنية
+لا نحفظ API key plain text.
+نحفظ فقط:
+key_hash
+11. frontend_api_scopes
+الصلاحيات المسموحة للواجهة.
+idfrontend_api_key_idscopecreated_at
+scopes مقترحة
+read_public_contentread_public_mediaread_public_productsread_public_servicessubmit_formscreate_cartcreate_orderread_public_business_profileread_mall_public_status
+ممنوع للواجهة العامة
+read_private_invoicesread_accountingread_employee_datamanage_permissionsaccess_admin
+12. frontend_builds
+لو Kabeeri يولد static frontend أو build artifacts.
+iduuidfrontend_project_idbuild_typestatus default pendingartifact_media_id nullableartifact_path nullablechecksum nullablestarted_at nullablecompleted_at nullableerror_message nullablemetadata json nullablecreated_atupdated_at
+build_type
+static_fullstatic_incrementalassets_onlypreview
+13. frontend_webhooks
+Webhooks بين Kabeeri والواجهة الخارجية أو CI/CD.
+iduuidfrontend_project_idnameurlsecret_hash nullablestatus default activeevents jsonlast_delivery_at nullablecreated_atupdated_at
+events
+content_publishedcontent_updatedproduct_updatedservice_updatedmedia_updatedmenu_updatedsite_settings_updated
+14. frontend_cache_invalidations
+طلبات مسح الكاش أو إعادة البناء.
+iduuidfrontend_project_idreasonsubject_type nullablesubject_id nullablestatus default pendingrequested_by nullableprocessed_at nullablemetadata json nullablecreated_atupdated_at
+reason
+content_updatedmenu_updatedtheme_settings_updatedproduct_updatedmanualfull_rebuild
+15. frontend_content_snapshots
+لقطات من المحتوى العام للواجهة الخارجية.
+iduuidfrontend_project_idsnapshot_typestatus default activecontent_hashpayload json nullablecreated_atupdated_at
+snapshot_type
+site_mapmenucontent_indexproduct_indexservice_indexbusiness_profile
+الهدف
+تسريع التسليم للواجهة الخارجية، وتقليل ضغط API.
+16. external_site_connections
+يربط الموقع الخارجي بـ Kabeeri.
+iduuidorganization_idsite_id nullablecompany_id nullableconnection_typeexternal_urlstatus default activeapi_key_hash nullablelast_checked_at nullablelast_seen_at nullablesettings json nullablecreated_atupdated_at
+connection_type
+frontend_anywhereself_hosted_portablededicated_externalexternal_storeexternal_erp
+17. public_api_requests
+تسجيل طلبات API العامة لأغراض الأمان والتحليلات والحدود.
+idfrontend_project_id nullablefrontend_api_key_id nullableorganization_id nullablesite_id nullableendpointmethodstatus_coderesponse_time_ms nullableip_address nullableuser_agent nullablecreated_at
+18. Frontend Anywhere ERD
+erDiagram    ORGANIZATIONS ||--o{ FRONTEND_PROJECTS : owns    SITES ||--o{ FRONTEND_PROJECTS : exposes    FRONTEND_PROJECTS ||--o{ FRONTEND_DEPLOYMENTS : deploys    FRONTEND_PROJECTS ||--o{ FRONTEND_DOMAINS : has    FRONTEND_PROJECTS ||--o{ FRONTEND_API_KEYS : uses    FRONTEND_API_KEYS ||--o{ FRONTEND_API_SCOPES : allows    FRONTEND_PROJECTS ||--o{ FRONTEND_BUILDS : builds    FRONTEND_PROJECTS ||--o{ FRONTEND_WEBHOOKS : sends    FRONTEND_PROJECTS ||--o{ FRONTEND_CACHE_INVALIDATIONS : invalidates    FRONTEND_PROJECTS ||--o{ FRONTEND_CONTENT_SNAPSHOTS : caches    SITES ||--o{ EXTERNAL_SITE_CONNECTIONS : connects
+19. Frontend Anywhere Flow
+Site exists in Kabeeri Cloud→ User enables Frontend Anywhere→ frontend_project created→ API key generated→ scopes selected→ external frontend connected→ domain configured externally→ frontend reads public APIs or static snapshots→ updates trigger cache invalidation/webhook
+20. Data Access Pattern
+Frontend Anywhere يجب أن يستخدم واحدًا من 3 أنماط:
+20.1 API Mode
+الواجهة تسحب البيانات من Kabeeri APIs.
+20.2 Static Snapshot Mode
+Kabeeri يولد ملفات JSON/HTML static.
+20.3 Hybrid Mode
+المحتوى static، والطلبات مثل forms/cart ديناميكية عبر API.
+21. Public API Data Contract
+الواجهة الخارجية لا ترى إلا بيانات عامة.
+مسموح
+published pagespublished postspublic mediamenuspublic productspublic servicespublic business profileforms submission endpointcart/order public flow if enabled
+ممنوع
+draftsprivate contentinternal tasksfinanceemployee dataaudit logsverification private documentsAI logsadmin settings
+22. Frontend Anywhere و Kabeeri Mall
+في هذا الوضع، Mall Sync لا يحتاج Pipeline خارجي معقد لأن البيانات الأصلية لا تزال داخل Kabeeri Cloud.
+Admin updates product in Kabeeri→ Product updated in Cloud DB→ Mall mirror updates internally→ Frontend external receives webhook/cache invalidation
+23. Cache Invalidation Flow
+ContentPublished→ create frontend_cache_invalidations→ send webhook to frontend_project→ update snapshot if static mode→ frontend rebuilds or clears cache
+24. Form Submission Flow
+Visitor submits form on external frontend→ POST to Kabeeri public API→ validate API key/scope→ create form_submission→ notify admin→ optional lead creation
+25. Commerce Flow في Frontend Anywhere
+Option A — Headless Cart
+External frontend uses Kabeeri cart/order API
+Option B — Catalog Only
+Products shown externallyorder/request happens inside Kabeeri or Mall
+Option C — Redirect
+External frontend redirects to Kabeeri checkout
+في V1 لهذا النظام، الأفضل:
+Catalog + Forms + Service Requests
+ثم cart/order لاحقًا.
+26. Security Requirements
+يجب استخدام
+API key hashscopesrate limitingCORS allowed originsHMAC optional للطلبات الحساسةrequest loggingrevocationexpiry
+ممنوع
+API key بدون scopes.
+API key plain text في DB.
+Allow all origins.
+وصول drafts للواجهة العامة.
+27. CORS / Allowed Origins
+يفضل إضافة جدول أو settings:
+allowed_origins
+أو داخل settings:
+{  "allowed_origins": ["https://example.com"]}
+لكن للمشاريع الكبيرة يمكن جدول:
+frontend_allowed_originsidfrontend_project_idoriginstatuscreated_atupdated_at
+28. Frontend Anywhere Indexes
+frontend_projects.organization_idfrontend_projects.site_idfrontend_projects.statusfrontend_domains.domainfrontend_api_keys.site_idfrontend_api_keys.frontend_project_idfrontend_api_scopes.frontend_api_key_idfrontend_deployments.frontend_project_idfrontend_cache_invalidations.frontend_project_idpublic_api_requests.frontend_api_key_idpublic_api_requests.created_at
+29. Frontend Anywhere vs Portable
+Frontend Anywhere
+DB عند KabeeriAdmin عند KabeeriFrontend فقط خارجي
+Portable
+DB عند العميلAdmin عند العميلFrontend عند العميلSync مع Mall عبر Connector
+30. Frontend Anywhere Package Manifest
+لو تم توليد static frontend، يمكن إنتاج manifest:
+{  "mode": "frontend_anywhere",  "site_uuid": "site_xxx",  "frontend_project_uuid": "fe_xxx",  "generated_at": "2026-05-04T12:00:00Z",  "api_base_url": "https://api.kabeeri.com",  "required_scopes": [    "read_public_content",    "read_public_media",    "submit_forms"  ],  "build_type": "static_full"}
+31. Billing Implications
+Frontend Anywhere يجب أن يكون Plan أو Add-on.
+Entitlements:
+enable_frontend_anywheremax_frontend_projectsmax_public_api_requestsmax_static_builds_per_monthmax_webhooks
+32. Analytics
+يمكن تتبع:
+API requests.
+build count.
+cache invalidations.
+public form submissions.
+external frontend uptime.
+33. Release Requirements
+Frontend Anywhere يعتبر جاهزًا عندما:
+frontend_project can be createdAPI key can be generated and revokedScopes workPublic content API worksPublic media API worksForms submit from external frontendWebhook/caching foundation worksExternal domain can be recordedMall internal sync remains workingRate limiting works
+34. الخلاصة
+Frontend Anywhere هو حل وسط ذكي.
+يعطي العميل حرية الواجهة، ويحافظ على قوة Kabeeri Cloud في:
+البيانات.
+الإدارة.
+الأمن.
+Mall Sync.
+AI.
+التحديثات.
+القاعدة النهائية:
+Frontend Anywhere gives freedom at the edge, while Kabeeri keeps the source of truth centralized and safe.

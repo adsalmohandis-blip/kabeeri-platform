@@ -1,0 +1,120 @@
+KABEERI Approved Plan Entitlements & Limits
+ملف مرجعي مختصر للقيم المعتمدة مبدئيًا للخطط. الأرقام قابلة للتعديل تجاريًا قبل الإطلاق، لكن أسماء المفاتيح يجب أن تثبت للتكويد.
+Version: v1.6.4 | Status: Approved Documentation Addendum
+هذا الملف جزء من تحديث Freemium & Plans ولا يغير ملفات V1 المجمدة مباشرة. أي تطبيق يتم عبر Addendum أو تاسك واضح في Codex.
+ملاحظة
+هذا الملف لا يحتوي على شرح تسويقي. الغرض منه تثبيت أسماء الخطط ومفاتيح Entitlements الأساسية وحدودها المبدئية فقط.
+خطة الحدود المعتمدة مبدئيًا
+الميزة
+Free
+Pro
+Business
+Agency
+Enterprise
+Apps
+1
+3
+10
+حسب الباقة
+مخصص
+Pages
+25
+150
+1000
+حسب العملاء
+مخصص
+Storage
+250 MB
+5 GB
+50 GB
+حسب الباقة
+مخصص
+Subdomain
+نعم
+نعم
+نعم
+نعم
+نعم
+Custom Domain
+لا أو Add-on
+نعم
+نعم
+نعم
+نعم
+Kabeeri Branding
+ظاهر
+إزالة
+إزالة
+إزالة
+مخصص
+Themes
+Free فقط
+Free + Pro محدد
+Pro
+Agency/Premium
+Enterprise
+Plugins
+Free official فقط
+Freemium/Pro
+Business
+Agency
+Enterprise
+Support
+Community
+Standard
+Priority
+Partner
+SLA
+مفاتيح Entitlements المعتمدة
+Key
+Type
+Description
+Free Default
+can_create_app
+boolean
+يسمح بإنشاء تطبيق
+true في Free
+max_apps
+integer
+عدد التطبيقات المسموح
+1 في Free
+max_pages
+integer
+عدد الصفحات
+25 في Free
+max_storage_mb
+integer
+مساحة التخزين
+250 في Free
+can_use_custom_domain
+boolean
+ربط دومين خاص
+false في Free
+can_remove_branding
+boolean
+إزالة شعار Kabeeri
+false في Free
+can_install_free_themes
+boolean
+تثبيت ثيمات مجانية
+true
+can_install_pro_themes
+boolean
+تثبيت ثيمات مدفوعة/Pro
+false في Free
+can_install_free_plugins
+boolean
+تثبيت بلجنز مجانية
+true
+can_install_paid_plugins
+boolean
+تثبيت بلجنز مدفوعة
+false في Free
+ai_credits_monthly
+integer
+رصيد AI شهري
+0 أو محدود جدًا
+support_level
+enum
+نوع الدعم
+community في Free

@@ -1,0 +1,1045 @@
+KABEERI Database File 26
+Kabeeri Search Engine Database
+نظام البحث والفهرسة الموحدة داخل KABEERI
+KABEERI / Kabeeri / kabeeri — powered by ADMIT
+Draft 1.0 — May 2026
+1. تعريف Search Engine داخل Kabeeri
+Search Engine هو طبقة تشغيل مركزية تجعل البحث موحدا عبر CMS وMall وTalent وERP وDocuments وPackages، مع احترام الصلاحيات والخصوصية والسياق الحالي للمستخدم.
+الهدف ليس بناء محرك بحث منفصل من اليوم الأول، بل بناء Database Foundation تسمح بالبدء بـ MySQL Search ثم الانتقال لاحقا إلى Meilisearch أو Typesense أو OpenSearch/Elasticsearch بدون إعادة تصميم جذرية.
+• في V1: بحث إداري بسيط داخل Dashboard وSearchable interface/trait.
+• في V2/V3: بحث أفضل للـ CMS والمنتجات وBusiness Directory والخدمات والمواهب.
+• في V4/V5: بحث Mall وTalent وERP مع indexing jobs وranking signals.
+• في V6: Enterprise Search يدعم dedicated clusters وadvanced analytics وdocument search.
+2. لماذا نحتاج Database خاصة بالبحث؟
+• Kabeeri ليست موقعا واحدا، بل منصة بها آلاف المواقع والشركات والمحتوى والمنتجات والطلبات والوثائق والـ ERP data.
+• كل موديول لا يجب أن يبني بحثه الخاص بمعزل عن الباقي.
+• البحث العام في Mall يختلف عن البحث الإداري داخل Organization ويختلف عن ERP Search.
+• نتائج البحث يجب أن تكون permission-aware وvisibility-aware وtenant-scoped.
+• الـ Search Index مشتق من البيانات الأصلية، ويجب أن يمكن إعادة بنائه في أي وقت.
+• البيانات الحساسة مثل payroll وprivate documents وverification documents لا تظهر في search public indexes.
+3. القاعدة الكبرى
+Search Index ليس مصدر الحقيقة.
+مصدر الحقيقة يبقى داخل جداول الموديولات الأصلية: CMS أو Commerce أو ERP أو Rabet أو Mall أو Documents. أما search_index_records فهو نسخة مشتقة للبحث فقط ويمكن حذفها وإعادة بنائها.
+Source Table→ Domain Event→ Search Index Job→ search_index_records→ Search Provider Sync→ Permission-aware Query→ Results
+4. أنواع البحث داخل Kabeeri
+نوع البحث
+النطاق
+أمثلة نتائج
+ملاحظات الخصوصية
+Global Search
+داخل لوحة التحكم حسب صلاحية المستخدم
+مواقع، شركات، صفحات، منتجات، مهام، فواتير
+لا يعرض إلا ما يملك المستخدم حق رؤيته
+Admin Search
+داخل Organization/Company/Site
+Content, Orders, Customers, Tasks, Documents
+يعتمد على membership + permissions
+Site Search
+واجهة موقع محدد
+Pages, Posts, Products, Services
+public/published فقط
+Kabeeri Mall Search
+السوق العام
+Businesses, Services, Products, Talent
+يعتمد على Mall Mirror + publication consent + moderation
+Talent Search
+سوق المواهب
+Professional Profiles, Skills, Availability
+يعتمد على visibility وprivacy controls
+ERP Search
+تشغيل داخلي
+Leads, Customers, Invoices, Inventory, Contracts
+internal فقط ولا يظهر للعامة
+Document Search
+مستندات وملفات
+Document titles, tags, metadata, extracted text
+يتطلب document permissions وsensitive access logs
+Package Search
+Marketplace الداخلي
+Plugins, Themes, Modules, Connectors, AI Skills
+يعتمد على package status, trust, compatibility
+5. مبادئ تصميم Search Database
+• Tenant-scoped: أي record يحتوي organization_id عند الحاجة، ومعه company_id/site_id حسب السياق.
+• Permission-aware: لا يكفي أن يكون السجل موجودا في index؛ يجب فحص صلاحيات المستخدم قبل عرضه.
+• Visibility-aware: visibility وpublication_status وmoderation_status جزء من القرار.
+• Rebuildable: أي index يمكن مسحه وإعادة بنائه من Source of Truth.
+• Event-driven: تحديث الفهرس يتم عبر أحداث مثل ContentPublished وProductUpdated وCompanyVerified وMallListingPublished.
+• Provider-agnostic: الجداول لا تفترض محرك بحث واحد فقط.
+• No private leakage: لا تنسخ محتوى حساس إلى public search index.
+• Soft-delete aware: السجلات المحذوفة أو المعلقة يجب أن تزال أو تخفى من نتائج البحث.
+6. الجداول الأساسية
+• search_indexes
+• search_index_records
+• search_index_fields
+• search_index_permissions
+• search_index_facets
+• search_index_relations
+• search_synonyms
+• search_stop_words
+• search_boost_rules
+• search_provider_configs
+• search_provider_sync_records
+• search_reindex_jobs
+• search_reindex_items
+• search_index_errors
+• search_query_logs
+• search_click_logs
+• saved_searches
+• search_alerts
+• search_result_cache_records
+7. search_indexes
+يمثل index منطقي مثل cms_content، mall_public، talent_public، erp_internal، documents_private.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي
+uuid
+ulid/uuid unique
+معرف آمن للـ API والتكامل
+key
+varchar unique
+مثال: cms_content, mall_public, erp_internal
+name
+varchar
+اسم ظاهر للإدارة
+index_type
+global|site|mall|talent|erp|documents|packages
+نوع الفهرس
+scope_type
+platform|organization|company|site|public
+السياق الافتراضي للفهرس
+provider
+database|meilisearch|typesense|opensearch|elasticsearch
+محرك البحث المستخدم
+status
+active|paused|rebuilding|archived
+حالة الفهرس
+settings
+json nullable
+إعدادات مثل searchableAttributes وfilterableAttributes
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث
+8. search_index_records
+السجل الموحد للعنصر القابل للبحث. هذا الجدول يمكن أن يعمل كـ DB search في البداية، أو كـ staging layer قبل المزامنة مع محرك خارجي.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف الداخلي
+uuid
+ulid/uuid unique
+معرف آمن
+search_index_id
+fk search_indexes
+الفهرس الذي ينتمي له السجل
+indexable_type
+varchar
+نوع الكيان الأصلي: content_entry, product, mall_listing, document
+indexable_id
+bigint nullable
+معرف الكيان الأصلي إذا كان داخل نفس DB
+indexable_uuid
+varchar nullable
+UUID مفيد عند Portable/Dedicated sync
+organization_id
+fk nullable indexed
+سياق العميل
+company_id
+fk nullable indexed
+سياق الشركة
+site_id
+fk nullable indexed
+سياق الموقع
+user_id
+fk nullable indexed
+سياق المستخدم إن كان خاصا بمستخدم
+title
+varchar
+عنوان نتيجة البحث
+summary
+text nullable
+ملخص قصير للنتيجة
+content
+longtext nullable
+نص قابل للبحث، بدون أسرار
+url
+varchar nullable
+رابط النتيجة الداخلي أو العام
+image_url
+varchar nullable
+صورة عامة إن وجدت
+language
+varchar default ar
+لغة المحتوى
+country_id / city
+fk/varchar nullable
+فلترة جغرافية
+status
+active|hidden|deleted|stale|error
+حالة السجل داخل الفهرس
+visibility
+public|private|organization_only|company_only|site_only|sensitive|mall_public
+قواعد الظهور
+publication_status
+draft|pending_review|published|suspended|rejected|archived
+مهم للـ public/Mall
+moderation_status
+clean|pending|flagged|suspended|rejected
+مهم للمحتوى العام
+rank_score
+decimal nullable
+درجة ترتيب محسوبة
+metadata
+json nullable
+بيانات إضافية غير حساسة
+source_updated_at
+timestamp nullable
+آخر تحديث للكيان الأصلي
+indexed_at
+timestamp nullable
+آخر فهرسة ناجحة
+created_at / updated_at
+timestamps
+تواريخ الإنشاء والتحديث
+9. search_index_fields
+يسمح بتخزين حقول منفصلة قابلة للفلترة أو الترتيب بدون تضخيم metadata.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_index_record_id
+fk
+السجل المرتبط
+field_key
+varchar
+مثال: category, price, skill, rating, industry
+field_value_text
+text nullable
+قيمة نصية
+field_value_number
+decimal nullable
+قيمة رقمية
+field_value_date
+datetime nullable
+قيمة زمنية
+field_value_bool
+boolean nullable
+قيمة منطقية
+is_filterable
+boolean default false
+يستخدم كفلتر
+is_sortable
+boolean default false
+يستخدم للترتيب
+created_at / updated_at
+timestamps
+تواريخ
+10. search_index_permissions
+لا نضع أسرار داخل index. هذا الجدول يساعد في pre-filtering، لكن القرار النهائي يجب أن يمر عبر Authorization Service عند النتائج الحساسة.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_index_record_id
+fk
+السجل
+permission_type
+public|role|permission|membership|owner|custom_policy
+نوع شرط الوصول
+permission_key
+varchar nullable
+مثال: content.view, invoice.view
+role_id
+fk nullable
+دور مسموح
+membership_type
+organization_membership|company_membership nullable
+نوع العضوية
+scope_type
+organization|company|site|module nullable
+نطاق الشرط
+scope_id
+bigint nullable
+معرف النطاق
+effect
+allow|deny
+deny يغلب allow
+created_at
+timestamp
+وقت الإنشاء
+11. search_index_facets
+Facets هي قيم فلترة محسوبة للبحث مثل التصنيف، الدولة، السعر، التقييم، التوفر، نوع النتيجة.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_index_id
+fk
+الفهرس
+facet_key
+varchar
+مثال: country, city, category, price_range, rating
+facet_label
+varchar
+اسم ظاهر
+facet_type
+text|number|range|date|boolean|geo
+نوع الفلتر
+is_public
+boolean default true
+هل يظهر للواجهة العامة؟
+sort_order
+integer default 0
+ترتيب العرض
+settings
+json nullable
+إعدادات مثل ranges
+created_at / updated_at
+timestamps
+تواريخ
+12. search_index_relations
+يربط نتيجة البحث بكيانات أخرى تساعد في الفلترة أو العرض أو permissions.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_index_record_id
+fk
+سجل البحث
+related_type
+varchar
+مثال: category, tag, company, business_profile
+related_id
+bigint nullable
+المعرف الداخلي
+related_uuid
+varchar nullable
+معرف خارجي أو Portable
+relation_role
+primary_category|tag|owner|source|context
+دور العلاقة
+created_at
+timestamp
+وقت الإنشاء
+13. search_synonyms
+مرادفات البحث، مهمة للعربية والإنجليزية والاختلافات السوقية.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+organization_id
+fk nullable
+قد تكون عامة أو خاصة بعميل
+language
+varchar default ar
+اللغة
+term
+varchar
+الكلمة الأصلية
+synonyms
+json
+مرادفات
+scope_type
+global|site|mall|erp|talent nullable
+مجال المرادفات
+status
+active|inactive
+الحالة
+created_by
+fk nullable
+من أضافها
+created_at / updated_at
+timestamps
+تواريخ
+14. search_stop_words
+كلمات مستبعدة أو قليلة القيمة حسب اللغة والسياق.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+language
+varchar
+ar/en/...
+word
+varchar
+الكلمة
+scope_type
+global|site|mall|erp nullable
+مجال التطبيق
+organization_id
+fk nullable
+تخصيص عميل
+status
+active|inactive
+الحالة
+created_at / updated_at
+timestamps
+تواريخ
+15. search_boost_rules
+قواعد رفع أو خفض ترتيب النتائج حسب الثقة، التوثيق، الحداثة، featured listings، أو relevance.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_index_id
+fk nullable
+الفهرس
+rule_name
+varchar
+اسم القاعدة
+subject_type
+varchar nullable
+نوع الكيان المستهدف
+condition_key
+varchar
+مثال: verified, featured, rating, freshness
+operator
+equals|gt|gte|lt|contains|exists
+طريقة التقييم
+condition_value
+json nullable
+قيمة الشرط
+boost_value
+decimal(8,4)
+قيمة الرفع أو الخفض
+status
+active|inactive
+الحالة
+starts_at / ends_at
+timestamps nullable
+مدة القاعدة
+created_at / updated_at
+timestamps
+تواريخ
+16. search_provider_configs
+إعدادات الربط مع محركات البحث الخارجية بدون حفظ أسرار واضحة.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_index_id
+fk
+الفهرس
+provider
+database|meilisearch|typesense|opensearch|elasticsearch
+المزود
+environment
+production|staging|sandbox
+البيئة
+endpoint_ref
+varchar nullable
+مرجع آمن وليس URL حساس عند الحاجة
+credentials_ref
+varchar nullable
+مرجع Vault/Secret
+remote_index_name
+varchar nullable
+اسم الفهرس في المزود
+sync_mode
+none|manual|event_driven|scheduled|hybrid
+طريقة المزامنة
+status
+active|paused|failed
+الحالة
+settings
+json nullable
+إعدادات provider-specific
+created_at / updated_at
+timestamps
+تواريخ
+17. search_provider_sync_records
+يراقب حالة إرسال كل search record إلى مزود خارجي مثل Meilisearch أو OpenSearch.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_index_record_id
+fk
+السجل المحلي
+provider_config_id
+fk
+إعداد المزود
+remote_document_id
+varchar nullable
+معرف المستند في المزود
+sync_status
+pending|synced|failed|deleted|stale
+حالة المزامنة
+last_synced_at
+timestamp nullable
+آخر مزامنة ناجحة
+last_error
+text nullable
+آخر خطأ
+metadata
+json nullable
+تفاصيل إضافية
+created_at / updated_at
+timestamps
+تواريخ
+18. search_reindex_jobs
+عملية إعادة بناء فهرس جزئي أو كامل. يجب أن تعمل عبر Queue ولا تعطل تجربة المستخدم.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+uuid
+ulid/uuid unique
+معرف آمن
+search_index_id
+fk nullable
+الفهرس المستهدف
+organization_id
+fk nullable
+إعادة بناء لعميل محدد
+scope_type / scope_id
+varchar/bigint nullable
+نطاق مثل site/company
+job_type
+full|partial|entity_type|record|provider_resync
+نوع العملية
+entity_type
+varchar nullable
+نوع كيان محدد
+status
+pending|running|completed|failed|cancelled
+حالة العملية
+total_records
+integer default 0
+إجمالي متوقع
+processed_records
+integer default 0
+تمت معالجته
+failed_records
+integer default 0
+فشل
+requested_by
+fk nullable
+من طلب العملية
+started_at / completed_at / failed_at
+timestamps nullable
+أوقات التنفيذ
+error_message
+text nullable
+الخطأ العام
+metadata
+json nullable
+تفاصيل
+created_at / updated_at
+timestamps
+تواريخ
+19. search_reindex_items
+تفاصيل كل عنصر داخل reindex job.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_reindex_job_id
+fk
+العملية
+indexable_type
+varchar
+نوع العنصر
+indexable_id
+bigint nullable
+معرف العنصر
+status
+pending|indexed|skipped|failed|deleted
+حالة العنصر
+message
+text nullable
+رسالة أو سبب التخطي
+processed_at
+timestamp nullable
+وقت المعالجة
+created_at / updated_at
+timestamps
+تواريخ
+20. search_index_errors
+يسجل أخطاء الفهرسة والمزامنة حتى لا تضيع مشاكل البحث بصمت.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_index_id
+fk nullable
+الفهرس
+search_index_record_id
+fk nullable
+السجل
+reindex_job_id
+fk nullable
+عملية الفهرسة
+severity
+low|medium|high|critical
+الأهمية
+error_code
+varchar
+كود الخطأ
+message
+text
+الرسالة
+payload
+json nullable
+بيانات غير حساسة تساعد في التشخيص
+resolved_by
+fk nullable
+من حل الخطأ
+resolved_at
+timestamp nullable
+وقت الحل
+created_at / updated_at
+timestamps
+تواريخ
+21. search_query_logs
+تسجيل الاستعلامات لتحسين البحث والـ analytics، مع مراعاة الخصوصية.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+uuid
+ulid/uuid unique
+معرف آمن
+user_id
+fk nullable
+المستخدم إن كان مسجلا
+organization_id / company_id / site_id
+fk nullable
+السياق
+search_index_id
+fk nullable
+الفهرس
+query_text
+varchar nullable
+نص البحث
+normalized_query
+varchar nullable
+نسخة معالجة
+filters
+json nullable
+الفلاتر المستخدمة
+result_count
+integer default 0
+عدد النتائج
+response_time_ms
+integer nullable
+زمن الاستجابة
+source
+admin|site|mall|api|frontend_anywhere
+مصدر البحث
+ip_address / user_agent
+nullable
+للحماية والتحليلات
+created_at
+timestamp
+وقت البحث
+22. search_click_logs
+يساعد في تحسين ranking وتحليل جودة النتائج.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+search_query_log_id
+fk
+استعلام البحث
+search_index_record_id
+fk nullable
+النتيجة المختارة
+position
+integer nullable
+ترتيب النتيجة عند الضغط
+clicked_url
+varchar nullable
+الرابط
+user_id
+fk nullable
+المستخدم
+created_at
+timestamp
+وقت الضغط
+23. saved_searches
+يسمح للمستخدمين بحفظ عمليات البحث أو الفلاتر المتكررة داخل Admin/Mall/ERP.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+uuid
+ulid/uuid unique
+معرف آمن
+user_id
+fk
+صاحب البحث
+organization_id / company_id / site_id
+fk nullable
+السياق
+name
+varchar
+اسم البحث المحفوظ
+search_scope
+admin|mall|erp|documents|talent|site
+نطاق البحث
+query_text
+varchar nullable
+نص البحث
+filters
+json nullable
+الفلاتر
+sort
+json nullable
+الترتيب
+is_default
+boolean default false
+افتراضي للمستخدم
+created_at / updated_at
+timestamps
+تواريخ
+24. search_alerts
+تنبيهات بحث لاحقة، مثل: أبلغني عند ظهور خدمة/موهبة/عميل/طلب مطابق. هذه لا تدخل مبكرا في V1.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+saved_search_id
+fk
+البحث المحفوظ
+frequency
+instant|daily|weekly|manual
+تكرار التنبيه
+status
+active|paused|expired
+الحالة
+last_checked_at
+timestamp nullable
+آخر فحص
+last_notified_at
+timestamp nullable
+آخر إشعار
+created_at / updated_at
+timestamps
+تواريخ
+25. search_result_cache_records
+كاش اختياري لنتائج البحث الشائعة، خصوصا Mall Search. يجب إبطاله عند تغير visibility أو moderation أو permissions.
+الحقل
+النوع/القيم
+الوصف
+id
+bigint pk
+المعرف
+cache_key
+varchar indexed
+مفتاح الكاش
+search_index_id
+fk nullable
+الفهرس
+query_hash
+varchar
+hash للاستعلام والفلاتر
+scope_type / scope_id
+nullable
+السياق
+result_ids
+json
+معرفات النتائج
+expires_at
+timestamp nullable
+انتهاء الصلاحية
+created_at / updated_at
+timestamps
+تواريخ
+26. Searchable Entities Matrix
+Domain
+Entity
+Index
+Visibility Rule
+Notes
+CMS
+content_entries/pages/posts
+cms_content / site_public
+published + site visibility
+العنوان، الملخص، المحتوى العام، SEO
+CMS
+forms
+admin_search فقط
+permission forms.view
+لا تفهرس submissions العامة إلا داخليا
+Media
+media_assets
+media_public / documents_private
+public/private/sensitive
+العنوان والـ alt والنوع، وليس كل الملف دائما
+Commerce
+products
+commerce_products / site_public / mall_public
+published + product visibility
+السعر العام فقط، لا costs/margins
+Commerce
+orders/customers
+erp_internal
+commerce.order.view / customer.view
+إداري فقط
+Rabet
+business_profiles
+business_directory / mall_public
+public + consent + moderation
+badge/trust summary فقط
+Mall
+mall_listings
+mall_public
+published + clean moderation
+الفهرس العام الرئيسي للزوار
+Talent
+professional_profiles
+talent_public
+visibility public أو open_to_offers
+لا يخرج تقييمات HR الداخلية
+ERP
+leads/quotations/invoices
+erp_internal
+permissions حسب الموديول
+لا يظهر في global public search
+Documents
+documents/files
+documents_private
+document permissions
+يسجل sensitive access عند البحث/الفتح
+Packages
+packages/versions
+packages_marketplace
+approved/published فقط
+يعرض compatibility وtrust
+27. Public vs Admin Search
+البحث
+المسموح
+الممنوع
+Public Site Search
+published pages/posts/products/services فقط
+drafts, private pages, internal files, admin settings
+Mall Search
+Mall mirror published/approved فقط
+private orders, accounting, payroll, verification documents, internal messages
+Admin Search
+حسب صلاحية المستخدم وسياقه
+أي كيان خارج organization/company/site المسموح
+ERP Search
+leads/customers/invoices/tasks حسب permission
+أي بيانات ERP خارج الشركة أو بدون role واضح
+Document Search
+metadata والنص المصرح فقط
+private/sensitive docs بدون permission وaccess log
+28. Permission-aware Search Flow
+User submits query→ Resolve current context: platform / organization / company / site→ Load user memberships + roles + deny overrides→ Select allowed indexes→ Apply tenant filters→ Apply visibility filters→ Run search→ Post-filter sensitive results through AuthorizationService→ Log query→ Return results
+29. Indexing Flow
+ContentPublished / ProductUpdated / CompanyVerified / DocumentUploaded→ SearchIndexRequested event→ BuildSearchDocument action→ Sanitize sensitive fields→ Upsert search_index_records→ Upsert fields/facets/relations→ Sync to provider if enabled→ Mark indexed_at→ Emit SearchIndexUpdated
+30. Reindex Flow
+Admin starts reindex→ search_reindex_job created→ queue chunks by entity type→ each source record converted to search document→ failed items logged→ provider resync optional→ job completed→ health summary generated
+31. Mall Search Flow
+Mall Search لا يبحث في جداول العميل مباشرة. يبحث في Mall Mirror وMall Listings أو search_index_records المنشأة منها فقط.
+Business/Profile/Product/Service approved for Mall→ Mall mirror updated→ MallListingPublished→ search_index_records upsert in mall_public index→ ranking signals calculated→ public search returns published + clean + consented results only
+32. Document Search Flow
+DocumentUploaded→ metadata extracted→ optional text extraction job→ sensitivity classification→ search_index_records created in documents_private→ permissions copied from document access policy→ search result requires document.view permission→ opening file creates sensitive access log if needed
+33. Frontend Anywhere Rules
+• Frontend Anywhere لا يحصل على admin search.
+• يمكنه استخدام public search API فقط حسب scopes مثل read_public_content وread_public_products وread_public_services.
+• الـ API key لا يسمح بقراءة drafts أو private documents أو ERP.
+• Static Snapshot mode يمكن أن يولد search snapshot public فقط.
+• أي query من الواجهة الخارجية يسجل في search_query_logs مع source = frontend_anywhere.
+34. Portable Rules
+• Portable يمكن أن يشغل search index محليا داخل self-hosted instance.
+• عند Mall Sync، يرسل فقط public mirror data وليس operational/private data.
+• UUIDs مهمة لمطابقة search records بين النسخة المحلية وMall Mirror.
+• المنصة المركزية لا تعتمد على search المحلي لدى العميل؛ تعتمد على Mall Mirror المركزي.
+35. Dedicated Rules
+• Dedicated قد يستخدم search service منفصل حسب حجم العميل.
+• يمكن الاحتفاظ بنفس schema داخل Dedicated DB لتوحيد الكود.
+• Mall Search المركزي لا يقرأ Dedicated DB مباشرة، بل يتلقى sync عبر Mall Sync API.
+• Enterprise clients يمكن أن يحتاجوا OpenSearch/Elasticsearch dedicated cluster لاحقا.
+36. Feature Flags
+• enable_search_foundation
+• enable_admin_global_search
+• enable_site_search
+• enable_mall_search
+• enable_talent_search
+• enable_erp_search
+• enable_document_search
+• enable_search_synonyms
+• enable_search_query_logging
+• enable_search_click_logging
+• enable_external_search_provider
+• enable_search_result_cache
+• enable_saved_searches
+• enable_search_alerts
+37. Permissions
+الصلاحية
+المعنى
+search.admin.use
+استخدام البحث الإداري العام
+search.site.manage
+إدارة إعدادات بحث الموقع
+search.index.manage
+إدارة الفهارس
+search.reindex.run
+تشغيل إعادة الفهرسة
+search.logs.view
+عرض سجلات البحث
+search.synonyms.manage
+إدارة المرادفات
+search.provider.manage
+إدارة مزود البحث
+search.analytics.view
+عرض تحليلات البحث
+search.public_api.use
+استخدام API البحث العام
+search.documents.use
+استخدام بحث المستندات حسب الصلاحية
+38. Events
+• SearchIndexRequested
+• SearchIndexRecordCreated
+• SearchIndexRecordUpdated
+• SearchIndexRecordDeleted
+• SearchProviderSyncFailed
+• SearchReindexStarted
+• SearchReindexCompleted
+• SearchReindexFailed
+• SearchQueryLogged
+• SearchResultClicked
+• MallSearchIndexUpdated
+• DocumentSearchIndexUpdated
+39. Indexes المهمة في قاعدة البيانات
+• search_indexes: unique(key), index(index_type, status)
+• search_index_records: index(search_index_id, status, visibility)
+• search_index_records: index(organization_id, company_id, site_id)
+• search_index_records: index(indexable_type, indexable_id)
+• search_index_records: index(publication_status, moderation_status)
+• search_index_records: fulltext(title, summary, content) في MySQL phase
+• search_index_fields: index(field_key), index(field_value_text), index(field_value_number)
+• search_query_logs: index(user_id, created_at), index(source, created_at)
+• search_reindex_jobs: index(status, created_at), index(search_index_id, status)
+• search_provider_sync_records: index(sync_status, updated_at)
+40. Queue Jobs
+• IndexSearchRecordJob
+• RemoveSearchRecordJob
+• SyncSearchRecordToProviderJob
+• RunSearchReindexJob
+• ReindexEntityChunkJob
+• BuildSearchFacetsJob
+• RecalculateSearchRankingJob
+• CleanOldSearchLogsJob
+• WarmPopularSearchCacheJob
+41. CLI Commands
+php artisan kabeeri:search:reindex {index?}php artisan kabeeri:search:reindex-entity {entityType}php artisan kabeeri:search:sync-provider {index}php artisan kabeeri:search:clear-stalephp artisan kabeeri:search:build-facets {index}php artisan kabeeri:search:ranking:recalculate {index}php artisan kabeeri:search:logs:prunephp artisan kabeeri:search:test-query "keyword" --index=mall_public
+42. Laravel Structure المقترح
+app/Core/Search/  Models/    SearchIndex.php    SearchIndexRecord.php    SearchIndexField.php    SearchReindexJob.php    SearchQueryLog.php  Contracts/    Searchable.php    SearchProvider.php  Actions/    BuildSearchDocument.php    UpsertSearchRecord.php    RemoveSearchRecord.php    RunSearchQuery.php  Services/    SearchIndexingService.php    SearchQueryService.php    SearchPermissionService.php    SearchProviderManager.php  Jobs/  Events/  Listeners/  Policies/  Console/Commands/
+43. Searchable Interface / Trait
+أي Model قابل للبحث يجب أن يعرّف كيف يتحول إلى Search Document بدون تسريب بيانات حساسة.
+interface Searchable{    public function searchIndexKey(): string;    public function searchTitle(): string;    public function searchSummary(): ?string;    public function searchContent(): ?string;    public function searchVisibility(): string;    public function searchMetadata(): array;    public function searchPermissions(): array;}
+44. Data Sanitization Rules
+• لا تفهرس passwords أو tokens أو secrets أو provider credentials.
+• لا تفهرس private verification documents في public indexes.
+• لا تفهرس supplier costs أو margins أو bank data أو payroll.
+• لا تضع raw PII في public index إلا إذا كانت بيانات عامة بإذن صريح.
+• في document search، يمكن فهرسة metadata فقط في البداية، ثم extracted text للمستندات المسموح بها.
+• أي AI-generated search summary يجب أن يمر على privacy guardrails قبل الحفظ.
+45. Search Provider Roadmap
+الإصدار
+المحرك
+النطاق
+V1
+MySQL fulltext/basic search
+Admin search + CMS basic
+V2
+MySQL optimized، optional Meilisearch/Typesense
+CMS, Products, Business Directory, Services
+V3
+Search engine basic
+CRM, Inventory, Invoicing, Documents foundation
+V4
+Meilisearch/Typesense recommended
+Mall, Talent, Cloud public traffic
+V5
+Dedicated search service optional
+ERP Pro + Integration logs + Helpdesk
+V6
+OpenSearch/Elasticsearch option
+Enterprise search, large tenants, analytics
+46. Testing Requirements
+• User cannot see search result from another organization.
+• Deny permission override hides result even if role allows it.
+• Draft content does not appear in public site search.
+• Suspended Mall listing does not appear even if source sends published.
+• Private document appears only to authorized user and opening it logs access.
+• Product update refreshes search index.
+• Delete/Archive removes or hides search record.
+• Reindex job can rebuild index from source tables.
+• External provider sync failure is logged and retryable.
+• Frontend Anywhere API cannot search admin/private records.
+• Portable/Dedicated Mall search depends on Mall Mirror, not direct DB access.
+• Query logs do not store sensitive payloads unnecessarily.
+47. أخطاء ممنوعة
+• لا تجعل search_index_records مصدر الحقيقة.
+• لا تبحث في كل الجداول مباشرة بدون tenant scoping.
+• لا تعرض نتائج قبل فحص visibility وpermissions.
+• لا تضع بيانات payroll أو accounting أو legal private docs في public index.
+• لا تعتمد على external search provider بدون fallback أو reindex plan.
+• لا تخلط Mall public search مع Admin/ERP search.
+• لا تسمح لـ Frontend Anywhere API key ببحث drafts أو private data.
+• لا تنسى cache invalidation عند Content/Product/Profile updates.
+• لا تحفظ search logs إلى الأبد بدون retention policy.
+48. Build Order العملي
+• 1. إنشاء search_indexes وsearch_index_records.
+• 2. إضافة Searchable trait للـ CMS content_entries وproducts وbusiness_profiles.
+• 3. بناء IndexSearchRecordJob وUpsertSearchRecord action.
+• 4. إضافة basic admin search UI.
+• 5. إضافة visibility/permission pre-filtering.
+• 6. إضافة query logs بشكل اختياري.
+• 7. إضافة Mall search index عند جاهزية Mall Mirror.
+• 8. إضافة facets وboost rules.
+• 9. إضافة external provider configs عند الانتقال إلى Meilisearch/Typesense.
+• 10. إضافة document search وsaved searches لاحقا.
+49. Release Gate
+• البحث الإداري يعرض فقط نتائج داخل سياق المستخدم.
+• Public Site Search لا يعرض إلا published/public content.
+• Mall Search يعمل بالتصنيف والدولة والمدينة والنوع بدون كشف بيانات خاصة.
+• Reindex job يستطيع إعادة بناء الفهرس بالكامل.
+• Search Index updates after publish/update/delete.
+• Query performance مقبول مع pagination وفهارس مناسبة.
+• Security tests تؤكد عدم تسريب بيانات بين tenants.
+• Search logs لها retention policy أو pruning command.
+50. الخلاصة التنفيذية
+Search Engine Database هو طبقة تشغيل مركزية تجعل Kabeeri قابلة للاستخدام والاتساع. تبدأ بسيطة ببحث MySQL داخل V1/V2، لكنها تصمم من البداية كـ provider-agnostic, permission-aware, tenant-scoped, rebuildable search layer. نجاح هذه الطبقة يمنع تكرار منطق البحث داخل كل موديول، ويحمي من تسريب البيانات الحساسة، ويجهز Kabeeri لـ Mall وTalent وERP وEnterprise Search لاحقا.
+KABEERI Search Engine Database — powered by ADMIT

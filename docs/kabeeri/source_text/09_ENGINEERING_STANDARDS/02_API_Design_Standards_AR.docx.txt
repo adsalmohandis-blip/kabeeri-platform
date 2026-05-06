@@ -1,0 +1,43 @@
+KABEERI / powered by ADMIT
+KABEERI API Design Standards
+قواعد تصميم REST APIs وWebhooks قبل التنفيذ
+الإصدار: v1.2.0 — Coding Ready
+تاريخ التحديث: 2026-05-05
+1. الهدف
+حتى لو V1 يعتمد على Filament، يجب تثبيت قواعد API مبكرًا لأن Frontend Anywhere وPortable وIntegrations وMobile/AI ستحتاج API ثابت.
+2. Response Format
+{  "success": true,  "data": {},  "meta": {},  "message": "تم التنفيذ بنجاح"}{  "success": false,  "error": {"code": "permission_denied", "message": "غير مسموح"},  "meta": {"request_id": "req_xxx"}}
+3. Naming
+العنصر
+القاعدة
+مثال
+Routes
+kebab-case plural
+/api/v1/organizations
+Fields
+snake_case
+organization_id
+IDs public
+uuid/ulid
+org_...
+Actions
+verb endpoints عند الحاجة
+POST /sites/{id}/publish
+Errors
+stable code
+validation_failed
+4. Auth & Scopes
+• Session auth للـ admin في البداية.
+• API tokens لاحقًا عبر hashed tokens.
+• Frontend Anywhere يستخدم scoped API keys.
+• أي API عامة لا ترجع private/draft data.
+• كل request مهم يسجل request_id.
+5. Pagination and Filters
+GET /api/v1/sites?page=1&per_page=25&filter[status]=active&sort=-created_atmeta: { current_page, per_page, total, last_page }
+6. Webhook Payload
+{  "event": "content.published",  "event_id": "evt_xxx",  "occurred_at": "2026-05-05T00:00:00Z",  "organization_id": "org_xxx",  "data": {},  "signature": "sha256=..."}
+7. Versioning
+• كل API تحت /api/v1.
+• لا تكسر response shape داخل نفس version.
+• Breaking changes تحتاج /api/v2.
+• Deprecated fields تبقى فترة انتقالية.

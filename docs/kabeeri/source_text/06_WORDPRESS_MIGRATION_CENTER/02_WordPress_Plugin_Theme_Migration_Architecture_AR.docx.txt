@@ -1,0 +1,92 @@
+KABEERI WordPress Plugin & Theme Migration Architecture
+تحويل البلجنات والثيمات إلى بدائل آمنة أو skeletons داخل Kabeeri
+KABEERI / Kabeeri — powered by ADMIT
+الحالة: Canonical Draft 1.0 | اللغة: العربية | قابل للتنفيذ داخل Laravel Modular Monolith
+1. القاعدة الحاكمة
+لا يتم تشغيل كود WordPress PHP داخل Kabeeri. يتم اكتشاف البلجنات والثيمات، تصنيفها، تحويل إعداداتها أو بياناتها عند الإمكان، ثم استبدالها بميزات أصلية أو Packages رسمية أو adapters أو skeletons تحتاج مراجعة.
+2. Plugin Compatibility Statuses
+الحالة
+المعنى
+native_replacement
+له بديل أصلي داخل Kabeeri مثل SEO أو Forms أو Redirects
+adapter_available
+يوجد adapter رسمي يقرأ بيانات البلجن ويحولها إلى Kabeeri
+partial_conversion
+يتم حفظ جزء من البيانات أو HTML مع warnings
+settings_only
+يمكن نقل الإعدادات فقط بدون logic
+content_preserve
+نحافظ على المحتوى كـ HTML أو placeholder
+rebuild_required
+يحتاج إعادة بناء كـ Kabeeri package أو module
+unsupported
+غير مدعوم حاليًا
+dangerous
+يتم منعه أو يحتاج مراجعة أمنية صارمة
+3. أمثلة Mapping
+WordPress
+Kabeeri
+القرار
+Yoast / RankMath
+Kabeeri SEO
+نقل titles/descriptions/canonical جزئيًا
+Contact Form 7 / WPForms
+Kabeeri Forms
+تحويل forms والحقول والقوالب قدر الإمكان
+Redirection
+Kabeeri Redirects
+استيراد redirect rules
+WooCommerce
+Kabeeri Commerce
+منتجات/طلبات/عملاء لاحقًا عبر Commerce importer
+Elementor
+Kabeeri Page Builder / AI Rebuild
+حفظ HTML ثم إعادة بناء اختيارية
+Wordfence / Security
+Kabeeri Security Center
+لا ينقل rules عمياء؛ يستبدل بميزات أصلية
+WP Rocket / Cache
+Kabeeri Cache
+غالبًا لا حاجة لنقل الإعدادات
+4. Theme Migration Levels
+• Level 1: Preserve Content + Apply Kabeeri Starter Theme.
+• Level 2: Visual Approximation عبر استخراج logo/colors/fonts/header/footer/menus.
+• Level 3: Generate Kabeeri Theme Draft من assets والقوالب الآمنة.
+• Level 4: AI Rebuild للصفحات والثيم بعد visual comparison وموافقة المستخدم.
+5. جداول قاعدة البيانات المقترحة
+• wordpress_detected_plugins
+• wordpress_detected_themes
+• wordpress_plugin_compatibility_rules
+• wordpress_theme_compatibility_rules
+• migration_plugin_mappings
+• migration_theme_mappings
+• plugin_setting_migrations
+• theme_asset_migrations
+• shortcode_mappings
+• block_mappings
+• generated_package_skeletons
+• generated_theme_skeletons
+• migration_compatibility_reports
+• license_review_records
+• marketplace_submission_drafts
+6. Licensing Rules
+• تحويل theme/plugin لموقع العميل لا يعني السماح بنشره في Kabeeri Marketplace.
+• أي نشر عام يحتاج license review، publisher identity، security scan، performance scan، RTL/responsive check، signing، وmanual review.
+• لا يتم نسخ assets تجارية أو fonts أو images إلى Marketplace بدون تصريح واضح.
+7. Marketplace Pipeline
+• Generated skeleton starts as private draft.
+• Developer/Agency reviews code and manifest.
+• Permissions are declared explicitly.
+• Security and compatibility scans run.
+• Only approved and signed packages can be published.
+8. Roadmap
+المرحلة
+النطاق
+V1
+Package foundation + Theme system + Import/export foundation
+V2
+Detect plugins/themes + known plugin report + SEO/forms/redirect mapping
+V3/V4
+WooCommerce/Form/SEO adapters + Agency tools + visual approximation
+V5/V6
+Plugin skeleton generator + Theme converter + AI rebuild + Marketplace submission draft

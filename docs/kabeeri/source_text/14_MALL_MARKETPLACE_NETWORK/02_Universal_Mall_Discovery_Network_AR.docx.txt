@@ -1,0 +1,83 @@
+KABEERI Universal Mall Discovery Network Architecture
+المعماريّة الشاملة لمول كبيري كشبكة اكتشاف موحدة لكل المنتجات والخدمات والكورسات والمواهب والبزنسز والرحلات والفرص، سواء من تطبيقات كبيري أو أنظمة خارجية.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. تعريف مول كبيري الجديد
+Kabeeri Mall ليس متجرًا داخليًا فقط، بل شبكة اكتشاف أعمال موحدة تجمع بيانات عامة مصرح بها من تطبيقات Kabeeri ومنصات خارجية ومعالجات يدوية.
+القاعدة: أي ظهور عام في المول يمر عبر Public Mirror + Consent + Moderation، ولا يقرأ مباشرة من قاعدة بيانات العميل أو النظام الخارجي.
+المول يخدم الاكتشاف والطلب والـ lead والربط، وليس بالضرورة تنفيذ المعاملة بالكامل داخل Kabeeri من أول يوم.
+2. أقسام المول النهائية
+القسم
+ماذا يعرض؟
+مصادر البيانات
+طريقة التفاعل
+المرحلة
+Products Mall
+منتجات، أسعار عامة، صور، توفر، تصنيفات
+Kabeeri Apps، WooCommerce، Shopify، ERP، CSV/API
+شراء داخلي أو Redirect أو طلب من البائع
+V2/V3
+Services Mall
+خدمات، باقات، أسعار تبدأ من، نماذج طلب
+Kabeeri Apps، مواقع خارجية، إدخال يدوي
+Service Request / Lead / WhatsApp / Booking
+V2/V3
+Courses & Training Mall
+كورسات، تدريبات، ورش، شهادات، مدربين
+Kabeeri LMS، Moodle، LearnDash، Teachable، CSV/API
+تسجيل داخلي أو Redirect أو Lead
+V3/V4
+Travel & Tourism Mall
+رحلات داخلية وخارجية، برامج، عمرة/حج، فنادق، مرشدين
+شركات سياحة، WordPress، Google Sheets، API
+طلب حجز، availability، redirect، lead
+V3/V4
+Talent / Professionals Mall
+محترفون، مهارات، بورتفوليو، تقييمات، تواصل
+Professional Profiles
+المشاهدة عامة، التواصل يتطلب حساب مجاني
+V2
+Business & Company Directory
+شركات، بزنسز، تطبيقات، Trust Badge، Business Passport
+Kabeeri/Rabet، خارجي manual/sync
+تواصل، استعراض منتجات/خدمات/كورسات
+V2
+Jobs & Projects Mall
+وظائف، مشاريع، طلب App Builder، طلب مصمم/مسوق
+Companies، Agencies، Work Network
+تقديم/عرض/تفاوض داخل المنصة
+V3/V4
+Partners & Agencies Mall
+وكالات، App Builders، Growth Partners، Legal Partners
+Work Network + Rabet
+طلب تنفيذ/اعتماد/تواصل
+V4
+Themes & Plugins Marketplace
+ثيمات، بلجنات، AI Skills، Connectors، Industry Kits
+Kabeeri Creators + Official
+شراء/تثبيت/مراجعة/اعتماد
+V3/V4
+Events Mall
+مؤتمرات، ندوات، ويبينار، معارض، حفلات
+Event Apps، External feeds
+تسجيل/تذكرة/حجز
+V4
+Deals & Offers Mall
+خصومات، كوبونات، عروض موسمية، باقات
+Commerce، Services، Growth Partners
+شراء/استرداد كوبون/lead
+V4
+RFQ / Requests Mall
+طلبات شراء أو مورد أو خدمة أو مشروع
+Companies and users
+ردود عروض أسعار، CRM/Sales
+V4/V5
+Properties & Assets Mall
+عقارات، قاعات، معدات، سيارات، أصول للإيجار/بيع
+Real estate/fleet/asset sources
+استفسار/زيارة/حجز
+V4/V5
+3. تدفق البيانات الموحد
+Source System → Connector / Feed / Manual Entry → Consent Check → Sync Job → Public Mirror → Moderation → Mall Listing → Inquiry / Redirect / Order / Booking.
+4. الأولويات
+V2: Business Directory + Products + Services + Talent. V3/V4: Courses, Travel, Partners, Themes/Plugins, Jobs/Projects. V4/V5: RFQ, Deals, Properties/Assets, advanced external integrations.

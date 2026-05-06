@@ -1,0 +1,37 @@
+KABEERI V1 Coding Plan — Core MVP
+خطة تكويد منفصلة لهذا الإصدار، مهيأة للتحويل إلى Sprint Backlog داخل أداة إدارة المشروع.
+إصدار الحزمة: v1.3.0 — Coding Ready Final
+ملاحظة: هذا الملف جزء من KABEERI Professional Knowledge System ويستخدم كمرجع تنفيذي مباشر قبل وأثناء التكويد.
+1. هدف الإصدار
+هذا الملف يحدد ما يتم تكويده في هذا الإصدار فقط، مع منع إدخال ميزات من إصدارات لاحقة إلا كـ feature flags مغلقة أو foundations واضحة.
+2. السبرنتات المقترحة
+السبرنت
+النطاق
+أهم الجداول/الموديولات
+مخرج قابل للاختبار
+Sprint 1
+Project setup + Auth + User + Organization
+Laravel, Filament, auth, users, organizations, memberships, roles seeds
+Register/login + create organization
+Sprint 2
+Apps/Sites + Settings + Activity
+sites/apps, settings, feature flags, activity logs
+Create app and view dashboard
+Sprint 3
+CMS Basic
+pages, posts, content types basic, revisions
+Create/publish page
+Sprint 4
+Media + Theme Basic
+media assets/usages, theme registry, activate theme
+Upload image and apply theme
+Sprint 5
+Rabet foundation + Onboarding
+company draft, business profile draft, setup wizard
+Create company/business profile draft
+Sprint 6
+QA + Demo + Release gate
+tests, seed data, backup, docs
+V1 demo usable
+3. Release Gate
+لا يعتبر الإصدار جاهزًا إلا بعد نجاح unit/feature/policy tests، ومراجعة الصلاحيات، وتحديث seed data، وتشغيل demo scenario بدون أخطاء.

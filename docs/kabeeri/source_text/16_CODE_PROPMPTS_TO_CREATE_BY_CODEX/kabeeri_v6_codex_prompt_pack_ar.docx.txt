@@ -1,0 +1,160 @@
+TASK TRACKING AUTOMATION — MANDATORYBefore starting any task from this prompt pack, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php start V6 TXXAfter implementation and tests pass, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php done V6 TXX --prompt=XX --tests="php artisan test" --commit=pending --notes="short summary"If blocked, Codex must run:php 24_kabeeri_task_tracking/scripts/kbr-task.php block V6 TXX --notes="reason"Codex must not mark tasks as verified. Only the project owner can run:php 24_kabeeri_task_tracking/scripts/kbr-task.php verify V6 TXX --notes="reviewed"Replace TXX and XX with the current task/prompt number. This rule is mandatory and comes before all implementation instructions.
+KABEERI V6 Codex Prompt Pack
+Enterprise Complete Platform, Public Ecosystem, Data Platform, Advanced AI, Universal Connectors
+كل Prompt يبدأ في صفحة جديدة — استخدم Prompt واحد فقط في كل مرة مع Codex
+Version: V6 Prompt Pack | For ChatGPT Codex / Coding AgentUsage Rules:1. لا تبدأ V6 إلا بعد استقرار V1/V2/V3/V4/V5 واكتمال اختباراتهم.2. نفّذ Prompt واحد فقط ثم راجع الكود وشغّل الاختبارات ثم اعمل commit.3. V6 توسعة Enterprise كبيرة؛ ممنوع إدخال أي تغييرات مكسّرة للـ Core أو Tenant Isolation.4. أي تكامل خارجي أو Public Marketplace أو AI Action يجب أن يكون permissioned, audited, reversible.5. عند الشك، نفّذ foundation فقط ولا تبني تكامل حقيقي مع مزود خارجي بدون adapter mock/test.
+Scope Summary:V6 يحوّل KABEERI إلى منصة Enterprise كاملة: Public Developer Marketplace، Universal Connector SDK، Advanced AI Co-builder، Data Platform/BI، GRC، Enterprise Architecture، Industry Solutions، Work Network Advanced، Universal Mall Advanced، ESG/EHS، PLM، Manufacturing/SCM/EAM، HCM/Payroll Advanced، Contact Center، Legal/CLM، Advanced Security, SSO/SCIM/SIEM، وEnterprise release readiness.
+Prompt 00 — V6 Rules and Boundaries
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+You are working on KABEERI V6 only.Read /docs/kabeeri first, especially:- CODING_START_HERE.md- V6 Coding Plan- V1/V2/V3/V4/V5 release notes- Database v1.3.0 Addendum- Security & Compliance docs- Developer Economy docs- Universal Mall / External Sync docsHard rules:1. Implement V6 only after confirming V1-V5 are stable.2. Do not break existing V1-V5 migrations, APIs, permissions, or tenant isolation.3. Enterprise features must be feature-flagged and permission-gated.4. No public marketplace publishing without review/signing gates.5. No external connector may access private data without explicit consent, scoped credentials, and audit logs.6. No AI write action can apply changes without Plan → Preview → Approval → Apply → Log → Rollback.7. Add tests for every feature.8. Prefer foundation/adapters/mocks over real vendor integrations unless explicitly requested.Output:- Summary of changes- Files changed- Commands run- Tests added- Test results- Risks/TODOs
+Prompt 01 — V6 Readiness Check
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Before implementing V6, inspect the project and produce a readiness report.Check that V1-V5 foundations exist and tests pass:- Core Kernel- CMS / Media / Themes / Packages- WordPress migration and Commerce Lite- ERP Essentials- Cloud/Mall/Rabet/Agency/Work Network foundations- ERP Pro / Integration Hub / Advanced Reporting foundations- Security and tenant isolation testsTasks:1. Run tests.2. Inspect migrations.3. Inspect feature flags and permissions.4. Verify V6 flags are not enabled by default.5. Report blockers before implementation.Do not implement new features in this prompt.
+Prompt 02 — V6 Feature Flags and Permissions
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Add V6 feature flags and permissions only.Feature flags:- enable_public_developer_marketplace- enable_universal_connector_sdk- enable_advanced_ai_cobuilder- enable_data_platform- enable_grc_suite- enable_enterprise_architecture- enable_industry_solutions- enable_esg_ehs_suite- enable_plm_suite- enable_manufacturing_suite- enable_hcm_payroll_advanced- enable_contact_center_advanced- enable_legal_clm_advanced- enable_sso_scim- enable_siem_exports- enable_universal_mall_advancedAdd permissions with appropriate risk_level:- marketplace.publisher.manage- marketplace.review.manage- connector.sdk.manage- ai.agent.manage- data_platform.manage- grc.manage- ea.manage- industry_solution.manage- esg.manage- plm.manage- manufacturing.manage- hcm.payroll.manage- contact_center.manage- legal_clm.manage- security.enterprise.manageAcceptance:- Seeders are idempotent.- Tests verify flags and permissions exist.
+Prompt 03 — Enterprise Security: MFA/SSO/SCIM Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement enterprise security foundation without real provider integrations.Create tables/models/services for:- identity_providers- sso_connections- scim_directories- scim_sync_events- enterprise_security_policiesRules:- Support SAML/OIDC metadata placeholders.- Store secrets only as encrypted references, not raw secrets.- SCIM is foundation only; no real vendor calls.- All admin changes must audit log.Acceptance:- Organization can configure disabled SSO connection draft.- SCIM sync event can be recorded.- Tests pass.
+Prompt 04 — SIEM and Security Export Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement SIEM export foundation.Create:- siem_destinations- siem_export_jobs- siem_export_events- security_event_streamsSupport destination types:- webhook- syslog_placeholder- s3_placeholder- manual_exportRules:- Do not send real external traffic in tests.- Export audit/security/activity logs through safe job classes.- Respect tenant boundaries.Acceptance:- Can create SIEM destination draft.- Can queue/export mock event batch.- Tests pass.
+Prompt 05 — Public Developer Marketplace Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Public Developer Marketplace foundation.Create/extend:- publisher_accounts- publisher_profiles- publisher_team_members- marketplace_submissions- marketplace_submission_versions- marketplace_review_steps- marketplace_review_decisionsRules:- Public submissions are disabled unless feature flag enabled.- Publisher must be verified before paid/public publishing.- No package is installable until approved and signed.Acceptance:- Publisher can create draft submission.- Reviewer can approve/reject in tests.- Unapproved package cannot be installed.
+Prompt 06 — Package Signing and Release Governance
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement package signing and release governance foundation.Create:- package_signatures- package_release_channels- package_compatibility_records- package_security_attestations- package_changelogsRules:- Do not implement cryptographic production signing unless dependencies already exist.- Provide Signed/Unsigned/Revoked statuses.- Installation must reject revoked packages.- Audit all release state changes.Acceptance:- Tests cover signed, unsigned, revoked states.
+Prompt 07 — Developer Certifications and Docs Portal
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement developer certification/docs foundation.Create:- developer_docs_sections- developer_docs_pages- developer_certification_tracks- developer_certification_attempts- developer_certification_badgesRules:- Docs are content records or standalone docs pages; keep V6 simple.- Certifications can unlock marketplace capabilities.- Do not build full LMS here; integrate with Academy foundation if present.Acceptance:- Publisher can hold certification badge.- Review pipeline can require certification.- Tests pass.
+Prompt 08 — Universal Connector SDK Registry
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Universal Connector SDK registry.Create:- connector_sdk_apps- connector_capabilities- connector_scopes- connector_schemas- connector_test_runs- connector_certificationsRules:- This is SDK registry/foundation, not real connectors.- Every connector declares scopes, data types, sync modes, rate limits.- Connector tests must run in sandbox/mock mode.Acceptance:- Developer can register connector draft.- Scopes are visible before installation.- Tests pass.
+Prompt 09 — External Sync Advanced: Any Platform or Custom
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Extend External Sync to support any known/custom platform safely.Create/extend:- external_system_types- external_sync_sources- external_sync_credentials- external_sync_mappings- external_sync_health_checksSupported source modes:- connector_api- feed_url- file_upload- google_sheet- webhook_push- manual_entry- custom_rest_apiRules:- Store credentials as encrypted references.- Public Mall sync uses Mirror only.- Private data requires explicit consent and scope.Acceptance:- Custom REST API source can be defined without real calls.- Mapping can be stored.- Tests pass.
+Prompt 10 — Universal Mall Advanced Sections
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Universal Mall advanced section registry.Sections:- products- services- courses- professionals- businesses- jobs_projects- partners_agencies- themes_plugins- events- deals_offers- rfq_requests- properties_assets- travel_tourismCreate:- mall_sections- mall_listing_types- mall_listing_sources- mall_listing_relationshipsRules:- Do not duplicate specialized listing tables if existing.- Use mirror/public listing layer.- Moderation and consent required.Acceptance:- Sections are seeded idempotently.- Listing types map to section.- Tests pass.
+Prompt 11 — Courses / LMS Mall Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Courses & Training Mall foundation.Create:- course_mirror_listings- course_providers- course_sessions- course_instructors- course_enrollment_linksRules:- Courses can originate from Kabeeri LMS or external LMS/feed.- Public listing only; do not build full LMS engine here.- Contact/enrollment can redirect externally.Acceptance:- Course listing can sync from external source metadata.- Instructor/provider links work.- Tests pass.
+Prompt 12 — Travel & Tourism Mall Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Travel & Tourism Mall foundation.Create:- travel_trip_listings- travel_package_days- travel_agencies- travel_destinations- travel_availability_windows- travel_booking_linksFields should support:- domestic/international- destination country/city- duration- dates- price_from/currency- included/excluded services- seats- visa_required- required_documents- cancellation_policyRules:- Public listing only.- Booking can be external link or inquiry.- Tests pass.
+Prompt 13 — RFQ / Requests Mall Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement RFQ / Requests Mall foundation.Create:- public_requests- public_request_categories- public_request_responses- public_request_attachmentsRules:- Requests can be for products, services, courses, travel, projects, agencies.- Request owner controls visibility.- Moderation can suspend requests.- No payment/contract execution in this prompt.Acceptance:- User can create public request.- Verified providers can respond if allowed.- Tests pass.
+Prompt 14 — Deals & Offers Mall Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Deals & Offers Mall foundation.Create:- mall_deals- mall_deal_items- mall_deal_sources- mall_deal_redemptionsRules:- Deal can link to product/service/course/travel package.- External deals redirect to original source.- Internal deals can link to Kabeeri apps.- Do not implement full coupon engine here if existing commerce coupon module handles it.Acceptance:- Deal can be published after consent/moderation.- Tests pass.
+Prompt 15 — Properties and Assets Mall Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Properties / Assets Mall foundation.Create:- asset_listings- asset_listing_media- asset_availability- asset_inquiry_linksSupport categories:- real_estate- vehicles- equipment- venues- office_spaces- rental_assetsRules:- Public listing only.- No legal transfer/payment flow.- Tests pass.
+Prompt 16 — Data Platform Ingestion Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement V6 Data Platform ingestion foundation.Create:- data_sources- data_ingestion_jobs- data_ingestion_runs- data_raw_records- data_staging_records- data_source_schemasRules:- Use queued jobs.- Heavy jobs must not run in request lifecycle.- Store raw/staging metadata safely.- Tenant scoped.Acceptance:- Data source can be registered.- Ingestion job can run in mock mode.- Tests pass.
+Prompt 17 — Data Warehouse / Data Mart Registry
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement warehouse and data mart registry foundation.Create:- data_warehouses- data_marts- data_mart_tables- fact_dimension_registry- transformation_jobs- transformation_runsRules:- Foundation only; no heavy ETL engine.- Provide clear contracts for future transformations.- Tests pass.
+Prompt 18 — Metric Store and KPI Management
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Metric Store and KPI Management foundation.Create:- metric_definitions- metric_values- kpi_definitions- kpi_targets- kpi_snapshotsRules:- Metrics must define formula/source/owner.- Calculations should be job-based.- Do not hardcode business metrics in controllers.Acceptance:- KPI can have target and snapshot.- Tests pass.
+Prompt 19 — Advanced BI Dashboards
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Advanced BI dashboard foundation.Create/extend:- dashboards- dashboard_widgets- dashboard_widget_data_snapshots- scheduled_dashboard_refreshesRules:- Use cached snapshots for heavy widgets.- Respect permissions.- No cross-tenant leakage.Acceptance:- Dashboard can hold widgets.- Widget can read from cached snapshot.- Tests pass.
+Prompt 20 — Data Dictionary, Glossary, and Lineage
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement data governance foundation.Create:- data_dictionary_entries- business_glossary_terms- data_ownership_records- data_lineage_edges- data_quality_rules- data_quality_resultsRules:- Link data ownership to organization/module/entity.- Lineage tracks source → transformation → output.- Tests pass.
+Prompt 21 — GRC Policy and Compliance Obligations
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement GRC policy and compliance obligations foundation.Create:- grc_policies- grc_policy_versions- compliance_frameworks- compliance_obligations- obligation_assignmentsRules:- Policies are versioned.- Compliance obligations can be mapped to controls.- Tests pass.
+Prompt 22 — GRC Risk Register and Controls
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement GRC risk register and controls foundation.Create:- risk_registers- risks- risk_assessments- controls- control_mappingsRules:- Risks have likelihood/impact/status/owner.- Controls map to risks and obligations.- Tests pass.
+Prompt 23 — Internal Audit, Evidence, and Remediation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement internal audit, evidence, and remediation foundation.Create:- audit_plans- audit_tests- audit_findings- evidence_records- corrective_actions- remediation_tasksRules:- Evidence can link to media/documents.- Corrective actions have owner/due date/status.- Tests pass.
+Prompt 24 — Enterprise Architecture / App Portfolio
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Enterprise Architecture / App Portfolio foundation.Create:- enterprise_applications- application_components- application_environments- business_capabilities- capability_application_map- technology_stack_items- architecture_decisionsRules:- Do not duplicate Kabeeri sites/apps; this tracks enterprise portfolio.- Link external/internal apps where possible.- Tests pass.
+Prompt 25 — Integration Map and Change Impact Analysis
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement integration map and change impact analysis foundation.Create:- integration_maps- integration_edges- change_requests- change_impact_assessments- impacted_assetsRules:- Integrations can reference connectors, apps, data sources, APIs.- Impact assessment is foundation only.- Tests pass.
+Prompt 26 — Industry Solutions Engine
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Industry Solutions engine foundation.Create:- industry_solutions- industry_solution_versions- industry_solution_requirements- industry_solution_modules- industry_solution_templates- industry_solution_installations- industry_solution_applied_itemsRules:- Industry solution is a governed package of themes/plugins/workflows/reports.- Installation requires permissions and compatibility check.- Tests pass.
+Prompt 27 — ESG / EHS / Sustainability Suite
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement ESG/EHS/Sustainability foundation.Create:- esg_profiles- esg_reporting_periods- esg_metrics- esg_metric_records- ghg_emission_factors- ghg_emission_records- ehs_incidents- ehs_corrective_actionsRules:- This is enterprise/industry optional suite.- Link evidence to documents/media.- Tests pass.
+Prompt 28 — PLM / R&D / Engineering Suite
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement PLM/R&D/Engineering foundation.Create:- engineering_items- engineering_item_versions- product_families- engineering_boms- engineering_documents- r_and_d_projects- experiments- engineering_change_requests- engineering_change_ordersRules:- Keep manufacturing execution separate.- Version engineering items.- Tests pass.
+Prompt 29 — Manufacturing / SCM / EAM Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Manufacturing / SCM / EAM foundation.Create:- manufacturing_boms- routings- work_centers- production_orders- material_requirements- quality_checks- assets- maintenance_plans- maintenance_ordersRules:- Foundation only; no advanced MRP optimizer.- Permissions must be high-risk.- Tests pass.
+Prompt 30 — Retail & Omnichannel Advanced
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Retail & Omnichannel foundation.Create:- retail_locations- sales_channels- channel_product_mappings- pos_registers- pos_sessions- omnichannel_inventory_views- click_and_collect_requestsRules:- Do not break existing Commerce/POS foundations.- Tests pass.
+Prompt 31 — HCM / Payroll Advanced Foundation
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement HCM / Payroll Advanced foundation.Create:- employee_records_advanced- attendance_records- leave_policies- leave_requests- payroll_periods- payroll_items- payroll_runs- payroll_run_linesRules:- Payroll is country-pack dependent.- Do not calculate real taxes without country pack rules.- High-risk permissions and audit logs required.- Tests pass.
+Prompt 32 — Project / PMO / Professional Services
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Project / PMO / Professional Services foundation.Create:- client_projects- project_milestones- project_deliverables- timesheets- billable_rates- project_billing_links- pmo_status_reportsRules:- Can integrate with invoicing but do not implement complex revenue recognition.- Tests pass.
+Prompt 33 — Contact Center / Customer Service Advanced
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Contact Center / Customer Service Advanced foundation.Create:- support_queues- support_channels- ticket_slas- ticket_escalations- knowledge_base_articles- customer_portal_access- contact_center_metricsRules:- Extend existing notifications/inbox/helpdesk if present.- Do not implement real telephony.- Tests pass.
+Prompt 34 — Legal / CLM Advanced
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Legal / Contract Lifecycle Management foundation.Create:- contract_templates- contracts- contract_versions- contract_parties- contract_obligations- contract_renewals- legal_approvals- e_signature_requests_placeholderRules:- Do not integrate real e-signature provider yet.- Link obligations to GRC where appropriate.- Tests pass.
+Prompt 35 — Advanced AI Co-builder Agents
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Advanced AI Co-builder agents foundation.Create/extend:- ai_agents- ai_agent_skills- ai_agent_runs- ai_tool_calls- ai_action_plans- ai_action_approvals- ai_rollback_pointsRules:- No AI write action without approval.- Store prompts/results safely.- Do not send real data to external AI provider unless explicitly configured.- Tests use fake AI provider.
+Prompt 36 — AI Skills Marketplace
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement AI Skills Marketplace foundation.Create:- ai_skill_packages- ai_skill_permissions- ai_skill_review_records- ai_skill_installations- ai_skill_usage_recordsRules:- AI skills are packages and require review/signing.- Must declare data access scopes.- Tests pass.
+Prompt 37 — Work Network Advanced Levels and Payouts
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Work Network advanced levels and payout foundation.Create/extend:- capability_level_rules- professional_level_events- partner_payout_accounts- partner_payout_batches- partner_payout_lines- partner_tax_profilesRules:- No real payment provider integration.- Payouts are generated as payable records only.- Tests pass.
+Prompt 38 — Agency Partner Advanced Operations
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Agency Partner advanced operations.Create/extend:- agency_service_packages- agency_client_reports- agency_sla_policies- agency_white_label_settings- agency_performance_scores- agency_accreditation_renewalsRules:- Annual accreditation can expire/renew.- White-label is foundation only.- Tests pass.
+Prompt 39 — Academy Advanced Assessments and Proctoring Placeholder
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Academy advanced assessments foundation.Create:- academy_practical_assignments- academy_assignment_submissions- academy_review_rubrics- academy_reviewer_assignments- academy_certification_renewals- academy_proctoring_sessions_placeholderRules:- No real proctoring provider integration.- Certification can expire/renew.- Tests pass.
+Prompt 40 — Advanced Billing, Revenue Share, and Marketplace Payouts
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement advanced billing/revenue share foundation.Create/extend:- revenue_share_rules- marketplace_sale_events- marketplace_commission_events- creator_royalty_events- agency_subscription_renewals- legal_partner_fee_eventsRules:- Do not charge real payments.- Use existing billing/payment abstractions.- Tests pass.
+Prompt 41 — Enterprise API Gateway and Rate Limits
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement Enterprise API gateway/rate limit foundation.Create:- api_clients- api_client_scopes- api_rate_limit_policies- api_usage_records- api_access_logsRules:- Do not expose unsafe APIs.- Scopes must map to permissions.- Tests pass.
+Prompt 42 — Versioned Public APIs and SDK Docs
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement versioned public API docs foundation.Create:- api_versions- api_endpoints_registry- api_schema_snapshots- sdk_releases- sdk_download_recordsRules:- Registry/docs only unless endpoints already exist.- Tests pass.
+Prompt 43 — Enterprise Data Privacy and Retention Advanced
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Implement enterprise privacy/retention foundation.Create/extend:- data_retention_policies- retention_policy_assignments- data_subject_requests- privacy_exports- privacy_deletion_jobs- sensitive_data_access_reviewsRules:- No destructive deletion without soft-delete/review workflow.- Audit everything.- Tests pass.
+Prompt 44 — Performance, Queue, and Scale Hardening
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Perform V6 performance/scale hardening.Tasks:1. Identify heavy jobs and ensure queue usage.2. Add indexes for new V6 high-volume tables.3. Add caching strategy notes for dashboards/mall/search.4. Add tests where possible for query scoping.Rules:- Do not rewrite architecture.- Do not introduce breaking changes.- Report recommendations.
+Prompt 45 — V6 Filament/Admin Resources
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Create safe Filament/admin resources for V6 foundations.Scope only for enabled modules:- Developer Marketplace reviews- Connector SDK registry- Data Platform sources/jobs- GRC policies/risks/controls- EA portfolio- Industry solutions- ESG/PLM foundations- Mall advanced listingsRules:- Respect permissions.- Read-only where risk is high.- No destructive actions by default.- Tests/smoke checks pass.
+Prompt 46 — V6 Seed Demo Data
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Create V6 demo seed data.Seed only safe demo records:- demo enterprise organization- demo publisher account- demo connector draft- demo data source- demo GRC policy/risk/control- demo industry solution draft- demo travel package listing- demo course listing- demo RFQ request- demo dashboard/KPIRules:- Idempotent seeders.- No real secrets.- No external calls.- Tests pass.
+Prompt 47 — V6 Smoke Tests
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Create V6 smoke test suite.Cover:- V6 flags/permissions- public marketplace submission gates- connector SDK draft registration- external sync source scope/consent- data platform ingestion mock- GRC risk/control creation- EA app portfolio creation- Universal Mall advanced sections- AI write approval guard- tenant isolationAcceptance:- Smoke tests pass.
+Prompt 48 — V6 Security and Compliance Pass
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Perform V6 security/compliance pass.Check:- tenant isolation- high-risk permissions- external connector credential handling- AI write guardrails- marketplace package signing/review- data privacy/retention workflows- SIEM export safety- audit logs for enterprise admin actionsDo not add new features except fixes.Return risk report.
+Prompt 49 — V6 Documentation Update
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Update documentation for V6 implementation.Update:- README- V6 release notes- module docs- API/SDK registry docs- admin usage notes- security notes- known limitationsDocument intentionally postponed integrations and provider-specific work.Do not add code unless docs reveal a broken command.
+Prompt 50 — V6 Release Candidate Check
+Copy this prompt into Codex as a single task. Review, test, then commit before moving to the next prompt.
+Prepare KABEERI V6 Release Candidate check.Tasks:1. Run all tests.2. Run Pint/static checks.3. Fresh migrate + seed.4. Verify V1-V5 flows still pass.5. Verify V6 feature flags default disabled unless configured.6. Verify no public marketplace package can install without approval/signature.7. Verify no external connector uses private data without consent/scope.8. Verify AI write actions require approval.9. Produce final V6 readiness report.Do not implement new features.
+KABEERI V6 Codex Prompt Pack

@@ -1,0 +1,20 @@
+10 — معيار حزمة الثيم وملفات Manifest
+يوضح هذا الملف القواعد التي يلتزم بها أي Theme Package رسمي أو منشور من Kabeeri Creators.
+Version: v1.6.3 — Theme & Plugin Ecosystem Completion
+قاعدة التحديث: هذا الملف يضيف تفاصيل تنفيذية جديدة ولا يغير ملفات V1 المجمّدة. أي ربط مع ملفات سابقة يتم بالإشارة فقط.
+الملفات القياسية داخل أي Theme Package
+theme.manifest.json — بيانات الثيم والنسخة والناشر والتوافق.
+app.recipe.json — البلجنات المطلوبة/المقترحة/الاختيارية.
+api.manifest.json — الـ endpoints التي يحتاجها الثيم.
+mobile.profile.json — وصف تجربة الموبايل المقابلة للثيم.
+design-tokens.json — الألوان والخطوط والهوامش والقيم القابلة للتخصيص.
+components/ — React/Next.js components للويب.
+demo-data/ — بيانات الديمو التي يستوردها Demo Importer.
+docs.md — شرح التثبيت والتخصيص والدعم.
+مثال مختصر
+{ "name": "Kabeeri Clinic Prime", "engine": "next-react", "rtl_ready": true, "requires": ["forms-pro", "booking-lite"], "mobile_profile": "clinic-default" }
+قواعد ممنوعة
+الثيم لا يلمس قاعدة البيانات مباشرة.
+الثيم لا يحتوي business logic أو payment logic.
+الثيم لا يطلب بيانات خاصة غير معلنة في api.manifest.json.
+الثيم لا يثبت بلجنات بدون موافقة المستخدم.

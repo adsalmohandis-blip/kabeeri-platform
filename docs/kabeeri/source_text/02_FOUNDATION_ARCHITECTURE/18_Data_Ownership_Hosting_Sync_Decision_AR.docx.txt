@@ -1,0 +1,749 @@
+KABEERI — ملحق قرار معماري: ملكية البيانات، الاستضافة الخارجية، والمزامنة مع Kabeeri Mall
+Data Ownership / Self-hosting / Frontend Export / Mall Sync Decision Analysis
+هذا الملحق يحلل بعمق اختيارات ملكية البيانات والاستضافة في Kabeeri، خصوصًا مع وجود ميزة مهمة جدًا:
+العميل يستطيع الخروج من Kabeeri Cloud وتشغيل موقعه خارج المنصة، ومع ذلك يمكن أن تستمر بياناته العامة — خدماته، منتجاته، بروفايله، وبعض بياناته التجارية — في الظهور داخل Kabeeri Mall الرسمي عبر Pipeline تحديثات.
+1. ملخص القرار المطلوب
+أمامنا 3 اقتراحات رئيسية:
+الاقتراح الأول
+العميل يأخذ:
+كود الموقع+ قاعدة بياناته+ ملفاته+ يستطيع عمل Hosting خارجي كامل
+ثم يتم ربطه بـ Kabeeri Mall عبر Sync Pipeline.
+الاقتراح الثاني
+تبقى بيانات العملاء داخل جداول المنصة متفرقة وTenant-scoped، وعندما يريد العميل الخروج، يقوم Module محوّل بجمع بياناته في Database واحدة قابلة للتشغيل خارجيًا، ثم تُحذف بياناته التشغيلية من قاعدة المنصة الرئيسية، مع الإبقاء على نسخة Mall/Public Business Data فقط.
+الاقتراح الثالث
+العميل لا يأخذ قاعدة البيانات ولا الكنترول بانل، بل يأخذ فقط Frontend قابل للاستضافة في أي مكان، بينما Control Panel والبيانات تظل داخل Kabeeri Cloud.
+2. أهم حقيقة قبل القرار
+Kabeeri ليس مجرد CMS.
+Kabeeri يحتوي على:
+CMSCommerceBusiness ProfilesRabet VerificationERPCRMInvoicesInventoryTeamsKabeeri MallTalentLegal Partner NetworkAIIntegrationsBilling
+لذلك قرار الاستضافة ليس قرار موقع فقط.
+هو قرار حول:
+من يملك البيانات؟
+من يدير التحديثات؟
+كيف تظهر البيانات في Mall؟
+كيف نضمن الثقة؟
+كيف نمنع Vendor Lock-in؟
+كيف نحافظ على نموذج SaaS التجاري؟
+كيف نقلل تكلفة الدعم؟
+3. تشبيه البنك ممتاز جدًا
+اقتراحك بأن كل عميل يكون له ملف مثل البنك مهم جدًا.
+التشبيه الصحيح:
+Customer Account داخل Kabeeri = ملف العميل في البنكBusiness Profile / Company = حساب بنكي أو حساب تجاري داخل ملف العميلSite = قناة أو واجهة تابعة لهذا الحسابMall Listing = نسخة عامة قابلة للظهور في السوق
+يعني العميل قد يكون له:
+Customer Account واحد→ أكثر من Organization→ أكثر من Company / Business File→ أكثر من Site→ أكثر من Store→ أكثر من Business Listing في Mall
+وهذا يثبت أن التصميم يجب ألا يبدأ من Site فقط.
+بل يبدأ من:
+Customer / Organization / Business Account
+ثم المواقع والمتاجر والخدمات تابعة له.
+4. المفهوم الصحيح: Kabeeri Business Passport
+أقترح إضافة مفهوم رسمي اسمه:
+Kabeeri Business Passport
+أو بالعربي:
+ملف العميل / ملف البزنس في Kabeeri
+هذا الملف لا يساوي الموقع.
+بل يحتوي على:
+هوية العميل.
+منظماته.
+شركاته.
+مواقعه.
+خدماته.
+منتجاته.
+التوثيق.
+سجلات الثقة.
+ظهور Mall.
+علاقته بالمنصة.
+حتى لو خرج الموقع خارجيًا، يبقى لدى Kabeeri ملف رسمي للعميل أو البزنس إذا وافق على الاستمرار في الظهور داخل Mall.
+5. فصل أنواع البيانات
+لكي نقرر صح، يجب تقسيم البيانات إلى 5 أنواع.
+5.1 Operational Private Data
+بيانات تشغيلية خاصة لا يجب ظهورها في Mall:
+invoicesaccountingpayrollinternal tasksprivate messagesemployee evaluationscontracts privateinventory costsbank accounts
+هذه إذا خرج العميل، يمكن تصديرها أو حذفها من Cloud حسب الباقة والاتفاق.
+5.2 Website/Public Content Data
+بيانات الموقع العامة:
+pagespostsmedia publicmenusSEOlanding pages
+هذه قابلة للتصدير للموقع الخارجي.
+5.3 Commerce Public Data
+بيانات منتجات عامة:
+product namedescriptionimagespublic priceavailabilitycategorypublic SKU optional
+هذه يمكن مزامنتها مع Mall.
+لكن لا تشمل بالضرورة:
+supplier costprivate marginsinternal stock detailspurchase history
+5.4 Business Public Profile Data
+بيانات البزنس العامة:
+business namelogocoverdescriptioncountry/cityservicesverified badgeratingpublic contact methodstrust signals
+هذه هي قلب Kabeeri Mall.
+5.5 Platform Relationship Data
+بيانات علاقة العميل بالمنصة:
+subscription historyKabeeri Mall listing IDverification badgelegal review recordstrust scorecommission recordspartner relations
+هذه غالبًا تبقى في Kabeeri لأن لها علاقة بالمنصة نفسها، وليست جزءًا من موقع العميل فقط.
+6. قاعدة مهمة جدًا
+لا يجب أن نفكر في “قاعدة بيانات العميل” كشيء واحد.
+بل نفكر في:
+Tenant Operational DataPublic Mall Mirror DataPlatform Relationship DataExport Package DataSync Contract Data
+وهذا هو مفتاح القرار.
+7. الاقتراح الأول: العميل يأخذ كل شيء ويعمل Hosting خارجي كامل
+7.1 وصف الاقتراح
+العميل يحصل على:
+Kabeeri Self-hosted Package+ Database Dump+ Media Files+ Theme/Frontend+ Modules+ Installer
+ويشغل النظام كاملًا خارج Kabeeri Cloud.
+ثم نربطه بالمنصة الرسمية عبر:
+Mall Sync Connector
+7.2 المميزات
+7.2.1 أعلى ثقة
+العميل يشعر أنه ليس محبوسًا.
+وهذه نقطة قوية ضد WordPress/Shopify/Closed SaaS.
+7.2.2 مناسب لجمهور WordPress
+جمهور WordPress يحب فكرة:
+أنا أقدر أستضيف بنفسي
+7.2.3 ميزة بيع قوية
+يمكن تسويقها كالتالي:
+ابدأ على Kabeeri Cloud، ولو حبيت تستضيف بنفسك خذ موقعك وبياناتك بالكامل.
+7.2.4 مناسب للشركات الحساسة
+بعض الشركات ترفض SaaS كامل وتريد:
+Dedicated hosting.
+Private server.
+On-prem.
+7.2.5 يحارب خوف Vendor Lock-in
+هذه ميزة استراتيجية كبيرة.
+7.3 العيوب
+7.3.1 تكلفة دعم عالية
+إذا أخذ العميل نسخة كاملة خارجية، ستظهر مشاكل كثيرة:
+نسخة PHP مختلفة.
+MySQL مختلف.
+Queue لا تعمل.
+Storage permissions.
+SSL.
+Cron.
+Updates.
+Packages compatibility.
+7.3.2 تحديثات أصعب
+كل إصدار جديد من Kabeeri يجب أن يكون قابلًا للتحديث خارج Cloud.
+هذا يحتاج:
+release packagesupgrade scriptsmigration compatibilitymodule versioning
+7.3.3 خطر أمني
+لو العميل استضاف بشكل سيئ، قد يتعرض للاختراق، ثم يلوم Kabeeri.
+7.3.4 Sync مع Mall أصعب
+لأن البيانات خارج Kabeeri Cloud، يجب بناء:
+API Connector.
+Webhooks.
+Auth tokens.
+Retry logic.
+Conflict handling.
+Data validation.
+7.3.5 احتمالية Forking
+لو العميل أخذ الكود وبدأ يعدل، يصبح تحديثه أصعب جدًا.
+7.4 متى يكون هذا الاقتراح مناسبًا؟
+مناسب لـ:
+Enterprise.
+عملاء يريدون on-prem.
+شركات لديها IT قوي.
+عملاء يدفعون باقة أعلى.
+باقة “Kabeeri Portable / Self-hosted”.
+غير مناسب كخيار مجاني أو رخيص.
+7.5 الحكم على الاقتراح الأول
+قوي جدًا تجاريًا وثقةً، لكنه مكلف دعمًا وتشغيليًا.
+يجب أن يكون:
+Paid high-tier option
+وليس الوضع الافتراضي لكل العملاء.
+8. الاقتراح الثاني: بيانات العميل متفرقة في منصة Kabeeri ويتم تجميعها عند الخروج
+8.1 وصف الاقتراح
+داخل Kabeeri Cloud:
+البيانات موجودة في جداول المنصة العادية.
+كل جدول فيه organization_id و/أو site_id و/أو company_id.
+عند خروج العميل:
+Tenant Export Module→ يجمع كل بيانات العميل→ يحولها إلى Portable Database→ يجهز files/media→ يجهز manifest→ يجهز self-hosted package→ يحذف operational data من Cloud حسب الاتفاق→ يبقي Mall/Public Relationship Data
+8.2 المميزات
+8.2.1 أفضل خيار اقتصادي في البداية
+لأنك لا تحتاج Database منفصلة لكل عميل.
+8.2.2 أسهل في بناء SaaS
+كل شيء في منصة واحدة:
+updates.
+monitoring.
+billing.
+marketplace.
+AI.
+Mall.
+8.2.3 التصدير ممكن
+طالما كل شيء مربوط بـ organization_id، يمكن استخراج بيانات العميل.
+8.2.4 مناسب جدًا لنموذج Kabeeri
+لأن Kabeeri ليس مجرد موقع، بل منظومة.
+8.2.5 يمكن حذف بيانات العميل التشغيلية بعد الخروج
+مع الاحتفاظ فقط بـ:
+Mall MirrorVerification/Trust relationshipPublic business profile if agreed
+8.2.6 يسمح بخيارات متعددة لاحقًا
+نفس التصميم يدعم:
+Shared SaaS.
+Dedicated DB.
+Self-hosted export.
+Frontend export.
+8.3 العيوب
+8.3.1 يحتاج Export Engine قوي
+لا يكفي SQL dump عشوائي.
+نحتاج:
+Tenant Export Graph
+يعرف كل الجداول المرتبطة بالعميل.
+8.3.2 خطر نسيان جدول
+لو أضفنا Module جديد ولم نسجله في Export Registry، قد لا يُصدّر.
+8.3.3 التحويل إلى DB واحدة يحتاج Mapping
+بعض الجداول في SaaS قد تحتوي Platform IDs أو relations تحتاج إعادة بناء.
+8.3.4 الحذف من DB الرئيسية يحتاج حذر
+لا يجب حذف بيانات قد تكون مرتبطة بـ:
+invoices platform.
+legal proof.
+audit requirements.
+disputes.
+payouts.
+8.3.5 بعد الخروج يحتاج Sync Connector
+لو العميل يريد الاستمرار في Mall، نحتاج pipeline تحديثات من موقعه الخارجي.
+8.4 متى يكون مناسبًا؟
+هذا هو أفضل وضع افتراضي لـ Kabeeri Cloud.
+مناسب لـ:
+معظم العملاء.
+SaaS اقتصادي.
+نمو سريع.
+دعم أسهل.
+قابلية export لاحقًا.
+8.5 الحكم على الاقتراح الثاني
+هذا هو الاقتراح الأنسب كأساس للمنصة.
+لأنه يوازن بين:
+SaaS economics+ portability+ customer trust+ Mall continuity+ future dedicated/self-hosted options
+9. الاقتراح الثالث: العميل يأخذ Frontend فقط والـ Control Panel والبيانات عندنا
+9.1 وصف الاقتراح
+العميل يستضيف الواجهة العامة فقط خارج Kabeeri.
+مثال:
+Static frontendأو Next/Nuxt frontendأو Blade/static export
+لكن:
+Admin PanelDatabaseCMSProductsOrdersMall Sync
+كلها تظل داخل Kabeeri Cloud.
+الواجهة الخارجية تتصل بـ Kabeeri API.
+9.2 المميزات
+9.2.1 أسهل Sync مع Mall
+لأن البيانات الأصلية ما زالت داخل Kabeeri.
+9.2.2 أقل تكلفة دعم
+لا يوجد self-hosted backend كامل عند العميل.
+9.2.3 تحديثات أسهل
+Kabeeri تتحكم في backend والتحديثات.
+9.2.4 أداء جيد لو الواجهة Static
+يمكن توليد frontend static واستضافته على أي CDN.
+9.2.5 مناسب جدًا للمواقع العامة
+خصوصًا:
+موقع شركة.
+Blog.
+Landing pages.
+Catalog.
+9.3 العيوب
+9.3.1 ليس خروجًا حقيقيًا
+العميل لا يملك DB ولا Admin.
+قد يشعر أن هذا Lock-in.
+9.3.2 اعتماد دائم على Kabeeri API
+لو Kabeeri Cloud توقف، لوحة التحكم والبيانات تتأثر.
+9.3.3 غير مناسب لكل العملاء
+بعض العملاء يريدون:
+قاعدة بياناتهم.
+control كامل.
+تشغيل داخلي.
+9.3.4 أقل جاذبية لجمهور WordPress المتشدد
+لأنهم يريدون سيطرة كاملة.
+9.3.5 التجارة والـ ERP أصعب خارجيًا
+Frontend فقط جيد للمحتوى والكتالوج، لكن للعمليات الحساسة قد يحتاج API دائم.
+9.4 متى يكون مناسبًا؟
+مناسب كباقة وسط:
+External Frontend Hosting
+للعملاء الذين يريدون:
+استضافة الواجهة على دومينهم أو CDNهم.
+لكن لا يريدون إدارة السيرفر والـ DB.
+ويريدون بقاء CMS/ERP في Kabeeri.
+9.5 الحكم على الاقتراح الثالث
+ممتاز كباقة إضافية، وليس بديلًا عن حق التصدير الكامل.
+هو حل ذكي جدًا للغالبية التي تريد مرونة شكلية وأداء عالي، لكنها لا تريد عبء إدارة Backend.
+10. القرار الأفضل: Hybrid Model
+أفضل قرار ليس اختيار واحد فقط.
+الأفضل هو بناء 3 باقات / أوضاع رسمية:
+Mode A — Kabeeri Cloud ManagedMode B — External Frontend HostingMode C — Full Self-hosted / Portable Export
+مع وجود:
+Kabeeri Mall Sync Layer
+في كل الأوضاع.
+11. Mode A — Kabeeri Cloud Managed
+الوصف
+كل شيء عند Kabeeri:
+FrontendBackendDatabaseFilesAdminMall SyncAIBilling
+مناسب لـ
+أغلب العملاء.
+الشركات الصغيرة والمتوسطة.
+الوكالات.
+المتاجر.
+Rabet verified companies.
+المميزات
+أسهل تشغيل.
+أفضل أداء تكاملي.
+أفضل Mall sync.
+أفضل AI.
+أفضل updates.
+أقل دعم على العميل.
+العيوب
+العميل يعتمد على Kabeeri.
+يحتاج ثقة عالية في المنصة.
+الحكم
+هذا هو الوضع الافتراضي.
+12. Mode B — External Frontend Hosting
+الوصف
+العميل يأخذ الواجهة فقط ويستضيفها خارج Kabeeri.
+لكن:
+Admin + DB + APIs remain in Kabeeri Cloud
+مناسب لـ
+شركات تريد تحكم في frontend/CDN.
+وكالات تريد نشر frontend مخصص.
+مواقع محتوى عالية الأداء.
+عملاء لا يريدون إدارة backend.
+المميزات
+Sync ممتاز.
+أقل تعقيد من self-hosting.
+Frontend حر.
+Control Panel يبقى موحدًا.
+العيوب
+لا يعطي DB ownership كامل.
+ليس كافيًا للعملاء الذين يريدون استقلالًا كاملًا.
+الحكم
+باقات وسط ممتازة.
+13. Mode C — Full Self-hosted / Portable Export
+الوصف
+العميل يأخذ:
+BackendFrontendDBFilesModulesThemeInstaller
+ويشغل خارج Kabeeri.
+مناسب لـ
+Enterprise.
+regulated sectors.
+عملاء كبار.
+جهات تريد private hosting.
+باقة مدفوعة أعلى.
+المميزات
+أعلى استقلالية.
+أعلى ثقة.
+مضاد قوي للـ lock-in.
+العيوب
+دعم أعلى.
+تحديثات أصعب.
+Sync مع Mall يحتاج Connector.
+خطر أمني لو استضافة العميل ضعيفة.
+الحكم
+ميزة قوية جدًا، لكن يجب أن تكون Premium وليست default.
+14. جدول مقارنة سريع
+المعيار
+Cloud Managed
+External Frontend
+Full Self-hosted
+سهولة التشغيل
+ممتازة
+ممتازة
+متوسطة/صعبة
+تحكم العميل
+متوسط
+متوسط/عالٍ في الواجهة
+عالٍ جدًا
+امتلاك قاعدة البيانات
+داخل Kabeeri
+داخل Kabeeri
+عند العميل
+Sync مع Mall
+ممتاز
+ممتاز
+جيد لكن يحتاج Connector
+تكلفة الدعم على Kabeeri
+منخفضة
+منخفضة/متوسطة
+عالية
+التحديثات
+سهلة
+سهلة
+أصعب
+مناسب للـ WordPress mindset
+جيد
+جيد
+ممتاز
+مناسب للـ SaaS economics
+ممتاز
+ممتاز
+أقل
+خطر Vendor Lock-in perception
+متوسط
+متوسط/عالٍ
+منخفض جدًا
+مناسب للـ Enterprise
+جيد
+جيد
+ممتاز
+15. القرار الموصى به رسميًا
+أوصي بهذا النموذج:
+Default: Kabeeri Cloud ManagedOption: External Frontend HostingPremium Option: Full Portable Self-hosted ExportAlways: Kabeeri Mall Sync / Business Passport remains available
+يعني:
+لا نجبر كل العملاء على self-hosting.
+لا نحرمهم من self-hosting.
+لا نفقد Mall relationship بعد خروجهم.
+لا نحمل نفسنا تكلفة دعم ضخمة في كل الباقات.
+16. Kabeeri Mall بعد خروج العميل
+هذه أهم نقطة في كلامك.
+حتى لو العميل خرج خارجيًا، يمكن أن يستمر في Kabeeri Mall عبر:
+Mall Sync Connector
+أو:
+Mall Data Pipeline
+17. ما الذي يستمر في Mall؟
+عند خروج العميل، يتم الاتفاق على ما يبقى ظاهرًا:
+17.1 Business Profile
+اسم الشركة.
+الشعار.
+الوصف.
+الدولة/المدينة.
+مجال العمل.
+وسائل التواصل العامة.
+التوثيق.
+17.2 Services
+اسم الخدمة.
+الوصف.
+السعر العام إن وجد.
+التصنيف.
+حالة النشر.
+17.3 Products
+اسم المنتج.
+وصفه.
+الصور.
+السعر العام.
+التوفر.
+رابط المنتج الخارجي.
+17.4 Trust / Verification
+badge.
+verification level.
+expiry.
+trust records العامة.
+17.5 Reviews / Ratings
+تبقى داخل Kabeeri لأنها جزء من Mall trust layer.
+18. ما الذي لا ينتقل إلى Mall؟
+لا يجب إرسال:
+customer private dataorders privateinvoicesaccountingpayrollsupplier costsbank dataemployee evaluationsinternal messagesprivate contracts
+إلا بتصريح خاص وتكامل واضح.
+19. تصميم Mall Sync Pipeline
+19.1 الفكرة
+كل عميل خارج Kabeeri لديه Connector يرسل تحديثات عامة إلى Mall.
+External Kabeeri Site→ Mall Sync API→ Validate→ Moderation/Trust checks→ Update Mall Mirror Tables→ Public Mall Display
+19.2 اتجاه المزامنة
+الأفضل في البداية:
+External Site → Kabeeri Mall
+وليس two-way sync.
+لأن two-way sync أصعب جدًا.
+19.3 لاحقًا
+يمكن دعم:
+Kabeeri Mall → External Site
+لأشياء مثل:
+reviews.
+inquiries.
+leads.
+RFQs.
+لكن بحذر.
+20. Mall Mirror Database
+داخل Kabeeri Cloud يجب أن يكون هناك جداول مخصصة للعرض العام.
+هذه ليست كل بيانات العميل.
+بل نسخة عامة مختارة.
+أمثلة
+mall_business_profilesmall_servicesmall_productsmall_talent_profilesmall_sync_sourcesmall_sync_eventsmall_sync_errors
+أو استخدام mall_listings مع source tracking.
+21. Sync Source Design
+جدول mall_sync_sources
+idorganization_id nullablecompany_id nullablebusiness_profile_id nullablesource_typesource_nameexternal_base_urlapi_key_hashstatuslast_sync_atlast_error_atsettings jsoncreated_atupdated_at
+source_type values
+kabeeri_cloudkabeeri_self_hostedexternal_frontendexternal_erpmanual
+جدول mall_sync_events
+idmall_sync_source_idevent_typeentity_typeexternal_idstatuspayload_hashreceived_atprocessed_aterrors json nullablecreated_atupdated_at
+22. Sync Contract
+كل موقع خارجي يجب أن يلتزم بعقد بيانات واضح.
+مثال Product Public Payload:
+{  "entity": "product",  "external_id": "prod_123",  "name": "Product Name",  "description": "Public description",  "price": 1500,  "currency": "EGP",  "images": [],  "availability": "in_stock",  "public_url": "https://example.com/products/product-name",  "updated_at": "2026-05-04T12:00:00Z"}
+23. طريقة تحديث Mall
+23.1 Event-based
+عندما يغير العميل منتجًا أو خدمة في موقعه الخارجي:
+ProductUpdated→ send webhook to Kabeeri Mall→ validate→ update listing
+23.2 Scheduled Sync
+كل فترة:
+daily/hourly sync
+23.3 Manual Sync
+زر داخل موقع العميل:
+Sync with Kabeeri Mall now
+24. التعامل مع التعارضات
+إذا كان Mall لديه review أو moderation، لا نسمح للموقع الخارجي بتجاوزها.
+مثال:
+العميل يرسل service published.
+Mall يضعها pending_review لو فيها كلمات ممنوعة.
+العميل لا يستطيع إجبار Mall على publish.
+25. حالة العميل بعد الخروج
+يجب وجود Status واضح:
+cloud_activeexternal_frontendself_hosted_connectedself_hosted_disconnectedarchivedterminated
+26. هل نمسح بياناته من DB الرئيسية؟
+الإجابة: نعم، لكن ليس فورًا ولا كلها.
+26.1 يجب تقسيم الحذف
+Operational Data
+يمكن حذفها أو أرشفتها بعد export.
+Legal/Audit Data
+قد يلزم الاحتفاظ بها مدة معينة حسب الشروط والقوانين.
+Billing Data
+تظل في المنصة كعلاقة تجارية.
+Mall Data
+تظل إذا اختار العميل الاستمرار في Mall.
+Public Reviews / Trust Records
+تظل كجزء من Kabeeri trust ecosystem، مع سياسة واضحة.
+27. سياسة الخروج المقترحة
+27.1 مراحل الخروج
+1. Request export2. Freeze critical changes optional3. Generate export bundle4. Customer downloads/verifies5. Grace period6. Switch to self-hosted mode7. Enable Mall Sync Connector8. Archive/delete operational cloud data9. Keep Mall mirror and platform relationship data
+28. لماذا لا نحذف كل شيء فورًا؟
+لأن هناك:
+مدفوعات.
+فواتير منصة.
+نزاعات.
+مراجعات.
+إثباتات توثيق.
+سجلات قانونية.
+حماية من fraud.
+لازم Terms واضحة.
+29. أفضل تصميم لملف العميل مثل البنك
+29.1 Customer Account
+جدول مقترح:
+customer_accountsiduuidowner_user_idaccount_typestatusprimary_emailcountrycreated_atupdated_at
+لكن قد نكتفي بـ:
+organizations
+كمفهوم Tenant أساسي.
+29.2 Business Account
+لكل شركة/بزنس:
+companiesbusiness_profilesverification_statusmall_identity
+29.3 Sites as Channels
+المواقع مجرد قنوات:
+sites
+تابعة للـ Organization وقد ترتبط بـ Company.
+30. التصميم البنكي المقترح في Kabeeri
+User→ Customer Account / Organization→ Business Account / Company→ Business Profile→ Sites / Stores / Services→ Mall Listings
+يعني:
+العميل قد يكون له أكثر من بزنس.
+كل بزنس قد يكون له أكثر من موقع.
+كل بزنس قد يظهر في Mall.
+كل بزنس قد يكون له Rabet verification.
+31. هل نحتاج جدول customer_accounts منفصل؟
+رأيي
+في البداية لا.
+استخدم:
+organizations
+كـ Customer Account / Tenant.
+ثم لاحقًا إن احتجنا فصلًا ماليًا أو قانونيًا أعمق، نضيف:
+account_holdersbilling_accounts
+بدل تعقيد V1.
+32. التصميم النهائي المقترح للأوضاع الثلاثة
+32.1 Cloud Managed
+organization_id موجود في كل الجداولكل البيانات داخل Kabeeri CloudMall mirror يحدث داخليًا مباشرة
+32.2 External Frontend
+frontend خارج Kabeeriadmin/db داخل KabeeriMall mirror يحدث داخليًاfrontend يسحب public APIs
+32.3 Full Self-hosted
+export operational tenant datainstall self-hosted Kabeeriactivate Mall Sync Connectorcloud keeps Mall mirror + platform relationship only
+33. أهم مبدأ: Data Ownership vs Data Publication
+يجب أن نفرق بين:
+33.1 Data Ownership
+من يملك البيانات التشغيلية؟
+33.2 Data Publication
+ما الذي وافق العميل على نشره في Mall؟
+العميل قد يمتلك DB خارجيًا، لكن يوافق على نشر نسخة من خدماته/منتجاته داخل Kabeeri Mall.
+34. صيغة تسويقية قوية جدًا
+يمكن قول:
+بياناتك ملكك. تستطيع البقاء على Kabeeri Cloud أو تصدير موقعك بالكامل أو استضافة الواجهة فقط. وحتى عند الاستضافة الخارجية، يمكنك الاستمرار في الظهور داخل Kabeeri Mall عبر مزامنة آمنة للبيانات العامة فقط.
+35. القرار التجاري للباقات
+35.1 باقة Cloud
+كل شيء مستضاف عند Kabeeriأفضل تجربةأفضل AIأفضل Mall integration
+35.2 باقة External Frontend
+استضف الواجهة أينما تريدواحتفظ بلوحة التحكم والبيانات داخل Kabeeri
+35.3 باقة Portable / Self-hosted
+خذ الكود والبيانات والملفات وشغلها خارج Kabeeriمع إمكانية استمرار الظهور في Kabeeri Mall عبر Connector
+35.4 باقة Dedicated Enterprise
+نسخة مخصصة بقاعدة بيانات منفصلة أو استضافة خاصةمع تكامل كامل مع Mall والمنصة
+36. المزايا والعيوب النهائية لكل اقتراح
+36.1 الاقتراح الأول — Full Self-hosting
+ممتاز في
+الثقة.
+الحرية.
+Enterprise.
+جمهور WordPress.
+ضعيف في
+الدعم.
+التحديثات.
+sync complexity.
+الأمان عند العميل.
+القرار
+Premium option.
+36.2 الاقتراح الثاني — Tenant Export Converter
+ممتاز في
+الاقتصاد.
+SaaS.
+المرونة.
+قابلية التصدير.
+النمو التدريجي.
+ضعيف في
+يحتاج export registry قوي.
+يحتاج deletion/retention policies.
+يحتاج mall mirror separation.
+القرار
+Core architecture الأساسي.
+36.3 الاقتراح الثالث — Frontend-only external hosting
+ممتاز في
+سهولة sync.
+قلة الدعم.
+الأداء.
+تجربة SaaS.
+ضعيف في
+ليس استقلالًا كاملًا.
+العميل لا يملك DB.
+قد يعتبر Lock-in.
+القرار
+Mid-tier option.
+37. التوصية النهائية الحاسمة
+لا تختار اقتراحًا واحدًا.
+اعتمد Hybrid Strategy:
+1. Core architecture = Tenant-scoped shared DB + Export Converter2. Default product = Kabeeri Cloud Managed3. Optional product = External Frontend Hosting4. Premium product = Full Self-hosted Portable Export5. Always available = Mall Sync / Business Passport
+38. ماذا نضيف إلى تصميم الداتابيز بسبب هذا القرار؟
+نحتاج إضافة جداول/مفاهيم:
+38.1 export_jobs
+لتصدير العميل.
+38.2 export_manifests
+لتوثيق ما تم تصديره.
+38.3 tenant_export_items
+كل جدول/سجل تم تصديره.
+38.4 self_hosted_installations
+نسخ العملاء الخارجية.
+38.5 mall_sync_sources
+مصادر المزامنة الخارجية.
+38.6 mall_sync_events
+أحداث التحديث من الخارج.
+38.7 mall_sync_errors
+أخطاء التحديث.
+38.8 external_site_connections
+ربط موقع خارجي بـ Kabeeri.
+39. الجداول المقترحة الجديدة
+export_jobs
+idorganization_idrequested_byexport_typestatusscope jsonstarted_atcompleted_atfile_media_id nullablemanifest json nullableerrors json nullablecreated_atupdated_at
+export_type
+full_self_hostedfrontend_onlydatabase_onlymedia_onlymall_public_data
+tenant_export_items
+idexport_job_idtable_namerecord_idrecord_uuid nullableactionstatuscreated_at
+self_hosted_installations
+idorganization_idcompany_id nullablesite_id nullableinstallation_uuidexternal_base_url nullablestatuskabeeri_versionlast_seen_at nullablemall_sync_enabled boolean default falsecreated_atupdated_at
+external_site_connections
+idorganization_idsite_id nullableconnection_typeexternal_urlstatusapi_key_hash nullablelast_checked_at nullablesettings json nullablecreated_atupdated_at
+mall_sync_sources
+idorganization_id nullablecompany_id nullablebusiness_profile_id nullablesource_typesource_nameexternal_base_url nullableapi_key_hash nullablestatuslast_sync_at nullablelast_error_at nullablesettings json nullablecreated_atupdated_at
+mall_sync_events
+idmall_sync_source_idevent_typeentity_typeexternal_id nullablestatuspayload_hash nullablepayload json nullableprocessed_at nullableerrors json nullablecreated_atupdated_at
+mall_sync_errors
+idmall_sync_source_id nullablemall_sync_event_id nullableseverityerror_codemessagepayload json nullableresolved_at nullablecreated_atupdated_at
+40. Export Registry مفهوم أساسي
+لا يجب أن يكون التصدير hardcoded عشوائي.
+نحتاج:
+TenantExportRegistry
+يحتوي على كل الجداول التي تدخل في export.
+مثال:
+return [  'core' => [    'organizations',    'organization_memberships',    'roles',  ],  'cms' => [    'sites',    'content_entries',    'media_assets',  ],  'commerce' => [    'products',    'orders',    'customers',  ],];
+أي Module جديد يجب أن يسجل نفسه في Export Registry.
+41. Mall Public Data Contract
+يجب أن يكون هناك عقد بيانات منفصل لما يُسمح بإرساله إلى Mall.
+MallPublicBusinessPayloadMallPublicServicePayloadMallPublicProductPayloadMallPublicTalentPayload
+هذا يمنع تسريب بيانات خاصة.
+42. لماذا Mall Mirror مهم؟
+لأن Mall لا يجب أن يعتمد مباشرة على قاعدة بيانات العميل self-hosted.
+بل يعتمد على نسخة عامة داخل Kabeeri.
+External site → sync → Mall Mirror → Public Mall
+لو موقع العميل وقع، Mall قد يعرض آخر نسخة صحيحة مع علامة:
+last updated at
+43. حالات الظهور في Mall
+43.1 Connected
+العميل يزامن بنجاح.
+43.2 Stale
+لم يحدث sync منذ فترة.
+43.3 Disconnected
+الاتصال انقطع.
+43.4 Suspended
+تم تعليق الظهور.
+43.5 Manual
+يتم تحديث البيانات يدويًا داخل Mall.
+44. سياسة Last Updated
+كل Listing يجب أن يعرض داخليًا:
+last_synced_atsource_typesource_status
+ويمكن للعامة أن ترى:
+تم تحديث البيانات آخر مرة في ...
+للشفافية.
+45. API المقترح للمزامنة
+Push API
+POST /api/mall-sync/business-profilePOST /api/mall-sync/servicesPOST /api/mall-sync/productsPOST /api/mall-sync/talentPOST /api/mall-sync/bulk
+Pull API اختياري لاحقًا
+GET /api/mall-sync/reviewsGET /api/mall-sync/inquiriesGET /api/mall-sync/rfqs
+46. Auth للمزامنة
+استخدم:
+Mall Sync API KeyHMAC SignatureTimestampReplay protection
+لا تعتمد على API key فقط.
+47. ماذا يحدث لو العميل غيّر بياناته خارجيًا؟
+Flow:
+Customer updates product externally→ Self-hosted Kabeeri fires ProductUpdated event→ MallSyncClient sends payload→ Kabeeri validates ownership/source→ updates mall listing→ logs sync event
+48. ماذا يحدث لو العميل لا يريد sync تلقائي؟
+نوفر:
+manual syncCSV uploadMall admin editingAPI disabled
+لكن يظهر داخل Mall أن البيانات manual.
+49. أفضل ترتيب تنفيذ لهذه الفكرة
+V1
+ضع الأساس فقط:
+organization/site/company ownershipexport_jobs table foundationmall listing future fields
+V2
+basic export registrybasic public business/service/product payload design
+V3
+business profile readinesstrust recordsservice/product mapping
+V4
+mall_sync_sourcesmall_sync_eventsexternal_site_connectionsself_hosted_installationsMall Sync V1
+V5
+Integration Hub handles sync robustlywebhooks/retries/errors
+V6
+advanced multi-vendor mall syncindustry data syncenterprise connectors
+50. القرار النهائي المختصر
+لا تجعل العميل يأخذ Frontend فقط كخيار وحيد
+لأنه يقلل الثقة.
+لا تجعل Full Self-hosted هو الوضع الافتراضي
+لأنه مكلف ومعقد.
+اجعل الأساس هو Tenant-scoped SaaS مع Export Converter
+لأنه أفضل توازن.
+اجعل Frontend-only خيارًا وسطًا
+لمن يريد حرية الواجهة فقط.
+اجعل Full Self-hosted خيارًا Premium
+لمن يريد استقلالًا كاملًا.
+اجعل Mall Sync موجودًا في كل الأحوال
+لأن هذه ميزة Kabeeri الكبيرة.
+51. صياغة المنتج النهائية
+يمكن تسمية الباقات كالتالي:
+Kabeeri CloudKabeeri Frontend AnywhereKabeeri PortableKabeeri Dedicated
+Kabeeri Cloud
+أفضل تجربة كاملة داخل المنصة.
+Kabeeri Frontend Anywhere
+استضف الواجهة في أي مكان، وأدر كل شيء من Kabeeri.
+Kabeeri Portable
+خذ النظام والبيانات والملفات وشغلها خارج Kabeeri.
+Kabeeri Dedicated
+نسخة مخصصة لك مع تكامل كامل.
+52. الخلاصة الحاسمة
+أفضل قرار لـ Kabeeri هو:
+Hybrid Data Ownership & Hosting Model
+يبني Kabeeri على:
+Tenant-scoped central SaaS database+ Export Converter+ Frontend-only hosting option+ Full self-hosted premium option+ Mall Sync Pipeline+ Mall Mirror Data+ Business Passport identity
+القاعدة النهائية:
+العميل يملك بياناته ويمكنه الخروج، لكن Kabeeri يحتفظ بعلاقة سوقية اختيارية معه عبر Kabeeri Mall من خلال مزامنة آمنة للبيانات العامة فقط.
+53. القرار التنفيذي المطلوب إضافته للملحق السابق
+يجب تعديل ملحق Database Architecture بإضافة:
+Business PassportMall Mirror DataMall Sync SourcesSelf-hosted InstallationsTenant Export RegistryFrontend Anywhere ModePortable Export ModeData Retention after ExitPublic Data Contract
+وبذلك يصبح تصميم الداتابيز متوافقًا مع:
+SaaS.
+Cloud.
+Frontend external hosting.
+Self-hosted full export.
+Mall continuity.
+Customer trust.
+Economic operation.
+54. توصية نهائية جدًا
+لو هنختار التنفيذ العملي من الآن:
+V1: صمم organization/site/company صحV1: ضع export_jobs foundationV1: لا تبني self-hosting كاملV2/V3: جهز data contractsV4: ابني Mall Sync V1V4/V5: ابني Portable Export فعلي
+لا تبني كل ده في البداية، لكن صمم قاعدة البيانات بحيث لا تمنعك منه.
