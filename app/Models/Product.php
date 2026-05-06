@@ -74,4 +74,9 @@ class Product extends Model
     {
         return $this->hasMany(InventoryItem::class);
     }
+
+    public function mallMirrorProducts(): HasMany
+    {
+        return $this->hasMany(MallMirrorProduct::class);
+    }
 }
