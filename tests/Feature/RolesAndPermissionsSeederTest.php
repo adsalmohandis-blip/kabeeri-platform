@@ -20,7 +20,7 @@ class RolesAndPermissionsSeederTest extends TestCase
             RolesSeeder::class,
         ]);
 
-        $this->assertSame(98, Permission::query()->count());
+        $this->assertSame(126, Permission::query()->count());
         $this->assertSame(7, Role::query()->count());
 
         $platformRole = Role::query()->where('slug', 'platform-super-admin')->firstOrFail();
@@ -97,15 +97,45 @@ class RolesAndPermissionsSeederTest extends TestCase
             $this->assertTrue($adminRole->permissions()->where('slug', $slug)->exists());
         }
 
+        $expectedV4Permissions = [
+            'operating_mode.manage',
+            'cloud_site.manage',
+            'cloud_domain.manage',
+            'cloud_backup.manage',
+            'mall_listing.manage',
+            'mall_listing.publish',
+            'mall_sync.manage',
+            'moderation.manage',
+            'review.manage',
+            'trust_badge.manage',
+            'legal_partner.manage',
+            'agency_partner.manage',
+            'marketplace.govern',
+            'creator_profile.manage',
+            'work_network.manage',
+            'academy_badge.manage',
+            'growth_referral.manage',
+            'partner_storefront.manage',
+        ];
+
+        foreach ($expectedV4Permissions as $slug) {
+            $this->assertDatabaseHas('permissions', ['slug' => $slug]);
+            $this->assertTrue($ownerRole->permissions()->where('slug', $slug)->exists());
+            $this->assertTrue($adminRole->permissions()->where('slug', $slug)->exists());
+        }
+
         $this->assertFalse($editorRole->permissions()->where('slug', 'migration.run')->exists());
         $this->assertFalse($editorRole->permissions()->where('slug', 'migration.rollback')->exists());
+        $this->assertFalse($editorRole->permissions()->where('slug', 'mall_listing.publish')->exists());
+        $this->assertFalse($editorRole->permissions()->where('slug', 'mall_sync.manage')->exists());
+        $this->assertFalse($editorRole->permissions()->where('slug', 'marketplace.govern')->exists());
 
         $this->seed([
             PermissionsSeeder::class,
             RolesSeeder::class,
         ]);
 
-        $this->assertSame(98, Permission::query()->count());
+        $this->assertSame(126, Permission::query()->count());
         $this->assertSame(7, Role::query()->count());
     }
 }

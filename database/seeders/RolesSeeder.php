@@ -95,6 +95,37 @@ class RolesSeeder extends Seeder
             'dashboard_widget.manage',
         ];
 
+        $v4OwnerAdminPermissions = [
+            'operating_mode.manage',
+            'cloud_site.view',
+            'cloud_site.manage',
+            'cloud_domain.view',
+            'cloud_domain.manage',
+            'cloud_backup.view',
+            'cloud_backup.manage',
+            'mall_listing.view',
+            'mall_listing.manage',
+            'mall_listing.publish',
+            'mall_sync.manage',
+            'moderation.view',
+            'moderation.manage',
+            'review.view',
+            'review.manage',
+            'trust_badge.manage',
+            'legal_partner.manage',
+            'agency_partner.manage',
+            'marketplace.view',
+            'marketplace.govern',
+            'creator_profile.view',
+            'creator_profile.manage',
+            'work_network.view',
+            'work_network.manage',
+            'academy.view',
+            'academy_badge.manage',
+            'growth_referral.manage',
+            'partner_storefront.manage',
+        ];
+
         $roleDefinitions = [
             [
                 'name' => 'Platform Super Admin',
@@ -135,7 +166,7 @@ class RolesSeeder extends Seeder
                     'activity_log.view',
                     'settings.view',
                     'feature_flags.view',
-                ], $v2OwnerAdminPermissions, $v3OwnerAdminPermissions),
+                ], $v2OwnerAdminPermissions, $v3OwnerAdminPermissions, $v4OwnerAdminPermissions),
             ],
             [
                 'name' => 'Organization Admin',
@@ -168,7 +199,7 @@ class RolesSeeder extends Seeder
                     'verification.submit',
                     'activity_log.view',
                     'settings.view',
-                ], $v2OwnerAdminPermissions, $v3OwnerAdminPermissions),
+                ], $v2OwnerAdminPermissions, $v3OwnerAdminPermissions, $v4OwnerAdminPermissions),
             ],
             [
                 'name' => 'Site Admin',

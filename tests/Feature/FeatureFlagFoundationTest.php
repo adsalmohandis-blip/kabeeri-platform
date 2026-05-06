@@ -137,4 +137,45 @@ class FeatureFlagFoundationTest extends TestCase
             $this->assertSame(1, FeatureFlag::query()->where('key', $key)->count());
         }
     }
+
+    public function test_feature_flags_seeder_adds_v4_flags_with_safe_defaults(): void
+    {
+        $this->seed(FeatureFlagsSeeder::class);
+        $this->seed(FeatureFlagsSeeder::class);
+
+        $expectedFlags = [
+            'enable_organization_operating_modes',
+            'enable_cloud_sites',
+            'enable_cloud_domains',
+            'enable_cloud_backups',
+            'enable_cloud_health_checks',
+            'enable_mall_publication_consents',
+            'enable_mall_sync_sources',
+            'enable_mall_mirrors',
+            'enable_mall_public_browsing',
+            'enable_public_feed_sync',
+            'enable_backoffice_anywhere',
+            'enable_moderation_cases',
+            'enable_reviews_ratings',
+            'enable_reputation_trust',
+            'enable_legal_partner_network',
+            'enable_internal_marketplace',
+            'enable_creator_profiles',
+            'enable_agency_partners',
+            'enable_work_network',
+            'enable_academy_badges',
+            'enable_growth_referrals',
+            'enable_partner_storefronts',
+        ];
+
+        foreach ($expectedFlags as $key) {
+            $this->assertDatabaseHas('feature_flags', [
+                'key' => $key,
+                'default_value' => false,
+                'status' => 'active',
+            ]);
+
+            $this->assertSame(1, FeatureFlag::query()->where('key', $key)->count());
+        }
+    }
 }
