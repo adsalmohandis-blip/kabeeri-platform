@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Database\Factories\MallMirrorBusinessFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -15,39 +15,37 @@ use Illuminate\Support\Str;
     'organization_id',
     'company_id',
     'site_id',
+    'business_profile_id',
+    'mall_publication_consent_id',
     'display_name',
     'slug',
     'description',
-    'public_email',
-    'public_phone',
-    'website_url',
-    'logo_media_id',
-    'cover_media_id',
-    'visibility',
-    'status',
+    'public_contacts',
+    'mirror_status',
+    'published_at',
+    'last_refreshed_at',
     'metadata',
 ])]
-class BusinessProfile extends Model
+class MallMirrorBusiness extends Model
 {
+    /** @use HasFactory<MallMirrorBusinessFactory> */
     use HasFactory, SoftDeletes;
 
     protected static function booted(): void
     {
-        static::creating(function (self $profile): void {
-            if (blank($profile->ulid)) {
-                $profile->ulid = (string) Str::ulid();
+        static::creating(function (self $business): void {
+            if (blank($business->ulid)) {
+                $business->ulid = (string) Str::ulid();
             }
         });
     }
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
+            'public_contacts' => 'array',
+            'published_at' => 'datetime',
+            'last_refreshed_at' => 'datetime',
             'metadata' => 'array',
             'deleted_at' => 'datetime',
         ];
@@ -68,18 +66,13 @@ class BusinessProfile extends Model
         return $this->belongsTo(Site::class);
     }
 
-    public function logoMedia(): BelongsTo
+    public function businessProfile(): BelongsTo
     {
-        return $this->belongsTo(MediaAsset::class, 'logo_media_id');
+        return $this->belongsTo(BusinessProfile::class);
     }
 
-    public function coverMedia(): BelongsTo
+    public function publicationConsent(): BelongsTo
     {
-        return $this->belongsTo(MediaAsset::class, 'cover_media_id');
-    }
-
-    public function mallMirrorBusinesses(): HasMany
-    {
-        return $this->hasMany(MallMirrorBusiness::class);
+        return $this->belongsTo(MallPublicationConsent::class, 'mall_publication_consent_id');
     }
 }
