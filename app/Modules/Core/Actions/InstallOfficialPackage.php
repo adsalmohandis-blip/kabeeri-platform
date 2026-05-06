@@ -8,6 +8,7 @@ use App\Models\Package;
 use App\Models\Site;
 use App\Models\User;
 use App\Modules\Core\Services\ActivityLogger;
+use App\Modules\Core\Services\PackageInstallationGovernanceService;
 use App\Modules\Core\Services\PermissionService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Validation\ValidationException;
@@ -17,6 +18,7 @@ class InstallOfficialPackage
     public function __construct(
         protected PermissionService $permissionService,
         protected ActivityLogger $activityLogger,
+        protected PackageInstallationGovernanceService $governanceService,
     ) {}
 
     public function __invoke(User $actor, Package $package, Organization $organization, ?Site $site = null): InstalledPackage
@@ -36,6 +38,8 @@ class InstallOfficialPackage
                 'site' => 'The app does not belong to the organization.',
             ]);
         }
+
+        $this->governanceService->assertInstallable($package, $organization, $site);
 
         $installation = InstalledPackage::query()->updateOrCreate(
             [
