@@ -18,6 +18,10 @@ use Illuminate\Support\Str;
     'submitted_at',
     'reviewed_at',
     'reviewed_by',
+    'assigned_to_user_id',
+    'assignment_status',
+    'assigned_at',
+    'due_at',
     'notes',
     'metadata',
 ])]
@@ -44,6 +48,8 @@ class VerificationRequest extends Model
         return [
             'submitted_at' => 'datetime',
             'reviewed_at' => 'datetime',
+            'assigned_at' => 'datetime',
+            'due_at' => 'datetime',
             'metadata' => 'array',
         ];
     }
@@ -66,6 +72,11 @@ class VerificationRequest extends Model
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
+    public function assignee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_to_user_id');
     }
 
     public function documents(): HasMany

@@ -32,6 +32,10 @@ class VerificationRequestFactory extends Factory
             'submitted_at' => null,
             'reviewed_at' => null,
             'reviewed_by' => null,
+            'assigned_to_user_id' => null,
+            'assignment_status' => 'unassigned',
+            'assigned_at' => null,
+            'due_at' => null,
             'notes' => fake()->optional()->sentence(),
             'metadata' => ['source' => 'factory'],
         ];
