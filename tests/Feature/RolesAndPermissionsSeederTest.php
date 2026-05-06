@@ -20,7 +20,7 @@ class RolesAndPermissionsSeederTest extends TestCase
             RolesSeeder::class,
         ]);
 
-        $this->assertSame(126, Permission::query()->count());
+        $this->assertSame(157, Permission::query()->count());
         $this->assertSame(7, Role::query()->count());
 
         $platformRole = Role::query()->where('slug', 'platform-super-admin')->firstOrFail();
@@ -124,6 +124,46 @@ class RolesAndPermissionsSeederTest extends TestCase
             $this->assertTrue($adminRole->permissions()->where('slug', $slug)->exists());
         }
 
+        $expectedV5Permissions = [
+            'erp_pro.view',
+            'erp_pro.manage',
+            'contract.manage',
+            'helpdesk.manage',
+            'commission.manage',
+            'partner_payout.review',
+            'integration_hub.view',
+            'integration_hub.manage',
+            'integration_mapping.manage',
+            'integration_webhook.manage',
+            'integration_conflict.resolve',
+            'billing_usage.view',
+            'package_operations.manage',
+            'package_signing.review',
+            'enterprise_security.manage',
+            'siem_export.manage',
+            'developer_marketplace.govern',
+            'data_platform.manage',
+            'grc.manage',
+            'industry_solution.manage',
+            'ai_cobuilder.manage',
+            'api_gateway.manage',
+            'privacy_retention.manage',
+            'performance_scale.manage',
+            'mobile_app.view',
+            'mobile_app.manage',
+            'mobile_device.manage',
+            'desktop_client.view',
+            'desktop_client.manage',
+            'desktop_sync.manage',
+            'desktop_file_queue.manage',
+        ];
+
+        foreach ($expectedV5Permissions as $slug) {
+            $this->assertDatabaseHas('permissions', ['slug' => $slug]);
+            $this->assertTrue($ownerRole->permissions()->where('slug', $slug)->exists());
+            $this->assertTrue($adminRole->permissions()->where('slug', $slug)->exists());
+        }
+
         $this->assertFalse($editorRole->permissions()->where('slug', 'migration.run')->exists());
         $this->assertFalse($editorRole->permissions()->where('slug', 'migration.rollback')->exists());
         $this->assertFalse($editorRole->permissions()->where('slug', 'mall_listing.publish')->exists());
@@ -135,7 +175,7 @@ class RolesAndPermissionsSeederTest extends TestCase
             RolesSeeder::class,
         ]);
 
-        $this->assertSame(126, Permission::query()->count());
+        $this->assertSame(157, Permission::query()->count());
         $this->assertSame(7, Role::query()->count());
     }
 }

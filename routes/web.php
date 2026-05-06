@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Desktop\DesktopSyncController;
 use App\Http\Controllers\Web\MallBusinessDirectoryController;
+use App\Http\Controllers\Mobile\MobileAuthController;
+use App\Http\Controllers\Mobile\MobileDeviceController;
+use App\Http\Controllers\Mobile\MobilePublicController;
 use App\Http\Controllers\Web\MallCourseController;
 use App\Http\Controllers\Web\MallHomeController;
 use App\Http\Controllers\Web\MallProductController;
@@ -18,6 +22,23 @@ Route::get('/', function () {
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
+
+Route::prefix('api/mobile')->name('mobile.')->group(function (): void {
+    Route::get('/config', [MobilePublicController::class, 'config'])->name('config');
+    Route::get('/manifest', [MobilePublicController::class, 'manifest'])->name('manifest');
+    Route::get('/theme', [MobilePublicController::class, 'theme'])->name('theme');
+    Route::post('/auth/register', [MobileAuthController::class, 'register'])->name('auth.register');
+    Route::post('/auth/login', [MobileAuthController::class, 'login'])->name('auth.login');
+    Route::post('/devices', [MobileDeviceController::class, 'store'])->name('devices.store');
+    Route::post('/push-tokens', [MobileDeviceController::class, 'pushToken'])->name('push-tokens.store');
+});
+
+Route::prefix('api/desktop')->name('desktop.')->group(function (): void {
+    Route::post('/register', [DesktopSyncController::class, 'register'])->name('register');
+    Route::post('/sync/pull', [DesktopSyncController::class, 'pull'])->name('sync.pull');
+    Route::post('/sync/push-dry-run', [DesktopSyncController::class, 'pushDryRun'])->name('sync.push-dry-run');
+    Route::post('/files', [DesktopSyncController::class, 'queueFile'])->name('files.queue');
+});
 
 Route::get('/mall', MallHomeController::class)
     ->name('mall.index');

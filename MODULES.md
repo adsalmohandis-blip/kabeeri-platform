@@ -174,3 +174,95 @@ Not allowed in V4:
 - Real payment gateways, card storage, payouts, commissions, escrow, or revenue share.
 - Legal operations casework, full agency operations, full Academy LMS, or job marketplace workflows.
 - SSO/MFA/SIEM enterprise security tracks.
+
+## Active V5 Domains
+
+`ERP Pro Foundation`:
+- CRM Pro opportunity records over existing contacts, leads, pipelines, and stages.
+- CLM basic contract records and helpdesk ticket records.
+- Record-only commission plans, commission events, and partner payout review placeholders.
+
+`Integration Hub`:
+- Connector registry, credential vault references, external object links, preview sync jobs, and sync logs.
+- Credentials store references only; raw API keys, tokens, and passwords remain out of database scope.
+- Sync defaults to preview/queued records rather than unsafe live execution.
+
+`Billing Usage Foundation`:
+- Metered usage records by organization, module, meter, date, and optional billable source.
+
+## V5 Boundaries
+
+Allowed in V5:
+- ERP Pro, CLM, helpdesk, commission, payout-review, integration hub, and billing usage foundations.
+- Preview-first integration records and auditable sync logs.
+- Partner payout placeholders with pending review and risk-check metadata.
+
+Not allowed in V5:
+- Raw secret storage, live unsafe sync, real payment rails, card storage, automatic payouts, escrow, or tax/legal finalization.
+- Adding tenant columns directly to `users`.
+- Running third-party connector code from marketplace submissions.
+
+## Active V6 Domains
+
+`Enterprise Security and Compliance`:
+- MFA, SSO, SCIM, SIEM export streams, security event export queues, GRC policies, obligations, risks, controls, audit evidence, and remediation foundations.
+
+`Developer and Integration Platform`:
+- Public developer marketplace, package release governance, developer certifications/docs, universal connector SDK registry, universal sync profiles, API gateway routes, and versioned public API docs records.
+
+`Data and BI Platform`:
+- Ingestion pipelines, data marts, metric definitions, BI dashboards, data dictionary terms, and lineage links.
+
+`Enterprise Mall and Industry Suites`:
+- Advanced Mall sections for LMS, travel, RFQ, deals, properties, and assets.
+- Industry solution templates plus ESG/EHS, PLM, manufacturing, retail, HCM/payroll, PMO, contact center, and legal/CLM advanced foundation records.
+
+`AI, Work Network, and Marketplace Economics`:
+- Guarded AI co-builder agents, AI skills marketplace listings, work network levels, agency operations, academy assessments, revenue-share rules, and payout batch placeholders.
+
+## V6 Boundaries
+
+Allowed in V6:
+- Enterprise-grade record foundations, governance queues, preview/draft states, and admin visibility.
+- Vault/reference fields for SSO, SCIM, SIEM, webhook, package signing, and AI marketplace governance.
+- Performance/queue profiles and release-check records.
+
+Not allowed in V6:
+- Raw secrets, raw certificates, tokens, passwords, or card data in database columns.
+- Live identity provisioning, external sync execution, AI code execution, automatic payouts, payroll execution, or legal/tax finalization.
+- Adding tenant columns directly to `users`.
+
+## Active V7 Domains
+
+`Mobile Platform`:
+- Mobile app configuration, theme profiles, API manifests, device registry, push token registry, public mobile APIs, and mobile auth APIs.
+
+## V7 Boundaries
+
+Allowed in V7:
+- Backend foundations for mobile clients.
+- JSON APIs for config, manifest, theme, registration, login, device registration, and push token registration.
+- Hashed token storage for push and auth tokens.
+
+Not allowed in V7:
+- Native iOS/Android binaries.
+- Raw push token or auth token storage.
+- Adding tenant columns directly to `users`.
+
+## Active V8 Domains
+
+`Desktop Platform`:
+- Desktop client registry, sync sessions, pull API, push dry-run API, outbox operations, conflict detection, and file queue records.
+
+## V8 Boundaries
+
+Allowed in V8:
+- Backend foundations for desktop/offline clients.
+- Read-oriented pull manifests, sync cursors, dry-run operation validation, auditable outbox records, and conflict records.
+- File queue metadata with hash-based storage references.
+
+Not allowed in V8:
+- Native Windows/macOS/Linux binaries.
+- Applying push payloads directly to domain tables.
+- Raw file byte storage through the queue API.
+- Silent conflict resolution or automatic overwrites.

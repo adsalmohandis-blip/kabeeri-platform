@@ -143,6 +143,39 @@ vendor/bin/pint --test
 Public Mall entry point:
 - `http://127.0.0.1:8000/mall`
 
+## V5 Feature Summary
+
+- ERP Pro foundation: opportunities, basic contracts, helpdesk tickets, and advanced partner commerce records.
+- Integration Hub foundation: connectors, credential vault references, external object links, preview sync jobs, and sync logs.
+- Commission and payout placeholders with pending-review defaults and no real payout rails.
+- Billing usage records for V5 module meters.
+- Completion foundations for Sales Pro documents, invoice links, inventory reservations, RFQs, accounting posting interfaces, POS records, advanced approvals, mappings, retries, conflicts, webhooks, rate limits, external catalog preview sync, advanced dashboards, and package version/signing review records.
+- V5 smoke/security tests for table availability, safe credential handling, and tenant-clean users.
+
+## V6 Feature Summary
+
+- Enterprise security foundations: MFA, SSO, SCIM, SIEM export streams, and queued security export events.
+- Developer platform foundations: public developer marketplace, package release governance, certifications, docs portal, connector SDK registry, and universal sync previews.
+- Advanced Mall sections for LMS, travel, RFQ, deals, properties, and asset-style listings.
+- Data platform foundations: ingestion pipelines, data marts, KPI/metric store, BI dashboards, data dictionary, and lineage.
+- GRC, audit, enterprise architecture, integration maps, impact analysis, industry suites, AI co-builder, AI skills marketplace, work/agency/academy advanced records, API gateway, public API versions, privacy retention, and performance queue profiles.
+- V6 remains governance/record-first: no raw secret storage, no live sync execution, no automatic payouts, and no AI execution runtime.
+
+## V7 Feature Summary
+
+- Mobile app config, mobile theme profiles, and mobile API manifests.
+- Device registry, push token registry with hashed token storage, and mobile auth token registry.
+- Public mobile JSON APIs for config, manifest, and theme.
+- Mobile auth/device APIs for register, login, device registration, and push-token registration.
+
+## V8 Feature Summary
+
+- Desktop client registry and sync session foundations.
+- Pull API with server cursor and module manifest changes.
+- Push dry-run API that records outbox operations without applying domain mutations.
+- Conflict detection for version mismatches.
+- File queue API that stores metadata and hash references only.
+
 ## More Docs
 
 - [MODULES.md](MODULES.md)
@@ -154,3 +187,7 @@ Public Mall entry point:
 - [docs/V4_IMPLEMENTATION_NOTES.md](docs/V4_IMPLEMENTATION_NOTES.md)
 - [docs/V4_DEMO_SEED.md](docs/V4_DEMO_SEED.md)
 - [docs/V4_SECURITY_PRIVACY_REPORT.md](docs/V4_SECURITY_PRIVACY_REPORT.md)
+- [docs/V5_IMPLEMENTATION_NOTES.md](docs/V5_IMPLEMENTATION_NOTES.md)
+- [docs/V6_IMPLEMENTATION_NOTES.md](docs/V6_IMPLEMENTATION_NOTES.md)
+- [docs/V7_IMPLEMENTATION_NOTES.md](docs/V7_IMPLEMENTATION_NOTES.md)
+- [docs/V8_IMPLEMENTATION_NOTES.md](docs/V8_IMPLEMENTATION_NOTES.md)

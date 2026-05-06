@@ -126,6 +126,40 @@ class RolesSeeder extends Seeder
             'partner_storefront.manage',
         ];
 
+        $v5OwnerAdminPermissions = [
+            'erp_pro.view',
+            'erp_pro.manage',
+            'contract.manage',
+            'helpdesk.manage',
+            'commission.manage',
+            'partner_payout.review',
+            'integration_hub.view',
+            'integration_hub.manage',
+            'integration_mapping.manage',
+            'integration_webhook.manage',
+            'integration_conflict.resolve',
+            'billing_usage.view',
+            'package_operations.manage',
+            'package_signing.review',
+            'enterprise_security.manage',
+            'siem_export.manage',
+            'developer_marketplace.govern',
+            'data_platform.manage',
+            'grc.manage',
+            'industry_solution.manage',
+            'ai_cobuilder.manage',
+            'api_gateway.manage',
+            'privacy_retention.manage',
+            'performance_scale.manage',
+            'mobile_app.view',
+            'mobile_app.manage',
+            'mobile_device.manage',
+            'desktop_client.view',
+            'desktop_client.manage',
+            'desktop_sync.manage',
+            'desktop_file_queue.manage',
+        ];
+
         $roleDefinitions = [
             [
                 'name' => 'Platform Super Admin',
@@ -166,7 +200,7 @@ class RolesSeeder extends Seeder
                     'activity_log.view',
                     'settings.view',
                     'feature_flags.view',
-                ], $v2OwnerAdminPermissions, $v3OwnerAdminPermissions, $v4OwnerAdminPermissions),
+                ], $v2OwnerAdminPermissions, $v3OwnerAdminPermissions, $v4OwnerAdminPermissions, $v5OwnerAdminPermissions),
             ],
             [
                 'name' => 'Organization Admin',
@@ -199,7 +233,7 @@ class RolesSeeder extends Seeder
                     'verification.submit',
                     'activity_log.view',
                     'settings.view',
-                ], $v2OwnerAdminPermissions, $v3OwnerAdminPermissions, $v4OwnerAdminPermissions),
+                ], $v2OwnerAdminPermissions, $v3OwnerAdminPermissions, $v4OwnerAdminPermissions, $v5OwnerAdminPermissions),
             ],
             [
                 'name' => 'Site Admin',

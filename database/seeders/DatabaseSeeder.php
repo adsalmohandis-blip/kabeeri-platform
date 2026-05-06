@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
             V1DemoSeeder::class,
             V3DemoSeeder::class,
             V4DemoSeeder::class,
+            V5DemoSeeder::class,
+            V6DemoSeeder::class,
+            V7DemoSeeder::class,
+            V8DemoSeeder::class,
         ]);
     }
 }
