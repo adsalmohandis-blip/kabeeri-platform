@@ -319,6 +319,11 @@ class Organization extends Model
         return $this->hasMany(MallMirrorTalent::class);
     }
 
+    public function travelTourismMallListings(): HasMany
+    {
+        return $this->hasMany(TravelTourismMallListing::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
