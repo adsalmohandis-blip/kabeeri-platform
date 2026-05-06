@@ -309,6 +309,11 @@ class Organization extends Model
         return $this->hasMany(ModerationCase::class);
     }
 
+    public function moderationFlags(): HasMany
+    {
+        return $this->hasMany(ModerationFlag::class);
+    }
+
     public function mallMirrorBusinesses(): HasMany
     {
         return $this->hasMany(MallMirrorBusiness::class);

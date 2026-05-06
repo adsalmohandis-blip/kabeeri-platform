@@ -195,4 +195,9 @@ class Site extends Model
     {
         return $this->hasMany(ModerationCase::class);
     }
+
+    public function moderationFlags(): HasMany
+    {
+        return $this->hasMany(ModerationFlag::class);
+    }
 }
