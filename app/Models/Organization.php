@@ -214,6 +214,11 @@ class Organization extends Model
         return $this->hasMany(Position::class);
     }
 
+    public function employeeEvaluations(): HasMany
+    {
+        return $this->hasMany(EmployeeEvaluation::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
