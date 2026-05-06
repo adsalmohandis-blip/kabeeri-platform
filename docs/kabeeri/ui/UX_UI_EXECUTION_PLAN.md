@@ -94,6 +94,18 @@ V9-V14 هي مسار UX/UI فوق الباك إند الموجود، وليست 
 - Manifest, permissions, signing, compatibility.
 - Licensing/revenue share.
 
+مخرجات التنفيذ داخل المشروع:
+
+- `config/kabeeri_marketplace.php`: مصدر truth لصفحات V12، الكتالوج، التصنيفات، lifecycle، manifest fields، permissions، QA، component library، licensing، وrelease gates.
+- `App\Support\Ui\V12MarketplaceExperience`: service يجهز بيانات Marketplace Studio ويفحص routes/admin routes/database/docs/task tracker readiness.
+- `App\Http\Controllers\Web\MarketplaceDeveloperController`: controller لصفحات Marketplace وDeveloper Portal.
+- Marketplace routes: `/marketplace`, `/marketplace/themes`, `/marketplace/themes/{theme}`, `/marketplace/theme-recipes`, `/marketplace/plugins`, `/marketplace/plugins/{package}`, `/marketplace/licensing`, `/marketplace/governance`, `/marketplace/review-status`.
+- Developer routes: `/developers`, `/developers/onboarding`, `/developers/docs/themes`, `/developers/docs/plugin-manifest`, `/developers/docs/connectors`, `/developers/submission-checklist`, `/developers/listings`, `/developers/sales`, `/developers/profile`, `/developers/qa`.
+- `resources/views/marketplace/v12-page.blade.php`: Blade bridge لواجهة Marketplace Studio وDeveloper Portal.
+- `docs/kabeeri/ui/V12_MARKETPLACE_DEVELOPER_UX.md`: شرح تجربة الثيمات والبلجنز والمطورين وحدودها.
+- `docs/kabeeri/ui/V12_RELEASE_CANDIDATE.md`: release gate واختبارات V12.
+- `tests/Feature/V12MarketplaceExperienceTest.php`: اختبارات config/routes/render/detail/governance/release readiness.
+
 ## V13
 
 هدف V13: تشغيل المسارات الخارجية حول Mall والعملاء والشركاء.

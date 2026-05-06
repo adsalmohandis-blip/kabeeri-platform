@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\MallProductController;
 use App\Http\Controllers\Web\MallServiceController;
 use App\Http\Controllers\Web\MallTalentController;
 use App\Http\Controllers\Web\MallTravelTourismController;
+use App\Http\Controllers\Web\MarketplaceDeveloperController;
 use App\Http\Controllers\Web\PublicContentEntryController;
 use App\Http\Controllers\Web\PublicMarketingController;
 use App\Http\Controllers\Web\RobotsController;
@@ -42,6 +43,31 @@ Route::get('/pricing', [PublicMarketingController::class, 'pricing'])->name('pub
 Route::get('/trust', [PublicMarketingController::class, 'trust'])->name('public.trust');
 Route::get('/contact-sales', [PublicMarketingController::class, 'contact'])->name('public.contact');
 Route::post('/contact-sales', [PublicMarketingController::class, 'storeInquiry'])->name('public.contact.store');
+
+Route::prefix('marketplace')->name('marketplace.')->group(function (): void {
+    Route::get('/', [MarketplaceDeveloperController::class, 'marketplaceHome'])->name('home');
+    Route::get('/themes', [MarketplaceDeveloperController::class, 'themeCatalog'])->name('themes.index');
+    Route::get('/themes/{theme}', [MarketplaceDeveloperController::class, 'themeDetail'])->name('themes.show');
+    Route::get('/theme-recipes', [MarketplaceDeveloperController::class, 'themeRecipes'])->name('theme-recipes');
+    Route::get('/plugins', [MarketplaceDeveloperController::class, 'pluginCatalog'])->name('plugins.index');
+    Route::get('/plugins/{package}', [MarketplaceDeveloperController::class, 'pluginDetail'])->name('plugins.show');
+    Route::get('/licensing', [MarketplaceDeveloperController::class, 'licensing'])->name('licensing');
+    Route::get('/governance', [MarketplaceDeveloperController::class, 'governance'])->name('governance');
+    Route::get('/review-status', [MarketplaceDeveloperController::class, 'reviewStatus'])->name('review-status');
+});
+
+Route::prefix('developers')->name('developers.')->group(function (): void {
+    Route::get('/', [MarketplaceDeveloperController::class, 'developerLanding'])->name('portal');
+    Route::get('/onboarding', [MarketplaceDeveloperController::class, 'developerOnboarding'])->name('onboarding');
+    Route::get('/docs/themes', [MarketplaceDeveloperController::class, 'themeBuilderDocs'])->name('docs.themes');
+    Route::get('/docs/plugin-manifest', [MarketplaceDeveloperController::class, 'pluginManifestDocs'])->name('docs.plugin-manifest');
+    Route::get('/docs/connectors', [MarketplaceDeveloperController::class, 'connectorSdkDocs'])->name('docs.connectors');
+    Route::get('/submission-checklist', [MarketplaceDeveloperController::class, 'submissionChecklist'])->name('submission-checklist');
+    Route::get('/listings', [MarketplaceDeveloperController::class, 'developerListings'])->name('listings');
+    Route::get('/sales', [MarketplaceDeveloperController::class, 'developerSales'])->name('sales');
+    Route::get('/profile', [MarketplaceDeveloperController::class, 'developerProfile'])->name('profile');
+    Route::get('/qa', [MarketplaceDeveloperController::class, 'qaCenter'])->name('qa');
+});
 
 Route::prefix('api/mobile')->name('mobile.')->group(function (): void {
     Route::get('/config', [MobilePublicController::class, 'config'])->name('config');
