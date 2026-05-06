@@ -14,10 +14,13 @@ use App\Http\Controllers\Web\MallTravelTourismController;
 use App\Http\Controllers\Web\PublicContentEntryController;
 use App\Http\Controllers\Web\RobotsController;
 use App\Http\Controllers\Web\SitemapController;
+use App\Support\RootDashboardData;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        'dashboard' => RootDashboardData::make(),
+    ]);
 });
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
