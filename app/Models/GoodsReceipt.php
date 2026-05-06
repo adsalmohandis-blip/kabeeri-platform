@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Database\Factories\PurchaseOrderFactory;
+use Database\Factories\GoodsReceiptFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,44 +14,32 @@ use Illuminate\Support\Str;
 #[Fillable([
     'ulid',
     'organization_id',
-    'supplier_id',
+    'purchase_order_id',
     'warehouse_id',
-    'purchase_order_number',
+    'receipt_number',
     'status',
-    'currency_code',
-    'subtotal',
-    'tax_total',
-    'total',
-    'ordered_at',
-    'expected_at',
+    'received_at',
     'notes',
     'metadata',
 ])]
-class PurchaseOrder extends Model
+class GoodsReceipt extends Model
 {
-    /** @use HasFactory<PurchaseOrderFactory> */
+    /** @use HasFactory<GoodsReceiptFactory> */
     use HasFactory, SoftDeletes;
 
     protected static function booted(): void
     {
-        static::creating(function (self $order): void {
-            if (blank($order->ulid)) {
-                $order->ulid = (string) Str::ulid();
+        static::creating(function (self $receipt): void {
+            if (blank($receipt->ulid)) {
+                $receipt->ulid = (string) Str::ulid();
             }
         });
     }
 
-    /**
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
-            'subtotal' => 'decimal:2',
-            'tax_total' => 'decimal:2',
-            'total' => 'decimal:2',
-            'ordered_at' => 'datetime',
-            'expected_at' => 'datetime',
+            'received_at' => 'datetime',
             'metadata' => 'array',
             'deleted_at' => 'datetime',
         ];
@@ -62,9 +50,9 @@ class PurchaseOrder extends Model
         return $this->belongsTo(Organization::class);
     }
 
-    public function supplier(): BelongsTo
+    public function purchaseOrder(): BelongsTo
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(PurchaseOrder::class);
     }
 
     public function warehouse(): BelongsTo
@@ -74,11 +62,6 @@ class PurchaseOrder extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(PurchaseOrderItem::class);
-    }
-
-    public function goodsReceipts(): HasMany
-    {
-        return $this->hasMany(GoodsReceipt::class);
+        return $this->hasMany(GoodsReceiptItem::class);
     }
 }
