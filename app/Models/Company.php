@@ -115,6 +115,11 @@ class Company extends Model
         return $this->hasMany(VerificationRequest::class);
     }
 
+    public function legalPartnerProfiles(): HasMany
+    {
+        return $this->hasMany(LegalPartnerProfile::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'company_memberships')
