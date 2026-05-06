@@ -389,6 +389,11 @@ class Organization extends Model
         return $this->hasMany(LegalPartnerProfile::class);
     }
 
+    public function trustBadgeAwards(): HasMany
+    {
+        return $this->hasMany(TrustBadgeAward::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'organization_memberships')

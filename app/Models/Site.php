@@ -210,4 +210,9 @@ class Site extends Model
     {
         return $this->hasMany(ReputationSnapshot::class);
     }
+
+    public function trustBadgeAwards(): HasMany
+    {
+        return $this->hasMany(TrustBadgeAward::class);
+    }
 }
