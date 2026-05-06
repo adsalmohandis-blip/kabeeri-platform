@@ -259,6 +259,11 @@ class Organization extends Model
         return $this->hasMany(DashboardWidget::class);
     }
 
+    public function operatingModes(): HasMany
+    {
+        return $this->hasMany(OrganizationOperatingMode::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
