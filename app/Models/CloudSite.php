@@ -65,4 +65,14 @@ class CloudSite extends Model
     {
         return $this->hasMany(CloudDomain::class);
     }
+
+    public function backups(): HasMany
+    {
+        return $this->hasMany(CloudBackup::class);
+    }
+
+    public function healthChecks(): HasMany
+    {
+        return $this->hasMany(CloudHealthCheck::class);
+    }
 }
