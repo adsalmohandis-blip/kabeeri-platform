@@ -1,47 +1,90 @@
 # KABEERI V3 Implementation Notes
 
-Generated for Prompt 00 on 2026-05-06.
+Updated on 2026-05-06.
 
-## Scope Summary
+## Scope Implemented
 
-KABEERI V3 builds on stable V1 and V2 foundations to add comprehensive **Business Operations** (ERP-lite) features. Organizations remain the tenant root, and multi-tenancy is preserved throughout.
+KABEERI V3 adds a Business Operations layer on top of the stable V1/V2 foundation. Organizations remain the tenant root, and V3 records are scoped by `organization_id` with optional company/site links where the existing model supports them.
 
-Planned V3 scope:
+Implemented V3 areas:
 
-- **CRM Foundation**: Contacts, Leads, Lead sources/scoring, Sales pipelines/stages, Activities/follow-ups, Customer timeline.
-- **Service Requests**: Support tickets, service request management, linking to CRM.
-- **Quotations**: Quote creation, line items, approval workflow, conversion to invoices.
-- **Invoicing**: Invoice generation, line items, payment status tracking, invoice numbering.
-- **Payments**: Payment methods, payment recording, receipts, payment reconciliation.
-- **Inventory Lite**: Inventory items, warehouses, stock movements, stock tracking.
-- **Suppliers**: Supplier management, supplier contacts, purchase order foundation.
-- **Financial Reporting Basic**: Invoice reports, payment reports, inventory reports.
+- CRM: contacts, CRM-expanded leads, lead sources, lead scoring, sales pipelines/stages, CRM activities, customer timeline, and service requests.
+- Sales: quotations, quotation lifecycle, invoices, quotation-to-invoice conversion, manual payments, and receipts.
+- Inventory and purchasing: inventory items, warehouses, stock movements, suppliers, supplier contacts, purchase orders, and goods receipts.
+- Accounting starter: chart of accounts and balanced journal entries.
+- People operations: employee profiles, departments, positions, and employee evaluations.
+- Projects and workflow: business projects/tasks, workflow definitions, workflow runs, approval requests, and workflow hook dispatch.
+- Reporting: report definitions, report snapshots, and dashboard widgets.
+- Admin foundation: Filament resources for the implemented V3 operational areas.
+- Demo data: idempotent V3 demo seed records included from `DatabaseSeeder`.
+- Hardening: smoke tests, tenant-isolation/security tests, and composite performance indexes.
 
 ## V3 Exclusions
 
-V3 must not implement:
+V3 intentionally does not implement:
 
-- Full ERP (accounting, tax, advanced reporting, audit trails for financials).
-- Real-time sync with external accounting systems.
-- Advanced AI or machine learning for lead scoring.
-- Multi-currency or complex tax calculations.
-- Time tracking, project management, or resource planning.
-- Advanced supply chain optimization.
-- Affiliate or subscription billing.
-- Payment gateway integrations (PCI compliance).
+- Full ERP accounting, tax engines, payroll, inventory costing, POS, shipping, or fulfillment.
+- Real payment gateway integrations or card-data storage.
+- Live external accounting, CRM, supplier, or inventory sync.
+- Advanced AI scoring, forecasting, or automation.
+- Public marketplace, affiliate payouts, Academy, Work Network, or partner operations.
+- Arbitrary package code execution or third-party package submissions.
 
-## Operating Rules
+## Common Commands
 
-- Keep V1 and V2 tests and flows stable.
-- All CRM, quotation, invoice, and inventory operations must be scoped to organization.
-- Use soft deletes for financial records (never hard delete invoices, quotations, payments).
-- Add focused tests for every implemented feature.
-- Keep operations simple and modular.
-- Log risks and assumptions in this file as V3 grows.
+Run the full test suite:
 
-## V3 Hard Boundaries
+```powershell
+php artisan test
+```
 
-- No direct external API integrations (e.g., payment gateways, accounting software).
-- No user-facing financial calculations in UI without backend validation.
-- No automatic approval workflows—all approvals must be explicit user actions.
-- No deletion of financial records once created; only void/cancel flags allowed.
+Check formatting:
+
+```powershell
+vendor/bin/pint --test
+```
+
+Fresh local setup with demo data:
+
+```powershell
+php artisan migrate:fresh --seed
+```
+
+The PHPUnit config sets a higher `memory_limit` for the expanded V3 suite.
+
+## Demo Data
+
+`DatabaseSeeder` runs V1, V2, and V3 demo seeders. V3 demo records include:
+
+- Demo contact, lead, service request, and quotation.
+- Demo warehouse, inventory item, supplier, and starter chart of accounts.
+- Demo department, employee profile, project, workflow definition, report definition, and dashboard widget.
+
+No real secrets or external credentials are seeded.
+
+## Admin Areas
+
+V3 Filament resources are grouped into:
+
+- CRM
+- Sales
+- Inventory
+- People
+- Workflow
+- Reports
+
+Resources use tenant-scoped queries so users only see records from organizations they can access.
+
+## Security and Performance
+
+See:
+
+- [V3_SECURITY_PASS_REPORT.md](V3_SECURITY_PASS_REPORT.md)
+- [V3_INDEX_PERFORMANCE_REPORT.md](V3_INDEX_PERFORMANCE_REPORT.md)
+
+## Known Limitations
+
+- V3 services are backend/data-layer foundations. Public customer-facing portals are not included.
+- Payment records are manual placeholders only.
+- Workflow hooks start matching active workflows but do not execute arbitrary package code.
+- Reporting stores definitions and snapshots; it does not include a full BI/query builder.

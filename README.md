@@ -1,6 +1,6 @@
-# KABEERI V1
+# KABEERI
 
-KABEERI V1 is the first stable Laravel + Filament foundation for multi-tenant organizations, apps, CMS content, media, settings, feature flags, activity logs, onboarding, and Rabet draft profile basics.
+KABEERI is a Laravel + Filament multi-tenant platform foundation. V1 provides the stable organization/app/CMS core, V2 expands CMS, migration, packages, themes, and Commerce Lite, and V3 adds Business Operations foundations.
 
 ## V1 Scope
 
@@ -111,8 +111,29 @@ vendor/bin/pint --test
 - Tenant-aware settings and feature flag override controls
 - V1 smoke + security test coverage
 
+## V2 Feature Summary
+
+- CMS menus, redirects, SEO fields, sitemap, and robots output.
+- Forms, submissions, optional lead capture, and simple contact inbox states.
+- WordPress migration foundation: jobs, XML preview, mappings, reports, warnings, redirects, and rollback.
+- Official theme/package catalogs, recipes, demo importer, manifest validation, bundles, and safe official package installs.
+- Commerce Lite products, variants, carts, draft orders, coupons, and manual payment placeholders.
+- External source registry and preview-only CSV/WooCommerce-like parsers.
+
+## V3 Feature Summary
+
+- CRM contacts, leads, lead sources/scoring, pipelines, activities, customer timeline, and service requests.
+- Quotations, invoices, quote-to-invoice conversion, manual payments, and receipts.
+- Inventory items, warehouses, stock movements, suppliers, purchase orders, and goods receipts.
+- Starter chart of accounts and journal entries.
+- Employee profiles, departments, positions, evaluations, projects, tasks, workflows, approvals, reports, and dashboard widgets.
+- V3 smoke/security/performance test coverage.
+
 ## More Docs
 
 - [MODULES.md](MODULES.md)
 - [docs/V1_LOCAL_SETUP.md](docs/V1_LOCAL_SETUP.md)
 - [docs/V1_DEMO_SEED.md](docs/V1_DEMO_SEED.md)
+- [docs/V2_IMPLEMENTATION_NOTES.md](docs/V2_IMPLEMENTATION_NOTES.md)
+- [docs/V3_IMPLEMENTATION_NOTES.md](docs/V3_IMPLEMENTATION_NOTES.md)
+- [docs/V3_DEMO_SEED.md](docs/V3_DEMO_SEED.md)
