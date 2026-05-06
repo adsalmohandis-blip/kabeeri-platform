@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Filament\Resources\Leads\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Table;
+
+class LeadsTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('name')->label('Lead')->searchable(),
+                TextColumn::make('organization.name')->label('Organization')->searchable(),
+                TextColumn::make('email')->searchable(),
+                TextColumn::make('source')->badge(),
+                TextColumn::make('status')->badge(),
+                TextColumn::make('priority')->badge(),
+                TextColumn::make('score')->sortable(),
+                TextColumn::make('updated_at')->dateTime()->sortable(),
+            ])
+            ->filters([
+                TrashedFilter::make(),
+            ])
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
+                ]),
+            ]);
+    }
+}
