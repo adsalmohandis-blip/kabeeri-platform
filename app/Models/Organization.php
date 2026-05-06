@@ -314,6 +314,11 @@ class Organization extends Model
         return $this->hasMany(MallMirrorCourse::class);
     }
 
+    public function mallMirrorTalent(): HasMany
+    {
+        return $this->hasMany(MallMirrorTalent::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
