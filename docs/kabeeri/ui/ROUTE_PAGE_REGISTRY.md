@@ -38,6 +38,7 @@ The source of truth for machine-readable registry data is `config/kabeeri_ui.php
 | mobile_theme | mobile.theme | /api/mobile/theme | Flutter |
 | desktop_register | desktop.register | /api/desktop/register | Electron |
 | desktop_pull | desktop.sync.pull | /api/desktop/sync/pull | Electron |
+| public_web_manifest | public-web.manifest | /api/public-web/manifest | Next.js public runtime |
 
 ## Planned Next.js Public Runtime
 
@@ -51,6 +52,14 @@ These are planned UI destinations and must not be confused with current Laravel 
 | developer_marketplace | /marketplace | V12 |
 | developer_portal | /developers | V12 |
 | public_mall | /mall | V13 |
+
+## Current Next.js Public Runtime Scaffold
+
+| Key | Path | Runtime | Version |
+| --- | --- | --- | --- |
+| public_web_workspace | apps/public-web | Next.js App Router | V15 |
+| localized_home | /ar | Next.js App Router | V15 |
+| public_web_manifest_contract | /api/public-web/manifest | Laravel JSON contract | V15 |
 
 ## Registry Rules
 

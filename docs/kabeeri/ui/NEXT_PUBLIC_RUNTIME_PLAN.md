@@ -66,3 +66,13 @@ Public web needs APIs for:
 5. Recreate developer marketplace/theme UX in V12.
 6. Recreate Mall external UX in V13.
 7. Validate separation, accessibility, responsive, RTL/LTR, and route parity in V14.
+
+## V15 Implementation Status
+
+V15 implements the first scaffold and contract layer:
+
+- `apps/public-web` exists as a Next.js App Router workspace.
+- Root npm scripts expose `public-web:build`, `public-web:typecheck`, and `public-web:smoke`.
+- Laravel exposes `GET /api/public-web/manifest` as the public runtime contract.
+- `config/kabeeri_public_runtime.php` defines V15 rules, routes, audience paths, theme manifest, required files, and quality gates.
+- Blade pages remain active bridge pages until route parity and visual QA are completed page-by-page.

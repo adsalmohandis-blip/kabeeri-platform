@@ -4,6 +4,7 @@ use App\Http\Controllers\Desktop\DesktopSyncController;
 use App\Http\Controllers\Mobile\MobileAuthController;
 use App\Http\Controllers\Mobile\MobileDeviceController;
 use App\Http\Controllers\Mobile\MobilePublicController;
+use App\Http\Controllers\Public\PublicWebRuntimeController;
 use App\Http\Controllers\Web\ExternalPortalController;
 use App\Http\Controllers\Web\MallBusinessDirectoryController;
 use App\Http\Controllers\Web\MallCourseController;
@@ -101,6 +102,10 @@ Route::prefix('api/desktop')->name('desktop.')->group(function (): void {
     Route::post('/sync/pull', [DesktopSyncController::class, 'pull'])->name('sync.pull');
     Route::post('/sync/push-dry-run', [DesktopSyncController::class, 'pushDryRun'])->name('sync.push-dry-run');
     Route::post('/files', [DesktopSyncController::class, 'queueFile'])->name('files.queue');
+});
+
+Route::prefix('api/public-web')->name('public-web.')->group(function (): void {
+    Route::get('/manifest', [PublicWebRuntimeController::class, 'manifest'])->name('manifest');
 });
 
 Route::get('/mall', MallHomeController::class)

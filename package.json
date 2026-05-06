@@ -2,9 +2,16 @@
     "$schema": "https://www.schemastore.org/package.json",
     "private": true,
     "type": "module",
+    "workspaces": [
+        "apps/public-web"
+    ],
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "public-web:build": "npm run build --workspace @kabeeri/public-web",
+        "public-web:dev": "npm run dev --workspace @kabeeri/public-web",
+        "public-web:smoke": "npm run test:smoke --workspace @kabeeri/public-web",
+        "public-web:typecheck": "npm run typecheck --workspace @kabeeri/public-web"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

@@ -221,6 +221,7 @@ return [
             ['key' => 'mobile_theme', 'route' => 'mobile.theme', 'uri' => '/api/mobile/theme', 'runtime' => 'api_contract', 'consumer' => 'flutter_mobile', 'status' => 'current'],
             ['key' => 'desktop_register', 'route' => 'desktop.register', 'uri' => '/api/desktop/register', 'runtime' => 'api_contract', 'consumer' => 'electron_desktop', 'status' => 'current'],
             ['key' => 'desktop_pull', 'route' => 'desktop.sync.pull', 'uri' => '/api/desktop/sync/pull', 'runtime' => 'api_contract', 'consumer' => 'electron_desktop', 'status' => 'current'],
+            ['key' => 'public_web_manifest', 'route' => 'public-web.manifest', 'uri' => '/api/public-web/manifest', 'runtime' => 'api_contract', 'consumer' => 'next_public_runtime', 'status' => 'current_v15'],
         ],
         'planned_next_public' => [
             ['key' => 'marketing_home', 'uri' => '/', 'runtime' => 'next_public_runtime', 'status' => 'planned_v11'],

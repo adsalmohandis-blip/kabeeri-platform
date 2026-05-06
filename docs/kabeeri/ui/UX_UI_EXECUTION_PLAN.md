@@ -158,6 +158,31 @@ V9-V14 هي مسار UX/UI فوق الباك إند الموجود، وليست 
 - `docs/kabeeri/ui/V14_UI_RELEASE_CANDIDATE.md`: release candidate report وGo/No-Go criteria.
 - `tests/Feature/V14UiReleaseCandidateTest.php`: اختبارات route inventory، coverage، docs، rendering، وrelease readiness.
 
+## V15
+
+هدف V15: تحويل قرار Next.js public runtime من خطة موثقة إلى scaffold حقيقي قابل للبناء والاختبار.
+
+يشمل:
+
+- Laravel public-web manifest contract.
+- Next.js App Router workspace under `apps/public-web`.
+- Arabic/RTL-first design tokens.
+- Public runtime route/navigation manifest.
+- Theme manifest resolver foundation.
+- API client boundary for Laravel JSON contracts.
+- Smoke/typecheck/build commands.
+
+مخرجات التنفيذ داخل المشروع:
+
+- `config/kabeeri_public_runtime.php`: مصدر truth لقواعد V15، workspace، API contract، route manifest، audience paths، theme manifest، required files، وquality gates.
+- `App\Support\Ui\V15PublicRuntime`: service يعرض manifest ويفحص release readiness.
+- `App\Http\Controllers\Public\PublicWebRuntimeController`: controller لعقد Next.js public runtime.
+- Route: `/api/public-web/manifest`.
+- `apps/public-web`: Next.js/React/TypeScript/Tailwind scaffold.
+- `docs/kabeeri/ui/V15_NEXT_PUBLIC_RUNTIME.md`: شرح runtime boundary وملفات scaffold.
+- `docs/kabeeri/ui/V15_RELEASE_CANDIDATE.md`: Go/No-Go gates وأوامر التحقق.
+- `tests/Feature/V15PublicRuntimeTest.php`: اختبارات manifest contract، route registry، files/scripts، وrelease readiness.
+
 ## قواعد UI
 
 - لا تعرض كل المنصة دفعة واحدة للجمهور.

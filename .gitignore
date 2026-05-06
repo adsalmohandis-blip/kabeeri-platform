@@ -8,6 +8,8 @@
 /.codex
 /.codex_tmp
 /.cursor/
+*.tsbuildinfo
+.next
 /.idea
 /.nova
 /.phpunit.cache

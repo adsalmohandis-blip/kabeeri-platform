@@ -1,0 +1,37 @@
+:root {
+  --kbr-ink: #17130d;
+  --kbr-paper: #fffaf0;
+  --kbr-sand: #f2ddb8;
+  --kbr-bronze: #c98a2e;
+  --kbr-olive: #3f5e47;
+  --kbr-sage: #78956f;
+  --kbr-clay: #9a5539;
+  --kbr-date: #20170f;
+  --kbr-sky: #2f5f73;
+  --kbr-line: rgba(23, 19, 13, 0.14);
+  --kbr-soft: rgba(255, 250, 240, 0.78);
+  --kbr-shadow: 0 30px 90px rgba(69, 43, 16, 0.16);
+  --kbr-radius-sm: 0.85rem;
+  --kbr-radius-md: 1.25rem;
+  --kbr-radius-lg: 2rem;
+  --kbr-radius-xl: 3rem;
+  --kbr-display: clamp(3.25rem, 8vw, 7rem);
+  --kbr-h1: clamp(2.4rem, 5vw, 4.9rem);
+  --kbr-h2: clamp(2rem, 3vw, 3.45rem);
+  --kbr-lead: clamp(1.08rem, 1.7vw, 1.38rem);
+}
+
+[data-kbr-theme='night-olive'] {
+  --kbr-ink: #f9edd6;
+  --kbr-paper: #181d14;
+  --kbr-sand: #2e351f;
+  --kbr-bronze: #e2a64d;
+  --kbr-olive: #b7c786;
+  --kbr-sage: #809869;
+  --kbr-clay: #da8a5f;
+  --kbr-date: #fff7e8;
+  --kbr-sky: #9dc4d5;
+  --kbr-line: rgba(249, 237, 214, 0.16);
+  --kbr-soft: rgba(24, 29, 20, 0.76);
+  --kbr-shadow: 0 30px 90px rgba(0, 0, 0, 0.26);
+}

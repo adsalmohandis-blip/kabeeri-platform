@@ -341,6 +341,10 @@ Goal: make external customer, Mall, partner, agency, marketer, Work Network, and
 
 Goal: make the entire UI pass quality checks before production/staging release.
 
+### V15 Next.js Public Runtime Scaffold and API Contract
+
+Goal: create the real `apps/public-web` Next.js runtime scaffold and Laravel public manifest contract so V11-V13 public pages can be migrated from Blade bridge to Next.js in controlled slices.
+
 ## 6. Version Execution Rules
 
 - Each version must start with rules/boundaries and readiness check tasks.
