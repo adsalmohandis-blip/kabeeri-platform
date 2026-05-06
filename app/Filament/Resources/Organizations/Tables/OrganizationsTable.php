@@ -35,6 +35,11 @@ class OrganizationsTable
                     ->label('Status')
                     ->badge()
                     ->searchable(),
+                TextColumn::make('plan_code')
+                    ->label('Plan')
+                    ->badge()
+                    ->placeholder('free')
+                    ->searchable(),
                 TextColumn::make('country.name')
                     ->label('Country')
                     ->searchable(),
@@ -63,6 +68,15 @@ class OrganizationsTable
                         'active' => 'Active',
                         'inactive' => 'Inactive',
                         'draft' => 'Draft',
+                    ]),
+                SelectFilter::make('plan_code')
+                    ->label('Plan')
+                    ->options([
+                        'free' => 'Free / Community',
+                        'starter' => 'Starter / Pro',
+                        'business' => 'Business',
+                        'agency' => 'Agency',
+                        'enterprise' => 'Enterprise',
                     ]),
             ])
             ->recordActions([

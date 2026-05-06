@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\Controller;
+use App\Models\MobileApiManifest;
+use App\Models\MobileThemeProfile;
 use App\Modules\Platform\Services\MobileAppService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,7 +28,7 @@ class MobilePublicController extends Controller
     public function manifest(Request $request, MobileAppService $mobile): JsonResponse
     {
         $config = $mobile->activeConfig($request->query('app_key')) ?? $mobile->createDefaultConfig();
-        $manifest = \App\Models\MobileApiManifest::query()
+        $manifest = MobileApiManifest::query()
             ->where('mobile_app_config_id', $config->id)
             ->where('status', 'active')
             ->latest('id')
@@ -42,7 +44,7 @@ class MobilePublicController extends Controller
     public function theme(Request $request, MobileAppService $mobile): JsonResponse
     {
         $config = $mobile->activeConfig($request->query('app_key')) ?? $mobile->createDefaultConfig();
-        $theme = \App\Models\MobileThemeProfile::query()
+        $theme = MobileThemeProfile::query()
             ->where('mobile_app_config_id', $config->id)
             ->where('status', 'active')
             ->latest('id')

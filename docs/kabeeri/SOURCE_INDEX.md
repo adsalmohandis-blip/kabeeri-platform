@@ -48,6 +48,16 @@
 - `08_DEVELOPER_ECONOMY/01_Theme_Plugin_Developer_Economy_Architecture_AR.docx` -> `docs/kabeeri/source_text/08_DEVELOPER_ECONOMY/01_Theme_Plugin_Developer_Economy_Architecture_AR.docx.txt`
 - `24_kabeeri_task_tracking/README_TASK_TRACKING.md` -> `docs/kabeeri/source_text/24_kabeeri_task_tracking/README_TASK_TRACKING.md.txt`
 
+## Active Extension Governance Pack
+
+- `docs/kabeeri/extensions/EXTENSION_UPDATE_RULES.md`
+- `docs/kabeeri/extensions/EXTENSION_BUSINESS_ARCHITECTURE.md`
+- `docs/kabeeri/extensions/EXTENSION_TECHNICAL_ARCHITECTURE.md`
+- `docs/kabeeri/extensions/EXTENSION_DATABASE_API_ADDENDUM.md`
+- `docs/kabeeri/extensions/EXTENSION_CODEX_PROMPT_PACK.md`
+- `docs/kabeeri/extensions/EXTENSION_ACCEPTANCE_CHECKLIST.md`
+- `docs/kabeeri/extensions/MANIFEST.json`
+
 ## Search Tip
 
 ?????? `rg` ???? `docs/kabeeri/source_text` ????? ?????? ?? ?? ??????? ?????????.

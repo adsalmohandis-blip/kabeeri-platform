@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\BillingUsageRecord;
 use App\Models\Organization;
-use App\Models\PartnerPayout;
 use App\Modules\BusinessOperations\Services\ErpProService;
 use App\Modules\Platform\Services\IntegrationHubService;
 use App\Modules\Rabet\Services\CommissionPayoutService;

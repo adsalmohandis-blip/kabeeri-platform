@@ -6,6 +6,7 @@ use App\Models\Contract;
 use App\Models\ErpProOpportunity;
 use App\Models\HelpdeskTicket;
 use App\Models\Organization;
+use Illuminate\Database\Eloquent\Model;
 
 class ErpProService
 {
@@ -51,7 +52,7 @@ class ErpProService
     }
 
     /**
-     * @param  class-string<\Illuminate\Database\Eloquent\Model>  $model
+     * @param  class-string<Model>  $model
      */
     private function nextNumber(Organization $organization, string $model, string $column, string $prefix): string
     {

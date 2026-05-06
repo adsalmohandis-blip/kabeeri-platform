@@ -24,6 +24,10 @@ class OrganizationInfolist
                 TextEntry::make('status')
                     ->label('Status')
                     ->badge(),
+                TextEntry::make('plan_code')
+                    ->label('Plan')
+                    ->badge()
+                    ->placeholder('free'),
                 TextEntry::make('country.name')
                     ->label('Country')
                     ->placeholder('-'),

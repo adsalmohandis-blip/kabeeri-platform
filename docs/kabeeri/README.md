@@ -12,6 +12,7 @@
 - `backend/DATABASE_AND_MIGRATION_WAVES.md`: موجات بناء قاعدة البيانات وترتيب التنفيذ.
 - `ui/UX_UI_EXECUTION_PLAN.md`: خطة UX/UI وفق الوثائق.
 - `task_tracking/TASK_TRACKING_RULES.md`: قواعد حالة التاسكات والتحقق.
+- `extensions/`: حزمة قواعد ومعمارية تحديثات الثيمات والبلجنز والإضافات.
 
 ## الوثائق التحليلية المرتبطة
 

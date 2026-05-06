@@ -1,0 +1,38 @@
+{
+  "pack": "kabeeri_extensions_governance",
+  "version": "EXT_UPDATE",
+  "generated_at": "2026-05-06",
+  "status": "active",
+  "files": [
+    {
+      "path": "docs/kabeeri/extensions/EXTENSION_UPDATE_RULES.md",
+      "task": "EXT_UPDATE T00",
+      "purpose": "Rules and required evidence for extension updates"
+    },
+    {
+      "path": "docs/kabeeri/extensions/EXTENSION_BUSINESS_ARCHITECTURE.md",
+      "task": "EXT_UPDATE T01",
+      "purpose": "Business architecture and marketplace model"
+    },
+    {
+      "path": "docs/kabeeri/extensions/EXTENSION_TECHNICAL_ARCHITECTURE.md",
+      "task": "EXT_UPDATE T02",
+      "purpose": "Technical architecture and runtime governance"
+    },
+    {
+      "path": "docs/kabeeri/extensions/EXTENSION_DATABASE_API_ADDENDUM.md",
+      "task": "EXT_UPDATE T03",
+      "purpose": "Database and API addendum template"
+    },
+    {
+      "path": "docs/kabeeri/extensions/EXTENSION_CODEX_PROMPT_PACK.md",
+      "task": "EXT_UPDATE T04",
+      "purpose": "Prompt pack for future Codex extension work"
+    },
+    {
+      "path": "docs/kabeeri/extensions/EXTENSION_ACCEPTANCE_CHECKLIST.md",
+      "task": "EXT_UPDATE T05",
+      "purpose": "Acceptance checklist before release candidate"
+    }
+  ]
+}

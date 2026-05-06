@@ -84,6 +84,16 @@ class Organization extends Model
         return $this->hasMany(Notification::class);
     }
 
+    public function usageRecords(): HasMany
+    {
+        return $this->hasMany(UsageRecord::class);
+    }
+
+    public function entitlementOverrides(): HasMany
+    {
+        return $this->hasMany(EntitlementOverride::class);
+    }
+
     public function mediaAssets(): HasMany
     {
         return $this->hasMany(MediaAsset::class);

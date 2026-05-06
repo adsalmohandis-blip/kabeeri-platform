@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Desktop\DesktopSyncController;
-use App\Http\Controllers\Web\MallBusinessDirectoryController;
 use App\Http\Controllers\Mobile\MobileAuthController;
 use App\Http\Controllers\Mobile\MobileDeviceController;
 use App\Http\Controllers\Mobile\MobilePublicController;
+use App\Http\Controllers\Web\MallBusinessDirectoryController;
 use App\Http\Controllers\Web\MallCourseController;
 use App\Http\Controllers\Web\MallHomeController;
 use App\Http\Controllers\Web\MallProductController;

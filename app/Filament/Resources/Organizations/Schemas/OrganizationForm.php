@@ -50,6 +50,17 @@ class OrganizationForm
                                 'inactive' => 'Inactive',
                             ])
                             ->default('active'),
+                        Select::make('plan_code')
+                            ->label('Plan')
+                            ->options([
+                                'free' => 'Free / Community',
+                                'starter' => 'Starter / Pro',
+                                'business' => 'Business',
+                                'agency' => 'Agency',
+                                'enterprise' => 'Enterprise',
+                            ])
+                            ->default('free')
+                            ->placeholder('Free / Community'),
                         Select::make('country_id')
                             ->label('Country')
                             ->relationship('country', 'name')
