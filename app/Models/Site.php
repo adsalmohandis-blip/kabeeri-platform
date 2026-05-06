@@ -205,4 +205,9 @@ class Site extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function reputationSnapshots(): HasMany
+    {
+        return $this->hasMany(ReputationSnapshot::class);
+    }
 }

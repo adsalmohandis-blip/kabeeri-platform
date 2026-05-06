@@ -319,6 +319,11 @@ class Organization extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function reputationSnapshots(): HasMany
+    {
+        return $this->hasMany(ReputationSnapshot::class);
+    }
+
     public function mallMirrorBusinesses(): HasMany
     {
         return $this->hasMany(MallMirrorBusiness::class);
