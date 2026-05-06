@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ThemesSeeder::class,
             ModulesSeeder::class,
             V1DemoSeeder::class,
+            V3DemoSeeder::class,
         ]);
     }
 }
