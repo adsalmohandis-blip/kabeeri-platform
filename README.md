@@ -1,6 +1,6 @@
 # KABEERI
 
-KABEERI is a Laravel + Filament multi-tenant platform foundation. V1 provides the stable organization/app/CMS core, V2 expands CMS, migration, packages, themes, and Commerce Lite, and V3 adds Business Operations foundations.
+KABEERI is a Laravel + Filament multi-tenant platform foundation. V1 provides the stable organization/app/CMS core, V2 expands CMS, migration, packages, themes, and Commerce Lite, V3 adds Business Operations foundations, and V4 adds cloud/Mall/partner/trust marketplace foundations.
 
 ## V1 Scope
 
@@ -62,6 +62,8 @@ Seeded demo records:
 - Published pages: `home`, `about`, `services`, `contact`
 - Demo media metadata record
 - Business profile draft
+- V3 operations demo records
+- V4 Mall, moderation, marketplace, partner, trust, academy, and referral demo records
 
 Public demo page URL:
 - `http://127.0.0.1:8000/app/kabeeri-demo-app/home`
@@ -129,6 +131,18 @@ vendor/bin/pint --test
 - Employee profiles, departments, positions, evaluations, projects, tasks, workflows, approvals, reports, and dashboard widgets.
 - V3 smoke/security/performance test coverage.
 
+## V4 Feature Summary
+
+- Cloud-site operational records, domains, backups, and health checks.
+- Public Mall mirroring with opt-in publication consent, preview-first sync events, public browsing, and `/mall` navigation.
+- Moderation cases, flags, queue service, reviews, reputation snapshots, trust badges, and security report.
+- Internal marketplace catalog over official packages/themes, theme store filters, and package installation governance.
+- Legal partner, agency partner, creator/publisher, Work Network, Academy badge, referral, and partner storefront draft foundations.
+- V4 demo seed data, smoke tests, Filament list resources for key V4 surfaces, and fresh seed verification.
+
+Public Mall entry point:
+- `http://127.0.0.1:8000/mall`
+
 ## More Docs
 
 - [MODULES.md](MODULES.md)
@@ -137,3 +151,6 @@ vendor/bin/pint --test
 - [docs/V2_IMPLEMENTATION_NOTES.md](docs/V2_IMPLEMENTATION_NOTES.md)
 - [docs/V3_IMPLEMENTATION_NOTES.md](docs/V3_IMPLEMENTATION_NOTES.md)
 - [docs/V3_DEMO_SEED.md](docs/V3_DEMO_SEED.md)
+- [docs/V4_IMPLEMENTATION_NOTES.md](docs/V4_IMPLEMENTATION_NOTES.md)
+- [docs/V4_DEMO_SEED.md](docs/V4_DEMO_SEED.md)
+- [docs/V4_SECURITY_PRIVACY_REPORT.md](docs/V4_SECURITY_PRIVACY_REPORT.md)

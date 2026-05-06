@@ -125,3 +125,52 @@ Not allowed in V3:
 - Live external system sync.
 - Advanced AI automation or forecasting.
 - Public marketplace, affiliate payouts, Academy, Work Network, or partner operations.
+
+## Active V4 Domains
+
+`Cloud Operations Foundation`:
+- Cloud sites, domains, backups, and health checks as record-only operational tracking.
+
+`Public Mall`:
+- Publication consents, sync sources/events, preview-first CSV and WordPress/WooCommerce listing previews.
+- Mall mirror businesses, products, services, courses, talent, and travel listings.
+- Public browsing routes and `/mall` navigation for published mirrors only.
+
+`Moderation and Trust`:
+- Moderation cases, reports/flags, queue service, reviews/ratings, reputation snapshots, Rabet trust badges, and security/privacy report.
+
+`Marketplace and Theme Store`:
+- Internal marketplace catalog items for packages/themes.
+- Theme store filters over approved internal marketplace themes.
+- Package installation governance for approved listings, dependencies, and compatibility.
+
+`Partner and Network Foundations`:
+- Legal partner profiles, verification assignment workflow, agency partner accreditation, agency dashboard snapshots.
+- Creator/publisher profiles, Work Network profiles, Academy badge awards, Growth Referral Lite, and partner storefront/catalog sharing drafts.
+
+## Filament Admin Navigation (V4)
+
+V4 added list resources for:
+
+- Moderation Cases
+- Reviews
+- Marketplace Catalog
+- Agency Partners
+- Partner Storefronts
+
+These resources use tenant-scoped queries where records belong to organizations. Full workflow UI remains intentionally incremental.
+
+## V4 Boundaries
+
+Allowed in V4:
+- Record-only cloud operations.
+- Public Mall mirrors with opt-in publication and status controls.
+- Preview-first external listing sync foundations.
+- Internal marketplace governance and official package/theme catalog surfaces.
+- Partner, Work Network, Academy, and referral foundations without payouts.
+
+Not allowed in V4:
+- Live unsafe two-way external sync.
+- Real payment gateways, card storage, payouts, commissions, escrow, or revenue share.
+- Legal operations casework, full agency operations, full Academy LMS, or job marketplace workflows.
+- SSO/MFA/SIEM enterprise security tracks.

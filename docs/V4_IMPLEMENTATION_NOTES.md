@@ -33,6 +33,15 @@ Organizations remain the tenant root. Sites remain user-facing apps stored in `s
 
 V4 has 52 tasks, T00 through T51. Codex may mark tasks as `codex_done`; owner verification remains separate.
 
+## Implemented V4 Foundations
+
+- Cloud operations records: sites, domains, backups, and health checks.
+- Public Mall mirrors, consent-gated publishing, preview-first sync records, public browsing, and Mall navigation.
+- Moderation, reports/flags, queue service, reviews, reputation snapshots, and trust badges.
+- Internal marketplace catalog, theme store filters, and package installation governance.
+- Rabet legal partners, verification assignment, agency accreditation/dashboard, creator profiles, Work Network profiles, Academy badges, growth referrals, and partner storefront drafts.
+- V4 Filament list resources, demo seed data, smoke tests, and security/privacy report.
+
 ## Known Missing Source
 
 The task tracker references `16_CODE_PROPMPTS_TO_CREATE_BY_CODEX/kabeeri_v4_codex_prompt_pack_ar.docx`, but that source file is not present in the current workspace. Until it is added, implementation will follow the task titles, existing architecture, and these V4 boundaries conservatively.
