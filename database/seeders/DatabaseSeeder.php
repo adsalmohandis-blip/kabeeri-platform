@@ -18,9 +18,11 @@ class DatabaseSeeder extends Seeder
             PermissionsSeeder::class,
             RolesSeeder::class,
             ThemesSeeder::class,
+            PackagesSeeder::class,
             ModulesSeeder::class,
             V1DemoSeeder::class,
             V3DemoSeeder::class,
+            V4DemoSeeder::class,
         ]);
     }
 }
