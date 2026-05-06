@@ -155,4 +155,9 @@ class Site extends Model
     {
         return $this->hasMany(BusinessProfile::class);
     }
+
+    public function cloudSites(): HasMany
+    {
+        return $this->hasMany(CloudSite::class);
+    }
 }
