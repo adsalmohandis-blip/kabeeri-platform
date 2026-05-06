@@ -84,6 +84,54 @@ class PermissionsSeeder extends Seeder
 
             ['name' => 'View External Sources', 'slug' => 'external_source.view', 'group' => 'external_sources', 'risk_level' => 'medium'],
             ['name' => 'Manage External Sources', 'slug' => 'external_source.manage', 'group' => 'external_sources', 'risk_level' => 'high'],
+
+            ['name' => 'View CRM', 'slug' => 'crm.view', 'group' => 'crm', 'risk_level' => 'low'],
+            ['name' => 'Manage Contacts', 'slug' => 'contact.manage', 'group' => 'crm', 'risk_level' => 'medium'],
+            ['name' => 'Manage Leads', 'slug' => 'lead.manage', 'group' => 'crm', 'risk_level' => 'medium'],
+            ['name' => 'Manage Pipelines', 'slug' => 'pipeline.manage', 'group' => 'crm', 'risk_level' => 'medium'],
+            ['name' => 'Manage CRM Activities', 'slug' => 'crm_activity.manage', 'group' => 'crm', 'risk_level' => 'medium'],
+            ['name' => 'Manage Service Requests', 'slug' => 'service_request.manage', 'group' => 'service', 'risk_level' => 'medium'],
+
+            ['name' => 'View Quotations', 'slug' => 'quotation.view', 'group' => 'sales', 'risk_level' => 'low'],
+            ['name' => 'Manage Quotations', 'slug' => 'quotation.manage', 'group' => 'sales', 'risk_level' => 'medium'],
+            ['name' => 'Issue Quotations', 'slug' => 'quotation.issue', 'group' => 'sales', 'risk_level' => 'medium'],
+            ['name' => 'Accept Quotations', 'slug' => 'quotation.accept', 'group' => 'sales', 'risk_level' => 'high'],
+            ['name' => 'View Invoices', 'slug' => 'invoice.view', 'group' => 'finance', 'risk_level' => 'low'],
+            ['name' => 'Manage Invoices', 'slug' => 'invoice.manage', 'group' => 'finance', 'risk_level' => 'high'],
+            ['name' => 'Record Payments', 'slug' => 'payment.record', 'group' => 'finance', 'risk_level' => 'high'],
+
+            ['name' => 'View Inventory', 'slug' => 'inventory.view', 'group' => 'inventory', 'risk_level' => 'low'],
+            ['name' => 'Manage Inventory Items', 'slug' => 'inventory_item.manage', 'group' => 'inventory', 'risk_level' => 'medium'],
+            ['name' => 'Manage Warehouses', 'slug' => 'warehouse.manage', 'group' => 'inventory', 'risk_level' => 'medium'],
+            ['name' => 'Record Stock Movements', 'slug' => 'stock_movement.record', 'group' => 'inventory', 'risk_level' => 'high'],
+            ['name' => 'View Purchasing', 'slug' => 'purchase.view', 'group' => 'purchasing', 'risk_level' => 'low'],
+            ['name' => 'Manage Suppliers', 'slug' => 'supplier.manage', 'group' => 'purchasing', 'risk_level' => 'medium'],
+            ['name' => 'Manage Purchase Orders', 'slug' => 'purchase_order.manage', 'group' => 'purchasing', 'risk_level' => 'medium'],
+            ['name' => 'Receive Goods', 'slug' => 'goods_receipt.manage', 'group' => 'purchasing', 'risk_level' => 'high'],
+
+            ['name' => 'View Accounting', 'slug' => 'accounting.view', 'group' => 'accounting', 'risk_level' => 'medium'],
+            ['name' => 'Manage Chart of Accounts', 'slug' => 'account.manage', 'group' => 'accounting', 'risk_level' => 'high'],
+            ['name' => 'Manage Journal Entries', 'slug' => 'journal_entry.manage', 'group' => 'accounting', 'risk_level' => 'high'],
+            ['name' => 'Post Journal Entries', 'slug' => 'journal_entry.post', 'group' => 'accounting', 'risk_level' => 'high'],
+
+            ['name' => 'View People', 'slug' => 'people.view', 'group' => 'people', 'risk_level' => 'low'],
+            ['name' => 'Manage Employees', 'slug' => 'employee.manage', 'group' => 'people', 'risk_level' => 'medium'],
+            ['name' => 'Manage Departments', 'slug' => 'department.manage', 'group' => 'people', 'risk_level' => 'medium'],
+            ['name' => 'Manage Positions', 'slug' => 'position.manage', 'group' => 'people', 'risk_level' => 'medium'],
+            ['name' => 'Manage Evaluations', 'slug' => 'evaluation.manage', 'group' => 'people', 'risk_level' => 'medium'],
+
+            ['name' => 'View Projects', 'slug' => 'project.view', 'group' => 'projects', 'risk_level' => 'low'],
+            ['name' => 'Manage Projects', 'slug' => 'project.manage', 'group' => 'projects', 'risk_level' => 'medium'],
+            ['name' => 'Manage Tasks', 'slug' => 'task.manage', 'group' => 'projects', 'risk_level' => 'medium'],
+
+            ['name' => 'View Workflows', 'slug' => 'workflow.view', 'group' => 'workflow', 'risk_level' => 'low'],
+            ['name' => 'Manage Workflow Definitions', 'slug' => 'workflow.manage', 'group' => 'workflow', 'risk_level' => 'high'],
+            ['name' => 'Run Workflows', 'slug' => 'workflow.run', 'group' => 'workflow', 'risk_level' => 'high'],
+            ['name' => 'Manage Approvals', 'slug' => 'approval.manage', 'group' => 'workflow', 'risk_level' => 'high'],
+
+            ['name' => 'View Reports', 'slug' => 'report.view', 'group' => 'reports', 'risk_level' => 'low'],
+            ['name' => 'Manage Reports', 'slug' => 'report.manage', 'group' => 'reports', 'risk_level' => 'medium'],
+            ['name' => 'Manage Dashboard Widgets', 'slug' => 'dashboard_widget.manage', 'group' => 'reports', 'risk_level' => 'medium'],
         ];
 
         foreach ($permissions as $permission) {

@@ -20,7 +20,7 @@ class RolesAndPermissionsSeederTest extends TestCase
             RolesSeeder::class,
         ]);
 
-        $this->assertSame(58, Permission::query()->count());
+        $this->assertSame(98, Permission::query()->count());
         $this->assertSame(7, Role::query()->count());
 
         $platformRole = Role::query()->where('slug', 'platform-super-admin')->firstOrFail();
@@ -71,6 +71,32 @@ class RolesAndPermissionsSeederTest extends TestCase
             $this->assertTrue($adminRole->permissions()->where('slug', $slug)->exists());
         }
 
+        $expectedV3Permissions = [
+            'crm.view',
+            'contact.manage',
+            'lead.manage',
+            'quotation.manage',
+            'invoice.manage',
+            'payment.record',
+            'inventory.view',
+            'purchase_order.manage',
+            'goods_receipt.manage',
+            'account.manage',
+            'journal_entry.post',
+            'employee.manage',
+            'project.manage',
+            'workflow.manage',
+            'approval.manage',
+            'report.manage',
+            'dashboard_widget.manage',
+        ];
+
+        foreach ($expectedV3Permissions as $slug) {
+            $this->assertDatabaseHas('permissions', ['slug' => $slug]);
+            $this->assertTrue($ownerRole->permissions()->where('slug', $slug)->exists());
+            $this->assertTrue($adminRole->permissions()->where('slug', $slug)->exists());
+        }
+
         $this->assertFalse($editorRole->permissions()->where('slug', 'migration.run')->exists());
         $this->assertFalse($editorRole->permissions()->where('slug', 'migration.rollback')->exists());
 
@@ -79,7 +105,7 @@ class RolesAndPermissionsSeederTest extends TestCase
             RolesSeeder::class,
         ]);
 
-        $this->assertSame(58, Permission::query()->count());
+        $this->assertSame(98, Permission::query()->count());
         $this->assertSame(7, Role::query()->count());
     }
 }
