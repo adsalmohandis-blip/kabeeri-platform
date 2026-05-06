@@ -33,6 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->navigationGroups([
+                'V10 Admin Command',
                 'Core',
                 'Organizations',
                 'Apps',
