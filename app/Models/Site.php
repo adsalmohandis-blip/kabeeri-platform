@@ -175,4 +175,9 @@ class Site extends Model
     {
         return $this->hasMany(CloudHealthCheck::class);
     }
+
+    public function mallPublicationConsents(): HasMany
+    {
+        return $this->hasMany(MallPublicationConsent::class);
+    }
 }
