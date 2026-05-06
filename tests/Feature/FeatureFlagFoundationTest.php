@@ -105,4 +105,36 @@ class FeatureFlagFoundationTest extends TestCase
             ),
         );
     }
+
+    public function test_feature_flags_seeder_adds_v3_flags_with_safe_defaults(): void
+    {
+        $this->seed(FeatureFlagsSeeder::class);
+        $this->seed(FeatureFlagsSeeder::class);
+
+        $expectedFlags = [
+            'enable_crm_operations',
+            'enable_service_requests',
+            'enable_quotations',
+            'enable_invoicing',
+            'enable_manual_payments',
+            'enable_inventory_lite',
+            'enable_purchasing',
+            'enable_accounting_starter',
+            'enable_people_operations',
+            'enable_projects_tasks',
+            'enable_workflow_basic',
+            'enable_reports_basic',
+            'enable_dashboard_widgets',
+        ];
+
+        foreach ($expectedFlags as $key) {
+            $this->assertDatabaseHas('feature_flags', [
+                'key' => $key,
+                'default_value' => false,
+                'status' => 'active',
+            ]);
+
+            $this->assertSame(1, FeatureFlag::query()->where('key', $key)->count());
+        }
+    }
 }

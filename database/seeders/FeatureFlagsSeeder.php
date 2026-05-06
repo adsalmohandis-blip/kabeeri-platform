@@ -32,6 +32,19 @@ class FeatureFlagsSeeder extends Seeder
             'enable_plugin_bundles',
             'enable_commerce_lite',
             'enable_external_source_registry',
+            'enable_crm_operations',
+            'enable_service_requests',
+            'enable_quotations',
+            'enable_invoicing',
+            'enable_manual_payments',
+            'enable_inventory_lite',
+            'enable_purchasing',
+            'enable_accounting_starter',
+            'enable_people_operations',
+            'enable_projects_tasks',
+            'enable_workflow_basic',
+            'enable_reports_basic',
+            'enable_dashboard_widgets',
         ];
 
         foreach ($flags as $key) {
