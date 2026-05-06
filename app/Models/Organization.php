@@ -424,6 +424,16 @@ class Organization extends Model
         return $this->hasMany(GrowthReferral::class);
     }
 
+    public function partnerStorefronts(): HasMany
+    {
+        return $this->hasMany(PartnerStorefront::class);
+    }
+
+    public function partnerCatalogShares(): HasMany
+    {
+        return $this->hasMany(PartnerCatalogShare::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'organization_memberships')

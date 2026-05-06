@@ -78,4 +78,9 @@ class AgencyPartnerProfile extends Model
     {
         return $this->hasMany(AgencyDashboardSnapshot::class);
     }
+
+    public function partnerStorefronts(): HasMany
+    {
+        return $this->hasMany(PartnerStorefront::class);
+    }
 }
