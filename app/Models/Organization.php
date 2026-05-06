@@ -229,6 +229,11 @@ class Organization extends Model
         return $this->hasMany(BusinessTask::class);
     }
 
+    public function workflowDefinitions(): HasMany
+    {
+        return $this->hasMany(WorkflowDefinition::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
