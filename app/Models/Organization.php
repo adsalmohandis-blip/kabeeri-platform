@@ -234,6 +234,11 @@ class Organization extends Model
         return $this->hasMany(WorkflowDefinition::class);
     }
 
+    public function workflowRuns(): HasMany
+    {
+        return $this->hasMany(WorkflowRun::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
