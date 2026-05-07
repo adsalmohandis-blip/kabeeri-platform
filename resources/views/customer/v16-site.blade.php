@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +16,7 @@
         <nav class="nav">
             <a href="{{ route('customer.workspace') }}">Customer Dashboard</a>
             <a href="{{ route('customer.start') }}">البداية</a>
+            @include('components.language-switcher', ['context' => 'customer'])
         </nav>
     </header>
 

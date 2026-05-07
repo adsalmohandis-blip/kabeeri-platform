@@ -257,6 +257,7 @@ External UI must answer:
 ### Public Site and CMS Rendering
 
 - Public content page: `/app/{username}/{contentEntry}`.
+- Language switching entry: `/language/{locale}` for visitor, customer, and admin/team surfaces.
 - Themed site layout.
 - Landing page template.
 - About page template.

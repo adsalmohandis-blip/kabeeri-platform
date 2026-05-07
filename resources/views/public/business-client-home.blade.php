@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +26,7 @@
                 <a class="rounded-full border border-[#17130d]/10 bg-white/60 px-4 py-2 text-sm font-black" href="{{ route('customer.start') }}">ابدأ كعميل</a>
                 <a class="rounded-full border border-[#17130d]/10 bg-white/60 px-4 py-2 text-sm font-black" href="{{ route('login') }}">دخول</a>
                 <a class="rounded-full bg-[#17130d] px-4 py-2 text-sm font-black text-[#fffaf0]" href="{{ route('register') }}">إنشاء حساب</a>
+                @include('components.language-switcher', ['context' => 'visitor'])
             </nav>
         </header>
 

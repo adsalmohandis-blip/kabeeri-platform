@@ -4,7 +4,7 @@
 @endphp
 
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,6 +34,7 @@
             <div class="actions">
                 <a class="button" href="{{ route('customer.dashboard') }}">Customer Portal</a>
                 <a class="button primary" href="{{ route('mall.trust') }}">Trust</a>
+                @include('components.language-switcher', ['context' => 'visitor'])
             </div>
         </header>
 

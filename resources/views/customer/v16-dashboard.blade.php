@@ -36,7 +36,7 @@
 @endphp
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -96,6 +96,7 @@
                     <div class="flex flex-wrap items-center gap-1.5">
                         <a href="{{ route('customer.start') }}" class="rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black">البداية</a>
                         <a href="{{ route('public.landing') }}" class="rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black">المنصة</a>
+                        @include('components.language-switcher', ['context' => 'customer'])
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="rounded-full bg-[#17130d] px-3 py-1.5 text-xs font-black text-[#fffaf0]">خروج</button>

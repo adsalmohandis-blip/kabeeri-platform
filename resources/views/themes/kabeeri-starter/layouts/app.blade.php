@@ -73,7 +73,10 @@
 <header class="ks-header">
     <div class="ks-wrap ks-header-inner">
         <p class="ks-brand">{{ $site->name }}</p>
-        <p class="ks-theme">{{ $themeName }}</p>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+            <p class="ks-theme">{{ $themeName }}</p>
+            @include('components.language-switcher', ['context' => 'visitor'])
+        </div>
     </div>
 </header>
 <main class="ks-main">
@@ -83,7 +86,7 @@
 </main>
 <footer class="ks-footer">
     <div class="ks-wrap">
-        {{ $site->name }} © {{ now()->year }}
+        {{ $site->name }} &copy; {{ now()->year }}
     </div>
 </footer>
 </body>

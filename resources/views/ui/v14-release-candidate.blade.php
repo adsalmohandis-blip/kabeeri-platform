@@ -8,7 +8,7 @@
 @endphp
 
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,6 +45,7 @@
             <div class="actions">
                 <a class="button primary" href="{{ route('mall.trust') }}">Trust QA</a>
                 <a class="button" href="{{ route('developers.qa') }}">Theme/Plugin QA</a>
+                @include('components.language-switcher', ['context' => 'admin'])
             </div>
         </header>
 

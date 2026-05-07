@@ -22,7 +22,7 @@
     $fmt = fn ($value) => number_format((int) $value);
 @endphp
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,6 +53,7 @@
                 <a class="nav-link" href="#plans">Freemium</a>
                 <a class="nav-link" href="#developers">Developers</a>
                 <a class="nav-link" href="/admin">Filament</a>
+                @include('components.language-switcher', ['context' => 'admin'])
             </nav>
         </header>
 

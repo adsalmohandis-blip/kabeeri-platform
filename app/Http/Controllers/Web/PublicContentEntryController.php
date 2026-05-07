@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContentEntry;
 use App\Models\Site;
 use App\Models\ThemeSetting;
+use App\Support\Localization\KabeeriLocale;
 use Illuminate\Contracts\View\View;
 
 class PublicContentEntryController extends Controller
@@ -39,11 +40,8 @@ class PublicContentEntryController extends Controller
             $primaryColor = $primaryColor['value'] ?? '#b45309';
         }
 
-        $language = (string) ($site->language ?: app()->getLocale());
-        $direction = in_array($language, ['ar', 'fa', 'he', 'ur'], true)
-            || (bool) ($site->theme?->supports_rtl ?? false)
-            ? 'rtl'
-            : 'ltr';
+        $language = app()->getLocale() ?: (string) ($site->language ?: 'ar');
+        $direction = KabeeriLocale::direction($language);
 
         return view('themes.kabeeri-starter.content-entry', [
             'site' => $site,

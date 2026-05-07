@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +17,7 @@
             <a href="{{ route('login') }}">دخول</a>
             <a class="primary" href="{{ route('register') }}">إنشاء حساب</a>
             <a href="{{ route('public.landing') }}">عن المنصة</a>
+            @include('components.language-switcher', ['context' => 'visitor'])
         </nav>
     </header>
 

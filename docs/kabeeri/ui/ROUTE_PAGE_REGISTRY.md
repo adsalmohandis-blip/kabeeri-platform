@@ -17,6 +17,7 @@ The source of truth for machine-readable registry data is `config/kabeeri_ui.php
 | mall_talent | mall.talent.index | /mall/talent | Blade bridge | Mall |
 | mall_travel | mall.travel.index | /mall/travel | Blade bridge | Mall |
 | public_content_entry | public.content-entry.show | /app/{username}/{contentEntry} | Blade bridge | CMS |
+| language_switch | language.switch | /language/{locale} | Blade bridge | Localization |
 
 ## Current Admin Routes
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Desktop\DesktopSyncController;
+use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\Mobile\MobileAuthController;
 use App\Http\Controllers\Mobile\MobileDeviceController;
 use App\Http\Controllers\Mobile\MobilePublicController;
@@ -38,6 +39,9 @@ Route::get('/internal/command-center', function () {
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
 Route::get('/ui/release-candidate', UiReleaseCandidateController::class)->name('ui.release-candidate');
+Route::get('/language/{locale}', LocalizationController::class)
+    ->where('locale', '[A-Za-z]{2}')
+    ->name('language.switch');
 
 Route::get('/start', CustomerStartController::class)->name('customer.start');
 Route::middleware('guest')->group(function (): void {

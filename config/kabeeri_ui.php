@@ -206,6 +206,7 @@ return [
             ['key' => 'mall_talent', 'route' => 'mall.talent.index', 'uri' => '/mall/talent', 'runtime' => 'blade_bridge', 'owner' => 'mall', 'status' => 'current'],
             ['key' => 'mall_travel', 'route' => 'mall.travel.index', 'uri' => '/mall/travel', 'runtime' => 'blade_bridge', 'owner' => 'mall', 'status' => 'current'],
             ['key' => 'public_content_entry', 'route' => 'public.content-entry.show', 'uri' => '/app/{username}/{contentEntry}', 'runtime' => 'blade_bridge', 'owner' => 'cms', 'status' => 'current'],
+            ['key' => 'language_switch', 'route' => 'language.switch', 'uri' => '/language/{locale}', 'runtime' => 'blade_bridge', 'owner' => 'localization', 'status' => 'current'],
         ],
         'current_admin' => [
             ['key' => 'admin_dashboard', 'route' => 'filament.admin.pages.dashboard', 'uri' => '/admin', 'runtime' => 'filament_admin', 'space' => 'platform', 'status' => 'current'],

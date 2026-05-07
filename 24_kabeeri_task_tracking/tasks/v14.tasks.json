@@ -47,12 +47,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T22:47:22+00:00",
-            "completed_by_codex_at": "2026-05-07T01:56:47+00:00",
+            "completed_by_codex_at": "2026-05-07T11:24:37+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan route:list --name=customer.apps.show; php artisan route:list --name=public.content-entry.show; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; php artisan test --filter=V1SmokeSuiteTest; php artisan test --filter=SiteFoundationTest; php artisan test --filter=V1DemoSeedDataTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Changed app/site customer URLs from id-based /customer/apps/{site} to username-based /customer/apps/{username}, using the existing site slug as the customer-facing username. Updated public app content route naming to /app/{username}/{contentEntry}, admin Site labels from Slug to Username, dashboard links, docs, route registry, sitemap and redirect URL generation, and regression tests preventing numeric customer app URLs.",
+            "tests": "php artisan route:list --name=language.switch; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Implemented a session-backed KABEERI language switching system with /language/{locale}, SetKabeeriLocale middleware, Arabic/English language packs, dynamic html lang/dir, and accessible switchers for visitor surfaces, customer dashboard/onboarding/app pages, and Filament platform admin/team dashboard. Updated UI route registry and docs.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
@@ -152,12 +152,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T22:47:22+00:00",
-            "completed_by_codex_at": "2026-05-07T01:56:47+00:00",
+            "completed_by_codex_at": "2026-05-07T11:24:37+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan route:list --name=customer.apps.show; php artisan route:list --name=public.content-entry.show; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; php artisan test --filter=V1SmokeSuiteTest; php artisan test --filter=SiteFoundationTest; php artisan test --filter=V1DemoSeedDataTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Changed app/site customer URLs from id-based /customer/apps/{site} to username-based /customer/apps/{username}, using the existing site slug as the customer-facing username. Updated public app content route naming to /app/{username}/{contentEntry}, admin Site labels from Slug to Username, dashboard links, docs, route registry, sitemap and redirect URL generation, and regression tests preventing numeric customer app URLs.",
+            "tests": "php artisan route:list --name=language.switch; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Implemented a session-backed KABEERI language switching system with /language/{locale}, SetKabeeriLocale middleware, Arabic/English language packs, dynamic html lang/dir, and accessible switchers for visitor surfaces, customer dashboard/onboarding/app pages, and Filament platform admin/team dashboard. Updated UI route registry and docs.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
@@ -272,12 +272,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T22:47:23+00:00",
-            "completed_by_codex_at": "2026-05-07T01:56:47+00:00",
+            "completed_by_codex_at": "2026-05-07T11:24:37+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan route:list --name=customer.apps.show; php artisan route:list --name=public.content-entry.show; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; php artisan test --filter=V1SmokeSuiteTest; php artisan test --filter=SiteFoundationTest; php artisan test --filter=V1DemoSeedDataTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Changed app/site customer URLs from id-based /customer/apps/{site} to username-based /customer/apps/{username}, using the existing site slug as the customer-facing username. Updated public app content route naming to /app/{username}/{contentEntry}, admin Site labels from Slug to Username, dashboard links, docs, route registry, sitemap and redirect URL generation, and regression tests preventing numeric customer app URLs.",
+            "tests": "php artisan route:list --name=language.switch; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Implemented a session-backed KABEERI language switching system with /language/{locale}, SetKabeeriLocale middleware, Arabic/English language packs, dynamic html lang/dir, and accessible switchers for visitor surfaces, customer dashboard/onboarding/app pages, and Filament platform admin/team dashboard. Updated UI route registry and docs.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
