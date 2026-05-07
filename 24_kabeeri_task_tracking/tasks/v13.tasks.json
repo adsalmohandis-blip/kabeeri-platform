@@ -62,12 +62,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T22:23:55+00:00",
-            "completed_by_codex_at": "2026-05-07T13:13:40+00:00",
+            "completed_by_codex_at": "2026-05-07T13:22:05+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "3148274",
-            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=PublicContentRenderingTest; php artisan test",
-            "notes": "Applied the shared icon system to Mall navigation, search buttons, trust, claim/report, and external discovery routes.",
+            "commit": "a62a7e2",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=PublicContentRenderingTest; php artisan test",
+            "notes": "Reworded V13 discovery/customer links to direct visitor language.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
@@ -167,12 +167,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T22:23:56+00:00",
-            "completed_by_codex_at": "2026-05-07T13:13:40+00:00",
+            "completed_by_codex_at": "2026-05-07T13:22:05+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "3148274",
-            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=PublicContentRenderingTest; php artisan test",
-            "notes": "Applied icon-led customer portal entry points in the V13 external experience.",
+            "commit": "a62a7e2",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=PublicContentRenderingTest; php artisan test",
+            "notes": "Changed Customer Portal visible wording to direct customer dashboard language.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
