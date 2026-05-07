@@ -96,7 +96,7 @@ class PublicMarketingController extends Controller
 
         return redirect()
             ->route('public.contact')
-            ->with('status', 'تم استلام طلبك. سنراجعه داخل CRM ونحدد الخطوة التالية.');
+            ->with('status', __('kabeeri.ui.contact_received'));
     }
 
     private function page(string $page): View

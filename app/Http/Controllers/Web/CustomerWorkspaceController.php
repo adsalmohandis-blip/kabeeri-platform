@@ -58,7 +58,7 @@ class CustomerWorkspaceController extends Controller
 
         return redirect()
             ->route('customer.workspace')
-            ->with('status', 'Your workspace, app, and theme were created successfully.');
+            ->with('status', __('kabeeri.ui.workspace_created'));
     }
 
     public function dashboard(Request $request, CustomerWorkspaceService $workspace): View
@@ -102,6 +102,6 @@ class CustomerWorkspaceController extends Controller
 
         return redirect()
             ->route('customer.workspace')
-            ->with('status', 'Your profile capabilities were updated.');
+            ->with('status', __('kabeeri.ui.profile_updated'));
     }
 }

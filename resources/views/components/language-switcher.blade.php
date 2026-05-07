@@ -35,7 +35,7 @@
     @foreach ($supportedLocales as $locale => $language)
         @if ($locale === $currentLocale)
             <span class="kbr-language-switcher__option" aria-current="true" title="{{ __('kabeeri.language.current') }}">
-                {{ $language['short_label'] }}
+                {{ __("kabeeri.language.names.{$locale}") }}
             </span>
         @else
             <a
@@ -44,7 +44,7 @@
                 hreflang="{{ $locale }}"
                 rel="nofollow"
             >
-                {{ $language['short_label'] }}
+                {{ __("kabeeri.language.names.{$locale}") }}
             </a>
         @endif
     @endforeach

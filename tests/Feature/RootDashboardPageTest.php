@@ -16,7 +16,7 @@ class RootDashboardPageTest extends TestCase
         $this->get('/')
             ->assertOk()
             ->assertSee(__('kabeeri.brand.name'))
-            ->assertSee('ابدأ الآن')
+            ->assertSee(__('kabeeri.ui.start_now'))
             ->assertDontSee(__('kabeeri.brand.name').' Business Client')
             ->assertDontSee('ابدأ مسار العميل')
             ->assertDontSee('Command Center انتقل لمسار خاص')

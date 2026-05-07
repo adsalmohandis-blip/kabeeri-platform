@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ __('kabeeri.brand.name') }} | ابدأ الآن</title>
-    <meta name="description" content="{{ __('kabeeri.brand.name') }} يساعدك تبدأ موقعك أو متجرك أو تطبيق خدماتك بخطوات واضحة.">
+    <title>{{ __('kabeeri.brand.name') }} | {{ __('kabeeri.ui.start_now') }}</title>
+    <meta name="description" content="{{ __('kabeeri.ui.hero_lead') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -16,39 +16,39 @@
     <div class="mx-auto flex min-h-screen w-[min(1180px,calc(100%-24px))] flex-col px-3 py-4 sm:px-5 lg:py-6">
         <header class="flex flex-col gap-3 rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/82 p-3 backdrop-blur-2xl lg:flex-row lg:items-center lg:justify-between">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <span class="grid h-10 w-10 place-items-center rounded-2xl bg-[#17130d] text-sm font-black text-[#fffaf0]">K</span>
+                <span class="grid h-10 w-10 place-items-center rounded-2xl bg-[#17130d] text-sm font-black text-[#fffaf0]">{{ __('kabeeri.brand.mark') }}</span>
                 <span>
                     <strong class="block text-base font-black">{{ __('kabeeri.brand.name') }}</strong>
-                    <small class="block text-xs font-bold text-[#17130d]">ابدأ الآن</small>
+                    <small class="block text-xs font-bold text-[#17130d]">{{ __('kabeeri.ui.start_now') }}</small>
                 </span>
             </a>
-            <nav class="flex flex-wrap gap-2" aria-label="{{ __('kabeeri.brand.name') }} public entry navigation">
-                <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />ابدأ الآن</a>
-                <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('login') }}"><x-kabeeri-icon name="login" />دخول</a>
-                <a class="inline-flex items-center rounded-full bg-[#17130d] px-3 py-1.5 text-xs font-black text-[#fffaf0]" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />إنشاء حساب</a>
+            <nav class="flex flex-wrap gap-2" aria-label="{{ __('kabeeri.ui.public_home') }}">
+                <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />{{ __('kabeeri.ui.start_now') }}</a>
+                <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('login') }}"><x-kabeeri-icon name="login" />{{ __('kabeeri.ui.login') }}</a>
+                <a class="inline-flex items-center rounded-full bg-[#17130d] px-3 py-1.5 text-xs font-black text-[#fffaf0]" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />{{ __('kabeeri.ui.create_account') }}</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </nav>
         </header>
 
         <main class="grid flex-1 gap-5 py-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-center">
             <section class="rounded-[2rem] border border-[#17130d]/10 bg-[#fffaf0]/86 p-5 backdrop-blur sm:p-6 lg:p-7">
-                <span class="inline-flex items-center rounded-full bg-[#17130d]/10 px-3 py-1.5 text-xs font-black tracking-[.08em] text-[#17130d]"><x-kabeeri-icon name="store" />ابدأ الآن</span>
-                <h1 class="mt-5 max-w-3xl text-2xl font-black leading-[1.12] tracking-[-.03em] sm:text-3xl">ابدأ موقعك أو متجرك أو تطبيق خدماتك بسهولة.</h1>
-                <p class="mt-4 max-w-2xl text-sm leading-7 text-[#17130d]">اختر نوع مشروعك، ثبت الثيم، ثم ادخل لوحة إدارة التطبيقات.</p>
+                <span class="inline-flex items-center rounded-full bg-[#17130d]/10 px-3 py-1.5 text-xs font-black tracking-[.08em] text-[#17130d]"><x-kabeeri-icon name="store" />{{ __('kabeeri.ui.hero_badge') }}</span>
+                <h1 class="mt-5 max-w-3xl text-2xl font-black leading-[1.12] tracking-[-.03em] sm:text-3xl">{{ __('kabeeri.ui.hero_title') }}</h1>
+                <p class="mt-4 max-w-2xl text-sm leading-7 text-[#17130d]">{{ __('kabeeri.ui.hero_lead') }}</p>
                 <div class="mt-5 flex flex-wrap gap-2">
-                    <a class="inline-flex items-center rounded-full bg-[#17130d] px-4 py-2.5 text-xs font-black text-[#fffaf0]" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />ابدأ الآن</a>
-                    <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.landing') }}"><x-kabeeri-icon name="info" />المزايا</a>
-                    <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.pricing') }}"><x-kabeeri-icon name="pricing" />الاشتراكات</a>
+                    <a class="inline-flex items-center rounded-full bg-[#17130d] px-4 py-2.5 text-xs font-black text-[#fffaf0]" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />{{ __('kabeeri.ui.start_now') }}</a>
+                    <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.landing') }}"><x-kabeeri-icon name="info" />{{ __('kabeeri.ui.features') }}</a>
+                    <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.pricing') }}"><x-kabeeri-icon name="pricing" />{{ __('kabeeri.ui.subscriptions') }}</a>
                 </div>
             </section>
 
             <aside class="space-y-2.5">
                 <article class="rounded-3xl border border-[#17130d]/10 bg-[#17130d] p-4 text-[#fffaf0]">
-                    <p class="text-xs font-black tracking-[.08em] text-[#c98a2e]">خطواتك</p>
+                    <p class="text-xs font-black tracking-[.08em] text-[#c98a2e]">{{ __('kabeeri.ui.your_steps') }}</p>
                     <ol class="mt-3 space-y-2 text-sm font-black">
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="map" style="margin-inline-end:0" /></span><span>اختر مسارك</span></li>
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="theme" style="margin-inline-end:0" /></span><span>ثبت التطبيق والثيم</span></li>
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="apps" style="margin-inline-end:0" /></span><span>افتح لوحة إدارة التطبيقات</span></li>
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="map" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.choose_path') }}</span></li>
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="theme" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.install_app_theme') }}</span></li>
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="apps" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.open_dashboard') }}</span></li>
                     </ol>
                 </article>
             </aside>

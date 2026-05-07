@@ -29,11 +29,11 @@ class V16CustomerExperienceTest extends TestCase
         $this->get('/start')
             ->assertOk()
             ->assertSee(__('kabeeri.brand.name'))
-            ->assertSee('ابدأ الآن')
+            ->assertSee(__('kabeeri.ui.start_now'))
             ->assertDontSee(__('kabeeri.brand.name').' Customer Start')
-            ->assertSee('Business Owner')
-            ->assertSee('I need a builder')
-            ->assertSee('kabeeri Atlas')
+            ->assertSee(__('kabeeri.customer.paths.business_owner.label'))
+            ->assertSee(__('kabeeri.customer.paths.needs_builder.label'))
+            ->assertSee(__('kabeeri.customer.themes.kabeeri-atlas.name'))
             ->assertSee('quick-register')
             ->assertSee('quick_name')
             ->assertSee('quick_password_confirmation');
@@ -43,7 +43,7 @@ class V16CustomerExperienceTest extends TestCase
     {
         $this->get('/register')
             ->assertOk()
-            ->assertSee('ابدأ الآن')
+            ->assertSee(__('kabeeri.ui.start_now'))
             ->assertDontSee('Create account form')
             ->assertSee('name="name"', false)
             ->assertSee('name="email"', false)
@@ -102,12 +102,12 @@ class V16CustomerExperienceTest extends TestCase
 
         $this->get(route('customer.workspace'))
             ->assertOk()
-            ->assertSee('لوحة إدارة التطبيقات')
+            ->assertSee(__('kabeeri.ui.apps_dashboard'))
             ->assertDontSee('Client Workspace')
             ->assertSee('workspace-sidebar')
-            ->assertSee('Apps')
+            ->assertSee(__('kabeeri.ui.apps'))
             ->assertSee('Acme Store')
-            ->assertSee('Mall Window')
+            ->assertSee(__('kabeeri.customer.themes.mall-window.name'))
             ->assertSee('/customer/apps/acme-store', false)
             ->assertDontSee('/customer/apps/'.$site->id, false);
 
@@ -118,9 +118,9 @@ class V16CustomerExperienceTest extends TestCase
 
         $this->get(route('customer.apps.show', ['username' => $site->username]))
             ->assertOk()
-            ->assertSee('App is active')
-            ->assertSee('Mall Window')
-            ->assertSee('Username')
+            ->assertSee(__('kabeeri.ui.app_active'))
+            ->assertSee(__('kabeeri.customer.themes.mall-window.name'))
+            ->assertSee(__('kabeeri.ui.username'))
             ->assertSee('acme-store');
 
         $this->get('/customer/apps/'.$site->id)

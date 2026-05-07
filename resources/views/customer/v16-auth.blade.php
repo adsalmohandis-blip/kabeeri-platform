@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ __('kabeeri.brand.name') }} | {{ $mode === 'register' ? 'ابدأ الآن' : 'دخول' }}</title>
+    <title>{{ __('kabeeri.brand.name') }} | {{ $mode === 'register' ? __('kabeeri.ui.start_now') : __('kabeeri.ui.login') }}</title>
     @include('customer.v16-style')
 </head>
 <body>
@@ -13,13 +13,13 @@
 <div class="shell">
     <header class="top">
         <a class="brand" href="{{ route('customer.start') }}">
-            <span class="mark">K</span>
-            <span><strong>{{ __('kabeeri.brand.name') }}</strong><small>{{ $isRegister ? 'ابدأ الآن' : 'دخول' }}</small></span>
+            <span class="mark">{{ __('kabeeri.brand.mark') }}</span>
+            <span><strong>{{ __('kabeeri.brand.name') }}</strong><small>{{ $isRegister ? __('kabeeri.ui.start_now') : __('kabeeri.ui.login') }}</small></span>
         </a>
-        <nav class="nav">
-            <a href="{{ route('customer.start') }}"><x-kabeeri-icon name="home" />البداية</a>
-            <a class="{{ $isRegister ? '' : 'primary' }}" href="{{ route('login') }}"><x-kabeeri-icon name="login" />دخول</a>
-            <a class="{{ $isRegister ? 'primary' : '' }}" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />إنشاء حساب</a>
+        <nav class="nav" aria-label="{{ __('kabeeri.ui.public_home') }}">
+            <a href="{{ route('customer.start') }}"><x-kabeeri-icon name="home" />{{ __('kabeeri.ui.home') }}</a>
+            <a class="{{ $isRegister ? '' : 'primary' }}" href="{{ route('login') }}"><x-kabeeri-icon name="login" />{{ __('kabeeri.ui.login') }}</a>
+            <a class="{{ $isRegister ? 'primary' : '' }}" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />{{ __('kabeeri.ui.create_account') }}</a>
             @include('components.language-switcher', ['context' => 'visitor'])
         </nav>
     </header>
@@ -38,61 +38,61 @@
             @endif
 
             @if ($isRegister)
-                <span class="tag"><x-kabeeri-icon name="user-plus" />ابدأ الآن</span>
-                <h1 class="page-title" style="margin-bottom:14px">إنشاء حساب عميل جديد</h1>
+                <span class="tag"><x-kabeeri-icon name="user-plus" />{{ __('kabeeri.ui.start_now') }}</span>
+                <h1 class="page-title" style="margin-bottom:14px">{{ __('kabeeri.ui.register_title') }}</h1>
                 <form method="POST" action="{{ route('register.store') }}">
                     @csrf
                     <div class="field">
-                        <label for="name">الاسم</label>
+                        <label for="name">{{ __('kabeeri.ui.name') }}</label>
                         <input id="name" name="name" value="{{ old('name') }}" required autocomplete="name">
                     </div>
                     <div class="field">
-                        <label for="email">البريد الإلكتروني</label>
+                        <label for="email">{{ __('kabeeri.ui.email') }}</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email">
                     </div>
                     <div class="field">
-                        <label for="customer_path">المسار</label>
+                        <label for="customer_path">{{ __('kabeeri.ui.path') }}</label>
                         <select id="customer_path" name="customer_path">
                             @foreach ($paths as $key => $path)
-                                <option value="{{ $key }}" @selected(old('customer_path', $selectedPath ?? 'business_owner') === $key)>{{ $path['label'] }}</option>
+                                <option value="{{ $key }}" @selected(old('customer_path', $selectedPath ?? 'business_owner') === $key)>{{ __('kabeeri.customer.paths.'.$key.'.label') }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="grid two">
                         <div class="field">
-                            <label for="password">كلمة المرور</label>
+                            <label for="password">{{ __('kabeeri.ui.password') }}</label>
                             <input id="password" type="password" name="password" required autocomplete="new-password">
                         </div>
                         <div class="field">
-                            <label for="password_confirmation">تأكيد كلمة المرور</label>
+                            <label for="password_confirmation">{{ __('kabeeri.ui.password_confirmation') }}</label>
                             <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password">
                         </div>
                     </div>
-                    <button class="primary" type="submit"><x-kabeeri-icon name="rocket" />إنشاء حساب والانتقال إلى Onboarding</button>
+                    <button class="primary" type="submit"><x-kabeeri-icon name="rocket" />{{ __('kabeeri.ui.create_and_start') }}</button>
                 </form>
             @else
-                <span class="tag"><x-kabeeri-icon name="login" />دخول</span>
-                <h1 class="page-title" style="margin-bottom:14px">دخول العميل</h1>
+                <span class="tag"><x-kabeeri-icon name="login" />{{ __('kabeeri.ui.login') }}</span>
+                <h1 class="page-title" style="margin-bottom:14px">{{ __('kabeeri.ui.login_title') }}</h1>
                 <form method="POST" action="{{ route('login.store') }}">
                     @csrf
                     <div class="field">
-                        <label for="email">البريد الإلكتروني</label>
+                        <label for="email">{{ __('kabeeri.ui.email') }}</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email">
                     </div>
                     <div class="field">
-                        <label for="password">كلمة المرور</label>
+                        <label for="password">{{ __('kabeeri.ui.password') }}</label>
                         <input id="password" type="password" name="password" required autocomplete="current-password">
                     </div>
-                    <label class="check"><input type="checkbox" name="remember" value="1"> <span>تذكرني على هذا الجهاز</span></label>
-                    <button class="primary" type="submit"><x-kabeeri-icon name="apps" />دخول إلى لوحة إدارة التطبيقات</button>
+                    <label class="check"><input type="checkbox" name="remember" value="1"> <span>{{ __('kabeeri.ui.remember_me') }}</span></label>
+                    <button class="primary" type="submit"><x-kabeeri-icon name="apps" />{{ __('kabeeri.ui.login_to_dashboard') }}</button>
                 </form>
             @endif
         </section>
 
         <aside class="card dark">
             <span class="kicker"><x-kabeeri-icon name="account" />{{ __('kabeeri.brand.name') }}</span>
-            <h1 class="page-title">{{ $isRegister ? 'افتح حسابك وابدأ بناء التطبيق.' : 'ادخل على مساحة عملك.' }}</h1>
-            <p class="lead">بعد الدخول نكمل الإعداد أو نفتح لوحة إدارة التطبيقات حسب حالتك.</p>
+            <h1 class="page-title">{{ $isRegister ? __('kabeeri.ui.open_account_title') : __('kabeeri.ui.enter_workspace_title') }}</h1>
+            <p class="lead">{{ __('kabeeri.ui.after_login_text') }}</p>
         </aside>
     </main>
 </div>

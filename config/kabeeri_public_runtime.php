@@ -53,7 +53,7 @@ return [
         'id' => 'kabeeri-public-foundation',
         'version' => '0.1.0',
         'runtime' => 'next-app-router',
-        'locales' => ['ar', 'en'],
+        'locales' => ['ar', 'en', 'es', 'fr', 'it', 'de', 'pt', 'ru', 'hi', 'ur', 'tr', 'id', 'zh', 'ja', 'ko', 'bn'],
         'default_locale' => 'ar',
         'default_direction' => 'rtl',
         'components' => ['Hero', 'AudienceGrid', 'OnboardingTimeline', 'MarketplaceMallSplit', 'DeveloperEconomy', 'RuntimeBoundary', 'OwnerConsole'],

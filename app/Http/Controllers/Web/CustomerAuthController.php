@@ -30,7 +30,7 @@ class CustomerAuthController extends Controller
 
         if (! Auth::attempt($credentials, (bool) $request->boolean('remember'))) {
             return back()
-                ->withErrors(['email' => 'Invalid customer login details.'])
+                ->withErrors(['email' => __('kabeeri.ui.invalid_login')])
                 ->onlyInput('email');
         }
 
@@ -87,7 +87,7 @@ class CustomerAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('customer.start')->with('status', 'Logged out successfully.');
+        return redirect()->route('customer.start')->with('status', __('kabeeri.ui.logged_out'));
     }
 
     private function postAuthTarget(?User $user): string
