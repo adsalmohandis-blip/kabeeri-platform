@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\GoodsReceipts;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\GoodsReceipts\Pages\CreateGoodsReceipt;
 use App\Filament\Resources\GoodsReceipts\Pages\EditGoodsReceipt;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class GoodsReceiptResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = GoodsReceipt::class;

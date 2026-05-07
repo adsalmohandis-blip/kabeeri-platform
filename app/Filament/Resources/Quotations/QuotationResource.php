@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Quotations;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\Quotations\Pages\CreateQuotation;
 use App\Filament\Resources\Quotations\Pages\EditQuotation;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class QuotationResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = Quotation::class;

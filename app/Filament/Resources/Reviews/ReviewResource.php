@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Reviews;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Reviews\Pages\ListReviews;
 use App\Filament\Resources\Reviews\Tables\ReviewsTable;
 use App\Models\Review;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ReviewResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = Review::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSparkles;

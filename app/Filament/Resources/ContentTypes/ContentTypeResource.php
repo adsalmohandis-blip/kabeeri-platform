@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ContentTypes;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\ContentTypes\Pages\CreateContentType;
 use App\Filament\Resources\ContentTypes\Pages\EditContentType;
 use App\Filament\Resources\ContentTypes\Pages\ListContentTypes;
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ContentTypeResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = ContentType::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleGroup;

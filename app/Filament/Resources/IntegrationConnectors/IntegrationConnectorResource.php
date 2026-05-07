@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\IntegrationConnectors;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\IntegrationConnectors\Pages\ListIntegrationConnectors;
 use App\Models\IntegrationConnector;
 use App\Models\OrganizationMembership;
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class IntegrationConnectorResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = IntegrationConnector::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQueueList;

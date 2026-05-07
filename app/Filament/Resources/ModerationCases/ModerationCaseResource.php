@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ModerationCases;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\ModerationCases\Pages\ListModerationCases;
 use App\Filament\Resources\ModerationCases\Tables\ModerationCasesTable;
 use App\Models\ModerationCase;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ModerationCaseResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = ModerationCase::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;

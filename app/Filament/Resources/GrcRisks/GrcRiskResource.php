@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\GrcRisks;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\GrcRisks\Pages\ListGrcRisks;
 use App\Models\GrcRisk;
 use App\Models\OrganizationMembership;
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class GrcRiskResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = GrcRisk::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldCheck;

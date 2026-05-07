@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\AgencyPartnerProfiles;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\AgencyPartnerProfiles\Pages\ListAgencyPartnerProfiles;
 use App\Filament\Resources\AgencyPartnerProfiles\Tables\AgencyPartnerProfilesTable;
 use App\Models\AgencyPartnerProfile;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class AgencyPartnerProfileResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = AgencyPartnerProfile::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice2;

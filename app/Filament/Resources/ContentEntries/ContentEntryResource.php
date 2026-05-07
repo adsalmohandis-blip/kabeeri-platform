@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ContentEntries;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\ContentEntries\Pages\CreateContentEntry;
 use App\Filament\Resources\ContentEntries\Pages\EditContentEntry;
 use App\Filament\Resources\ContentEntries\Pages\ListContentEntries;
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ContentEntryResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = ContentEntry::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;

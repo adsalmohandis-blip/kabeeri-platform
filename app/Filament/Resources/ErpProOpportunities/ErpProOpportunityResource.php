@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ErpProOpportunities;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\ErpProOpportunities\Pages\ListErpProOpportunities;
 use App\Models\ErpProOpportunity;
 use App\Models\OrganizationMembership;
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ErpProOpportunityResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = ErpProOpportunity::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;

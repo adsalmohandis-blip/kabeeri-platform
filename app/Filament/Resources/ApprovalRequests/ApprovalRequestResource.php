@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ApprovalRequests;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\ApprovalRequests\Pages\CreateApprovalRequest;
 use App\Filament\Resources\ApprovalRequests\Pages\EditApprovalRequest;
 use App\Filament\Resources\ApprovalRequests\Pages\ListApprovalRequests;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class ApprovalRequestResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = ApprovalRequest::class;

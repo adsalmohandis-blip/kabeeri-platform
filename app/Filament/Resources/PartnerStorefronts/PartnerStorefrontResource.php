@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PartnerStorefronts;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\PartnerStorefronts\Pages\ListPartnerStorefronts;
 use App\Filament\Resources\PartnerStorefronts\Tables\PartnerStorefrontsTable;
 use App\Models\PartnerStorefront;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PartnerStorefrontResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = PartnerStorefront::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingStorefront;

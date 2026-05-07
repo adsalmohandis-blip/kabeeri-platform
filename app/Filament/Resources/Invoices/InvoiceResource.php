@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Invoices;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\Invoices\Pages\CreateInvoice;
 use App\Filament\Resources\Invoices\Pages\EditInvoice;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class InvoiceResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = Invoice::class;

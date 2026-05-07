@@ -17,6 +17,32 @@ class AdminPanelTest extends TestCase
             ->assertOk();
     }
 
+    public function test_admin_home_uses_compact_localized_dashboard_widget(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/admin')
+            ->assertOk()
+            ->assertSee('لوحة أدمن المنصة')
+            ->assertSee('لوحة حالة التطوير')
+            ->assertSee('الأشخاص')
+            ->assertSee('مشروعات الأعمال')
+            ->assertSee('data-admin-icon-scale="compact"', false)
+            ->assertDontSee('fi-filament-info-widget-logo')
+            ->assertDontSee('fi-account-widget')
+            ->assertDontSee('People')
+            ->assertDontSee('business projects')
+            ->assertDontSee('Welcome to');
+
+        $this->actingAs(User::factory()->create())
+            ->withSession(['kabeeri_locale_admin' => 'en'])
+            ->get('/admin')
+            ->assertOk()
+            ->assertSee('Platform Admin Dashboard')
+            ->assertSee('Development status')
+            ->assertSee('Open development status')
+            ->assertDontSee('لوحة حالة التطوير');
+    }
+
     public function test_customer_session_can_open_platform_admin_login_without_loop(): void
     {
         $customer = User::factory()->create();

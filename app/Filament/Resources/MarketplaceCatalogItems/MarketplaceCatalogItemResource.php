@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\MarketplaceCatalogItems;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\MarketplaceCatalogItems\Pages\ListMarketplaceCatalogItems;
 use App\Filament\Resources\MarketplaceCatalogItems\Tables\MarketplaceCatalogItemsTable;
 use App\Models\MarketplaceCatalogItem;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class MarketplaceCatalogItemResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = MarketplaceCatalogItem::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

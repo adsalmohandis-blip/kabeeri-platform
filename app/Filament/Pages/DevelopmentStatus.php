@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Concerns\LocalizesAdminPageLabels;
 use App\Support\RootDashboardData;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
@@ -9,11 +10,15 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class DevelopmentStatus extends Page
 {
+    use LocalizesAdminPageLabels;
+
     protected static ?string $slug = 'development-status';
 
     protected static string|\UnitEnum|null $navigationGroup = 'V10 Admin Command';
 
     protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedPresentationChartLine;
+
+    protected static ?string $navigationLabel = 'Development status';
 
     protected static ?int $navigationSort = 0;
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Payments;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\Payments\Pages\CreatePayment;
 use App\Filament\Resources\Payments\Pages\EditPayment;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class PaymentResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = Payment::class;

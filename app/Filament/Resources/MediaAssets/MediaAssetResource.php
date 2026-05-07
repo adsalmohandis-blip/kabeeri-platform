@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\MediaAssets;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\MediaAssets\Pages\CreateMediaAsset;
 use App\Filament\Resources\MediaAssets\Pages\EditMediaAsset;
 use App\Filament\Resources\MediaAssets\Pages\ListMediaAssets;
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class MediaAssetResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = MediaAsset::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;

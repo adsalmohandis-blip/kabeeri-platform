@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ReportDefinitions;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\ReportDefinitions\Pages\CreateReportDefinition;
 use App\Filament\Resources\ReportDefinitions\Pages\EditReportDefinition;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class ReportDefinitionResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = ReportDefinition::class;

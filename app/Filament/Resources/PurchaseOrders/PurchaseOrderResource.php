@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PurchaseOrders;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\PurchaseOrders\Pages\CreatePurchaseOrder;
 use App\Filament\Resources\PurchaseOrders\Pages\EditPurchaseOrder;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class PurchaseOrderResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = PurchaseOrder::class;

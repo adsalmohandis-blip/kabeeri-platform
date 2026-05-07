@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Concerns\LocalizesAdminPageLabels;
 use App\Filament\Pages\Concerns\HasV10AdminPageData;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
@@ -9,6 +10,7 @@ use Filament\Support\Icons\Heroicon;
 class DatabaseStatus extends Page
 {
     use HasV10AdminPageData;
+    use LocalizesAdminPageLabels;
 
     protected static string $pageKey = 'database_status';
 

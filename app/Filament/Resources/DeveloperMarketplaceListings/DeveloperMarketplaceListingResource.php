@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\DeveloperMarketplaceListings;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\DeveloperMarketplaceListings\Pages\ListDeveloperMarketplaceListings;
 use App\Models\DeveloperMarketplaceListing;
 use BackedEnum;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class DeveloperMarketplaceListingResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = DeveloperMarketplaceListing::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

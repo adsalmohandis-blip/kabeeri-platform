@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ImportJobs;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\ImportJobs\Pages\ListImportJobs;
 use App\Filament\Resources\ImportJobs\Pages\ViewImportJob;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class ImportJobResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = ImportJob::class;

@@ -40,11 +40,25 @@ class V10AdminExperienceTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         foreach (config('kabeeri_admin.pages') as $page) {
-            $this->get(route($page['route']))
+            $this->withSession(['kabeeri_locale_admin' => 'en'])
+                ->get(route($page['route']))
                 ->assertOk()
                 ->assertSee(__('kabeeri.brand.name').' V10 Admin Command')
                 ->assertSee($page['label']);
         }
+    }
+
+    public function test_v10_admin_pages_use_arabic_copy_without_default_english_widgets(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get(route('filament.admin.pages.system-check'))
+            ->assertOk()
+            ->assertSee('فحص النظام')
+            ->assertSee('قيادة التطوير')
+            ->assertDontSee('V10 Admin Command')
+            ->assertDontSee('Release signal')
+            ->assertDontSee('Quick Actions')
+            ->assertDontSee('Welcome to');
     }
 
     public function test_v10_admin_experience_reports_workspaces_and_blocked_actions(): void

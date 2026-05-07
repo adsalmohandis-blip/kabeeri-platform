@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\FeatureFlags;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\FeatureFlags\Pages\ListFeatureFlags;
 use App\Filament\Resources\FeatureFlags\Pages\ViewFeatureFlag;
 use App\Filament\Resources\FeatureFlags\RelationManagers\OverridesRelationManager;
@@ -16,6 +17,8 @@ use Filament\Tables\Table;
 
 class FeatureFlagResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = FeatureFlag::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBolt;

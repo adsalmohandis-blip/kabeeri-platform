@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\WorkflowDefinitions;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\WorkflowDefinitions\Pages\CreateWorkflowDefinition;
 use App\Filament\Resources\WorkflowDefinitions\Pages\EditWorkflowDefinition;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class WorkflowDefinitionResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = WorkflowDefinition::class;

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ServiceRequests;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\ServiceRequests\Pages\CreateServiceRequest;
 use App\Filament\Resources\ServiceRequests\Pages\EditServiceRequest;
 use App\Filament\Resources\ServiceRequests\Pages\ListServiceRequests;
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ServiceRequestResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = ServiceRequest::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedLifebuoy;

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\BusinessProjects;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\BusinessProjects\Pages\CreateBusinessProject;
 use App\Filament\Resources\BusinessProjects\Pages\EditBusinessProject;
 use App\Filament\Resources\BusinessProjects\Pages\ListBusinessProjects;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class BusinessProjectResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = BusinessProject::class;

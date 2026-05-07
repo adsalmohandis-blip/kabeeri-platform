@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\InventoryItems;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\InventoryItems\Pages\CreateInventoryItem;
 use App\Filament\Resources\InventoryItems\Pages\EditInventoryItem;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class InventoryItemResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = InventoryItem::class;

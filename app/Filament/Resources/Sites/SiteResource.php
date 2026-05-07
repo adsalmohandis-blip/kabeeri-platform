@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Sites;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Sites\Pages\CreateSite;
 use App\Filament\Resources\Sites\Pages\EditSite;
 use App\Filament\Resources\Sites\Pages\ListSites;
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SiteResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = Site::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSquares2x2;

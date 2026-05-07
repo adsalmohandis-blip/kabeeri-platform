@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Plans;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Plans\Pages\ListPlans;
 use App\Filament\Resources\Plans\Pages\ViewPlan;
 use App\Models\Plan;
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PlanResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = Plan::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

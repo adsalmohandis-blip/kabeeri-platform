@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Redirects;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\Redirects\Pages\CreateRedirect;
 use App\Filament\Resources\Redirects\Pages\EditRedirect;
@@ -28,6 +29,7 @@ use Filament\Tables\Table;
 
 class RedirectResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = Redirect::class;

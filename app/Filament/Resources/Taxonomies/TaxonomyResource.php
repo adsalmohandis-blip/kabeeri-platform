@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Taxonomies;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Taxonomies\Pages\CreateTaxonomy;
 use App\Filament\Resources\Taxonomies\Pages\EditTaxonomy;
 use App\Filament\Resources\Taxonomies\Pages\ListTaxonomies;
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TaxonomyResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = Taxonomy::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\DataIngestionPipelines;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\DataIngestionPipelines\Pages\ListDataIngestionPipelines;
 use App\Models\DataIngestionPipeline;
 use App\Models\OrganizationMembership;
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class DataIngestionPipelineResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = DataIngestionPipeline::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCircleStack;

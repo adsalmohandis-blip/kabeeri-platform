@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Organizations;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Organizations\Pages\CreateOrganization;
 use App\Filament\Resources\Organizations\Pages\EditOrganization;
 use App\Filament\Resources\Organizations\Pages\ListOrganizations;
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class OrganizationResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
+
     protected static ?string $model = Organization::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

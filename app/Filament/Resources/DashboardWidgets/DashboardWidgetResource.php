@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\DashboardWidgets;
 
+use App\Filament\Concerns\LocalizesAdminResourceLabels;
 use App\Filament\Resources\Concerns\ScopesToAccessibleOrganizations;
 use App\Filament\Resources\DashboardWidgets\Pages\CreateDashboardWidget;
 use App\Filament\Resources\DashboardWidgets\Pages\EditDashboardWidget;
@@ -19,6 +20,7 @@ use Filament\Tables\Table;
 
 class DashboardWidgetResource extends Resource
 {
+    use LocalizesAdminResourceLabels;
     use ScopesToAccessibleOrganizations;
 
     protected static ?string $model = DashboardWidget::class;
