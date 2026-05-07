@@ -26,10 +26,14 @@ use App\Support\RootDashboardData;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    return view('public.business-client-home');
+})->name('home');
+
+Route::get('/internal/command-center', function () {
     return view('welcome', [
         'dashboard' => RootDashboardData::make(),
     ]);
-})->name('home');
+})->middleware('auth')->name('system.command-center');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');

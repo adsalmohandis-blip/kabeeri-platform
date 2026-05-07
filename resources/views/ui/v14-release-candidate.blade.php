@@ -34,7 +34,8 @@
             </a>
 
             <nav class="nav" aria-label="V14 navigation">
-                <a href="{{ route('home') }}">Root</a>
+                <a href="{{ route('home') }}">Public Home</a>
+                <a href="{{ route('system.command-center') }}">Command Center</a>
                 <a href="{{ route('public.landing') }}">Public</a>
                 <a href="{{ route('marketplace.home') }}">Marketplace</a>
                 <a href="{{ route('mall.index') }}">Mall</a>

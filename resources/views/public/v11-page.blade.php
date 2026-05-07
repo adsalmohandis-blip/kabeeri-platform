@@ -682,7 +682,7 @@
             </nav>
 
             <div class="top-actions">
-                <a class="button" href="{{ route('home') }}">فحص النظام</a>
+                <a class="button" href="{{ route('system.command-center') }}">فحص النظام</a>
                 <a class="button primary" href="/admin">Admin</a>
             </div>
         </header>

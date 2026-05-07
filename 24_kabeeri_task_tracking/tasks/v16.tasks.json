@@ -227,12 +227,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T01:27:04+00:00",
+            "completed_by_codex_at": "2026-05-07T01:35:21+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V16CustomerExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Refined V16 customer dashboard into a compact professional layout: slimmer sidebar, smaller widgets, reduced hero height, denser app rows, lighter action panels, and less visual clutter.",
+            "tests": "php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V14; php artisan test --filter=V16CustomerExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Moved the technical root Command Center from / to private /internal/command-center behind auth, added a public Business/Client home page on /, and updated links/tests to match the new information architecture.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -242,12 +242,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T00:30:18+00:00",
+            "completed_by_codex_at": "2026-05-07T01:35:21+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Implemented V16 customer web auth, guided onboarding, workspace provisioning, theme install, customer dashboard, app detail, profile capabilities, docs, tests, and root dashboard awareness.",
+            "tests": "php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V14; php artisan test --filter=V16CustomerExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Moved the technical root Command Center from / to private /internal/command-center behind auth, added a public Business/Client home page on /, and updated links/tests to match the new information architecture.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
