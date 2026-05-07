@@ -74,7 +74,9 @@ class LocalizationSwitchingTest extends TestCase
             ->assertOk()
             ->assertSee('User settings')
             ->assertSee('Admin language')
+            ->assertSee('Admin theme')
             ->assertSee('Admin font')
+            ->assertSee('Dark')
             ->assertSee('Clear Arabic font');
     }
 
@@ -85,16 +87,19 @@ class LocalizationSwitchingTest extends TestCase
             'visibility' => 'private',
             'metadata' => [
                 'admin_locale' => 'en',
+                'admin_theme' => 'dark',
                 'admin_font' => 'tajawal',
             ],
         ]);
 
-        $this->actingAs($user)
+        $response = $this->actingAs($user)
             ->get('/admin')
             ->assertOk()
             ->assertSee('lang="en"', false)
             ->assertSee('Platform Admin Dashboard')
             ->assertSee('--kbr-admin-font-family: "Tajawal", "IBM Plex Sans Arabic", sans-serif;', false);
+
+        $this->assertMatchesRegularExpression('/const kabeeriAdminTheme = [\'"]dark[\'"];/', $response->getContent());
     }
 
     public function test_new_common_languages_are_supported(): void
@@ -136,6 +141,27 @@ class LocalizationSwitchingTest extends TestCase
 
         $this->get(route('ui.font', ['font' => 'tajawal', 'redirect' => '/']))
             ->assertForbidden();
+    }
+
+    public function test_theme_foundation_uses_saved_theme_on_public_and_customer_surfaces(): void
+    {
+        $publicResponse = $this->withSession(['kabeeri_theme_platform_public' => 'dark'])
+            ->get('/')
+            ->assertOk()
+            ->assertSee('data-kbr-theme="dark"', false)
+            ->assertSee('html[data-kbr-theme="dark"] body', false);
+
+        $this->assertMatchesRegularExpression('/const kabeeriTheme = [\'"]dark[\'"];/', $publicResponse->getContent());
+
+        $user = User::factory()->create();
+        $customerResponse = $this->actingAs($user)
+            ->withSession(['kabeeri_theme_customer' => 'dark'])
+            ->get(route('customer.workspace'))
+            ->assertOk()
+            ->assertSee('data-kbr-theme="dark"', false)
+            ->assertSee('data-theme-context="customer"', false);
+
+        $this->assertMatchesRegularExpression('/const kabeeriTheme = [\'"]dark[\'"];/', $customerResponse->getContent());
     }
 
     public function test_arabic_and_english_entry_pages_do_not_mix_core_copy(): void

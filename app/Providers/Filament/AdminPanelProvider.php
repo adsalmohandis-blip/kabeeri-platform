@@ -37,6 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->darkMode(false)
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
                 fn (): string => view('filament.partials.admin-style')->render(),

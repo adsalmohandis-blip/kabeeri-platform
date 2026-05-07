@@ -55,9 +55,12 @@ class AdminPanelTest extends TestCase
             ->assertOk()
             ->assertSee('إعدادات المستخدم')
             ->assertSee('لغة لوحة الأدمن')
+            ->assertSee('مظهر لوحة الأدمن')
             ->assertSee('خط لوحة الأدمن')
+            ->assertSee('داكن')
             ->assertSee('المراعي')
             ->assertDontSee('Admin language')
+            ->assertDontSee('Admin theme')
             ->assertDontSee('Admin font');
     }
 
@@ -75,14 +78,17 @@ class AdminPanelTest extends TestCase
                 'name' => 'Admin User',
                 'email' => 'admin@example.test',
                 'admin_locale' => 'en',
+                'admin_theme' => 'dark',
                 'admin_font' => 'tajawal',
             ])
             ->call('save')
             ->assertHasNoFormErrors();
 
         $this->assertSame('en', session('kabeeri_locale_admin'));
+        $this->assertSame('dark', session('kabeeri_theme_admin'));
         $this->assertSame('tajawal', session('kabeeri_font_admin'));
         $this->assertSame('en', $user->profile()->firstOrFail()->metadata['admin_locale']);
+        $this->assertSame('dark', $user->profile()->firstOrFail()->metadata['admin_theme']);
         $this->assertSame('tajawal', $user->profile()->firstOrFail()->metadata['admin_font']);
     }
 

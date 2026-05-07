@@ -6,6 +6,8 @@
     $currentFontLabelKey = 'font_'.str_replace('-', '_', $currentFont);
 @endphp
 
+@include('components.theme-foundation')
+
 @if ($context !== 'visitor' && $context !== 'platform_public')
     <details class="kbr-language-switcher kbr-language-switcher--font" data-font-switcher data-font-context="{{ $context }}">
         <summary class="kbr-language-switcher__trigger" aria-label="{{ __('kabeeri.ui.font') }}">

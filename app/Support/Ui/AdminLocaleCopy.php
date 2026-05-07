@@ -14,6 +14,7 @@ class AdminLocaleCopy
             'Account data' => 'بيانات الحساب',
             'Interface settings' => 'إعدادات الواجهة',
             'Admin language' => 'لغة لوحة الأدمن',
+            'Admin theme' => 'مظهر لوحة الأدمن',
             'Admin font' => 'خط لوحة الأدمن',
             'Security' => 'الأمان',
             'User settings saved' => 'تم حفظ إعدادات المستخدم',

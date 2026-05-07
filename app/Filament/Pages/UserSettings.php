@@ -39,9 +39,10 @@ class UserSettings extends EditProfile
                 Section::make(AdminLocaleCopy::label('Interface settings'))
                     ->schema([
                         $this->getAdminLocaleFormComponent(),
+                        $this->getAdminThemeFormComponent(),
                         $this->getAdminFontFormComponent(),
                     ])
-                    ->columns(2),
+                    ->columns(3),
                 Section::make(AdminLocaleCopy::label('Security'))
                     ->schema([
                         $this->getPasswordFormComponent(),
@@ -69,6 +70,15 @@ class UserSettings extends EditProfile
             ->required();
     }
 
+    protected function getAdminThemeFormComponent(): Component
+    {
+        return Select::make('admin_theme')
+            ->label(AdminLocaleCopy::label('Admin theme'))
+            ->options($this->themeOptions())
+            ->native(false)
+            ->required();
+    }
+
     /**
      * @param  array<string, mixed>  $data
      * @return array<string, mixed>
@@ -83,6 +93,9 @@ class UserSettings extends EditProfile
         $data['admin_font'] = KabeeriUiPreference::supportedFont(
             session()->get(KabeeriUiPreference::fontKey('admin'), $metadata['admin_font'] ?? config('kabeeri_ui_preferences.default_font')),
         );
+        $data['admin_theme'] = KabeeriUiPreference::supportedTheme(
+            session()->get(KabeeriUiPreference::themeKey('admin'), $metadata['admin_theme'] ?? config('kabeeri_ui_preferences.default_theme')),
+        );
 
         return $data;
     }
@@ -95,10 +108,12 @@ class UserSettings extends EditProfile
     {
         $locale = KabeeriLocale::normalize($data['admin_locale'] ?? KabeeriLocale::default());
         $font = KabeeriUiPreference::supportedFont($data['admin_font'] ?? config('kabeeri_ui_preferences.default_font'));
+        $theme = KabeeriUiPreference::supportedTheme($data['admin_theme'] ?? config('kabeeri_ui_preferences.default_theme'));
 
         session()->put(KabeeriLocale::contextSessionKey('admin'), $locale);
         session()->put(KabeeriLocale::sessionKey(), $locale);
         session()->put(KabeeriUiPreference::fontKey('admin'), $font);
+        session()->put(KabeeriUiPreference::themeKey('admin'), $theme);
 
         $profile = $this->getUser()->profile()->firstOrCreate(
             ['user_id' => $this->getUser()->id],
@@ -109,10 +124,11 @@ class UserSettings extends EditProfile
             'metadata' => array_merge($profile->metadata ?? [], [
                 'admin_locale' => $locale,
                 'admin_font' => $font,
+                'admin_theme' => $theme,
             ]),
         ])->save();
 
-        unset($data['admin_locale'], $data['admin_font']);
+        unset($data['admin_locale'], $data['admin_font'], $data['admin_theme']);
 
         return $data;
     }
@@ -145,6 +161,18 @@ class UserSettings extends EditProfile
 
                 return [$key => __($translationKey)];
             })
+            ->all();
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function themeOptions(): array
+    {
+        return collect(config('kabeeri_ui_preferences.themes', []))
+            ->mapWithKeys(fn (array $theme, string $key): array => [
+                $key => __("kabeeri.ui.theme_mode_{$key}"),
+            ])
             ->all();
     }
 }

@@ -6,6 +6,8 @@
     $currentThemeLabel = __("kabeeri.ui.theme_mode_{$currentTheme}");
 @endphp
 
+@include('components.theme-foundation')
+
 <details class="kbr-language-switcher kbr-language-switcher--theme" data-theme-switcher data-theme-context="{{ $context }}">
     <summary class="kbr-language-switcher__trigger" aria-label="{{ __('kabeeri.ui.theme_mode') }}">
         <x-kabeeri-icon name="settings" />
