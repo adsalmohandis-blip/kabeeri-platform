@@ -6,12 +6,12 @@
     <title>{{ $pageTitle ?? $site->name }}</title>
     <style>
         :root {
-            --ks-primary: {{ $primaryColor ?? '#b45309' }};
-            --ks-text: #111827;
-            --ks-muted: #4b5563;
-            --ks-bg: #f8fafc;
+            --ks-primary: {{ $primaryColor ?? '#17130d' }};
+            --ks-text: #17130d;
+            --ks-muted: #17130d;
+            --ks-bg: #ffffff;
             --ks-surface: #ffffff;
-            --ks-border: #e5e7eb;
+            --ks-border: #fffaf0;
         }
         * { box-sizing: border-box; }
         body {

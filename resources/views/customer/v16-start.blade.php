@@ -46,7 +46,7 @@
                 <h2>إنشاء حساب عميل جديد</h2>
                 <p>املأ البيانات هنا مباشرة، وبعدها سننقلك إلى Onboarding لاختيار نوع التطبيق والثيم.</p>
                 @if ($errors->any())
-                    <div class="error" style="color:#ffd7ce">
+                    <div class="error" style="color:#fffaf0">
                         @foreach ($errors->all() as $error)
                             <div>{{ $error }}</div>
                         @endforeach

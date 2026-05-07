@@ -9,33 +9,33 @@
     --font-sans: 'IBM Plex Sans Arabic', 'Almarai', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
     --color-kabeeri-ink: #17130d;
     --color-kabeeri-paper: #fffaf0;
-    --color-kabeeri-sand: #f2ddb8;
+    --color-kabeeri-sand: #fffaf0;
     --color-kabeeri-bronze: #c98a2e;
-    --color-kabeeri-olive: #3f5e47;
-    --color-kabeeri-sage: #78956f;
-    --color-kabeeri-clay: #9a5539;
-    --color-kabeeri-date: #20170f;
-    --color-kabeeri-sky: #2f5f73;
+    --color-kabeeri-olive: #17130d;
+    --color-kabeeri-sage: #c98a2e;
+    --color-kabeeri-clay: #c98a2e;
+    --color-kabeeri-date: #17130d;
+    --color-kabeeri-sky: #c98a2e;
     --radius-kabeeri-card: 1.75rem;
-    --shadow-kabeeri-soft: 0 18px 50px rgb(69 43 16 / 10%);
-    --shadow-kabeeri-strong: 0 30px 90px rgb(69 43 16 / 18%);
+    --shadow-kabeeri-soft: 0 18px 50px rgb(23 19 13 / 10%);
+    --shadow-kabeeri-strong: 0 30px 90px rgb(23 19 13 / 18%);
 }
 
 @layer base {
     :root {
         --kbr-ink: #17130d;
         --kbr-paper: #fffaf0;
-        --kbr-sand: #f2ddb8;
+        --kbr-sand: #fffaf0;
         --kbr-bronze: #c98a2e;
-        --kbr-olive: #3f5e47;
-        --kbr-sage: #78956f;
-        --kbr-clay: #9a5539;
-        --kbr-date: #20170f;
-        --kbr-sky: #2f5f73;
-        --kbr-success: #2f7d46;
-        --kbr-warning: #a76b1f;
-        --kbr-danger: #9b3f30;
-        --kbr-muted: #756a5e;
+        --kbr-olive: #17130d;
+        --kbr-sage: #c98a2e;
+        --kbr-clay: #c98a2e;
+        --kbr-date: #17130d;
+        --kbr-sky: #c98a2e;
+        --kbr-success: #c98a2e;
+        --kbr-warning: #c98a2e;
+        --kbr-danger: #17130d;
+        --kbr-muted: #17130d;
         --kbr-focus-ring: 0 0 0 4px rgb(201 138 46 / 25%);
     }
 
@@ -75,8 +75,8 @@
         justify-content: center;
         border-radius: 999px;
         padding: .5rem .8rem;
-        background: rgb(63 94 71 / 12%);
-        color: var(--kbr-olive);
+        background: rgb(201 138 46 / 12%);
+        color: var(--kbr-bronze);
         font-size: .8rem;
         font-weight: 800;
     }

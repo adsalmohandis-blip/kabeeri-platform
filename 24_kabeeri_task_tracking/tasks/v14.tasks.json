@@ -272,12 +272,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T22:47:23+00:00",
-            "completed_by_codex_at": "2026-05-06T22:52:55+00:00",
+            "completed_by_codex_at": "2026-05-07T01:45:50+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V9UiFoundationTest; npm run build; vendor/bin/pint --test; php artisan test",
-            "notes": "Ran and documented full project regression command as V14 requirement.",
+            "tests": "npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=V15PublicRuntimeTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test",
+            "notes": "Standardized the UI identity color system across Blade/Tailwind surfaces to black, golden yellow, white, and off-white only, including admin, public, marketplace, mall, customer, and root pages. Verified no non-brand hex/rgb values remain.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
@@ -362,12 +362,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T22:47:23+00:00",
-            "completed_by_codex_at": "2026-05-06T22:52:55+00:00",
+            "completed_by_codex_at": "2026-05-07T01:45:50+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V9UiFoundationTest; npm run build; vendor/bin/pint --test; php artisan test",
-            "notes": "Added design system component coverage QA using V9 tokens and V12 component library.",
+            "tests": "npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=V15PublicRuntimeTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test",
+            "notes": "Standardized the UI identity color system across Blade/Tailwind surfaces to black, golden yellow, white, and off-white only, including admin, public, marketplace, mall, customer, and root pages. Verified no non-brand hex/rgb values remain.",
             "source_prompt_file": "docs/KBR_V166_DEEP_UI_UX_REVIEW.md"
         },
         {

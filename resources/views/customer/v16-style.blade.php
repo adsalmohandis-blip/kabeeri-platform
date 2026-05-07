@@ -1,22 +1,22 @@
-﻿@once
+@once
 <link rel="preconnect" href="https://fonts.bunny.net">
 <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
 <style>
 :root {
     --ink: #17130d;
-    --muted: #756a5e;
+    --muted: #17130d;
     --paper: #fffaf0;
-    --panel: rgba(255, 250, 240, .86);
-    --panel-strong: rgba(255, 255, 255, .72);
-    --line: rgba(23, 19, 13, .13);
-    --night: #20170f;
-    --forest: #315f46;
+    --panel: rgba(255,250,240, .86);
+    --panel-strong: rgba(255,255,255, .72);
+    --line: rgba(23,19,13, .13);
+    --night: #17130d;
+    --forest: #17130d;
     --gold: #c98a2e;
-    --clay: #9a5539;
-    --sky: #2f5f73;
-    --good: #2f7d46;
-    --danger: #9b3f30;
-    --shadow: 0 30px 90px rgba(69, 43, 16, .16);
+    --clay: #17130d;
+    --sky: #17130d;
+    --good: #17130d;
+    --danger: #17130d;
+    --shadow: 0 30px 90px rgba(23,19,13, .16);
     --radius: 30px;
 }
 * { box-sizing: border-box; }
@@ -27,9 +27,9 @@ body {
     color: var(--ink);
     font-family: "IBM Plex Sans Arabic", "Almarai", system-ui, sans-serif;
     background:
-        radial-gradient(circle at 12% 10%, rgba(201, 138, 46, .32), transparent 28rem),
-        radial-gradient(circle at 88% 4%, rgba(47, 95, 115, .18), transparent 30rem),
-        linear-gradient(135deg, #fffaf0, #f2ddb8 55%, #d9b06e);
+        radial-gradient(circle at 12% 10%, rgba(201,138,46, .32), transparent 28rem),
+        radial-gradient(circle at 88% 4%, rgba(23,19,13, .18), transparent 30rem),
+        linear-gradient(135deg, #fffaf0, #fffaf0 55%, #c98a2e);
 }
 body::before {
     content: "";
@@ -38,8 +38,8 @@ body::before {
     z-index: -1;
     opacity: .16;
     background-image:
-        linear-gradient(rgba(23, 19, 13, .07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(23, 19, 13, .06) 1px, transparent 1px);
+        linear-gradient(rgba(23,19,13, .07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23,19,13, .06) 1px, transparent 1px);
     background-size: 42px 42px;
     mask-image: linear-gradient(to bottom, #000, transparent 84%);
 }
@@ -55,7 +55,7 @@ button, input, select, textarea { font: inherit; }
     padding: 12px;
     border: 1px solid var(--line);
     border-radius: 26px;
-    background: rgba(255, 250, 240, .76);
+    background: rgba(255,250,240, .76);
     backdrop-filter: blur(16px);
 }
 .brand { display: flex; align-items: center; gap: 10px; }
@@ -66,7 +66,7 @@ button, input, select, textarea { font: inherit; }
     height: 48px;
     border-radius: 17px;
     color: var(--paper);
-    background: conic-gradient(from 210deg, #20170f, #86502f, #d7983f, #315f46, #20170f);
+    background: conic-gradient(from 210deg, #17130d, #17130d, #c98a2e, #17130d, #17130d);
     font-weight: 900;
 }
 .brand strong { display: block; }
@@ -78,9 +78,9 @@ button, input, select, textarea { font: inherit; }
     justify-content: center;
     min-height: 44px;
     padding: 0 16px;
-    border: 1px solid rgba(23, 19, 13, .13);
+    border: 1px solid rgba(23,19,13, .13);
     border-radius: 999px;
-    background: rgba(255, 255, 255, .54);
+    background: rgba(255,255,255, .54);
     font-weight: 800;
     cursor: pointer;
 }
@@ -110,8 +110,8 @@ button, input, select, textarea { font: inherit; }
     width: fit-content;
     padding: 8px 12px;
     border-radius: 999px;
-    background: rgba(154, 85, 57, .11);
-    color: #713924;
+    background: rgba(201,138,46, .11);
+    color: #17130d;
     font-weight: 900;
     font-size: 12px;
 }
@@ -129,24 +129,24 @@ button, input, select, textarea { font: inherit; }
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 16px;
-    background: rgba(255, 255, 255, .62);
+    background: rgba(255,255,255, .62);
     padding: 13px 14px;
     color: var(--ink);
 }
 .field textarea { min-height: 110px; resize: vertical; }
 .error { margin: 0 0 12px; color: var(--danger); font-weight: 800; }
-.notice { margin: 0 0 12px; padding: 12px 14px; border-radius: 16px; background: rgba(47, 125, 70, .12); color: var(--good); font-weight: 800; }
+.notice { margin: 0 0 12px; padding: 12px 14px; border-radius: 16px; background: rgba(23,19,13, .12); color: var(--good); font-weight: 800; }
 .theme { position: relative; overflow: hidden; }
 .theme::after {
     content: attr(data-score);
     position: absolute;
     inset-inline-end: 18px;
     bottom: -8px;
-    color: rgba(23, 19, 13, .06);
+    color: rgba(23,19,13, .06);
     font-size: 70px;
     font-weight: 900;
 }
-.metric { padding: 16px; border-radius: 20px; background: rgba(255, 255, 255, .48); border: 1px solid rgba(23, 19, 13, .08); }
+.metric { padding: 16px; border-radius: 20px; background: rgba(255,255,255, .48); border: 1px solid rgba(23,19,13, .08); }
 .metric strong { display: block; font-size: 28px; }
 .list { display: grid; gap: 10px; }
 .list a, .list div, .line-item {
@@ -156,12 +156,12 @@ button, input, select, textarea { font: inherit; }
     gap: 10px;
     padding: 12px 14px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, .46);
-    border: 1px solid rgba(23, 19, 13, .08);
+    background: rgba(255,255,255, .46);
+    border: 1px solid rgba(23,19,13, .08);
     font-weight: 800;
 }
-.dark { background: linear-gradient(145deg, #20170f, #315f46); color: var(--paper); }
-.dark p, .dark small { color: rgba(255, 250, 240, .75); }
+.dark { background: linear-gradient(145deg, #17130d, #17130d); color: var(--paper); }
+.dark p, .dark small { color: rgba(255,250,240, .75); }
 .checks { display: grid; gap: 9px; }
 .check { display: flex; gap: 9px; align-items: flex-start; padding: 10px 0; }
 .check input { margin-top: 6px; }
@@ -169,7 +169,7 @@ button, input, select, textarea { font: inherit; }
 .choice { display: block; cursor: pointer; }
 .choice input { margin-inline-end: 8px; }
 .choice .card { height: 100%; transition: transform .18s ease, border-color .18s ease; }
-.choice input:checked + .card { border-color: rgba(49, 95, 70, .72); transform: translateY(-2px); }
+.choice input:checked + .card { border-color: rgba(23,19,13, .72); transform: translateY(-2px); }
 .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; align-items: start; }
 .muted { color: var(--muted); }
 .small { font-size: 13px; }
