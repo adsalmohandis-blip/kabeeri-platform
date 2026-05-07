@@ -16,28 +16,29 @@ class LocalizationSwitchingTest extends TestCase
             ->assertOk()
             ->assertSee('lang="ar"', false)
             ->assertSee('dir="rtl"', false)
-            ->assertSee('data-language-context="visitor"', false)
-            ->assertSee('/language/en', false)
+            ->assertSee('data-language-context="platform_public"', false)
+            ->assertSee('href="http://localhost/en"', false)
             ->assertSee(__('kabeeri.language.label'))
-            ->assertSee(__('kabeeri.language.names.en'))
-            ->assertSee('/language/es', false)
-            ->assertSee('/language/ru', false)
-            ->assertSee('/language/hi', false)
-            ->assertSee('/language/ur', false);
+            ->assertSee('English')
+            ->assertSee('href="http://localhost/es"', false)
+            ->assertSee('href="http://localhost/ru"', false)
+            ->assertSee('href="http://localhost/hi"', false)
+            ->assertSee('href="http://localhost/ur"', false);
     }
 
     public function test_language_switch_persists_locale_and_redirects_back_to_requested_surface(): void
     {
         $this->get(route('language.switch', ['locale' => 'en', 'redirect' => '/start']))
-            ->assertRedirect('/start')
+            ->assertRedirect('/en/start')
+            ->assertSessionHas('kabeeri_locale_platform_public', 'en')
             ->assertSessionHas('kabeeri_locale', 'en');
 
-        $this->withSession(['kabeeri_locale' => 'en'])
+        $this->withSession(['kabeeri_locale_platform_public' => 'en'])
             ->get('/start')
             ->assertOk()
             ->assertSee('lang="en"', false)
             ->assertSee('dir="ltr"', false)
-            ->assertSee('data-language-context="visitor"', false)
+            ->assertSee('data-language-context="platform_public"', false)
             ->assertSee('Language')
             ->assertDontSee('اللغة');
     }
@@ -47,7 +48,7 @@ class LocalizationSwitchingTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
-            ->withSession(['kabeeri_locale' => 'en'])
+            ->withSession(['kabeeri_locale_customer' => 'en'])
             ->get(route('customer.workspace'))
             ->assertOk()
             ->assertSee('lang="en"', false)
@@ -60,7 +61,7 @@ class LocalizationSwitchingTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
-            ->withSession(['kabeeri_locale' => 'en'])
+            ->withSession(['kabeeri_locale_admin' => 'en'])
             ->get('/admin')
             ->assertOk()
             ->assertSee('data-language-context="admin"', false)
@@ -71,9 +72,41 @@ class LocalizationSwitchingTest extends TestCase
     {
         foreach (['es', 'ru', 'hi', 'ur', 'it', 'fr', 'de', 'pt', 'tr', 'id', 'zh', 'ja', 'ko', 'bn'] as $locale) {
             $this->get(route('language.switch', ['locale' => $locale, 'redirect' => '/']))
-                ->assertRedirect('/')
+                ->assertRedirect('/'.$locale)
+                ->assertSessionHas('kabeeri_locale_platform_public', $locale)
                 ->assertSessionHas('kabeeri_locale', $locale);
         }
+    }
+
+    public function test_localized_slug_routes_set_the_right_context_locale(): void
+    {
+        $this->get('/en')
+            ->assertOk()
+            ->assertSee('lang="en"', false)
+            ->assertSessionHas('kabeeri_locale_platform_public', 'en');
+
+        $this->get('/ar/start')
+            ->assertOk()
+            ->assertSee('lang="ar"', false)
+            ->assertSessionHas('kabeeri_locale_platform_public', 'ar');
+    }
+
+    public function test_theme_and_font_preferences_are_saved_per_interface_context(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get(route('ui.theme', ['theme' => 'dark', 'redirect' => '/customer/dashboard']))
+            ->assertRedirect('/customer/dashboard')
+            ->assertSessionHas('kabeeri_theme_customer', 'dark');
+
+        $this->actingAs($user)
+            ->get(route('ui.font', ['font' => 'tajawal', 'redirect' => '/customer/dashboard']))
+            ->assertRedirect('/customer/dashboard')
+            ->assertSessionHas('kabeeri_font_customer', 'tajawal');
+
+        $this->get(route('ui.font', ['font' => 'tajawal', 'redirect' => '/']))
+            ->assertForbidden();
     }
 
     public function test_arabic_and_english_entry_pages_do_not_mix_core_copy(): void
@@ -86,7 +119,7 @@ class LocalizationSwitchingTest extends TestCase
             ->assertDontSee('Language')
             ->assertDontSee('KABEERI');
 
-        $this->withSession(['kabeeri_locale' => 'en'])
+        $this->withSession(['kabeeri_locale_platform_public' => 'en'])
             ->get('/')
             ->assertOk()
             ->assertSee('KABEERI')
@@ -106,7 +139,7 @@ class LocalizationSwitchingTest extends TestCase
             ->assertDontSeeText('Language')
             ->assertDontSeeText('KABEERI');
 
-        $this->withSession(['kabeeri_locale' => 'en'])
+        $this->withSession(['kabeeri_locale_platform_public' => 'en'])
             ->get('/start')
             ->assertOk()
             ->assertSeeText('Business owner')

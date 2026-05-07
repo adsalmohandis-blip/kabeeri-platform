@@ -40,6 +40,7 @@
         'steps' => '<path d="M6 6h12"/><path d="M6 12h12"/><path d="M6 18h12"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/>',
         'store' => '<path d="M4 9h16l-1-5H5L4 9Z"/><path d="M6 9v11h12V9"/><path d="M9 20v-6h6v6"/><path d="M4 9a3 3 0 0 0 6 0"/><path d="M10 9a3 3 0 0 0 6 0"/><path d="M16 9a3 3 0 0 0 6 0"/>',
         'theme' => '<path d="M12 21a9 9 0 1 1 8.7-6.8c.4 1.5-.7 2.8-2.2 2.8H16a2 2 0 0 0-2 2c0 1.1-.9 2-2 2Z"/><path d="M7.5 10.5h.01"/><path d="M10 7h.01"/><path d="M14 7h.01"/><path d="M16.5 10.5h.01"/>',
+        'trash' => '<path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 14h10l1-14"/><path d="M9 7V4h6v3"/>',
         'trust' => '<path d="M12 3 4.5 6v5.5c0 4.5 3 7.9 7.5 9.5 4.5-1.6 7.5-5 7.5-9.5V6L12 3Z"/><path d="m9 12 2 2 4-5"/>',
         'user-plus' => '<path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M18 8v6"/><path d="M21 11h-6"/>',
     ];

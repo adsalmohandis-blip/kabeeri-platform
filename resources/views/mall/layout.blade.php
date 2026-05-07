@@ -4,7 +4,7 @@
 @endphp
 
 <!doctype html>
-<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}" data-kbr-theme="{{ $kabeeriUi['theme'] ?? 'light' }}" data-kbr-font="{{ $kabeeriUi['font'] ?? 'ibm-plex-sans-arabic' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,8 @@
             <div class="actions">
                 <a class="button" href="{{ route('customer.dashboard') }}"><x-kabeeri-icon name="apps" />Customer Portal</a>
                 <a class="button primary" href="{{ route('mall.trust') }}"><x-kabeeri-icon name="trust" />Trust</a>
-                @include('components.language-switcher', ['context' => 'visitor'])
+                @include('components.language-switcher', ['context' => 'platform_public'])
+                @include('components.theme-switcher', ['context' => 'platform_public'])
             </div>
         </header>
 

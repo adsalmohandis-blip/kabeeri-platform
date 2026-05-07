@@ -52,7 +52,7 @@
 @endphp
 
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}" data-kbr-theme="{{ $kabeeriUi['theme'] ?? 'light' }}" data-kbr-font="{{ $kabeeriUi['font'] ?? 'ibm-plex-sans-arabic' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -627,7 +627,8 @@
             <div class="top-actions">
                 <a class="button" href="{{ route('public.landing') }}"><x-kabeeri-icon name="home" />المنصة</a>
                 <a class="button primary" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />ابدأ الآن</a>
-                @include('components.language-switcher', ['context' => 'visitor'])
+                @include('components.language-switcher', ['context' => 'platform_public'])
+                @include('components.theme-switcher', ['context' => 'platform_public'])
             </div>
         </header>
 

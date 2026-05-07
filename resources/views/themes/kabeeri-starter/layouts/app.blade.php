@@ -1,5 +1,10 @@
+@php
+    $publicThemeMode = $site->metadata['public_theme_mode'] ?? config('kabeeri_ui_preferences.default_theme', 'light');
+    $publicFont = $site->metadata['public_font'] ?? config('kabeeri_ui_preferences.default_font', 'ibm-plex-sans-arabic');
+@endphp
+
 <!DOCTYPE html>
-<html lang="{{ $language }}" dir="{{ $direction }}">
+<html lang="{{ $language }}" dir="{{ $direction }}" data-kbr-theme="{{ $publicThemeMode }}" data-kbr-font="{{ $publicFont }}" style="--kbr-font-family: {{ \App\Support\Ui\KabeeriUiPreference::fontFamily($publicFont) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +21,7 @@
         * { box-sizing: border-box; }
         body {
             margin: 0;
-            font-family: "Segoe UI", Tahoma, sans-serif;
+            font-family: var(--kbr-font-family);
             color: var(--ks-text);
             background: var(--ks-bg);
             line-height: 1.65;
@@ -77,7 +82,7 @@
         <p class="ks-brand"><x-kabeeri-icon name="store" />{{ $site->name }}</p>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
             <p class="ks-theme"><x-kabeeri-icon name="theme" />{{ $themeName }}</p>
-            @include('components.language-switcher', ['context' => 'visitor'])
+            @include('components.language-switcher', ['context' => 'app_public'])
         </div>
     </div>
 </header>

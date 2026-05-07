@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}" data-kbr-theme="{{ $kabeeriUi['theme'] ?? 'light' }}" data-kbr-font="{{ $kabeeriUi['font'] ?? 'ibm-plex-sans-arabic' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +17,8 @@
             <a href="{{ route('customer.start') }}"><x-kabeeri-icon name="home" />{{ __('kabeeri.ui.home') }}</a>
             <a href="{{ route('customer.workspace') }}"><x-kabeeri-icon name="apps" />{{ __('kabeeri.ui.apps_dashboard') }}</a>
             @include('components.language-switcher', ['context' => 'customer'])
+            @include('components.theme-switcher', ['context' => 'customer'])
+            @include('components.font-switcher', ['context' => 'customer'])
         </nav>
     </header>
 

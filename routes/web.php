@@ -6,6 +6,7 @@ use App\Http\Controllers\Mobile\MobileAuthController;
 use App\Http\Controllers\Mobile\MobileDeviceController;
 use App\Http\Controllers\Mobile\MobilePublicController;
 use App\Http\Controllers\Public\PublicWebRuntimeController;
+use App\Http\Controllers\UiPreferenceController;
 use App\Http\Controllers\Web\CustomerAuthController;
 use App\Http\Controllers\Web\CustomerStartController;
 use App\Http\Controllers\Web\CustomerWorkspaceController;
@@ -39,6 +40,8 @@ Route::get('/ui/release-candidate', UiReleaseCandidateController::class)->name('
 Route::get('/language/{locale}', LocalizationController::class)
     ->where('locale', '[A-Za-z]{2}')
     ->name('language.switch');
+Route::get('/ui/theme/{theme}', [UiPreferenceController::class, 'theme'])->name('ui.theme');
+Route::get('/ui/font/{font}', [UiPreferenceController::class, 'font'])->name('ui.font');
 
 Route::get('/start', CustomerStartController::class)->name('customer.start');
 Route::middleware('guest')->group(function (): void {
@@ -72,6 +75,46 @@ Route::middleware('auth')->prefix('customer')->name('customer.')->group(function
     Route::get('/onboarding', [CustomerWorkspaceController::class, 'onboarding'])->name('onboarding');
     Route::post('/onboarding', [CustomerWorkspaceController::class, 'storeOnboarding'])->name('onboarding.store');
     Route::get('/dashboard', [CustomerWorkspaceController::class, 'dashboard'])->name('workspace');
+    Route::get('/apps', [CustomerWorkspaceController::class, 'apps'])->name('apps.index');
+    Route::get('/apps/create', [CustomerWorkspaceController::class, 'createApp'])->name('apps.create');
+    Route::post('/apps', [CustomerWorkspaceController::class, 'storeApp'])->name('apps.store');
+    Route::get('/apps/trash', [CustomerWorkspaceController::class, 'trash'])->name('apps.trash');
+    Route::post('/apps/trash/{username}/restore', [CustomerWorkspaceController::class, 'restoreApp'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.restore');
+    Route::patch('/apps/trash/{username}/schedule-delete', [CustomerWorkspaceController::class, 'scheduleTrashPurge'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.schedule-delete');
+    Route::get('/apps/{username}/edit', [CustomerWorkspaceController::class, 'editApp'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.edit');
+    Route::put('/apps/{username}', [CustomerWorkspaceController::class, 'updateApp'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.update');
+    Route::delete('/apps/{username}', [CustomerWorkspaceController::class, 'trashApp'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.destroy');
+    Route::get('/apps/{username}/themes', [CustomerWorkspaceController::class, 'themes'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.themes');
+    Route::patch('/apps/{username}/themes', [CustomerWorkspaceController::class, 'switchTheme'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.themes.update');
+    Route::get('/apps/{username}/plugins', [CustomerWorkspaceController::class, 'plugins'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.plugins');
+    Route::post('/apps/{username}/plugins/{package}', [CustomerWorkspaceController::class, 'installPlugin'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->where('package', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.plugins.install');
+    Route::patch('/apps/{username}/plugins/{package}/deactivate', [CustomerWorkspaceController::class, 'deactivatePlugin'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->where('package', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.plugins.deactivate');
+    Route::patch('/apps/{username}/plugins/{package}/activate', [CustomerWorkspaceController::class, 'activatePlugin'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->where('package', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.plugins.activate');
     Route::get('/apps/{username}', [CustomerWorkspaceController::class, 'showSite'])
         ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
         ->name('apps.show');
@@ -172,3 +215,34 @@ Route::scopeBindings()->group(function (): void {
         ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
         ->name('public.content-entry.show');
 });
+
+Route::get('/{locale}/{localizedPath?}', function (
+    \Illuminate\Http\Request $request,
+    string $locale,
+    ?string $localizedPath = null,
+) {
+    abort_unless(\App\Support\Localization\KabeeriLocale::isSupported($locale), 404);
+
+    $locale = \App\Support\Localization\KabeeriLocale::normalize($locale);
+    $context = \App\Support\Localization\KabeeriLocale::context($request);
+    $request->session()->put(\App\Support\Localization\KabeeriLocale::contextSessionKey($context), $locale);
+    $request->session()->put(\App\Support\Localization\KabeeriLocale::sessionKey(), $locale);
+
+    $target = '/'.trim((string) $localizedPath, '/');
+    $target = $target === '/' ? '/' : $target;
+    $subRequest = \Illuminate\Http\Request::create(
+        $target,
+        'GET',
+        $request->query->all(),
+        $request->cookies->all(),
+        [],
+        $request->server->all(),
+    );
+    $subRequest->setLaravelSession($request->session());
+    $subRequest->headers->replace($request->headers->all());
+
+    return app(\Illuminate\Contracts\Http\Kernel::class)->handle($subRequest);
+})
+    ->where('locale', '[A-Za-z]{2}')
+    ->where('localizedPath', '.*')
+    ->name('localized.proxy');

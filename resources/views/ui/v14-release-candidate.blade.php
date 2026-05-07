@@ -8,7 +8,7 @@
 @endphp
 
 <!doctype html>
-<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}" data-kbr-theme="{{ $kabeeriUi['theme'] ?? 'light' }}" data-kbr-font="{{ $kabeeriUi['font'] ?? 'ibm-plex-sans-arabic' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,6 +46,8 @@
                 <a class="button primary" href="{{ route('mall.trust') }}"><x-kabeeri-icon name="trust" />Trust QA</a>
                 <a class="button" href="{{ route('developers.qa') }}"><x-kabeeri-icon name="check-circle" />Theme/Plugin QA</a>
                 @include('components.language-switcher', ['context' => 'admin'])
+                @include('components.theme-switcher', ['context' => 'admin'])
+                @include('components.font-switcher', ['context' => 'admin'])
             </div>
         </header>
 

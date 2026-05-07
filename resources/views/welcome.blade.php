@@ -22,7 +22,7 @@
     $fmt = fn ($value) => number_format((int) $value);
 @endphp
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}" data-kbr-theme="{{ $kabeeriUi['theme'] ?? 'light' }}" data-kbr-font="{{ $kabeeriUi['font'] ?? 'ibm-plex-sans-arabic' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,6 +54,8 @@
                 <a class="nav-link" href="#developers"><x-kabeeri-icon name="code" />Developers</a>
                 <a class="nav-link" href="/admin"><x-kabeeri-icon name="admin" />Filament</a>
                 @include('components.language-switcher', ['context' => 'admin'])
+                @include('components.theme-switcher', ['context' => 'admin'])
+                @include('components.font-switcher', ['context' => 'admin'])
             </nav>
         </header>
 

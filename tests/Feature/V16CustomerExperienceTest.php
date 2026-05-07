@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\ContentEntry;
+use App\Models\InstalledPackage;
 use App\Models\Organization;
 use App\Models\Site;
 use App\Models\ThemeSetting;
@@ -156,6 +157,118 @@ class V16CustomerExperienceTest extends TestCase
         $this->assertContains('marketer_partner', $profile->metadata['capabilities']);
         $this->assertContains('implementation_builder', $profile->metadata['capabilities']);
         $this->assertSame('I want to help customers build their apps.', $profile->metadata['capability_note']);
+    }
+
+    public function test_customer_can_manage_apps_themes_plugins_and_trash_by_username(): void
+    {
+        $user = User::factory()->create(['password' => 'password-123']);
+        $this->actingAs($user);
+
+        $this->post(route('customer.onboarding.store'), [
+            'customer_path' => 'business_owner',
+            'organization_name' => 'Owner Workspace',
+            'company_name' => 'Owner Company',
+            'site_name' => 'Owner Main',
+            'app_type' => 'website',
+            'theme_slug' => 'kabeeri-atlas',
+        ])->assertRedirect(route('customer.workspace'));
+
+        $this->get(route('customer.apps.index'))
+            ->assertOk()
+            ->assertSee(__('kabeeri.ui.apps_manage'))
+            ->assertSee('Owner Main');
+
+        $this->get(route('customer.apps.create'))
+            ->assertOk()
+            ->assertSee(__('kabeeri.ui.create_app'))
+            ->assertSee('name="public_language"', false)
+            ->assertSee('name="public_theme_mode"', false)
+            ->assertSee('name="public_font"', false);
+
+        $this->post(route('customer.apps.store'), [
+            'site_name' => 'Second App',
+            'username' => 'second-app',
+            'app_type' => 'website',
+            'theme_slug' => 'kabeeri-atlas',
+            'public_language' => 'en',
+            'public_theme_mode' => 'dark',
+            'public_font' => 'tajawal',
+        ])->assertRedirect(route('customer.apps.show', ['username' => 'second-app']));
+
+        $site = Site::query()->where('slug', 'second-app')->firstOrFail();
+        $this->assertSame('second-app', $site->username);
+        $this->assertSame('en', $site->language);
+        $this->assertSame('dark', $site->metadata['public_theme_mode']);
+        $this->assertSame('tajawal', $site->metadata['public_font']);
+
+        $this->put(route('customer.apps.update', ['username' => 'second-app']), [
+            'site_name' => 'Second App Pro',
+            'username' => 'second-app-pro',
+            'app_type' => 'website',
+            'status' => 'paused',
+            'public_language' => 'fr',
+            'public_theme_mode' => 'light',
+            'public_font' => 'almarai',
+        ])->assertRedirect(route('customer.apps.show', ['username' => 'second-app-pro']));
+
+        $site = $site->refresh();
+        $this->assertSame('second-app-pro', $site->username);
+        $this->assertSame('paused', $site->status);
+        $this->assertSame('fr', $site->language);
+        $this->assertSame('almarai', $site->metadata['public_font']);
+
+        $this->get(route('customer.apps.themes', ['username' => $site->username]))
+            ->assertOk()
+            ->assertSee(__('kabeeri.ui.switch_theme'));
+
+        $this->patch(route('customer.apps.themes.update', ['username' => $site->username]), [
+            'theme_slug' => 'launch-loom',
+        ])->assertRedirect(route('customer.apps.themes', ['username' => $site->username]));
+
+        $this->assertSame('launch-loom', $site->refresh()->theme?->slug);
+
+        $this->get(route('customer.apps.plugins', ['username' => $site->username]))
+            ->assertOk()
+            ->assertSee(__('kabeeri.ui.plugins'));
+
+        $this->post(route('customer.apps.plugins.install', ['username' => $site->username, 'package' => 'commerce-pulse-pack']))
+            ->assertRedirect(route('customer.apps.plugins', ['username' => $site->username]));
+
+        $installed = InstalledPackage::query()->where('site_id', $site->id)->firstOrFail();
+        $this->assertSame('active', $installed->status);
+        $this->assertSame('commerce-pulse-pack', $installed->package->slug);
+
+        $this->patch(route('customer.apps.plugins.deactivate', ['username' => $site->username, 'package' => 'commerce-pulse-pack']))
+            ->assertRedirect(route('customer.apps.plugins', ['username' => $site->username]));
+        $this->assertSame('inactive', $installed->refresh()->status);
+
+        $this->patch(route('customer.apps.plugins.activate', ['username' => $site->username, 'package' => 'commerce-pulse-pack']))
+            ->assertRedirect(route('customer.apps.plugins', ['username' => $site->username]));
+        $this->assertSame('active', $installed->refresh()->status);
+
+        $this->delete(route('customer.apps.destroy', ['username' => $site->username]), [
+            'retention_days' => 60,
+        ])->assertRedirect(route('customer.apps.trash'));
+
+        $this->assertSoftDeleted('sites', ['id' => $site->id]);
+        $trashedSite = Site::withTrashed()->findOrFail($site->id);
+        $this->assertSame(60, $trashedSite->metadata['trash_retention_days']);
+
+        $this->get(route('customer.apps.trash'))
+            ->assertOk()
+            ->assertSee('Second App Pro');
+
+        $this->patch(route('customer.apps.schedule-delete', ['username' => $site->username]), [
+            'retention_days' => 90,
+        ])->assertRedirect(route('customer.apps.trash'));
+        $trashedSite = Site::withTrashed()->findOrFail($site->id);
+        $this->assertSame(90, $trashedSite->metadata['trash_retention_days']);
+
+        $this->post(route('customer.apps.restore', ['username' => $site->username]))
+            ->assertRedirect(route('customer.apps.index'));
+        $restoredSite = Site::query()->findOrFail($site->id);
+        $this->assertFalse($restoredSite->trashed());
+        $this->assertSame('active', $restoredSite->status);
     }
 
     public function test_v16_release_candidate_report_is_ready_after_tracker_sync(): void

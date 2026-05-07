@@ -35,7 +35,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::TOPBAR_END,
-                fn (): string => view('components.language-switcher', ['context' => 'admin'])->render(),
+                fn (): string => view('components.ui-preference-toolbar', ['context' => 'admin'])->render(),
             )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->navigationGroups([

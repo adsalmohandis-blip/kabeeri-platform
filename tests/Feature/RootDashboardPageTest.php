@@ -38,7 +38,7 @@ class RootDashboardPageTest extends TestCase
             ->assertRedirect(route('filament.admin.pages.development-status'));
 
         $this->actingAs($user)
-            ->withSession(['kabeeri_locale' => 'en'])
+            ->withSession(['kabeeri_locale_admin' => 'en'])
             ->get(route('filament.admin.pages.development-status'))
             ->assertOk()
             ->assertSee('Development status')
@@ -50,7 +50,7 @@ class RootDashboardPageTest extends TestCase
     public function test_main_admin_dashboard_contains_development_status_entry(): void
     {
         $this->actingAs(User::factory()->create())
-            ->withSession(['kabeeri_locale' => 'en'])
+            ->withSession(['kabeeri_locale_admin' => 'en'])
             ->get('/admin')
             ->assertOk()
             ->assertSee('Development status')

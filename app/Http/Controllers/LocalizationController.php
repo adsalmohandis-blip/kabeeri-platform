@@ -12,9 +12,13 @@ class LocalizationController extends Controller
     {
         abort_unless(KabeeriLocale::isSupported($locale), 404);
 
-        $request->session()->put(KabeeriLocale::sessionKey(), KabeeriLocale::normalize($locale));
+        $locale = KabeeriLocale::normalize($locale);
+        $redirectTarget = $this->safeRedirectTarget($request);
+        $context = KabeeriLocale::context($redirectTarget ?? $request);
+        $request->session()->put(KabeeriLocale::contextSessionKey($context), $locale);
+        $request->session()->put(KabeeriLocale::sessionKey(), $locale);
 
-        return redirect()->to($this->safeRedirectTarget($request) ?? url()->previous(route('home')));
+        return redirect()->to(KabeeriLocale::localizedUrl($locale, $redirectTarget ?? '/'));
     }
 
     protected function safeRedirectTarget(Request $request): ?string

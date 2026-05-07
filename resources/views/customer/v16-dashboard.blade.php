@@ -1,8 +1,9 @@
-﻿@php
+@php
     $user = $dashboard['user'];
     $profile = $dashboard['profile'];
     $activeOrganization = $dashboard['active_organization'];
     $sites = $dashboard['sites'];
+    $firstSite = $sites->first();
     $capabilities = $dashboard['capabilities'];
     $capabilityValues = $profile->metadata['capabilities'] ?? ['customer_owner'];
     $activeThemeCount = $sites->filter(fn ($site) => filled($site->theme))->count();
@@ -10,12 +11,12 @@
     $builderNote = $profile->metadata['capability_note'] ?? $profile->metadata['builder_request_note'] ?? null;
     $workspaceReady = filled($activeOrganization);
     $sidebarItems = [
-        ['label' => 'overview', 'target' => '#overview', 'icon' => 'chart', 'active' => true],
-        ['label' => 'apps', 'target' => '#apps', 'icon' => 'apps', 'active' => false],
-        ['label' => 'actions', 'target' => '#actions', 'icon' => 'steps', 'active' => false],
+        ['label' => 'dashboard_overview', 'target' => route('customer.workspace'), 'icon' => 'chart', 'active' => true],
+        ['label' => 'apps_manage', 'target' => route('customer.apps.index'), 'icon' => 'apps', 'active' => false],
+        ['label' => 'new_app', 'target' => route('customer.apps.create'), 'icon' => 'plus', 'active' => false],
+        ['label' => 'themes_plugins', 'target' => $firstSite ? route('customer.apps.plugins', ['username' => $firstSite->username]) : route('customer.apps.index'), 'icon' => 'plugin', 'active' => false],
+        ['label' => 'trash', 'target' => route('customer.apps.trash'), 'icon' => 'trash', 'active' => false],
         ['label' => 'capabilities', 'target' => '#capabilities', 'icon' => 'account', 'active' => false],
-        ['label' => 'marketplace', 'target' => '#marketplace', 'icon' => 'mall', 'active' => false],
-        ['label' => 'account', 'target' => '#client-account', 'icon' => 'settings', 'active' => false],
     ];
     $nextActions = $workspaceReady
         ? [
@@ -31,7 +32,7 @@
 @endphp
 
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}" data-kbr-theme="{{ $kabeeriUi['theme'] ?? 'light' }}" data-kbr-font="{{ $kabeeriUi['font'] ?? 'ibm-plex-sans-arabic' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,36 +44,8 @@
 <body class="min-h-screen bg-[#fffaf0] text-[#17130d] antialiased">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_92%_8%,rgba(201,138,46,.18),transparent_22rem),linear-gradient(180deg,#fffaf0_0%,#fffaf0_62%,rgba(201,138,46,.10)_100%)]"></div>
 
-    <div class="mx-auto grid min-h-screen w-full max-w-[1440px] lg:grid-cols-[16rem_minmax(0,1fr)]">
-        <aside id="workspace-sidebar" class="hidden border-e border-[#17130d]/10 bg-[#17130d] text-[#fffaf0] lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
-            <div class="px-5 py-5">
-                <a href="{{ route('customer.workspace') }}" class="flex items-center gap-3">
-                    <span class="grid h-10 w-10 place-items-center rounded-2xl bg-[#c98a2e] text-sm font-black text-[#17130d]">{{ __('kabeeri.brand.mark') }}</span>
-                    <span>
-                        <strong class="block text-sm font-black leading-tight">{{ __('kabeeri.brand.name') }}</strong>
-                        <small class="mt-0.5 block text-[11px] font-bold text-[#fffaf0]/58">{{ __('kabeeri.ui.apps_dashboard') }}</small>
-                    </span>
-                </a>
-            </div>
-
-            <nav class="flex-1 space-y-1 px-3" aria-label="{{ __('kabeeri.ui.dashboard_nav') }}">
-                @foreach ($sidebarItems as $item)
-                    <a href="{{ $item['target'] }}" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-black transition {{ $item['active'] ? 'bg-[#fffaf0] text-[#17130d]' : 'text-[#fffaf0]/74 hover:bg-white/10 hover:text-[#fffaf0]' }}">
-                        <x-kabeeri-icon name="{{ $item['icon'] }}" class="{{ $item['active'] ? 'text-[#c98a2e]' : 'text-[#c98a2e]' }}" />
-                        <span>{{ __('kabeeri.ui.'.$item['label']) }}</span>
-                    </a>
-                @endforeach
-            </nav>
-
-            <div class="m-3 rounded-3xl border border-white/10 bg-white/[.06] p-4">
-                <p class="text-[10px] font-black uppercase tracking-[.18em] text-[#c98a2e]">{{ __('kabeeri.ui.workspace_status') }}</p>
-                <p class="mt-2 text-sm font-black">{{ __('kabeeri.ui.'.($workspaceReady ? 'ready' : 'needs_setup')) }}</p>
-                <p class="mt-1 line-clamp-2 text-xs leading-5 text-[#fffaf0]/60">{{ $activeOrganization?->name ?? __('kabeeri.ui.needs_setup_sentence') }}</p>
-                @unless ($workspaceReady)
-                    <a href="{{ route('customer.onboarding') }}" class="mt-3 inline-flex w-full items-center justify-center rounded-full bg-[#c98a2e] px-3 py-2 text-xs font-black text-[#17130d]"><x-kabeeri-icon name="plus" />{{ __('kabeeri.ui.start_now') }}</a>
-                @endunless
-            </div>
-        </aside>
+    <div class="kbr-customer-shell mx-auto grid min-h-screen w-full max-w-[1440px] lg:grid-cols-[16rem_minmax(0,1fr)]">
+        @include('customer.partials.dashboard-sidebar', ['dashboard' => $dashboard, 'activeNav' => 'overview'])
 
         <main class="min-w-0 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
             <header id="overview" class="mb-5 rounded-[1.7rem] border border-[#17130d]/10 bg-[#fffaf0]/92 px-4 py-3 shadow-[0_18px_55px_rgba(23,19,13,.08)] backdrop-blur-xl">
@@ -97,6 +70,8 @@
                         <a href="{{ route('customer.start') }}" class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-3 py-2 text-xs font-black text-[#17130d]"><x-kabeeri-icon name="home" />{{ __('kabeeri.ui.home') }}</a>
                         <a href="{{ route('public.landing') }}" class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-3 py-2 text-xs font-black text-[#17130d]"><x-kabeeri-icon name="info" />{{ __('kabeeri.ui.platform') }}</a>
                         @include('components.language-switcher', ['context' => 'customer'])
+            @include('components.theme-switcher', ['context' => 'customer'])
+            @include('components.font-switcher', ['context' => 'customer'])
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="inline-flex items-center rounded-full bg-[#17130d] px-3 py-2 text-xs font-black text-[#fffaf0]"><x-kabeeri-icon name="logout" />{{ __('kabeeri.ui.logout') }}</button>

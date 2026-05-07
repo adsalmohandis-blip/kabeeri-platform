@@ -102,6 +102,11 @@ class Site extends Model
         return $this->hasMany(ModuleInstallation::class);
     }
 
+    public function installedPackages(): HasMany
+    {
+        return $this->hasMany(InstalledPackage::class);
+    }
+
     public function contentEntries(): HasMany
     {
         return $this->hasMany(ContentEntry::class);

@@ -264,6 +264,21 @@
             "tests": "php artisan view:clear; php artisan view:cache; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=LocalizationSwitchingTest; vendor/bin/pint --test; npm run build; php artisan test",
             "notes": "Synced V16 tracker after the customer dashboard redesign and full regression pass.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
+        },
+        {
+            "task_id": "T17",
+            "prompt_id": "17",
+            "title": "Global UI Preferences Language Slugs and Sidebar Collapse",
+            "size": "Unknown",
+            "status": "codex_done",
+            "started_at": "2026-05-07T15:59:59+00:00",
+            "completed_by_codex_at": "2026-05-07T16:00:00+00:00",
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": "pending",
+            "tests": "php artisan test",
+            "notes": "Implemented context-separated language/theme/font preferences, locale slug routing, native language dropdowns, collapsible customer sidebar, and customer app theme/plugin/trash management.",
+            "source_prompt_file": "user_followup_ui_language_theme_sidebar"
         }
     ]
 }
