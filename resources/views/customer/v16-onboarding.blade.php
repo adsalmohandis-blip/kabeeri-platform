@@ -14,15 +14,15 @@
             <span><strong>Guided Onboarding</strong><small>إنشاء مساحة العميل وتطبيقه الأول</small></span>
         </a>
         <nav class="nav">
-            <a href="{{ route('customer.start') }}">البداية</a>
-            <a href="{{ route('customer.workspace') }}">لوحة إدارة التطبيقات</a>
+            <a href="{{ route('customer.start') }}"><x-kabeeri-icon name="home" />البداية</a>
+            <a href="{{ route('customer.workspace') }}"><x-kabeeri-icon name="apps" />لوحة إدارة التطبيقات</a>
             @include('components.language-switcher', ['context' => 'customer'])
         </nav>
     </header>
 
     <main class="hero">
         <section>
-            <span class="kicker">Step 1 to 4</span>
+            <span class="kicker"><x-kabeeri-icon name="steps" />Step 1 to 4</span>
             <h1>اختار المسار، التطبيق، والثيم.</h1>
             <p class="lead">نحتاج هذه البيانات فقط لتفعيل أول تطبيق لك.</p>
         </section>
@@ -44,7 +44,7 @@
 
         <div class="grid two">
             <section class="card">
-                <span class="tag">1. Audience path</span>
+                <span class="tag"><x-kabeeri-icon name="map" />1. Audience path</span>
                 <div class="field" style="margin-top:14px">
                     <label for="customer_path">مسارك الأساسي</label>
                     <select id="customer_path" name="customer_path">
@@ -68,7 +68,7 @@
             </section>
 
             <section class="card">
-                <span class="tag">2. App type</span>
+                <span class="tag"><x-kabeeri-icon name="apps" />2. App type</span>
                 <div class="nav" style="margin:14px 0">
                     @foreach ($appTypes as $key => $type)
                         <a class="{{ old('app_type', $selectedAppType) === $key ? 'primary' : '' }}" href="{{ route('customer.onboarding', ['path' => old('customer_path', $selectedPath), 'app_type' => $key]) }}">{{ $type['label'] }}</a>
@@ -96,14 +96,14 @@
         </div>
 
         <section class="card section">
-            <span class="tag">3. Theme install</span>
+            <span class="tag"><x-kabeeri-icon name="theme" />3. Theme install</span>
             <h2 style="margin-top:10px">اختار الثيم المناسب لنوع التطبيق</h2>
             <div class="grid three" style="margin-top:14px">
                 @foreach ($themes as $theme)
                     <label class="choice">
                         <input type="radio" name="theme_slug" value="{{ $theme->slug }}" @checked(old('theme_slug', $themes->first()?->slug) === $theme->slug) required>
                         <article class="card theme" data-score="{{ $theme->performance_score ?? 90 }}">
-                            <span class="tag">{{ implode(' / ', $theme->app_types ?? []) }}</span>
+                            <span class="tag"><x-kabeeri-icon name="theme" />{{ implode(' / ', $theme->app_types ?? []) }}</span>
                             <h3>{{ $theme->name }}</h3>
                             <p>{{ $theme->category }} - {{ $theme->publisher }} - {{ $theme->price_type }}</p>
                         </article>
@@ -113,7 +113,7 @@
         </section>
 
         <section class="card section">
-            <span class="tag">4. Profile capabilities</span>
+            <span class="tag"><x-kabeeri-icon name="account" />4. Profile capabilities</span>
             <h2 style="margin-top:10px">قدرات إضافية على ملف العميل</h2>
             <div class="grid two">
                 <div class="checks">
@@ -127,7 +127,7 @@
                     <textarea id="builder_request_note" name="builder_request_note" placeholder="اكتب ما تحتاجه، نوع المشروع، وما الذي تريد إنجازه أولاً.">{{ old('builder_request_note') }}</textarea>
                 </div>
             </div>
-            <button class="primary" type="submit">تثبيت الثيم وتفعيل التطبيق</button>
+            <button class="primary" type="submit"><x-kabeeri-icon name="check-circle" />تثبيت الثيم وتفعيل التطبيق</button>
         </section>
     </form>
 </div>

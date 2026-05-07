@@ -9,7 +9,7 @@
                 <p>Product mirrors published into Mall with price clarity, consent, moderation, and report flow.</p>
                 <form class="search" method="GET">
                     <input name="q" value="{{ request('q') }}" placeholder="Search products">
-                    <button class="button primary" type="submit">Search</button>
+                    <button class="button primary" type="submit"><x-kabeeri-icon name="search" />Search</button>
                 </form>
             </div>
             <aside class="card">

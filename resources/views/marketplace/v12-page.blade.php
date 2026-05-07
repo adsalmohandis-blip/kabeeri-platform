@@ -23,13 +23,13 @@
     $selectedPlugin = $data['selected_plugin'];
 
     $nav = [
-        ['label' => 'Marketplace', 'route' => 'marketplace.home'],
-        ['label' => 'Themes', 'route' => 'marketplace.themes.index'],
-        ['label' => 'Plugins', 'route' => 'marketplace.plugins.index'],
-        ['label' => 'Developers', 'route' => 'developers.portal'],
-        ['label' => 'QA', 'route' => 'developers.qa'],
-        ['label' => 'Revenue', 'route' => 'marketplace.licensing'],
-        ['label' => 'Governance', 'route' => 'marketplace.governance'],
+        ['label' => 'Marketplace', 'route' => 'marketplace.home', 'icon' => 'mall'],
+        ['label' => 'Themes', 'route' => 'marketplace.themes.index', 'icon' => 'theme'],
+        ['label' => 'Plugins', 'route' => 'marketplace.plugins.index', 'icon' => 'plugin'],
+        ['label' => 'Developers', 'route' => 'developers.portal', 'icon' => 'code'],
+        ['label' => 'QA', 'route' => 'developers.qa', 'icon' => 'check-circle'],
+        ['label' => 'Revenue', 'route' => 'marketplace.licensing', 'icon' => 'pricing'],
+        ['label' => 'Governance', 'route' => 'marketplace.governance', 'icon' => 'trust'],
     ];
 
     $developerPages = [
@@ -615,13 +615,13 @@
 
             <nav class="nav" aria-label="{{ __('kabeeri.brand.name') }} V12 navigation">
                 @foreach ($nav as $item)
-                    <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}">{{ $item['label'] }}</a>
+                    <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}"><x-kabeeri-icon name="{{ $item['icon'] }}" />{{ $item['label'] }}</a>
                 @endforeach
             </nav>
 
             <div class="top-actions">
-                <a class="button" href="{{ route('public.landing') }}">Public V11</a>
-                <a class="button primary" href="/admin">Admin</a>
+                <a class="button" href="{{ route('public.landing') }}"><x-kabeeri-icon name="home" />Public V11</a>
+                <a class="button primary" href="/admin"><x-kabeeri-icon name="admin" />Admin</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </div>
         </header>
@@ -634,9 +634,9 @@
                         <h1>{{ in_array($page, $developerPages, true) ? 'بوابة المطورين والمبدعين لبيع الثيمات والبلجنز.' : $pageConfig['label'] }}</h1>
                         <p>{{ $pageConfig['intent'] }} V12 تفصل Marketplace الداخلي عن {{ __('kabeeri.brand.name') }} Mall، وتعرض قبل أي تثبيت: permissions، compatibility، signing، license، rollback، والدعم.</p>
                         <div class="hero-actions">
-                            <a class="button primary" href="{{ route('marketplace.themes.index') }}">تصفح Theme Catalog</a>
-                            <a class="button amber" href="{{ route('marketplace.plugins.index') }}">تصفح Plugin Bundle Catalog</a>
-                            <a class="button" href="{{ route('developers.onboarding') }}">ابدأ Publisher Account</a>
+                            <a class="button primary" href="{{ route('marketplace.themes.index') }}"><x-kabeeri-icon name="theme" />تصفح Theme Catalog</a>
+                            <a class="button amber" href="{{ route('marketplace.plugins.index') }}"><x-kabeeri-icon name="plugin" />تصفح Plugin Bundle Catalog</a>
+                            <a class="button" href="{{ route('developers.onboarding') }}"><x-kabeeri-icon name="code" />ابدأ Publisher Account</a>
                         </div>
                     </div>
 

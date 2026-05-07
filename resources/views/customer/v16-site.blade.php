@@ -14,15 +14,15 @@
             <span><strong>{{ $site->name }}</strong><small>Customer App Detail</small></span>
         </a>
         <nav class="nav">
-            <a href="{{ route('customer.workspace') }}">لوحة إدارة التطبيقات</a>
-            <a href="{{ route('customer.start') }}">البداية</a>
+            <a href="{{ route('customer.workspace') }}"><x-kabeeri-icon name="apps" />لوحة إدارة التطبيقات</a>
+            <a href="{{ route('customer.start') }}"><x-kabeeri-icon name="home" />البداية</a>
             @include('components.language-switcher', ['context' => 'customer'])
         </nav>
     </header>
 
     <main class="hero">
         <section>
-            <span class="kicker">App is active</span>
+            <span class="kicker"><x-kabeeri-icon name="check-circle" />App is active</span>
             <h1>{{ $site->name }}</h1>
             <p class="lead">التطبيق مفعل بثيم {{ $site->theme?->name ?? 'بدون ثيم' }}.</p>
             <div class="grid four">
@@ -44,7 +44,7 @@
 
     <section class="grid two section">
         <div class="card">
-            <span class="tag">Theme settings</span>
+            <span class="tag"><x-kabeeri-icon name="settings" />Theme settings</span>
             <h2 style="margin-top:10px">إعدادات الثيم</h2>
             <div class="list">
                 @forelse ($site->themeSettings as $setting)
@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="card">
-            <span class="tag">Starter content</span>
+            <span class="tag"><x-kabeeri-icon name="document" />Starter content</span>
             <h2 style="margin-top:10px">المحتوى الأولي</h2>
             <div class="list">
                 @forelse ($site->contentEntries as $entry)
@@ -68,12 +68,12 @@
     </section>
 
     <section class="card section">
-        <span class="tag">Compatible themes</span>
+        <span class="tag"><x-kabeeri-icon name="theme" />Compatible themes</span>
         <h2 style="margin-top:10px">ثيمات أخرى مناسبة لنفس نوع التطبيق</h2>
         <div class="grid three" style="margin-top:14px">
             @foreach ($themes as $theme)
                 <article class="card theme" data-score="{{ $theme->performance_score ?? 90 }}">
-                    <span class="tag">{{ implode(' / ', $theme->app_types ?? []) }}</span>
+                    <span class="tag"><x-kabeeri-icon name="theme" />{{ implode(' / ', $theme->app_types ?? []) }}</span>
                     <h3>{{ $theme->name }}</h3>
                     <p>{{ $theme->category }} - {{ $theme->publisher }} - {{ $theme->price_type }}</p>
                 </article>

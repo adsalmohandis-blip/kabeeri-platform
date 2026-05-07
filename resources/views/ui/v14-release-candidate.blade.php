@@ -34,17 +34,17 @@
             </a>
 
             <nav class="nav" aria-label="V14 navigation">
-                <a href="{{ route('home') }}">Public Home</a>
-                <a href="{{ route('system.command-center') }}">Command Center</a>
-                <a href="{{ route('public.landing') }}">Public</a>
-                <a href="{{ route('marketplace.home') }}">Marketplace</a>
-                <a href="{{ route('mall.index') }}">Mall</a>
-                <a href="/admin">Admin</a>
+                <a href="{{ route('home') }}"><x-kabeeri-icon name="home" />Public Home</a>
+                <a href="{{ route('system.command-center') }}"><x-kabeeri-icon name="command" />Command Center</a>
+                <a href="{{ route('public.landing') }}"><x-kabeeri-icon name="info" />Public</a>
+                <a href="{{ route('marketplace.home') }}"><x-kabeeri-icon name="mall" />Marketplace</a>
+                <a href="{{ route('mall.index') }}"><x-kabeeri-icon name="store" />Mall</a>
+                <a href="/admin"><x-kabeeri-icon name="admin" />Admin</a>
             </nav>
 
             <div class="actions">
-                <a class="button primary" href="{{ route('mall.trust') }}">Trust QA</a>
-                <a class="button" href="{{ route('developers.qa') }}">Theme/Plugin QA</a>
+                <a class="button primary" href="{{ route('mall.trust') }}"><x-kabeeri-icon name="trust" />Trust QA</a>
+                <a class="button" href="{{ route('developers.qa') }}"><x-kabeeri-icon name="check-circle" />Theme/Plugin QA</a>
                 @include('components.language-switcher', ['context' => 'admin'])
             </div>
         </header>
@@ -57,9 +57,9 @@
                         <h1>Quality gate before the UI can be treated as release-ready.</h1>
                         <p>{{ $config['rules']['scope'] }} This report verifies route inventory, accessibility coverage, responsive coverage, security and permission UI, design-system coverage, Next.js separation, and Mall/Marketplace separation.</p>
                         <div class="actions" style="margin-top: 24px;">
-                            <a class="button primary" href="#gates">Go / No-Go Gates</a>
-                            <a class="button" href="#routes">Route Inventory</a>
-                            <a class="button" href="#commands">Verification Commands</a>
+                            <a class="button primary" href="#gates"><x-kabeeri-icon name="check-circle" />Go / No-Go Gates</a>
+                            <a class="button" href="#routes"><x-kabeeri-icon name="map" />Route Inventory</a>
+                            <a class="button" href="#commands"><x-kabeeri-icon name="command" />Verification Commands</a>
                         </div>
                     </div>
                     <aside class="card">

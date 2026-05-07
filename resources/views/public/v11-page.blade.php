@@ -24,12 +24,12 @@
     $selectedAudience = $audienceKey ? $audiences[$audienceKey] : null;
 
     $publicNav = [
-        ['label' => 'الرئيسية العامة', 'route' => 'public.landing'],
-        ['label' => 'اختر مسارك', 'route' => 'public.audiences'],
-        ['label' => 'الأسعار', 'route' => 'public.pricing'],
-        ['label' => 'Onboarding', 'route' => 'public.onboarding'],
-        ['label' => 'الثقة', 'route' => 'public.trust'],
-        ['label' => 'طلب ديمو', 'route' => 'public.contact'],
+        ['label' => 'الرئيسية العامة', 'route' => 'public.landing', 'icon' => 'home'],
+        ['label' => 'اختر مسارك', 'route' => 'public.audiences', 'icon' => 'map'],
+        ['label' => 'الأسعار', 'route' => 'public.pricing', 'icon' => 'pricing'],
+        ['label' => 'Onboarding', 'route' => 'public.onboarding', 'icon' => 'steps'],
+        ['label' => 'الثقة', 'route' => 'public.trust', 'icon' => 'trust'],
+        ['label' => 'طلب ديمو', 'route' => 'public.contact', 'icon' => 'rocket'],
     ];
 @endphp
 
@@ -681,13 +681,13 @@
 
             <nav class="nav" aria-label="{{ __('kabeeri.brand.name') }} public navigation">
                 @foreach ($publicNav as $item)
-                    <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}">{{ $item['label'] }}</a>
+                    <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}"><x-kabeeri-icon name="{{ $item['icon'] }}" />{{ $item['label'] }}</a>
                 @endforeach
             </nav>
 
             <div class="top-actions">
-                <a class="button" href="{{ route('system.command-center') }}">فحص النظام</a>
-                <a class="button primary" href="/admin">Admin</a>
+                <a class="button" href="{{ route('system.command-center') }}"><x-kabeeri-icon name="command" />فحص النظام</a>
+                <a class="button primary" href="/admin"><x-kabeeri-icon name="admin" />Admin</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </div>
         </header>
@@ -706,9 +706,9 @@
                         </h1>
                         <p>{{ $pageConfig['intent'] }} هذه الصفحة تفصل العرض العام عن أدوات الأدمن الداخلية، وتشرح للعميل أين يبدأ، ماذا يحصل عليه، ومتى ينتقل للخطوة التالية.</p>
                         <div class="hero-actions">
-                            <a class="button primary" href="{{ route('public.contact') }}">احجز ديمو مبكر</a>
-                            <a class="button copper" href="{{ route('public.audiences') }}">اختر مسارك</a>
-                            <a class="button" href="{{ route('public.onboarding') }}">شاهد onboarding</a>
+                            <a class="button primary" href="{{ route('public.contact') }}"><x-kabeeri-icon name="rocket" />احجز ديمو مبكر</a>
+                            <a class="button copper" href="{{ route('public.audiences') }}"><x-kabeeri-icon name="map" />اختر مسارك</a>
+                            <a class="button" href="{{ route('public.onboarding') }}"><x-kabeeri-icon name="steps" />شاهد onboarding</a>
                         </div>
                     </div>
 

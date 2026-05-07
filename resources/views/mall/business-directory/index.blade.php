@@ -9,7 +9,7 @@
                 <p>Published business profiles with consent, public contacts, verification context, and claim/report paths.</p>
                 <form class="search" method="GET">
                     <input name="q" value="{{ request('q') }}" placeholder="Search businesses">
-                    <button class="button primary" type="submit">Search</button>
+                    <button class="button primary" type="submit"><x-kabeeri-icon name="search" />Search</button>
                 </form>
             </div>
             <aside class="card">

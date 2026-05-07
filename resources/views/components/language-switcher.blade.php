@@ -8,7 +8,7 @@
 @once
     <style>
         .kbr-language-switcher{display:inline-flex;align-items:center;gap:.35rem;flex-wrap:wrap;border:1px solid rgba(23,19,13,.14);border-radius:999px;background:rgba(255,250,240,.76);padding:.25rem;box-shadow:0 12px 32px rgba(23,19,13,.10);font-family:"IBM Plex Sans Arabic","Almarai",sans-serif}
-        .kbr-language-switcher__label{padding:0 .55rem;color:#17130d;font-size:.72rem;font-weight:900;white-space:nowrap}
+        .kbr-language-switcher__label{display:inline-flex;align-items:center;gap:.2rem;padding:0 .55rem;color:#17130d;font-size:.72rem;font-weight:900;white-space:nowrap}
         .kbr-language-switcher__option{display:inline-flex;min-height:2rem;align-items:center;justify-content:center;border-radius:999px;padding:0 .7rem;border:1px solid transparent;color:#17130d;text-decoration:none;font-size:.74rem;font-weight:900;line-height:1}
         .kbr-language-switcher__option:hover{border-color:rgba(201,138,46,.45);background:rgba(201,138,46,.14)}
         .kbr-language-switcher__option[aria-current="true"]{background:#17130d;color:#fffaf0;border-color:#17130d}
@@ -27,6 +27,7 @@
     aria-label="{{ __('kabeeri.language.aria') }}"
 >
     <span class="kbr-language-switcher__label">
+        <x-kabeeri-icon name="globe" />
         {{ __('kabeeri.language.label') }}
         <span class="sr-only">- {{ __("kabeeri.language.contexts.{$context}") }}</span>
     </span>

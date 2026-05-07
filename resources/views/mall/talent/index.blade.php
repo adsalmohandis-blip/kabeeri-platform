@@ -9,7 +9,7 @@
                 <p>Public professional profiles with skills, availability, location, Academy badges, and publication consent.</p>
                 <form class="search" method="GET">
                     <input name="q" value="{{ request('q') }}" placeholder="Search talent">
-                    <button class="button primary" type="submit">Search</button>
+                    <button class="button primary" type="submit"><x-kabeeri-icon name="search" />Search</button>
                 </form>
             </div>
             <aside class="card">

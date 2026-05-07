@@ -35,6 +35,8 @@
         }
         .ks-brand {
             margin: 0;
+            display: inline-flex;
+            align-items: center;
             font-size: 1.05rem;
             font-weight: 700;
         }
@@ -72,9 +74,9 @@
 <body>
 <header class="ks-header">
     <div class="ks-wrap ks-header-inner">
-        <p class="ks-brand">{{ $site->name }}</p>
+        <p class="ks-brand"><x-kabeeri-icon name="store" />{{ $site->name }}</p>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
-            <p class="ks-theme">{{ $themeName }}</p>
+            <p class="ks-theme"><x-kabeeri-icon name="theme" />{{ $themeName }}</p>
             @include('components.language-switcher', ['context' => 'visitor'])
         </div>
     </div>

@@ -16,8 +16,8 @@
                 <h3>Claim, report, and verify</h3>
                 <p>This public profile can connect to Rabet/company verification, moderation cases, reviews, and listing claim requests.</p>
                 <div class="actions" style="margin-top: 14px;">
-                    <a class="button" href="{{ route('mall.claim-report') }}">Claim / Report</a>
-                    <a class="button" href="{{ route('mall.trust') }}">Trust Center</a>
+                    <a class="button" href="{{ route('mall.claim-report') }}"><x-kabeeri-icon name="flag" />Claim / Report</a>
+                    <a class="button" href="{{ route('mall.trust') }}"><x-kabeeri-icon name="trust" />Trust Center</a>
                 </div>
             </aside>
         </div>

@@ -17,9 +17,9 @@
             <span><strong>{{ $isRegister ? 'Create account' : 'Customer login' }}</strong><small>مسار العميل الخارجي</small></span>
         </a>
         <nav class="nav">
-            <a href="{{ route('customer.start') }}">البداية</a>
-            <a class="{{ $isRegister ? '' : 'primary' }}" href="{{ route('login') }}">دخول</a>
-            <a class="{{ $isRegister ? 'primary' : '' }}" href="{{ route('register') }}">إنشاء حساب</a>
+            <a href="{{ route('customer.start') }}"><x-kabeeri-icon name="home" />البداية</a>
+            <a class="{{ $isRegister ? '' : 'primary' }}" href="{{ route('login') }}"><x-kabeeri-icon name="login" />دخول</a>
+            <a class="{{ $isRegister ? 'primary' : '' }}" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />إنشاء حساب</a>
             @include('components.language-switcher', ['context' => 'visitor'])
         </nav>
     </header>
@@ -38,7 +38,7 @@
             @endif
 
             @if ($isRegister)
-                <span class="tag">Create account form</span>
+                <span class="tag"><x-kabeeri-icon name="user-plus" />Create account form</span>
                 <h1 class="page-title" style="margin-bottom:14px">إنشاء حساب عميل جديد</h1>
                 <form method="POST" action="{{ route('register.store') }}">
                     @csrf
@@ -68,10 +68,10 @@
                             <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password">
                         </div>
                     </div>
-                    <button class="primary" type="submit">إنشاء حساب والانتقال إلى Onboarding</button>
+                    <button class="primary" type="submit"><x-kabeeri-icon name="rocket" />إنشاء حساب والانتقال إلى Onboarding</button>
                 </form>
             @else
-                <span class="tag">Customer login form</span>
+                <span class="tag"><x-kabeeri-icon name="login" />Customer login form</span>
                 <h1 class="page-title" style="margin-bottom:14px">دخول العميل</h1>
                 <form method="POST" action="{{ route('login.store') }}">
                     @csrf
@@ -84,13 +84,13 @@
                         <input id="password" type="password" name="password" required autocomplete="current-password">
                     </div>
                     <label class="check"><input type="checkbox" name="remember" value="1"> <span>تذكرني على هذا الجهاز</span></label>
-                    <button class="primary" type="submit">دخول إلى لوحة إدارة التطبيقات</button>
+                    <button class="primary" type="submit"><x-kabeeri-icon name="apps" />دخول إلى لوحة إدارة التطبيقات</button>
                 </form>
             @endif
         </section>
 
         <aside class="card dark">
-            <span class="kicker">V16 Customer Auth</span>
+            <span class="kicker"><x-kabeeri-icon name="admin" />V16 Customer Auth</span>
             <h1 class="page-title">{{ $isRegister ? 'افتح حسابك وابدأ بناء التطبيق.' : 'ادخل على مساحة عملك.' }}</h1>
             <p class="lead">بعد الدخول نكمل الإعداد أو نفتح لوحة إدارة التطبيقات حسب حالتك.</p>
         </aside>

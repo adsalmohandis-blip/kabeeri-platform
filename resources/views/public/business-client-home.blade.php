@@ -23,22 +23,22 @@
                 </span>
             </a>
             <nav class="flex flex-wrap gap-2" aria-label="{{ __('kabeeri.brand.name') }} public entry navigation">
-                <a class="rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('customer.start') }}">ابدأ كعميل</a>
-                <a class="rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('login') }}">دخول</a>
-                <a class="rounded-full bg-[#17130d] px-3 py-1.5 text-xs font-black text-[#fffaf0]" href="{{ route('register') }}">إنشاء حساب</a>
+                <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />ابدأ كعميل</a>
+                <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('login') }}"><x-kabeeri-icon name="login" />دخول</a>
+                <a class="inline-flex items-center rounded-full bg-[#17130d] px-3 py-1.5 text-xs font-black text-[#fffaf0]" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />إنشاء حساب</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </nav>
         </header>
 
         <main class="grid flex-1 gap-5 py-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-center">
             <section class="rounded-[2rem] border border-[#17130d]/10 bg-[#fffaf0]/86 p-5 backdrop-blur sm:p-6 lg:p-7">
-                <span class="inline-flex rounded-full bg-[#17130d]/10 px-3 py-1.5 text-xs font-black uppercase tracking-[.16em] text-[#17130d]">Business / Client First</span>
+                <span class="inline-flex items-center rounded-full bg-[#17130d]/10 px-3 py-1.5 text-xs font-black uppercase tracking-[.16em] text-[#17130d]"><x-kabeeri-icon name="store" />Business / Client First</span>
                 <h1 class="mt-5 max-w-3xl text-2xl font-black leading-[1.12] tracking-[-.03em] sm:text-3xl">ابدأ موقعك أو متجرك أو تطبيق خدماتك من مسار واضح.</h1>
                 <p class="mt-4 max-w-2xl text-sm leading-7 text-[#17130d]">اختر نوع مشروعك، ثبت الثيم، ثم ادخل لوحة إدارة التطبيقات.</p>
                 <div class="mt-5 flex flex-wrap gap-2">
-                    <a class="rounded-full bg-[#17130d] px-4 py-2.5 text-xs font-black text-[#fffaf0]" href="{{ route('customer.start') }}">ابدأ مسار العميل</a>
-                    <a class="rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.landing') }}">اعرف المنصة</a>
-                    <a class="rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.pricing') }}">الاشتراكات</a>
+                    <a class="inline-flex items-center rounded-full bg-[#17130d] px-4 py-2.5 text-xs font-black text-[#fffaf0]" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />ابدأ مسار العميل</a>
+                    <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.landing') }}"><x-kabeeri-icon name="info" />اعرف المنصة</a>
+                    <a class="inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.pricing') }}"><x-kabeeri-icon name="pricing" />الاشتراكات</a>
                 </div>
             </section>
 
@@ -46,16 +46,16 @@
                 <article class="rounded-3xl border border-[#17130d]/10 bg-[#17130d] p-4 text-[#fffaf0]">
                     <p class="text-xs font-black uppercase tracking-[.16em] text-[#c98a2e]">What happens next</p>
                     <ol class="mt-3 space-y-2 text-sm font-black">
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]">1</span><span>اختر مسارك</span></li>
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]">2</span><span>ثبت التطبيق والثيم</span></li>
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]">3</span><span>افتح لوحة إدارة التطبيقات</span></li>
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="map" style="margin-inline-end:0" /></span><span>اختر مسارك</span></li>
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="theme" style="margin-inline-end:0" /></span><span>ثبت التطبيق والثيم</span></li>
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]"><x-kabeeri-icon name="apps" style="margin-inline-end:0" /></span><span>افتح لوحة إدارة التطبيقات</span></li>
                     </ol>
                 </article>
 
                 <article class="rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/86 p-4 backdrop-blur">
                     <p class="text-xs font-black uppercase tracking-[.16em] text-[#17130d]">For internal team</p>
                     <h2 class="mt-2 text-base font-black">Command Center انتقل لمسار خاص.</h2>
-                    <a class="mt-3 inline-flex rounded-full border border-[#17130d]/10 bg-white/70 px-3 py-1.5 text-xs font-black" href="{{ route('system.command-center') }}">فتح Internal Command Center</a>
+                    <a class="mt-3 inline-flex items-center rounded-full border border-[#17130d]/10 bg-white/70 px-3 py-1.5 text-xs font-black" href="{{ route('system.command-center') }}"><x-kabeeri-icon name="command" />فتح Internal Command Center</a>
                 </article>
             </aside>
         </main>

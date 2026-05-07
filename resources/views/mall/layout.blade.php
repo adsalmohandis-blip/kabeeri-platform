@@ -32,8 +32,8 @@
             @include('mall.partials.navigation')
 
             <div class="actions">
-                <a class="button" href="{{ route('customer.dashboard') }}">Customer Portal</a>
-                <a class="button primary" href="{{ route('mall.trust') }}">Trust</a>
+                <a class="button" href="{{ route('customer.dashboard') }}"><x-kabeeri-icon name="apps" />Customer Portal</a>
+                <a class="button primary" href="{{ route('mall.trust') }}"><x-kabeeri-icon name="trust" />Trust</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </div>
         </header>

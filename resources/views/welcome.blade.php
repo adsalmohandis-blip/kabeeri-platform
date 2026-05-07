@@ -46,13 +46,13 @@
                 </div>
             </a>
             <nav class="topnav" aria-label="روابط لوحة البيانات">
-                <a class="nav-link" href="#readiness">الجاهزية</a>
-                <a class="nav-link" href="#task-tracker">Task Tracker Truth</a>
-                <a class="nav-link" href="#database">Database</a>
-                <a class="nav-link" href="#public">الجمهور</a>
-                <a class="nav-link" href="#plans">Freemium</a>
-                <a class="nav-link" href="#developers">Developers</a>
-                <a class="nav-link" href="/admin">Filament</a>
+                <a class="nav-link" href="#readiness"><x-kabeeri-icon name="check-circle" />الجاهزية</a>
+                <a class="nav-link" href="#task-tracker"><x-kabeeri-icon name="steps" />Task Tracker Truth</a>
+                <a class="nav-link" href="#database"><x-kabeeri-icon name="database" />Database</a>
+                <a class="nav-link" href="#public"><x-kabeeri-icon name="home" />الجمهور</a>
+                <a class="nav-link" href="#plans"><x-kabeeri-icon name="pricing" />Freemium</a>
+                <a class="nav-link" href="#developers"><x-kabeeri-icon name="code" />Developers</a>
+                <a class="nav-link" href="/admin"><x-kabeeri-icon name="admin" />Filament</a>
                 @include('components.language-switcher', ['context' => 'admin'])
             </nav>
         </header>
@@ -64,9 +64,9 @@
                     <h1>لوحة كابيري الرئيسية محدثة لتعكس الحقيقة بعد V16.</h1>
                     <p class="lead">هذه الصفحة تفصل بوضوح بين قسم الأدمن الداخلي وقسم العرض الخارجي. تعرض حالة التنفيذ من V1 إلى V16، جاهزية V14/V15، مسار العميل الجديد، قاعدة البيانات، public routes، Next.js public runtime، وما تبقى قبل staging أو production.</p>
                     <div class="actions">
-                        <a class="button primary" href="#readiness">راجع الجاهزية</a>
-                        <a class="button secondary" href="/ui/release-candidate">افتح V14 RC</a>
-                        <a class="button ghost" href="/api/public-web/manifest">افتح V15 Manifest</a>
+                        <a class="button primary" href="#readiness"><x-kabeeri-icon name="check-circle" />راجع الجاهزية</a>
+                        <a class="button secondary" href="/ui/release-candidate"><x-kabeeri-icon name="rocket" />افتح V14 RC</a>
+                        <a class="button ghost" href="/api/public-web/manifest"><x-kabeeri-icon name="document" />افتح V15 Manifest</a>
                     </div>
                 </section>
 

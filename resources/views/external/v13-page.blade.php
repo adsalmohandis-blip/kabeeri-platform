@@ -14,13 +14,13 @@
     $release = $data['release'];
 
     $nav = [
-        ['label' => 'Mall', 'route' => 'mall.index'],
-        ['label' => 'Search', 'route' => 'mall.search'],
-        ['label' => 'Customer', 'route' => 'customer.dashboard'],
-        ['label' => 'Partners', 'route' => 'partners.landing'],
-        ['label' => 'Referrals', 'route' => 'partners.referrals'],
-        ['label' => 'Network', 'route' => 'network.academy'],
-        ['label' => 'Trust', 'route' => 'mall.trust'],
+        ['label' => 'Mall', 'route' => 'mall.index', 'icon' => 'mall'],
+        ['label' => 'Search', 'route' => 'mall.search', 'icon' => 'search'],
+        ['label' => 'Customer', 'route' => 'customer.dashboard', 'icon' => 'apps'],
+        ['label' => 'Partners', 'route' => 'partners.landing', 'icon' => 'partner'],
+        ['label' => 'Referrals', 'route' => 'partners.referrals', 'icon' => 'rocket'],
+        ['label' => 'Network', 'route' => 'network.academy', 'icon' => 'book'],
+        ['label' => 'Trust', 'route' => 'mall.trust', 'icon' => 'trust'],
     ];
 @endphp
 
@@ -454,13 +454,13 @@
 
             <nav class="nav" aria-label="V13 external navigation">
                 @foreach ($nav as $item)
-                    <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}">{{ $item['label'] }}</a>
+                    <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}"><x-kabeeri-icon name="{{ $item['icon'] }}" />{{ $item['label'] }}</a>
                 @endforeach
             </nav>
 
             <div class="actions">
-                <a class="button" href="{{ route('marketplace.home') }}">Marketplace V12</a>
-                <a class="button primary" href="{{ route('public.landing') }}">Public V11</a>
+                <a class="button" href="{{ route('marketplace.home') }}"><x-kabeeri-icon name="mall" />Marketplace V12</a>
+                <a class="button primary" href="{{ route('public.landing') }}"><x-kabeeri-icon name="home" />Public V11</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </div>
         </header>
@@ -474,7 +474,7 @@
                         <p>{{ $pageConfig['intent'] }} هذه الطبقة تفصل اكتشاف Mall العام عن Marketplace الداخلي، وتربط العميل والشريك والمسوق بمسار واضح وقابل للقياس.</p>
                         <div class="actions" style="margin-top: 24px;">
                             <a class="button primary" href="{{ route('mall.search') }}">ابدأ البحث في Mall</a>
-                            <a class="button clay" href="{{ route('customer.dashboard') }}">افتح Customer Portal</a>
+                            <a class="button clay" href="{{ route('customer.dashboard') }}"><x-kabeeri-icon name="apps" />افتح Customer Portal</a>
                             <a class="button" href="{{ route('partners.landing') }}">مسار الشركاء</a>
                         </div>
                     </div>

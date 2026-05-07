@@ -14,22 +14,22 @@
             <span><strong>{{ __('kabeeri.brand.name') }} Customer Start</strong><small>مدخل العميل العام</small></span>
         </a>
         <nav class="nav">
-            <a href="{{ route('login') }}">دخول</a>
-            <a class="primary" href="{{ route('register') }}">إنشاء حساب</a>
-            <a href="{{ route('public.landing') }}">عن المنصة</a>
+            <a href="{{ route('login') }}"><x-kabeeri-icon name="login" />دخول</a>
+            <a class="primary" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />إنشاء حساب</a>
+            <a href="{{ route('public.landing') }}"><x-kabeeri-icon name="info" />عن المنصة</a>
             @include('components.language-switcher', ['context' => 'visitor'])
         </nav>
     </header>
 
     <main class="hero">
         <section>
-            <span class="kicker">V16 Customer Onboarding</span>
+            <span class="kicker"><x-kabeeri-icon name="steps" />V16 Customer Onboarding</span>
             <h1>ابدأ من المسار المناسب، ثم ابن موقعك أو متجرك أو تطبيقك.</h1>
             <p class="lead">اختر مسارك، نوع التطبيق، والثيم المناسب. بعدها نفتح لك لوحة إدارة التطبيقات.</p>
             <div class="nav">
-                <a class="button primary" href="{{ route('register') }}">ابدأ الآن</a>
-                <a class="button" href="#paths">شاهد المسارات</a>
-                <a class="button" href="#themes">استكشف الثيمات</a>
+                <a class="button primary" href="{{ route('register') }}"><x-kabeeri-icon name="rocket" />ابدأ الآن</a>
+                <a class="button" href="#paths"><x-kabeeri-icon name="map" />شاهد المسارات</a>
+                <a class="button" href="#themes"><x-kabeeri-icon name="theme" />استكشف الثيمات</a>
             </div>
         </section>
         <aside class="card dark" id="quick-register">
@@ -37,10 +37,10 @@
                 <h2>أنت داخل بالفعل</h2>
                 <p>افتح لوحة إدارة التطبيقات أو اخرج لإنشاء حساب جديد.</p>
                 <div class="nav" style="margin-top:14px">
-                    <a class="button primary" href="{{ route('customer.workspace') }}">افتح لوحة إدارة التطبيقات</a>
+                    <a class="button primary" href="{{ route('customer.workspace') }}"><x-kabeeri-icon name="apps" />افتح لوحة إدارة التطبيقات</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit">خروج وإنشاء حساب جديد</button>
+                        <button type="submit"><x-kabeeri-icon name="logout" />خروج وإنشاء حساب جديد</button>
                     </form>
                 </div>
             @else
@@ -81,7 +81,7 @@
                             <input id="quick_password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password">
                         </div>
                     </div>
-                    <button class="primary" type="submit">إنشاء الحساب وبدء Onboarding</button>
+                    <button class="primary" type="submit"><x-kabeeri-icon name="user-plus" />إنشاء الحساب وبدء Onboarding</button>
                 </form>
             @endauth
         </aside>
@@ -91,11 +91,11 @@
         <div class="grid three">
             @foreach ($paths as $key => $path)
                 <article class="card">
-                    <span class="tag">{{ $key }}</span>
+                    <span class="tag"><x-kabeeri-icon name="map" />{{ $key }}</span>
                     <h3>{{ $path['label'] }}</h3>
                     <p>{{ $path['headline'] }}</p>
                     <div class="nav" style="margin-top:14px">
-                        <a class="button primary" href="{{ route('customer.start', ['path' => $key]) }}#quick-register">اختار هذا المسار وأنشئ حساب</a>
+                        <a class="button primary" href="{{ route('customer.start', ['path' => $key]) }}#quick-register"><x-kabeeri-icon name="check-circle" />اختار هذا المسار وأنشئ حساب</a>
                     </div>
                 </article>
             @endforeach
@@ -106,7 +106,7 @@
         <div class="card">
             <div class="top" style="margin:0 0 14px; box-shadow:none">
                 <div>
-                    <span class="kicker">Theme marketplace preview</span>
+                    <span class="kicker"><x-kabeeri-icon name="theme" />Theme marketplace preview</span>
                     <h2 style="margin:8px 0 0">ثيمات متاحة حسب نوع التطبيق</h2>
                 </div>
                 <nav class="nav">
