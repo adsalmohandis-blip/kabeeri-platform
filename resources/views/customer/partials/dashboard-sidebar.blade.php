@@ -59,45 +59,45 @@
     </script>
 @endonce
 
-<aside id="workspace-sidebar" class="hidden border-e border-[#17130d]/10 bg-[#17130d] text-[#fffaf0] lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
+<aside id="workspace-sidebar" class="hidden border-e border-[#111111]/10 bg-[#111111] text-[#f1eadc] lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
     <div class="px-5 py-5">
         <a href="{{ route('customer.workspace') }}" class="kbr-sidebar-brand flex items-center gap-3">
-            <span class="grid h-10 w-10 place-items-center rounded-2xl bg-[#c98a2e] text-sm font-black text-[#17130d]">{{ __('kabeeri.brand.mark') }}</span>
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-[#f1eadc] text-sm font-black text-[#111111]">{{ __('kabeeri.brand.mark') }}</span>
             <span class="kbr-sidebar-brand-copy">
                 <strong class="block text-sm font-black leading-tight">{{ __('kabeeri.brand.name') }}</strong>
-                <small class="mt-0.5 block text-[11px] font-bold text-[#fffaf0]/58">{{ __('kabeeri.ui.apps_dashboard') }}</small>
+                <small class="mt-0.5 block text-[11px] font-bold text-[#f1eadc]/58">{{ __('kabeeri.ui.apps_dashboard') }}</small>
             </span>
         </a>
     </div>
 
     <nav class="flex-1 space-y-1 px-3" aria-label="{{ __('kabeeri.ui.dashboard_nav') }}">
         @foreach ($navItems as $item)
-            <a href="{{ $item['route'] }}" class="kbr-sidebar-link flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-black transition {{ $item['active'] ? 'bg-[#fffaf0] text-[#17130d]' : 'text-[#fffaf0]/74 hover:bg-white/10 hover:text-[#fffaf0]' }}">
-                <x-kabeeri-icon name="{{ $item['icon'] }}" class="text-[#c98a2e]" />
+            <a href="{{ $item['route'] }}" class="kbr-sidebar-link flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-black transition {{ $item['active'] ? 'bg-[#f1eadc] text-[#111111]' : 'text-[#f1eadc]/74 hover:bg-white/10 hover:text-[#f1eadc]' }}">
+                <x-kabeeri-icon name="{{ $item['icon'] }}" />
                 <span class="kbr-sidebar-label">{{ __('kabeeri.ui.'.$item['key']) }}</span>
             </a>
         @endforeach
     </nav>
 
     <div class="kbr-sidebar-status m-3 rounded-3xl border border-white/10 bg-white/[.06] p-4">
-        <p class="text-[10px] font-black uppercase tracking-[.18em] text-[#c98a2e]">{{ __('kabeeri.ui.workspace_status') }}</p>
+        <p class="text-[10px] font-black uppercase tracking-[.18em] text-[#f1eadc]/58">{{ __('kabeeri.ui.workspace_status') }}</p>
         <p class="mt-2 text-sm font-black">{{ __('kabeeri.ui.'.($workspaceReady ? 'ready' : 'needs_setup')) }}</p>
-        <p class="mt-1 line-clamp-2 text-xs leading-5 text-[#fffaf0]/60">{{ $activeOrganization?->name ?? __('kabeeri.ui.needs_setup_sentence') }}</p>
+        <p class="mt-1 line-clamp-2 text-xs leading-5 text-[#f1eadc]/60">{{ $activeOrganization?->name ?? __('kabeeri.ui.needs_setup_sentence') }}</p>
         @unless ($workspaceReady)
-            <a href="{{ route('customer.onboarding') }}" class="mt-3 inline-flex w-full items-center justify-center rounded-full bg-[#c98a2e] px-3 py-2 text-xs font-black text-[#17130d]"><x-kabeeri-icon name="plus" />{{ __('kabeeri.ui.start_now') }}</a>
+            <a href="{{ route('customer.onboarding') }}" class="mt-3 inline-flex w-full items-center justify-center rounded-full bg-[#f1eadc] px-3 py-2 text-xs font-black text-[#111111]"><x-kabeeri-icon name="plus" />{{ __('kabeeri.ui.start_now') }}</a>
         @endunless
     </div>
 
     <div class="px-3 pb-4">
         <button
             type="button"
-            class="kbr-sidebar-toggle flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/[.06] px-3 py-2.5 text-xs font-black text-[#fffaf0] transition hover:bg-white/10"
+            class="kbr-sidebar-toggle flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/[.06] px-3 py-2.5 text-xs font-black text-[#f1eadc] transition hover:bg-white/10"
             data-kbr-sidebar-toggle="customer"
             data-label-collapse="{{ __('kabeeri.ui.collapse_sidebar') }}"
             data-label-expand="{{ __('kabeeri.ui.expand_sidebar') }}"
             aria-expanded="true"
         >
-            <x-kabeeri-icon name="settings" class="text-[#c98a2e]" />
+            <x-kabeeri-icon name="settings" />
             <span class="kbr-sidebar-label" data-kbr-sidebar-toggle-label>{{ __('kabeeri.ui.collapse_sidebar') }}</span>
         </button>
     </div>

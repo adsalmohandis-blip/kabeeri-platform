@@ -7,36 +7,36 @@
 
 @theme {
     --font-sans: 'IBM Plex Sans Arabic', 'Almarai', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-    --color-kabeeri-ink: #17130d;
-    --color-kabeeri-paper: #fffaf0;
-    --color-kabeeri-sand: #fffaf0;
-    --color-kabeeri-bronze: #c98a2e;
-    --color-kabeeri-olive: #17130d;
-    --color-kabeeri-sage: #c98a2e;
-    --color-kabeeri-clay: #c98a2e;
-    --color-kabeeri-date: #17130d;
-    --color-kabeeri-sky: #c98a2e;
+    --color-kabeeri-ink: #111111;
+    --color-kabeeri-paper: #f1eadc;
+    --color-kabeeri-sand: #ebe1d0;
+    --color-kabeeri-bronze: #111111;
+    --color-kabeeri-olive: #111111;
+    --color-kabeeri-sage: #111111;
+    --color-kabeeri-clay: #111111;
+    --color-kabeeri-date: #111111;
+    --color-kabeeri-sky: #111111;
     --radius-kabeeri-card: 1.75rem;
-    --shadow-kabeeri-soft: 0 18px 50px rgb(23 19 13 / 10%);
-    --shadow-kabeeri-strong: 0 30px 90px rgb(23 19 13 / 18%);
+    --shadow-kabeeri-soft: 0 18px 50px rgb(17 17 17 / 10%);
+    --shadow-kabeeri-strong: 0 30px 90px rgb(17 17 17 / 18%);
 }
 
 @layer base {
     :root {
-        --kbr-ink: #17130d;
-        --kbr-paper: #fffaf0;
-        --kbr-sand: #fffaf0;
-        --kbr-bronze: #c98a2e;
-        --kbr-olive: #17130d;
-        --kbr-sage: #c98a2e;
-        --kbr-clay: #c98a2e;
-        --kbr-date: #17130d;
-        --kbr-sky: #c98a2e;
-        --kbr-success: #c98a2e;
-        --kbr-warning: #c98a2e;
-        --kbr-danger: #17130d;
-        --kbr-muted: #17130d;
-        --kbr-focus-ring: 0 0 0 4px rgb(201 138 46 / 25%);
+        --kbr-ink: #111111;
+        --kbr-paper: #f1eadc;
+        --kbr-sand: #ebe1d0;
+        --kbr-bronze: #111111;
+        --kbr-olive: #111111;
+        --kbr-sage: #111111;
+        --kbr-clay: #111111;
+        --kbr-date: #111111;
+        --kbr-sky: #111111;
+        --kbr-success: #111111;
+        --kbr-warning: #111111;
+        --kbr-danger: #111111;
+        --kbr-muted: #111111;
+        --kbr-focus-ring: 0 0 0 4px rgb(17 17 17 / 16%);
     }
 
     html {
@@ -50,7 +50,7 @@
     }
 
     :focus-visible {
-        outline: 2px solid var(--kbr-bronze);
+        outline: 2px solid var(--kbr-ink);
         outline-offset: 3px;
         box-shadow: var(--kbr-focus-ring);
     }
@@ -63,9 +63,9 @@
     }
 
     .kbr-card {
-        border: 1px solid rgb(23 19 13 / 13%);
+        border: 1px solid rgb(17 17 17 / 13%);
         border-radius: var(--radius-kabeeri-card);
-        background: rgb(255 250 240 / 78%);
+        background: rgb(255 255 255 / 48%);
         box-shadow: var(--shadow-kabeeri-soft);
     }
 
@@ -75,8 +75,8 @@
         justify-content: center;
         border-radius: 999px;
         padding: .5rem .8rem;
-        background: rgb(201 138 46 / 12%);
-        color: var(--kbr-bronze);
+        background: rgb(17 17 17 / 8%);
+        color: var(--kbr-ink);
         font-size: .8rem;
         font-weight: 800;
     }

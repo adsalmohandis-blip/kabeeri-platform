@@ -3,20 +3,20 @@
 <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
 <style>
 :root {
-    --ink: #17130d;
-    --muted: #17130d;
-    --paper: #fffaf0;
-    --panel: rgba(255,250,240, .86);
-    --panel-strong: rgba(255,255,255, .72);
-    --line: rgba(23,19,13, .13);
-    --night: #17130d;
-    --forest: #17130d;
-    --gold: #c98a2e;
-    --clay: #17130d;
-    --sky: #17130d;
-    --good: #17130d;
-    --danger: #17130d;
-    --shadow: 0 14px 38px rgba(23,19,13, .08);
+    --ink: #111111;
+    --muted: rgba(17,17,17,.64);
+    --paper: #f1eadc;
+    --panel: rgba(255,255,255, .44);
+    --panel-strong: rgba(255,255,255, .74);
+    --line: rgba(17,17,17, .13);
+    --night: #111111;
+    --forest: #111111;
+    --gold: #111111;
+    --clay: #111111;
+    --sky: #111111;
+    --good: #111111;
+    --danger: #111111;
+    --shadow: 0 18px 58px rgba(17,17,17, .07);
     --radius: 24px;
 }
 * { box-sizing: border-box; }
@@ -26,22 +26,7 @@ body {
     min-height: 100vh;
     color: var(--ink);
     font-family: "IBM Plex Sans Arabic", "Almarai", system-ui, sans-serif;
-    background:
-        radial-gradient(circle at 12% 10%, rgba(201,138,46, .32), transparent 28rem),
-        radial-gradient(circle at 88% 4%, rgba(23,19,13, .18), transparent 30rem),
-        linear-gradient(135deg, #fffaf0, #fffaf0 55%, #c98a2e);
-}
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    opacity: .16;
-    background-image:
-        linear-gradient(rgba(23,19,13, .07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(23,19,13, .06) 1px, transparent 1px);
-    background-size: 42px 42px;
-    mask-image: linear-gradient(to bottom, #000, transparent 84%);
+    background: linear-gradient(180deg, #f1eadc 0%, #ebe1d0 100%);
 }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }
@@ -55,7 +40,7 @@ button, input, select, textarea { font: inherit; }
     padding: 11px;
     border: 1px solid var(--line);
     border-radius: 26px;
-    background: rgba(255,250,240, .76);
+    background: rgba(241,234,220, .86);
     backdrop-filter: blur(16px);
 }
 .brand { display: flex; align-items: center; gap: 10px; }
@@ -66,7 +51,7 @@ button, input, select, textarea { font: inherit; }
     height: 42px;
     border-radius: 15px;
     color: var(--paper);
-    background: conic-gradient(from 210deg, #17130d, #17130d, #c98a2e, #17130d, #17130d);
+    background: #111111;
     font-weight: 900;
 }
 .brand strong { display: block; }
@@ -78,9 +63,9 @@ button, input, select, textarea { font: inherit; }
     justify-content: center;
     min-height: 40px;
     padding: 0 14px;
-    border: 1px solid rgba(23,19,13, .13);
+    border: 1px solid rgba(17,17,17, .13);
     border-radius: 999px;
-    background: rgba(255,255,255, .54);
+    background: rgba(255,255,255, .58);
     font-weight: 800;
     cursor: pointer;
 }
@@ -110,8 +95,8 @@ button, input, select, textarea { font: inherit; }
     width: fit-content;
     padding: 8px 12px;
     border-radius: 999px;
-    background: rgba(201,138,46, .11);
-    color: #17130d;
+    background: rgba(17,17,17, .08);
+    color: #111111;
     font-weight: 900;
     font-size: 12px;
 }
@@ -123,33 +108,35 @@ button, input, select, textarea { font: inherit; }
 .card h2, .card h3 { margin: 0 0 10px; }
 .card p { margin: 0; color: var(--muted); line-height: 1.7; font-size: 13px; }
 .section { margin-top: 16px; }
+.section-title { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
 .field { display: grid; gap: 6px; margin-bottom: 12px; }
 .field label { font-weight: 900; }
 .field input, .field select, .field textarea {
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 16px;
-    background: rgba(255,255,255, .62);
+    background: rgba(255,255,255, .76);
     padding: 11px 13px;
     color: var(--ink);
 }
 .field textarea { min-height: 110px; resize: vertical; }
 .error { margin: 0 0 12px; color: var(--danger); font-weight: 800; }
-.notice { margin: 0 0 12px; padding: 12px 14px; border-radius: 16px; background: rgba(23,19,13, .12); color: var(--good); font-weight: 800; }
+.notice { margin: 0 0 12px; padding: 12px 14px; border-radius: 16px; background: rgba(17,17,17, .12); color: var(--good); font-weight: 800; }
 .theme { position: relative; overflow: hidden; }
 .theme::after {
     content: attr(data-score);
     position: absolute;
     inset-inline-end: 18px;
     bottom: -8px;
-    color: rgba(23,19,13, .06);
+    color: rgba(17,17,17, .06);
     font-size: 44px;
     font-weight: 900;
 }
-.metric { padding: 10px 0; border-bottom: 1px solid rgba(23,19,13, .1); background: transparent; }
+.metric { padding: 10px 0; border-bottom: 1px solid rgba(17,17,17, .1); background: transparent; }
 .metric strong { display: block; font-size: 18px; }
 .metric:last-child { border-bottom: 0; }
 .list { display: grid; gap: 0; }
+.panel-list { border-top: 1px solid rgba(17,17,17,.12); }
 .list a, .list div, .line-item {
     display: flex;
     justify-content: space-between;
@@ -159,12 +146,15 @@ button, input, select, textarea { font: inherit; }
     border-radius: 0;
     background: transparent;
     border: 0;
-    border-bottom: 1px solid rgba(23,19,13, .1);
+    border-bottom: 1px solid rgba(17,17,17, .1);
     font-weight: 800;
 }
+.line-item span { display: grid; gap: 4px; }
+.line-item small { color: var(--muted); font-size: 12px; font-weight: 800; line-height: 1.55; }
+.line-item b { color: #111; font-size: 12px; }
 .list a:last-child, .list div:last-child, .line-item:last-child { border-bottom: 0; }
-.dark { background: linear-gradient(145deg, #17130d, #17130d); color: var(--paper); }
-.dark p, .dark small { color: rgba(255,250,240, .75); }
+.dark { background: linear-gradient(145deg, #111111, #111111); color: var(--paper); }
+.dark p, .dark small { color: rgba(241,234,220, .75); }
 .checks { display: grid; gap: 9px; }
 .check { display: flex; gap: 9px; align-items: flex-start; padding: 10px 0; }
 .check input { margin-top: 6px; }
@@ -172,7 +162,7 @@ button, input, select, textarea { font: inherit; }
 .choice { display: block; cursor: pointer; }
 .choice input { margin-inline-end: 8px; }
 .choice .card { height: 100%; transition: transform .18s ease, border-color .18s ease; }
-.choice input:checked + .card { border-color: rgba(23,19,13, .72); transform: translateY(-2px); }
+.choice input:checked + .card { border-color: rgba(17,17,17, .72); transform: translateY(-2px); }
 .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; align-items: start; }
 .muted { color: var(--muted); }
 .small { font-size: 13px; }

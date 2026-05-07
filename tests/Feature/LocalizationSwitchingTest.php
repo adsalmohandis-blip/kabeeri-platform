@@ -177,7 +177,7 @@ class LocalizationSwitchingTest extends TestCase
             ->assertOk()
             ->assertSee('data-kbr-theme="dark"', false)
             ->assertSee('html[data-kbr-theme="dark"] .nav a:not(.primary)', false)
-            ->assertSee('color: #17130d !important;', false);
+            ->assertSee('color: #111111 !important;', false);
     }
 
     public function test_arabic_and_english_entry_pages_do_not_mix_core_copy(): void
