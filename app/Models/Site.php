@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use LogicException;
 
 #[Fillable([
     'ulid',
@@ -39,6 +40,20 @@ class Site extends Model
             if (blank($site->ulid)) {
                 $site->ulid = (string) Str::ulid();
             }
+
+            if (blank($site->slug)) {
+                $site->slug = self::normalizeUsername((string) ($site->name ?: 'app'));
+            }
+
+            $site->syncFixedPermalinkMetadata();
+        });
+
+        static::updating(function (self $site): void {
+            if ($site->isDirty('slug')) {
+                throw new LogicException('Site username is a fixed permalink and cannot be changed after creation.');
+            }
+
+            $site->syncFixedPermalinkMetadata();
         });
     }
 
@@ -65,6 +80,27 @@ class Site extends Model
     {
         // Customer-facing username remains backed by the existing slug column.
         return (string) $this->slug;
+    }
+
+    public function getPermalinkAttribute(): string
+    {
+        return '/app/'.$this->username;
+    }
+
+    public static function normalizeUsername(string $value): string
+    {
+        $username = Str::slug($value);
+
+        return $username !== '' ? $username : 'app';
+    }
+
+    protected function syncFixedPermalinkMetadata(): void
+    {
+        $metadata = $this->metadata ?? [];
+        $metadata['fixed_permalink_username'] = (string) $this->slug;
+        $metadata['fixed_permalink_locked_at'] ??= now()->toISOString();
+
+        $this->metadata = $metadata;
     }
 
     public function company(): BelongsTo

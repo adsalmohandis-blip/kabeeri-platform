@@ -53,7 +53,11 @@
                     </label>
                     <label class="grid gap-1 text-xs font-black">
                         {{ __('kabeeri.ui.username') }}
-                        <input name="username" value="{{ old('username', $site?->username) }}" placeholder="my-app" class="rounded-2xl border border-[#17130d]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#c98a2e]">
+                        @if ($mode === 'create')
+                            <input name="username" value="{{ old('username') }}" placeholder="my-app" class="rounded-2xl border border-[#17130d]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#c98a2e]">
+                        @else
+                            <input value="{{ $site->username }}" disabled class="rounded-2xl border border-[#17130d]/10 bg-[#17130d]/5 px-3 py-3 text-sm font-black text-[#17130d] outline-none">
+                        @endif
                     </label>
                     <label class="grid gap-1 text-xs font-black">
                         {{ __('kabeeri.ui.app_type') }}

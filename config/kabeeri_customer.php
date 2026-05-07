@@ -8,6 +8,7 @@ return [
         'auth_scope' => 'Customer web auth marks its session surface; /admin/login and /platform-admin/login reset customer sessions before Filament admin login.',
         'workspace' => 'A customer workspace creates User, Organization, optional Company, first Site/App, selected Theme, theme settings, and starter content.',
         'theme_install' => 'Theme install must be explicit, app-type compatible, reversible later, and must not execute hidden package code.',
+        'fixed_permalink' => 'Every customer-created app receives one globally unique username permalink that is never changed after creation.',
         'roles' => 'Customers can add capabilities such as marketer, creator, developer, agency, or implementation builder request without becoming platform admins.',
     ],
     'routes' => [
@@ -33,6 +34,8 @@ return [
         ['name' => 'customer.apps.plugins.deactivate', 'uri' => '/customer/apps/{username}/plugins/{package}/deactivate', 'label' => 'Deactivate Customer App Plugin'],
         ['name' => 'customer.apps.plugins.activate', 'uri' => '/customer/apps/{username}/plugins/{package}/activate', 'label' => 'Activate Customer App Plugin'],
         ['name' => 'customer.apps.show', 'uri' => '/customer/apps/{username}', 'label' => 'Customer App Detail'],
+        ['name' => 'public.site.show', 'uri' => '/app/{username}', 'label' => 'Public App Permalink'],
+        ['name' => 'public.content-entry.show', 'uri' => '/app/{username}/{contentEntry}', 'label' => 'Public App Page'],
         ['name' => 'customer.capabilities.update', 'uri' => '/customer/profile/capabilities', 'label' => 'Capabilities Upgrade'],
     ],
     'audience_paths' => [

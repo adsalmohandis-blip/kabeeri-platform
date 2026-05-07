@@ -143,7 +143,6 @@ class CustomerWorkspaceController extends Controller
 
         $validated = $request->validate([
             'site_name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'regex:/^[A-Za-z0-9][A-Za-z0-9_-]*$/'],
             'app_type' => ['required', 'string', Rule::in($appTypes)],
             'status' => ['required', 'string', Rule::in(['active', 'paused'])],
             'public_language' => ['nullable', 'string', Rule::in(KabeeriLocale::codes())],

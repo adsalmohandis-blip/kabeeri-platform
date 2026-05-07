@@ -100,11 +100,7 @@ class OnboardingService
                 'organization_id' => $organization->id,
                 'company_id' => $company?->id,
                 'name' => $siteName,
-                'slug' => $this->generateUniqueSlug(
-                    Site::class,
-                    $siteName,
-                    ['organization_id' => $organization->id],
-                ),
+                'slug' => $this->generateUniqueSlug(Site::class, $siteName),
                 'site_type' => (string) ($data['site_type'] ?? 'website'),
                 'status' => 'active',
                 'language' => (string) ($data['language'] ?? 'ar'),
@@ -210,7 +206,7 @@ class OnboardingService
         $suffix = 2;
 
         while (
-            $modelClass::query()
+            ($modelClass === Site::class ? Site::withTrashed() : $modelClass::query())
                 ->where($constraints)
                 ->where('slug', $slug)
                 ->exists()

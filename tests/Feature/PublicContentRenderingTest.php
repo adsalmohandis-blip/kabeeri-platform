@@ -44,6 +44,11 @@ class PublicContentRenderingTest extends TestCase
             ->assertOk()
             ->assertSee('Welcome Page')
             ->assertSee('Public content body');
+
+        $this->get(route('public.site.show', ['username' => $site->username]))
+            ->assertOk()
+            ->assertSee('Welcome Page')
+            ->assertSee('Public content body');
     }
 
     public function test_draft_page_does_not_render_publicly(): void

@@ -7,6 +7,7 @@ use App\Models\Organization;
 use App\Models\Site;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use LogicException;
 use Tests\TestCase;
 
 class SiteFoundationTest extends TestCase
@@ -40,7 +41,7 @@ class SiteFoundationTest extends TestCase
         $this->assertCount(2, $company->sites);
     }
 
-    public function test_site_slug_is_unique_within_organization(): void
+    public function test_site_username_permalink_is_unique_across_platform(): void
     {
         $organizationA = Organization::factory()->create();
         $organizationB = Organization::factory()->create();
@@ -50,16 +51,20 @@ class SiteFoundationTest extends TestCase
             'slug' => 'primary-app',
         ]);
 
+        $this->expectException(QueryException::class);
+
         Site::factory()->create([
             'organization_id' => $organizationB->id,
             'slug' => 'primary-app',
         ]);
+    }
 
-        $this->expectException(QueryException::class);
+    public function test_site_username_permalink_cannot_change_after_creation(): void
+    {
+        $site = Site::factory()->create(['slug' => 'fixed-app']);
 
-        Site::factory()->create([
-            'organization_id' => $organizationA->id,
-            'slug' => 'primary-app',
-        ]);
+        $this->expectException(LogicException::class);
+
+        $site->forceFill(['slug' => 'changed-app'])->save();
     }
 }

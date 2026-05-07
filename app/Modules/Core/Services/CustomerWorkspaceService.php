@@ -12,7 +12,6 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class CustomerWorkspaceService
@@ -225,7 +224,7 @@ class CustomerWorkspaceService
                 'organization_id' => $organization->id,
                 'company_id' => $organization->companies()->latest('id')->value('id'),
                 'name' => $name,
-                'slug' => $this->uniqueUsername($organization, (string) ($data['username'] ?? $name)),
+                'slug' => $this->uniqueUsername((string) ($data['username'] ?? $name)),
                 'site_type' => $this->siteTypeFor($appType),
                 'status' => 'active',
                 'language' => $publicLanguage,
@@ -272,14 +271,12 @@ class CustomerWorkspaceService
 
         $metadata = $site->metadata ?? [];
         $appType = (string) ($data['app_type'] ?? $metadata['v16_app_type'] ?? $site->site_type);
-        $username = trim((string) ($data['username'] ?? $site->username));
         $publicLanguage = (string) ($data['public_language'] ?? $metadata['public_language'] ?? $site->language ?? 'ar');
         $publicThemeMode = (string) ($data['public_theme_mode'] ?? $metadata['public_theme_mode'] ?? config('kabeeri_ui_preferences.default_theme', 'light'));
         $publicFont = (string) ($data['public_font'] ?? $metadata['public_font'] ?? config('kabeeri_ui_preferences.default_font', 'ibm-plex-sans-arabic'));
 
         $site->forceFill([
             'name' => trim((string) ($data['site_name'] ?? $site->name)),
-            'slug' => $this->uniqueUsername($site->organization, $username, $site),
             'site_type' => $this->siteTypeFor($appType),
             'language' => $publicLanguage,
             'timezone' => (string) ($data['timezone'] ?? $site->timezone),
@@ -670,16 +667,14 @@ class CustomerWorkspaceService
         return $organization;
     }
 
-    protected function uniqueUsername(Organization $organization, string $name, ?Site $ignore = null): string
+    protected function uniqueUsername(string $name, ?Site $ignore = null): string
     {
-        $base = Str::slug($name);
-        $base = $base !== '' ? $base : 'app';
+        $base = Site::normalizeUsername($name);
         $candidate = $base;
         $suffix = 2;
 
         while (
             Site::withTrashed()
-                ->where('organization_id', $organization->id)
                 ->where('slug', $candidate)
                 ->when($ignore, fn ($query) => $query->whereKeyNot($ignore->id))
                 ->exists()

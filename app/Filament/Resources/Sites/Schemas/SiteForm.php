@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\Sites\Schemas;
 
+use App\Models\Site;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 
 class SiteForm
 {
@@ -74,15 +74,19 @@ class SiteForm
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function ($state, callable $set): void {
-                                $set('slug', Str::slug((string) $state));
+                            ->afterStateUpdated(function ($state, callable $set, ?Site $record): void {
+                                if ($record === null) {
+                                    $set('slug', Site::normalizeUsername((string) $state));
+                                }
                             }),
                         TextInput::make('slug')
                             ->label('Username')
-                            ->helperText('Used in customer app URLs, for example /customer/apps/username.')
+                            ->helperText('Fixed permalink. Used in /app/username and cannot be changed after creation.')
                             ->required()
                             ->maxLength(255)
-                            ->alphaDash(),
+                            ->alphaDash()
+                            ->disabled(fn (?Site $record): bool => $record !== null)
+                            ->dehydrated(fn (?Site $record): bool => $record === null),
                         Select::make('site_type')
                             ->label('App Type')
                             ->required()

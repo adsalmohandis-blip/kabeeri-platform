@@ -220,6 +220,9 @@ Route::get('/mall/travel/{listing:slug}', [MallTravelTourismController::class, '
     ->name('mall.travel.show');
 
 Route::scopeBindings()->group(function (): void {
+    Route::get('/app/{username}', [PublicContentEntryController::class, 'home'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('public.site.show');
     Route::get('/app/{username}/{contentEntry:slug}', PublicContentEntryController::class)
         ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
         ->name('public.content-entry.show');

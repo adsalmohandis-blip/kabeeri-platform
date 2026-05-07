@@ -93,6 +93,8 @@ class V16CustomerExperienceTest extends TestCase
 
         $this->assertSame($organization->id, $site->organization_id);
         $this->assertSame('acme-store', $site->username);
+        $this->assertSame('acme-store', $site->metadata['fixed_permalink_username']);
+        $this->assertSame('/app/acme-store', $site->permalink);
         $this->assertSame('store', $site->metadata['v16_app_type']);
         $this->assertSame('active', $site->metadata['theme_install_status']);
         $this->assertSame('mall-window', $site->theme?->slug);
@@ -236,6 +238,7 @@ class V16CustomerExperienceTest extends TestCase
         $this->get(route('customer.apps.create'))
             ->assertOk()
             ->assertSee(__('kabeeri.ui.create_app'))
+            ->assertSee('name="username"', false)
             ->assertSee('name="public_language"', false)
             ->assertSee('name="public_theme_mode"', false)
             ->assertSee('name="public_font"', false);
@@ -252,9 +255,15 @@ class V16CustomerExperienceTest extends TestCase
 
         $site = Site::query()->where('slug', 'second-app')->firstOrFail();
         $this->assertSame('second-app', $site->username);
+        $this->assertSame('second-app', $site->metadata['fixed_permalink_username']);
         $this->assertSame('en', $site->language);
         $this->assertSame('dark', $site->metadata['public_theme_mode']);
         $this->assertSame('tajawal', $site->metadata['public_font']);
+
+        $this->get(route('customer.apps.edit', ['username' => 'second-app']))
+            ->assertOk()
+            ->assertDontSee('name="username"', false)
+            ->assertSee('value="second-app"', false);
 
         $this->put(route('customer.apps.update', ['username' => 'second-app']), [
             'site_name' => 'Second App Pro',
@@ -264,13 +273,17 @@ class V16CustomerExperienceTest extends TestCase
             'public_language' => 'fr',
             'public_theme_mode' => 'light',
             'public_font' => 'almarai',
-        ])->assertRedirect(route('customer.apps.show', ['username' => 'second-app-pro']));
+        ])->assertRedirect(route('customer.apps.show', ['username' => 'second-app']));
 
         $site = $site->refresh();
-        $this->assertSame('second-app-pro', $site->username);
+        $this->assertSame('second-app', $site->username);
+        $this->assertSame('second-app', $site->metadata['fixed_permalink_username']);
         $this->assertSame('paused', $site->status);
         $this->assertSame('fr', $site->language);
         $this->assertSame('almarai', $site->metadata['public_font']);
+
+        $this->get(route('customer.apps.show', ['username' => 'second-app-pro']))
+            ->assertNotFound();
 
         $this->get(route('customer.apps.themes', ['username' => $site->username]))
             ->assertOk()
