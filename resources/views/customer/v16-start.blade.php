@@ -31,14 +31,58 @@
                 <a class="button" href="#themes">استكشف الثيمات</a>
             </div>
         </section>
-        <aside class="card dark">
-            <h2>ما الذي يحدث بعد التسجيل؟</h2>
-            <p>ننشئ User + Organization + Company عند الحاجة + Site/App + Theme + starter content، ثم نفتح Customer Dashboard.</p>
-            <div class="list" style="margin-top:14px">
-                <div><span>Workspace</span><small>Organization + permissions</small></div>
-                <div><span>App</span><small>Website / Store / Services</small></div>
-                <div><span>Theme</span><small>Compatible install</small></div>
-            </div>
+        <aside class="card dark" id="quick-register">
+            @auth
+                <h2>أنت داخل بالفعل</h2>
+                <p>لو عايز تكمل تجربة العميل الحالية افتح الداشبورد. لو عايز تنشئ حساب عميل جديد، اخرج الأول ثم ارجع لنفس الصفحة.</p>
+                <div class="nav" style="margin-top:14px">
+                    <a class="button primary" href="{{ route('customer.workspace') }}">افتح Customer Dashboard</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit">خروج وإنشاء حساب جديد</button>
+                    </form>
+                </div>
+            @else
+                <h2>إنشاء حساب عميل جديد</h2>
+                <p>املأ البيانات هنا مباشرة، وبعدها سننقلك إلى Onboarding لاختيار نوع التطبيق والثيم.</p>
+                @if ($errors->any())
+                    <div class="error" style="color:#ffd7ce">
+                        @foreach ($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
+                <form method="POST" action="{{ route('register.store') }}" style="margin-top:14px">
+                    @csrf
+                    <div class="field">
+                        <label for="quick_name">الاسم</label>
+                        <input id="quick_name" name="name" value="{{ old('name') }}" required autocomplete="name">
+                    </div>
+                    <div class="field">
+                        <label for="quick_email">البريد الإلكتروني</label>
+                        <input id="quick_email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email">
+                    </div>
+                    <div class="field">
+                        <label for="quick_customer_path">المسار</label>
+                        <select id="quick_customer_path" name="customer_path">
+                            @foreach ($paths as $key => $path)
+                                <option value="{{ $key }}" @selected(old('customer_path', $selectedPath) === $key)>{{ $path['label'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="grid two">
+                        <div class="field">
+                            <label for="quick_password">كلمة المرور</label>
+                            <input id="quick_password" type="password" name="password" required autocomplete="new-password">
+                        </div>
+                        <div class="field">
+                            <label for="quick_password_confirmation">تأكيد كلمة المرور</label>
+                            <input id="quick_password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password">
+                        </div>
+                    </div>
+                    <button class="primary" type="submit">إنشاء الحساب وبدء Onboarding</button>
+                </form>
+            @endauth
         </aside>
     </main>
 
@@ -50,7 +94,7 @@
                     <h3>{{ $path['label'] }}</h3>
                     <p>{{ $path['headline'] }}</p>
                     <div class="nav" style="margin-top:14px">
-                        <a class="button primary" href="{{ route('register', ['path' => $key]) }}">اختار هذا المسار</a>
+                        <a class="button primary" href="{{ route('customer.start', ['path' => $key]) }}#quick-register">اختار هذا المسار وأنشئ حساب</a>
                     </div>
                 </article>
             @endforeach

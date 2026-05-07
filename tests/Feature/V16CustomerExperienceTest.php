@@ -31,7 +31,20 @@ class V16CustomerExperienceTest extends TestCase
             ->assertSee('KABEERI Customer Start')
             ->assertSee('Business Owner')
             ->assertSee('I need a builder')
-            ->assertSee('Kabeeri Atlas');
+            ->assertSee('Kabeeri Atlas')
+            ->assertSee('quick-register')
+            ->assertSee('quick_name')
+            ->assertSee('quick_password_confirmation');
+    }
+
+    public function test_register_page_prioritizes_visible_create_account_form(): void
+    {
+        $this->get('/register')
+            ->assertOk()
+            ->assertSee('Create account form')
+            ->assertSee('name="name"', false)
+            ->assertSee('name="email"', false)
+            ->assertSee('name="password_confirmation"', false);
     }
 
     public function test_customer_register_creates_user_profile_and_redirects_to_onboarding(): void

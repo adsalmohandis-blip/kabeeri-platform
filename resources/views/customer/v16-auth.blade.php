@@ -24,17 +24,6 @@
     </header>
 
     <main class="split">
-        <aside class="card dark">
-            <span class="kicker">V16 Customer Auth</span>
-            <h1 class="page-title">{{ $isRegister ? 'افتح حسابك وابدأ بناء التطبيق.' : 'ادخل على مساحة عملك.' }}</h1>
-            <p class="lead">هذا الدخول مخصص للعميل العادي وليس لوحة Filament Admin. بعد الدخول نأخذك إلى Guided Onboarding أو Customer Dashboard حسب حالتك.</p>
-            <div class="list">
-                <div><span>Public start</span><small>/start</small></div>
-                <div><span>Customer dashboard</span><small>/customer/dashboard</small></div>
-                <div><span>Admin panel</span><small>/admin/login</small></div>
-            </div>
-        </aside>
-
         <section class="card">
             @if (session('status'))
                 <p class="notice">{{ session('status') }}</p>
@@ -48,6 +37,8 @@
             @endif
 
             @if ($isRegister)
+                <span class="tag">Create account form</span>
+                <h1 class="page-title" style="font-size:clamp(30px,4vw,52px); margin-bottom:14px">إنشاء حساب عميل جديد</h1>
                 <form method="POST" action="{{ route('register.store') }}">
                     @csrf
                     <div class="field">
@@ -79,6 +70,8 @@
                     <button class="primary" type="submit">إنشاء حساب والانتقال إلى Onboarding</button>
                 </form>
             @else
+                <span class="tag">Customer login form</span>
+                <h1 class="page-title" style="font-size:clamp(30px,4vw,52px); margin-bottom:14px">دخول العميل</h1>
                 <form method="POST" action="{{ route('login.store') }}">
                     @csrf
                     <div class="field">
@@ -94,6 +87,17 @@
                 </form>
             @endif
         </section>
+
+        <aside class="card dark">
+            <span class="kicker">V16 Customer Auth</span>
+            <h1 class="page-title">{{ $isRegister ? 'افتح حسابك وابدأ بناء التطبيق.' : 'ادخل على مساحة عملك.' }}</h1>
+            <p class="lead">هذا الدخول مخصص للعميل العادي وليس لوحة Filament Admin. بعد الدخول نأخذك إلى Guided Onboarding أو Customer Dashboard حسب حالتك.</p>
+            <div class="list">
+                <div><span>Public start</span><small>/start</small></div>
+                <div><span>Customer dashboard</span><small>/customer/dashboard</small></div>
+                <div><span>Admin panel</span><small>/admin/login</small></div>
+            </div>
+        </aside>
     </main>
 </div>
 </body>

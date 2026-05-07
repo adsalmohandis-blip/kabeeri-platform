@@ -62,12 +62,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:37+00:00",
-            "completed_by_codex_at": "2026-05-07T00:30:17+00:00",
+            "completed_by_codex_at": "2026-05-07T01:09:05+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Implemented V16 customer web auth, guided onboarding, workspace provisioning, theme install, customer dashboard, app detail, profile capabilities, docs, tests, and root dashboard awareness.",
+            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; vendor/bin/pint --test; php artisan test",
+            "notes": "Improved V16 signup UX after manual testing: /start now has a direct customer account form, /register prioritizes the form above explanatory content, and regression coverage verifies visible signup fields.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -77,12 +77,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:37+00:00",
-            "completed_by_codex_at": "2026-05-07T00:30:17+00:00",
+            "completed_by_codex_at": "2026-05-07T01:09:05+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Implemented V16 customer web auth, guided onboarding, workspace provisioning, theme install, customer dashboard, app detail, profile capabilities, docs, tests, and root dashboard awareness.",
+            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; vendor/bin/pint --test; php artisan test",
+            "notes": "Improved V16 signup UX after manual testing: /start now has a direct customer account form, /register prioritizes the form above explanatory content, and regression coverage verifies visible signup fields.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -227,12 +227,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T00:30:18+00:00",
+            "completed_by_codex_at": "2026-05-07T01:09:05+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Implemented V16 customer web auth, guided onboarding, workspace provisioning, theme install, customer dashboard, app detail, profile capabilities, docs, tests, and root dashboard awareness.",
+            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; vendor/bin/pint --test; php artisan test",
+            "notes": "Improved V16 signup UX after manual testing: /start now has a direct customer account form, /register prioritizes the form above explanatory content, and regression coverage verifies visible signup fields.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
