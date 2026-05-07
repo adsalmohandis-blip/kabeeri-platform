@@ -38,7 +38,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $pageConfig['label'] }} | {{ __('kabeeri.brand.name') }} Public Bridge</title>
+    <title>{{ $pageConfig['label'] }} | {{ __('kabeeri.brand.name') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -675,7 +675,7 @@
                 <span class="mark">Kb</span>
                 <span>
                     <strong>{{ __('kabeeri.brand.name') }}</strong>
-                    <small>Public Bridge V11</small>
+                    <small>ابدأ الآن</small>
                 </span>
             </a>
 
@@ -686,8 +686,8 @@
             </nav>
 
             <div class="top-actions">
-                <a class="button" href="{{ route('system.command-center') }}"><x-kabeeri-icon name="command" />فحص النظام</a>
-                <a class="button primary" href="/admin"><x-kabeeri-icon name="admin" />Admin</a>
+                <a class="button" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />ابدأ الآن</a>
+                <a class="button primary" href="{{ route('login') }}"><x-kabeeri-icon name="login" />دخول</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </div>
         </header>
@@ -696,7 +696,7 @@
             <section class="hero">
                 <div class="hero-grid">
                     <div>
-                        <span class="eyebrow">{{ __('kabeeri.brand.name') }} Public Bridge</span>
+                        <span class="eyebrow">{{ __('kabeeri.brand.name') }}</span>
                         <h1>
                             @if ($page === 'landing')
                                 منصة تبدأ كموقع واضح وتنتهي كنظام تشغيل للشركة.
@@ -704,7 +704,7 @@
                                 {{ $pageConfig['label'] }}
                             @endif
                         </h1>
-                        <p>{{ $pageConfig['intent'] }} هذه الصفحة تفصل العرض العام عن أدوات الأدمن الداخلية، وتشرح للعميل أين يبدأ، ماذا يحصل عليه، ومتى ينتقل للخطوة التالية.</p>
+                        <p>{{ $pageConfig['intent'] }} اختر ما تحتاجه الآن، ثم انتقل للخطوة التالية بوضوح.</p>
                         <div class="hero-actions">
                             <a class="button primary" href="{{ route('public.contact') }}"><x-kabeeri-icon name="rocket" />احجز ديمو مبكر</a>
                             <a class="button copper" href="{{ route('public.audiences') }}"><x-kabeeri-icon name="map" />اختر مسارك</a>
@@ -722,8 +722,8 @@
                             <span>صاحب مشروع، مؤسسة، مطور، مسوق، شريك، أو زائر Mall. كل جمهور له مسار واشتراك واستفادة واضحة.</span>
                         </div>
                         <div class="signal">
-                            <strong>Admin split</strong>
-                            <span>فحص النظام وtask tracker وقواعد النشر تبقى للأدمن. التفاصيل التسويقية ومسارات الاشتراك تبقى للجمهور.</span>
+                            <strong>مسار واضح</strong>
+                            <span>كل خطوة تعرض لك ما تحتاجه فقط.</span>
                         </div>
                     </aside>
                 </div>

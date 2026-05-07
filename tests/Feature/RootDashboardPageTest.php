@@ -15,9 +15,12 @@ class RootDashboardPageTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
-            ->assertSee(__('kabeeri.brand.name').' Business Client')
-            ->assertSee('ابدأ مسار العميل')
-            ->assertSee('Command Center انتقل لمسار خاص')
+            ->assertSee(__('kabeeri.brand.name'))
+            ->assertSee('ابدأ الآن')
+            ->assertDontSee(__('kabeeri.brand.name').' Business Client')
+            ->assertDontSee('ابدأ مسار العميل')
+            ->assertDontSee('Command Center انتقل لمسار خاص')
+            ->assertDontSee('Internal Command Center')
             ->assertDontSee('Task Tracker Truth')
             ->assertDontSee('V15 Public Web Manifest');
     }

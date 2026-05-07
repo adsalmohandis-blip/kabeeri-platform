@@ -620,8 +620,8 @@
             </nav>
 
             <div class="top-actions">
-                <a class="button" href="{{ route('public.landing') }}"><x-kabeeri-icon name="home" />Public V11</a>
-                <a class="button primary" href="/admin"><x-kabeeri-icon name="admin" />Admin</a>
+                <a class="button" href="{{ route('public.landing') }}"><x-kabeeri-icon name="home" />المنصة</a>
+                <a class="button primary" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />ابدأ الآن</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </div>
         </header>
@@ -1015,7 +1015,7 @@
                     <div class="section-title">
                         <div>
                             <span class="chip">Marketplace Governance and Review Admin UI</span>
-                            <h2>Review flow يربط public listing بالـ Filament admin.</h2>
+                            <h2>Review flow يحافظ على جودة النشر.</h2>
                         </div>
                         <p>المراجعة الحقيقية تبقى في الأدمن، لكن V12 يشرح gates للمطور ولصاحب المنصة بوضوح.</p>
                     </div>

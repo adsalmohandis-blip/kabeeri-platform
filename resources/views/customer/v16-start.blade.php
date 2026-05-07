@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ __('kabeeri.brand.name') }} Customer Start</title>
+    <title>{{ __('kabeeri.brand.name') }} | ابدأ الآن</title>
     @include('customer.v16-style')
 </head>
 <body>
@@ -11,19 +11,19 @@
     <header class="top">
         <a class="brand" href="{{ route('home') }}">
             <span class="mark">K</span>
-            <span><strong>{{ __('kabeeri.brand.name') }} Customer Start</strong><small>مدخل العميل العام</small></span>
+            <span><strong>{{ __('kabeeri.brand.name') }}</strong><small>ابدأ الآن</small></span>
         </a>
         <nav class="nav">
             <a href="{{ route('login') }}"><x-kabeeri-icon name="login" />دخول</a>
-            <a class="primary" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />إنشاء حساب</a>
-            <a href="{{ route('public.landing') }}"><x-kabeeri-icon name="info" />عن المنصة</a>
+            <a class="primary" href="{{ route('register') }}"><x-kabeeri-icon name="user-plus" />ابدأ الآن</a>
+            <a href="{{ route('public.landing') }}"><x-kabeeri-icon name="info" />المزايا</a>
             @include('components.language-switcher', ['context' => 'visitor'])
         </nav>
     </header>
 
     <main class="hero">
         <section>
-            <span class="kicker"><x-kabeeri-icon name="steps" />V16 Customer Onboarding</span>
+            <span class="kicker"><x-kabeeri-icon name="steps" />ابدأ الآن</span>
             <h1>ابدأ من المسار المناسب، ثم ابن موقعك أو متجرك أو تطبيقك.</h1>
             <p class="lead">اختر مسارك، نوع التطبيق، والثيم المناسب. بعدها نفتح لك لوحة إدارة التطبيقات.</p>
             <div class="nav">
@@ -81,7 +81,7 @@
                             <input id="quick_password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password">
                         </div>
                     </div>
-                    <button class="primary" type="submit"><x-kabeeri-icon name="user-plus" />إنشاء الحساب وبدء Onboarding</button>
+                    <button class="primary" type="submit"><x-kabeeri-icon name="user-plus" />إنشاء الحساب والبدء</button>
                 </form>
             @endauth
         </aside>
@@ -95,7 +95,7 @@
                     <h3>{{ $path['label'] }}</h3>
                     <p>{{ $path['headline'] }}</p>
                     <div class="nav" style="margin-top:14px">
-                        <a class="button primary" href="{{ route('customer.start', ['path' => $key]) }}#quick-register"><x-kabeeri-icon name="check-circle" />اختار هذا المسار وأنشئ حساب</a>
+                        <a class="button primary" href="{{ route('customer.start', ['path' => $key]) }}#quick-register"><x-kabeeri-icon name="check-circle" />اختيار وبدء</a>
                     </div>
                 </article>
             @endforeach
@@ -106,7 +106,7 @@
         <div class="card">
             <div class="top" style="margin:0 0 14px; box-shadow:none">
                 <div>
-                    <span class="kicker"><x-kabeeri-icon name="theme" />Theme marketplace preview</span>
+                    <span class="kicker"><x-kabeeri-icon name="theme" />الثيمات</span>
                     <h2 style="margin:8px 0 0">ثيمات متاحة حسب نوع التطبيق</h2>
                 </div>
                 <nav class="nav">

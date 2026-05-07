@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <nav class="flex-1 space-y-1.5 overflow-y-auto px-3 py-4" aria-label="Customer dashboard sidebar">
+            <nav class="flex-1 space-y-1.5 overflow-y-auto px-3 py-4" aria-label="لوحة التنقل">
                 @foreach ($sidebarItems as $item)
                     <a href="{{ $item['target'] }}" class="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[.035] px-3 py-2.5 transition hover:border-[#c98a2e]/55 hover:bg-[#c98a2e]/12">
                         <span class="flex items-start gap-2">
@@ -92,7 +92,7 @@
                     <div class="flex items-center gap-2.5">
                         <span class="grid h-10 w-10 place-items-center rounded-2xl bg-[#17130d] text-sm font-black text-[#fffaf0] lg:hidden">K</span>
                         <div>
-                            <p class="text-[10px] font-black uppercase tracking-[.18em] text-kabeeri-clay">Client Workspace</p>
+                            <p class="text-[10px] font-black uppercase tracking-[.18em] text-kabeeri-clay">{{ __('kabeeri.brand.name') }}</p>
                             <h2 class="text-base font-black sm:text-lg">{{ $user->name }}، لوحة إدارة التطبيقات.</h2>
                         </div>
                     </div>

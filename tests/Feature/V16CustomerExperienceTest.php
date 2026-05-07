@@ -28,7 +28,9 @@ class V16CustomerExperienceTest extends TestCase
     {
         $this->get('/start')
             ->assertOk()
-            ->assertSee(__('kabeeri.brand.name').' Customer Start')
+            ->assertSee(__('kabeeri.brand.name'))
+            ->assertSee('ابدأ الآن')
+            ->assertDontSee(__('kabeeri.brand.name').' Customer Start')
             ->assertSee('Business Owner')
             ->assertSee('I need a builder')
             ->assertSee('kabeeri Atlas')
@@ -41,7 +43,8 @@ class V16CustomerExperienceTest extends TestCase
     {
         $this->get('/register')
             ->assertOk()
-            ->assertSee('Create account form')
+            ->assertSee('ابدأ الآن')
+            ->assertDontSee('Create account form')
             ->assertSee('name="name"', false)
             ->assertSee('name="email"', false)
             ->assertSee('name="password_confirmation"', false);
@@ -100,7 +103,7 @@ class V16CustomerExperienceTest extends TestCase
         $this->get(route('customer.workspace'))
             ->assertOk()
             ->assertSee('لوحة إدارة التطبيقات')
-            ->assertSee('Client Workspace')
+            ->assertDontSee('Client Workspace')
             ->assertSee('workspace-sidebar')
             ->assertSee('Apps')
             ->assertSee('Acme Store')

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $mode === 'register' ? 'Create customer account' : 'Customer login' }} - {{ __('kabeeri.brand.name') }}</title>
+    <title>{{ __('kabeeri.brand.name') }} | {{ $mode === 'register' ? 'ابدأ الآن' : 'دخول' }}</title>
     @include('customer.v16-style')
 </head>
 <body>
@@ -14,7 +14,7 @@
     <header class="top">
         <a class="brand" href="{{ route('customer.start') }}">
             <span class="mark">K</span>
-            <span><strong>{{ $isRegister ? 'Create account' : 'Customer login' }}</strong><small>مسار العميل الخارجي</small></span>
+            <span><strong>{{ __('kabeeri.brand.name') }}</strong><small>{{ $isRegister ? 'ابدأ الآن' : 'دخول' }}</small></span>
         </a>
         <nav class="nav">
             <a href="{{ route('customer.start') }}"><x-kabeeri-icon name="home" />البداية</a>
@@ -38,7 +38,7 @@
             @endif
 
             @if ($isRegister)
-                <span class="tag"><x-kabeeri-icon name="user-plus" />Create account form</span>
+                <span class="tag"><x-kabeeri-icon name="user-plus" />ابدأ الآن</span>
                 <h1 class="page-title" style="margin-bottom:14px">إنشاء حساب عميل جديد</h1>
                 <form method="POST" action="{{ route('register.store') }}">
                     @csrf
@@ -71,7 +71,7 @@
                     <button class="primary" type="submit"><x-kabeeri-icon name="rocket" />إنشاء حساب والانتقال إلى Onboarding</button>
                 </form>
             @else
-                <span class="tag"><x-kabeeri-icon name="login" />Customer login form</span>
+                <span class="tag"><x-kabeeri-icon name="login" />دخول</span>
                 <h1 class="page-title" style="margin-bottom:14px">دخول العميل</h1>
                 <form method="POST" action="{{ route('login.store') }}">
                     @csrf
@@ -90,7 +90,7 @@
         </section>
 
         <aside class="card dark">
-            <span class="kicker"><x-kabeeri-icon name="admin" />V16 Customer Auth</span>
+            <span class="kicker"><x-kabeeri-icon name="account" />{{ __('kabeeri.brand.name') }}</span>
             <h1 class="page-title">{{ $isRegister ? 'افتح حسابك وابدأ بناء التطبيق.' : 'ادخل على مساحة عملك.' }}</h1>
             <p class="lead">بعد الدخول نكمل الإعداد أو نفتح لوحة إدارة التطبيقات حسب حالتك.</p>
         </aside>

@@ -459,8 +459,8 @@
             </nav>
 
             <div class="actions">
-                <a class="button" href="{{ route('marketplace.home') }}"><x-kabeeri-icon name="mall" />Marketplace V12</a>
-                <a class="button primary" href="{{ route('public.landing') }}"><x-kabeeri-icon name="home" />Public V11</a>
+                <a class="button" href="{{ route('marketplace.home') }}"><x-kabeeri-icon name="mall" />السوق</a>
+                <a class="button primary" href="{{ route('public.landing') }}"><x-kabeeri-icon name="home" />المنصة</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </div>
         </header>
@@ -474,7 +474,7 @@
                         <p>{{ $pageConfig['intent'] }} هذه الطبقة تفصل اكتشاف Mall العام عن Marketplace الداخلي، وتربط العميل والشريك والمسوق بمسار واضح وقابل للقياس.</p>
                         <div class="actions" style="margin-top: 24px;">
                             <a class="button primary" href="{{ route('mall.search') }}">ابدأ البحث في Mall</a>
-                            <a class="button clay" href="{{ route('customer.dashboard') }}"><x-kabeeri-icon name="apps" />افتح Customer Portal</a>
+                            <a class="button clay" href="{{ route('customer.dashboard') }}"><x-kabeeri-icon name="apps" />افتح لوحتك</a>
                             <a class="button" href="{{ route('partners.landing') }}">مسار الشركاء</a>
                         </div>
                     </div>
@@ -599,10 +599,10 @@
                 <section class="section dark">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Customer Portal Dashboard Foundation</span>
+                            <span class="chip">لوحتك</span>
                             <h2>العميل يبدأ من checklist تشغيل، مش من لوحة ضخمة.</h2>
                         </div>
-                        <p>Customer Portal يربط workspace، theme/plugin selection، quick setup، consent، Mall publication، والقياس.</p>
+                        <p>لوحتك تجمع التطبيق، الثيم، الإضافات، والنشر في مكان واحد.</p>
                     </div>
 
                     <div class="grid-3">
