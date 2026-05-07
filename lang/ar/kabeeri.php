@@ -167,7 +167,7 @@ return [
         'state_required' => 'مطلوب',
         'overview' => 'ملخص',
         'actions' => 'خطوات',
-        'dashboard_nav' => 'تنقل لوحة الإدارة',
+        'dashboard_nav' => 'قائمة اللوحة',
         'workspace_status' => 'حالة المساحة',
         'app_count' => 'عدد التطبيقات',
         'theme_count' => 'عدد الثيمات',

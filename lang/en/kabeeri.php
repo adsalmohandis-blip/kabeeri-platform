@@ -167,7 +167,7 @@ return [
         'state_required' => 'Required',
         'overview' => 'Overview',
         'actions' => 'Actions',
-        'dashboard_nav' => 'Dashboard navigation',
+        'dashboard_nav' => 'Dashboard menu',
         'workspace_status' => 'Workspace status',
         'app_count' => 'App count',
         'theme_count' => 'Theme count',
