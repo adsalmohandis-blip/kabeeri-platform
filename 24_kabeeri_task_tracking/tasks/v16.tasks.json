@@ -152,12 +152,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T01:15:17+00:00",
+            "completed_by_codex_at": "2026-05-07T01:27:04+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V15PublicRuntimeTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Upgraded V16 customer dashboard to a professional Tailwind control center with persistent sidebar, mobile sidebar controls, app management, next actions, capabilities, builder help, marketplace roadmap, and account sections.",
+            "tests": "php artisan test --filter=V16CustomerExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Refined V16 customer dashboard into a compact professional layout: slimmer sidebar, smaller widgets, reduced hero height, denser app rows, lighter action panels, and less visual clutter.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -227,12 +227,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T01:15:17+00:00",
+            "completed_by_codex_at": "2026-05-07T01:27:04+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V15PublicRuntimeTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Upgraded V16 customer dashboard to a professional Tailwind control center with persistent sidebar, mobile sidebar controls, app management, next actions, capabilities, builder help, marketplace roadmap, and account sections.",
+            "tests": "php artisan test --filter=V16CustomerExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Refined V16 customer dashboard into a compact professional layout: slimmer sidebar, smaller widgets, reduced hero height, denser app rows, lighter action panels, and less visual clutter.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
