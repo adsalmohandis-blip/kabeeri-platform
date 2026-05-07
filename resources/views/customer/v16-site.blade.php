@@ -24,7 +24,7 @@
         <section>
             <span class="kicker">App is active</span>
             <h1>{{ $site->name }}</h1>
-            <p class="lead">التطبيق مفعل بثيم {{ $site->theme?->name ?? 'بدون ثيم' }}. هذه الصفحة تجمع حالة التثبيت، إعدادات الثيم، والمحتوى الأولي الذي تم إنشاؤه للعميل.</p>
+            <p class="lead">التطبيق مفعل بثيم {{ $site->theme?->name ?? 'بدون ثيم' }}.</p>
             <div class="grid four">
                 <div class="metric"><strong>{{ $site->username }}</strong><span>Username</span></div>
                 <div class="metric"><strong>{{ $site->site_type }}</strong><span>Site type</span></div>
@@ -34,7 +34,7 @@
         </section>
         <aside class="card dark">
             <h2>{{ $site->theme?->name ?? 'No theme' }}</h2>
-            <p>{{ $site->theme?->category }} - {{ $site->theme?->publisher }} - Score {{ $site->theme?->performance_score }}</p>
+            <p>{{ $site->theme?->category }} - {{ $site->theme?->publisher }}</p>
             <div class="list" style="margin-top:14px">
                 <div><span>Installed at</span><small>{{ $site->metadata['theme_installed_at'] ?? 'n/a' }}</small></div>
                 <div><span>Customer path</span><small>{{ $site->metadata['v16_customer_path'] ?? 'business_owner' }}</small></div>

@@ -14,58 +14,48 @@
     <div class="pointer-events-none fixed inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(23,19,13,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(23,19,13,.045)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:linear-gradient(to_bottom,#000,transparent_82%)]"></div>
 
     <div class="mx-auto flex min-h-screen w-[min(1180px,calc(100%-24px))] flex-col px-3 py-4 sm:px-5 lg:py-6">
-        <header class="flex flex-col gap-3 rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/82 p-3 shadow-kabeeri-soft backdrop-blur-2xl lg:flex-row lg:items-center lg:justify-between">
+        <header class="flex flex-col gap-3 rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/82 p-3 backdrop-blur-2xl lg:flex-row lg:items-center lg:justify-between">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <span class="grid h-11 w-11 place-items-center rounded-2xl bg-[#17130d] text-base font-black text-[#fffaf0]">K</span>
+                <span class="grid h-10 w-10 place-items-center rounded-2xl bg-[#17130d] text-sm font-black text-[#fffaf0]">K</span>
                 <span>
-                    <strong class="block text-lg font-black">{{ __('kabeeri.brand.name') }} Business Client</strong>
-                    <small class="block text-xs font-bold text-[#17130d]">واجهة البداية للعميل، وليست لوحة فحص تقنية</small>
+                    <strong class="block text-base font-black">{{ __('kabeeri.brand.name') }} Business Client</strong>
+                    <small class="block text-xs font-bold text-[#17130d]">ابدأ مشروعك من مسار واضح</small>
                 </span>
             </a>
             <nav class="flex flex-wrap gap-2" aria-label="{{ __('kabeeri.brand.name') }} public entry navigation">
-                <a class="rounded-full border border-[#17130d]/10 bg-white/60 px-4 py-2 text-sm font-black" href="{{ route('customer.start') }}">ابدأ كعميل</a>
-                <a class="rounded-full border border-[#17130d]/10 bg-white/60 px-4 py-2 text-sm font-black" href="{{ route('login') }}">دخول</a>
-                <a class="rounded-full bg-[#17130d] px-4 py-2 text-sm font-black text-[#fffaf0]" href="{{ route('register') }}">إنشاء حساب</a>
+                <a class="rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('customer.start') }}">ابدأ كعميل</a>
+                <a class="rounded-full border border-[#17130d]/10 bg-white/60 px-3 py-1.5 text-xs font-black" href="{{ route('login') }}">دخول</a>
+                <a class="rounded-full bg-[#17130d] px-3 py-1.5 text-xs font-black text-[#fffaf0]" href="{{ route('register') }}">إنشاء حساب</a>
                 @include('components.language-switcher', ['context' => 'visitor'])
             </nav>
         </header>
 
-        <main class="grid flex-1 gap-6 py-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-center">
-            <section class="rounded-[2.25rem] border border-white/70 bg-[#fffaf0]/86 p-6 shadow-kabeeri-strong backdrop-blur sm:p-7 lg:p-8">
+        <main class="grid flex-1 gap-5 py-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-center">
+            <section class="rounded-[2rem] border border-[#17130d]/10 bg-[#fffaf0]/86 p-5 backdrop-blur sm:p-6 lg:p-7">
                 <span class="inline-flex rounded-full bg-[#17130d]/10 px-3 py-1.5 text-xs font-black uppercase tracking-[.16em] text-[#17130d]">Business / Client First</span>
-                <h1 class="mt-5 max-w-3xl text-3xl font-black leading-[1.08] tracking-[-.035em] sm:text-4xl">ابدأ موقعك أو متجرك أو تطبيق خدماتك من مسار واضح.</h1>
-                <p class="mt-4 max-w-2xl text-sm leading-7 text-[#17130d] sm:text-base">{{ __('kabeeri.brand.name') }} يبدأ بسؤال بسيط: ما نوع مشروعك؟ بعدها تختار المسار والثيم، ثم تدخل لوحة إدارة التطبيقات الخاصة بك.</p>
-                <div class="mt-6 flex flex-wrap gap-2">
-                    <a class="rounded-full bg-[#17130d] px-5 py-3 text-sm font-black text-[#fffaf0]" href="{{ route('customer.start') }}">ابدأ مسار العميل</a>
-                    <a class="rounded-full border border-[#17130d]/10 bg-white/70 px-5 py-3 text-sm font-black" href="{{ route('public.landing') }}">اعرف المنصة</a>
-                    <a class="rounded-full border border-[#17130d]/10 bg-white/70 px-5 py-3 text-sm font-black" href="{{ route('public.pricing') }}">الاشتراكات</a>
+                <h1 class="mt-5 max-w-3xl text-2xl font-black leading-[1.12] tracking-[-.03em] sm:text-3xl">ابدأ موقعك أو متجرك أو تطبيق خدماتك من مسار واضح.</h1>
+                <p class="mt-4 max-w-2xl text-sm leading-7 text-[#17130d]">اختر نوع مشروعك، ثبت الثيم، ثم ادخل لوحة إدارة التطبيقات.</p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                    <a class="rounded-full bg-[#17130d] px-4 py-2.5 text-xs font-black text-[#fffaf0]" href="{{ route('customer.start') }}">ابدأ مسار العميل</a>
+                    <a class="rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.landing') }}">اعرف المنصة</a>
+                    <a class="rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2.5 text-xs font-black" href="{{ route('public.pricing') }}">الاشتراكات</a>
                 </div>
             </section>
 
-            <aside class="space-y-3">
-                <article class="rounded-[1.75rem] border border-white/70 bg-[#17130d] p-4 text-[#fffaf0] shadow-kabeeri-soft">
+            <aside class="space-y-2.5">
+                <article class="rounded-3xl border border-[#17130d]/10 bg-[#17130d] p-4 text-[#fffaf0]">
                     <p class="text-xs font-black uppercase tracking-[.16em] text-[#c98a2e]">What happens next</p>
-                    <div class="mt-4 space-y-3">
-                        <div class="rounded-2xl border border-white/10 bg-white/[.06] p-3">
-                            <strong class="block text-sm font-black">1. اختر مسارك</strong>
-                            <p class="mt-1 line-clamp-1 text-xs leading-5 text-white/62">Business owner، Store owner، Services، Creator، Marketer، أو تحتاج Builder.</p>
-                        </div>
-                        <div class="rounded-2xl border border-white/10 bg-white/[.06] p-3">
-                            <strong class="block text-sm font-black">2. ثبت التطبيق والثيم</strong>
-                            <p class="mt-1 line-clamp-1 text-xs leading-5 text-white/62">يتم إنشاء Workspace، App، Theme، وstarter content.</p>
-                        </div>
-                        <div class="rounded-2xl border border-white/10 bg-white/[.06] p-3">
-                            <strong class="block text-sm font-black">3. ادخل داشبورد العميل</strong>
-                            <p class="mt-1 line-clamp-1 text-xs leading-5 text-white/62">لوحة إدارة التطبيقات والقدرات الأساسية.</p>
-                        </div>
-                    </div>
+                    <ol class="mt-3 space-y-2 text-sm font-black">
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]">1</span><span>اختر مسارك</span></li>
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]">2</span><span>ثبت التطبيق والثيم</span></li>
+                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#c98a2e] text-[11px] text-[#17130d]">3</span><span>افتح لوحة إدارة التطبيقات</span></li>
+                    </ol>
                 </article>
 
-                <article class="rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/86 p-4 shadow-kabeeri-soft backdrop-blur">
+                <article class="rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/86 p-4 backdrop-blur">
                     <p class="text-xs font-black uppercase tracking-[.16em] text-[#17130d]">For internal team</p>
-                    <h2 class="mt-2 text-lg font-black">Command Center انتقل لمسار خاص.</h2>
-                    <p class="mt-2 text-xs leading-6 text-[#17130d]">لوحة الفحص التقنية لم تعد أول صفحة عامة. يمكن الوصول لها من المسار الداخلي.</p>
-                    <a class="mt-4 inline-flex rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2 text-xs font-black" href="{{ route('system.command-center') }}">فتح Internal Command Center</a>
+                    <h2 class="mt-2 text-base font-black">Command Center انتقل لمسار خاص.</h2>
+                    <a class="mt-3 inline-flex rounded-full border border-[#17130d]/10 bg-white/70 px-3 py-1.5 text-xs font-black" href="{{ route('system.command-center') }}">فتح Internal Command Center</a>
                 </article>
             </aside>
         </main>

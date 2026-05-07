@@ -118,55 +118,26 @@
                 <div class="mb-4 rounded-2xl border border-[#c98a2e]/20 bg-[#fffaf0]/80 px-4 py-3 text-xs font-black text-[#17130d] shadow-kabeeri-soft">{{ session('status') }}</div>
             @endif
 
-            <section class="rounded-[1.75rem] border border-white/70 bg-[#17130d] p-4 text-[#fffaf0] shadow-kabeeri-soft sm:p-5">
-                <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_18rem] xl:items-center">
+            <section class="rounded-3xl border border-white/60 bg-[#17130d] p-4 text-[#fffaf0] sm:p-5">
+                <div class="grid gap-3 xl:grid-cols-[minmax(0,1fr)_18rem] xl:items-center">
                     <div>
                         <span class="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-[.16em] text-[#c98a2e]">Apps</span>
-                        <h1 class="mt-3 max-w-2xl text-xl font-black leading-tight tracking-[-.025em] sm:text-2xl">لوحة إدارة التطبيقات</h1>
-                        <p class="mt-2 max-w-2xl text-xs leading-6 text-white/64 sm:text-sm">تابع التطبيقات، الحالة، والخطوة التالية بدون تفاصيل زائدة.</p>
+                        <h1 class="mt-3 max-w-2xl text-lg font-black leading-tight tracking-[-.02em] sm:text-xl">لوحة إدارة التطبيقات</h1>
                     </div>
-                    <div class="grid grid-cols-3 gap-2">
-                        <div class="rounded-2xl border border-white/10 bg-white/[.075] p-2.5">
-                            <p class="text-[11px] text-white/52">Workspaces</p>
-                            <strong class="mt-1 block text-xl font-black">{{ $organizations->count() }}</strong>
-                        </div>
-                        <div class="rounded-2xl border border-white/10 bg-white/[.075] p-2.5">
-                            <p class="text-[11px] text-white/52">Apps</p>
-                            <strong class="mt-1 block text-xl font-black">{{ $sites->count() }}</strong>
-                        </div>
-                        <div class="rounded-2xl border border-white/10 bg-white/[.075] p-2.5">
-                            <p class="text-[11px] text-white/52">Roles</p>
-                            <strong class="mt-1 block text-xl font-black">{{ count($capabilityValues) }}</strong>
-                        </div>
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs font-bold text-white/70">
+                        <span><strong class="text-[#fffaf0]">{{ $workspaceReady ? 'جاهزة' : 'تحتاج إعداد' }}</strong> المساحة</span>
+                        <span><strong class="text-[#fffaf0]">{{ $sites->count() }}</strong> تطبيق</span>
+                        <span><strong class="text-[#fffaf0]">{{ $activeThemeCount }}</strong> ثيم</span>
                     </div>
                 </div>
             </section>
 
-            <section class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                <article class="rounded-2xl border border-white/70 bg-[#fffaf0]/84 p-3.5 shadow-kabeeri-soft backdrop-blur">
-                    <p class="text-xs font-bold text-[#17130d]">الحالة</p>
-                    <strong class="mt-1 block text-base font-black">{{ $workspaceReady ? 'Workspace Active' : 'Needs Onboarding' }}</strong>
-                </article>
-                <article class="rounded-2xl border border-white/70 bg-[#fffaf0]/84 p-3.5 shadow-kabeeri-soft backdrop-blur">
-                    <p class="text-xs font-bold text-[#17130d]">الثيمات</p>
-                    <strong class="mt-1 block text-base font-black">{{ $activeThemeCount }} مثبت</strong>
-                </article>
-                <article class="rounded-2xl border border-white/70 bg-[#fffaf0]/84 p-3.5 shadow-kabeeri-soft backdrop-blur">
-                    <p class="text-xs font-bold text-[#17130d]">Builder</p>
-                    <strong class="mt-1 block text-base font-black">{{ $needsBuilderHelp ? 'Requested' : 'Optional' }}</strong>
-                </article>
-                <article class="rounded-2xl border border-white/70 bg-[#fffaf0]/84 p-3.5 shadow-kabeeri-soft backdrop-blur">
-                    <p class="text-xs font-bold text-[#17130d]">الدور</p>
-                    <strong class="mt-1 block truncate text-base font-black">{{ $capabilityNames->take(2)->implode(' / ') ?: 'Customer Owner' }}</strong>
-                </article>
-            </section>
-
             <section class="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(280px,.65fr)]">
-                <div id="apps" class="rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/86 p-4 shadow-kabeeri-soft backdrop-blur">
+                <div id="apps" class="rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/84 p-4 backdrop-blur">
                     <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <span class="rounded-full bg-[#17130d]/10 px-2.5 py-1 text-[11px] font-black text-[#17130d]">My Apps</span>
-                            <h2 class="mt-2 text-lg font-black tracking-[-.02em]">التطبيقات</h2>
+                            <h2 class="mt-2 text-base font-black tracking-[-.02em]">التطبيقات</h2>
                         </div>
                         <a href="{{ route('customer.onboarding') }}" class="rounded-full border border-[#17130d]/10 bg-white/70 px-3 py-1.5 text-xs font-black">تطبيق جديد لاحقًا</a>
                     </div>
@@ -191,17 +162,14 @@
                     </div>
                 </div>
 
-                <div id="actions" class="rounded-[1.75rem] border border-[#17130d]/10 bg-[#17130d] p-4 text-[#fffaf0] shadow-kabeeri-soft">
+                <div id="actions" class="rounded-3xl border border-[#17130d]/10 bg-[#17130d] p-4 text-[#fffaf0]">
                     <span class="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-black uppercase tracking-[.14em] text-[#c98a2e]">Next</span>
-                    <h2 class="mt-2 text-lg font-black tracking-[-.02em]">خطوات مختصرة</h2>
-                    <div class="mt-3 space-y-2">
+                    <h2 class="mt-2 text-base font-black tracking-[-.02em]">الخطوات التالية</h2>
+                    <div class="mt-3 divide-y divide-white/10">
                         @foreach ($nextActions as $action)
-                            <div class="rounded-2xl border border-white/10 bg-white/[.055] p-2.5">
-                                <div class="flex items-start justify-between gap-2">
-                                    <strong class="text-sm font-black">{{ $action['title'] }}</strong>
-                                    <span class="rounded-full bg-[#c98a2e] px-2 py-0.5 text-[10px] font-black text-[#17130d]">{{ $action['state'] }}</span>
-                                </div>
-                                <p class="mt-1 line-clamp-1 text-[11px] leading-5 text-white/58">{{ $action['text'] }}</p>
+                            <div class="flex items-center justify-between gap-3 py-2.5">
+                                <strong class="text-sm font-black">{{ $action['title'] }}</strong>
+                                <span class="shrink-0 rounded-full bg-[#c98a2e] px-2 py-0.5 text-[10px] font-black text-[#17130d]">{{ $action['state'] }}</span>
                             </div>
                         @endforeach
                     </div>
@@ -209,23 +177,23 @@
             </section>
 
             <section id="capabilities" class="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(280px,.55fr)]">
-                <div class="rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/86 p-4 shadow-kabeeri-soft backdrop-blur">
+                <div class="rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/84 p-4 backdrop-blur">
                     <div class="mb-3 flex items-center justify-between gap-2">
                         <div>
                             <span class="rounded-full bg-[#17130d]/10 px-2.5 py-1 text-[11px] font-black text-[#17130d]">Capabilities</span>
-                            <h2 class="mt-2 text-lg font-black tracking-[-.02em]">الأدوار والقدرات</h2>
+                            <h2 class="mt-2 text-base font-black tracking-[-.02em]">الأدوار والقدرات</h2>
                         </div>
                         <span class="rounded-full bg-white/70 px-2.5 py-1 text-xs font-black text-[#17130d]">{{ count($capabilityValues) }} مفعلة</span>
                     </div>
                     <form method="POST" action="{{ route('customer.capabilities.update') }}">
                         @csrf
-                        <div class="grid gap-2 md:grid-cols-2">
+                        <div class="grid gap-1.5 md:grid-cols-2">
                             @foreach ($capabilities as $key => $capability)
-                                <label class="flex gap-2 rounded-2xl border border-[#17130d]/10 bg-white/58 p-2.5 transition hover:border-[#17130d]/45 hover:bg-white/85">
+                                <label class="flex gap-2 rounded-2xl border border-transparent px-2 py-2 transition hover:border-[#17130d]/15 hover:bg-white/55">
                                     <input class="mt-1 h-4 w-4 rounded border-[#17130d]/20 text-[#17130d]" type="checkbox" name="capabilities[]" value="{{ $key }}" @checked(in_array($key, $capabilityValues, true)) @disabled($key === 'customer_owner')>
                                     <span>
                                         <strong class="block text-sm font-black">{{ $capability['label'] }}</strong>
-                                        <span class="mt-0.5 block text-[11px] leading-5 text-[#17130d]">{{ $capability['description'] }}</span>
+                                        <span class="mt-0.5 block line-clamp-1 text-[11px] leading-5 text-[#17130d]">{{ $capability['description'] }}</span>
                                     </span>
                                 </label>
                                 @if ($key === 'customer_owner')
@@ -241,13 +209,11 @@
                     </form>
                 </div>
 
-                <div id="builder-help" class="rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/86 p-4 shadow-kabeeri-soft backdrop-blur">
+                <div id="builder-help" class="rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/84 p-4 backdrop-blur">
                     <span class="rounded-full bg-[#c98a2e]/15 px-2.5 py-1 text-[11px] font-black text-[#17130d]">Builder Help</span>
-                    <h2 class="mt-2 text-lg font-black tracking-[-.02em]">مساعدة التنفيذ</h2>
-                    <p class="mt-2 text-xs leading-5 text-[#17130d]">مساعدة اختيارية عند الحاجة.</p>
-                    <div class="mt-3 rounded-2xl border border-[#17130d]/10 bg-white/58 p-3">
-                        <p class="text-xs font-black text-[#17130d]">الحالة</p>
-                        <strong class="mt-1 block text-sm font-black">{{ $needsBuilderHelp ? 'تم طلب مساعدة Builder' : 'اختياري لاحقًا' }}</strong>
+                    <h2 class="mt-2 text-base font-black tracking-[-.02em]">مساعدة التنفيذ</h2>
+                    <div class="mt-3 border-t border-[#17130d]/10 pt-3">
+                        <strong class="block text-sm font-black">{{ $needsBuilderHelp ? 'تم طلب مساعدة Builder' : 'اختياري لاحقًا' }}</strong>
                         @if ($builderNote)
                             <p class="mt-2 line-clamp-2 text-xs leading-5 text-[#17130d]">{{ $builderNote }}</p>
                         @endif
@@ -255,32 +221,28 @@
                 </div>
             </section>
 
-            <section id="marketplace" class="mt-4 rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/86 p-4 shadow-kabeeri-soft backdrop-blur">
+            <section id="marketplace" class="mt-4 rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/84 p-4 backdrop-blur">
                 <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <span class="rounded-full bg-[#c98a2e]/15 px-2.5 py-1 text-[11px] font-black text-[#17130d]">Marketplace</span>
-                        <h2 class="mt-2 text-lg font-black tracking-[-.02em]">إضافات وثيمات لاحقة</h2>
+                        <h2 class="mt-2 text-base font-black tracking-[-.02em]">الإضافات والثيمات</h2>
                     </div>
-                    <p class="max-w-xl text-xs leading-5 text-[#17130d]">اختيارات لاحقة عندما تحتاجها.</p>
                 </div>
-                <div class="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+                <div class="divide-y divide-[#17130d]/10">
                     @foreach ($dashboard['cards'] as $card)
-                        <article class="rounded-2xl border border-[#17130d]/10 bg-white/58 p-3">
-                            <div class="flex items-center justify-between gap-2">
-                                <h3 class="text-sm font-black">{{ $card['label'] }}</h3>
-                                <span class="rounded-full bg-[#c98a2e]/15 px-2 py-0.5 text-[10px] font-black text-[#17130d]">{{ $card['key'] }}</span>
-                            </div>
-                            <p class="mt-1 line-clamp-1 text-[11px] leading-5 text-[#17130d]">{{ $card['text'] }}</p>
+                        <article class="flex items-center justify-between gap-3 py-2.5">
+                            <h3 class="text-sm font-black">{{ $card['label'] }}</h3>
+                            <span class="shrink-0 rounded-full bg-[#c98a2e]/15 px-2 py-0.5 text-[10px] font-black text-[#17130d]">{{ $card['key'] }}</span>
                         </article>
                     @endforeach
                 </div>
             </section>
 
-            <section id="client-account" class="mt-4 rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/86 p-4 shadow-kabeeri-soft backdrop-blur">
+            <section id="client-account" class="mt-4 rounded-3xl border border-[#17130d]/10 bg-[#fffaf0]/84 p-4 backdrop-blur">
                 <div class="grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] lg:items-center">
                     <div>
                         <span class="rounded-full bg-[#17130d]/10 px-2.5 py-1 text-[11px] font-black text-[#17130d]">Account</span>
-                        <h2 class="mt-2 text-lg font-black tracking-[-.02em]">بيانات الحساب</h2>
+                        <h2 class="mt-2 text-base font-black tracking-[-.02em]">بيانات الحساب</h2>
                     </div>
                     <div class="text-sm leading-7 text-[#17130d]">
                         <strong class="font-black text-[#17130d]">{{ $user->name }}</strong>

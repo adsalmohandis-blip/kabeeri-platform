@@ -23,12 +23,12 @@
     <main class="hero">
         <section>
             <span class="kicker">Step 1 to 4</span>
-            <h1>اختار المسار، التطبيق، الثيم، ثم فعّل أول Workspace.</h1>
-            <p class="lead">هذا الفورم يحول العميل من زائر إلى مالك مساحة عمل: Organization، Company عند الحاجة، Site/App، Theme settings، ومحتوى بداية.</p>
+            <h1>اختار المسار، التطبيق، والثيم.</h1>
+            <p class="lead">نحتاج هذه البيانات فقط لتفعيل أول تطبيق لك.</p>
         </section>
         <aside class="card dark">
-            <h2>المخرجات بعد الضغط</h2>
-            <p>Workspace active + app active + compatible theme installed + starter pages imported + customer capabilities saved.</p>
+            <h2>بعد التفعيل</h2>
+            <p>ستنتقل مباشرة إلى لوحة إدارة التطبيقات.</p>
         </aside>
     </main>
 

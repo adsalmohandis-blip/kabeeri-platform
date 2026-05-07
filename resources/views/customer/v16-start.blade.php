@@ -25,7 +25,7 @@
         <section>
             <span class="kicker">V16 Customer Onboarding</span>
             <h1>ابدأ من المسار المناسب، ثم ابن موقعك أو متجرك أو تطبيقك.</h1>
-            <p class="lead">اختار هل أنت صاحب مشروع، متجر، شركة خدمات، مطور/Creator، مسوق/Partner، أو تحتاج {{ __('kabeeri.brand.name') }} Builder يساعدك. بعد التسجيل ستختار نوع التطبيق، ترى الثيمات المناسبة، تثبت ثيم، وتدخل داشبورد العميل.</p>
+            <p class="lead">اختر مسارك، نوع التطبيق، والثيم المناسب. بعدها نفتح لك لوحة إدارة التطبيقات.</p>
             <div class="nav">
                 <a class="button primary" href="{{ route('register') }}">ابدأ الآن</a>
                 <a class="button" href="#paths">شاهد المسارات</a>
@@ -35,7 +35,7 @@
         <aside class="card dark" id="quick-register">
             @auth
                 <h2>أنت داخل بالفعل</h2>
-                <p>لو عايز تكمل تجربة العميل الحالية افتح الداشبورد. لو عايز تنشئ حساب عميل جديد، اخرج الأول ثم ارجع لنفس الصفحة.</p>
+                <p>افتح لوحة إدارة التطبيقات أو اخرج لإنشاء حساب جديد.</p>
                 <div class="nav" style="margin-top:14px">
                     <a class="button primary" href="{{ route('customer.workspace') }}">افتح لوحة إدارة التطبيقات</a>
                     <form method="POST" action="{{ route('logout') }}">
@@ -45,7 +45,7 @@
                 </div>
             @else
                 <h2>إنشاء حساب عميل جديد</h2>
-                <p>املأ البيانات هنا مباشرة، وبعدها سننقلك إلى Onboarding لاختيار نوع التطبيق والثيم.</p>
+                <p>بعد الحساب نكمل اختيار التطبيق والثيم.</p>
                 @if ($errors->any())
                     <div class="error" style="color:#fffaf0">
                         @foreach ($errors->all() as $error)
