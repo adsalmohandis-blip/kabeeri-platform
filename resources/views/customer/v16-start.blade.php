@@ -1,3 +1,14 @@
+@php
+    $isArabic = app()->getLocale() === 'ar';
+    $copy = fn (string $ar, string $en): string => $isArabic ? $ar : $en;
+    $startSteps = [
+        $copy('أنشئ الحساب', 'Create account'),
+        $copy('اختر نوع التطبيق', 'Choose app type'),
+        $copy('ثبّت الثيم', 'Install theme'),
+        $copy('افتح الداشبورد', 'Open dashboard'),
+    ];
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" dir="{{ \App\Support\Localization\KabeeriLocale::direction() }}" data-kbr-theme="{{ $kabeeriUi['theme'] ?? 'light' }}" data-kbr-font="{{ $kabeeriUi['font'] ?? 'ibm-plex-sans-arabic' }}">
 <head>
@@ -22,22 +33,27 @@
         </nav>
     </header>
 
-    <main class="hero">
+    <main class="start-grid">
         <section>
             <span class="kicker"><x-kabeeri-icon name="steps" />{{ __('kabeeri.ui.start_now') }}</span>
             <h1>{{ __('kabeeri.ui.start_title') }}</h1>
             <p class="lead">{{ __('kabeeri.ui.start_lead') }}</p>
-            <div class="nav" style="margin-top:18px">
+            <div class="hero-actions">
                 <a class="button primary" href="#quick-register"><x-kabeeri-icon name="rocket" />{{ __('kabeeri.ui.start_now') }}</a>
                 <a class="button" href="#paths"><x-kabeeri-icon name="map" />{{ __('kabeeri.ui.see_paths') }}</a>
             </div>
+            <div class="step-list" aria-label="{{ $copy('مسار البداية', 'Start path') }}">
+                @foreach ($startSteps as $step)
+                    <div class="step-line"><span class="number">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span><strong>{{ $step }}</strong></div>
+                @endforeach
+            </div>
         </section>
 
-        <aside class="card dark" id="quick-register">
+        <aside class="form-card dark" id="quick-register">
             @auth
                 <h2>{{ __('kabeeri.ui.already_signed_in') }}</h2>
                 <p>{{ __('kabeeri.ui.open_or_logout') }}</p>
-                <div class="nav" style="margin-top:14px">
+                <div class="hero-actions">
                     <a class="button primary" href="{{ route('customer.workspace') }}"><x-kabeeri-icon name="apps" />{{ __('kabeeri.ui.open_dashboard') }}</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -48,7 +64,7 @@
                 <h2>{{ __('kabeeri.ui.new_account') }}</h2>
                 <p>{{ __('kabeeri.ui.after_account') }}</p>
                 @if ($errors->any())
-                    <div class="error" style="color:#f1eadc">
+                    <div class="error">
                         @foreach ($errors->all() as $error)
                             <div>{{ $error }}</div>
                         @endforeach
@@ -93,7 +109,7 @@
             <h2 class="page-title">{{ __('kabeeri.ui.see_paths') }}</h2>
             <p class="lead">{{ __('kabeeri.ui.simple_path_text') }}</p>
         </div>
-        <div class="list panel-list">
+        <div class="line-list">
             @foreach ($paths as $key => $path)
                 <a href="{{ route('customer.start', ['path' => $key]) }}#quick-register" class="line-item">
                     <span><strong>{{ __('kabeeri.customer.paths.'.$key.'.label') }}</strong><small>{{ __('kabeeri.customer.paths.'.$key.'.headline') }}</small></span>
@@ -105,15 +121,18 @@
 
     <section class="section" id="themes">
         <div class="section-title">
-            <h2 class="page-title">{{ __('kabeeri.ui.available_themes') }}</h2>
-            <nav class="nav">
+            <div>
+                <span class="tag"><x-kabeeri-icon name="theme" />{{ __('kabeeri.ui.available_themes') }}</span>
+                <h2 class="page-title">{{ __('kabeeri.ui.available_themes') }}</h2>
+            </div>
+            <nav class="nav" aria-label="{{ __('kabeeri.ui.available_themes') }}">
                 <a class="{{ blank($selectedAppType) ? 'primary' : '' }}" href="{{ route('customer.start') }}#themes">{{ __('kabeeri.ui.all') }}</a>
                 @foreach ($appTypes as $key => $type)
                     <a class="{{ $selectedAppType === $key ? 'primary' : '' }}" href="{{ route('customer.start', ['app_type' => $key]) }}#themes">{{ __('kabeeri.customer.app_types.'.$key.'.label') }}</a>
                 @endforeach
             </nav>
         </div>
-        <div class="list panel-list">
+        <div class="line-list">
             @foreach ($themes as $theme)
                 <article class="line-item">
                     <span><strong>{{ __('kabeeri.customer.themes.'.$theme->slug.'.name') }}</strong><small>{{ __('kabeeri.customer.themes.'.$theme->slug.'.category') }}</small></span>

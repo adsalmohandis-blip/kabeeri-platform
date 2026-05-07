@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('components.theme-foundation')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#f1eadc] text-kabeeri-ink antialiased">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_90%_8%,rgba(17,17,17,.18),transparent_26rem),radial-gradient(circle_at_8%_18%,rgba(17,17,17,.30),transparent_25rem),linear-gradient(135deg,#f1eadc_0%,#f1eadc_58%,#111111_100%)]"></div>
@@ -44,12 +45,12 @@
             </section>
 
             <aside class="space-y-2.5">
-                <article class="rounded-3xl border border-[#111111]/10 bg-[#111111] p-4 text-[#f1eadc]">
-                    <p class="text-xs font-black tracking-[.08em] text-[#111111]">{{ __('kabeeri.ui.your_steps') }}</p>
-                    <ol class="mt-3 space-y-2 text-sm font-black">
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#111111] text-[11px] text-[#111111]"><x-kabeeri-icon name="map" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.choose_path') }}</span></li>
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#111111] text-[11px] text-[#111111]"><x-kabeeri-icon name="theme" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.install_app_theme') }}</span></li>
-                        <li class="flex items-center gap-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#111111] text-[11px] text-[#111111]"><x-kabeeri-icon name="apps" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.open_dashboard') }}</span></li>
+                <article class="rounded-3xl bg-[#111111] p-4 text-[#f1eadc]">
+                    <p class="text-xs font-black tracking-[.08em] text-[#f1eadc]/70">{{ __('kabeeri.ui.your_steps') }}</p>
+                    <ol class="mt-3 divide-y divide-[#f1eadc]/12 text-sm font-black">
+                        <li class="flex items-center gap-2 py-2 first:pt-0"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#f1eadc] text-[11px] text-[#111111]"><x-kabeeri-icon name="map" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.choose_path') }}</span></li>
+                        <li class="flex items-center gap-2 py-2"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#f1eadc] text-[11px] text-[#111111]"><x-kabeeri-icon name="theme" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.install_app_theme') }}</span></li>
+                        <li class="flex items-center gap-2 py-2 last:pb-0"><span class="grid h-6 w-6 place-items-center rounded-full bg-[#f1eadc] text-[11px] text-[#111111]"><x-kabeeri-icon name="apps" style="margin-inline-end:0" /></span><span>{{ __('kabeeri.ui.open_dashboard') }}</span></li>
                     </ol>
                 </article>
             </aside>
