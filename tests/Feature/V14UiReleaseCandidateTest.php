@@ -67,7 +67,7 @@ class V14UiReleaseCandidateTest extends TestCase
     {
         $this->get(route('ui.release-candidate'))
             ->assertOk()
-            ->assertSee('KABEERI V14 UI Release Candidate')
+            ->assertSee(__('kabeeri.brand.name').' V14 UI Release Candidate')
             ->assertSee('Full UI Route Inventory Verification')
             ->assertSee('Quality Coverage')
             ->assertSee('Marketplace vs Mall')

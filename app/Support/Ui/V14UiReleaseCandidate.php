@@ -157,8 +157,8 @@ class V14UiReleaseCandidate
             'theme_qa' => self::coverageGate(count($themeQa) >= 10, 'Theme QA checklist coverage is represented.'),
             'plugin_qa' => self::coverageGate(count($pluginQa) >= 12, 'Plugin QA checklist coverage is represented.'),
             'mall_marketplace_separation' => self::coverageGate(
-                str_contains(config('kabeeri_external.rules.mall_vs_marketplace', ''), 'Kabeeri Mall is public discovery')
-                && str_contains(config('kabeeri_marketplace.rules.marketplace_vs_mall', ''), 'Kabeeri Marketplace sells'),
+                str_contains(config('kabeeri_external.rules.mall_vs_marketplace', ''), 'kabeeri Mall is public discovery')
+                && str_contains(config('kabeeri_marketplace.rules.marketplace_vs_mall', ''), 'kabeeri Marketplace sells'),
                 'Marketplace vs Mall separation is represented in V12 and V13.',
             ),
             'product_narrative' => self::coverageGate(count(config('kabeeri_public.story_layers', [])) >= 6, 'Progressive public product narrative is represented.'),

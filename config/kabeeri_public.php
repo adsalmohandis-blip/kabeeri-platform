@@ -2,7 +2,7 @@
 
 return [
     'version' => 'V11',
-    'name' => 'KABEERI Public Marketing, Audience, and Onboarding UX',
+    'name' => 'kabeeri Public Marketing, Audience, and Onboarding UX',
     'rules' => [
         'runtime' => 'Laravel Blade is a public bridge for V11. The long-term public runtime remains Next.js + React + TypeScript + Tailwind.',
         'narrative' => 'Do not sell the whole platform at once. Progress from website/CMS to commerce, trust, operations, Mall visibility, and full company OS.',
@@ -11,13 +11,13 @@ return [
         'conversion_safety' => 'Inquiry flow creates CRM leads with explicit metadata and no sensitive automation.',
     ],
     'pages' => [
-        'landing' => ['label' => 'Public Landing', 'route' => 'public.landing', 'uri' => '/public', 'task_ids' => ['T02', 'T20'], 'intent' => 'Explain Kabeeri progressively.'],
+        'landing' => ['label' => 'Public Landing', 'route' => 'public.landing', 'uri' => '/public', 'task_ids' => ['T02', 'T20'], 'intent' => 'Explain kabeeri progressively.'],
         'audiences' => ['label' => 'Audience Selector', 'route' => 'public.audiences', 'uri' => '/for', 'task_ids' => ['T03'], 'intent' => 'Help visitors choose the right path.'],
         'business' => ['label' => 'Business Owner Path', 'route' => 'public.business', 'uri' => '/for/business-owners', 'task_ids' => ['T04'], 'intent' => 'Website, commerce, CRM, operations, and Mall growth.'],
         'enterprise' => ['label' => 'Enterprise Buyer Path', 'route' => 'public.enterprise', 'uri' => '/for/enterprise', 'task_ids' => ['T05'], 'intent' => 'Governance, security, integrations, BI, and GRC.'],
         'developers' => ['label' => 'Developer and Creator Path', 'route' => 'public.developers', 'uri' => '/for/developers-creators', 'task_ids' => ['T22'], 'intent' => 'Themes, plugins, packages, review, signing, and revenue.'],
         'partners' => ['label' => 'Marketer and Partner Path', 'route' => 'public.partners', 'uri' => '/for/marketers-partners', 'task_ids' => ['T24'], 'intent' => 'Referral, campaigns, lead handoff, and partner revenue.'],
-        'wordpress' => ['label' => 'WordPress Alternative', 'route' => 'public.wordpress', 'uri' => '/wordpress-alternative', 'task_ids' => ['T21'], 'intent' => 'Position Kabeeri as simpler website/CMS and commerce growth path.'],
+        'wordpress' => ['label' => 'WordPress Alternative', 'route' => 'public.wordpress', 'uri' => '/wordpress-alternative', 'task_ids' => ['T21'], 'intent' => 'Position kabeeri as simpler website/CMS and commerce growth path.'],
         'service_business' => ['label' => 'Service Business Use Case', 'route' => 'public.service-business', 'uri' => '/use-cases/service-business', 'task_ids' => ['T23'], 'intent' => 'Show booking, services, CRM, quotations, invoices, and Mall discovery.'],
         'templates' => ['label' => 'Use Cases and Templates', 'route' => 'public.templates', 'uri' => '/templates', 'task_ids' => ['T10'], 'intent' => 'Industry templates without overwhelming the visitor.'],
         'onboarding' => ['label' => 'Onboarding Overview', 'route' => 'public.onboarding', 'uri' => '/onboarding', 'task_ids' => ['T06'], 'intent' => 'Explain onboarding from audience to workspace to first launch.'],
@@ -27,29 +27,29 @@ return [
         'contact' => ['label' => 'Contact Sales', 'route' => 'public.contact', 'uri' => '/contact-sales', 'task_ids' => ['T12', 'T25'], 'intent' => 'Capture qualified inquiries into CRM leads.'],
     ],
     'story_layers' => [
-        ['step' => '01', 'title' => 'Website that is clearer than WordPress chaos', 'text' => 'Start with a Kabeeri App: pages, content, SEO, media, forms, and menus without plugin sprawl.'],
+        ['step' => '01', 'title' => 'Website that is clearer than WordPress chaos', 'text' => 'Start with a kabeeri App: pages, content, SEO, media, forms, and menus without plugin sprawl.'],
         ['step' => '02', 'title' => 'Commerce without WooCommerce weight', 'text' => 'Add products, services, orders, coupons, payment placeholders, and quoting when the business is ready.'],
         ['step' => '03', 'title' => 'Trusted company identity through Rabet', 'text' => 'Connect business profile, verification, contacts, and public trust signals.'],
         ['step' => '04', 'title' => 'Operations when the team grows', 'text' => 'Move into CRM, service requests, quotations, invoices, inventory, purchasing, workflows, reports, and approvals gradually.'],
-        ['step' => '05', 'title' => 'Visibility through Kabeeri Mall', 'text' => 'Publish moderated and consented businesses, products, services, courses, talent, and travel listings.'],
+        ['step' => '05', 'title' => 'Visibility through kabeeri Mall', 'text' => 'Publish moderated and consented businesses, products, services, courses, talent, and travel listings.'],
         ['step' => '06', 'title' => 'Platform economy', 'text' => 'Developers, agencies, creators, marketers, and partners can build, sell, refer, and support inside the ecosystem.'],
     ],
     'audiences' => [
-        'business' => ['label' => 'Business Owner', 'route' => 'public.business', 'headline' => 'Launch a serious business presence, then grow into operations.', 'pain' => 'You need a website, content, leads, commerce, invoices, and visibility without managing disconnected plugins.', 'outcome' => 'Start with a Kabeeri App, add commerce and CRM, then graduate to Company OS and Mall visibility.'],
+        'business' => ['label' => 'Business Owner', 'route' => 'public.business', 'headline' => 'Launch a serious business presence, then grow into operations.', 'pain' => 'You need a website, content, leads, commerce, invoices, and visibility without managing disconnected plugins.', 'outcome' => 'Start with a kabeeri App, add commerce and CRM, then graduate to Company OS and Mall visibility.'],
         'enterprise' => ['label' => 'Enterprise Buyer', 'route' => 'public.enterprise', 'headline' => 'Govern teams, data, integrations, and risk from one controlled platform.', 'pain' => 'You need permissions, audit trails, integration control, BI/GRC readiness, and deployment discipline.', 'outcome' => 'Use Laravel/Filament admin, policies, activity logs, release gates, APIs, mobile, desktop, BI, and GRC tracks.'],
-        'developers' => ['label' => 'Developer / Creator', 'route' => 'public.developers', 'headline' => 'Build themes, plugins, connectors, and business kits for the Kabeeri economy.', 'pain' => 'You need a marketplace path with manifests, permissions, compatibility, signing, support, and revenue.', 'outcome' => 'Create packages, pass review, publish into Marketplace, and sell or support customers.'],
+        'developers' => ['label' => 'Developer / Creator', 'route' => 'public.developers', 'headline' => 'Build themes, plugins, connectors, and business kits for the kabeeri economy.', 'pain' => 'You need a marketplace path with manifests, permissions, compatibility, signing, support, and revenue.', 'outcome' => 'Create packages, pass review, publish into Marketplace, and sell or support customers.'],
         'partners' => ['label' => 'Marketer / Partner', 'route' => 'public.partners', 'headline' => 'Turn campaigns, referrals, and delivery partners into measurable growth.', 'pain' => 'You need lead handoff, campaign assets, referral visibility, partner storefronts, and revenue rules.', 'outcome' => 'Use partner paths, referral tracking, CRM handoff, Academy/work network, and later revenue dashboards.'],
-        'mall' => ['label' => 'Mall Visitor', 'route' => 'mall.index', 'headline' => 'Discover trusted businesses, products, services, courses, talent, and travel.', 'pain' => 'You need public discovery with trust, moderation, verification, and clear listing types.', 'outcome' => 'Browse Kabeeri Mall and contact verified or published listings.'],
+        'mall' => ['label' => 'Mall Visitor', 'route' => 'mall.index', 'headline' => 'Discover trusted businesses, products, services, courses, talent, and travel.', 'pain' => 'You need public discovery with trust, moderation, verification, and clear listing types.', 'outcome' => 'Browse kabeeri Mall and contact verified or published listings.'],
     ],
     'journeys' => [
-        'business' => ['Pick your business path', 'Create Kabeeri App', 'Add content and services', 'Capture leads', 'Add commerce and invoices', 'Publish to Mall when trusted'],
+        'business' => ['Pick your business path', 'Create kabeeri App', 'Add content and services', 'Capture leads', 'Add commerce and invoices', 'Publish to Mall when trusted'],
         'enterprise' => ['Map governance scope', 'Define organizations and companies', 'Review permissions and audit', 'Connect APIs and integrations', 'Plan BI/GRC', 'Run release gates'],
         'developers' => ['Create publisher profile', 'Build manifest', 'Run local tests', 'Submit for review', 'Pass permission/security checks', 'Sign and publish'],
         'partners' => ['Choose partner path', 'Create campaign or storefront', 'Capture/referral lead', 'Handoff to CRM', 'Measure progress', 'Prepare revenue share'],
     ],
     'onboarding_steps' => [
         ['n' => '01', 'title' => 'Audience and intent', 'text' => 'Choose business owner, enterprise, developer/creator, marketer/partner, agency, or Mall visitor.'],
-        ['n' => '02', 'title' => 'Workspace', 'text' => 'Create Organization, Company if needed, and first Kabeeri App.'],
+        ['n' => '02', 'title' => 'Workspace', 'text' => 'Create Organization, Company if needed, and first kabeeri App.'],
         ['n' => '03', 'title' => 'App recipe', 'text' => 'Pick website, service business, store, landing, portal, or content hub.'],
         ['n' => '04', 'title' => 'Theme and modules', 'text' => 'Select bridge theme now, later Next.js theme runtime, and enable only needed modules.'],
         ['n' => '05', 'title' => 'Team and permissions', 'text' => 'Invite users, set roles, and explain blocked actions clearly.'],
@@ -82,8 +82,8 @@ return [
         ['title' => 'Enterprise Governance', 'route' => 'public.enterprise', 'includes' => ['permissions', 'audit', 'integrations', 'BI', 'GRC']],
     ],
     'faq' => [
-        ['q' => 'Is Kabeeri only a website builder?', 'a' => 'No. It starts as a clearer website/CMS path, then grows into commerce, CRM, operations, Mall, Marketplace, mobile, desktop, and enterprise governance.'],
-        ['q' => 'Why not just WordPress?', 'a' => 'WordPress can be powerful, but many businesses end in plugin sprawl. Kabeeri aims for controlled modules, admin governance, and business operations in one product path.'],
+        ['q' => 'Is kabeeri only a website builder?', 'a' => 'No. It starts as a clearer website/CMS path, then grows into commerce, CRM, operations, Mall, Marketplace, mobile, desktop, and enterprise governance.'],
+        ['q' => 'Why not just WordPress?', 'a' => 'WordPress can be powerful, but many businesses end in plugin sprawl. kabeeri aims for controlled modules, admin governance, and business operations in one product path.'],
         ['q' => 'Are themes Blade or Next.js?', 'a' => 'Current Laravel pages are a bridge. Long-term public commercial themes target Next.js + React + TypeScript + Tailwind through API contracts.'],
         ['q' => 'What is the difference between Marketplace and Mall?', 'a' => 'Marketplace is internal extensions: themes, plugins, connectors, AI skills. Mall is public discovery: businesses, products, services, talent, courses, and travel.'],
         ['q' => 'Can developers sell on the platform?', 'a' => 'Yes, the planned developer economy includes package manifests, review, permissions, signing, publishing, support obligations, and revenue share.'],
@@ -91,7 +91,7 @@ return [
     ],
     'contact' => [
         'organization_slug' => 'kabeeri-public-inquiries',
-        'organization_name' => 'KABEERI Public Inquiries',
+        'organization_name' => 'kabeeri Public Inquiries',
         'owner_email' => 'public-inquiries@kabeeri.local',
     ],
     'next_runtime' => [

@@ -2,7 +2,7 @@
 
 return [
     'version' => 'V10',
-    'name' => 'KABEERI Internal Admin System Check and Core Admin UX',
+    'name' => 'kabeeri Internal Admin System Check and Core Admin UX',
     'rules' => [
         'runtime' => 'Filament is the internal admin runtime. Public marketing remains outside V10.',
         'context_first' => 'Every admin surface must show current context, what needs action, allowed actions, blocked actions, and next safe step.',
@@ -65,7 +65,7 @@ return [
             'label' => 'Content and Apps',
             'tables' => ['sites', 'content_types', 'content_entries', 'menus', 'redirects', 'forms', 'media_assets'],
             'routes' => ['filament.admin.resources.sites.index', 'filament.admin.resources.content-entries.index', 'filament.admin.resources.menus.index'],
-            'next_action' => 'Choose the active Kabeeri App, then manage content, SEO, menus, and media.',
+            'next_action' => 'Choose the active kabeeri App, then manage content, SEO, menus, and media.',
         ],
         'company_rabet' => [
             'label' => 'Company / Rabet OS',
@@ -86,7 +86,7 @@ return [
             'next_action' => 'Scope ERP work to company context and keep posting/finance actions permission-gated.',
         ],
         'mall' => [
-            'label' => 'Kabeeri Mall Console',
+            'label' => 'kabeeri Mall Console',
             'tables' => ['mall_sync_sources', 'mall_mirror_businesses', 'mall_mirror_products', 'mall_mirror_services', 'mall_mirror_courses', 'mall_mirror_talent', 'travel_tourism_mall_listings'],
             'routes' => ['mall.index'],
             'next_action' => 'Separate Mall discovery, moderation, and public trust from extension Marketplace installs.',
@@ -119,13 +119,13 @@ return [
     'workspace_homes' => [
         'personal' => ['label' => 'Personal Space', 'primary_route' => 'filament.admin.pages.admin-workspaces', 'context' => 'Current user', 'empty_state' => 'No personal queue yet. Start from notifications, approvals, or assigned work when enabled.'],
         'organization' => ['label' => 'Organization Workspace', 'primary_route' => 'filament.admin.resources.organizations.index', 'context' => 'Organization', 'empty_state' => 'Create or select an organization before team, billing, or app setup.'],
-        'site' => ['label' => 'Kabeeri App / Site Admin', 'primary_route' => 'filament.admin.resources.sites.index', 'context' => 'Kabeeri App / Site', 'empty_state' => 'Create or select a Kabeeri App before content, theme, menus, and SEO work.'],
+        'site' => ['label' => 'kabeeri App / Site Admin', 'primary_route' => 'filament.admin.resources.sites.index', 'context' => 'kabeeri App / Site', 'empty_state' => 'Create or select a kabeeri App before content, theme, menus, and SEO work.'],
         'company_rabet' => ['label' => 'Company Admin / Rabet OS', 'primary_route' => 'filament.admin.resources.companies.index', 'context' => 'Company', 'empty_state' => 'Create or select a company before Rabet verification, CRM, and business profile work.'],
         'commerce' => ['label' => 'Commerce Admin', 'primary_route' => 'filament.admin.resources.products.index', 'context' => 'Site or company commerce scope', 'empty_state' => 'Add products before orders, coupons, and payment review.'],
         'erp' => ['label' => 'ERP Admin', 'primary_route' => 'filament.admin.resources.inventory-items.index', 'context' => 'Company', 'empty_state' => 'Start with inventory and suppliers before purchasing, receipts, and finance posting.'],
-        'mall' => ['label' => 'Kabeeri Mall Console', 'primary_route' => 'filament.admin.pages.module-health', 'context' => 'Public listing network', 'empty_state' => 'Publish only consented and moderated listings into Mall discovery.'],
+        'mall' => ['label' => 'kabeeri Mall Console', 'primary_route' => 'filament.admin.pages.module-health', 'context' => 'Public listing network', 'empty_state' => 'Publish only consented and moderated listings into Mall discovery.'],
         'talent' => ['label' => 'Talent Console', 'primary_route' => 'filament.admin.resources.employee-profiles.index', 'context' => 'Professional profile', 'empty_state' => 'Talent profiles, badges, work network, and academy flows are staged for V13.'],
-        'teams' => ['label' => 'Kabeeri Teams', 'primary_route' => 'filament.admin.resources.approval-requests.index', 'context' => 'Team/workflow', 'empty_state' => 'Use approvals and workflows as the first operational team queue.'],
+        'teams' => ['label' => 'kabeeri Teams', 'primary_route' => 'filament.admin.resources.approval-requests.index', 'context' => 'Team/workflow', 'empty_state' => 'Use approvals and workflows as the first operational team queue.'],
         'developer' => ['label' => 'Developer Console', 'primary_route' => 'filament.admin.resources.developer-marketplace-listings.index', 'context' => 'Publisher account', 'empty_state' => 'No package submission selected. Start with manifest, permissions, review, signing, and support status.'],
         'billing' => ['label' => 'Billing Console', 'primary_route' => 'filament.admin.resources.plans.index', 'context' => 'Organization or company billing', 'empty_state' => 'Seed plans and entitlements before showing usage or upgrade prompts.'],
         'platform' => ['label' => 'Platform Admin', 'primary_route' => 'filament.admin.pages.system-check', 'context' => 'Global platform', 'empty_state' => 'Use system check, task tracker, database status, and release readiness before deployment.'],

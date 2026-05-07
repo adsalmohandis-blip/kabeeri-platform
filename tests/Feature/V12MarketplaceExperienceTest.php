@@ -42,7 +42,7 @@ class V12MarketplaceExperienceTest extends TestCase
         foreach (config('kabeeri_marketplace.pages') as $key => $page) {
             $this->get(route($page['route'], $this->routeParametersFor($key)))
                 ->assertOk()
-                ->assertSee('KABEERI V12 Marketplace Studio')
+                ->assertSee(__('kabeeri.brand.name').' V12 Marketplace Studio')
                 ->assertSee($page['label']);
         }
     }
@@ -51,7 +51,7 @@ class V12MarketplaceExperienceTest extends TestCase
     {
         $this->get(route('marketplace.themes.show', 'kabeeri-atlas'))
             ->assertOk()
-            ->assertSee('Kabeeri Atlas')
+            ->assertSee('kabeeri Atlas')
             ->assertSee('Theme Detail and Preview')
             ->assertSee('React Component Runtime Mapping')
             ->assertSee('Theme Manifest to React Components')

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $mode === 'register' ? 'Create customer account' : 'Customer login' }} - KABEERI</title>
+    <title>{{ $mode === 'register' ? 'Create customer account' : 'Customer login' }} - {{ __('kabeeri.brand.name') }}</title>
     @include('customer.v16-style')
 </head>
 <body>

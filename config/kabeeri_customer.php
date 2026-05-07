@@ -2,7 +2,7 @@
 
 return [
     'version' => 'V16',
-    'name' => 'KABEERI Customer Web Auth, Guided Onboarding, App Builder, and Workspace Runtime',
+    'name' => 'kabeeri Customer Web Auth, Guided Onboarding, App Builder, and Workspace Runtime',
     'rules' => [
         'entry' => 'Public visitors enter through /start, choose an audience path, then authenticate only when they are ready to create a workspace.',
         'auth_scope' => 'Customer web auth is separate from Filament admin. Admin remains /admin/login.',
@@ -26,7 +26,7 @@ return [
             'headline' => 'Launch a website, store, or service presence and grow into operations.',
             'default_app_type' => 'website',
             'creates_company' => true,
-            'benefits' => ['Kabeeri App', 'CRM Leads', 'Theme install', 'Mall visibility later'],
+            'benefits' => ['kabeeri App', 'CRM Leads', 'Theme install', 'Mall visibility later'],
         ],
         'store_owner' => [
             'label' => 'Store Owner',
@@ -58,7 +58,7 @@ return [
         ],
         'needs_builder' => [
             'label' => 'I need a builder',
-            'headline' => 'Request a Kabeeri Builder to help create the app, company, and content.',
+            'headline' => 'Request a kabeeri Builder to help create the app, company, and content.',
             'default_app_type' => 'website',
             'creates_company' => true,
             'benefits' => ['Builder request', 'Guided setup', 'Implementation partner handoff'],
@@ -74,7 +74,7 @@ return [
     ],
     'starter_themes' => [
         [
-            'name' => 'Kabeeri Atlas',
+            'name' => 'kabeeri Atlas',
             'slug' => 'kabeeri-atlas',
             'category' => 'business website',
             'app_types' => ['website', 'service_business', 'portal'],
@@ -82,7 +82,7 @@ return [
             'performance_score' => 94,
             'supports_rtl' => true,
             'supports_dark_mode' => false,
-            'publisher' => 'KABEERI Official',
+            'publisher' => 'kabeeri Official',
             'manifest' => ['sections' => ['hero', 'services', 'trust', 'lead_form'], 'runtime' => 'blade-bridge-next-ready'],
             'settings' => ['palette' => 'sand-olive', 'home_layout' => 'service-led', 'lead_capture' => true],
         ],
@@ -95,7 +95,7 @@ return [
             'performance_score' => 90,
             'supports_rtl' => true,
             'supports_dark_mode' => false,
-            'publisher' => 'KABEERI Official',
+            'publisher' => 'kabeeri Official',
             'manifest' => ['sections' => ['catalog', 'filters', 'trust_badges', 'inquiry'], 'runtime' => 'blade-bridge-next-ready'],
             'settings' => ['palette' => 'market-clay', 'home_layout' => 'catalog-led', 'mall_ready' => true],
         ],
@@ -108,7 +108,7 @@ return [
             'performance_score' => 92,
             'supports_rtl' => true,
             'supports_dark_mode' => true,
-            'publisher' => 'KABEERI Official',
+            'publisher' => 'kabeeri Official',
             'manifest' => ['sections' => ['campaign_hero', 'proof', 'pricing', 'cta'], 'runtime' => 'blade-bridge-next-ready'],
             'settings' => ['palette' => 'night-gold', 'home_layout' => 'conversion-led', 'campaign_mode' => true],
         ],
@@ -117,7 +117,7 @@ return [
         'customer_owner' => ['label' => 'Customer Owner', 'description' => 'Manages workspace, app, and subscription.'],
         'developer_creator' => ['label' => 'Developer / Creator', 'description' => 'Wants to build themes, plugins, or assets for sale later.'],
         'marketer_partner' => ['label' => 'Marketer / Partner', 'description' => 'Wants referrals, campaigns, and lead handoff.'],
-        'implementation_builder' => ['label' => 'Kabeeri Builder', 'description' => 'Wants to help customers build apps, companies, and content.'],
+        'implementation_builder' => ['label' => 'kabeeri Builder', 'description' => 'Wants to help customers build apps, companies, and content.'],
         'needs_builder_help' => ['label' => 'Needs Builder Help', 'description' => 'Customer wants someone to build the platform path for them.'],
     ],
     'dashboard_cards' => [

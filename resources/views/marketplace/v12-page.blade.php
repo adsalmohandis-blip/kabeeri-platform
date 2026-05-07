@@ -51,7 +51,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $pageConfig['label'] }} | KABEERI V12 Marketplace Studio</title>
+    <title>{{ $pageConfig['label'] }} | {{ __('kabeeri.brand.name') }} V12 Marketplace Studio</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -168,10 +168,14 @@
             font-weight: 800;
         }
 
-        .nav a:hover,
-        .nav a.active {
+        .nav a:hover {
             color: var(--charcoal);
-            background: rgba(23,19,13, .12);
+            background: rgba(255,250,240, .9);
+        }
+
+        .nav a.active {
+            color: #fffaf0;
+            background: #17130d;
         }
 
         .top-actions {
@@ -206,9 +210,9 @@
         }
 
         .button.amber {
-            color: #fffaf0;
-            border-color: transparent;
-            background: linear-gradient(135deg, var(--rust), var(--amber));
+            color: var(--charcoal);
+            border-color: rgba(23,19,13, .14);
+            background: rgba(255,250,240, .72);
         }
 
         .hero {
@@ -242,7 +246,7 @@
             display: grid;
             grid-template-columns: minmax(0, 1.06fr) minmax(330px, .94fr);
             gap: 24px;
-            padding: 52px;
+            padding: 34px;
         }
 
         .eyebrow,
@@ -280,7 +284,7 @@
             max-width: 820px;
             margin: 20px 0 15px;
             color: #17130d;
-            font-size: clamp(42px, 7vw, 84px);
+            font-size: clamp(30px, 4.8vw, 54px);
             line-height: .98;
         }
 
@@ -296,7 +300,7 @@
             max-width: 780px;
             margin: 0;
             color: rgba(23,19,13, .72);
-            font-size: clamp(17px, 2vw, 22px);
+            font-size: clamp(14px, 1.3vw, 17px);
         }
 
         .hero-actions {
@@ -362,7 +366,7 @@
 
         .section-title h2 {
             margin: 8px 0 0;
-            font-size: clamp(28px, 4vw, 46px);
+            font-size: clamp(22px, 2.8vw, 32px);
             line-height: 1.08;
         }
 
@@ -429,7 +433,7 @@
         .metric {
             margin-top: 12px;
             color: var(--teal);
-            font-size: 38px;
+            font-size: 24px;
             font-weight: 900;
             letter-spacing: -.05em;
         }
@@ -604,12 +608,12 @@
             <a class="brand" href="{{ route('marketplace.home') }}">
                 <span class="brand-mark">Kb</span>
                 <span>
-                    <strong>KABEERI Marketplace</strong>
+                    <strong>{{ __('kabeeri.brand.name') }} Marketplace</strong>
                     <small>V12 Themes, Plugins, Developer Economy</small>
                 </span>
             </a>
 
-            <nav class="nav" aria-label="KABEERI V12 navigation">
+            <nav class="nav" aria-label="{{ __('kabeeri.brand.name') }} V12 navigation">
                 @foreach ($nav as $item)
                     <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}">{{ $item['label'] }}</a>
                 @endforeach
@@ -626,9 +630,9 @@
             <section class="hero">
                 <div class="hero-grid">
                     <div>
-                        <span class="eyebrow">KABEERI V12 Marketplace Studio</span>
+                        <span class="eyebrow">{{ __('kabeeri.brand.name') }} V12 Marketplace Studio</span>
                         <h1>{{ in_array($page, $developerPages, true) ? 'بوابة المطورين والمبدعين لبيع الثيمات والبلجنز.' : $pageConfig['label'] }}</h1>
-                        <p>{{ $pageConfig['intent'] }} V12 تفصل Marketplace الداخلي عن Kabeeri Mall، وتعرض قبل أي تثبيت: permissions، compatibility، signing، license، rollback، والدعم.</p>
+                        <p>{{ $pageConfig['intent'] }} V12 تفصل Marketplace الداخلي عن {{ __('kabeeri.brand.name') }} Mall، وتعرض قبل أي تثبيت: permissions، compatibility، signing، license، rollback، والدعم.</p>
                         <div class="hero-actions">
                             <a class="button primary" href="{{ route('marketplace.themes.index') }}">تصفح Theme Catalog</a>
                             <a class="button amber" href="{{ route('marketplace.plugins.index') }}">تصفح Plugin Bundle Catalog</a>
@@ -1082,7 +1086,7 @@
                     </div>
 
                     <div class="grid-3">
-                        @foreach (['Kabeeri Creator', 'Kabeeri Developer', 'Certified Creator', 'Publisher Account', 'Developer Profile', 'Creator Public Page'] as $identity)
+                        @foreach ([__('kabeeri.brand.name').' Creator', __('kabeeri.brand.name').' Developer', 'Certified Creator', 'Publisher Account', 'Developer Profile', 'Creator Public Page'] as $identity)
                             <article class="card">
                                 <span class="chip">Identity</span>
                                 <h3>{{ $identity }}</h3>
@@ -1145,7 +1149,7 @@
         </main>
 
         <footer class="footer">
-            <span>KABEERI V12 Marketplace Studio</span>
+            <span>{{ __('kabeeri.brand.name') }} V12 Marketplace Studio</span>
             <span>{{ $pageConfig['uri'] }} · {{ $pageConfig['label'] }}</span>
         </footer>
     </div>

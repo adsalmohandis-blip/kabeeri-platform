@@ -29,7 +29,7 @@ class UpgradeTriggerService
                 'current_plan' => $result['plan_code'],
                 'recommended_plan' => $this->recommendedPlan((string) $result['key'], (string) $result['plan_code']),
                 'reason' => $result['reason'],
-                'message' => 'This action needs a higher KABEERI plan or an explicit entitlement override.',
+                'message' => 'This action needs a higher kabeeri plan or an explicit entitlement override.',
                 'usage' => $result['usage'],
                 'limit' => $result['limit'],
             ];

@@ -2,20 +2,20 @@
 
 return [
     'version' => 'V15',
-    'name' => 'KABEERI Next.js Public Runtime Scaffold and API Contract',
+    'name' => 'kabeeri Next.js Public Runtime Scaffold and API Contract',
     'rules' => [
         'runtime_boundary' => 'Next.js owns public theme rendering; Laravel owns domain logic, data, policies, jobs, and JSON contracts.',
         'blade_bridge' => 'Blade remains a temporary bridge for current public pages until route parity and API contracts are production-ready.',
         'api_only' => 'The public runtime must consume documented JSON endpoints and must not depend on Laravel models, Blade partials, or database access.',
         'rtl_first' => 'Arabic RTL is first-class. Locale, direction, logical spacing, semantic HTML, and accessible focus states are required.',
-        'marketplace_mall_separation' => 'Kabeeri Marketplace is the extension economy. Kabeeri Mall is public discovery and lead flow.',
+        'marketplace_mall_separation' => 'kabeeri Marketplace is the extension economy. kabeeri Mall is public discovery and lead flow.',
     ],
     'workspace' => [
         'path' => 'apps/public-web',
         'package' => '@kabeeri/public-web',
         'framework' => 'Next.js App Router',
         'language' => 'TypeScript',
-        'styling' => 'Tailwind CSS 4 plus Kabeeri design tokens',
+        'styling' => 'Tailwind CSS 4 plus kabeeri design tokens',
         'scripts' => [
             'build' => 'next build',
             'typecheck' => 'tsc --noEmit',
@@ -36,15 +36,15 @@ return [
         ],
     ],
     'routes' => [
-        ['key' => 'home', 'path' => '/ar', 'title' => 'Kabeeri Public Runtime Home', 'source' => 'V11 public narrative'],
+        ['key' => 'home', 'path' => '/ar', 'title' => 'kabeeri Public Runtime Home', 'source' => 'V11 public narrative'],
         ['key' => 'audiences', 'path' => '/ar/for', 'title' => 'Audience Paths', 'source' => 'V11 audience selector'],
         ['key' => 'pricing', 'path' => '/ar/pricing', 'title' => 'Pricing and Subscriptions', 'source' => 'V11 pricing'],
-        ['key' => 'marketplace', 'path' => '/ar/marketplace', 'title' => 'Kabeeri Marketplace', 'source' => 'V12 marketplace/developer UX'],
+        ['key' => 'marketplace', 'path' => '/ar/marketplace', 'title' => 'kabeeri Marketplace', 'source' => 'V12 marketplace/developer UX'],
         ['key' => 'developers', 'path' => '/ar/developers', 'title' => 'Developer Economy', 'source' => 'V12 developer portal'],
-        ['key' => 'mall', 'path' => '/ar/mall', 'title' => 'Kabeeri Mall', 'source' => 'V13 external Mall UX'],
+        ['key' => 'mall', 'path' => '/ar/mall', 'title' => 'kabeeri Mall', 'source' => 'V13 external Mall UX'],
     ],
     'audience_paths' => [
-        ['key' => 'business', 'label' => 'Business owners', 'promise' => 'Launch a Kabeeri App, then grow into commerce, CRM, operations, and Mall visibility.', 'route' => '/ar/for'],
+        ['key' => 'business', 'label' => 'Business owners', 'promise' => 'Launch a kabeeri App, then grow into commerce, CRM, operations, and Mall visibility.', 'route' => '/ar/for'],
         ['key' => 'enterprise', 'label' => 'Enterprise buyers', 'promise' => 'Govern teams, permissions, integrations, auditability, BI, and GRC adoption.', 'route' => '/ar/for'],
         ['key' => 'developers', 'label' => 'Developers and creators', 'promise' => 'Build themes, plugins, connectors, and business kits for the platform economy.', 'route' => '/ar/developers'],
         ['key' => 'partners', 'label' => 'Marketers and partners', 'promise' => 'Run campaigns, referrals, storefronts, lead handoff, and measurable growth paths.', 'route' => '/ar/for'],

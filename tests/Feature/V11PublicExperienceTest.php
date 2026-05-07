@@ -37,7 +37,7 @@ class V11PublicExperienceTest extends TestCase
         foreach (config('kabeeri_public.pages') as $page) {
             $this->get(route($page['route']))
                 ->assertOk()
-                ->assertSee('KABEERI Public Bridge')
+                ->assertSee(__('kabeeri.brand.name').' Public Bridge')
                 ->assertSee($page['label']);
         }
     }

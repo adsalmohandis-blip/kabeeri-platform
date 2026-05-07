@@ -64,7 +64,7 @@ class V7MobileSuiteTest extends TestCase
 
         $this->getJson('/api/mobile/theme')
             ->assertOk()
-            ->assertJsonPath('name', 'KABEERI Mobile Default');
+            ->assertJsonPath('name', 'kabeeri Mobile Default');
     }
 
     public function test_mobile_auth_and_device_apis_work_without_raw_token_storage(): void

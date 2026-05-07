@@ -15,9 +15,9 @@ class ThemesSeeder extends Seeder
         Theme::query()->updateOrCreate(
             ['slug' => 'kabeeri-starter'],
             [
-                'name' => 'Kabeeri Starter Theme',
+                'name' => 'kabeeri Starter Theme',
                 'version' => '1.0.0',
-                'publisher' => 'Kabeeri',
+                'publisher' => 'kabeeri',
                 'status' => 'active',
                 'type' => 'official',
                 'category' => 'starter',
@@ -43,9 +43,9 @@ class ThemesSeeder extends Seeder
         Theme::query()->updateOrCreate(
             ['slug' => 'kabeeri-commerce-lite'],
             [
-                'name' => 'Kabeeri Commerce Lite',
+                'name' => 'kabeeri Commerce Lite',
                 'version' => '1.0.0',
-                'publisher' => 'Kabeeri',
+                'publisher' => 'kabeeri',
                 'status' => 'active',
                 'type' => 'official',
                 'category' => 'commerce',

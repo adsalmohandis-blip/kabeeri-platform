@@ -16,9 +16,9 @@ class SettingFoundationTest extends TestCase
     {
         $service = app(SettingService::class);
 
-        $service->set('platform', null, 'app.name', 'Kabeeri', 'string');
+        $service->set('platform', null, 'app.name', 'kabeeri', 'string');
 
-        $this->assertSame('Kabeeri', $service->get('platform', null, 'app.name'));
+        $this->assertSame('kabeeri', $service->get('platform', null, 'app.name'));
     }
 
     public function test_can_override_organization_with_site_setting(): void

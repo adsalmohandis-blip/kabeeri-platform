@@ -42,7 +42,7 @@ class V10AdminExperienceTest extends TestCase
         foreach (config('kabeeri_admin.pages') as $page) {
             $this->get(route($page['route']))
                 ->assertOk()
-                ->assertSee('KABEERI V10 Admin Command')
+                ->assertSee(__('kabeeri.brand.name').' V10 Admin Command')
                 ->assertSee($page['label']);
         }
     }

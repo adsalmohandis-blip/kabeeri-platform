@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Guided Onboarding - KABEERI</title>
+    <title>Guided Onboarding - {{ __('kabeeri.brand.name') }}</title>
     @include('customer.v16-style')
 </head>
 <body>
@@ -119,8 +119,8 @@
                 <div class="checks">
                     <label class="check"><input type="checkbox" name="developer_creator" value="1" @checked(old('developer_creator'))> <span>أريد مسار Developer / Creator لبناء وبيع ثيمات أو إضافات لاحقًا.</span></label>
                     <label class="check"><input type="checkbox" name="marketer_partner" value="1" @checked(old('marketer_partner'))> <span>أريد مسار Marketer / Partner للإحالات والحملات.</span></label>
-                    <label class="check"><input type="checkbox" name="implementation_builder" value="1" @checked(old('implementation_builder'))> <span>أريد أن أكون Kabeeri Builder يساعد العملاء في بناء تطبيقاتهم.</span></label>
-                    <label class="check"><input type="checkbox" name="needs_builder_help" value="1" @checked(old('needs_builder_help', $selectedPath === 'needs_builder'))> <span>أحتاج Kabeeri Builder يساعدني في بناء التطبيق والشركة والمحتوى.</span></label>
+                    <label class="check"><input type="checkbox" name="implementation_builder" value="1" @checked(old('implementation_builder'))> <span>أريد أن أكون {{ __('kabeeri.brand.name') }} Builder يساعد العملاء في بناء تطبيقاتهم.</span></label>
+                    <label class="check"><input type="checkbox" name="needs_builder_help" value="1" @checked(old('needs_builder_help', $selectedPath === 'needs_builder'))> <span>أحتاج {{ __('kabeeri.brand.name') }} Builder يساعدني في بناء التطبيق والشركة والمحتوى.</span></label>
                 </div>
                 <div class="field">
                     <label for="builder_request_note">ملاحظات للـ Builder</label>

@@ -4,8 +4,8 @@
     <section class="hero">
         <div class="hero-grid">
             <div>
-                <span class="eyebrow">KABEERI Mall Home</span>
-                <h1>KABEERI Mall</h1>
+                <span class="eyebrow">{{ __('kabeeri.brand.name') }} Mall Home</span>
+                <h1>{{ __('kabeeri.brand.name') }} Mall</h1>
                 <p>Public discovery for trusted businesses, products, services, courses, talent, and travel. Mall is public discovery; Marketplace is internal extensions.</p>
                 <form class="search" action="{{ route('mall.search') }}" method="GET">
                     <input name="q" value="{{ request('q') }}" placeholder="ابحث عن شركة، منتج، خدمة، موهبة، أو رحلة">
@@ -30,7 +30,7 @@
                 <span class="chip">Mall Home Redesign</span>
                 <h2>كل قسم يوضح عدد المنشور ومعنى الثقة.</h2>
             </div>
-            <p>Kabeeri Mall لا يخلط نفسه مع Kabeeri Marketplace. هنا زائر يبحث عن أعمال وخدمات وفرص عامة، وليس تثبيت plugin.</p>
+            <p>{{ __('kabeeri.brand.name') }} Mall لا يخلط نفسه مع {{ __('kabeeri.brand.name') }} Marketplace. هنا زائر يبحث عن أعمال وخدمات وفرص عامة، وليس تثبيت plugin.</p>
         </div>
 
         <div class="grid-3" aria-label="Mall sections">

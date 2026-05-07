@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'brand' => [
+        'name' => 'kabeeri',
+    ],
     'language' => [
         'label' => 'Language',
         'aria' => 'Switch interface language',

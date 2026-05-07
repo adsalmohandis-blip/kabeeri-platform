@@ -2,7 +2,7 @@
 
 return [
     'version' => 'V14',
-    'name' => 'KABEERI UI Quality, Accessibility, Responsive, and Release Candidate',
+    'name' => 'kabeeri UI Quality, Accessibility, Responsive, and Release Candidate',
     'rules' => [
         'scope' => 'V14 is a release-candidate QA layer over V9-V13. It should not introduce a new product surface that hides quality problems.',
         'runtime' => 'Laravel Blade pages remain bridge/fallback surfaces. Next.js remains the target public theme runtime.',

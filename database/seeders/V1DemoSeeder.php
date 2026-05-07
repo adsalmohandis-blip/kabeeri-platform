@@ -24,7 +24,7 @@ class V1DemoSeeder extends Seeder
         $admin = User::query()->updateOrCreate(
             ['email' => 'admin@kabeeri.local'],
             [
-                'name' => 'KABEERI Platform Admin',
+                'name' => 'kabeeri Platform Admin',
                 'password' => 'password',
                 'email_verified_at' => now(),
             ],
@@ -33,7 +33,7 @@ class V1DemoSeeder extends Seeder
         $organization = Organization::query()->updateOrCreate(
             ['slug' => 'kabeeri-demo-org'],
             [
-                'name' => 'KABEERI Demo Organization',
+                'name' => 'kabeeri Demo Organization',
                 'owner_user_id' => $admin->id,
                 'account_type' => 'business',
                 'status' => 'active',
@@ -63,8 +63,8 @@ class V1DemoSeeder extends Seeder
                 'slug' => 'kabeeri-demo-company',
             ],
             [
-                'trade_name' => 'KABEERI Demo Company',
-                'legal_name' => 'KABEERI Demo Company LLC',
+                'trade_name' => 'kabeeri Demo Company',
+                'legal_name' => 'kabeeri Demo Company LLC',
                 'city' => 'Cairo',
                 'status' => 'active',
                 'verification_status' => 'not_submitted',
@@ -81,7 +81,7 @@ class V1DemoSeeder extends Seeder
             ],
             [
                 'company_id' => $company->id,
-                'name' => 'KABEERI Demo App',
+                'name' => 'kabeeri Demo App',
                 'site_type' => 'website',
                 'status' => 'active',
                 'language' => 'ar',
@@ -132,26 +132,26 @@ class V1DemoSeeder extends Seeder
             [
                 'title' => 'Home',
                 'slug' => 'home',
-                'excerpt' => 'Welcome to the KABEERI demo app.',
-                'body' => 'This is the Home page of the KABEERI V1 demo.',
+                'excerpt' => 'Welcome to the kabeeri demo app.',
+                'body' => 'This is the Home page of the kabeeri V1 demo.',
             ],
             [
                 'title' => 'About',
                 'slug' => 'about',
                 'excerpt' => 'Know more about our demo organization.',
-                'body' => 'This is the About page for the KABEERI V1 demo.',
+                'body' => 'This is the About page for the kabeeri V1 demo.',
             ],
             [
                 'title' => 'Services',
                 'slug' => 'services',
                 'excerpt' => 'A quick overview of demo services.',
-                'body' => 'This is the Services page for the KABEERI V1 demo.',
+                'body' => 'This is the Services page for the kabeeri V1 demo.',
             ],
             [
                 'title' => 'Contact',
                 'slug' => 'contact',
                 'excerpt' => 'How to reach the demo organization.',
-                'body' => 'This is the Contact page for the KABEERI V1 demo.',
+                'body' => 'This is the Contact page for the kabeeri V1 demo.',
             ],
         ];
 
@@ -213,7 +213,7 @@ class V1DemoSeeder extends Seeder
             [
                 'company_id' => $company->id,
                 'site_id' => $site->id,
-                'display_name' => 'KABEERI Demo Business',
+                'display_name' => 'kabeeri Demo Business',
                 'description' => 'Draft business profile for V1 demo scenario.',
                 'public_email' => 'info@kabeeri.local',
                 'public_phone' => '+20-100-000-0000',

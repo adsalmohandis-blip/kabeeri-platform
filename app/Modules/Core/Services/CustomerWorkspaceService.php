@@ -82,7 +82,7 @@ class CustomerWorkspaceService
                 'company_name' => (string) ($data['company_name'] ?? $organizationName),
                 'seed_basic_cms_page' => true,
                 'seed_page_title' => 'Home',
-                'seed_page_body' => 'Welcome to your Kabeeri app. This starter page was created by V16 onboarding.',
+                'seed_page_body' => 'Welcome to your kabeeri app. This starter page was created by V16 onboarding.',
             ]);
 
             /** @var Organization $organization */
@@ -186,7 +186,7 @@ class CustomerWorkspaceService
                 'name' => $theme['name'],
                 'slug' => $theme['slug'],
                 'version' => '1.0.0',
-                'publisher' => $theme['publisher'] ?? 'KABEERI Official',
+                'publisher' => $theme['publisher'] ?? 'kabeeri Official',
                 'status' => 'active',
                 'type' => 'official',
                 'category' => $theme['category'] ?? 'business website',
@@ -272,8 +272,8 @@ class CustomerWorkspaceService
                 [
                     'title' => 'Home',
                     'slug' => 'home',
-                    'excerpt' => 'Starter home page for your Kabeeri app.',
-                    'body' => '<p>Your Kabeeri app is active. Start editing your content, services, products, and growth path.</p>',
+                    'excerpt' => 'Starter home page for your kabeeri app.',
+                    'body' => '<p>Your kabeeri app is active. Start editing your content, services, products, and growth path.</p>',
                 ],
                 [
                     'title' => 'Contact',

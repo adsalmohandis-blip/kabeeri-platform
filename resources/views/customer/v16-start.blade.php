@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>KABEERI Customer Start</title>
+    <title>{{ __('kabeeri.brand.name') }} Customer Start</title>
     @include('customer.v16-style')
 </head>
 <body>
@@ -11,7 +11,7 @@
     <header class="top">
         <a class="brand" href="{{ route('home') }}">
             <span class="mark">K</span>
-            <span><strong>KABEERI Customer Start</strong><small>مدخل العميل العام</small></span>
+            <span><strong>{{ __('kabeeri.brand.name') }} Customer Start</strong><small>مدخل العميل العام</small></span>
         </a>
         <nav class="nav">
             <a href="{{ route('login') }}">دخول</a>
@@ -25,7 +25,7 @@
         <section>
             <span class="kicker">V16 Customer Onboarding</span>
             <h1>ابدأ من المسار المناسب، ثم ابن موقعك أو متجرك أو تطبيقك.</h1>
-            <p class="lead">اختار هل أنت صاحب مشروع، متجر، شركة خدمات، مطور/Creator، مسوق/Partner، أو تحتاج Kabeeri Builder يساعدك. بعد التسجيل ستختار نوع التطبيق، ترى الثيمات المناسبة، تثبت ثيم، وتدخل داشبورد العميل.</p>
+            <p class="lead">اختار هل أنت صاحب مشروع، متجر، شركة خدمات، مطور/Creator، مسوق/Partner، أو تحتاج {{ __('kabeeri.brand.name') }} Builder يساعدك. بعد التسجيل ستختار نوع التطبيق، ترى الثيمات المناسبة، تثبت ثيم، وتدخل داشبورد العميل.</p>
             <div class="nav">
                 <a class="button primary" href="{{ route('register') }}">ابدأ الآن</a>
                 <a class="button" href="#paths">شاهد المسارات</a>

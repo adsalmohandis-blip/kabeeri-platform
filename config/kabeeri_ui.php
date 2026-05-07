@@ -2,7 +2,7 @@
 
 return [
     'version' => 'V9',
-    'name' => 'KABEERI UI Foundation, Navigation, and Frontend Runtime',
+    'name' => 'kabeeri UI Foundation, Navigation, and Frontend Runtime',
     'decision' => [
         'public_runtime_target' => 'Next.js + React + TypeScript + Tailwind',
         'admin_runtime' => 'Filament + Livewire inside Laravel',
@@ -116,7 +116,7 @@ return [
             'resource_groups' => ['Organizations', 'Core', 'Apps'],
         ],
         'site' => [
-            'label' => 'Kabeeri App / Site Admin',
+            'label' => 'kabeeri App / Site Admin',
             'context' => 'site',
             'primary_jobs' => ['content', 'menus', 'SEO', 'forms', 'media', 'theme settings'],
             'resource_groups' => ['Content', 'Media', 'Apps'],
@@ -140,7 +140,7 @@ return [
             'resource_groups' => ['Inventory & Purchasing', 'Finance', 'Workflows'],
         ],
         'mall' => [
-            'label' => 'Kabeeri Mall Console',
+            'label' => 'kabeeri Mall Console',
             'context' => 'public_listing',
             'primary_jobs' => ['publication consent', 'moderation', 'trust', 'mirrors'],
             'resource_groups' => ['V4 Mall', 'V4 Marketplace'],
@@ -152,7 +152,7 @@ return [
             'resource_groups' => ['V4 Partners', 'People'],
         ],
         'teams' => [
-            'label' => 'Kabeeri Teams',
+            'label' => 'kabeeri Teams',
             'context' => 'team',
             'primary_jobs' => ['projects', 'tasks', 'approvals', 'activity'],
             'resource_groups' => ['People', 'Workflows'],
@@ -237,7 +237,7 @@ return [
         'rtl' => ['Use logical CSS properties', 'Do not hard-code left/right when inline-start/end is intended', 'Arabic content is primary, English is fallback'],
         'accessibility' => ['Semantic HTML first', 'Visible focus states', 'Keyboard reachable navigation', 'Contrast-safe tokens', 'Do not rely on color alone'],
         'responsive' => ['Mobile-first content hierarchy', 'No horizontal scroll at 360px', 'Sticky elements must gracefully collapse', 'Tables need card/list fallback'],
-        'copy' => ['Use Kabeeri App for public site/app copy', 'Use Site only for technical/admin database context', 'Do not expose every module at once to public visitors'],
+        'copy' => ['Use kabeeri App for public site/app copy', 'Use Site only for technical/admin database context', 'Do not expose every module at once to public visitors'],
     ],
     'smoke_strategy' => [
         'route_rendering' => ['/', '/admin/login', '/mall', '/mall/products', '/api/mobile/manifest'],
@@ -256,7 +256,7 @@ return [
         'sensitive_actions' => ['billing.manage', 'company.verification.approve', 'finance.journal.post', 'users.role.assign', 'plugin.install', 'ai.apply_sensitive_change'],
     ],
     'naming_rules' => [
-        'app_vs_site' => 'Use Kabeeri App for customer-facing website/store/landing/blog/portal copy. Use Site in admin technical context.',
+        'app_vs_site' => 'Use kabeeri App for customer-facing website/store/landing/blog/portal copy. Use Site in admin technical context.',
         'organization' => 'Workspace/admin scope.',
         'company' => 'Legal/business entity.',
         'business_profile' => 'Public Mall appearance of a company/business.',

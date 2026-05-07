@@ -10,7 +10,7 @@
         <section class="overflow-hidden rounded-3xl bg-gradient-to-br from-[#17130d] via-[#17130d] to-[#c98a2e] p-6 text-white shadow-xl">
             <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div class="max-w-3xl">
-                    <p class="text-sm font-bold uppercase tracking-[0.22em] text-white/70">KABEERI V10 Admin Command</p>
+                    <p class="text-sm font-bold uppercase tracking-[0.22em] text-white/70">{{ __('kabeeri.brand.name') }} V10 Admin Command</p>
                     <h1 class="mt-3 text-3xl font-black tracking-tight sm:text-5xl">{{ $pageConfig['label'] ?? 'Admin Command' }}</h1>
                     <p class="mt-4 text-base leading-8 text-white/78">{{ $pageConfig['purpose'] ?? 'Internal admin workspace for system clarity.' }}</p>
                 </div>

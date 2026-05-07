@@ -15,7 +15,7 @@ class RootDashboardPageTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
-            ->assertSee('KABEERI Business Client')
+            ->assertSee(__('kabeeri.brand.name').' Business Client')
             ->assertSee('ابدأ مسار العميل')
             ->assertSee('Command Center انتقل لمسار خاص')
             ->assertDontSee('Task Tracker Truth')
@@ -32,7 +32,7 @@ class RootDashboardPageTest extends TestCase
         $this->actingAs(User::factory()->create())
             ->get(route('system.command-center'))
             ->assertOk()
-            ->assertSee('KABEERI Command Center')
+            ->assertSee(__('kabeeri.brand.name').' Command Center')
             ->assertSee('Task Tracker Truth')
             ->assertSee('Release Candidate')
             ->assertSee('V15 Public Web Manifest')

@@ -12,7 +12,7 @@ class PackagesSeeder extends Seeder
         $packages = [
             [
                 'key' => 'kabeeri.forms',
-                'name' => 'Kabeeri Forms',
+                'name' => 'kabeeri Forms',
                 'slug' => 'kabeeri-forms',
                 'package_type' => 'module',
                 'category' => 'forms',
@@ -20,7 +20,7 @@ class PackagesSeeder extends Seeder
             ],
             [
                 'key' => 'kabeeri.commerce-lite',
-                'name' => 'Kabeeri Commerce Lite',
+                'name' => 'kabeeri Commerce Lite',
                 'slug' => 'kabeeri-commerce-lite',
                 'package_type' => 'module',
                 'category' => 'commerce',

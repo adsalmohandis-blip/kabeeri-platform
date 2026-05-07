@@ -29,7 +29,7 @@ class MobileAppService
         $config = MobileAppConfig::query()->updateOrCreate(
             ['organization_id' => null, 'app_key' => 'kabeeri-mobile'],
             [
-                'name' => 'KABEERI Mobile',
+                'name' => 'kabeeri Mobile',
                 'platform' => 'universal',
                 'status' => 'active',
                 'min_supported_version' => '1.0.0',
@@ -40,7 +40,7 @@ class MobileAppService
         );
 
         MobileThemeProfile::query()->updateOrCreate(
-            ['mobile_app_config_id' => $config->id, 'name' => 'KABEERI Mobile Default'],
+            ['mobile_app_config_id' => $config->id, 'name' => 'kabeeri Mobile Default'],
             [
                 'status' => 'active',
                 'colors' => ['primary' => '#b7791f', 'surface' => '#fffaf0'],

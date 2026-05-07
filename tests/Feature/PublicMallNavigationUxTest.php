@@ -30,7 +30,7 @@ class PublicMallNavigationUxTest extends TestCase
 
         $this->get('/mall')
             ->assertOk()
-            ->assertSee('KABEERI Mall')
+            ->assertSee(__('kabeeri.brand.name').' Mall')
             ->assertSee(route('mall.businesses.index'), false)
             ->assertSee(route('mall.products.index'), false)
             ->assertSee('Business Directory')

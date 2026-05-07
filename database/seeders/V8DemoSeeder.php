@@ -12,7 +12,7 @@ class V8DemoSeeder extends Seeder
         $service = app(DesktopSyncService::class);
         $client = $service->registerClient(null, [
             'client_uuid' => 'kabeeri-desktop-demo',
-            'name' => 'KABEERI Desktop Demo',
+            'name' => 'kabeeri Desktop Demo',
             'platform' => 'windows',
             'app_version' => '1.0.0',
             'capabilities' => ['pull', 'push_dry_run', 'file_queue'],

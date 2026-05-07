@@ -40,7 +40,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>لوحة إدارة التطبيقات - KABEERI</title>
+    <title>لوحة إدارة التطبيقات - {{ __('kabeeri.brand.name') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -55,7 +55,7 @@
                 <div class="flex items-center gap-3">
                     <span class="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-[#c98a2e] via-[#17130d] to-[#17130d] text-base font-black">K</span>
                     <div>
-                        <p class="text-[11px] font-black uppercase tracking-[.22em] text-[#c98a2e]">KABEERI</p>
+                        <p class="text-[11px] font-black uppercase tracking-[.22em] text-[#c98a2e]">{{ __('kabeeri.brand.name') }}</p>
                         <h1 class="text-sm font-black leading-tight">لوحة التطبيقات</h1>
                     </div>
                 </div>

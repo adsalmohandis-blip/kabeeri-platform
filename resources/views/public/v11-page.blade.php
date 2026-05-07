@@ -38,7 +38,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $pageConfig['label'] }} | KABEERI Public Bridge</title>
+    <title>{{ $pageConfig['label'] }} | {{ __('kabeeri.brand.name') }} Public Bridge</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -171,10 +171,14 @@
             transition: .2s ease;
         }
 
-        .nav a:hover,
-        .nav a.active {
+        .nav a:hover {
             color: var(--olive-dark);
-            background: rgba(23,19,13, .12);
+            background: rgba(255,250,240, .9);
+        }
+
+        .nav a.active {
+            color: #fffaf0;
+            background: #17130d;
         }
 
         .top-actions {
@@ -210,9 +214,9 @@
         }
 
         .button.copper {
-            color: #fffaf0;
-            border-color: transparent;
-            background: linear-gradient(135deg, #17130d, var(--copper));
+            color: var(--olive-dark);
+            border-color: rgba(23,19,13, .15);
+            background: rgba(255,250,240, .72);
         }
 
         .hero {
@@ -244,8 +248,8 @@
             z-index: 1;
             display: grid;
             grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr);
-            gap: 28px;
-            padding: 54px;
+            gap: 20px;
+            padding: 34px;
         }
 
         .eyebrow {
@@ -256,7 +260,7 @@
             border: 1px solid rgba(23,19,13, .18);
             border-radius: 999px;
             color: var(--olive-dark);
-            background: rgba(23,19,13, .52);
+            background: rgba(255,250,240, .76);
             font-size: 13px;
             font-weight: 800;
         }
@@ -274,7 +278,7 @@
             max-width: 820px;
             margin: 22px 0 16px;
             color: #17130d;
-            font-size: clamp(42px, 7vw, 88px);
+            font-size: clamp(30px, 4.8vw, 56px);
             line-height: .98;
         }
 
@@ -282,7 +286,7 @@
             max-width: 760px;
             margin: 0;
             color: rgba(23,19,13, .72);
-            font-size: clamp(17px, 2vw, 22px);
+            font-size: clamp(14px, 1.3vw, 17px);
             line-height: 1.85;
         }
 
@@ -354,7 +358,7 @@
 
         .section-title h2 {
             margin: 0;
-            font-size: clamp(28px, 4vw, 46px);
+            font-size: clamp(22px, 2.8vw, 32px);
             line-height: 1.08;
         }
 
@@ -434,7 +438,7 @@
             padding: 5px 10px;
             border-radius: 999px;
             color: var(--olive-dark);
-            background: rgba(23,19,13, .72);
+            background: rgba(255,250,240, .76);
             font-size: 12px;
             font-weight: 800;
         }
@@ -499,7 +503,7 @@
         .price {
             margin: 12px 0;
             color: var(--copper);
-            font-size: 36px;
+            font-size: 24px;
             font-weight: 800;
             letter-spacing: -.04em;
         }
@@ -558,7 +562,7 @@
             border: 1px solid rgba(23,19,13, .18);
             border-radius: 18px;
             color: var(--olive-dark);
-            background: rgba(23,19,13, .72);
+            background: rgba(255,250,240, .76);
             font-weight: 800;
         }
 
@@ -670,12 +674,12 @@
             <a class="brand" href="{{ route('public.landing') }}">
                 <span class="mark">Kb</span>
                 <span>
-                    <strong>KABEERI</strong>
+                    <strong>{{ __('kabeeri.brand.name') }}</strong>
                     <small>Public Bridge V11</small>
                 </span>
             </a>
 
-            <nav class="nav" aria-label="KABEERI public navigation">
+            <nav class="nav" aria-label="{{ __('kabeeri.brand.name') }} public navigation">
                 @foreach ($publicNav as $item)
                     <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}">{{ $item['label'] }}</a>
                 @endforeach
@@ -692,7 +696,7 @@
             <section class="hero">
                 <div class="hero-grid">
                     <div>
-                        <span class="eyebrow">KABEERI Public Bridge</span>
+                        <span class="eyebrow">{{ __('kabeeri.brand.name') }} Public Bridge</span>
                         <h1>
                             @if ($page === 'landing')
                                 منصة تبدأ كموقع واضح وتنتهي كنظام تشغيل للشركة.
@@ -708,7 +712,7 @@
                         </div>
                     </div>
 
-                    <aside class="signal-board" aria-label="KABEERI public positioning">
+                    <aside class="signal-board" aria-label="{{ __('kabeeri.brand.name') }} public positioning">
                         <div class="signal dark">
                             <strong>من WordPress Alternative إلى Company OS</strong>
                             <span>لا نرمي كل المنصة على العميل مرة واحدة. نبدأ بالاحتياج المفهوم، ثم نفتح التجارة والثقة والعمليات والسوق.</span>
@@ -829,7 +833,7 @@
                         </article>
                         <article class="card">
                             <h3>ثقة وسوق</h3>
-                            <p>Rabet للتحقق والهوية، وKabeeri Mall لاكتشاف الخدمات والمنتجات والقوائم العامة.</p>
+                            <p>Rabet للتحقق والهوية، و{{ __('kabeeri.brand.name') }} Mall لاكتشاف الخدمات والمنتجات والقوائم العامة.</p>
                         </article>
                     </div>
                 </section>
@@ -1123,7 +1127,7 @@
         </main>
 
         <footer class="footer">
-            <span>KABEERI V11 Public Marketing UX</span>
+            <span>{{ __('kabeeri.brand.name') }} V11 Public Marketing UX</span>
             <span>{{ $pageConfig['uri'] }} · {{ $pageConfig['label'] }} · {{ $pageConfig['intent'] }}</span>
         </footer>
     </div>

@@ -179,7 +179,7 @@ class V11PublicExperience
         $owner = User::query()->firstOrCreate(
             ['email' => $contact['owner_email']],
             [
-                'name' => 'KABEERI Public Inquiry Owner',
+                'name' => 'kabeeri Public Inquiry Owner',
                 'password' => Str::password(40),
             ],
         );

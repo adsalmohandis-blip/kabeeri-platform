@@ -29,7 +29,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $pageConfig['label'] }} | KABEERI V13 External UX</title>
+    <title>{{ $pageConfig['label'] }} | {{ __('kabeeri.brand.name') }} V13 External UX</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -156,10 +156,14 @@
             font-size: 13px;
         }
 
-        .nav a:hover,
-        .nav a.active {
-            background: rgba(23,19,13, .14);
+        .nav a:hover {
+            background: rgba(255,250,240, .9);
             color: var(--forest);
+        }
+
+        .nav a.active {
+            background: #17130d;
+            color: #fffaf0;
         }
 
         .button {
@@ -183,9 +187,9 @@
         }
 
         .button.clay {
-            border-color: transparent;
-            color: var(--paper);
-            background: linear-gradient(135deg, #17130d, var(--clay));
+            border-color: var(--line);
+            color: var(--forest);
+            background: rgba(255,250,240, .72);
         }
 
         .hero {
@@ -204,7 +208,7 @@
             display: grid;
             grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr);
             gap: 24px;
-            padding: 52px;
+            padding: 34px;
         }
 
         h1,
@@ -217,7 +221,7 @@
         h1 {
             max-width: 820px;
             margin: 18px 0 16px;
-            font-size: clamp(42px, 7vw, 84px);
+            font-size: clamp(30px, 4.8vw, 54px);
             line-height: .98;
         }
 
@@ -227,7 +231,7 @@
             padding: 6px 11px;
             border: 1px solid rgba(23,19,13, .18);
             color: var(--forest);
-            background: rgba(23,19,13, .52);
+            background: rgba(255,250,240, .76);
             font-size: 12px;
         }
 
@@ -243,7 +247,7 @@
             max-width: 760px;
             margin: 0;
             color: rgba(23,19,13, .72);
-            font-size: clamp(17px, 2vw, 22px);
+            font-size: clamp(14px, 1.3vw, 17px);
         }
 
         .signal-board {
@@ -297,7 +301,7 @@
 
         .section-title h2 {
             margin: 8px 0 0;
-            font-size: clamp(28px, 4vw, 46px);
+            font-size: clamp(22px, 2.8vw, 32px);
             line-height: 1.08;
         }
 
@@ -339,7 +343,7 @@
         .metric {
             margin-top: 12px;
             color: var(--forest);
-            font-size: 36px;
+            font-size: 24px;
             font-weight: 900;
         }
 
@@ -443,7 +447,7 @@
             <a class="brand" href="{{ route('mall.index') }}">
                 <span class="brand-mark">Kb</span>
                 <span>
-                    <strong>KABEERI External</strong>
+                    <strong>{{ __('kabeeri.brand.name') }} External</strong>
                     <small>V13 Mall, Customer, Partner, Network</small>
                 </span>
             </a>
@@ -465,7 +469,7 @@
             <section class="hero">
                 <div class="hero-grid">
                     <div>
-                        <span class="eyebrow">KABEERI V13 External Portal</span>
+                        <span class="eyebrow">{{ __('kabeeri.brand.name') }} V13 External Portal</span>
                         <h1>{{ $pageConfig['label'] }}</h1>
                         <p>{{ $pageConfig['intent'] }} هذه الطبقة تفصل اكتشاف Mall العام عن Marketplace الداخلي، وتربط العميل والشريك والمسوق بمسار واضح وقابل للقياس.</p>
                         <div class="actions" style="margin-top: 24px;">
@@ -496,7 +500,7 @@
                 <section class="section">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Kabeeri Mall vs Kabeeri Marketplace Public Copy Separation</span>
+                            <span class="chip">{{ __('kabeeri.brand.name') }} Mall vs {{ __('kabeeri.brand.name') }} Marketplace Public Copy Separation</span>
                             <h2>Mall للعثور على أعمال حقيقية، Marketplace لتثبيت إضافات داخلية.</h2>
                         </div>
                         <p>هذه الرسالة لازم تظل واضحة في كل صفحة عامة حتى لا يخلط الزائر بين شراء خدمة عامة وتثبيت plugin بصلاحيات حساسة.</p>
@@ -790,7 +794,7 @@
         </main>
 
         <footer class="footer">
-            <span>KABEERI V13 External UX</span>
+            <span>{{ __('kabeeri.brand.name') }} V13 External UX</span>
             <span>{{ $pageConfig['uri'] }} · {{ $pageConfig['label'] }}</span>
         </footer>
     </div>

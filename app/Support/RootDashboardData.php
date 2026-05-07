@@ -328,9 +328,9 @@ class RootDashboardData
     private static function audiences(): array
     {
         return [
-            ['title' => 'أصحاب الأعمال', 'tag' => 'Business', 'value' => 'موقع واضح، محتوى، متجر، CRM، فواتير، عمليات، وظهور منظم داخل Kabeeri Mall.'],
+            ['title' => 'أصحاب الأعمال', 'tag' => 'Business', 'value' => 'موقع واضح، محتوى، متجر، CRM، فواتير، عمليات، وظهور منظم داخل kabeeri Mall.'],
             ['title' => 'المؤسسات', 'tag' => 'Enterprise', 'value' => 'حوكمة، صلاحيات، تدقيق، تكاملات، BI، GRC، ومسارات Mobile/Desktop.'],
-            ['title' => 'المطورون والCreators', 'tag' => 'Developers', 'value' => 'ثيمات وبلجنز وConnectors قابلة للمراجعة والتوقيع والبيع في Kabeeri Marketplace.'],
+            ['title' => 'المطورون والCreators', 'tag' => 'Developers', 'value' => 'ثيمات وبلجنز وConnectors قابلة للمراجعة والتوقيع والبيع في kabeeri Marketplace.'],
             ['title' => 'المسوقون والشركاء', 'tag' => 'Partners', 'value' => 'إحالات، حملات، partner storefronts، lead handoff، وقياس نمو قابل للتوسع.'],
         ];
     }
@@ -342,7 +342,7 @@ class RootDashboardData
     {
         return [
             ['n' => '01', 'title' => 'اختيار الجمهور', 'text' => 'صاحب عمل، مؤسسة، مطور، مسوق، وكالة، شريك، أو زائر Mall. كل مسار يكشف الأدوات المناسبة فقط.'],
-            ['n' => '02', 'title' => 'بناء المساحة', 'text' => 'Organization، Company عند الحاجة، أول Kabeeri App، اللغة، العملة، الدومين، والفريق.'],
+            ['n' => '02', 'title' => 'بناء المساحة', 'text' => 'Organization، Company عند الحاجة، أول kabeeri App، اللغة، العملة، الدومين، والفريق.'],
             ['n' => '03', 'title' => 'اختيار الثيم والإضافات', 'text' => 'Theme catalog وplugin bundles بعرض صلاحيات، توافق، مراجعة، وrollback قبل أي تثبيت.'],
             ['n' => '04', 'title' => 'النشر والنمو', 'text' => 'محتوى، منتجات، CRM، عمليات، تقارير، Mall visibility، ثم Marketplace وPartner Network.'],
         ];

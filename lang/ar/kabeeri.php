@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'brand' => [
+        'name' => 'كبيري',
+    ],
     'language' => [
         'label' => 'اللغة',
         'aria' => 'تبديل لغة الواجهة',

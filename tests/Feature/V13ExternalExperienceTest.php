@@ -27,7 +27,7 @@ class V13ExternalExperienceTest extends TestCase
         $this->assertGreaterThanOrEqual(4, count($config['trust_badges']));
         $this->assertGreaterThanOrEqual(5, count($config['customer_steps']));
         $this->assertGreaterThanOrEqual(4, count($config['partner_paths']));
-        $this->assertSame('Kabeeri Mall is public discovery. Kabeeri Marketplace is internal extensions. Do not mix Mall leads with package install flows.', $config['rules']['mall_vs_marketplace']);
+        $this->assertSame('kabeeri Mall is public discovery. kabeeri Marketplace is internal extensions. Do not mix Mall leads with package install flows.', $config['rules']['mall_vs_marketplace']);
     }
 
     public function test_v13_external_routes_and_admin_handoffs_are_registered(): void
@@ -50,7 +50,7 @@ class V13ExternalExperienceTest extends TestCase
         foreach (config('kabeeri_external.pages') as $page) {
             $this->get(route($page['route']))
                 ->assertOk()
-                ->assertSee('KABEERI V13')
+                ->assertSee(__('kabeeri.brand.name').' V13')
                 ->assertSee($page['label']);
         }
     }
@@ -74,7 +74,7 @@ class V13ExternalExperienceTest extends TestCase
         ] as $route => $expected) {
             $this->get(route($route))
                 ->assertOk()
-                ->assertSee('KABEERI V13 Mall UX')
+                ->assertSee(__('kabeeri.brand.name').' V13 Mall UX')
                 ->assertSee($expected)
                 ->assertSee('Mall is public discovery. Marketplace is internal extensions.');
         }

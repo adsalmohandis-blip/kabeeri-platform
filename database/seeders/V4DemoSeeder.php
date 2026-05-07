@@ -187,7 +187,7 @@ class V4DemoSeeder extends Seeder
         $package = Package::query()->updateOrCreate(
             ['key' => 'kabeeri.v4-demo-package'],
             [
-                'name' => 'Kabeeri V4 Demo Package',
+                'name' => 'kabeeri V4 Demo Package',
                 'slug' => 'kabeeri-v4-demo-package',
                 'package_type' => 'module',
                 'publisher_type' => 'official',
@@ -298,7 +298,7 @@ class V4DemoSeeder extends Seeder
             [
                 'user_id' => $admin->id,
                 'display_name' => 'V4 Demo Work Profile',
-                'headline' => 'KABEERI V4 Specialist',
+                'headline' => 'kabeeri V4 Specialist',
                 'skills' => ['mall', 'migration'],
                 'visibility' => 'public',
                 'status' => 'published',

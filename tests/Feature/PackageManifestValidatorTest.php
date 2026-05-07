@@ -11,7 +11,7 @@ class PackageManifestValidatorTest extends TestCase
     {
         $result = app(PackageManifestValidator::class)->validate([
             'key' => 'kabeeri.forms',
-            'name' => 'Kabeeri Forms',
+            'name' => 'kabeeri Forms',
             'version' => '1.0.0',
             'package_type' => 'module',
             'permissions' => ['form.view'],

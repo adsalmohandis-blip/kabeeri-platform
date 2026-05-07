@@ -2,16 +2,16 @@
 
 return [
     'version' => 'V13',
-    'name' => 'KABEERI Mall, Customer Portal, Partner, and Network UX',
+    'name' => 'kabeeri Mall, Customer Portal, Partner, and Network UX',
     'rules' => [
         'runtime' => 'Laravel Blade is the V13 bridge for external portals. Long-term themed public surfaces still move toward Next.js contracts.',
-        'mall_vs_marketplace' => 'Kabeeri Mall is public discovery. Kabeeri Marketplace is internal extensions. Do not mix Mall leads with package install flows.',
+        'mall_vs_marketplace' => 'kabeeri Mall is public discovery. kabeeri Marketplace is internal extensions. Do not mix Mall leads with package install flows.',
         'trust_first' => 'Mall listings must explain verification, publication consent, moderation, reporting, claim/submit, and reputation before conversion.',
         'portal_progressive' => 'Customer portal starts with setup, theme/plugin choice, products/services quick setup, billing, team, and support.',
         'partner_measurable' => 'Agency, marketer, partner, and legal partner paths must show lead handoff, referrals, commissions, verification journey, and next actions.',
     ],
     'pages' => [
-        'mall_home' => ['label' => 'KABEERI Mall Home', 'route' => 'mall.index', 'uri' => '/mall', 'task_ids' => ['T02', 'T22'], 'intent' => 'Public discovery for trusted listings, not extension installs.'],
+        'mall_home' => ['label' => 'Mall Home', 'route' => 'mall.index', 'uri' => '/mall', 'task_ids' => ['T02', 'T22'], 'intent' => 'Public discovery for trusted listings, not extension installs.'],
         'mall_search' => ['label' => 'Mall Search and Filters', 'route' => 'mall.search', 'uri' => '/mall/search', 'task_ids' => ['T03'], 'intent' => 'Expose search categories, trust filters, and listing type filters.'],
         'mall_trust' => ['label' => 'Mall Trust and Moderation', 'route' => 'mall.trust', 'uri' => '/mall/trust', 'task_ids' => ['T23'], 'intent' => 'Explain verification badges, moderation, reports, and reputation.'],
         'mall_claim_report' => ['label' => 'Mall Claim Submit and Report', 'route' => 'mall.claim-report', 'uri' => '/mall/claim-report', 'task_ids' => ['T24'], 'intent' => 'Explain listing claim, submit interest, and report flow.'],
@@ -89,7 +89,7 @@ return [
         'partner storefront kit',
     ],
     'network' => [
-        'academy_badges' => ['Kabeeri Starter', 'Verified Creator', 'Mall Trust Guide', 'Partner Sales Basics'],
+        'academy_badges' => ['kabeeri Starter', 'Verified Creator', 'Mall Trust Guide', 'Partner Sales Basics'],
         'work_paths' => ['Professional profile', 'Talent listing', 'Agency role', 'Creator profile', 'Legal partner path'],
         'quality_rules' => ['public consent', 'skills evidence', 'badge criteria', 'moderation safety', 'report flow'],
     ],

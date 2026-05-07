@@ -28,10 +28,10 @@ class V16CustomerExperienceTest extends TestCase
     {
         $this->get('/start')
             ->assertOk()
-            ->assertSee('KABEERI Customer Start')
+            ->assertSee(__('kabeeri.brand.name').' Customer Start')
             ->assertSee('Business Owner')
             ->assertSee('I need a builder')
-            ->assertSee('Kabeeri Atlas')
+            ->assertSee('kabeeri Atlas')
             ->assertSee('quick-register')
             ->assertSee('quick_name')
             ->assertSee('quick_password_confirmation');
