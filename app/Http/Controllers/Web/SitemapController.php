@@ -22,7 +22,7 @@ class SitemapController extends Controller
 
         $urls = $entries->map(function (ContentEntry $entry): string {
             $location = route('public.content-entry.show', [
-                'site' => $entry->site,
+                'username' => $entry->site->username,
                 'contentEntry' => $entry,
             ]);
 

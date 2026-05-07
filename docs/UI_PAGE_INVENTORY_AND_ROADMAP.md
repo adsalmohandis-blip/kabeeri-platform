@@ -256,7 +256,7 @@ External UI must answer:
 
 ### Public Site and CMS Rendering
 
-- Public content page: `/app/{site}/{contentEntry}`.
+- Public content page: `/app/{username}/{contentEntry}`.
 - Themed site layout.
 - Landing page template.
 - About page template.

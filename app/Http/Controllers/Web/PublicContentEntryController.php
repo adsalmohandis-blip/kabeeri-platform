@@ -10,8 +10,12 @@ use Illuminate\Contracts\View\View;
 
 class PublicContentEntryController extends Controller
 {
-    public function __invoke(Site $site, ContentEntry $contentEntry): View
+    public function __invoke(string $username, ContentEntry $contentEntry): View
     {
+        $site = Site::query()
+            ->where('slug', $username)
+            ->firstOrFail();
+
         if ($contentEntry->site_id !== $site->id) {
             abort(404);
         }

@@ -71,7 +71,9 @@ Route::middleware('auth')->prefix('customer')->name('customer.')->group(function
     Route::get('/onboarding', [CustomerWorkspaceController::class, 'onboarding'])->name('onboarding');
     Route::post('/onboarding', [CustomerWorkspaceController::class, 'storeOnboarding'])->name('onboarding.store');
     Route::get('/dashboard', [CustomerWorkspaceController::class, 'dashboard'])->name('workspace');
-    Route::get('/apps/{site}', [CustomerWorkspaceController::class, 'showSite'])->name('apps.show');
+    Route::get('/apps/{username}', [CustomerWorkspaceController::class, 'showSite'])
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
+        ->name('apps.show');
     Route::post('/profile/capabilities', [CustomerWorkspaceController::class, 'updateCapabilities'])->name('capabilities.update');
 });
 
@@ -165,6 +167,7 @@ Route::get('/mall/travel/{listing:slug}', [MallTravelTourismController::class, '
     ->name('mall.travel.show');
 
 Route::scopeBindings()->group(function (): void {
-    Route::get('/app/{site:slug}/{contentEntry:slug}', PublicContentEntryController::class)
+    Route::get('/app/{username}/{contentEntry:slug}', PublicContentEntryController::class)
+        ->where('username', '[A-Za-z0-9][A-Za-z0-9_-]*')
         ->name('public.content-entry.show');
 });

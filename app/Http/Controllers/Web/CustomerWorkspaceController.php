@@ -68,9 +68,17 @@ class CustomerWorkspaceController extends Controller
         ]);
     }
 
-    public function showSite(Request $request, Site $site, CustomerWorkspaceService $workspace): View
+    public function showSite(Request $request, string $username, CustomerWorkspaceService $workspace): View
     {
-        abort_unless($request->user()?->ownedOrganizations()->whereKey($site->organization_id)->exists(), 403);
+        $user = $request->user();
+        $ownedOrganizationIds = $user?->ownedOrganizations()->pluck('organizations.id') ?? collect();
+        $site = Site::query()
+            ->whereIn('organization_id', $ownedOrganizationIds)
+            ->where('slug', $username)
+            ->first();
+
+        abort_if($site === null && Site::query()->where('slug', $username)->exists(), 403);
+        abort_if($site === null, 404);
 
         return view('customer.v16-site', [
             'site' => $site->load(['theme', 'themeSettings', 'contentEntries']),

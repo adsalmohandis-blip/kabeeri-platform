@@ -87,6 +87,7 @@ class V16CustomerExperienceTest extends TestCase
         $site = Site::query()->where('name', 'Acme Store')->firstOrFail();
 
         $this->assertSame($organization->id, $site->organization_id);
+        $this->assertSame('acme-store', $site->username);
         $this->assertSame('store', $site->metadata['v16_app_type']);
         $this->assertSame('active', $site->metadata['theme_install_status']);
         $this->assertSame('mall-window', $site->theme?->slug);
@@ -103,12 +104,24 @@ class V16CustomerExperienceTest extends TestCase
             ->assertSee('workspace-sidebar')
             ->assertSee('Control Center')
             ->assertSee('Acme Store')
-            ->assertSee('Mall Window');
+            ->assertSee('Mall Window')
+            ->assertSee('/customer/apps/acme-store', false)
+            ->assertDontSee('/customer/apps/'.$site->id, false);
 
-        $this->get(route('customer.apps.show', $site))
+        $this->assertSame(
+            url('/customer/apps/acme-store'),
+            route('customer.apps.show', ['username' => $site->username]),
+        );
+
+        $this->get(route('customer.apps.show', ['username' => $site->username]))
             ->assertOk()
             ->assertSee('App is active')
-            ->assertSee('Mall Window');
+            ->assertSee('Mall Window')
+            ->assertSee('Username')
+            ->assertSee('acme-store');
+
+        $this->get('/customer/apps/'.$site->id)
+            ->assertNotFound();
     }
 
     public function test_customer_dashboard_is_protected_and_foreign_app_is_forbidden(): void
@@ -121,7 +134,7 @@ class V16CustomerExperienceTest extends TestCase
         $this->get(route('customer.workspace'))->assertRedirect('/login');
 
         $this->actingAs($other)
-            ->get(route('customer.apps.show', $site))
+            ->get(route('customer.apps.show', ['username' => $site->username]))
             ->assertForbidden();
     }
 

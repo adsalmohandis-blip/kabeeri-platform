@@ -24,7 +24,8 @@
             <span class="kicker">App is active</span>
             <h1>{{ $site->name }}</h1>
             <p class="lead">التطبيق مفعل بثيم {{ $site->theme?->name ?? 'بدون ثيم' }}. هذه الصفحة تجمع حالة التثبيت، إعدادات الثيم، والمحتوى الأولي الذي تم إنشاؤه للعميل.</p>
-            <div class="grid three">
+            <div class="grid four">
+                <div class="metric"><strong>{{ $site->username }}</strong><span>Username</span></div>
                 <div class="metric"><strong>{{ $site->site_type }}</strong><span>Site type</span></div>
                 <div class="metric"><strong>{{ $site->metadata['v16_app_type'] ?? 'website' }}</strong><span>App type</span></div>
                 <div class="metric"><strong>{{ $site->metadata['theme_install_status'] ?? 'active' }}</strong><span>Theme status</span></div>

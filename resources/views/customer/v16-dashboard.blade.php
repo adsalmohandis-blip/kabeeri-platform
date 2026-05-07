@@ -172,10 +172,10 @@
 
                     <div class="overflow-hidden rounded-2xl border border-[#17130d]/10 bg-white/58">
                         @forelse ($sites as $site)
-                            <a href="{{ route('customer.apps.show', $site) }}" class="grid gap-2 border-b border-[#17130d]/10 px-3 py-2.5 transition last:border-b-0 hover:bg-[#fffaf0]/55 md:grid-cols-[minmax(0,1fr)_10rem_7rem] md:items-center">
+                            <a href="{{ route('customer.apps.show', ['username' => $site->username]) }}" class="grid gap-2 border-b border-[#17130d]/10 px-3 py-2.5 transition last:border-b-0 hover:bg-[#fffaf0]/55 md:grid-cols-[minmax(0,1fr)_10rem_7rem] md:items-center">
                                 <span>
                                     <strong class="block text-sm font-black">{{ $site->name }}</strong>
-                                    <small class="mt-0.5 block text-xs text-[#17130d]">{{ $site->metadata['v16_app_type'] ?? $site->site_type }} / {{ $site->slug }}</small>
+                                    <small class="mt-0.5 block text-xs text-[#17130d]">{{ $site->metadata['v16_app_type'] ?? $site->site_type }} / username: {{ $site->username }}</small>
                                 </span>
                                 <span class="rounded-full bg-[#17130d]/10 px-2.5 py-1 text-xs font-black text-[#17130d]">{{ $site->theme?->name ?? 'No theme' }}</span>
                                 <span class="rounded-full bg-[#c98a2e]/15 px-2.5 py-1 text-center text-xs font-black text-[#17130d]">{{ $site->metadata['theme_install_status'] ?? $site->status }}</span>

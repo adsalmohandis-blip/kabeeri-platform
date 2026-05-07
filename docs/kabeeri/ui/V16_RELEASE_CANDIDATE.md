@@ -10,7 +10,7 @@ V16 is ready when the customer can move from public entry to authenticated works
 - `/login` authenticates customer web users.
 - `/customer/onboarding` provisions Organization, optional Company, Site/App, selected Theme, theme settings, and starter content.
 - `/customer/dashboard` renders authenticated workspace data.
-- `/customer/apps/{site}` is scoped to the owning customer.
+- `/customer/apps/{username}` is scoped to the owning customer and resolves the app/site username from the stored site slug.
 - Profile capabilities can be updated.
 - V16 docs and tests exist.
 - V16 task tracker is synced.
@@ -32,7 +32,7 @@ Open these pages manually:
 - `/login`
 - `/customer/onboarding`
 - `/customer/dashboard`
-- `/customer/apps/{site}` after provisioning
+- `/customer/apps/{username}` after provisioning
 - `/admin/login` to confirm admin remains separate
 
 ## Next Version Candidates

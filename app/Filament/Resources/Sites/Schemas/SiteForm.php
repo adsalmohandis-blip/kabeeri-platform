@@ -78,7 +78,8 @@ class SiteForm
                                 $set('slug', Str::slug((string) $state));
                             }),
                         TextInput::make('slug')
-                            ->label('Slug')
+                            ->label('Username')
+                            ->helperText('Used in customer app URLs, for example /customer/apps/username.')
                             ->required()
                             ->maxLength(255)
                             ->alphaDash(),

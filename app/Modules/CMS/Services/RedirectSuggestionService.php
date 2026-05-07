@@ -21,7 +21,7 @@ class RedirectSuggestionService
             'site_id' => $job->site_id,
             'source_url' => $this->normalizePath($sourceUrl),
             'target_url' => route('public.content-entry.show', [
-                'site' => $entry->site,
+                'username' => $entry->site->username,
                 'contentEntry' => $entry,
             ], false),
             'status' => 'pending',

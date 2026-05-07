@@ -17,7 +17,7 @@ V16 implements the ordinary customer path that was missing after V15.
   - ThemeSetting records.
   - starter CMS content.
 - Authenticated customer dashboard: `/customer/dashboard`.
-- Customer app detail: `/customer/apps/{site}`.
+- Customer app detail: `/customer/apps/{username}`.
 - Capability upgrade path for customer owner, developer/creator, marketer/partner, implementation builder, and needs-builder-help.
 
 ## Important Naming
@@ -26,6 +26,7 @@ V16 separates two developer concepts:
 
 - Theme/plugin developer: builds platform extensions for Marketplace.
 - Kabeeri Builder / Implementation Partner: helps customers build their app, company, content, services, and setup inside the platform.
+- App/site username: customer-facing routes use the site's stored slug as `username`, so links must look like `/customer/apps/{username}` and never `/customer/apps/{id}`.
 
 ## Boundaries
 

@@ -61,6 +61,12 @@ class Site extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function getUsernameAttribute(): string
+    {
+        // Customer-facing username remains backed by the existing slug column.
+        return (string) $this->slug;
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

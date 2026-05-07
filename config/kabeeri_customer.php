@@ -17,7 +17,7 @@ return [
         ['name' => 'customer.onboarding', 'uri' => '/customer/onboarding', 'label' => 'Guided Onboarding'],
         ['name' => 'customer.onboarding.store', 'uri' => '/customer/onboarding', 'label' => 'Provision Workspace'],
         ['name' => 'customer.workspace', 'uri' => '/customer/dashboard', 'label' => 'Customer Dashboard'],
-        ['name' => 'customer.apps.show', 'uri' => '/customer/apps/{site}', 'label' => 'Customer App Detail'],
+        ['name' => 'customer.apps.show', 'uri' => '/customer/apps/{username}', 'label' => 'Customer App Detail'],
         ['name' => 'customer.capabilities.update', 'uri' => '/customer/profile/capabilities', 'label' => 'Capabilities Upgrade'],
     ],
     'audience_paths' => [

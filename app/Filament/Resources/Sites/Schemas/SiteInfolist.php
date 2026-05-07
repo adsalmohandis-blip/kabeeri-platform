@@ -12,7 +12,7 @@ class SiteInfolist
         return $schema
             ->components([
                 TextEntry::make('name')->label('App Name'),
-                TextEntry::make('slug')->label('Slug'),
+                TextEntry::make('slug')->label('Username'),
                 TextEntry::make('organization.name')->label('Organization'),
                 TextEntry::make('company.trade_name')->label('Company')->placeholder('-'),
                 TextEntry::make('site_type')->label('App Type')->badge(),

@@ -20,7 +20,7 @@ class SitesTable
                 TextColumn::make('name')->label('App')->searchable(),
                 TextColumn::make('organization.name')->label('Organization')->searchable(),
                 TextColumn::make('company.trade_name')->label('Company')->placeholder('-'),
-                TextColumn::make('slug')->label('Slug')->searchable(),
+                TextColumn::make('slug')->label('Username')->searchable(),
                 TextColumn::make('site_type')->label('Type')->badge(),
                 TextColumn::make('status')->label('Status')->badge(),
                 TextColumn::make('language')->label('Language'),

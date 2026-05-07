@@ -152,12 +152,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T01:45:50+00:00",
+            "completed_by_codex_at": "2026-05-07T01:56:46+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=V15PublicRuntimeTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test",
-            "notes": "Standardized the UI identity color system across Blade/Tailwind surfaces to black, golden yellow, white, and off-white only, including admin, public, marketplace, mall, customer, and root pages. Verified no non-brand hex/rgb values remain.",
+            "tests": "php artisan route:list --name=customer.apps.show; php artisan route:list --name=public.content-entry.show; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; php artisan test --filter=V1SmokeSuiteTest; php artisan test --filter=SiteFoundationTest; php artisan test --filter=V1DemoSeedDataTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Changed app/site customer URLs from id-based /customer/apps/{site} to username-based /customer/apps/{username}, using the existing site slug as the customer-facing username. Updated public app content route naming to /app/{username}/{contentEntry}, admin Site labels from Slug to Username, dashboard links, docs, route registry, sitemap and redirect URL generation, and regression tests preventing numeric customer app URLs.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -167,12 +167,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T00:30:17+00:00",
+            "completed_by_codex_at": "2026-05-07T01:56:46+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V13ExternalExperienceTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Implemented V16 customer web auth, guided onboarding, workspace provisioning, theme install, customer dashboard, app detail, profile capabilities, docs, tests, and root dashboard awareness.",
+            "tests": "php artisan route:list --name=customer.apps.show; php artisan route:list --name=public.content-entry.show; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; php artisan test --filter=V1SmokeSuiteTest; php artisan test --filter=SiteFoundationTest; php artisan test --filter=V1DemoSeedDataTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Changed app/site customer URLs from id-based /customer/apps/{site} to username-based /customer/apps/{username}, using the existing site slug as the customer-facing username. Updated public app content route naming to /app/{username}/{contentEntry}, admin Site labels from Slug to Username, dashboard links, docs, route registry, sitemap and redirect URL generation, and regression tests preventing numeric customer app URLs.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -227,12 +227,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T01:45:50+00:00",
+            "completed_by_codex_at": "2026-05-07T01:56:46+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=V15PublicRuntimeTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test",
-            "notes": "Standardized the UI identity color system across Blade/Tailwind surfaces to black, golden yellow, white, and off-white only, including admin, public, marketplace, mall, customer, and root pages. Verified no non-brand hex/rgb values remain.",
+            "tests": "php artisan route:list --name=customer.apps.show; php artisan route:list --name=public.content-entry.show; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; php artisan test --filter=V1SmokeSuiteTest; php artisan test --filter=SiteFoundationTest; php artisan test --filter=V1DemoSeedDataTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Changed app/site customer URLs from id-based /customer/apps/{site} to username-based /customer/apps/{username}, using the existing site slug as the customer-facing username. Updated public app content route naming to /app/{username}/{contentEntry}, admin Site labels from Slug to Username, dashboard links, docs, route registry, sitemap and redirect URL generation, and regression tests preventing numeric customer app URLs.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -257,12 +257,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T01:45:51+00:00",
+            "completed_by_codex_at": "2026-05-07T01:56:47+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
             "commit": "pending",
-            "tests": "npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=V15PublicRuntimeTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test",
-            "notes": "Standardized the UI identity color system across Blade/Tailwind surfaces to black, golden yellow, white, and off-white only, including admin, public, marketplace, mall, customer, and root pages. Verified no non-brand hex/rgb values remain.",
+            "tests": "php artisan route:list --name=customer.apps.show; php artisan route:list --name=public.content-entry.show; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; php artisan test --filter=V1SmokeSuiteTest; php artisan test --filter=SiteFoundationTest; php artisan test --filter=V1DemoSeedDataTest; vendor/bin/pint --test; npm run build; php artisan test",
+            "notes": "Changed app/site customer URLs from id-based /customer/apps/{site} to username-based /customer/apps/{username}, using the existing site slug as the customer-facing username. Updated public app content route naming to /app/{username}/{contentEntry}, admin Site labels from Slug to Username, dashboard links, docs, route registry, sitemap and redirect URL generation, and regression tests preventing numeric customer app URLs.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         }
     ]
