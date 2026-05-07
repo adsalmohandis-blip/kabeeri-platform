@@ -16,6 +16,9 @@
             --kbr-line: rgba(23,19,13,.12);
             --kbr-gold: #c98a2e;
             --kbr-dark: #17130d;
+            --kbr-nav-layer: 2147483000;
+            --kbr-nav-control-layer: 2147483100;
+            --kbr-dropdown-layer: 2147483200;
         }
 
         html[data-kbr-theme="dark"] {
@@ -138,10 +141,44 @@
             box-shadow: inset 0 0 0 1px rgba(201,138,46,.28);
         }
 
+        .topbar,
+        .top,
+        .fi-topbar {
+            z-index: var(--kbr-nav-layer) !important;
+            overflow: visible !important;
+            isolation: isolate;
+        }
+
+        header:has(.kbr-language-switcher),
+        header:has(.kbr-theme-toggle),
+        nav:has(.kbr-language-switcher),
+        nav:has(.kbr-theme-toggle) {
+            z-index: var(--kbr-nav-layer) !important;
+            overflow: visible !important;
+            isolation: isolate;
+        }
+
+        header details[open],
+        nav details[open],
+        .fi-dropdown-panel {
+            z-index: var(--kbr-dropdown-layer) !important;
+        }
+
+        header details[open] > :not(summary),
+        nav details[open] > :not(summary) {
+            position: relative;
+            z-index: var(--kbr-dropdown-layer) !important;
+        }
+
         .kbr-language-switcher {
             position: relative;
+            z-index: var(--kbr-nav-control-layer);
             display: inline-block;
             font-family: var(--kbr-font-family);
+        }
+
+        .kbr-language-switcher[open] {
+            z-index: var(--kbr-dropdown-layer);
         }
 
         .kbr-language-switcher__trigger {
@@ -185,7 +222,7 @@
             position: absolute;
             inset-inline-end: 0;
             top: calc(100% + .45rem);
-            z-index: 80;
+            z-index: var(--kbr-dropdown-layer);
             display: grid;
             width: min(18rem, calc(100vw - 2rem));
             gap: .25rem;
@@ -223,6 +260,8 @@
         }
 
         .kbr-theme-toggle {
+            position: relative;
+            z-index: var(--kbr-nav-control-layer);
             display: inline-flex;
             align-items: center;
             gap: .18rem;
