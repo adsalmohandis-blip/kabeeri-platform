@@ -164,6 +164,16 @@ class LocalizationSwitchingTest extends TestCase
         $this->assertMatchesRegularExpression('/const kabeeriTheme = [\'"]dark[\'"];/', $customerResponse->getContent());
     }
 
+    public function test_dark_theme_keeps_start_page_buttons_readable(): void
+    {
+        $this->withSession(['kabeeri_theme_platform_public' => 'dark'])
+            ->get(route('customer.start'))
+            ->assertOk()
+            ->assertSee('data-kbr-theme="dark"', false)
+            ->assertSee('html[data-kbr-theme="dark"] .nav a:not(.primary)', false)
+            ->assertSee('color: #17130d !important;', false);
+    }
+
     public function test_arabic_and_english_entry_pages_do_not_mix_core_copy(): void
     {
         $this->get('/')

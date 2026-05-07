@@ -121,6 +121,23 @@
             color: rgba(255,250,240,.48);
         }
 
+        html[data-kbr-theme="dark"] .nav a:not(.primary),
+        html[data-kbr-theme="dark"] .button:not(.primary),
+        html[data-kbr-theme="dark"] button:not(.primary):not(.fi-btn):not(.kbr-sidebar-toggle) {
+            background: #fffaf0 !important;
+            border-color: rgba(255,250,240,.24) !important;
+            color: #17130d !important;
+        }
+
+        html[data-kbr-theme="dark"] .nav a.primary,
+        html[data-kbr-theme="dark"] .button.primary,
+        html[data-kbr-theme="dark"] button.primary {
+            background: #17130d !important;
+            border-color: rgba(201,138,46,.42) !important;
+            color: #fffaf0 !important;
+            box-shadow: inset 0 0 0 1px rgba(201,138,46,.28);
+        }
+
         .kbr-language-switcher {
             position: relative;
             display: inline-block;
