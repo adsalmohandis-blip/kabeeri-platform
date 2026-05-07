@@ -22,7 +22,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-[#fffaf0] text-[#17130d] antialiased">
-    <div class="kbr-customer-shell mx-auto grid min-h-screen w-full max-w-[1440px] lg:grid-cols-[16rem_minmax(0,1fr)]">
+    <div class="kbr-customer-shell grid min-h-screen w-full lg:grid-cols-[16rem_minmax(0,1fr)]">
         @include('customer.partials.dashboard-sidebar', ['dashboard' => $dashboard, 'activeNav' => $activeNav])
 
         <main class="min-w-0 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">

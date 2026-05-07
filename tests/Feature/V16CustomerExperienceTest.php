@@ -107,6 +107,8 @@ class V16CustomerExperienceTest extends TestCase
             ->assertSee(__('kabeeri.ui.apps_dashboard'))
             ->assertDontSee('Client Workspace')
             ->assertSee('workspace-sidebar')
+            ->assertSee('class="kbr-customer-shell grid min-h-screen w-full lg:grid-cols-[16rem_minmax(0,1fr)]"', false)
+            ->assertDontSee('max-w-[1440px]', false)
             ->assertSee(__('kabeeri.ui.apps'))
             ->assertSee('Acme Store')
             ->assertSee(__('kabeeri.customer.themes.mall-window.name'))
