@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\ResetCustomerSessionForAdminLogin;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\RedirectResponse;
@@ -35,6 +36,7 @@ class CustomerAuthController extends Controller
         }
 
         $request->session()->regenerate();
+        $request->session()->put(ResetCustomerSessionForAdminLogin::CUSTOMER_AUTH_SURFACE, 'customer');
 
         return redirect()->intended($this->postAuthTarget($request->user()));
     }
@@ -75,6 +77,7 @@ class CustomerAuthController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
+        $request->session()->put(ResetCustomerSessionForAdminLogin::CUSTOMER_AUTH_SURFACE, 'customer');
 
         return redirect()->route('customer.onboarding', [
             'path' => $validated['customer_path'] ?? 'business_owner',

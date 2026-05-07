@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\ResetCustomerSessionForAdminLogin;
 use App\Http\Middleware\SetKabeeriLocale;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -79,6 +80,7 @@ class AdminPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                ResetCustomerSessionForAdminLogin::class,
                 SetKabeeriLocale::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,

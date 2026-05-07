@@ -7,6 +7,7 @@ use App\Http\Controllers\Mobile\MobileDeviceController;
 use App\Http\Controllers\Mobile\MobilePublicController;
 use App\Http\Controllers\Public\PublicWebRuntimeController;
 use App\Http\Controllers\UiPreferenceController;
+use App\Http\Controllers\Web\AdminLoginEntryController;
 use App\Http\Controllers\Web\CustomerAuthController;
 use App\Http\Controllers\Web\CustomerStartController;
 use App\Http\Controllers\Web\CustomerWorkspaceController;
@@ -24,6 +25,9 @@ use App\Http\Controllers\Web\PublicMarketingController;
 use App\Http\Controllers\Web\RobotsController;
 use App\Http\Controllers\Web\SitemapController;
 use App\Http\Controllers\Web\UiReleaseCandidateController;
+use App\Support\Localization\KabeeriLocale;
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,6 +37,7 @@ Route::get('/', function () {
 Route::get('/internal/command-center', fn () => redirect()->route('filament.admin.pages.development-status'))
     ->middleware('auth')
     ->name('system.command-center');
+Route::get('/platform-admin/login', AdminLoginEntryController::class)->name('admin.login.entry');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
@@ -68,7 +73,11 @@ Route::get('/trust', [PublicMarketingController::class, 'trust'])->name('public.
 Route::get('/contact-sales', [PublicMarketingController::class, 'contact'])->name('public.contact');
 Route::post('/contact-sales', [PublicMarketingController::class, 'storeInquiry'])->name('public.contact.store');
 
-Route::get('/customer', [ExternalPortalController::class, 'customerDashboard'])->name('customer.dashboard');
+Route::get('/customer', function (Request $request, ExternalPortalController $portal) {
+    return $request->user()
+        ? redirect()->route('customer.workspace')
+        : $portal->customerDashboard();
+})->name('customer.dashboard');
 Route::get('/customer/theme-plugins', [ExternalPortalController::class, 'customerThemePlugins'])->name('customer.theme-plugins');
 Route::get('/customer/quick-setup', [ExternalPortalController::class, 'customerQuickSetup'])->name('customer.quick-setup');
 Route::middleware('auth')->prefix('customer')->name('customer.')->group(function (): void {
@@ -217,20 +226,20 @@ Route::scopeBindings()->group(function (): void {
 });
 
 Route::get('/{locale}/{localizedPath?}', function (
-    \Illuminate\Http\Request $request,
+    Request $request,
     string $locale,
     ?string $localizedPath = null,
 ) {
-    abort_unless(\App\Support\Localization\KabeeriLocale::isSupported($locale), 404);
+    abort_unless(KabeeriLocale::isSupported($locale), 404);
 
-    $locale = \App\Support\Localization\KabeeriLocale::normalize($locale);
-    $context = \App\Support\Localization\KabeeriLocale::context($request);
-    $request->session()->put(\App\Support\Localization\KabeeriLocale::contextSessionKey($context), $locale);
-    $request->session()->put(\App\Support\Localization\KabeeriLocale::sessionKey(), $locale);
+    $locale = KabeeriLocale::normalize($locale);
+    $context = KabeeriLocale::context($request);
+    $request->session()->put(KabeeriLocale::contextSessionKey($context), $locale);
+    $request->session()->put(KabeeriLocale::sessionKey(), $locale);
 
     $target = '/'.trim((string) $localizedPath, '/');
     $target = $target === '/' ? '/' : $target;
-    $subRequest = \Illuminate\Http\Request::create(
+    $subRequest = Request::create(
         $target,
         'GET',
         $request->query->all(),
@@ -241,7 +250,7 @@ Route::get('/{locale}/{localizedPath?}', function (
     $subRequest->setLaravelSession($request->session());
     $subRequest->headers->replace($request->headers->all());
 
-    return app(\Illuminate\Contracts\Http\Kernel::class)->handle($subRequest);
+    return app(Kernel::class)->handle($subRequest);
 })
     ->where('locale', '[A-Za-z]{2}')
     ->where('localizedPath', '.*')

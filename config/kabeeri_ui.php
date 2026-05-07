@@ -210,6 +210,7 @@ return [
         ],
         'current_admin' => [
             ['key' => 'admin_dashboard', 'route' => 'filament.admin.pages.dashboard', 'uri' => '/admin', 'runtime' => 'filament_admin', 'space' => 'platform', 'status' => 'current'],
+            ['key' => 'admin_login_entry', 'route' => 'admin.login.entry', 'uri' => '/platform-admin/login', 'runtime' => 'laravel_bridge', 'space' => 'platform', 'status' => 'current'],
             ['key' => 'admin_login', 'route' => 'filament.admin.auth.login', 'uri' => '/admin/login', 'runtime' => 'filament_admin', 'space' => 'platform', 'status' => 'current'],
             ['key' => 'plans', 'route' => 'filament.admin.resources.plans.index', 'uri' => '/admin/plans', 'runtime' => 'filament_admin', 'space' => 'billing', 'status' => 'current'],
             ['key' => 'organizations', 'route' => 'filament.admin.resources.organizations.index', 'uri' => '/admin/organizations', 'runtime' => 'filament_admin', 'space' => 'organization', 'status' => 'current'],

@@ -5,7 +5,7 @@ return [
     'name' => 'kabeeri Customer Web Auth, Guided Onboarding, App Builder, and Workspace Runtime',
     'rules' => [
         'entry' => 'Public visitors enter through /start, choose an audience path, then authenticate only when they are ready to create a workspace.',
-        'auth_scope' => 'Customer web auth is separate from Filament admin. Admin remains /admin/login.',
+        'auth_scope' => 'Customer web auth marks its session surface; /admin/login and /platform-admin/login reset customer sessions before Filament admin login.',
         'workspace' => 'A customer workspace creates User, Organization, optional Company, first Site/App, selected Theme, theme settings, and starter content.',
         'theme_install' => 'Theme install must be explicit, app-type compatible, reversible later, and must not execute hidden package code.',
         'roles' => 'Customers can add capabilities such as marketer, creator, developer, agency, or implementation builder request without becoming platform admins.',

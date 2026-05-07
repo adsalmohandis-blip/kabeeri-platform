@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\ResetCustomerSessionForAdminLogin;
 use App\Models\ContentEntry;
 use App\Models\InstalledPackage;
 use App\Models\Organization;
@@ -140,6 +141,58 @@ class V16CustomerExperienceTest extends TestCase
         $this->actingAs($other)
             ->get(route('customer.apps.show', ['username' => $site->username]))
             ->assertForbidden();
+    }
+
+    public function test_authenticated_customer_entry_redirects_to_workspace_not_public_home(): void
+    {
+        $customer = User::factory()->create();
+
+        $this->actingAs($customer)
+            ->get(route('customer.dashboard'))
+            ->assertRedirect(route('customer.workspace'));
+    }
+
+    public function test_authenticated_customer_auth_pages_redirect_to_workspace_not_home(): void
+    {
+        $customer = User::factory()->create();
+
+        $this->actingAs($customer)
+            ->get('/login')
+            ->assertRedirect(route('customer.workspace'));
+
+        $this->actingAs($customer)
+            ->get('/register')
+            ->assertRedirect(route('customer.workspace'));
+    }
+
+    public function test_customer_app_routes_preserve_intended_destination_after_login(): void
+    {
+        $owner = User::factory()->create([
+            'email' => 'owner@example.test',
+            'password' => 'password-123',
+        ]);
+        $organization = Organization::factory()->create(['owner_user_id' => $owner->id]);
+        $site = Site::factory()->create([
+            'organization_id' => $organization->id,
+            'name' => 'Owner App',
+            'slug' => 'owner-app',
+        ]);
+
+        $this->get(route('customer.apps.show', ['username' => $site->username]))
+            ->assertRedirect('/login');
+
+        $this->post('/login', [
+            'email' => 'owner@example.test',
+            'password' => 'password-123',
+        ])
+            ->assertRedirect(route('customer.apps.show', ['username' => $site->username]))
+            ->assertSessionHas(ResetCustomerSessionForAdminLogin::CUSTOMER_AUTH_SURFACE, 'customer');
+
+        $this->assertAuthenticatedAs($owner);
+
+        $this->get('/en/customer/apps/'.$site->username)
+            ->assertOk()
+            ->assertSessionHas('kabeeri_locale_customer', 'en');
     }
 
     public function test_customer_can_update_profile_capabilities(): void
