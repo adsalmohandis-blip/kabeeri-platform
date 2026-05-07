@@ -99,10 +99,10 @@ class V16CustomerExperienceTest extends TestCase
 
         $this->get(route('customer.workspace'))
             ->assertOk()
-            ->assertSee('Customer Dashboard')
-            ->assertSee('Sidebar Control')
+            ->assertSee('لوحة إدارة التطبيقات')
+            ->assertSee('Client Workspace')
             ->assertSee('workspace-sidebar')
-            ->assertSee('Control Center')
+            ->assertSee('Apps')
             ->assertSee('Acme Store')
             ->assertSee('Mall Window')
             ->assertSee('/customer/apps/acme-store', false)

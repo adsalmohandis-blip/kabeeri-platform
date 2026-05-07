@@ -15,7 +15,7 @@
         </a>
         <nav class="nav">
             <a href="{{ route('customer.start') }}">البداية</a>
-            <a href="{{ route('customer.workspace') }}">Customer Dashboard</a>
+            <a href="{{ route('customer.workspace') }}">لوحة إدارة التطبيقات</a>
             @include('components.language-switcher', ['context' => 'customer'])
         </nav>
     </header>

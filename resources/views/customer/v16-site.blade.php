@@ -14,7 +14,7 @@
             <span><strong>{{ $site->name }}</strong><small>Customer App Detail</small></span>
         </a>
         <nav class="nav">
-            <a href="{{ route('customer.workspace') }}">Customer Dashboard</a>
+            <a href="{{ route('customer.workspace') }}">لوحة إدارة التطبيقات</a>
             <a href="{{ route('customer.start') }}">البداية</a>
             @include('components.language-switcher', ['context' => 'customer'])
         </nav>

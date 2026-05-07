@@ -37,7 +37,7 @@
                 <h2>أنت داخل بالفعل</h2>
                 <p>لو عايز تكمل تجربة العميل الحالية افتح الداشبورد. لو عايز تنشئ حساب عميل جديد، اخرج الأول ثم ارجع لنفس الصفحة.</p>
                 <div class="nav" style="margin-top:14px">
-                    <a class="button primary" href="{{ route('customer.workspace') }}">افتح Customer Dashboard</a>
+                    <a class="button primary" href="{{ route('customer.workspace') }}">افتح لوحة إدارة التطبيقات</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit">خروج وإنشاء حساب جديد</button>

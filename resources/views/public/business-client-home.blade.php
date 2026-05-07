@@ -30,11 +30,11 @@
             </nav>
         </header>
 
-        <main class="grid flex-1 gap-5 py-5 lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-center">
-            <section class="rounded-[2.25rem] border border-white/70 bg-[#fffaf0]/86 p-6 shadow-kabeeri-strong backdrop-blur sm:p-8 lg:p-10">
+        <main class="grid flex-1 gap-6 py-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-center">
+            <section class="rounded-[2.25rem] border border-white/70 bg-[#fffaf0]/86 p-6 shadow-kabeeri-strong backdrop-blur sm:p-7 lg:p-8">
                 <span class="inline-flex rounded-full bg-[#17130d]/10 px-3 py-1.5 text-xs font-black uppercase tracking-[.16em] text-[#17130d]">Business / Client First</span>
-                <h1 class="mt-5 max-w-4xl text-4xl font-black leading-[1.04] tracking-[-.045em] sm:text-6xl">ابدأ موقعك أو متجرك أو تطبيق خدماتك من مسار واضح.</h1>
-                <p class="mt-5 max-w-3xl text-base leading-8 text-[#17130d] sm:text-lg">KABEERI لا يبدأ بعرض لوحة تقنية. نبدأ بسؤال العميل: ما نوع مشروعك؟ بعدها تختار المسار، نوع التطبيق، الثيم المناسب، ثم تدخل Dashboard خاصة بك لإدارة كل شيء خطوة بخطوة.</p>
+                <h1 class="mt-5 max-w-3xl text-3xl font-black leading-[1.08] tracking-[-.035em] sm:text-4xl">ابدأ موقعك أو متجرك أو تطبيق خدماتك من مسار واضح.</h1>
+                <p class="mt-4 max-w-2xl text-sm leading-7 text-[#17130d] sm:text-base">KABEERI يبدأ بسؤال بسيط: ما نوع مشروعك؟ بعدها تختار المسار والثيم، ثم تدخل لوحة إدارة التطبيقات الخاصة بك.</p>
                 <div class="mt-6 flex flex-wrap gap-2">
                     <a class="rounded-full bg-[#17130d] px-5 py-3 text-sm font-black text-[#fffaf0]" href="{{ route('customer.start') }}">ابدأ مسار العميل</a>
                     <a class="rounded-full border border-[#17130d]/10 bg-white/70 px-5 py-3 text-sm font-black" href="{{ route('public.landing') }}">اعرف المنصة</a>
@@ -43,28 +43,28 @@
             </section>
 
             <aside class="space-y-3">
-                <article class="rounded-[1.75rem] border border-white/70 bg-[#17130d] p-5 text-[#fffaf0] shadow-kabeeri-soft">
+                <article class="rounded-[1.75rem] border border-white/70 bg-[#17130d] p-4 text-[#fffaf0] shadow-kabeeri-soft">
                     <p class="text-xs font-black uppercase tracking-[.16em] text-[#c98a2e]">What happens next</p>
                     <div class="mt-4 space-y-3">
                         <div class="rounded-2xl border border-white/10 bg-white/[.06] p-3">
                             <strong class="block text-sm font-black">1. اختر مسارك</strong>
-                            <p class="mt-1 text-xs leading-6 text-white/62">Business owner، Store owner، Services، Creator، Marketer، أو تحتاج Builder.</p>
+                            <p class="mt-1 line-clamp-1 text-xs leading-5 text-white/62">Business owner، Store owner، Services، Creator، Marketer، أو تحتاج Builder.</p>
                         </div>
                         <div class="rounded-2xl border border-white/10 bg-white/[.06] p-3">
                             <strong class="block text-sm font-black">2. ثبت التطبيق والثيم</strong>
-                            <p class="mt-1 text-xs leading-6 text-white/62">يتم إنشاء Workspace، App، Theme، وstarter content.</p>
+                            <p class="mt-1 line-clamp-1 text-xs leading-5 text-white/62">يتم إنشاء Workspace، App، Theme، وstarter content.</p>
                         </div>
                         <div class="rounded-2xl border border-white/10 bg-white/[.06] p-3">
                             <strong class="block text-sm font-black">3. ادخل داشبورد العميل</strong>
-                            <p class="mt-1 text-xs leading-6 text-white/62">لوحة خاصة لإدارة التطبيق والقدرات وطلب Builder.</p>
+                            <p class="mt-1 line-clamp-1 text-xs leading-5 text-white/62">لوحة إدارة التطبيقات والقدرات الأساسية.</p>
                         </div>
                     </div>
                 </article>
 
-                <article class="rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/86 p-5 shadow-kabeeri-soft backdrop-blur">
+                <article class="rounded-[1.75rem] border border-white/70 bg-[#fffaf0]/86 p-4 shadow-kabeeri-soft backdrop-blur">
                     <p class="text-xs font-black uppercase tracking-[.16em] text-[#17130d]">For internal team</p>
-                    <h2 class="mt-2 text-xl font-black">Command Center انتقل لمسار خاص.</h2>
-                    <p class="mt-2 text-sm leading-7 text-[#17130d]">لوحة الفحص التقنية لم تعد أول صفحة عامة. يمكن الوصول لها بعد تسجيل الدخول من المسار الداخلي.</p>
+                    <h2 class="mt-2 text-lg font-black">Command Center انتقل لمسار خاص.</h2>
+                    <p class="mt-2 text-xs leading-6 text-[#17130d]">لوحة الفحص التقنية لم تعد أول صفحة عامة. يمكن الوصول لها من المسار الداخلي.</p>
                     <a class="mt-4 inline-flex rounded-full border border-[#17130d]/10 bg-white/70 px-4 py-2 text-xs font-black" href="{{ route('system.command-center') }}">فتح Internal Command Center</a>
                 </article>
             </aside>
