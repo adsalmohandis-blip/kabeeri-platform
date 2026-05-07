@@ -152,12 +152,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T12:56:37+00:00",
+            "completed_by_codex_at": "2026-05-07T13:13:40+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "efc406b",
-            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test",
-            "notes": "Converted the customer dashboard to a calmer minimal layout with fewer boxes, smaller readable type, concise status, app list, next actions, capabilities, marketplace, and account sections.",
+            "commit": "3148274",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=PublicContentRenderingTest; php artisan test",
+            "notes": "Applied the shared icon system to the customer dashboard sidebar, actions, app list, capabilities, marketplace, account, and language switcher.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -242,12 +242,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T12:56:38+00:00",
+            "completed_by_codex_at": "2026-05-07T13:13:40+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "efc406b",
-            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test",
-            "notes": "Updated the public root business/client entry to be calmer, less card-heavy, and focused on the customer path.",
+            "commit": "3148274",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=PublicContentRenderingTest; php artisan test",
+            "notes": "Applied icon-led actions and onboarding steps to the public business/client root entry.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -257,12 +257,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T12:56:38+00:00",
+            "completed_by_codex_at": "2026-05-07T13:13:40+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "efc406b",
-            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test",
-            "notes": "Synced V16 tracker with the reduced-noise customer UI implementation.",
+            "commit": "3148274",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=PublicContentRenderingTest; php artisan test",
+            "notes": "Synced V16 tracker after adopting the global kabeeri icon system.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         }
     ]
