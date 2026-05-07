@@ -1,7 +1,7 @@
-@php
+﻿@php
     $isArabic = app()->getLocale() === 'ar';
     $copy = fn (string $arabic, string $english): string => $isArabic ? $arabic : $english;
-    $brand = $isArabic ? 'كبيري' : 'KABEERI';
+    $brand = __('kabeeri.brand.name');
     $fmt = fn ($value): string => number_format((int) $value);
     $percent = fn ($value): int => max(0, min(100, (int) $value));
 
@@ -24,24 +24,28 @@
             'value' => ($summary['percent'] ?? 0).'%',
             'note' => $fmt($summary['done'] ?? 0).' / '.$fmt($summary['total'] ?? 0),
             'ready' => ($summary['pending'] ?? 1) === 0 && ($summary['blocked'] ?? 1) === 0,
+            'icon' => 'M4 19V5 M4 19h16 M8 16v-4 M12 16V8 M16 16v-6',
         ],
         [
             'label' => $copy('الباك إند', 'Backend'),
             'value' => ($backend['percent'] ?? 0).'%',
             'note' => $fmt($backend['done'] ?? 0).' / '.$fmt($backend['total'] ?? 0),
             'ready' => ($backend['pending'] ?? 1) === 0 && ($backend['blocked'] ?? 1) === 0,
+            'icon' => 'M5 5h14v14H5V5Z M8 9h8 M8 13h8 M8 17h5',
         ],
         [
             'label' => $copy('واجهات الاستخدام', 'User interfaces'),
             'value' => ($ui['percent'] ?? 0).'%',
             'note' => $fmt($ui['done'] ?? 0).' / '.$fmt($ui['total'] ?? 0),
             'ready' => ($ui['pending'] ?? 1) === 0 && ($ui['blocked'] ?? 1) === 0,
+            'icon' => 'M4 5h16v10H4V5Z M9 19h6 M12 15v4',
         ],
         [
             'label' => $copy('جاهزية النشر', 'Release readiness'),
             'value' => $releaseReady ? $copy('جاهز', 'Ready') : $copy('مراجعة', 'Review'),
             'note' => $productionReady ? $copy('إنتاج بعد الاختبار', 'Production after staging') : $copy('يلزم تأكيد نهائي', 'Final verification needed'),
             'ready' => $releaseReady,
+            'icon' => 'M5 15c2.5-6 6.5-10 14-10-1 7.5-4 11.5-10 14l-4-4Z M9 19c-1.5.8-3 1-5 1 .1-2 .3-3.5 1-5',
         ],
     ];
 
@@ -84,151 +88,479 @@
 @endphp
 
 <x-filament-panels::page>
-    <div class="space-y-6" dir="{{ $isArabic ? 'rtl' : 'ltr' }}">
-        <section class="overflow-hidden rounded-3xl border border-[#17130d]/10 bg-[#17130d] text-[#fffaf0] shadow-sm">
-            <div class="grid gap-6 p-6 lg:grid-cols-[1fr_280px] lg:items-end">
-                <div class="max-w-3xl">
-                    <div class="inline-flex items-center gap-2 rounded-full border border-[#c98a2e]/40 bg-[#c98a2e]/10 px-3 py-1 text-xs font-bold text-[#f4c46b]">
-                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M4 13h4l2-6 4 12 2-6h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <span>{{ $brand }}</span>
-                    </div>
-                    <h1 class="mt-4 text-2xl font-black tracking-tight sm:text-4xl">{{ $copy('لوحة حالة التطوير', 'Development status') }}</h1>
-                    <p class="mt-3 max-w-2xl text-sm leading-7 text-[#fffaf0]/75">
-                        {{ $copy('ملخص داخلي واضح لحالة التنفيذ، البيانات، التتبع، وجاهزية النشر من داخل لوحة الأدمن.', 'A focused internal view of implementation, data, tracking, and release readiness inside the admin dashboard.') }}
+    <style>
+        .kbr-dev-status {
+            --kbr-dev-ink: #17130d;
+            --kbr-dev-paper: #fffaf0;
+            --kbr-dev-gold: #c98a2e;
+            --kbr-dev-muted: rgba(23, 19, 13, .68);
+            --kbr-dev-line: rgba(23, 19, 13, .12);
+            --kbr-dev-card: rgba(255, 250, 240, .94);
+            --kbr-dev-soft: rgba(255, 250, 240, .68);
+            display: grid;
+            gap: 1rem;
+            width: 100%;
+            color: var(--kbr-dev-ink);
+            font-family: var(--kbr-admin-font-family, "IBM Plex Sans Arabic", "Almarai", sans-serif);
+        }
+
+        .kbr-dev-status *, .kbr-dev-status *::before, .kbr-dev-status *::after {
+            box-sizing: border-box;
+        }
+
+        .kbr-dev-status svg {
+            width: 1.05rem;
+            height: 1.05rem;
+            flex: none;
+        }
+
+        .kbr-dev-hero,
+        .kbr-dev-card,
+        .kbr-dev-stat,
+        .kbr-dev-panel,
+        .kbr-dev-data-card {
+            border: 1px solid var(--kbr-dev-line);
+            border-radius: 1.35rem;
+            background: var(--kbr-dev-card);
+            box-shadow: 0 18px 45px rgba(23, 19, 13, .08);
+        }
+
+        .kbr-dev-hero {
+            overflow: hidden;
+            color: var(--kbr-dev-paper);
+            background:
+                radial-gradient(circle at 12% 12%, rgba(201, 138, 46, .28), transparent 22rem),
+                linear-gradient(135deg, #17130d, #211a11);
+        }
+
+        .kbr-dev-hero-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+            align-items: end;
+            padding: clamp(1.25rem, 2.5vw, 2rem);
+        }
+
+        .kbr-dev-badge,
+        .kbr-dev-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            min-height: 1.75rem;
+            width: fit-content;
+            border-radius: 999px;
+            padding: .35rem .7rem;
+            font-size: .72rem;
+            font-weight: 900;
+        }
+
+        .kbr-dev-badge {
+            border: 1px solid rgba(201, 138, 46, .42);
+            color: #f4c46b;
+            background: rgba(201, 138, 46, .12);
+        }
+
+        .kbr-dev-title {
+            margin: .85rem 0 0;
+            max-width: 58rem;
+            font-size: clamp(1.65rem, 3vw, 2.85rem);
+            font-weight: 950;
+            line-height: 1.05;
+            letter-spacing: -.04em;
+        }
+
+        .kbr-dev-lead,
+        .kbr-dev-muted {
+            color: var(--kbr-dev-muted);
+            line-height: 1.75;
+        }
+
+        .kbr-dev-hero .kbr-dev-lead,
+        .kbr-dev-hero .kbr-dev-muted {
+            color: rgba(255, 250, 240, .74);
+        }
+
+        .kbr-dev-release-card {
+            border: 1px solid rgba(255, 250, 240, .13);
+            border-radius: 1.1rem;
+            background: rgba(255, 250, 240, .07);
+            padding: 1rem;
+        }
+
+        .kbr-dev-release-card strong {
+            display: block;
+            margin-top: .45rem;
+            font-size: 1.35rem;
+            line-height: 1.2;
+        }
+
+        .kbr-dev-grid-4,
+        .kbr-dev-grid-3,
+        .kbr-dev-grid-2,
+        .kbr-dev-main-grid,
+        .kbr-dev-split-grid {
+            display: grid;
+            gap: .85rem;
+        }
+
+        .kbr-dev-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .kbr-dev-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .kbr-dev-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .kbr-dev-main-grid { grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem); }
+        .kbr-dev-split-grid { grid-template-columns: minmax(0, 1.12fr) minmax(20rem, .88fr); }
+
+        .kbr-dev-stat,
+        .kbr-dev-card,
+        .kbr-dev-panel,
+        .kbr-dev-data-card {
+            padding: 1rem;
+        }
+
+        .kbr-dev-stat-head,
+        .kbr-dev-section-head,
+        .kbr-dev-row,
+        .kbr-dev-mini-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .75rem;
+        }
+
+        .kbr-dev-section-head {
+            align-items: flex-start;
+            margin-bottom: .9rem;
+        }
+
+        .kbr-dev-kicker {
+            margin: 0;
+            color: var(--kbr-dev-gold);
+            font-size: .72rem;
+            font-weight: 900;
+        }
+
+        .kbr-dev-heading {
+            margin: .2rem 0 0;
+            color: var(--kbr-dev-ink);
+            font-size: 1.15rem;
+            font-weight: 950;
+            line-height: 1.25;
+            letter-spacing: -.025em;
+        }
+
+        .kbr-dev-stat-value {
+            margin: .35rem 0 0;
+            color: var(--kbr-dev-ink);
+            font-size: 1.6rem;
+            font-weight: 950;
+        }
+
+        .kbr-dev-icon-box {
+            display: inline-grid;
+            place-items: center;
+            width: 2.35rem;
+            height: 2.35rem;
+            border-radius: 999px;
+            color: var(--kbr-dev-paper);
+            background: var(--kbr-dev-ink);
+        }
+
+        .kbr-dev-icon-box.is-review {
+            color: var(--kbr-dev-ink);
+            background: var(--kbr-dev-paper);
+            box-shadow: inset 0 0 0 1px rgba(201, 138, 46, .34);
+        }
+
+        .kbr-dev-shortcuts {
+            display: grid;
+            gap: .55rem;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .kbr-dev-shortcut,
+        .kbr-dev-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .7rem;
+            min-height: 2.75rem;
+            border: 1px solid var(--kbr-dev-line);
+            border-radius: 1rem;
+            background: var(--kbr-dev-paper);
+            color: var(--kbr-dev-ink);
+            padding: .7rem .85rem;
+            font-size: .82rem;
+            font-weight: 900;
+            text-decoration: none;
+            transition: transform .18s ease, border-color .18s ease, background .18s ease;
+        }
+
+        .kbr-dev-shortcut:hover,
+        .kbr-dev-button:hover {
+            transform: translateY(-1px);
+            border-color: rgba(201, 138, 46, .55);
+            background: #fff;
+        }
+
+        .kbr-dev-button {
+            min-height: 2.35rem;
+            background: var(--kbr-dev-ink);
+            color: var(--kbr-dev-paper);
+        }
+
+        .kbr-dev-list {
+            display: grid;
+            gap: .55rem;
+            margin-top: .85rem;
+        }
+
+        .kbr-dev-row,
+        .kbr-dev-mini-row {
+            min-height: 2.65rem;
+            border-radius: 1rem;
+            background: var(--kbr-dev-paper);
+            padding: .65rem .85rem;
+            font-size: .82rem;
+        }
+
+        .kbr-dev-row strong,
+        .kbr-dev-mini-row strong {
+            color: var(--kbr-dev-ink);
+            font-weight: 950;
+        }
+
+        .kbr-dev-progress-card {
+            border-radius: 1rem;
+            background: var(--kbr-dev-paper);
+            padding: .85rem;
+        }
+
+        .kbr-dev-progress-top {
+            display: flex;
+            justify-content: space-between;
+            gap: .7rem;
+            font-size: .82rem;
+        }
+
+        .kbr-dev-bar {
+            overflow: hidden;
+            height: .5rem;
+            margin-top: .7rem;
+            border-radius: 999px;
+            background: rgba(23, 19, 13, .1);
+        }
+
+        .kbr-dev-bar span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #17130d, #c98a2e);
+        }
+
+        .kbr-dev-warn {
+            margin: .55rem 0 0;
+            color: #8a5a16;
+            font-size: .75rem;
+            font-weight: 900;
+        }
+
+        .kbr-dev-status-text {
+            color: #8a5a16;
+            font-weight: 950;
+        }
+
+        .kbr-dev-status-text.is-ready {
+            color: var(--kbr-dev-ink);
+        }
+
+        .kbr-dev-table-name {
+            overflow: hidden;
+            color: var(--kbr-dev-muted);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        html.fi[data-kbr-theme="dark"] .kbr-dev-status {
+            --kbr-dev-ink: #fffaf0;
+            --kbr-dev-paper: #211a11;
+            --kbr-dev-muted: rgba(255, 250, 240, .68);
+            --kbr-dev-line: rgba(255, 250, 240, .14);
+            --kbr-dev-card: #211a11;
+            color: var(--kbr-dev-ink);
+        }
+
+        html.fi[data-kbr-theme="dark"] .kbr-dev-card,
+        html.fi[data-kbr-theme="dark"] .kbr-dev-stat,
+        html.fi[data-kbr-theme="dark"] .kbr-dev-panel,
+        html.fi[data-kbr-theme="dark"] .kbr-dev-data-card {
+            box-shadow: none;
+        }
+
+        html.fi[data-kbr-theme="dark"] .kbr-dev-shortcut:hover,
+        html.fi[data-kbr-theme="dark"] .kbr-dev-button:hover {
+            background: rgba(255, 250, 240, .08);
+        }
+
+        html.fi[data-kbr-theme="dark"] .kbr-dev-icon-box {
+            color: #17130d;
+            background: #c98a2e;
+        }
+
+        html.fi[data-kbr-theme="dark"] .kbr-dev-icon-box.is-review,
+        html.fi[data-kbr-theme="dark"] .kbr-dev-button {
+            color: #17130d;
+            background: #fffaf0;
+        }
+
+        html.fi[data-kbr-theme="dark"] .kbr-dev-status-text,
+        html.fi[data-kbr-theme="dark"] .kbr-dev-warn {
+            color: #f4c46b;
+        }
+
+        html.fi[data-kbr-theme="dark"] .kbr-dev-status-text.is-ready {
+            color: #fffaf0;
+        }
+
+        @media (max-width: 1180px) {
+            .kbr-dev-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .kbr-dev-main-grid,
+            .kbr-dev-split-grid,
+            .kbr-dev-hero-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 760px) {
+            .kbr-dev-grid-4,
+            .kbr-dev-grid-3,
+            .kbr-dev-grid-2,
+            .kbr-dev-shortcuts { grid-template-columns: 1fr; }
+            .kbr-dev-section-head,
+            .kbr-dev-row,
+            .kbr-dev-mini-row { align-items: flex-start; flex-direction: column; }
+        }
+    </style>
+
+    <div class="kbr-dev-status kabeeri-admin-surface" dir="{{ $isArabic ? 'rtl' : 'ltr' }}">
+        <section class="kbr-dev-hero">
+            <div class="kbr-dev-hero-grid">
+                <div>
+                    <span class="kbr-dev-badge">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 13h4l2-6 4 12 2-6h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                        {{ $brand }}
+                    </span>
+                    <h1 class="kbr-dev-title">{{ $copy('لوحة حالة التطوير', 'Development status') }}</h1>
+                    <p class="kbr-dev-lead">
+                        {{ $copy('ملخص داخلي منظم لحالة التنفيذ، البيانات، التتبع، وجاهزية النشر داخل لوحة الأدمن.', 'A focused internal view of implementation, data, tracking, and release readiness inside the admin dashboard.') }}
                     </p>
                 </div>
 
-                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <p class="text-xs font-bold text-[#f4c46b]">{{ $copy('إشارة الإصدار', 'Release signal') }}</p>
-                    <p class="mt-2 text-2xl font-black">{{ $releaseReady ? $copy('جاهز للمراجعة', 'Ready for review') : $copy('يحتاج متابعة', 'Needs follow-up') }}</p>
-                    <p class="mt-1 text-sm text-[#fffaf0]/65">{{ $productionReady ? $copy('جاهز بعد اختبار بيئة التجربة.', 'Ready after staging verification.') : $copy('يلزم تأكيد المالك وبيئة التجربة قبل الإنتاج.', 'Owner and staging verification are still required.') }}</p>
-                </div>
+                <aside class="kbr-dev-release-card">
+                    <p class="kbr-dev-kicker">{{ $copy('إشارة الإصدار', 'Release signal') }}</p>
+                    <strong>{{ $releaseReady ? $copy('جاهز للمراجعة', 'Ready for review') : $copy('يحتاج متابعة', 'Needs follow-up') }}</strong>
+                    <p class="kbr-dev-muted">{{ $productionReady ? $copy('جاهز بعد اختبار بيئة التجربة.', 'Ready after staging verification.') : $copy('يلزم تأكيد المالك وبيئة التجربة قبل الإنتاج.', 'Owner and staging verification are still required.') }}</p>
+                </aside>
             </div>
         </section>
 
-        <section class="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <section class="kbr-dev-grid-4" aria-label="{{ $copy('مؤشرات الحالة', 'Status metrics') }}">
             @foreach ($stats as $stat)
-                <article class="rounded-2xl border border-[#17130d]/10 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-[#17130d]">
-                    <div class="flex items-start justify-between gap-3">
+                <article class="kbr-dev-stat">
+                    <div class="kbr-dev-stat-head">
                         <div>
-                            <p class="text-xs font-bold text-[#17130d]/55 dark:text-[#fffaf0]/55">{{ $stat['label'] }}</p>
-                            <p class="mt-2 text-2xl font-black text-[#17130d] dark:text-[#fffaf0]">{{ $stat['value'] }}</p>
+                            <p class="kbr-dev-muted">{{ $stat['label'] }}</p>
+                            <p class="kbr-dev-stat-value">{{ $stat['value'] }}</p>
                         </div>
-                        <span class="inline-flex h-9 w-9 items-center justify-center rounded-full {{ $stat['ready'] ? 'bg-[#17130d] text-[#fffaf0]' : 'bg-[#fffaf0] text-[#17130d] ring-1 ring-[#c98a2e]/30' }}">
-                            @if ($stat['ready'])
-                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            @else
-                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="1.8" />
-                                </svg>
-                            @endif
+                        <span class="kbr-dev-icon-box {{ $stat['ready'] ? '' : 'is-review' }}">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="{{ $stat['icon'] }}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
                         </span>
                     </div>
-                    <p class="mt-3 text-sm text-[#17130d]/60 dark:text-[#fffaf0]/60">{{ $stat['note'] }}</p>
+                    <p class="kbr-dev-muted">{{ $stat['note'] }}</p>
                 </article>
             @endforeach
         </section>
 
-        <section class="grid gap-4 lg:grid-cols-[1fr_360px]">
-            <article class="rounded-3xl border border-[#17130d]/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#17130d]">
-                <div class="flex flex-wrap items-center justify-between gap-3">
+        <section class="kbr-dev-main-grid">
+            <article class="kbr-dev-panel">
+                <div class="kbr-dev-section-head">
                     <div>
-                        <p class="text-xs font-bold text-[#c98a2e]">{{ $copy('المسارات الداخلية', 'Internal paths') }}</p>
-                        <h2 class="mt-1 text-xl font-black text-[#17130d] dark:text-[#fffaf0]">{{ $copy('اختصارات لوحة الأدمن', 'Admin shortcuts') }}</h2>
+                        <p class="kbr-dev-kicker">{{ $copy('المسارات الداخلية', 'Internal paths') }}</p>
+                        <h2 class="kbr-dev-heading">{{ $copy('اختصارات لوحة الأدمن', 'Admin shortcuts') }}</h2>
                     </div>
-                    <a class="inline-flex items-center gap-2 rounded-full bg-[#17130d] px-4 py-2 text-xs font-bold text-[#fffaf0] ring-1 ring-[#17130d]/10 transition hover:bg-[#2a2116] dark:bg-[#fffaf0] dark:text-[#17130d]" href="{{ route('filament.admin.pages.development-status') }}">
-                        <span>{{ $copy('الصفحة الحالية', 'Current page') }}</span>
-                    </a>
+                    <a class="kbr-dev-button" href="{{ route('filament.admin.pages.development-status') }}">{{ $copy('الصفحة الحالية', 'Current page') }}</a>
                 </div>
 
-                <div class="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+                <div class="kbr-dev-shortcuts">
                     @foreach ($adminLinks as $link)
-                        <a class="group flex items-center justify-between gap-3 rounded-2xl border border-[#17130d]/10 bg-[#fffaf0] px-4 py-3 text-sm font-bold text-[#17130d] transition hover:border-[#c98a2e]/60 hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-[#fffaf0]" href="{{ route($link['route']) }}">
+                        <a class="kbr-dev-shortcut" href="{{ route($link['route']) }}">
                             <span>{{ $link['label'] }}</span>
-                            <svg class="h-4 w-4 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="{{ $isArabic ? 'M15 6l-6 6 6 6' : 'M9 6l6 6-6 6' }}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
                         </a>
                     @endforeach
                 </div>
             </article>
 
-            <article class="rounded-3xl border border-[#17130d]/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#17130d]">
-                <p class="text-xs font-bold text-[#c98a2e]">{{ $copy('ملخص سريع', 'Quick summary') }}</p>
-                <h2 class="mt-1 text-xl font-black text-[#17130d] dark:text-[#fffaf0]">{{ $copy('مخزون النظام', 'System inventory') }}</h2>
-                <div class="mt-4 space-y-2">
+            <aside class="kbr-dev-card">
+                <p class="kbr-dev-kicker">{{ $copy('ملخص سريع', 'Quick summary') }}</p>
+                <h2 class="kbr-dev-heading">{{ $copy('مخزون النظام', 'System inventory') }}</h2>
+                <div class="kbr-dev-list">
                     @foreach (array_slice($inventory, 0, 5) as $item)
-                        <div class="flex items-center justify-between gap-3 rounded-2xl bg-[#fffaf0] px-4 py-3 text-sm dark:bg-white/5">
-                            <span class="text-[#17130d]/65 dark:text-[#fffaf0]/65">{{ $inventoryLabel($item['label'] ?? '') }}</span>
-                            <strong class="text-[#17130d] dark:text-[#fffaf0]">{{ $fmt($item['value'] ?? 0) }}</strong>
+                        <div class="kbr-dev-row">
+                            <span class="kbr-dev-muted">{{ $inventoryLabel($item['label'] ?? '') }}</span>
+                            <strong>{{ $fmt($item['value'] ?? 0) }}</strong>
                         </div>
                     @endforeach
                 </div>
-            </article>
+            </aside>
         </section>
 
-        <section class="grid gap-4 xl:grid-cols-[1.15fr_.85fr]">
-            <article class="rounded-3xl border border-[#17130d]/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#17130d]">
-                <div class="flex items-center justify-between gap-3">
+        <section class="kbr-dev-split-grid">
+            <article class="kbr-dev-panel">
+                <div class="kbr-dev-section-head">
                     <div>
-                        <p class="text-xs font-bold text-[#c98a2e]">{{ $copy('التقدم الحقيقي', 'Real progress') }}</p>
-                        <h2 class="mt-1 text-xl font-black text-[#17130d] dark:text-[#fffaf0]">{{ $copy('حالة النسخ', 'Version status') }}</h2>
+                        <p class="kbr-dev-kicker">{{ $copy('التقدم الحقيقي', 'Real progress') }}</p>
+                        <h2 class="kbr-dev-heading">{{ $copy('حالة النسخ', 'Version status') }}</h2>
                     </div>
-                    <span class="rounded-full bg-[#17130d] px-3 py-1 text-xs font-bold text-[#fffaf0] dark:bg-[#fffaf0] dark:text-[#17130d]">{{ $summary['percent'] ?? 0 }}%</span>
+                    <span class="kbr-dev-pill" style="background:#17130d;color:#fffaf0">{{ $summary['percent'] ?? 0 }}%</span>
                 </div>
 
-                <div class="mt-4 space-y-3">
+                <div class="kbr-dev-list">
                     @foreach ($versions as $version)
-                        <div class="rounded-2xl bg-[#fffaf0] p-4 dark:bg-white/5">
-                            <div class="flex flex-wrap items-center justify-between gap-2 text-sm">
-                                <strong class="text-[#17130d] dark:text-[#fffaf0]">{{ $version['name'] }}</strong>
-                                <span class="text-[#17130d]/55 dark:text-[#fffaf0]/55">{{ $fmt($version['done'] ?? 0) }} / {{ $fmt($version['total'] ?? 0) }}</span>
+                        <div class="kbr-dev-progress-card">
+                            <div class="kbr-dev-progress-top">
+                                <strong>{{ $version['name'] }}</strong>
+                                <span class="kbr-dev-muted">{{ $fmt($version['done'] ?? 0) }} / {{ $fmt($version['total'] ?? 0) }}</span>
                             </div>
-                            <div class="mt-3 h-2 overflow-hidden rounded-full bg-[#17130d]/10 dark:bg-white/10">
-                                <div class="h-full rounded-full bg-gradient-to-r from-[#17130d] to-[#c98a2e]" style="width: {{ $percent($version['percent'] ?? 0) }}%"></div>
-                            </div>
+                            <div class="kbr-dev-bar"><span style="width: {{ $percent($version['percent'] ?? 0) }}%"></span></div>
                             @if (($version['pending'] ?? 0) > 0 || ($version['blocked'] ?? 0) > 0)
-                                <p class="mt-2 text-xs font-bold text-[#8a5a16] dark:text-[#f4c46b]">
-                                    {{ $copy('متبقي', 'Remaining') }}: {{ $fmt(($version['pending'] ?? 0) + ($version['blocked'] ?? 0)) }}
-                                </p>
+                                <p class="kbr-dev-warn">{{ $copy('متبقي', 'Remaining') }}: {{ $fmt(($version['pending'] ?? 0) + ($version['blocked'] ?? 0)) }}</p>
                             @endif
                         </div>
                     @endforeach
                 </div>
             </article>
 
-            <div class="space-y-4">
-                <article class="rounded-3xl border border-[#17130d]/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#17130d]">
-                    <p class="text-xs font-bold text-[#c98a2e]">{{ $copy('آخر الحركة', 'Latest movement') }}</p>
-                    <h2 class="mt-1 text-xl font-black text-[#17130d] dark:text-[#fffaf0]">{{ $copy('سجل التتبع', 'Tracker log') }}</h2>
-                    <div class="mt-4 space-y-2">
+            <div class="kbr-dev-list" style="margin-top:0">
+                <article class="kbr-dev-card">
+                    <p class="kbr-dev-kicker">{{ $copy('آخر الحركة', 'Latest movement') }}</p>
+                    <h2 class="kbr-dev-heading">{{ $copy('سجل التتبع', 'Tracker log') }}</h2>
+                    <div class="kbr-dev-list">
                         @forelse ($history as $event)
-                            <div class="rounded-2xl bg-[#fffaf0] px-4 py-3 text-sm dark:bg-white/5">
-                                <strong class="text-[#17130d] dark:text-[#fffaf0]">{{ $event['version'] }} {{ $event['task_id'] }}</strong>
-                                <span class="mx-2 text-[#c98a2e]">-</span>
-                                <span class="text-[#17130d]/65 dark:text-[#fffaf0]/65">{{ $statusLabel($event['status'] ?? '') }}</span>
+                            <div class="kbr-dev-row">
+                                <strong>{{ $event['version'] }} {{ $event['task_id'] }}</strong>
+                                <span class="kbr-dev-muted">{{ $statusLabel($event['status'] ?? '') }}</span>
                             </div>
                         @empty
-                            <p class="rounded-2xl bg-[#fffaf0] px-4 py-3 text-sm text-[#17130d]/65 dark:bg-white/5 dark:text-[#fffaf0]/65">
-                                {{ $copy('لا يوجد سجل حديث.', 'No recent log entries.') }}
-                            </p>
+                            <p class="kbr-dev-row kbr-dev-muted">{{ $copy('لا يوجد سجل حديث.', 'No recent log entries.') }}</p>
                         @endforelse
                     </div>
                 </article>
 
-                <article class="rounded-3xl border border-[#17130d]/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#17130d]">
-                    <p class="text-xs font-bold text-[#c98a2e]">{{ $copy('بوابة النشر', 'Publish gate') }}</p>
-                    <h2 class="mt-1 text-xl font-black text-[#17130d] dark:text-[#fffaf0]">{{ $copy('قائمة التأكيد', 'Verification checklist') }}</h2>
-                    <div class="mt-4 space-y-2">
+                <article class="kbr-dev-card">
+                    <p class="kbr-dev-kicker">{{ $copy('بوابة النشر', 'Publish gate') }}</p>
+                    <h2 class="kbr-dev-heading">{{ $copy('قائمة التأكيد', 'Verification checklist') }}</h2>
+                    <div class="kbr-dev-list">
                         @foreach (array_slice($checklist, 0, 5) as $item)
-                            <div class="flex items-center justify-between gap-3 rounded-2xl bg-[#fffaf0] px-4 py-3 text-sm dark:bg-white/5">
-                                <span class="text-[#17130d]/70 dark:text-[#fffaf0]/70">{{ $checklistTitle($item['title'] ?? '') }}</span>
-                                <strong class="{{ ($item['status'] ?? null) === 'ready' ? 'text-[#17130d] dark:text-[#fffaf0]' : 'text-[#8a5a16] dark:text-[#f4c46b]' }}">{{ $statusLabel($item['status'] ?? '') }}</strong>
+                            <div class="kbr-dev-row">
+                                <span class="kbr-dev-muted">{{ $checklistTitle($item['title'] ?? '') }}</span>
+                                <strong class="kbr-dev-status-text {{ ($item['status'] ?? null) === 'ready' ? 'is-ready' : '' }}">{{ $statusLabel($item['status'] ?? '') }}</strong>
                             </div>
                         @endforeach
                     </div>
@@ -236,29 +568,27 @@
             </div>
         </section>
 
-        <section class="rounded-3xl border border-[#17130d]/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[#17130d]">
-            <div class="flex flex-wrap items-center justify-between gap-3">
+        <section class="kbr-dev-panel">
+            <div class="kbr-dev-section-head">
                 <div>
-                    <p class="text-xs font-bold text-[#c98a2e]">{{ $copy('قاعدة البيانات', 'Database') }}</p>
-                    <h2 class="mt-1 text-xl font-black text-[#17130d] dark:text-[#fffaf0]">{{ $copy('أهم مجموعات الجداول', 'Key table groups') }}</h2>
+                    <p class="kbr-dev-kicker">{{ $copy('قاعدة البيانات', 'Database') }}</p>
+                    <h2 class="kbr-dev-heading">{{ $copy('أهم مجموعات الجداول', 'Key table groups') }}</h2>
                 </div>
-                <a class="rounded-full bg-[#fffaf0] px-4 py-2 text-xs font-bold text-[#17130d] ring-1 ring-[#17130d]/10 transition hover:bg-white dark:bg-white/10 dark:text-[#fffaf0] dark:ring-white/10" href="{{ route('filament.admin.pages.database-status') }}">
-                    {{ $copy('التفاصيل', 'Details') }}
-                </a>
+                <a class="kbr-dev-shortcut" href="{{ route('filament.admin.pages.database-status') }}" style="min-height:2.35rem">{{ $copy('التفاصيل', 'Details') }}</a>
             </div>
 
-            <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div class="kbr-dev-grid-4">
                 @foreach ($databaseGroups as $index => $group)
-                    <article class="rounded-2xl bg-[#fffaf0] p-4 dark:bg-white/5">
-                        <div class="flex items-start justify-between gap-3">
-                            <h3 class="text-sm font-black text-[#17130d] dark:text-[#fffaf0]">{{ $copy('مجموعة بيانات', 'Data group') }} {{ $index + 1 }}</h3>
-                            <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-[#17130d] ring-1 ring-[#17130d]/10 dark:bg-[#17130d] dark:text-[#fffaf0] dark:ring-white/10">{{ $fmt($group['total'] ?? 0) }}</span>
+                    <article class="kbr-dev-data-card">
+                        <div class="kbr-dev-row" style="background:transparent;padding:0;min-height:auto">
+                            <h3 class="kbr-dev-heading">{{ $copy('مجموعة بيانات', 'Data group') }} {{ $index + 1 }}</h3>
+                            <span class="kbr-dev-pill">{{ $fmt($group['total'] ?? 0) }}</span>
                         </div>
-                        <div class="mt-3 space-y-2">
+                        <div class="kbr-dev-list">
                             @foreach (array_slice($group['items'] ?? [], 0, 5) as $table)
-                                <div class="flex items-center justify-between gap-2 text-xs">
-                                    <span class="text-[#17130d]/60 dark:text-[#fffaf0]/60">{{ $table['table'] }}</span>
-                                    <strong class="text-[#17130d] dark:text-[#fffaf0]">{{ $fmt($table['count'] ?? 0) }}</strong>
+                                <div class="kbr-dev-mini-row">
+                                    <span class="kbr-dev-table-name">{{ $table['table'] }}</span>
+                                    <strong>{{ $fmt($table['count'] ?? 0) }}</strong>
                                 </div>
                             @endforeach
                         </div>

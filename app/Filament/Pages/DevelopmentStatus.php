@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Filament\Concerns\LocalizesAdminPageLabels;
 use App\Support\RootDashboardData;
 use Filament\Pages\Page;
+use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -21,6 +22,8 @@ class DevelopmentStatus extends Page
     protected static ?string $navigationLabel = 'Development status';
 
     protected static ?int $navigationSort = 0;
+
+    protected Width|string|null $maxContentWidth = Width::Full;
 
     protected string $view = 'filament.pages.development-status';
 
