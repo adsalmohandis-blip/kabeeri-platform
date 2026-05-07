@@ -50,9 +50,9 @@
             "completed_by_codex_at": "2026-05-07T01:45:50+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "pending",
-            "tests": "npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=V15PublicRuntimeTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test",
-            "notes": "Standardized the UI identity color system across Blade/Tailwind surfaces to black, golden yellow, white, and off-white only, including admin, public, marketplace, mall, customer, and root pages. Verified no non-brand hex/rgb values remain.",
+            "commit": "2e99f18",
+            "tests": "vendor/bin/pint app/Filament/Pages/DevelopmentStatus.php app/Filament/Widgets/DevelopmentStatusOverview.php routes/web.php tests/Feature/RootDashboardPageTest.php; php artisan view:clear; php artisan view:cache; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=AdminPanelTest; git diff --check",
+            "notes": "Integrated /internal/command-center into Filament admin as a Development Status page with live task, database, release, and system inventory overview.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
@@ -140,9 +140,9 @@
             "completed_by_codex_at": "2026-05-06T21:10:41+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "pending",
-            "tests": "php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=AdminPanelTest; php artisan test --filter=V9UiFoundationTest; npm run build; vendor/bin/pint --test",
-            "notes": "Added V10 Admin Command navigation group and page ordering in Filament.",
+            "commit": "2e99f18",
+            "tests": "vendor/bin/pint app/Filament/Pages/DevelopmentStatus.php app/Filament/Widgets/DevelopmentStatusOverview.php routes/web.php tests/Feature/RootDashboardPageTest.php; php artisan view:clear; php artisan view:cache; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=AdminPanelTest; git diff --check",
+            "notes": "Added the Development Status navigation entry and main admin dashboard widget so the old command center is part of the primary admin experience.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
@@ -230,9 +230,9 @@
             "completed_by_codex_at": "2026-05-06T21:10:41+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "pending",
-            "tests": "php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=AdminPanelTest; php artisan test --filter=V9UiFoundationTest; npm run build; vendor/bin/pint --test",
-            "notes": "Added V10AdminExperienceTest covering routes, rendered pages, workspaces, and permission-aware navigation.",
+            "commit": "2e99f18",
+            "tests": "vendor/bin/pint app/Filament/Pages/DevelopmentStatus.php app/Filament/Widgets/DevelopmentStatusOverview.php routes/web.php tests/Feature/RootDashboardPageTest.php; php artisan view:clear; php artisan view:cache; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=AdminPanelTest; git diff --check",
+            "notes": "Updated regression coverage for the legacy command-center redirect, Development Status page render, and main admin dashboard widget.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
