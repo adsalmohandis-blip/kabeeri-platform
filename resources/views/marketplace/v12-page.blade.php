@@ -21,6 +21,11 @@
     $release = $data['release'];
     $selectedTheme = $data['selected_theme'];
     $selectedPlugin = $data['selected_plugin'];
+    $brief = fn (?string $text, int $words = 12): string => \Illuminate\Support\Str::words(
+        \Illuminate\Support\Str::squish((string) $text),
+        $words,
+        ''
+    );
 
     $nav = [
         ['label' => 'Marketplace', 'route' => 'marketplace.home', 'icon' => 'mall'],
@@ -632,7 +637,7 @@
                     <div>
                         <span class="eyebrow">{{ __('kabeeri.brand.name') }} V12 Marketplace Studio</span>
                         <h1>{{ in_array($page, $developerPages, true) ? 'بوابة المطورين والمبدعين لبيع الثيمات والبلجنز.' : $pageConfig['label'] }}</h1>
-                        <p>{{ $pageConfig['intent'] }} V12 تفصل Marketplace الداخلي عن {{ __('kabeeri.brand.name') }} Mall، وتعرض قبل أي تثبيت: permissions، compatibility، signing، license، rollback، والدعم.</p>
+                        <p>{{ $brief($pageConfig['intent'], 10) }} افحص التوافق قبل التثبيت.</p>
                         <div class="hero-actions">
                             <a class="button primary" href="{{ route('marketplace.themes.index') }}"><x-kabeeri-icon name="theme" />تصفح Theme Catalog</a>
                             <a class="button amber" href="{{ route('marketplace.plugins.index') }}"><x-kabeeri-icon name="plugin" />تصفح Plugin Bundle Catalog</a>
@@ -703,7 +708,7 @@
                             <article class="card">
                                 <span class="chip">{{ $theme['type'] }}</span>
                                 <h3>{{ $theme['name'] }}</h3>
-                                <p>{{ $theme['best_for'] }}</p>
+                                <p>{{ $brief($theme['best_for'], 10) }}</p>
                                 <div class="metric">{{ $theme['performance_score'] }}</div>
                                 <p class="muted">Performance score · {{ $theme['price_type'] }} · {{ $theme['license'] }}</p>
                                 <div class="mini-grid">
@@ -727,7 +732,7 @@
                             <span class="chip">Theme Detail and Preview</span>
                             <h2>{{ $selectedTheme['name'] }} كـ preview قابل للفحص، مش مجرد screenshot.</h2>
                         </div>
-                        <p>{{ $selectedTheme['best_for'] }}</p>
+                        <p>{{ $brief($selectedTheme['best_for'], 10) }}</p>
                     </div>
 
                     <div class="grid-2">
@@ -893,7 +898,7 @@
                             <article class="card">
                                 <span class="badge">{{ $step['n'] }}</span>
                                 <h3>{{ $step['title'] }}</h3>
-                                <p>{{ $step['text'] }}</p>
+                                <p>{{ $brief($step['text'], 12) }}</p>
                             </article>
                         @endforeach
                     </div>
@@ -1062,7 +1067,7 @@
                                 <span class="chip">Revenue Share</span>
                                 <h3>{{ $plan['label'] }}</h3>
                                 <div class="metric">{{ $plan['fee'] }}</div>
-                                <p>{{ $plan['best_for'] }}</p>
+                                <p>{{ $brief($plan['best_for'], 10) }}</p>
                             </article>
                         @endforeach
                     </div>
@@ -1082,7 +1087,7 @@
                             <span class="chip">Developer Profile and Creator Public Page UX</span>
                             <h2>الثقة في المطور جزء من المنتج نفسه.</h2>
                         </div>
-                        <p>Developer profile يعرض الهوية، publisher type، verification، specialties، packages، support policy، certification، وpublic creator page عند السماح.</p>
+                        <p>Profile واضح: هوية، ثقة، دعم، وحزم منشورة.</p>
                     </div>
 
                     <div class="grid-3">

@@ -13,6 +13,11 @@
     $faq = $data['faq'];
     $release = $data['release'];
     $nextRuntime = $data['next_runtime'];
+    $brief = fn (?string $text, int $words = 12): string => \Illuminate\Support\Str::words(
+        \Illuminate\Support\Str::squish((string) $text),
+        $words,
+        ''
+    );
 
     $audienceKey = match ($page) {
         'business' => 'business',
@@ -704,7 +709,7 @@
                                 {{ $pageConfig['label'] }}
                             @endif
                         </h1>
-                        <p>{{ $pageConfig['intent'] }} اختر ما تحتاجه الآن، ثم انتقل للخطوة التالية بوضوح.</p>
+                        <p>{{ $brief($pageConfig['intent'], 10) }} ابدأ بما تحتاجه الآن.</p>
                         <div class="hero-actions">
                             <a class="button primary" href="{{ route('public.contact') }}"><x-kabeeri-icon name="rocket" />احجز ديمو مبكر</a>
                             <a class="button copper" href="{{ route('public.audiences') }}"><x-kabeeri-icon name="map" />اختر مسارك</a>
@@ -745,7 +750,7 @@
                                 <span class="step-badge">{{ $layer['step'] }}</span>
                                 <div>
                                     <h3>{{ $layer['title'] }}</h3>
-                                    <p>{{ $layer['text'] }}</p>
+                                    <p>{{ $brief($layer['text'], 12) }}</p>
                                 </div>
                             </article>
                         @endforeach
@@ -768,8 +773,8 @@
                             <article class="card">
                                 <span class="chip">{{ $audience['label'] }}</span>
                                 <h3>{{ $audience['headline'] }}</h3>
-                                <p>{{ $audience['pain'] }}</p>
-                                <p style="margin-top: 10px;"><strong>النتيجة:</strong> {{ $audience['outcome'] }}</p>
+                                <p>{{ $brief($audience['pain'], 11) }}</p>
+                                <p style="margin-top: 10px;"><strong>النتيجة:</strong> {{ $brief($audience['outcome'], 11) }}</p>
                                 <a class="route-pill" href="{{ route($audience['route']) }}">افتح المسار</a>
                             </article>
                         @endforeach
@@ -784,13 +789,13 @@
                             <span class="chip">{{ $selectedAudience['label'] }}</span>
                             <h2>{{ $selectedAudience['headline'] }}</h2>
                         </div>
-                        <p>{{ $selectedAudience['pain'] }}</p>
+                        <p>{{ $brief($selectedAudience['pain'], 12) }}</p>
                     </div>
 
                     <div class="grid-2">
                         <article class="card">
                             <h3>القيمة التي يحصل عليها {{ $selectedAudience['label'] }}</h3>
-                            <p>{{ $selectedAudience['outcome'] }}</p>
+                            <p>{{ $brief($selectedAudience['outcome'], 12) }}</p>
                             <a class="route-pill" href="{{ route('public.pricing') }}">شاهد الاشتراكات المناسبة</a>
                         </article>
 
@@ -898,7 +903,7 @@
                             <article class="card">
                                 <span class="step-badge">{{ $step['n'] }}</span>
                                 <h3>{{ $step['title'] }}</h3>
-                                <p>{{ $step['text'] }}</p>
+                                <p>{{ $brief($step['text'], 12) }}</p>
                             </article>
                         @endforeach
                     </div>
@@ -955,7 +960,7 @@
                                 <span class="chip">{{ $plan['highlight'] }}</span>
                                 <h3>{{ $plan['name'] }}</h3>
                                 <div class="price">{{ $plan['price'] }}</div>
-                                <p>{{ $plan['best_for'] }}</p>
+                                <p>{{ $brief($plan['best_for'], 10) }}</p>
                                 <a class="button" href="{{ route('public.contact') }}">ناقش الخطة</a>
                             </article>
                         @endforeach
@@ -965,7 +970,7 @@
                         @foreach ($pricingLayers as $layer)
                             <article class="card">
                                 <h3>{{ $layer['label'] }}</h3>
-                                <p>{{ $layer['text'] }}</p>
+                                <p>{{ $brief($layer['text'], 12) }}</p>
                             </article>
                         @endforeach
                     </div>
@@ -1128,7 +1133,7 @@
 
         <footer class="footer">
             <span>{{ __('kabeeri.brand.name') }} V11 Public Marketing UX</span>
-            <span>{{ $pageConfig['uri'] }} · {{ $pageConfig['label'] }} · {{ $pageConfig['intent'] }}</span>
+            <span>{{ $pageConfig['uri'] }} · {{ $pageConfig['label'] }} · {{ $brief($pageConfig['intent'], 8) }}</span>
         </footer>
     </div>
 </body>

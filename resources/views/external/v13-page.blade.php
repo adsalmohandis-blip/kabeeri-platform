@@ -12,6 +12,11 @@
     $network = $data['network'];
     $legalSteps = $data['legal_verification_steps'];
     $release = $data['release'];
+    $brief = fn (?string $text, int $words = 12): string => \Illuminate\Support\Str::words(
+        \Illuminate\Support\Str::squish((string) $text),
+        $words,
+        ''
+    );
 
     $nav = [
         ['label' => 'Mall', 'route' => 'mall.index', 'icon' => 'mall'],
@@ -471,7 +476,7 @@
                     <div>
                         <span class="eyebrow">{{ __('kabeeri.brand.name') }} V13 External Portal</span>
                         <h1>{{ $pageConfig['label'] }}</h1>
-                        <p>{{ $pageConfig['intent'] }} هذه الطبقة تفصل اكتشاف Mall العام عن Marketplace الداخلي، وتربط العميل والشريك والمسوق بمسار واضح وقابل للقياس.</p>
+                        <p>{{ $brief($pageConfig['intent'], 10) }} اكتشاف واضح، ثم مسار مناسب.</p>
                         <div class="actions" style="margin-top: 24px;">
                             <a class="button primary" href="{{ route('mall.search') }}">ابدأ البحث في Mall</a>
                             <a class="button clay" href="{{ route('customer.dashboard') }}"><x-kabeeri-icon name="apps" />افتح لوحتك</a>
@@ -587,7 +592,7 @@
                                 <span class="badge">{{ $step['step'] }}</span>
                                 <div>
                                     <h3>{{ $step['title'] }}</h3>
-                                    <p>{{ $step['text'] }}</p>
+                                    <p>{{ $brief($step['text'], 12) }}</p>
                                 </div>
                             </div>
                         @endforeach
@@ -610,7 +615,7 @@
                             <article class="card">
                                 <span class="badge">{{ $step['n'] }}</span>
                                 <h3>{{ $step['title'] }}</h3>
-                                <p>{{ $step['text'] }}</p>
+                                <p>{{ $brief($step['text'], 12) }}</p>
                             </article>
                         @endforeach
                     </div>
@@ -654,7 +659,7 @@
                             <article class="card">
                                 <span class="chip">{{ $path['label'] }}</span>
                                 <h3>{{ $path['label'] }}</h3>
-                                <p>{{ $path['benefit'] }}</p>
+                                <p>{{ $brief($path['benefit'], 10) }}</p>
                                 <div class="actions" style="margin-top: 14px;">
                                     <a class="button" href="{{ route($path['route']) }}">افتح المسار</a>
                                 </div>
@@ -762,7 +767,7 @@
                                 <span class="badge">{{ $step['step'] }}</span>
                                 <div>
                                     <h3>{{ $step['title'] }}</h3>
-                                    <p>{{ $step['text'] }}</p>
+                                    <p>{{ $brief($step['text'], 12) }}</p>
                                 </div>
                             </div>
                         @endforeach
