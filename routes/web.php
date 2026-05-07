@@ -5,6 +5,9 @@ use App\Http\Controllers\Mobile\MobileAuthController;
 use App\Http\Controllers\Mobile\MobileDeviceController;
 use App\Http\Controllers\Mobile\MobilePublicController;
 use App\Http\Controllers\Public\PublicWebRuntimeController;
+use App\Http\Controllers\Web\CustomerAuthController;
+use App\Http\Controllers\Web\CustomerStartController;
+use App\Http\Controllers\Web\CustomerWorkspaceController;
 use App\Http\Controllers\Web\ExternalPortalController;
 use App\Http\Controllers\Web\MallBusinessDirectoryController;
 use App\Http\Controllers\Web\MallCourseController;
@@ -32,6 +35,15 @@ Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
 Route::get('/ui/release-candidate', UiReleaseCandidateController::class)->name('ui.release-candidate');
 
+Route::get('/start', CustomerStartController::class)->name('customer.start');
+Route::middleware('guest')->group(function (): void {
+    Route::get('/login', [CustomerAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [CustomerAuthController::class, 'login'])->name('login.store');
+    Route::get('/register', [CustomerAuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [CustomerAuthController::class, 'register'])->name('register.store');
+});
+Route::post('/logout', [CustomerAuthController::class, 'logout'])->middleware('auth')->name('logout');
+
 Route::get('/public', [PublicMarketingController::class, 'landing'])->name('public.landing');
 Route::get('/for', [PublicMarketingController::class, 'audiences'])->name('public.audiences');
 Route::get('/for/business-owners', [PublicMarketingController::class, 'business'])->name('public.business');
@@ -51,6 +63,13 @@ Route::post('/contact-sales', [PublicMarketingController::class, 'storeInquiry']
 Route::get('/customer', [ExternalPortalController::class, 'customerDashboard'])->name('customer.dashboard');
 Route::get('/customer/theme-plugins', [ExternalPortalController::class, 'customerThemePlugins'])->name('customer.theme-plugins');
 Route::get('/customer/quick-setup', [ExternalPortalController::class, 'customerQuickSetup'])->name('customer.quick-setup');
+Route::middleware('auth')->prefix('customer')->name('customer.')->group(function (): void {
+    Route::get('/onboarding', [CustomerWorkspaceController::class, 'onboarding'])->name('onboarding');
+    Route::post('/onboarding', [CustomerWorkspaceController::class, 'storeOnboarding'])->name('onboarding.store');
+    Route::get('/dashboard', [CustomerWorkspaceController::class, 'dashboard'])->name('workspace');
+    Route::get('/apps/{site}', [CustomerWorkspaceController::class, 'showSite'])->name('apps.show');
+    Route::post('/profile/capabilities', [CustomerWorkspaceController::class, 'updateCapabilities'])->name('capabilities.update');
+});
 
 Route::get('/partners', [ExternalPortalController::class, 'partnerLanding'])->name('partners.landing');
 Route::get('/partners/agency-profile', [ExternalPortalController::class, 'agencyProfile'])->name('partners.agency-profile');

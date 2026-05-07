@@ -267,6 +267,8 @@ class RootDashboardData
     {
         return [
             ['name' => 'Public Landing', 'url' => '/public', 'count' => self::routeExists('public.landing') ? 1 : 0, 'label' => 'route'],
+            ['name' => 'Customer Start', 'url' => '/start', 'count' => self::routeExists('customer.start') ? 1 : 0, 'label' => 'route'],
+            ['name' => 'Customer Login', 'url' => '/login', 'count' => self::routeExists('login') ? 1 : 0, 'label' => 'route'],
             ['name' => 'UI Release Candidate', 'url' => '/ui/release-candidate', 'count' => self::routeExists('ui.release-candidate') ? 1 : 0, 'label' => 'route'],
             ['name' => 'Public Web Manifest', 'url' => '/api/public-web/manifest', 'count' => self::routeExists('public-web.manifest') ? 1 : 0, 'label' => 'contract'],
             ['name' => 'Mall Home', 'url' => '/mall', 'count' => self::publishedMallCount(), 'label' => 'published listings'],
@@ -385,6 +387,7 @@ class RootDashboardData
             ['name' => 'V14 UI Release Candidate', 'path' => 'docs/kabeeri/ui/V14_UI_RELEASE_CANDIDATE.md'],
             ['name' => 'V15 Next Public Runtime', 'path' => 'docs/kabeeri/ui/V15_NEXT_PUBLIC_RUNTIME.md'],
             ['name' => 'V15 Release Candidate', 'path' => 'docs/kabeeri/ui/V15_RELEASE_CANDIDATE.md'],
+            ['name' => 'V16 Customer Onboarding', 'path' => 'docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md'],
             ['name' => 'Extension Governance', 'path' => 'docs/kabeeri/extensions/README.md'],
         ];
     }

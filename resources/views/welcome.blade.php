@@ -60,8 +60,8 @@
             <div class="hero-grid">
                 <section>
                     <div class="kicker"><span class="dot"></span>{{ $release['label'] }}</div>
-                    <h1>لوحة كابيري الرئيسية محدثة لتعكس الحقيقة بعد V15.</h1>
-                    <p class="lead">هذه الصفحة تفصل بوضوح بين قسم الأدمن الداخلي وقسم العرض الخارجي. تعرض حالة التنفيذ من V1 إلى V15، جاهزية V14/V15، قاعدة البيانات، public routes، Next.js public runtime، وما تبقى قبل staging أو production.</p>
+                    <h1>لوحة كابيري الرئيسية محدثة لتعكس الحقيقة بعد V16.</h1>
+                    <p class="lead">هذه الصفحة تفصل بوضوح بين قسم الأدمن الداخلي وقسم العرض الخارجي. تعرض حالة التنفيذ من V1 إلى V16، جاهزية V14/V15، مسار العميل الجديد، قاعدة البيانات، public routes، Next.js public runtime، وما تبقى قبل staging أو production.</p>
                     <div class="actions">
                         <a class="button primary" href="#readiness">راجع الجاهزية</a>
                         <a class="button secondary" href="/ui/release-candidate">افتح V14 RC</a>
@@ -74,7 +74,7 @@
                     <p>{{ $release['production_label'] }}. اللوحة جاهزة لتوجيه مراجعة staging، وليست وعدًا بنشر إنتاجي بدون مراجعة مالك.</p>
                     <div class="hero-metrics">
                         <div class="hero-metric"><span>كل التاسكات</span><strong>{{ $summary['percent'] }}%</strong><small>{{ $fmt($summary['done']) }} / {{ $fmt($summary['total']) }}</small></div>
-                        <div class="hero-metric"><span>UI V9-V15</span><strong>{{ $ui['percent'] }}%</strong><small>{{ $fmt($ui['pending']) }} pending</small></div>
+                        <div class="hero-metric"><span>UI V9-V16</span><strong>{{ $ui['percent'] }}%</strong><small>{{ $fmt($ui['pending']) }} pending</small></div>
                         <div class="hero-metric"><span>V15 Runtime</span><strong>{{ $release['v15_ready'] ? 'Ready' : 'Review' }}</strong><small>{{ $nextRuntime['contract'] }}</small></div>
                         <div class="hero-metric"><span>Filament Resources</span><strong>{{ $fmt($filamentResources) }}</strong><small>Admin resources</small></div>
                     </div>
@@ -88,12 +88,12 @@
                     <span class="eyebrow">قسم الأدمن الداخلي</span>
                     <h2>جاهزية Release Candidate مقابل جاهزية الإنتاج.</h2>
                 </div>
-                <p>المشروع جاهز كـ Release Candidate قوي. الإنتاج النهائي يحتاج Owner Verification وبيئة staging/production مضبوطة.</p>
+                <p>المشروع جاهز كـ Release Candidate قوي، ومع V16 أصبح لديه مدخل عميل عام ومسار إنشاء تطبيق. الإنتاج النهائي يحتاج Owner Verification وبيئة staging/production مضبوطة.</p>
             </div>
             <div class="stat-grid">
                 <div class="stat good"><span>V14 RC</span><strong>{{ $release['v14_ready'] ? 'Ready' : 'Review' }}</strong><small>UI quality gates</small></div>
                 <div class="stat good"><span>V15 RC</span><strong>{{ $release['v15_ready'] ? 'Ready' : 'Review' }}</strong><small>Next public runtime</small></div>
-                <div class="stat good"><span>Tracker</span><strong>{{ $release['tracker_done'] ? 'Done' : 'Open' }}</strong><small>V1-V15 status truth</small></div>
+                <div class="stat good"><span>Tracker</span><strong>{{ $release['tracker_done'] ? 'Done' : 'Open' }}</strong><small>V1-V16 status truth</small></div>
                 <div class="stat warn"><span>Owner Verified</span><strong>{{ $summary['verified'] }}</strong><small>تحتاج اعتماد يدوي</small></div>
                 <div class="stat {{ $release['production_ready'] ? 'good' : 'warn' }}"><span>Production</span><strong>{{ $release['production_ready'] ? 'Ready' : 'Not Yet' }}</strong><small>بعد staging</small></div>
                 <div class="stat"><span>Backend</span><strong>{{ $backend['percent'] }}%</strong><small>V1-V8 + extensions</small></div>
@@ -130,7 +130,7 @@
             <div class="section-title">
                 <div>
                     <span class="eyebrow">Task Tracker Truth</span>
-                    <h2>كل Versions من V1 إلى V15 في مكان واحد.</h2>
+                    <h2>كل Versions من V1 إلى V16 في مكان واحد.</h2>
                 </div>
                 <p>الأرقام هنا تُقرأ من ملفات التراكر، وليس من نص ثابت داخل الصفحة. لو التراكر اتغير، اللوحة تتغير معه.</p>
             </div>
@@ -296,6 +296,7 @@
                     <span class="chip">RTL-first</span>
                     <span class="chip">API-only contract</span>
                     <span class="chip">Marketplace vs Mall separated</span>
+                    <span class="chip">V16 customer onboarding</span>
                 </div>
                 <div class="doc-list">
                     @foreach ($docs as $doc)
