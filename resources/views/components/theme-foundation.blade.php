@@ -222,11 +222,51 @@
             border-color: #17130d;
         }
 
+        .kbr-theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: .18rem;
+            min-height: 2.25rem;
+            border: 1px solid rgba(23,19,13,.16);
+            border-radius: 999px;
+            background: rgba(255,250,240,.9);
+            padding: .18rem;
+            box-shadow: 0 10px 26px rgba(23,19,13,.08);
+            font-family: var(--kbr-font-family);
+        }
+
+        .kbr-theme-toggle__button {
+            display: inline-grid;
+            place-items: center;
+            width: 1.9rem;
+            height: 1.9rem;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            color: #17130d;
+            background: #fffaf0;
+            text-decoration: none;
+            transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+        }
+
+        .kbr-theme-toggle__button:hover {
+            transform: translateY(-1px);
+            border-color: rgba(201,138,46,.38);
+            background: rgba(201,138,46,.14);
+        }
+
+        .kbr-theme-toggle__button.is-active {
+            color: #fffaf0;
+            border-color: #17130d;
+            background: #17130d;
+            box-shadow: inset 0 0 0 1px rgba(255,250,240,.16);
+        }
+
         .kbr-language-switcher--admin {
             margin-inline-start: .5rem;
         }
 
-        .kbr-language-switcher .sr-only {
+        .kbr-language-switcher .sr-only,
+        .kbr-theme-toggle .sr-only {
             position: absolute;
             width: 1px;
             height: 1px;
@@ -263,6 +303,27 @@
             color: #17130d;
         }
 
+        html[data-kbr-theme="dark"] .kbr-theme-toggle {
+            border-color: rgba(255,250,240,.18);
+            background: rgba(33,26,17,.9);
+        }
+
+        html[data-kbr-theme="dark"] .kbr-theme-toggle__button {
+            color: #fffaf0;
+            background: rgba(255,250,240,.08);
+        }
+
+        html[data-kbr-theme="dark"] .kbr-theme-toggle__button:hover {
+            border-color: rgba(201,138,46,.46);
+            background: rgba(201,138,46,.18);
+        }
+
+        html[data-kbr-theme="dark"] .kbr-theme-toggle__button.is-active {
+            color: #17130d;
+            border-color: #c98a2e;
+            background: #c98a2e;
+        }
+
         @media (max-width: 720px) {
             .kbr-language-switcher {
                 width: 100%;
@@ -276,6 +337,11 @@
             .kbr-language-switcher__menu {
                 inset-inline: 0;
                 width: 100%;
+            }
+
+            .kbr-theme-toggle {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>

@@ -3,24 +3,41 @@
     $currentTheme = $kabeeriUi['theme'] ?? 'light';
     $themes = config('kabeeri_ui_preferences.themes', []);
     $redirectTarget = request()->getRequestUri();
-    $currentThemeLabel = __("kabeeri.ui.theme_mode_{$currentTheme}");
+    $themeIcon = fn (string $theme): string => $theme === 'dark' ? 'moon' : 'sun';
 @endphp
 
 @include('components.theme-foundation')
 
-<details class="kbr-language-switcher kbr-language-switcher--theme" data-theme-switcher data-theme-context="{{ $context }}">
-    <summary class="kbr-language-switcher__trigger" aria-label="{{ __('kabeeri.ui.theme_mode') }}">
-        <x-kabeeri-icon name="settings" />
-        <strong>{{ $currentThemeLabel }}</strong>
-    </summary>
-    <div class="kbr-language-switcher__menu" role="listbox" aria-label="{{ __('kabeeri.ui.theme_mode') }}">
-        @foreach ($themes as $theme => $item)
-            @php($themeLabel = __("kabeeri.ui.theme_mode_{$theme}"))
-            @if ($theme === $currentTheme)
-                <span class="kbr-language-switcher__option" aria-current="true">{{ $themeLabel }}</span>
-            @else
-                <a class="kbr-language-switcher__option" href="{{ route('ui.theme', ['theme' => $theme, 'redirect' => $redirectTarget]) }}">{{ $themeLabel }}</a>
-            @endif
-        @endforeach
-    </div>
-</details>
+<div
+    class="kbr-theme-toggle"
+    data-theme-switcher
+    data-theme-context="{{ $context }}"
+    role="group"
+    aria-label="{{ __('kabeeri.ui.theme_mode') }}"
+>
+    @foreach ($themes as $theme => $item)
+        @php($themeLabel = __("kabeeri.ui.theme_mode_{$theme}"))
+        @if ($theme === $currentTheme)
+            <span
+                class="kbr-theme-toggle__button is-active"
+                data-theme-option="{{ $theme }}"
+                aria-current="true"
+                title="{{ $themeLabel }}"
+            >
+                <x-kabeeri-icon :name="$themeIcon($theme)" style="margin-inline-end:0" />
+                <span class="sr-only">{{ $themeLabel }}</span>
+            </span>
+        @else
+            <a
+                class="kbr-theme-toggle__button"
+                href="{{ route('ui.theme', ['theme' => $theme, 'redirect' => $redirectTarget]) }}"
+                data-theme-option="{{ $theme }}"
+                aria-label="{{ $themeLabel }}"
+                title="{{ $themeLabel }}"
+            >
+                <x-kabeeri-icon :name="$themeIcon($theme)" style="margin-inline-end:0" />
+                <span class="sr-only">{{ $themeLabel }}</span>
+            </a>
+        @endif
+    @endforeach
+</div>

@@ -149,7 +149,11 @@ class LocalizationSwitchingTest extends TestCase
             ->get('/')
             ->assertOk()
             ->assertSee('data-kbr-theme="dark"', false)
-            ->assertSee('html[data-kbr-theme="dark"] body', false);
+            ->assertSee('html[data-kbr-theme="dark"] body', false)
+            ->assertSee('class="kbr-theme-toggle"', false)
+            ->assertSee('data-theme-option="light"', false)
+            ->assertSee('data-theme-option="dark"', false)
+            ->assertDontSee('<strong>داكن</strong>', false);
 
         $this->assertMatchesRegularExpression('/const kabeeriTheme = [\'"]dark[\'"];/', $publicResponse->getContent());
 
@@ -159,7 +163,9 @@ class LocalizationSwitchingTest extends TestCase
             ->get(route('customer.workspace'))
             ->assertOk()
             ->assertSee('data-kbr-theme="dark"', false)
-            ->assertSee('data-theme-context="customer"', false);
+            ->assertSee('data-theme-context="customer"', false)
+            ->assertSee('data-theme-option="light"', false)
+            ->assertSee('data-theme-option="dark"', false);
 
         $this->assertMatchesRegularExpression('/const kabeeriTheme = [\'"]dark[\'"];/', $customerResponse->getContent());
     }
