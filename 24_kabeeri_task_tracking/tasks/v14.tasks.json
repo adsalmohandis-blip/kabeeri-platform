@@ -429,6 +429,21 @@
             "tests": "php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V9UiFoundationTest; npm run build; vendor/bin/pint --test; php artisan test",
             "notes": "Added public product narrative clarity QA coverage using V11 progressive story layers.",
             "source_prompt_file": "docs/KBR_V166_DEEP_UI_UX_REVIEW.md"
+        },
+        {
+            "task_id": "T28",
+            "prompt_id": "28",
+            "title": "External and Customer Concise Copy Enforcement",
+            "size": "Unknown",
+            "status": "codex_done",
+            "started_at": "2026-05-07T14:21:00+00:00",
+            "completed_by_codex_at": "2026-05-07T14:42:50+00:00",
+            "verified_by_owner_at": null,
+            "blocked_at": null,
+            "commit": "6124eec",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=ExternalConciseCopyTest; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test",
+            "notes": "Applied concise customer-facing copy to Arabic/English customer translation keys, added display-level brief copy handling for V11/V12/V13 visitor surfaces, and added ExternalConciseCopyTest to prevent long rendered paragraphs.",
+            "source_prompt_file": "docs/KBR_V166_DEEP_UI_UX_REVIEW.md"
         }
     ]
 }
