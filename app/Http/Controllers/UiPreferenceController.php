@@ -15,6 +15,7 @@ class UiPreferenceController extends Controller
         $context = KabeeriUiPreference::context($redirectTarget ?? $request);
 
         $request->session()->put(KabeeriUiPreference::themeKey($context), $theme);
+        $this->storeUserPreference($request, "{$context}_theme", $theme);
 
         return redirect()->to($redirectTarget ?? url()->previous(route('home')));
     }
@@ -28,6 +29,7 @@ class UiPreferenceController extends Controller
         abort_if($context === 'platform_public', 403);
 
         $request->session()->put(KabeeriUiPreference::fontKey($context), $font);
+        $this->storeUserPreference($request, "{$context}_font", $font);
 
         return redirect()->to($redirectTarget ?? url()->previous(route('home')));
     }
@@ -45,5 +47,23 @@ class UiPreferenceController extends Controller
         }
 
         return null;
+    }
+
+    protected function storeUserPreference(Request $request, string $key, string $value): void
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            return;
+        }
+
+        $profile = $user->profile()->firstOrCreate(
+            ['user_id' => $user->id],
+            ['visibility' => 'private'],
+        );
+
+        $profile->forceFill([
+            'metadata' => array_merge($profile->metadata ?? [], [$key => $value]),
+        ])->save();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use App\Filament\Pages\UserSettings;
 use App\Filament\Widgets\DevelopmentStatusOverview;
 use App\Http\Middleware\ResetCustomerSessionForAdminLogin;
 use App\Http\Middleware\SetKabeeriLocale;
@@ -32,13 +33,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile(UserSettings::class, isSimple: false)
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->renderHook(
-                PanelsRenderHook::TOPBAR_END,
-                fn (): string => view('components.ui-preference-toolbar', ['context' => 'admin'])->render(),
-            )
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
                 fn (): string => view('filament.partials.admin-style')->render(),

@@ -10,6 +10,13 @@ class AdminLocaleCopy
     private const LABELS = [
         'ar' => [
             'Dashboard' => 'الرئيسية',
+            'User settings' => 'إعدادات المستخدم',
+            'Account data' => 'بيانات الحساب',
+            'Interface settings' => 'إعدادات الواجهة',
+            'Admin language' => 'لغة لوحة الأدمن',
+            'Admin font' => 'خط لوحة الأدمن',
+            'Security' => 'الأمان',
+            'User settings saved' => 'تم حفظ إعدادات المستخدم',
             'Platform Admin Dashboard' => 'لوحة أدمن المنصة',
             'Development status' => 'لوحة حالة التطوير',
             'Open development status' => 'فتح لوحة حالة التطوير',

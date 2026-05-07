@@ -1,4 +1,17 @@
+@php($adminFontFamily = $kabeeriUi['font_family'] ?? '"IBM Plex Sans Arabic", "Almarai", sans-serif')
+
 <style>
+    html.fi {
+        --kbr-admin-font-family: {!! $adminFontFamily !!};
+    }
+
+    .fi-body,
+    .fi-topbar,
+    .fi-sidebar,
+    .fi-dropdown-panel {
+        font-family: var(--kbr-admin-font-family), var(--font-family), sans-serif !important;
+    }
+
     .fi-sidebar svg,
     .fi-topbar svg {
         max-width: 1.125rem;

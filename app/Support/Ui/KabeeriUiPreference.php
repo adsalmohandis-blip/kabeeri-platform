@@ -33,7 +33,11 @@ class KabeeriUiPreference
     public static function theme(Request $request): string
     {
         $context = self::context($request);
-        $theme = (string) $request->session()->get(self::themeKey($context), config('kabeeri_ui_preferences.default_theme', 'light'));
+        $theme = (string) $request->session()->get(
+            self::themeKey($context),
+            self::userMetadataPreference($request, "{$context}_theme")
+                ?? config('kabeeri_ui_preferences.default_theme', 'light'),
+        );
 
         return self::supportedTheme($theme);
     }
@@ -41,7 +45,11 @@ class KabeeriUiPreference
     public static function font(Request $request): string
     {
         $context = self::context($request);
-        $font = (string) $request->session()->get(self::fontKey($context), config('kabeeri_ui_preferences.default_font', 'ibm-plex-sans-arabic'));
+        $font = (string) $request->session()->get(
+            self::fontKey($context),
+            self::userMetadataPreference($request, "{$context}_font")
+                ?? config('kabeeri_ui_preferences.default_font', 'ibm-plex-sans-arabic'),
+        );
 
         return self::supportedFont($font);
     }
@@ -70,6 +78,24 @@ class KabeeriUiPreference
     {
         return config("kabeeri_ui_preferences.fonts.{$font}.family")
             ?? config('kabeeri_ui_preferences.fonts.ibm-plex-sans-arabic.family');
+    }
+
+    private static function userMetadataPreference(Request $request, string $key): ?string
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            return null;
+        }
+
+        if (! method_exists($user, 'profile')) {
+            return null;
+        }
+
+        $profile = $user->profile()->first(['metadata']);
+        $value = $profile?->metadata[$key] ?? null;
+
+        return is_string($value) ? $value : null;
     }
 
     /**

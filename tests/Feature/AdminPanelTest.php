@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Filament\Pages\UserSettings;
 use App\Http\Middleware\ResetCustomerSessionForAdminLogin;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class AdminPanelTest extends TestCase
@@ -26,9 +28,12 @@ class AdminPanelTest extends TestCase
             ->assertSee('لوحة حالة التطوير')
             ->assertSee('الأشخاص')
             ->assertSee('مشروعات الأعمال')
+            ->assertSee('إعدادات المستخدم')
             ->assertSee('data-admin-icon-scale="compact"', false)
             ->assertDontSee('fi-filament-info-widget-logo')
             ->assertDontSee('fi-account-widget')
+            ->assertDontSee('data-language-context="admin"', false)
+            ->assertDontSee('data-font-context="admin"', false)
             ->assertDontSee('People')
             ->assertDontSee('business projects')
             ->assertDontSee('Welcome to');
@@ -41,6 +46,44 @@ class AdminPanelTest extends TestCase
             ->assertSee('Development status')
             ->assertSee('Open development status')
             ->assertDontSee('لوحة حالة التطوير');
+    }
+
+    public function test_admin_user_settings_host_language_and_font_controls(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/admin/profile')
+            ->assertOk()
+            ->assertSee('إعدادات المستخدم')
+            ->assertSee('لغة لوحة الأدمن')
+            ->assertSee('خط لوحة الأدمن')
+            ->assertSee('المراعي')
+            ->assertDontSee('Admin language')
+            ->assertDontSee('Admin font');
+    }
+
+    public function test_admin_user_settings_save_language_and_font_preferences(): void
+    {
+        $user = User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.test',
+        ]);
+
+        $this->actingAs($user);
+
+        Livewire::test(UserSettings::class)
+            ->fillForm([
+                'name' => 'Admin User',
+                'email' => 'admin@example.test',
+                'admin_locale' => 'en',
+                'admin_font' => 'tajawal',
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertSame('en', session('kabeeri_locale_admin'));
+        $this->assertSame('tajawal', session('kabeeri_font_admin'));
+        $this->assertSame('en', $user->profile()->firstOrFail()->metadata['admin_locale']);
+        $this->assertSame('tajawal', $user->profile()->firstOrFail()->metadata['admin_font']);
     }
 
     public function test_customer_session_can_open_platform_admin_login_without_loop(): void

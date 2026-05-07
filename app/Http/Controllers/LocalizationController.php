@@ -17,6 +17,7 @@ class LocalizationController extends Controller
         $context = KabeeriLocale::context($redirectTarget ?? $request);
         $request->session()->put(KabeeriLocale::contextSessionKey($context), $locale);
         $request->session()->put(KabeeriLocale::sessionKey(), $locale);
+        $this->storeUserLocale($request, "{$context}_locale", $locale);
 
         return redirect()->to(KabeeriLocale::localizedUrl($locale, $redirectTarget ?? '/'));
     }
@@ -34,5 +35,23 @@ class LocalizationController extends Controller
         }
 
         return null;
+    }
+
+    protected function storeUserLocale(Request $request, string $key, string $locale): void
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            return;
+        }
+
+        $profile = $user->profile()->firstOrCreate(
+            ['user_id' => $user->id],
+            ['visibility' => 'private'],
+        );
+
+        $profile->forceFill([
+            'metadata' => array_merge($profile->metadata ?? [], [$key => $locale]),
+        ])->save();
     }
 }

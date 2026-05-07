@@ -56,7 +56,7 @@ class LocalizationSwitchingTest extends TestCase
             ->assertSee('data-language-context="customer"', false);
     }
 
-    public function test_platform_admin_dashboard_has_team_language_switcher_context(): void
+    public function test_platform_admin_language_and_font_live_inside_user_settings(): void
     {
         $user = User::factory()->create();
 
@@ -64,8 +64,37 @@ class LocalizationSwitchingTest extends TestCase
             ->withSession(['kabeeri_locale_admin' => 'en'])
             ->get('/admin')
             ->assertOk()
-            ->assertSee('data-language-context="admin"', false)
-            ->assertSee('Language');
+            ->assertSee('User settings')
+            ->assertDontSee('data-language-context="admin"', false)
+            ->assertDontSee('data-font-context="admin"', false);
+
+        $this->actingAs($user)
+            ->withSession(['kabeeri_locale_admin' => 'en'])
+            ->get('/admin/profile')
+            ->assertOk()
+            ->assertSee('User settings')
+            ->assertSee('Admin language')
+            ->assertSee('Admin font')
+            ->assertSee('Clear Arabic font');
+    }
+
+    public function test_platform_admin_user_settings_preferences_are_loaded_from_profile(): void
+    {
+        $user = User::factory()->create();
+        $user->profile()->create([
+            'visibility' => 'private',
+            'metadata' => [
+                'admin_locale' => 'en',
+                'admin_font' => 'tajawal',
+            ],
+        ]);
+
+        $this->actingAs($user)
+            ->get('/admin')
+            ->assertOk()
+            ->assertSee('lang="en"', false)
+            ->assertSee('Platform Admin Dashboard')
+            ->assertSee('--kbr-admin-font-family: "Tajawal", "IBM Plex Sans Arabic", sans-serif;', false);
     }
 
     public function test_new_common_languages_are_supported(): void

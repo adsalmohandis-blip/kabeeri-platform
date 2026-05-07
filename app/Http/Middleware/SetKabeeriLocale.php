@@ -29,6 +29,16 @@ class SetKabeeriLocale
             $locale = KabeeriLocale::normalize($queryLocale);
             $request->session()->put($contextSessionKey, $locale);
             $request->session()->put(KabeeriLocale::sessionKey(), $locale);
+        } elseif (! $request->session()->has($contextSessionKey)) {
+            $user = $request->user();
+            $profile = ($user && method_exists($user, 'profile')) ? $user->profile()->first(['metadata']) : null;
+            $profileLocale = $profile?->metadata["{$context}_locale"] ?? null;
+
+            if (is_string($profileLocale) && KabeeriLocale::isSupported($profileLocale)) {
+                $locale = KabeeriLocale::normalize($profileLocale);
+                $request->session()->put($contextSessionKey, $locale);
+                $request->session()->put(KabeeriLocale::sessionKey(), $locale);
+            }
         }
 
         $locale = KabeeriLocale::normalize(
