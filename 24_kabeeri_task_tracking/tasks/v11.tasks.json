@@ -212,12 +212,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T21:46:05+00:00",
-            "completed_by_codex_at": "2026-05-07T11:24:37+00:00",
+            "completed_by_codex_at": "2026-05-07T11:58:38+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "pending",
-            "tests": "php artisan route:list --name=language.switch; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14; php artisan test --filter=PublicContentRenderingTest; php artisan test --filter=SitemapAndRobotsTest; vendor/bin/pint --test; npm run build; php artisan test",
-            "notes": "Implemented a session-backed KABEERI language switching system with /language/{locale}, SetKabeeriLocale middleware, Arabic/English language packs, dynamic html lang/dir, and accessible switchers for visitor surfaces, customer dashboard/onboarding/app pages, and Filament platform admin/team dashboard. Updated UI route registry and docs.",
+            "commit": "31360c9",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=V7MobileSuiteTest; php artisan test",
+            "notes": "Applied the minimal kabeeri UI system to public surfaces: localized platform name, calmer typography, and contrast-safe active/inactive actions.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {
@@ -227,12 +227,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-06T21:46:05+00:00",
-            "completed_by_codex_at": "2026-05-06T21:58:06+00:00",
+            "completed_by_codex_at": "2026-05-07T11:58:38+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "pending",
-            "tests": "php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V9UiFoundationTest; php artisan test --filter=V10AdminExperienceTest; npm run build; vendor/bin/pint --test",
-            "notes": "Added V11 public UI smoke tests for config, routes, rendering, contact flow, and readiness.",
+            "commit": "31360c9",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=V7MobileSuiteTest; php artisan test",
+            "notes": "Updated V11 public smoke expectations for the localized kabeeri brand and verified the full regression suite.",
             "source_prompt_file": "docs/UI_PAGE_INVENTORY_AND_ROADMAP.md"
         },
         {

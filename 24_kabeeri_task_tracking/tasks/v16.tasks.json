@@ -152,12 +152,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T11:35:31+00:00",
+            "completed_by_codex_at": "2026-05-07T11:58:39+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "99dd3d7",
-            "tests": "vendor/bin/pint --test; npm run build; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=V11PublicExperienceTest; php artisan test",
-            "notes": "Refined the V16 customer dashboard into a calmer Apps Management workspace with comfortable whitespace, smaller typography, shorter copy, consistent client-facing naming, and reduced information overload.",
+            "commit": "31360c9",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=V7MobileSuiteTest; php artisan test",
+            "notes": "Updated customer surfaces to render the localized brand name while preserving the calmer Apps Management dashboard.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -227,12 +227,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T11:35:31+00:00",
+            "completed_by_codex_at": "2026-05-07T11:58:39+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "99dd3d7",
-            "tests": "vendor/bin/pint --test; npm run build; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=V11PublicExperienceTest; php artisan test",
-            "notes": "Updated V16 regression coverage to match the real customer dashboard UX labels and verified the full suite after the calm dashboard refinement.",
+            "commit": "31360c9",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=V7MobileSuiteTest; php artisan test",
+            "notes": "Updated V16 feature expectations for localized kabeeri/كبيري naming and verified full regression.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         },
         {
@@ -257,12 +257,12 @@
             "size": "Unknown",
             "status": "codex_done",
             "started_at": "2026-05-07T00:07:38+00:00",
-            "completed_by_codex_at": "2026-05-07T11:35:31+00:00",
+            "completed_by_codex_at": "2026-05-07T11:58:39+00:00",
             "verified_by_owner_at": null,
             "blocked_at": null,
-            "commit": "99dd3d7",
-            "tests": "vendor/bin/pint --test; npm run build; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=LocalizationSwitchingTest; php artisan test --filter=V11PublicExperienceTest; php artisan test",
-            "notes": "Synced V16 task tracking after the customer dashboard UX refinement so task state reflects the implemented and tested UI state.",
+            "commit": "31360c9",
+            "tests": "php artisan view:clear; php artisan view:cache; npm run build; vendor/bin/pint --test; php artisan test --filter=RootDashboardPageTest; php artisan test --filter=V10AdminExperienceTest; php artisan test --filter=V11PublicExperienceTest; php artisan test --filter=V12MarketplaceExperienceTest; php artisan test --filter=V13ExternalExperienceTest; php artisan test --filter=V14UiReleaseCandidateTest; php artisan test --filter=V16CustomerExperienceTest; php artisan test --filter=PublicMallNavigationUxTest; php artisan test --filter=V7MobileSuiteTest; php artisan test",
+            "notes": "Synced V16 tracker after global minimal UI and brand-rule implementation.",
             "source_prompt_file": "docs/kabeeri/ui/V16_CUSTOMER_ONBOARDING.md"
         }
     ]
