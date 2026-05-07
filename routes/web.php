@@ -23,18 +23,15 @@ use App\Http\Controllers\Web\PublicMarketingController;
 use App\Http\Controllers\Web\RobotsController;
 use App\Http\Controllers\Web\SitemapController;
 use App\Http\Controllers\Web\UiReleaseCandidateController;
-use App\Support\RootDashboardData;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('public.business-client-home');
 })->name('home');
 
-Route::get('/internal/command-center', function () {
-    return view('welcome', [
-        'dashboard' => RootDashboardData::make(),
-    ]);
-})->middleware('auth')->name('system.command-center');
+Route::get('/internal/command-center', fn () => redirect()->route('filament.admin.pages.development-status'))
+    ->middleware('auth')
+    ->name('system.command-center');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');

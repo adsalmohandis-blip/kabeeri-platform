@@ -25,28 +25,35 @@ class RootDashboardPageTest extends TestCase
             ->assertDontSee('V15 Public Web Manifest');
     }
 
-    public function test_command_center_is_private_and_renders_live_system_data_sections(): void
+    public function test_command_center_is_private_and_redirects_to_admin_development_status(): void
     {
         $this->seed(FreemiumSeeder::class);
+        $user = User::factory()->create();
 
         $this->get(route('system.command-center'))
             ->assertRedirect('/login');
 
-        $this->actingAs(User::factory()->create())
+        $this->actingAs($user)
             ->get(route('system.command-center'))
+            ->assertRedirect(route('filament.admin.pages.development-status'));
+
+        $this->actingAs($user)
+            ->withSession(['kabeeri_locale' => 'en'])
+            ->get(route('filament.admin.pages.development-status'))
             ->assertOk()
-            ->assertSee(__('kabeeri.brand.name').' Command Center')
-            ->assertSee('Task Tracker Truth')
-            ->assertSee('Release Candidate')
-            ->assertSee('V15 Public Web Manifest')
-            ->assertSee('Next.js Public Runtime')
-            ->assertSee('Database')
-            ->assertSee('Modules')
-            ->assertSee('Freemium')
-            ->assertSee('Entitlements')
-            ->assertSee('V9')
-            ->assertSee('V15')
-            ->assertSee('FREEMIUM')
-            ->assertSee('Free / Community');
+            ->assertSee('Development status')
+            ->assertSee('Admin shortcuts')
+            ->assertSee('Task tracker')
+            ->assertSee('Database status');
+    }
+
+    public function test_main_admin_dashboard_contains_development_status_entry(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->withSession(['kabeeri_locale' => 'en'])
+            ->get('/admin')
+            ->assertOk()
+            ->assertSee('Development status')
+            ->assertSee('Open development status');
     }
 }
