@@ -19,7 +19,7 @@ class LocalizationSwitchingTest extends TestCase
             ->assertSee('data-language-context="platform_public"', false)
             ->assertSee('href="http://localhost/en"', false)
             ->assertSee(__('kabeeri.language.label'))
-            ->assertSee('English')
+            ->assertSee(__('kabeeri.language.names.en'))
             ->assertSee('href="http://localhost/es"', false)
             ->assertSee('href="http://localhost/ru"', false)
             ->assertSee('href="http://localhost/hi"', false)

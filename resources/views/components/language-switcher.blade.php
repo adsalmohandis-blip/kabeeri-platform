@@ -2,7 +2,15 @@
     $context = $context ?? 'visitor';
     $currentLocale = \App\Support\Localization\KabeeriLocale::current();
     $supportedLocales = \App\Support\Localization\KabeeriLocale::supported();
-    $currentNativeLabel = $supportedLocales[$currentLocale]['native_label'] ?? $currentLocale;
+    $languageLabel = function (string $locale, array $language): string {
+        $key = "kabeeri.language.names.{$locale}";
+        $translated = __($key);
+
+        return $translated === $key
+            ? ($language['native_label'] ?? strtoupper($locale))
+            : $translated;
+    };
+    $currentNativeLabel = $languageLabel($currentLocale, $supportedLocales[$currentLocale] ?? []);
 @endphp
 
 @include('components.theme-foundation')
@@ -23,8 +31,7 @@
         @foreach ($supportedLocales as $locale => $language)
             @if ($locale === $currentLocale)
                 <span class="kbr-language-switcher__option" aria-current="true" title="{{ __('kabeeri.language.current') }}">
-                    {{ $language['native_label'] }}
-                    <small>{{ $language['short_label'] }}</small>
+                    {{ $languageLabel($locale, $language) }}
                 </span>
             @else
                 <a
@@ -32,8 +39,7 @@
                     href="{{ \App\Support\Localization\KabeeriLocale::localizedUrl($locale, request()->getRequestUri()) }}"
                     hreflang="{{ $locale }}"
                 >
-                    {{ $language['native_label'] }}
-                    <small>{{ $language['short_label'] }}</small>
+                    {{ $languageLabel($locale, $language) }}
                 </a>
             @endif
         @endforeach

@@ -34,11 +34,16 @@ class V11PublicExperienceTest extends TestCase
 
     public function test_v11_public_pages_render(): void
     {
+        $this->withSession([
+            'kabeeri_locale' => 'en',
+            'kabeeri_locale_platform_public' => 'en',
+        ]);
+
         foreach (config('kabeeri_public.pages') as $page) {
             $this->get(route($page['route']))
                 ->assertOk()
-                ->assertSee(__('kabeeri.brand.name'))
-                ->assertDontSee(__('kabeeri.brand.name').' Public Bridge')
+                ->assertSee('KABEERI')
+                ->assertDontSee('KABEERI Public Bridge')
                 ->assertDontSee('Admin split')
                 ->assertSee($page['label']);
         }
@@ -46,6 +51,11 @@ class V11PublicExperienceTest extends TestCase
 
     public function test_v11_public_pages_explain_core_audience_paths(): void
     {
+        $this->withSession([
+            'kabeeri_locale' => 'en',
+            'kabeeri_locale_platform_public' => 'en',
+        ]);
+
         $this->get(route('public.audiences'))
             ->assertOk()
             ->assertSee('Audience Selector')
@@ -59,6 +69,65 @@ class V11PublicExperienceTest extends TestCase
         $this->get(route('public.contact'))
             ->assertOk()
             ->assertSee('Contact Sales');
+    }
+
+    public function test_arabic_v11_public_pages_do_not_show_core_english_copy(): void
+    {
+        $paths = [
+            '/ar/public',
+            '/ar/for',
+            '/ar/for/business-owners',
+            '/ar/for/enterprise',
+            '/ar/for/developers-creators',
+            '/ar/for/marketers-partners',
+            '/ar/wordpress-alternative',
+            '/ar/use-cases/service-business',
+            '/ar/templates',
+            '/ar/onboarding',
+            '/ar/onboarding/workspace-setup',
+            '/ar/pricing',
+            '/ar/trust',
+            '/ar/contact-sales',
+        ];
+
+        $englishPhrases = [
+            'Public Landing',
+            'Public home',
+            'Audience Selector',
+            'Business Owner',
+            'Enterprise Buyer',
+            'Developer / Creator',
+            'Marketer / Partner',
+            'WordPress Alternative',
+            'Service Business Use Case',
+            'Use Cases and Templates',
+            'Onboarding Overview',
+            'Workspace Setup Wizard',
+            'Pricing and Plans',
+            'FAQ and Trust',
+            'Contact Sales',
+            'Progressive Narrative',
+            'Next.js Runtime Plan',
+            'Public Marketing UX',
+            'CRM lead',
+            'Mall listing',
+            'Marketplace',
+            'Blade',
+        ];
+
+        foreach ($paths as $path) {
+            $response = $this->get($path)
+                ->assertOk()
+                ->assertSee('lang="ar"', false);
+
+            foreach ($englishPhrases as $phrase) {
+                $response->assertDontSeeText($phrase);
+            }
+        }
+
+        $this->get('/ar/public')
+            ->assertOk()
+            ->assertSeeText('الواجهة العامة');
     }
 
     public function test_contact_sales_flow_creates_crm_lead(): void

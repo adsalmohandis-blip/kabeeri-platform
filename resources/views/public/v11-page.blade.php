@@ -18,6 +18,9 @@
         $words,
         ''
     );
+    $isArabic = app()->getLocale() === 'ar';
+    $copy = fn (string $ar, string $en): string => $isArabic ? $ar : $en;
+    $statusLabel = fn (bool $ready): string => $ready ? $copy('جاهز', 'Ready') : $copy('معلّق', 'Pending');
 
     $audienceKey = match ($page) {
         'business' => 'business',
@@ -29,12 +32,12 @@
     $selectedAudience = $audienceKey ? $audiences[$audienceKey] : null;
 
     $publicNav = [
-        ['label' => 'الرئيسية العامة', 'route' => 'public.landing', 'icon' => 'home'],
-        ['label' => 'اختر مسارك', 'route' => 'public.audiences', 'icon' => 'map'],
-        ['label' => 'الأسعار', 'route' => 'public.pricing', 'icon' => 'pricing'],
-        ['label' => 'Onboarding', 'route' => 'public.onboarding', 'icon' => 'steps'],
-        ['label' => 'الثقة', 'route' => 'public.trust', 'icon' => 'trust'],
-        ['label' => 'طلب ديمو', 'route' => 'public.contact', 'icon' => 'rocket'],
+        ['label' => $copy('الرئيسية العامة', 'Public home'), 'route' => 'public.landing', 'icon' => 'home'],
+        ['label' => $copy('اختر مسارك', 'Choose your path'), 'route' => 'public.audiences', 'icon' => 'map'],
+        ['label' => $copy('الأسعار', 'Pricing'), 'route' => 'public.pricing', 'icon' => 'pricing'],
+        ['label' => $copy('مسار البداية', 'Onboarding'), 'route' => 'public.onboarding', 'icon' => 'steps'],
+        ['label' => $copy('الثقة', 'Trust'), 'route' => 'public.trust', 'icon' => 'trust'],
+        ['label' => $copy('طلب ديمو', 'Request a demo'), 'route' => 'public.contact', 'icon' => 'rocket'],
     ];
 @endphp
 
@@ -677,22 +680,22 @@
     <div class="shell">
         <header class="topbar">
             <a class="brand" href="{{ route('public.landing') }}">
-                <span class="mark">Kb</span>
+                <span class="mark">{{ __('kabeeri.brand.mark') }}</span>
                 <span>
                     <strong>{{ __('kabeeri.brand.name') }}</strong>
-                    <small>ابدأ الآن</small>
+                    <small>{{ __('kabeeri.ui.start_now') }}</small>
                 </span>
             </a>
 
-            <nav class="nav" aria-label="{{ __('kabeeri.brand.name') }} public navigation">
+            <nav class="nav" aria-label="{{ $copy('تنقل الواجهة العامة', 'Public navigation') }}">
                 @foreach ($publicNav as $item)
                     <a class="{{ request()->routeIs($item['route']) ? 'active' : '' }}" href="{{ route($item['route']) }}"><x-kabeeri-icon name="{{ $item['icon'] }}" />{{ $item['label'] }}</a>
                 @endforeach
             </nav>
 
             <div class="top-actions">
-                <a class="button" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />ابدأ الآن</a>
-                <a class="button primary" href="{{ route('login') }}"><x-kabeeri-icon name="login" />دخول</a>
+                <a class="button" href="{{ route('customer.start') }}"><x-kabeeri-icon name="rocket" />{{ __('kabeeri.ui.start_now') }}</a>
+                <a class="button primary" href="{{ route('login') }}"><x-kabeeri-icon name="login" />{{ __('kabeeri.ui.login') }}</a>
                 @include('components.language-switcher', ['context' => 'platform_public'])
                 @include('components.theme-switcher', ['context' => 'platform_public'])
             </div>
@@ -705,31 +708,31 @@
                         <span class="eyebrow">{{ __('kabeeri.brand.name') }}</span>
                         <h1>
                             @if ($page === 'landing')
-                                منصة تبدأ كموقع واضح وتنتهي كنظام تشغيل للشركة.
+                                {{ $copy('منصة تبدأ كموقع واضح وتنتهي كنظام تشغيل للشركة.', 'Start with a clear business site, then grow into a company operating system.') }}
                             @else
                                 {{ $pageConfig['label'] }}
                             @endif
                         </h1>
-                        <p>{{ $brief($pageConfig['intent'], 10) }} ابدأ بما تحتاجه الآن.</p>
+                        <p>{{ $brief($pageConfig['intent'], 10) }} {{ $copy('ابدأ بما تحتاجه الآن.', 'Start with what you need now.') }}</p>
                         <div class="hero-actions">
-                            <a class="button primary" href="{{ route('public.contact') }}"><x-kabeeri-icon name="rocket" />احجز ديمو مبكر</a>
-                            <a class="button copper" href="{{ route('public.audiences') }}"><x-kabeeri-icon name="map" />اختر مسارك</a>
-                            <a class="button" href="{{ route('public.onboarding') }}"><x-kabeeri-icon name="steps" />شاهد onboarding</a>
+                            <a class="button primary" href="{{ route('public.contact') }}"><x-kabeeri-icon name="rocket" />{{ $copy('احجز ديمو مبكر', 'Book an early demo') }}</a>
+                            <a class="button copper" href="{{ route('public.audiences') }}"><x-kabeeri-icon name="map" />{{ $copy('اختر مسارك', 'Choose your path') }}</a>
+                            <a class="button" href="{{ route('public.onboarding') }}"><x-kabeeri-icon name="steps" />{{ $copy('شاهد مسار البداية', 'View onboarding') }}</a>
                         </div>
                     </div>
 
-                    <aside class="signal-board" aria-label="{{ __('kabeeri.brand.name') }} public positioning">
+                    <aside class="signal-board" aria-label="{{ $copy('تموضع الواجهة العامة', 'Public positioning') }}">
                         <div class="signal dark">
-                            <strong>من WordPress Alternative إلى Company OS</strong>
-                            <span>لا نرمي كل المنصة على العميل مرة واحدة. نبدأ بالاحتياج المفهوم، ثم نفتح التجارة والثقة والعمليات والسوق.</span>
+                            <strong>{{ $copy('من بديل ووردبريس إلى نظام تشغيل الشركة', 'From WordPress alternative to company operating system') }}</strong>
+                            <span>{{ $copy('لا نرمي كل المنصة على العميل مرة واحدة. نبدأ بالاحتياج المفهوم، ثم نفتح التجارة والثقة والعمليات والسوق.', 'We do not push the whole platform at once. We start with the clear need, then open commerce, trust, operations, and market visibility.') }}</span>
                         </div>
                         <div class="signal">
-                            <strong>Audience Selector</strong>
-                            <span>صاحب مشروع، مؤسسة، مطور، مسوق، شريك، أو زائر Mall. كل جمهور له مسار واشتراك واستفادة واضحة.</span>
+                            <strong>{{ $copy('اختيار الجمهور', 'Audience selector') }}</strong>
+                            <span>{{ $copy('صاحب مشروع، مؤسسة، مطور، مسوق، شريك، أو زائر المول. كل جمهور له مسار واشتراك واستفادة واضحة.', 'Business owner, enterprise, developer, marketer, partner, or Mall visitor. Each audience has a clear path, subscription, and benefit.') }}</span>
                         </div>
                         <div class="signal">
-                            <strong>مسار واضح</strong>
-                            <span>كل خطوة تعرض لك ما تحتاجه فقط.</span>
+                            <strong>{{ $copy('مسار واضح', 'A clear path') }}</strong>
+                            <span>{{ $copy('كل خطوة تعرض لك ما تحتاجه فقط.', 'Every step shows only what you need.') }}</span>
                         </div>
                     </aside>
                 </div>
@@ -739,10 +742,10 @@
                 <section class="section dark">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Progressive Narrative</span>
-                            <h2>نشرح كابيري كرحلة، مش كقائمة ضخمة من الموديولات.</h2>
+                            <span class="chip">{{ $copy('سرد تدريجي', 'Progressive narrative') }}</span>
+                            <h2>{{ $copy('نشرح كبيري كرحلة، لا كقائمة ضخمة من الموديولات.', 'We explain kabeeri as a journey, not a huge module list.') }}</h2>
                         </div>
-                        <p>الزائر يفهم أولًا أنه يستطيع إطلاق موقع/تطبيق أعمال منظم، ثم يكتشف التجارة والثقة والعمليات وMall واقتصاد المطورين تدريجيًا.</p>
+                        <p>{{ $copy('الزائر يفهم أولًا أنه يستطيع إطلاق موقع أو تطبيق أعمال منظم، ثم يكتشف التجارة والثقة والعمليات والمول واقتصاد المطورين تدريجيًا.', 'The visitor first understands they can launch a structured business site or app, then discovers commerce, trust, operations, Mall, and the developer economy gradually.') }}</p>
                     </div>
 
                     <div class="timeline">
@@ -763,10 +766,10 @@
                 <section class="section" id="audiences">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Audience Selector</span>
-                            <h2>كل جمهور يدخل من باب واضح.</h2>
+                            <span class="chip">{{ $copy('اختيار الجمهور', 'Audience selector') }}</span>
+                            <h2>{{ $copy('كل جمهور يدخل من باب واضح.', 'Every audience enters through a clear door.') }}</h2>
                         </div>
-                        <p>التقسيم هنا يمنع تشتيت العميل: كل مسار يشرح الألم، النتيجة، والصفحة التالية المناسبة.</p>
+                        <p>{{ $copy('التقسيم هنا يمنع تشتيت العميل: كل مسار يشرح الألم، النتيجة، والصفحة التالية المناسبة.', 'This split prevents confusion: every path explains the pain, outcome, and right next page.') }}</p>
                     </div>
 
                     <div class="grid-3">
@@ -775,8 +778,8 @@
                                 <span class="chip">{{ $audience['label'] }}</span>
                                 <h3>{{ $audience['headline'] }}</h3>
                                 <p>{{ $brief($audience['pain'], 11) }}</p>
-                                <p style="margin-top: 10px;"><strong>النتيجة:</strong> {{ $brief($audience['outcome'], 11) }}</p>
-                                <a class="route-pill" href="{{ route($audience['route']) }}">افتح المسار</a>
+                                <p style="margin-top: 10px;"><strong>{{ $copy('النتيجة:', 'Outcome:') }}</strong> {{ $brief($audience['outcome'], 11) }}</p>
+                                <a class="route-pill" href="{{ route($audience['route']) }}">{{ $copy('افتح المسار', 'Open path') }}</a>
                             </article>
                         @endforeach
                     </div>
@@ -795,20 +798,20 @@
 
                     <div class="grid-2">
                         <article class="card">
-                            <h3>القيمة التي يحصل عليها {{ $selectedAudience['label'] }}</h3>
+                            <h3>{{ $copy('القيمة التي يحصل عليها', 'Value for') }} {{ $selectedAudience['label'] }}</h3>
                             <p>{{ $brief($selectedAudience['outcome'], 12) }}</p>
-                            <a class="route-pill" href="{{ route('public.pricing') }}">شاهد الاشتراكات المناسبة</a>
+                            <a class="route-pill" href="{{ route('public.pricing') }}">{{ $copy('شاهد الاشتراكات المناسبة', 'View suitable subscriptions') }}</a>
                         </article>
 
                         <article class="card">
-                            <h3>مسار العمل المقترح</h3>
+                            <h3>{{ $copy('مسار العمل المقترح', 'Suggested workflow') }}</h3>
                             <div class="timeline">
                                 @foreach ($journeys[$audienceKey] as $index => $step)
                                     <div class="timeline-row">
                                         <span class="step-badge">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
                                         <div>
                                             <h3>{{ $step }}</h3>
-                                            <p>خطوة عملية ضمن onboarding حتى لا تتحول المنصة إلى بحر غير مفهوم.</p>
+                                            <p>{{ $copy('خطوة عملية ضمن مسار البداية حتى لا تتحول المنصة إلى بحر غير مفهوم.', 'A practical onboarding step so the platform does not become overwhelming.') }}</p>
                                         </div>
                                     </div>
                                 @endforeach
@@ -822,24 +825,24 @@
                 <section class="section">
                     <div class="section-title">
                         <div>
-                            <span class="chip">WordPress Alternative</span>
-                            <h2>بديل أكثر تنظيمًا من فوضى الإضافات.</h2>
+                            <span class="chip">{{ $copy('بديل ووردبريس', 'WordPress alternative') }}</span>
+                            <h2>{{ $copy('بديل أكثر تنظيمًا من فوضى الإضافات.', 'A more structured alternative to plugin sprawl.') }}</h2>
                         </div>
-                        <p>الرسالة ليست مهاجمة WordPress، بل شرح أن كابيري يقدم مسارًا محكومًا: موقع، محتوى، تجارة، CRM، عمليات، وثقة في نفس النظام.</p>
+                        <p>{{ $copy('الرسالة ليست مهاجمة ووردبريس، بل شرح أن كبيري يقدم مسارًا محكومًا: موقع، محتوى، تجارة، إدارة عملاء، عمليات، وثقة في نفس النظام.', 'The message is not attacking WordPress. It explains that kabeeri offers a governed path: website, content, commerce, CRM, operations, and trust in one system.') }}</p>
                     </div>
 
                     <div class="grid-3">
                         <article class="card">
                             <h3>موقع ومحتوى</h3>
-                            <p>صفحات، SEO، ميديا، نماذج، قوائم، وربط لاحق بثيمات تجارية مستقلة.</p>
+                            <p>{{ $copy('صفحات، تحسين ظهور، وسائط، نماذج، قوائم، وربط لاحق بثيمات تجارية مستقلة.', 'Pages, SEO, media, forms, menus, and later commercial theme connections.') }}</p>
                         </article>
                         <article class="card">
                             <h3>تجارة وعمليات</h3>
-                            <p>منتجات، خدمات، عروض أسعار، فواتير، CRM، workflows وتقارير عند نضج الشركة.</p>
+                            <p>{{ $copy('منتجات، خدمات، عروض أسعار، فواتير، إدارة عملاء، سير عمل، وتقارير عند نضج الشركة.', 'Products, services, quotations, invoices, CRM, workflows, and reports when the company is ready.') }}</p>
                         </article>
                         <article class="card">
                             <h3>ثقة وسوق</h3>
-                            <p>Rabet للتحقق والهوية، و{{ __('kabeeri.brand.name') }} Mall لاكتشاف الخدمات والمنتجات والقوائم العامة.</p>
+                            <p>{{ $copy('رابط للتحقق والهوية، ومول كبيري لاكتشاف الخدمات والمنتجات والقوائم العامة.', 'Rabet for verification and identity, and kabeeri Mall for discovering services, products, and public listings.') }}</p>
                         </article>
                     </div>
                 </section>
@@ -849,18 +852,18 @@
                 <section class="section">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Service Business Use Case</span>
-                            <h2>شركة خدمات تبدأ بصفحة واضحة وتنتهي بتشغيل قابل للقياس.</h2>
+                            <span class="chip">{{ $copy('حالة استخدام لشركات الخدمات', 'Service business use case') }}</span>
+                            <h2>{{ $copy('شركة خدمات تبدأ بصفحة واضحة وتنتهي بتشغيل قابل للقياس.', 'A service business starts with a clear page and grows into measurable operations.') }}</h2>
                         </div>
-                        <p>هذا المسار مناسب للاستشارات، الصيانة، التدريب، الخدمات الطبية، الخدمات المنزلية، وأي نشاط يحتاج طلبات وعروض وفواتير.</p>
+                        <p>{{ $copy('هذا المسار مناسب للاستشارات، الصيانة، التدريب، الخدمات الطبية، الخدمات المنزلية، وأي نشاط يحتاج طلبات وعروض وفواتير.', 'This path fits consulting, maintenance, training, medical services, home services, and any activity that needs requests, quotations, and invoices.') }}</p>
                     </div>
 
                     <div class="grid-3">
-                        @foreach (['صفحة خدمات', 'نموذج طلب', 'CRM Lead', 'عرض سعر', 'فاتورة', 'Mall Listing'] as $index => $serviceStep)
+                        @foreach (($isArabic ? ['صفحة خدمات', 'نموذج طلب', 'عميل محتمل', 'عرض سعر', 'فاتورة', 'قائمة في المول'] : ['Service page', 'Request form', 'CRM lead', 'Quotation', 'Invoice', 'Mall listing']) as $index => $serviceStep)
                             <article class="card">
                                 <span class="step-badge">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
                                 <h3>{{ $serviceStep }}</h3>
-                                <p>العميل يرى خطوة مفهومة، والفريق يرى بيانات قابلة للمتابعة داخل النظام.</p>
+                                <p>{{ $copy('العميل يرى خطوة مفهومة، والفريق يرى بيانات قابلة للمتابعة داخل النظام.', 'The customer sees a clear step, and the team sees trackable data inside the system.') }}</p>
                             </article>
                         @endforeach
                     </div>
@@ -871,10 +874,10 @@
                 <section class="section">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Use Cases and Templates</span>
-                            <h2>قوالب عمل تساعد العميل يبدأ بسرعة.</h2>
+                            <span class="chip">{{ $copy('حالات الاستخدام والقوالب', 'Use cases and templates') }}</span>
+                            <h2>{{ $copy('قوالب عمل تساعد العميل يبدأ بسرعة.', 'Business templates help the customer start faster.') }}</h2>
                         </div>
-                        <p>القوالب ليست مجرد شكل UI. هي recipe جاهزة: صفحات، موديولات، بيانات أولية، وخطوات تشغيل.</p>
+                        <p>{{ $copy('القوالب ليست مجرد شكل واجهة. هي وصفة جاهزة: صفحات، موديولات، بيانات أولية، وخطوات تشغيل.', 'Templates are not just UI shape. They are ready recipes: pages, modules, starter data, and operating steps.') }}</p>
                     </div>
 
                     <div class="grid-3">
@@ -893,10 +896,10 @@
                 <section class="section dark">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Onboarding</span>
-                            <h2>العميل لا يحتاج خريطة ضخمة، يحتاج أول خطوة صحيحة.</h2>
+                            <span class="chip">{{ $copy('مسار البداية', 'Onboarding') }}</span>
+                            <h2>{{ $copy('العميل لا يحتاج خريطة ضخمة، يحتاج أول خطوة صحيحة.', 'The customer does not need a huge map. They need the right first step.') }}</h2>
                         </div>
-                        <p>مسار onboarding يترجم المنصة إلى قرارات صغيرة: الجمهور، workspace، نوع التطبيق، الثيم، الموديولات، الفريق، ثم الإطلاق.</p>
+                        <p>{{ $copy('مسار البداية يترجم المنصة إلى قرارات صغيرة: الجمهور، مساحة العمل، نوع التطبيق، الثيم، الموديولات، الفريق، ثم الإطلاق.', 'Onboarding turns the platform into small decisions: audience, workspace, app type, theme, modules, team, then launch.') }}</p>
                     </div>
 
                     <div class="grid-3">
@@ -915,15 +918,15 @@
                 <section class="section">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Workspace Setup Wizard</span>
-                            <h2>Wizard foundation يمشي حسب الجمهور لا حسب رغبة النظام في الكلام.</h2>
+                            <span class="chip">{{ $copy('معالج إعداد مساحة العمل', 'Workspace setup wizard') }}</span>
+                            <h2>{{ $copy('معالج الإعداد يمشي حسب الجمهور، لا حسب رغبة النظام في الكلام.', 'The setup wizard follows the audience, not the system urge to talk.') }}</h2>
                         </div>
-                        <p>الحقول تظهر تدريجيًا. ERP وMarketplace وMall لا يظهروا إلا عندما يصبحوا منطقيين في رحلة المستخدم.</p>
+                        <p>{{ $copy('الحقول تظهر تدريجيًا. الموارد والمتجر والمول لا يظهرون إلا عندما يصبحوا منطقيين في رحلة المستخدم.', 'Fields appear progressively. ERP, Marketplace, and Mall appear only when they make sense in the user journey.') }}</p>
                     </div>
 
                     <div class="grid-2">
                         <article class="card">
-                            <h3>حقول التأسيس</h3>
+                            <h3>{{ $copy('حقول التأسيس', 'Setup fields') }}</h3>
                             <div class="grid-3">
                                 @foreach ($wizard['fields'] as $field)
                                     <span class="chip">{{ $field }}</span>
@@ -931,7 +934,7 @@
                             </div>
                         </article>
                         <article class="card">
-                            <h3>Progressive disclosure rules</h3>
+                            <h3>{{ $copy('قواعد الإظهار التدريجي', 'Progressive disclosure rules') }}</h3>
                             <div class="timeline">
                                 @foreach ($wizard['progressive_rules'] as $index => $rule)
                                     <div class="timeline-row">
@@ -949,10 +952,10 @@
                 <section class="section">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Pricing and Monetization</span>
-                            <h2>الاشتراكات تتشرح كطبقات قيمة، مش كجدول أسعار فقط.</h2>
+                            <span class="chip">{{ $copy('الأسعار وتحقيق العوائد', 'Pricing and monetization') }}</span>
+                            <h2>{{ $copy('الاشتراكات تتشرح كطبقات قيمة، لا كجدول أسعار فقط.', 'Subscriptions are explained as value layers, not just a price table.') }}</h2>
                         </div>
-                        <p>V11 يوضح الاشتراك، الموديولات، التحقق، ظهور Mall، AI credits، ومشاركة أرباح Marketplace.</p>
+                        <p>{{ $copy('هذه النسخة توضح الاشتراك، الموديولات، التحقق، ظهور المول، رصيد الذكاء الاصطناعي، ومشاركة أرباح المتجر.', 'This version explains subscription, modules, verification, Mall visibility, AI credits, and Marketplace revenue share.') }}</p>
                     </div>
 
                     <div class="grid-3">
@@ -982,10 +985,10 @@
                 <section class="section">
                     <div class="section-title">
                         <div>
-                            <span class="chip">FAQ and Trust</span>
-                            <h2>نرد على الأسئلة قبل ما تتحول لاعتراضات.</h2>
+                            <span class="chip">{{ $copy('الأسئلة والثقة', 'FAQ and trust') }}</span>
+                            <h2>{{ $copy('نرد على الأسئلة قبل أن تتحول لاعتراضات.', 'We answer questions before they become objections.') }}</h2>
                         </div>
-                        <p>الثقة هنا تشمل الفرق بين Marketplace وMall، ملكية البيانات، الثيمات، المطورين، وRabet.</p>
+                        <p>{{ $copy('الثقة هنا تشمل الفرق بين المتجر والمول، ملكية البيانات، الثيمات، المطورين، ورابط.', 'Trust here covers the difference between Marketplace and Mall, data ownership, themes, developers, and Rabet.') }}</p>
                     </div>
 
                     <div class="grid-2">
@@ -1001,8 +1004,8 @@
                 <section class="section dark">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Release Gates</span>
-                            <h2>حالة الجاهزية العامة لا تختلط بحالة الأدمن.</h2>
+                            <span class="chip">{{ $copy('بوابات الجاهزية', 'Release gates') }}</span>
+                            <h2>{{ $copy('حالة الجاهزية العامة لا تختلط بحالة الأدمن.', 'Public readiness should not mix with admin status.') }}</h2>
                         </div>
                         <p>هذه المؤشرات للشفافية الداخلية أثناء التطوير، وليست نسخة نهائية للعميل قبل اعتمادك.</p>
                     </div>
@@ -1010,9 +1013,9 @@
                     <div class="grid-3">
                         @foreach ($release['gates'] as $gate)
                             <article class="card">
-                                <span class="chip">{{ $gate['ready'] ? 'Ready' : 'Pending' }}</span>
+                                <span class="chip">{{ $statusLabel((bool) $gate['ready']) }}</span>
                                 <h3>{{ $gate['label'] }}</h3>
-                                <p>{{ $gate['key'] }}</p>
+                                <p>{{ $copy('بوابة تحقق مرتبطة بجاهزية النسخة.', $gate['key']) }}</p>
                             </article>
                         @endforeach
                     </div>
@@ -1023,10 +1026,10 @@
                 <section class="section">
                     <div class="section-title">
                         <div>
-                            <span class="chip">Contact Sales</span>
-                            <h2>طلب ديمو يتحول مباشرة إلى CRM Lead.</h2>
+                            <span class="chip">{{ $copy('طلب ديمو', 'Contact sales') }}</span>
+                            <h2>{{ $copy('طلب الديمو يتحول مباشرة إلى عميل محتمل.', 'Demo requests become qualified leads.') }}</h2>
                         </div>
-                        <p>هذا هو مسار early access/demo request في V11. الطلب لا يشغل أتمتة حساسة، فقط يلتقط بيانات مؤهلة للفريق.</p>
+                        <p>{{ $copy('هذا هو مسار الوصول المبكر وطلب الديمو. الطلب لا يشغل أتمتة حساسة، فقط يلتقط بيانات مؤهلة للفريق.', 'This is the early access and demo request path. It does not trigger sensitive automation; it only captures qualified data for the team.') }}</p>
                     </div>
 
                     @if (session('status'))
@@ -1066,7 +1069,7 @@
 
                             <label>
                                 اسم الشركة
-                                <input name="company_name" value="{{ old('company_name') }}" placeholder="مثال: Acme Services">
+                                <input name="company_name" value="{{ old('company_name') }}" placeholder="{{ $copy('مثال: شركة النور للخدمات', 'Example: Acme Services') }}">
                             </label>
 
                             <label>
@@ -1076,7 +1079,7 @@
 
                             <label>
                                 البريد الإلكتروني
-                                <input name="email" type="email" value="{{ old('email') }}" required placeholder="name@example.com">
+                                <input name="email" type="email" value="{{ old('email') }}" required placeholder="{{ $copy('اسم@مثال.كوم', 'name@example.com') }}">
                             </label>
 
                             <label>
@@ -1091,8 +1094,8 @@
                         </div>
 
                         <div class="hero-actions">
-                            <button class="button primary" type="submit">إرسال الطلب إلى CRM</button>
-                            <a class="button" href="{{ route('public.pricing') }}">راجع الأسعار أولًا</a>
+                            <button class="button primary" type="submit">{{ $copy('إرسال الطلب إلى إدارة العملاء', 'Send request to CRM') }}</button>
+                            <a class="button" href="{{ route('public.pricing') }}">{{ $copy('راجع الأسعار أولًا', 'Review pricing first') }}</a>
                         </div>
                     </form>
                 </section>
@@ -1101,15 +1104,15 @@
             <section class="section">
                 <div class="section-title">
                     <div>
-                        <span class="chip">Next.js Runtime Plan</span>
-                        <h2>Blade هنا جسر V11، وليس وجهة الثيمات النهائية.</h2>
+                        <span class="chip">{{ $copy('خطة واجهة نكست', 'Next.js runtime plan') }}</span>
+                        <h2>{{ $copy('قوالب لارافيل هنا جسر مؤقت، وليست وجهة الثيمات النهائية.', 'Blade is a temporary bridge, not the final theme destination.') }}</h2>
                     </div>
                     <p>{{ $nextRuntime['decision'] }}</p>
                 </div>
 
                 <div class="grid-2">
                     <article class="card">
-                        <h3>API contracts المطلوبة</h3>
+                        <h3>{{ $copy('عقود الواجهات البرمجية المطلوبة', 'Required API contracts') }}</h3>
                         <div class="grid-3">
                             @foreach ($nextRuntime['contract_needs'] as $contract)
                                 <span class="chip">{{ $contract }}</span>
@@ -1118,7 +1121,7 @@
                     </article>
 
                     <article class="card">
-                        <h3>Migration path</h3>
+                        <h3>{{ $copy('مسار الهجرة', 'Migration path') }}</h3>
                         <div class="timeline">
                             @foreach ($nextRuntime['migration_steps'] as $index => $step)
                                 <div class="timeline-row">
@@ -1133,8 +1136,8 @@
         </main>
 
         <footer class="footer">
-            <span>{{ __('kabeeri.brand.name') }} V11 Public Marketing UX</span>
-            <span>{{ $pageConfig['uri'] }} · {{ $pageConfig['label'] }} · {{ $brief($pageConfig['intent'], 8) }}</span>
+            <span>{{ $copy('كبيري - الواجهة العامة', __('kabeeri.brand.name').' V11 Public Marketing UX') }}</span>
+            <span>{{ $isArabic ? $pageConfig['label'].' · '.$brief($pageConfig['intent'], 8) : $pageConfig['uri'].' · '.$pageConfig['label'].' · '.$brief($pageConfig['intent'], 8) }}</span>
         </footer>
     </div>
 </body>
