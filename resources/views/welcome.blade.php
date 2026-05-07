@@ -63,7 +63,7 @@
             <div class="hero-grid">
                 <section>
                     <div class="kicker"><span class="dot"></span>{{ $release['label'] }}</div>
-                    <h1>لوحة كابيري الرئيسية محدثة لتعكس الحقيقة بعد V16.</h1>
+                    <h1>لوحة كبيري الرئيسية محدثة لتعكس الحقيقة بعد V16.</h1>
                     <p class="lead">هذه الصفحة تفصل بوضوح بين قسم الأدمن الداخلي وقسم العرض الخارجي. تعرض حالة التنفيذ من V1 إلى V16، جاهزية V14/V15، مسار العميل الجديد، قاعدة البيانات، public routes، Next.js public runtime، وما تبقى قبل staging أو production.</p>
                     <div class="actions">
                         <a class="button primary" href="#readiness"><x-kabeeri-icon name="check-circle" />راجع الجاهزية</a>
