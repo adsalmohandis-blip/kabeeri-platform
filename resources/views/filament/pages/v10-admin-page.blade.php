@@ -75,7 +75,7 @@
                         <div class="grid gap-3 rounded-2xl bg-[#f0f0f0] p-4 dark:bg-[#fafafa]/5 md:grid-cols-[110px_1fr_90px_120px] md:items-center">
                             <strong>{{ $version['name'] }}</strong>
                             <div class="h-2 overflow-hidden rounded-full bg-[#000000]/15 dark:bg-[#fafafa]/10">
-                                <div class="h-full rounded-full bg-gradient-to-r from-[#000000] to-[#000000]" style="width: {{ $version['percent'] }}%"></div>
+                                <div class="h-full rounded-full bg-[#000000]" style="width: {{ $version['percent'] }}%"></div>
                             </div>
                             <span class="font-bold">{{ $version['percent'] }}%</span>
                             <span class="text-sm text-[#000000]/60 dark:text-[#f0f0f0]/60">{{ $version['pending'] }} {{ AdminLocaleCopy::label('pending') }}</span>

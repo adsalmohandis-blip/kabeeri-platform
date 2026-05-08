@@ -11,8 +11,8 @@
     @include('components.theme-foundation')
 </head>
 <body class="min-h-screen overflow-x-hidden bg-[#f0f0f0] text-kabeeri-ink antialiased">
-    <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_90%_8%,rgba(0,0,0,.18),rgba(0,0,0,0)_26rem),radial-gradient(circle_at_8%_18%,rgba(0,0,0,.30),rgba(0,0,0,0)_25rem),linear-gradient(135deg,#f0f0f0_0%,#f0f0f0_58%,#000000_100%)]"></div>
-    <div class="pointer-events-none fixed inset-0 -z-10 opacity-20 [background-image:linear-gradient(rgba(0,0,0,.06)_1px,rgba(0,0,0,0)_1px),linear-gradient(90deg,rgba(0,0,0,.045)_1px,rgba(0,0,0,0)_1px)] [background-size:44px_44px] [mask-image:linear-gradient(to_bottom,#000000,rgba(0,0,0,0)_82%)]"></div>
+    <div class="pointer-events-none fixed inset-0 -z-10 bg-[#f0f0f0]"></div>
+    <div class="pointer-events-none fixed inset-0 -z-10 opacity-20 [background-image:none] [background-size:44px_44px] [mask-image:none]"></div>
 
     <div class="mx-auto flex min-h-screen w-[min(1180px,calc(100%-24px))] flex-col px-3 py-4 sm:px-5 lg:py-6">
         <header class="flex flex-col gap-3 rounded-3xl border border-[#000000]/10 bg-[#f0f0f0]/82 p-3 backdrop-blur-2xl lg:flex-row lg:items-center lg:justify-between">

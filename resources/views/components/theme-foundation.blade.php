@@ -44,10 +44,7 @@
         }
 
         html[data-kbr-theme="dark"] body {
-            background:
-                radial-gradient(circle at 88% 8%, rgba(0,0,0,.22), rgba(0,0,0,0) 24rem),
-                radial-gradient(circle at 8% 12%, rgba(240,240,240,.08), rgba(0,0,0,0) 26rem),
-                linear-gradient(135deg, #000000 0%, #000000 62%, #000000 100%) !important;
+            background: #000000;
             color: var(--kbr-ink) !important;
         }
 

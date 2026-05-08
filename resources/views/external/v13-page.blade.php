@@ -61,24 +61,11 @@
             margin: 0;
             min-height: 100vh;
             color: var(--ink);
-            background:
-                radial-gradient(circle at 86% 14%, rgba(0,0,0, .74), rgba(0,0,0,0) 27rem),
-                radial-gradient(circle at 7% 20%, rgba(0,0,0, .36), rgba(0,0,0,0) 24rem),
-                linear-gradient(135deg, #f0f0f0 0%, #f0f0f0 48%, #000000 100%);
+            background: #f0f0f0;
             font-family: "IBM Plex Sans Arabic", "Almarai", sans-serif;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            background-image:
-                radial-gradient(rgba(0,0,0, .06) 1px, rgba(0,0,0,0) 1px),
-                linear-gradient(120deg, rgba(0,0,0, .035), rgba(0,0,0,0) 38%);
-            background-size: 28px 28px, 100% 100%;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0, .86), rgba(0,0,0,0) 80%);
-        }
+        body::before { content: ""; display: none; }
 
         a {
             color: inherit;
@@ -100,9 +87,9 @@
             justify-content: space-between;
             gap: 14px;
             padding: 14px;
-            border: 1px solid rgba(240,240,240, .72);
+            border: 1px solid rgba(0,0,0, .13);
             border-radius: 999px;
-            background: rgba(240,240,240, .74);
+            background: rgba(250,250,250, .76);
             box-shadow: 0 18px 64px rgba(0,0,0, .12);
             backdrop-filter: blur(22px);
         }
@@ -121,7 +108,7 @@
             height: 48px;
             border-radius: 17px;
             color: var(--paper);
-            background: linear-gradient(135deg, var(--forest), var(--sage));
+            background: #000000;
             font-weight: 900;
             letter-spacing: -.1em;
         }
@@ -188,7 +175,7 @@
         .button.primary {
             border-color: rgba(0,0,0,0);
             color: var(--paper);
-            background: linear-gradient(135deg, var(--forest), #000000);
+            background: #000000;
         }
 
         .button.clay {
@@ -201,11 +188,9 @@
             overflow: hidden;
             position: relative;
             margin-top: 22px;
-            border: 1px solid rgba(240,240,240, .76);
+            border: 1px solid rgba(0,0,0, .13);
             border-radius: 46px;
-            background:
-                radial-gradient(circle at 18% 20%, rgba(0,0,0, .2), rgba(0,0,0,0) 24rem),
-                linear-gradient(145deg, rgba(240,240,240, .9), rgba(240,240,240, .52));
+            background: rgba(250,250,250,.72);
             box-shadow: var(--shadow);
         }
 
@@ -278,9 +263,7 @@
         .section.dark {
             color: var(--paper);
             border-color: var(--white-line);
-            background:
-                radial-gradient(circle at top left, rgba(0,0,0, .18), rgba(0,0,0,0) 24rem),
-                linear-gradient(135deg, #000000, #000000);
+            background: #000000;
         }
 
         .signal span {
@@ -380,7 +363,7 @@
             height: 44px;
             border-radius: 16px;
             color: var(--paper);
-            background: linear-gradient(135deg, var(--clay), var(--wheat));
+            background: #000000;
             font-weight: 900;
         }
 

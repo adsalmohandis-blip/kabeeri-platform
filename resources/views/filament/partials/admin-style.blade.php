@@ -59,9 +59,7 @@
     }
 
     html.fi[data-kbr-theme="dark"] .fi-body {
-        background:
-            radial-gradient(circle at 92% 8%, rgba(0,0,0,.16), rgba(0,0,0,0) 22rem),
-            linear-gradient(135deg, #000000 0%, #000000 68%, #000000 100%) !important;
+        background: #000000;
         color: #f0f0f0;
     }
 

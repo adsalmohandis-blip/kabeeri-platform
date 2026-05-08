@@ -92,7 +92,7 @@
             margin: 0;
             min-height: 100vh;
             color: var(--kbr-public-ink);
-            background: linear-gradient(180deg, var(--kbr-public-paper) 0%, var(--kbr-public-paper-strong) 100%);
+            background: #f0f0f0;
             font-family: "IBM Plex Sans Arabic", "Almarai", sans-serif;
         }
         a { color: inherit; text-decoration: none; }

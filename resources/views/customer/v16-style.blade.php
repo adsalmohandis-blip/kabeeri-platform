@@ -20,7 +20,7 @@ body {
     min-height: 100vh;
     color: var(--ink);
     font-family: "IBM Plex Sans Arabic", "Almarai", system-ui, sans-serif;
-    background: linear-gradient(180deg, var(--paper) 0%, var(--sand) 100%);
+    background: #f0f0f0;
 }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }

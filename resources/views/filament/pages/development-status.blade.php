@@ -128,9 +128,7 @@
         .kbr-dev-hero {
             overflow: hidden;
             color: var(--kbr-dev-paper);
-            background:
-                radial-gradient(circle at 12% 12%, rgba(0,0,0, .28), rgba(0,0,0,0) 22rem),
-                linear-gradient(135deg, #000000, #000000);
+            background: #000000;
         }
 
         .kbr-dev-hero-grid {
@@ -353,7 +351,7 @@
             display: block;
             height: 100%;
             border-radius: inherit;
-            background: linear-gradient(90deg, #000000, #000000);
+            background: #000000;
         }
 
         .kbr-dev-warn {
