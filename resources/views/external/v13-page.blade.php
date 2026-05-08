@@ -62,8 +62,8 @@
             min-height: 100vh;
             color: var(--ink);
             background:
-                radial-gradient(circle at 86% 14%, rgba(0,0,0, .74), transparent 27rem),
-                radial-gradient(circle at 7% 20%, rgba(0,0,0, .36), transparent 24rem),
+                radial-gradient(circle at 86% 14%, rgba(0,0,0, .74), rgba(0,0,0,0) 27rem),
+                radial-gradient(circle at 7% 20%, rgba(0,0,0, .36), rgba(0,0,0,0) 24rem),
                 linear-gradient(135deg, #f0f0f0 0%, #f0f0f0 48%, #000000 100%);
             font-family: "IBM Plex Sans Arabic", "Almarai", sans-serif;
         }
@@ -74,10 +74,10 @@
             inset: 0;
             pointer-events: none;
             background-image:
-                radial-gradient(rgba(0,0,0, .06) 1px, transparent 1px),
-                linear-gradient(120deg, rgba(0,0,0, .035), transparent 38%);
+                radial-gradient(rgba(0,0,0, .06) 1px, rgba(0,0,0,0) 1px),
+                linear-gradient(120deg, rgba(0,0,0, .035), rgba(0,0,0,0) 38%);
             background-size: 28px 28px, 100% 100%;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0, .86), transparent 80%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0, .86), rgba(0,0,0,0) 80%);
         }
 
         a {
@@ -186,7 +186,7 @@
         }
 
         .button.primary {
-            border-color: transparent;
+            border-color: rgba(0,0,0,0);
             color: var(--paper);
             background: linear-gradient(135deg, var(--forest), #000000);
         }
@@ -204,7 +204,7 @@
             border: 1px solid rgba(240,240,240, .76);
             border-radius: 46px;
             background:
-                radial-gradient(circle at 18% 20%, rgba(0,0,0, .2), transparent 24rem),
+                radial-gradient(circle at 18% 20%, rgba(0,0,0, .2), rgba(0,0,0,0) 24rem),
                 linear-gradient(145deg, rgba(240,240,240, .9), rgba(240,240,240, .52));
             box-shadow: var(--shadow);
         }
@@ -279,7 +279,7 @@
             color: var(--paper);
             border-color: var(--white-line);
             background:
-                radial-gradient(circle at top left, rgba(0,0,0, .18), transparent 24rem),
+                radial-gradient(circle at top left, rgba(0,0,0, .18), rgba(0,0,0,0) 24rem),
                 linear-gradient(135deg, #000000, #000000);
         }
 

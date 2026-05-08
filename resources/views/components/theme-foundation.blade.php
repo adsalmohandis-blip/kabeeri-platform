@@ -45,8 +45,8 @@
 
         html[data-kbr-theme="dark"] body {
             background:
-                radial-gradient(circle at 88% 8%, rgba(0,0,0,.22), transparent 24rem),
-                radial-gradient(circle at 8% 12%, rgba(240,240,240,.08), transparent 26rem),
+                radial-gradient(circle at 88% 8%, rgba(0,0,0,.22), rgba(0,0,0,0) 24rem),
+                radial-gradient(circle at 8% 12%, rgba(240,240,240,.08), rgba(0,0,0,0) 26rem),
                 linear-gradient(135deg, #000000 0%, #000000 62%, #000000 100%) !important;
             color: var(--kbr-ink) !important;
         }
@@ -238,7 +238,7 @@
             min-height: 2.15rem;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid transparent;
+            border: 1px solid rgba(0,0,0,0);
             border-radius: .9rem;
             padding: 0 .75rem;
             color: #000000;
@@ -279,7 +279,7 @@
             place-items: center;
             width: 1.9rem;
             height: 1.9rem;
-            border: 1px solid transparent;
+            border: 1px solid rgba(0,0,0,0);
             border-radius: 999px;
             color: #000000;
             background: #f0f0f0;

@@ -129,7 +129,7 @@
             overflow: hidden;
             color: var(--kbr-dev-paper);
             background:
-                radial-gradient(circle at 12% 12%, rgba(0,0,0, .28), transparent 22rem),
+                radial-gradient(circle at 12% 12%, rgba(0,0,0, .28), rgba(0,0,0,0) 22rem),
                 linear-gradient(135deg, #000000, #000000);
         }
 
@@ -580,7 +580,7 @@
             <div class="kbr-dev-grid-4">
                 @foreach ($databaseGroups as $index => $group)
                     <article class="kbr-dev-data-card">
-                        <div class="kbr-dev-row" style="background:transparent;padding:0;min-height:auto">
+                        <div class="kbr-dev-row" style="background:rgba(0,0,0,0);padding:0;min-height:auto">
                             <h3 class="kbr-dev-heading">{{ $copy('مجموعة بيانات', 'Data group') }} {{ $index + 1 }}</h3>
                             <span class="kbr-dev-pill">{{ $fmt($group['total'] ?? 0) }}</span>
                         </div>
