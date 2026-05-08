@@ -11,14 +11,14 @@
     <title>{{ __('kabeeri.ui.plugins') }} | {{ __('kabeeri.brand.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-[#f1eadc] text-[#111111] antialiased">
+<body class="min-h-screen bg-[#f3e5ab] text-[#111111] antialiased">
     <div class="kbr-customer-shell grid min-h-screen w-full lg:grid-cols-[16rem_minmax(0,1fr)]">
         @include('customer.partials.dashboard-sidebar', ['dashboard' => $dashboard, 'activeNav' => $activeNav])
 
         <main class="min-w-0 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
             @include('customer.partials.dashboard-header', ['title' => __('kabeeri.ui.plugins'), 'subtitle' => $site->name])
 
-            <section class="rounded-[1.7rem] border border-[#111111]/10 bg-[#f1eadc]/92 p-4 shadow-[0_18px_55px_rgba(17,17,17,.08)]">
+            <section class="rounded-[1.7rem] border border-[#111111]/10 bg-[#f3e5ab]/92 p-4 shadow-[0_18px_55px_rgba(17,17,17,.08)]">
                 <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <span class="inline-flex items-center rounded-full bg-[#111111]/10 px-3 py-1 text-[11px] font-black text-[#111111]"><x-kabeeri-icon name="plugin" />{{ __('kabeeri.ui.plugin_catalog') }}</span>
@@ -39,14 +39,14 @@
                                     <strong class="block text-sm font-black">{{ $plugin->name }}</strong>
                                     <span class="mt-1 block text-xs font-bold text-[#111111]/60">{{ $isActive ? __('kabeeri.ui.active') : ($installed ? __('kabeeri.ui.inactive') : __('kabeeri.ui.not_installed')) }}</span>
                                 </div>
-                                <span class="grid h-9 w-9 place-items-center rounded-2xl {{ $isActive ? 'bg-[#111111] text-[#f1eadc]' : 'bg-[#f1eadc] text-[#111111]' }}"><x-kabeeri-icon name="plugin" style="margin-inline-end:0" /></span>
+                                <span class="grid h-9 w-9 place-items-center rounded-2xl {{ $isActive ? 'bg-[#111111] text-[#f3e5ab]' : 'bg-[#f3e5ab] text-[#111111]' }}"><x-kabeeri-icon name="plugin" style="margin-inline-end:0" /></span>
                             </div>
 
                             <div class="mt-4">
                                 @if (! $installed)
                                     <form method="POST" action="{{ route('customer.apps.plugins.install', ['username' => $site->username, 'package' => $plugin->slug]) }}">
                                         @csrf
-                                        <button class="w-full rounded-full bg-[#111111] px-4 py-2.5 text-xs font-black text-[#f1eadc]" type="submit">{{ __('kabeeri.ui.install_plugin') }}</button>
+                                        <button class="w-full rounded-full bg-[#111111] px-4 py-2.5 text-xs font-black text-[#f3e5ab]" type="submit">{{ __('kabeeri.ui.install_plugin') }}</button>
                                     </form>
                                 @elseif ($isActive)
                                     <form method="POST" action="{{ route('customer.apps.plugins.deactivate', ['username' => $site->username, 'package' => $plugin->slug]) }}">
@@ -58,7 +58,7 @@
                                     <form method="POST" action="{{ route('customer.apps.plugins.activate', ['username' => $site->username, 'package' => $plugin->slug]) }}">
                                         @csrf
                                         @method('PATCH')
-                                        <button class="w-full rounded-full bg-[#111111] px-4 py-2.5 text-xs font-black text-[#f1eadc]" type="submit">{{ __('kabeeri.ui.activate_plugin') }}</button>
+                                        <button class="w-full rounded-full bg-[#111111] px-4 py-2.5 text-xs font-black text-[#f3e5ab]" type="submit">{{ __('kabeeri.ui.activate_plugin') }}</button>
                                     </form>
                                 @endif
                             </div>

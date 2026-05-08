@@ -62,7 +62,7 @@
         background:
             radial-gradient(circle at 92% 8%, rgba(201,138,46,.16), transparent 22rem),
             linear-gradient(135deg, #17130d 0%, #17130d 68%, #211a11 100%) !important;
-        color: #fffaf0;
+        color: #f3e5ab;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-sidebar,
@@ -73,7 +73,7 @@
     html.fi[data-kbr-theme="dark"] .fi-modal-window,
     html.fi[data-kbr-theme="dark"] .fi-ta-ctn,
     html.fi[data-kbr-theme="dark"] .fi-input-wrp {
-        border-color: rgba(255,250,240,.14) !important;
+        border-color: rgba(243,229,171,.14) !important;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-sidebar,
@@ -84,18 +84,18 @@
     html.fi[data-kbr-theme="dark"] .fi-ta-ctn,
     html.fi[data-kbr-theme="dark"] .fi-input-wrp {
         background-color: #211a11 !important;
-        color: #fffaf0 !important;
+        color: #f3e5ab !important;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-main-sidebar,
     html.fi[data-kbr-theme="dark"] .fi-sidebar-header {
         background-color: #17130d !important;
-        border-color: rgba(255,250,240,.12) !important;
+        border-color: rgba(243,229,171,.12) !important;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-sidebar-item-active a,
     html.fi[data-kbr-theme="dark"] .fi-sidebar-item a:hover {
-        background-color: #fffaf0 !important;
+        background-color: #f3e5ab !important;
         color: #17130d !important;
     }
 

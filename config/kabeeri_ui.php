@@ -40,7 +40,7 @@ return [
     'design_tokens' => [
         'colors' => [
             'ink' => '#17130d',
-            'paper' => '#fffaf0',
+            'paper' => '#f3e5ab',
             'sand' => '#f2ddb8',
             'bronze' => '#c98a2e',
             'olive' => '#3f5e47',

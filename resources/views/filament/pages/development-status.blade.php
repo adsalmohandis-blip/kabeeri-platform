@@ -1,4 +1,4 @@
-﻿@php
+@php
     $isArabic = app()->getLocale() === 'ar';
     $copy = fn (string $arabic, string $english): string => $isArabic ? $arabic : $english;
     $brand = __('kabeeri.brand.name');
@@ -91,7 +91,7 @@
     <style>
         .kbr-dev-status {
             --kbr-dev-ink: #17130d;
-            --kbr-dev-paper: #fffaf0;
+            --kbr-dev-paper: #f3e5ab;
             --kbr-dev-gold: #c98a2e;
             --kbr-dev-muted: rgba(23, 19, 13, .68);
             --kbr-dev-line: rgba(23, 19, 13, .12);
@@ -380,7 +380,7 @@
         }
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-status {
-            --kbr-dev-ink: #fffaf0;
+            --kbr-dev-ink: #f3e5ab;
             --kbr-dev-paper: #211a11;
             --kbr-dev-muted: rgba(255, 250, 240, .68);
             --kbr-dev-line: rgba(255, 250, 240, .14);
@@ -408,7 +408,7 @@
         html.fi[data-kbr-theme="dark"] .kbr-dev-icon-box.is-review,
         html.fi[data-kbr-theme="dark"] .kbr-dev-button {
             color: #17130d;
-            background: #fffaf0;
+            background: #f3e5ab;
         }
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-status-text,
@@ -417,7 +417,7 @@
         }
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-status-text.is-ready {
-            color: #fffaf0;
+            color: #f3e5ab;
         }
 
         @media (max-width: 1180px) {
@@ -518,7 +518,7 @@
                         <p class="kbr-dev-kicker">{{ $copy('التقدم الحقيقي', 'Real progress') }}</p>
                         <h2 class="kbr-dev-heading">{{ $copy('حالة النسخ', 'Version status') }}</h2>
                     </div>
-                    <span class="kbr-dev-pill" style="background:#17130d;color:#fffaf0">{{ $summary['percent'] ?? 0 }}%</span>
+                    <span class="kbr-dev-pill" style="background:#17130d;color:#f3e5ab">{{ $summary['percent'] ?? 0 }}%</span>
                 </div>
 
                 <div class="kbr-dev-list">

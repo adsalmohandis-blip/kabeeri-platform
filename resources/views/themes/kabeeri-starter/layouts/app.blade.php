@@ -16,7 +16,7 @@
             --ks-muted: #17130d;
             --ks-bg: #ffffff;
             --ks-surface: #ffffff;
-            --ks-border: #fffaf0;
+            --ks-border: #f3e5ab;
         }
         * { box-sizing: border-box; }
         body {

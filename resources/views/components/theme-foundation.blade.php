@@ -7,9 +7,9 @@
     <style>
         :root {
             --kbr-font-family: {!! $activeFontFamily !!};
-            --kbr-page: #f1eadc;
-            --kbr-surface: rgba(241,234,220,.92);
-            --kbr-card: rgba(241,234,220,.92);
+            --kbr-page: #f3e5ab;
+            --kbr-surface: rgba(243,229,171,.92);
+            --kbr-card: rgba(243,229,171,.92);
             --kbr-card-strong: rgba(255,255,255,.76);
             --kbr-ink: #111111;
             --kbr-muted: rgba(17,17,17,.66);
@@ -27,16 +27,16 @@
             --kbr-surface: #1a1a1a;
             --kbr-card: #1a1a1a;
             --kbr-card-strong: #202020;
-            --kbr-ink: #f1eadc;
-            --kbr-muted: rgba(241,234,220,.68);
-            --kbr-line: rgba(241,234,220,.16);
-            --ink: #f1eadc;
-            --soft: rgba(241,234,220,.72);
-            --muted: rgba(241,234,220,.68);
+            --kbr-ink: #f3e5ab;
+            --kbr-muted: rgba(243,229,171,.68);
+            --kbr-line: rgba(243,229,171,.16);
+            --ink: #f3e5ab;
+            --soft: rgba(243,229,171,.72);
+            --muted: rgba(243,229,171,.68);
             --panel: rgba(26,26,26,.92);
             --panel-strong: rgba(32,32,32,.88);
             --cream: #1a1a1a;
-            --line: rgba(241,234,220,.16);
+            --line: rgba(243,229,171,.16);
         }
 
         html[data-kbr-theme] body {
@@ -46,7 +46,7 @@
         html[data-kbr-theme="dark"] body {
             background:
                 radial-gradient(circle at 88% 8%, rgba(17,17,17,.22), transparent 24rem),
-                radial-gradient(circle at 8% 12%, rgba(241,234,220,.08), transparent 26rem),
+                radial-gradient(circle at 8% 12%, rgba(243,229,171,.08), transparent 26rem),
                 linear-gradient(135deg, #111111 0%, #111111 62%, #1a1a1a 100%) !important;
             color: var(--kbr-ink) !important;
         }
@@ -66,30 +66,30 @@
         html[data-kbr-theme="dark"] .table-chip,
         html[data-kbr-theme="dark"] .history-item,
         html[data-kbr-theme="dark"] .check-item,
-        html[data-kbr-theme="dark"] [class*="bg-[#f1eadc]"],
+        html[data-kbr-theme="dark"] [class*="bg-[#f3e5ab]"],
         html[data-kbr-theme="dark"] [class*="bg-white"] {
             background-color: var(--kbr-card) !important;
             border-color: var(--kbr-line) !important;
             color: var(--kbr-ink) !important;
         }
 
-        html[data-kbr-theme="dark"] [class*="bg-[#f1eadc]/"],
+        html[data-kbr-theme="dark"] [class*="bg-[#f3e5ab]/"],
         html[data-kbr-theme="dark"] [class*="bg-white/"] {
             background-color: rgba(26,26,26,.88) !important;
         }
 
         html[data-kbr-theme="dark"] [class*="bg-[#111111]/"] {
-            background-color: rgba(241,234,220,.09) !important;
+            background-color: rgba(243,229,171,.09) !important;
             color: var(--kbr-ink) !important;
         }
 
         html[data-kbr-theme="dark"] [class*="text-[#111111]"] {
-            color: #f1eadc !important;
+            color: #f3e5ab !important;
         }
 
         html[data-kbr-theme="dark"] [class*="bg-[#111111]"],
         html[data-kbr-theme="dark"] [class*="bg-[#111111]/"] {
-            background-color: #f1eadc !important;
+            background-color: #f3e5ab !important;
             color: #111111 !important;
         }
 
@@ -117,18 +117,18 @@
 
         html[data-kbr-theme="dark"] option {
             background-color: #1a1a1a;
-            color: #f1eadc;
+            color: #f3e5ab;
         }
 
         html[data-kbr-theme="dark"] ::placeholder {
-            color: rgba(241,234,220,.48);
+            color: rgba(243,229,171,.48);
         }
 
         html[data-kbr-theme="dark"] .nav a:not(.primary),
         html[data-kbr-theme="dark"] .button:not(.primary),
         html[data-kbr-theme="dark"] button:not(.primary):not(.fi-btn):not(.kbr-sidebar-toggle) {
-            background: #f1eadc !important;
-            border-color: rgba(241,234,220,.24) !important;
+            background: #f3e5ab !important;
+            border-color: rgba(243,229,171,.24) !important;
             color: #111111 !important;
         }
 
@@ -137,7 +137,7 @@
         html[data-kbr-theme="dark"] button.primary {
             background: #111111 !important;
             border-color: rgba(17,17,17,.42) !important;
-            color: #f1eadc !important;
+            color: #f3e5ab !important;
             box-shadow: inset 0 0 0 1px rgba(17,17,17,.28);
         }
 
@@ -188,7 +188,7 @@
             gap: .35rem;
             border: 1px solid rgba(17,17,17,.18);
             border-radius: 999px;
-            background: #f1eadc;
+            background: #f3e5ab;
             padding: 0 .85rem;
             color: #111111;
             font-size: .74rem;
@@ -215,7 +215,7 @@
 
         .kbr-language-switcher[open] .kbr-language-switcher__trigger {
             background: #111111;
-            color: #f1eadc;
+            color: #f3e5ab;
         }
 
         .kbr-language-switcher__menu {
@@ -228,7 +228,7 @@
             gap: .25rem;
             border: 1px solid rgba(17,17,17,.12);
             border-radius: 1.2rem;
-            background: #f1eadc;
+            background: #f3e5ab;
             padding: .45rem;
             box-shadow: 0 24px 70px rgba(17,17,17,.18);
         }
@@ -255,7 +255,7 @@
 
         .kbr-language-switcher__option[aria-current="true"] {
             background: #111111;
-            color: #f1eadc;
+            color: #f3e5ab;
             border-color: #111111;
         }
 
@@ -268,7 +268,7 @@
             min-height: 2.25rem;
             border: 1px solid rgba(17,17,17,.16);
             border-radius: 999px;
-            background: rgba(241,234,220,.9);
+            background: rgba(243,229,171,.9);
             padding: .18rem;
             box-shadow: 0 10px 26px rgba(17,17,17,.08);
             font-family: var(--kbr-font-family);
@@ -282,7 +282,7 @@
             border: 1px solid transparent;
             border-radius: 999px;
             color: #111111;
-            background: #f1eadc;
+            background: #f3e5ab;
             text-decoration: none;
             transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
         }
@@ -294,10 +294,10 @@
         }
 
         .kbr-theme-toggle__button.is-active {
-            color: #f1eadc;
+            color: #f3e5ab;
             border-color: #111111;
             background: #111111;
-            box-shadow: inset 0 0 0 1px rgba(241,234,220,.16);
+            box-shadow: inset 0 0 0 1px rgba(243,229,171,.16);
         }
 
         .kbr-language-switcher--admin {
@@ -318,49 +318,49 @@
         }
 
         html[data-kbr-theme="dark"] .kbr-language-switcher__trigger {
-            background: #f1eadc;
+            background: #f3e5ab;
             color: #111111;
-            border-color: rgba(241,234,220,.3);
+            border-color: rgba(243,229,171,.3);
         }
 
         html[data-kbr-theme="dark"] .kbr-language-switcher[open] .kbr-language-switcher__trigger {
-            background: #f1eadc;
+            background: #f3e5ab;
             color: #111111;
         }
 
         html[data-kbr-theme="dark"] .kbr-language-switcher__menu {
             background: #1a1a1a;
-            border-color: rgba(241,234,220,.16);
+            border-color: rgba(243,229,171,.16);
         }
 
         html[data-kbr-theme="dark"] .kbr-language-switcher__option {
-            color: #f1eadc;
+            color: #f3e5ab;
         }
 
         html[data-kbr-theme="dark"] .kbr-language-switcher__option[aria-current="true"] {
-            background: #f1eadc;
+            background: #f3e5ab;
             color: #111111;
         }
 
         html[data-kbr-theme="dark"] .kbr-theme-toggle {
-            border-color: rgba(241,234,220,.18);
+            border-color: rgba(243,229,171,.18);
             background: rgba(26,26,26,.9);
         }
 
         html[data-kbr-theme="dark"] .kbr-theme-toggle__button {
-            color: #f1eadc;
-            background: rgba(241,234,220,.08);
+            color: #f3e5ab;
+            background: rgba(243,229,171,.08);
         }
 
         html[data-kbr-theme="dark"] .kbr-theme-toggle__button:hover {
-            border-color: rgba(241,234,220,.34);
-            background: rgba(241,234,220,.12);
+            border-color: rgba(243,229,171,.34);
+            background: rgba(243,229,171,.12);
         }
 
         html[data-kbr-theme="dark"] .kbr-theme-toggle__button.is-active {
             color: #111111;
-            border-color: #f1eadc;
-            background: #f1eadc;
+            border-color: #f3e5ab;
+            background: #f3e5ab;
         }
 
         @media (max-width: 720px) {

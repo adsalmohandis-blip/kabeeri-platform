@@ -6,8 +6,8 @@
 :root {
     --ink: #111111;
     --muted: rgba(17,17,17,.62);
-    --paper: #f1eadc;
-    --sand: #ebe1d0;
+    --paper: #f3e5ab;
+    --sand: #eadb9b;
     --panel: rgba(255,255,255,.42);
     --line: rgba(17,17,17,.12);
     --night: #111111;
@@ -37,7 +37,7 @@ button, input, select, textarea { font: inherit; }
     padding: 10px;
     border: 1px solid var(--line);
     border-radius: 999px;
-    background: rgba(241,234,220,.9);
+    background: rgba(243,229,171,.9);
     backdrop-filter: blur(16px);
 }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; }
@@ -67,7 +67,7 @@ button, input, select, textarea { font: inherit; }
     font-weight: 900;
     cursor: pointer;
 }
-.primary, button.primary { background: #111111; color: #f1eadc; border-color: #111111; }
+.primary, button.primary { background: #111111; color: #f3e5ab; border-color: #111111; }
 .start-grid {
     display: grid;
     grid-template-columns: minmax(0,1fr) minmax(330px,.72fr);
@@ -102,9 +102,9 @@ h1, .page-title {
     background: rgba(255,255,255,.42);
     padding: 18px;
 }
-.form-card.dark { background: #111111; color: #f1eadc; }
-.form-card.dark p, .form-card.dark small { color: rgba(241,234,220,.72); }
-.form-card.dark input, .form-card.dark select { background: #f1eadc; color: #111111; }
+.form-card.dark { background: #111111; color: #f3e5ab; }
+.form-card.dark p, .form-card.dark small { color: rgba(243,229,171,.72); }
+.form-card.dark input, .form-card.dark select { background: #f3e5ab; color: #111111; }
 .form-card h2, .quiet-card h2 { margin: 0 0 8px; font-size: 20px; }
 .field { display: grid; gap: 6px; margin-bottom: 11px; }
 .field label { font-size: 12px; font-weight: 900; }
@@ -116,7 +116,7 @@ h1, .page-title {
     padding: 10px 12px;
     color: #111111;
 }
-.error { margin: 0 0 12px; color: #f1eadc; font-weight: 900; }
+.error { margin: 0 0 12px; color: #f3e5ab; font-weight: 900; }
 .grid { display: grid; gap: 10px; }
 .grid.two { grid-template-columns: repeat(2,minmax(0,1fr)); }
 .section { padding: 24px 0; border-top: 1px solid var(--line); }
@@ -138,7 +138,7 @@ h1, .page-title {
 .step-list { display: grid; gap: 0; margin-top: 22px; max-width: 690px; border-top: 1px solid var(--line); }
 .step-line { display: grid; grid-template-columns: 2rem minmax(0,1fr); gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(17,17,17,.1); }
 .step-line strong { font-size: 13px; }
-.number { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 999px; background: #111111; color: #f1eadc; font-size: 11px; font-weight: 900; }
+.number { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 999px; background: #111111; color: #f3e5ab; font-size: 11px; font-weight: 900; }
 @media (max-width: 940px) {
     .top { align-items: stretch; border-radius: 24px; flex-direction: column; }
     .nav, .hero-actions { align-items: stretch; flex-direction: column; }

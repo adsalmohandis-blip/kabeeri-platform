@@ -10,14 +10,14 @@
     <title>{{ __('kabeeri.ui.switch_theme') }} | {{ __('kabeeri.brand.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-[#f1eadc] text-[#111111] antialiased">
+<body class="min-h-screen bg-[#f3e5ab] text-[#111111] antialiased">
     <div class="kbr-customer-shell grid min-h-screen w-full lg:grid-cols-[16rem_minmax(0,1fr)]">
         @include('customer.partials.dashboard-sidebar', ['dashboard' => $dashboard, 'activeNav' => $activeNav])
 
         <main class="min-w-0 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
             @include('customer.partials.dashboard-header', ['title' => __('kabeeri.ui.switch_theme'), 'subtitle' => $site->name])
 
-            <section class="rounded-[1.7rem] border border-[#111111]/10 bg-[#f1eadc]/92 p-4 shadow-[0_18px_55px_rgba(17,17,17,.08)]">
+            <section class="rounded-[1.7rem] border border-[#111111]/10 bg-[#f3e5ab]/92 p-4 shadow-[0_18px_55px_rgba(17,17,17,.08)]">
                 <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <span class="inline-flex items-center rounded-full bg-[#111111]/10 px-3 py-1 text-[11px] font-black text-[#111111]"><x-kabeeri-icon name="theme" />{{ __('kabeeri.ui.current_theme') }}</span>
@@ -35,14 +35,14 @@
                                     <strong class="block text-sm font-black">{{ __('kabeeri.customer.themes.'.$theme->slug.'.name') }}</strong>
                                     <span class="mt-1 block text-xs font-bold text-[#111111]/60">{{ __('kabeeri.customer.themes.'.$theme->slug.'.category') }}</span>
                                 </div>
-                                <span class="rounded-full {{ $isCurrent ? 'bg-[#111111] text-[#f1eadc]' : 'bg-[#f1eadc] text-[#111111]' }} px-3 py-1 text-[11px] font-black ring-1 ring-[#111111]/10">{{ $isCurrent ? __('kabeeri.ui.active') : __('kabeeri.ui.compatible') }}</span>
+                                <span class="rounded-full {{ $isCurrent ? 'bg-[#111111] text-[#f3e5ab]' : 'bg-[#f3e5ab] text-[#111111]' }} px-3 py-1 text-[11px] font-black ring-1 ring-[#111111]/10">{{ $isCurrent ? __('kabeeri.ui.active') : __('kabeeri.ui.compatible') }}</span>
                             </div>
 
                             <form method="POST" action="{{ route('customer.apps.themes.update', ['username' => $site->username]) }}" class="mt-4">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="theme_slug" value="{{ $theme->slug }}">
-                                <button class="w-full rounded-full {{ $isCurrent ? 'bg-white text-[#111111] ring-1 ring-[#111111]/10' : 'bg-[#111111] text-[#f1eadc]' }} px-4 py-2.5 text-xs font-black" type="submit" @disabled($isCurrent)>
+                                <button class="w-full rounded-full {{ $isCurrent ? 'bg-white text-[#111111] ring-1 ring-[#111111]/10' : 'bg-[#111111] text-[#f3e5ab]' }} px-4 py-2.5 text-xs font-black" type="submit" @disabled($isCurrent)>
                                     {{ $isCurrent ? __('kabeeri.ui.current_theme') : __('kabeeri.ui.switch_theme') }}
                                 </button>
                             </form>

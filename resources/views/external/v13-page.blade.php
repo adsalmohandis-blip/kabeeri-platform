@@ -42,14 +42,14 @@
         :root {
             --ink: #17130d;
             --soft: #17130d;
-            --paper: #fffaf0;
+            --paper: #f3e5ab;
             --sage: #17130d;
             --forest: #17130d;
             --sky: #17130d;
             --clay: #c98a2e;
             --wheat: #c98a2e;
             --line: rgba(23,19,13, .13);
-            --white-line: rgba(255,250,240, .18);
+            --white-line: rgba(243,229,171, .18);
             --shadow: 0 26px 84px rgba(23,19,13, .16);
         }
 
@@ -64,7 +64,7 @@
             background:
                 radial-gradient(circle at 86% 14%, rgba(23,19,13, .74), transparent 27rem),
                 radial-gradient(circle at 7% 20%, rgba(201,138,46, .36), transparent 24rem),
-                linear-gradient(135deg, #fffaf0 0%, #fffaf0 48%, #17130d 100%);
+                linear-gradient(135deg, #f3e5ab 0%, #f3e5ab 48%, #17130d 100%);
             font-family: "IBM Plex Sans Arabic", "Almarai", sans-serif;
         }
 
@@ -100,9 +100,9 @@
             justify-content: space-between;
             gap: 14px;
             padding: 14px;
-            border: 1px solid rgba(255,250,240, .72);
+            border: 1px solid rgba(243,229,171, .72);
             border-radius: 999px;
-            background: rgba(255,250,240, .74);
+            background: rgba(243,229,171, .74);
             box-shadow: 0 18px 64px rgba(23,19,13, .12);
             backdrop-filter: blur(22px);
         }
@@ -162,20 +162,20 @@
         }
 
         .nav a:hover {
-            background: rgba(255,250,240, .9);
+            background: rgba(243,229,171, .9);
             color: var(--forest);
         }
 
         .nav a.active {
             background: #17130d;
-            color: #fffaf0;
+            color: #f3e5ab;
         }
 
         .button {
             min-height: 44px;
             padding: 11px 18px;
             border: 1px solid var(--line);
-            background: rgba(255,250,240, .7);
+            background: rgba(243,229,171, .7);
             color: var(--forest);
             transition: .2s ease;
         }
@@ -194,18 +194,18 @@
         .button.clay {
             border-color: var(--line);
             color: var(--forest);
-            background: rgba(255,250,240, .72);
+            background: rgba(243,229,171, .72);
         }
 
         .hero {
             overflow: hidden;
             position: relative;
             margin-top: 22px;
-            border: 1px solid rgba(255,250,240, .76);
+            border: 1px solid rgba(243,229,171, .76);
             border-radius: 46px;
             background:
                 radial-gradient(circle at 18% 20%, rgba(201,138,46, .2), transparent 24rem),
-                linear-gradient(145deg, rgba(255,250,240, .9), rgba(255,250,240, .52));
+                linear-gradient(145deg, rgba(243,229,171, .9), rgba(243,229,171, .52));
             box-shadow: var(--shadow);
         }
 
@@ -236,7 +236,7 @@
             padding: 6px 11px;
             border: 1px solid rgba(23,19,13, .18);
             color: var(--forest);
-            background: rgba(255,250,240, .76);
+            background: rgba(243,229,171, .76);
             font-size: 12px;
         }
 
@@ -264,7 +264,7 @@
         .card,
         .section {
             border: 1px solid var(--line);
-            background: rgba(255,250,240, .72);
+            background: rgba(243,229,171, .72);
             box-shadow: 0 14px 40px rgba(23,19,13, .08);
         }
 
@@ -318,7 +318,7 @@
         .dark .section-title p,
         .dark .card p,
         .dark .timeline p {
-            color: rgba(255,250,240, .72);
+            color: rgba(243,229,171, .72);
         }
 
         .grid-2,
@@ -365,12 +365,12 @@
             padding: 14px;
             border: 1px solid var(--line);
             border-radius: 22px;
-            background: rgba(255,250,240, .62);
+            background: rgba(243,229,171, .62);
         }
 
         .dark .timeline-row {
             border-color: var(--white-line);
-            background: rgba(255,250,240, .08);
+            background: rgba(243,229,171, .08);
         }
 
         .badge {

@@ -8,8 +8,8 @@
 @theme {
     --font-sans: 'IBM Plex Sans Arabic', 'Almarai', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
     --color-kabeeri-ink: #111111;
-    --color-kabeeri-paper: #f1eadc;
-    --color-kabeeri-sand: #ebe1d0;
+    --color-kabeeri-paper: #f3e5ab;
+    --color-kabeeri-sand: #eadb9b;
     --color-kabeeri-bronze: #111111;
     --color-kabeeri-olive: #111111;
     --color-kabeeri-sage: #111111;
@@ -24,8 +24,8 @@
 @layer base {
     :root {
         --kbr-ink: #111111;
-        --kbr-paper: #f1eadc;
-        --kbr-sand: #ebe1d0;
+        --kbr-paper: #f3e5ab;
+        --kbr-sand: #eadb9b;
         --kbr-bronze: #111111;
         --kbr-olive: #111111;
         --kbr-sage: #111111;
