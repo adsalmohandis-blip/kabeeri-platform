@@ -59,10 +59,10 @@ class PublicContentEntryController extends Controller
             ->all();
 
         $siteSettings = is_array($site->settings) ? $site->settings : [];
-        $primaryColor = $themeSettings['primary_color'] ?? $siteSettings['primary_color'] ?? '#b45309';
+        $primaryColor = $themeSettings['primary_color'] ?? $siteSettings['primary_color'] ?? '#000000';
 
         if (is_array($primaryColor)) {
-            $primaryColor = $primaryColor['value'] ?? '#b45309';
+            $primaryColor = $primaryColor['value'] ?? '#000000';
         }
 
         $language = app()->getLocale() ?: (string) ($site->language ?: 'ar');

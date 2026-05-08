@@ -11,20 +11,20 @@
     <title>{{ __('kabeeri.ui.plugins') }} | {{ __('kabeeri.brand.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-[#f3e5ab] text-[#111111] antialiased">
+<body class="min-h-screen bg-[#f0f0f0] text-[#000000] antialiased">
     <div class="kbr-customer-shell grid min-h-screen w-full lg:grid-cols-[16rem_minmax(0,1fr)]">
         @include('customer.partials.dashboard-sidebar', ['dashboard' => $dashboard, 'activeNav' => $activeNav])
 
         <main class="min-w-0 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
             @include('customer.partials.dashboard-header', ['title' => __('kabeeri.ui.plugins'), 'subtitle' => $site->name])
 
-            <section class="rounded-[1.7rem] border border-[#111111]/10 bg-[#f3e5ab]/92 p-4 shadow-[0_18px_55px_rgba(17,17,17,.08)]">
+            <section class="rounded-[1.7rem] border border-[#000000]/10 bg-[#f0f0f0]/92 p-4 shadow-[0_18px_55px_rgba(0,0,0,.08)]">
                 <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <span class="inline-flex items-center rounded-full bg-[#111111]/10 px-3 py-1 text-[11px] font-black text-[#111111]"><x-kabeeri-icon name="plugin" />{{ __('kabeeri.ui.plugin_catalog') }}</span>
+                        <span class="inline-flex items-center rounded-full bg-[#000000]/10 px-3 py-1 text-[11px] font-black text-[#000000]"><x-kabeeri-icon name="plugin" />{{ __('kabeeri.ui.plugin_catalog') }}</span>
                         <h2 class="mt-2 text-base font-black">{{ __('kabeeri.ui.plugins') }}</h2>
                     </div>
-                    <a href="{{ route('customer.apps.themes', ['username' => $site->username]) }}" class="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-xs font-black text-[#111111] ring-1 ring-[#111111]/10"><x-kabeeri-icon name="theme" />{{ __('kabeeri.ui.switch_theme') }}</a>
+                    <a href="{{ route('customer.apps.themes', ['username' => $site->username]) }}" class="inline-flex items-center justify-center rounded-full bg-[#fafafa] px-4 py-2 text-xs font-black text-[#000000] ring-1 ring-[#000000]/10"><x-kabeeri-icon name="theme" />{{ __('kabeeri.ui.switch_theme') }}</a>
                 </div>
 
                 <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -33,32 +33,32 @@
                             $installed = $installedBySlug->get($plugin->slug);
                             $isActive = $installed?->status === 'active';
                         @endphp
-                        <article class="rounded-3xl border border-[#111111]/10 bg-white/70 p-4">
+                        <article class="rounded-3xl border border-[#000000]/10 bg-[#fafafa]/70 p-4">
                             <div class="flex items-start justify-between gap-3">
                                 <div>
                                     <strong class="block text-sm font-black">{{ $plugin->name }}</strong>
-                                    <span class="mt-1 block text-xs font-bold text-[#111111]/60">{{ $isActive ? __('kabeeri.ui.active') : ($installed ? __('kabeeri.ui.inactive') : __('kabeeri.ui.not_installed')) }}</span>
+                                    <span class="mt-1 block text-xs font-bold text-[#000000]/60">{{ $isActive ? __('kabeeri.ui.active') : ($installed ? __('kabeeri.ui.inactive') : __('kabeeri.ui.not_installed')) }}</span>
                                 </div>
-                                <span class="grid h-9 w-9 place-items-center rounded-2xl {{ $isActive ? 'bg-[#111111] text-[#f3e5ab]' : 'bg-[#f3e5ab] text-[#111111]' }}"><x-kabeeri-icon name="plugin" style="margin-inline-end:0" /></span>
+                                <span class="grid h-9 w-9 place-items-center rounded-2xl {{ $isActive ? 'bg-[#000000] text-[#f0f0f0]' : 'bg-[#f0f0f0] text-[#000000]' }}"><x-kabeeri-icon name="plugin" style="margin-inline-end:0" /></span>
                             </div>
 
                             <div class="mt-4">
                                 @if (! $installed)
                                     <form method="POST" action="{{ route('customer.apps.plugins.install', ['username' => $site->username, 'package' => $plugin->slug]) }}">
                                         @csrf
-                                        <button class="w-full rounded-full bg-[#111111] px-4 py-2.5 text-xs font-black text-[#f3e5ab]" type="submit">{{ __('kabeeri.ui.install_plugin') }}</button>
+                                        <button class="w-full rounded-full bg-[#000000] px-4 py-2.5 text-xs font-black text-[#f0f0f0]" type="submit">{{ __('kabeeri.ui.install_plugin') }}</button>
                                     </form>
                                 @elseif ($isActive)
                                     <form method="POST" action="{{ route('customer.apps.plugins.deactivate', ['username' => $site->username, 'package' => $plugin->slug]) }}">
                                         @csrf
                                         @method('PATCH')
-                                        <button class="w-full rounded-full bg-white px-4 py-2.5 text-xs font-black text-[#111111] ring-1 ring-[#111111]/10" type="submit">{{ __('kabeeri.ui.deactivate_plugin') }}</button>
+                                        <button class="w-full rounded-full bg-[#fafafa] px-4 py-2.5 text-xs font-black text-[#000000] ring-1 ring-[#000000]/10" type="submit">{{ __('kabeeri.ui.deactivate_plugin') }}</button>
                                     </form>
                                 @else
                                     <form method="POST" action="{{ route('customer.apps.plugins.activate', ['username' => $site->username, 'package' => $plugin->slug]) }}">
                                         @csrf
                                         @method('PATCH')
-                                        <button class="w-full rounded-full bg-[#111111] px-4 py-2.5 text-xs font-black text-[#f3e5ab]" type="submit">{{ __('kabeeri.ui.activate_plugin') }}</button>
+                                        <button class="w-full rounded-full bg-[#000000] px-4 py-2.5 text-xs font-black text-[#f0f0f0]" type="submit">{{ __('kabeeri.ui.activate_plugin') }}</button>
                                     </form>
                                 @endif
                             </div>

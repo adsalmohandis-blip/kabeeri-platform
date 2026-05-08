@@ -4,13 +4,13 @@
 @include('components.theme-foundation')
 <style>
 :root {
-    --ink: #111111;
-    --muted: rgba(17,17,17,.62);
-    --paper: #f3e5ab;
-    --sand: #eadb9b;
-    --panel: rgba(255,255,255,.42);
-    --line: rgba(17,17,17,.12);
-    --night: #111111;
+    --ink: #000000;
+    --muted: rgba(0,0,0,.62);
+    --paper: #f0f0f0;
+    --sand: #f0f0f0;
+    --panel: rgba(250,250,250,.42);
+    --line: rgba(0,0,0,.12);
+    --night: #000000;
     --radius: 24px;
 }
 * { box-sizing: border-box; }
@@ -37,7 +37,7 @@ button, input, select, textarea { font: inherit; }
     padding: 10px;
     border: 1px solid var(--line);
     border-radius: 999px;
-    background: rgba(243,229,171,.9);
+    background: rgba(240,240,240,.9);
     backdrop-filter: blur(16px);
 }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; }
@@ -48,7 +48,7 @@ button, input, select, textarea { font: inherit; }
     height: 40px;
     border-radius: 999px;
     color: var(--paper);
-    background: #111111;
+    background: #000000;
     font-weight: 900;
 }
 .brand small { display: block; color: var(--muted); font-size: 12px; }
@@ -61,13 +61,13 @@ button, input, select, textarea { font: inherit; }
     padding: 0 13px;
     border: 1px solid var(--line);
     border-radius: 999px;
-    background: rgba(255,255,255,.55);
-    color: #111111;
+    background: rgba(250,250,250,.55);
+    color: #000000;
     font-size: 13px;
     font-weight: 900;
     cursor: pointer;
 }
-.primary, button.primary { background: #111111; color: #f3e5ab; border-color: #111111; }
+.primary, button.primary { background: #000000; color: #f0f0f0; border-color: #000000; }
 .start-grid {
     display: grid;
     grid-template-columns: minmax(0,1fr) minmax(330px,.72fr);
@@ -81,9 +81,9 @@ button, input, select, textarea { font: inherit; }
     align-items: center;
     gap: 8px;
     border-radius: 999px;
-    background: rgba(17,17,17,.08);
+    background: rgba(0,0,0,.08);
     padding: 8px 12px;
-    color: #111111;
+    color: #000000;
     font-size: 12px;
     font-weight: 900;
 }
@@ -99,12 +99,12 @@ h1, .page-title {
 .form-card, .quiet-card {
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    background: rgba(255,255,255,.42);
+    background: rgba(250,250,250,.42);
     padding: 18px;
 }
-.form-card.dark { background: #111111; color: #f3e5ab; }
-.form-card.dark p, .form-card.dark small { color: rgba(243,229,171,.72); }
-.form-card.dark input, .form-card.dark select { background: #f3e5ab; color: #111111; }
+.form-card.dark { background: #000000; color: #f0f0f0; }
+.form-card.dark p, .form-card.dark small { color: rgba(240,240,240,.72); }
+.form-card.dark input, .form-card.dark select { background: #f0f0f0; color: #000000; }
 .form-card h2, .quiet-card h2 { margin: 0 0 8px; font-size: 20px; }
 .field { display: grid; gap: 6px; margin-bottom: 11px; }
 .field label { font-size: 12px; font-weight: 900; }
@@ -112,11 +112,11 @@ h1, .page-title {
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 15px;
-    background: rgba(255,255,255,.78);
+    background: rgba(250,250,250,.78);
     padding: 10px 12px;
-    color: #111111;
+    color: #000000;
 }
-.error { margin: 0 0 12px; color: #f3e5ab; font-weight: 900; }
+.error { margin: 0 0 12px; color: #f0f0f0; font-weight: 900; }
 .grid { display: grid; gap: 10px; }
 .grid.two { grid-template-columns: repeat(2,minmax(0,1fr)); }
 .section { padding: 24px 0; border-top: 1px solid var(--line); }
@@ -129,16 +129,16 @@ h1, .page-title {
     gap: 12px;
     align-items: center;
     padding: 13px 0;
-    border-bottom: 1px solid rgba(17,17,17,.1);
+    border-bottom: 1px solid rgba(0,0,0,.1);
     font-weight: 900;
 }
 .line-item span { display: grid; gap: 4px; min-width: 0; }
 .line-item small { color: var(--muted); font-size: 12px; font-weight: 800; line-height: 1.55; }
-.line-item b { color: #111111; font-size: 12px; }
+.line-item b { color: #000000; font-size: 12px; }
 .step-list { display: grid; gap: 0; margin-top: 22px; max-width: 690px; border-top: 1px solid var(--line); }
-.step-line { display: grid; grid-template-columns: 2rem minmax(0,1fr); gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(17,17,17,.1); }
+.step-line { display: grid; grid-template-columns: 2rem minmax(0,1fr); gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,.1); }
 .step-line strong { font-size: 13px; }
-.number { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 999px; background: #111111; color: #f3e5ab; font-size: 11px; font-weight: 900; }
+.number { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 999px; background: #000000; color: #f0f0f0; font-size: 11px; font-weight: 900; }
 @media (max-width: 940px) {
     .top { align-items: stretch; border-radius: 24px; flex-direction: column; }
     .nav, .hero-actions { align-items: stretch; flex-direction: column; }

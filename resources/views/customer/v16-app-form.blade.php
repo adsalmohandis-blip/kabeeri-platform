@@ -21,21 +21,21 @@
     <title>{{ $title }} | {{ __('kabeeri.brand.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-[#f3e5ab] text-[#111111] antialiased">
+<body class="min-h-screen bg-[#f0f0f0] text-[#000000] antialiased">
     <div class="kbr-customer-shell grid min-h-screen w-full lg:grid-cols-[16rem_minmax(0,1fr)]">
         @include('customer.partials.dashboard-sidebar', ['dashboard' => $dashboard, 'activeNav' => $activeNav])
 
         <main class="min-w-0 px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
             @include('customer.partials.dashboard-header', ['title' => $title])
 
-            <form method="POST" action="{{ $formAction }}" class="rounded-[1.7rem] border border-[#111111]/10 bg-[#f3e5ab]/92 p-4 shadow-[0_18px_55px_rgba(17,17,17,.08)]">
+            <form method="POST" action="{{ $formAction }}" class="rounded-[1.7rem] border border-[#000000]/10 bg-[#f0f0f0]/92 p-4 shadow-[0_18px_55px_rgba(0,0,0,.08)]">
                 @csrf
                 @if ($mode === 'edit')
                     @method('PUT')
                 @endif
 
                 @if ($errors->any())
-                    <div class="mb-4 rounded-2xl border border-[#111111]/30 bg-white/70 p-3 text-xs font-black text-[#111111]">
+                    <div class="mb-4 rounded-2xl border border-[#000000]/30 bg-[#fafafa]/70 p-3 text-xs font-black text-[#000000]">
                         @foreach ($errors->all() as $error)
                             <div>{{ $error }}</div>
                         @endforeach
@@ -49,19 +49,19 @@
                 <div class="grid gap-4 md:grid-cols-2">
                     <label class="grid gap-1 text-xs font-black">
                         {{ __('kabeeri.ui.site_name') }}
-                        <input name="site_name" value="{{ old('site_name', $site?->name) }}" required class="rounded-2xl border border-[#111111]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#111111]">
+                        <input name="site_name" value="{{ old('site_name', $site?->name) }}" required class="rounded-2xl border border-[#000000]/10 bg-[#fafafa]/80 px-3 py-3 text-sm outline-none focus:border-[#000000]">
                     </label>
                     <label class="grid gap-1 text-xs font-black">
                         {{ __('kabeeri.ui.username') }}
                         @if ($mode === 'create')
-                            <input name="username" value="{{ old('username') }}" placeholder="my-app" class="rounded-2xl border border-[#111111]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#111111]">
+                            <input name="username" value="{{ old('username') }}" placeholder="my-app" class="rounded-2xl border border-[#000000]/10 bg-[#fafafa]/80 px-3 py-3 text-sm outline-none focus:border-[#000000]">
                         @else
-                            <input value="{{ $site->username }}" disabled class="rounded-2xl border border-[#111111]/10 bg-[#111111]/5 px-3 py-3 text-sm font-black text-[#111111] outline-none">
+                            <input value="{{ $site->username }}" disabled class="rounded-2xl border border-[#000000]/10 bg-[#000000]/5 px-3 py-3 text-sm font-black text-[#000000] outline-none">
                         @endif
                     </label>
                     <label class="grid gap-1 text-xs font-black">
                         {{ __('kabeeri.ui.app_type') }}
-                        <select name="app_type" class="rounded-2xl border border-[#111111]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#111111]">
+                        <select name="app_type" class="rounded-2xl border border-[#000000]/10 bg-[#fafafa]/80 px-3 py-3 text-sm outline-none focus:border-[#000000]">
                             @foreach ($appTypes as $key => $type)
                                 <option value="{{ $key }}" @selected(old('app_type', $site?->metadata['v16_app_type'] ?? $selectedAppType) === $key)>{{ __('kabeeri.customer.app_types.'.$key.'.label') }}</option>
                             @endforeach
@@ -70,7 +70,7 @@
                     @if ($mode === 'edit')
                         <label class="grid gap-1 text-xs font-black">
                             {{ __('kabeeri.ui.state_ready') }}
-                            <select name="status" class="rounded-2xl border border-[#111111]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#111111]">
+                            <select name="status" class="rounded-2xl border border-[#000000]/10 bg-[#fafafa]/80 px-3 py-3 text-sm outline-none focus:border-[#000000]">
                                 <option value="active" @selected(old('status', $site->status) === 'active')>{{ __('kabeeri.ui.active') }}</option>
                                 <option value="paused" @selected(old('status', $site->status) === 'paused')>{{ __('kabeeri.ui.paused') }}</option>
                             </select>
@@ -78,7 +78,7 @@
                     @else
                         <label class="grid gap-1 text-xs font-black">
                             {{ __('kabeeri.ui.theme') }}
-                            <select name="theme_slug" class="rounded-2xl border border-[#111111]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#111111]">
+                            <select name="theme_slug" class="rounded-2xl border border-[#000000]/10 bg-[#fafafa]/80 px-3 py-3 text-sm outline-none focus:border-[#000000]">
                                 @foreach ($themes as $theme)
                                     <option value="{{ $theme->slug }}">{{ __('kabeeri.customer.themes.'.$theme->slug.'.name') }}</option>
                                 @endforeach
@@ -87,7 +87,7 @@
                     @endif
                     <label class="grid gap-1 text-xs font-black">
                         {{ __('kabeeri.ui.public_language') }}
-                        <select name="public_language" class="rounded-2xl border border-[#111111]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#111111]">
+                        <select name="public_language" class="rounded-2xl border border-[#000000]/10 bg-[#fafafa]/80 px-3 py-3 text-sm outline-none focus:border-[#000000]">
                             @foreach ($supportedLocales as $locale => $language)
                                 <option value="{{ $locale }}" @selected($selectedPublicLanguage === $locale)>{{ $language['native_label'] }}</option>
                             @endforeach
@@ -95,7 +95,7 @@
                     </label>
                     <label class="grid gap-1 text-xs font-black">
                         {{ __('kabeeri.ui.public_theme_mode') }}
-                        <select name="public_theme_mode" class="rounded-2xl border border-[#111111]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#111111]">
+                        <select name="public_theme_mode" class="rounded-2xl border border-[#000000]/10 bg-[#fafafa]/80 px-3 py-3 text-sm outline-none focus:border-[#000000]">
                             @foreach ($uiThemes as $themeMode => $themeItem)
                                 @php($themeLabelKey = 'theme_mode_'.$themeMode)
                                 <option value="{{ $themeMode }}" @selected($selectedPublicTheme === $themeMode)>{{ __("kabeeri.ui.{$themeLabelKey}") }}</option>
@@ -104,7 +104,7 @@
                     </label>
                     <label class="grid gap-1 text-xs font-black">
                         {{ __('kabeeri.ui.public_font') }}
-                        <select name="public_font" class="rounded-2xl border border-[#111111]/10 bg-white/80 px-3 py-3 text-sm outline-none focus:border-[#111111]">
+                        <select name="public_font" class="rounded-2xl border border-[#000000]/10 bg-[#fafafa]/80 px-3 py-3 text-sm outline-none focus:border-[#000000]">
                             @foreach ($uiFonts as $fontKey => $fontItem)
                                 @php($fontLabelKey = 'font_'.str_replace('-', '_', $fontKey))
                                 <option value="{{ $fontKey }}" @selected($selectedPublicFont === $fontKey)>{{ __("kabeeri.ui.{$fontLabelKey}") }}</option>
@@ -114,26 +114,26 @@
                 </div>
 
                 <div class="mt-5 flex flex-wrap gap-2">
-                    <button class="rounded-full bg-[#111111] px-5 py-3 text-xs font-black text-[#f3e5ab]" type="submit">{{ $mode === 'create' ? __('kabeeri.ui.create_app') : __('kabeeri.ui.save_app') }}</button>
-                    <a href="{{ route('customer.apps.index') }}" class="rounded-full bg-white px-5 py-3 text-xs font-black text-[#111111] ring-1 ring-[#111111]/10">{{ __('kabeeri.ui.apps_manage') }}</a>
+                    <button class="rounded-full bg-[#000000] px-5 py-3 text-xs font-black text-[#f0f0f0]" type="submit">{{ $mode === 'create' ? __('kabeeri.ui.create_app') : __('kabeeri.ui.save_app') }}</button>
+                    <a href="{{ route('customer.apps.index') }}" class="rounded-full bg-[#fafafa] px-5 py-3 text-xs font-black text-[#000000] ring-1 ring-[#000000]/10">{{ __('kabeeri.ui.apps_manage') }}</a>
                 </div>
             </form>
 
             @if ($mode === 'edit')
-                <form method="POST" action="{{ route('customer.apps.destroy', ['username' => $site->username]) }}" class="mt-5 rounded-[1.7rem] border border-[#111111]/10 bg-white/70 p-4">
+                <form method="POST" action="{{ route('customer.apps.destroy', ['username' => $site->username]) }}" class="mt-5 rounded-[1.7rem] border border-[#000000]/10 bg-[#fafafa]/70 p-4">
                     @csrf
                     @method('DELETE')
                     <h2 class="text-sm font-black">{{ __('kabeeri.ui.delete_app') }}</h2>
                     <div class="mt-3 flex flex-wrap items-end gap-3">
                         <label class="grid gap-1 text-xs font-black">
                             {{ __('kabeeri.ui.retention_days') }}
-                            <select name="retention_days" class="rounded-2xl border border-[#111111]/10 bg-[#f3e5ab] px-3 py-2">
+                            <select name="retention_days" class="rounded-2xl border border-[#000000]/10 bg-[#f0f0f0] px-3 py-2">
                                 <option value="30">30</option>
                                 <option value="60">60</option>
                                 <option value="90">90</option>
                             </select>
                         </label>
-                        <button class="rounded-full bg-[#111111] px-5 py-3 text-xs font-black text-[#f3e5ab]" type="submit">{{ __('kabeeri.ui.delete_app') }}</button>
+                        <button class="rounded-full bg-[#000000] px-5 py-3 text-xs font-black text-[#f0f0f0]" type="submit">{{ __('kabeeri.ui.delete_app') }}</button>
                     </div>
                 </form>
             @endif

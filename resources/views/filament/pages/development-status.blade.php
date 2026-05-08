@@ -90,13 +90,13 @@
 <x-filament-panels::page>
     <style>
         .kbr-dev-status {
-            --kbr-dev-ink: #17130d;
-            --kbr-dev-paper: #f3e5ab;
-            --kbr-dev-gold: #c98a2e;
-            --kbr-dev-muted: rgba(23, 19, 13, .68);
-            --kbr-dev-line: rgba(23, 19, 13, .12);
-            --kbr-dev-card: rgba(255, 250, 240, .94);
-            --kbr-dev-soft: rgba(255, 250, 240, .68);
+            --kbr-dev-ink: #000000;
+            --kbr-dev-paper: #f0f0f0;
+            --kbr-dev-gold: #000000;
+            --kbr-dev-muted: rgba(0,0,0, .68);
+            --kbr-dev-line: rgba(0,0,0, .12);
+            --kbr-dev-card: rgba(250,250,250, .94);
+            --kbr-dev-soft: rgba(250,250,250, .68);
             display: grid;
             gap: 1rem;
             width: 100%;
@@ -122,15 +122,15 @@
             border: 1px solid var(--kbr-dev-line);
             border-radius: 1.35rem;
             background: var(--kbr-dev-card);
-            box-shadow: 0 18px 45px rgba(23, 19, 13, .08);
+            box-shadow: 0 18px 45px rgba(0,0,0, .08);
         }
 
         .kbr-dev-hero {
             overflow: hidden;
             color: var(--kbr-dev-paper);
             background:
-                radial-gradient(circle at 12% 12%, rgba(201, 138, 46, .28), transparent 22rem),
-                linear-gradient(135deg, #17130d, #211a11);
+                radial-gradient(circle at 12% 12%, rgba(0,0,0, .28), transparent 22rem),
+                linear-gradient(135deg, #000000, #000000);
         }
 
         .kbr-dev-hero-grid {
@@ -155,9 +155,9 @@
         }
 
         .kbr-dev-badge {
-            border: 1px solid rgba(201, 138, 46, .42);
-            color: #f4c46b;
-            background: rgba(201, 138, 46, .12);
+            border: 1px solid rgba(0,0,0, .42);
+            color: #f0f0f0;
+            background: rgba(0,0,0, .12);
         }
 
         .kbr-dev-title {
@@ -177,13 +177,13 @@
 
         .kbr-dev-hero .kbr-dev-lead,
         .kbr-dev-hero .kbr-dev-muted {
-            color: rgba(255, 250, 240, .74);
+            color: rgba(250,250,250, .74);
         }
 
         .kbr-dev-release-card {
-            border: 1px solid rgba(255, 250, 240, .13);
+            border: 1px solid rgba(250,250,250, .13);
             border-radius: 1.1rem;
-            background: rgba(255, 250, 240, .07);
+            background: rgba(250,250,250, .07);
             padding: 1rem;
         }
 
@@ -267,7 +267,7 @@
         .kbr-dev-icon-box.is-review {
             color: var(--kbr-dev-ink);
             background: var(--kbr-dev-paper);
-            box-shadow: inset 0 0 0 1px rgba(201, 138, 46, .34);
+            box-shadow: inset 0 0 0 1px rgba(0,0,0, .34);
         }
 
         .kbr-dev-shortcuts {
@@ -297,8 +297,8 @@
         .kbr-dev-shortcut:hover,
         .kbr-dev-button:hover {
             transform: translateY(-1px);
-            border-color: rgba(201, 138, 46, .55);
-            background: #fff;
+            border-color: rgba(0,0,0, .55);
+            background: #fafafa;
         }
 
         .kbr-dev-button {
@@ -346,25 +346,25 @@
             height: .5rem;
             margin-top: .7rem;
             border-radius: 999px;
-            background: rgba(23, 19, 13, .1);
+            background: rgba(0,0,0, .1);
         }
 
         .kbr-dev-bar span {
             display: block;
             height: 100%;
             border-radius: inherit;
-            background: linear-gradient(90deg, #17130d, #c98a2e);
+            background: linear-gradient(90deg, #000000, #000000);
         }
 
         .kbr-dev-warn {
             margin: .55rem 0 0;
-            color: #8a5a16;
+            color: #000000;
             font-size: .75rem;
             font-weight: 900;
         }
 
         .kbr-dev-status-text {
-            color: #8a5a16;
+            color: #000000;
             font-weight: 950;
         }
 
@@ -380,11 +380,11 @@
         }
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-status {
-            --kbr-dev-ink: #f3e5ab;
-            --kbr-dev-paper: #211a11;
-            --kbr-dev-muted: rgba(255, 250, 240, .68);
-            --kbr-dev-line: rgba(255, 250, 240, .14);
-            --kbr-dev-card: #211a11;
+            --kbr-dev-ink: #f0f0f0;
+            --kbr-dev-paper: #000000;
+            --kbr-dev-muted: rgba(250,250,250, .68);
+            --kbr-dev-line: rgba(250,250,250, .14);
+            --kbr-dev-card: #000000;
             color: var(--kbr-dev-ink);
         }
 
@@ -397,27 +397,27 @@
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-shortcut:hover,
         html.fi[data-kbr-theme="dark"] .kbr-dev-button:hover {
-            background: rgba(255, 250, 240, .08);
+            background: rgba(250,250,250, .08);
         }
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-icon-box {
-            color: #17130d;
-            background: #c98a2e;
+            color: #000000;
+            background: #000000;
         }
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-icon-box.is-review,
         html.fi[data-kbr-theme="dark"] .kbr-dev-button {
-            color: #17130d;
-            background: #f3e5ab;
+            color: #000000;
+            background: #f0f0f0;
         }
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-status-text,
         html.fi[data-kbr-theme="dark"] .kbr-dev-warn {
-            color: #f4c46b;
+            color: #f0f0f0;
         }
 
         html.fi[data-kbr-theme="dark"] .kbr-dev-status-text.is-ready {
-            color: #f3e5ab;
+            color: #f0f0f0;
         }
 
         @media (max-width: 1180px) {
@@ -518,7 +518,7 @@
                         <p class="kbr-dev-kicker">{{ $copy('التقدم الحقيقي', 'Real progress') }}</p>
                         <h2 class="kbr-dev-heading">{{ $copy('حالة النسخ', 'Version status') }}</h2>
                     </div>
-                    <span class="kbr-dev-pill" style="background:#17130d;color:#f3e5ab">{{ $summary['percent'] ?? 0 }}%</span>
+                    <span class="kbr-dev-pill" style="background:#000000;color:#f0f0f0">{{ $summary['percent'] ?? 0 }}%</span>
                 </div>
 
                 <div class="kbr-dev-list">

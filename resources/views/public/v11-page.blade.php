@@ -77,13 +77,13 @@
     @include('components.theme-foundation')
     <style>
         :root {
-            --kbr-public-ink: #111111;
-            --kbr-public-paper: #f3e5ab;
-            --kbr-public-paper-strong: #eadb9b;
-            --kbr-public-white: #ffffff;
-            --kbr-public-muted: rgba(17,17,17,.62);
-            --kbr-public-line: rgba(17,17,17,.12);
-            --kbr-public-soft: rgba(255,255,255,.42);
+            --kbr-public-ink: #000000;
+            --kbr-public-paper: #f0f0f0;
+            --kbr-public-paper-strong: #f0f0f0;
+            --kbr-public-white: #fafafa;
+            --kbr-public-muted: rgba(0,0,0,.62);
+            --kbr-public-line: rgba(0,0,0,.12);
+            --kbr-public-soft: rgba(250,250,250,.42);
         }
 
         * { box-sizing: border-box; }
@@ -107,12 +107,12 @@
             gap: 16px;
             border: 1px solid var(--kbr-public-line);
             border-radius: 999px;
-            background: rgba(243,229,171,.9);
+            background: rgba(240,240,240,.9);
             padding: 9px 11px;
             backdrop-filter: blur(18px);
         }
         .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 900; }
-        .mark { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 999px; background: #111; color: #f3e5ab; }
+        .mark { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 999px; background: #000000; color: #f0f0f0; }
         .brand small { display: block; margin-top: 1px; color: var(--kbr-public-muted); font-size: 12px; font-weight: 800; }
         .nav, .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
         .nav a, .button, button.button {
@@ -123,13 +123,13 @@
             gap: 7px;
             border: 1px solid var(--kbr-public-line);
             border-radius: 999px;
-            background: rgba(255,255,255,.5);
+            background: rgba(250,250,250,.5);
             padding: 0 13px;
-            color: #111;
+            color: #000000;
             font-size: 13px;
             font-weight: 900;
         }
-        .nav a.active, .button.primary { background: #111; color: #f3e5ab; border-color: #111; }
+        .nav a.active, .button.primary { background: #000000; color: #f0f0f0; border-color: #000000; }
         .hero { padding: clamp(36px, 7vw, 86px) 0 28px; }
         .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; color: var(--kbr-public-muted); font-size: 13px; font-weight: 900; }
         h1 { max-width: 900px; margin: 0; font-size: clamp(35px, 6vw, 74px); line-height: .98; letter-spacing: -.06em; }
@@ -143,7 +143,7 @@
         .line-row { display: grid; grid-template-columns: 2.6rem minmax(0,.86fr) minmax(0,1.14fr); gap: 14px; align-items: center; border-bottom: 1px solid var(--kbr-public-line); padding: 15px 0; }
         .line-row strong { font-size: 15px; }
         .line-row p, .line-row span { margin: 0; color: var(--kbr-public-muted); line-height: 1.62; }
-        .line-icon, .number { display: inline-grid; width: 34px; height: 34px; place-items: center; border-radius: 999px; background: #111; color: #f3e5ab; font-size: 12px; font-weight: 900; }
+        .line-icon, .number { display: inline-grid; width: 34px; height: 34px; place-items: center; border-radius: 999px; background: #000000; color: #f0f0f0; font-size: 12px; font-weight: 900; }
         .intro-strip { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0; border-top: 1px solid var(--kbr-public-line); border-bottom: 1px solid var(--kbr-public-line); }
         .intro-item { display: grid; gap: 8px; padding: 18px 18px; border-inline-end: 1px solid var(--kbr-public-line); }
         .intro-item:last-child { border-inline-end: 0; }
@@ -151,15 +151,15 @@
         .intro-item p { margin: 0; color: var(--kbr-public-muted); line-height: 1.62; font-size: 13px; }
         .focus-band { display: grid; grid-template-columns: minmax(0,1fr) minmax(280px,.55fr); gap: 18px; align-items: stretch; }
         .focus-dark, .focus-light { border: 1px solid var(--kbr-public-line); border-radius: 28px; padding: 22px; }
-        .focus-dark { background: #111; color: #f3e5ab; }
-        .focus-dark p { color: rgba(243,229,171,.72); }
-        .focus-light { background: rgba(255,255,255,.38); }
+        .focus-dark { background: #000000; color: #f0f0f0; }
+        .focus-dark p { color: rgba(240,240,240,.72); }
+        .focus-light { background: rgba(250,250,250,.38); }
         .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .chip { display: inline-flex; min-height: 32px; align-items: center; border: 1px solid var(--kbr-public-line); border-radius: 999px; background: rgba(255,255,255,.5); padding: 0 11px; font-size: 12px; font-weight: 900; }
-        .form-panel { border: 1px solid var(--kbr-public-line); border-radius: 28px; background: rgba(255,255,255,.42); padding: 18px; }
+        .chip { display: inline-flex; min-height: 32px; align-items: center; border: 1px solid var(--kbr-public-line); border-radius: 999px; background: rgba(250,250,250,.5); padding: 0 11px; font-size: 12px; font-weight: 900; }
+        .form-panel { border: 1px solid var(--kbr-public-line); border-radius: 28px; background: rgba(250,250,250,.42); padding: 18px; }
         .form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
-        label { display: grid; gap: 7px; color: #111; font-size: 13px; font-weight: 900; }
-        input, select, textarea { width: 100%; border: 1px solid var(--kbr-public-line); border-radius: 16px; background: #fff; color: #111; padding: 12px 13px; font: inherit; }
+        label { display: grid; gap: 7px; color: #000000; font-size: 13px; font-weight: 900; }
+        input, select, textarea { width: 100%; border: 1px solid var(--kbr-public-line); border-radius: 16px; background: #fafafa; color: #000000; padding: 12px 13px; font: inherit; }
         textarea { min-height: 128px; resize: vertical; }
         .full { grid-column: 1 / -1; }
         .footer { display: flex; justify-content: space-between; gap: 14px; padding-top: 22px; color: var(--kbr-public-muted); font-size: 13px; }

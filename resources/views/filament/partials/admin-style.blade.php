@@ -60,9 +60,9 @@
 
     html.fi[data-kbr-theme="dark"] .fi-body {
         background:
-            radial-gradient(circle at 92% 8%, rgba(201,138,46,.16), transparent 22rem),
-            linear-gradient(135deg, #17130d 0%, #17130d 68%, #211a11 100%) !important;
-        color: #f3e5ab;
+            radial-gradient(circle at 92% 8%, rgba(0,0,0,.16), transparent 22rem),
+            linear-gradient(135deg, #000000 0%, #000000 68%, #000000 100%) !important;
+        color: #f0f0f0;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-sidebar,
@@ -73,7 +73,7 @@
     html.fi[data-kbr-theme="dark"] .fi-modal-window,
     html.fi[data-kbr-theme="dark"] .fi-ta-ctn,
     html.fi[data-kbr-theme="dark"] .fi-input-wrp {
-        border-color: rgba(243,229,171,.14) !important;
+        border-color: rgba(240,240,240,.14) !important;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-sidebar,
@@ -83,24 +83,24 @@
     html.fi[data-kbr-theme="dark"] .fi-modal-window,
     html.fi[data-kbr-theme="dark"] .fi-ta-ctn,
     html.fi[data-kbr-theme="dark"] .fi-input-wrp {
-        background-color: #211a11 !important;
-        color: #f3e5ab !important;
+        background-color: #000000 !important;
+        color: #f0f0f0 !important;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-main-sidebar,
     html.fi[data-kbr-theme="dark"] .fi-sidebar-header {
-        background-color: #17130d !important;
-        border-color: rgba(243,229,171,.12) !important;
+        background-color: #000000 !important;
+        border-color: rgba(240,240,240,.12) !important;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-sidebar-item-active a,
     html.fi[data-kbr-theme="dark"] .fi-sidebar-item a:hover {
-        background-color: #f3e5ab !important;
-        color: #17130d !important;
+        background-color: #f0f0f0 !important;
+        color: #000000 !important;
     }
 
     html.fi[data-kbr-theme="dark"] .fi-btn-color-primary {
-        background-color: #c98a2e !important;
-        color: #17130d !important;
+        background-color: #000000 !important;
+        color: #000000 !important;
     }
 </style>

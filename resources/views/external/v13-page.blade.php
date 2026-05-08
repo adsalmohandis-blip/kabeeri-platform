@@ -40,17 +40,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root {
-            --ink: #17130d;
-            --soft: #17130d;
-            --paper: #f3e5ab;
-            --sage: #17130d;
-            --forest: #17130d;
-            --sky: #17130d;
-            --clay: #c98a2e;
-            --wheat: #c98a2e;
-            --line: rgba(23,19,13, .13);
-            --white-line: rgba(243,229,171, .18);
-            --shadow: 0 26px 84px rgba(23,19,13, .16);
+            --ink: #000000;
+            --soft: #000000;
+            --paper: #f0f0f0;
+            --sage: #000000;
+            --forest: #000000;
+            --sky: #000000;
+            --clay: #000000;
+            --wheat: #000000;
+            --line: rgba(0,0,0, .13);
+            --white-line: rgba(240,240,240, .18);
+            --shadow: 0 26px 84px rgba(0,0,0, .16);
         }
 
         * {
@@ -62,9 +62,9 @@
             min-height: 100vh;
             color: var(--ink);
             background:
-                radial-gradient(circle at 86% 14%, rgba(23,19,13, .74), transparent 27rem),
-                radial-gradient(circle at 7% 20%, rgba(201,138,46, .36), transparent 24rem),
-                linear-gradient(135deg, #f3e5ab 0%, #f3e5ab 48%, #17130d 100%);
+                radial-gradient(circle at 86% 14%, rgba(0,0,0, .74), transparent 27rem),
+                radial-gradient(circle at 7% 20%, rgba(0,0,0, .36), transparent 24rem),
+                linear-gradient(135deg, #f0f0f0 0%, #f0f0f0 48%, #000000 100%);
             font-family: "IBM Plex Sans Arabic", "Almarai", sans-serif;
         }
 
@@ -74,8 +74,8 @@
             inset: 0;
             pointer-events: none;
             background-image:
-                radial-gradient(rgba(23,19,13, .06) 1px, transparent 1px),
-                linear-gradient(120deg, rgba(23,19,13, .035), transparent 38%);
+                radial-gradient(rgba(0,0,0, .06) 1px, transparent 1px),
+                linear-gradient(120deg, rgba(0,0,0, .035), transparent 38%);
             background-size: 28px 28px, 100% 100%;
             mask-image: linear-gradient(to bottom, rgba(0,0,0, .86), transparent 80%);
         }
@@ -100,10 +100,10 @@
             justify-content: space-between;
             gap: 14px;
             padding: 14px;
-            border: 1px solid rgba(243,229,171, .72);
+            border: 1px solid rgba(240,240,240, .72);
             border-radius: 999px;
-            background: rgba(243,229,171, .74);
-            box-shadow: 0 18px 64px rgba(23,19,13, .12);
+            background: rgba(240,240,240, .74);
+            box-shadow: 0 18px 64px rgba(0,0,0, .12);
             backdrop-filter: blur(22px);
         }
 
@@ -157,55 +157,55 @@
 
         .nav a {
             padding: 10px 13px;
-            color: rgba(23,19,13, .72);
+            color: rgba(0,0,0, .72);
             font-size: 13px;
         }
 
         .nav a:hover {
-            background: rgba(243,229,171, .9);
+            background: rgba(240,240,240, .9);
             color: var(--forest);
         }
 
         .nav a.active {
-            background: #17130d;
-            color: #f3e5ab;
+            background: #000000;
+            color: #f0f0f0;
         }
 
         .button {
             min-height: 44px;
             padding: 11px 18px;
             border: 1px solid var(--line);
-            background: rgba(243,229,171, .7);
+            background: rgba(240,240,240, .7);
             color: var(--forest);
             transition: .2s ease;
         }
 
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 16px 34px rgba(23,19,13, .13);
+            box-shadow: 0 16px 34px rgba(0,0,0, .13);
         }
 
         .button.primary {
             border-color: transparent;
             color: var(--paper);
-            background: linear-gradient(135deg, var(--forest), #17130d);
+            background: linear-gradient(135deg, var(--forest), #000000);
         }
 
         .button.clay {
             border-color: var(--line);
             color: var(--forest);
-            background: rgba(243,229,171, .72);
+            background: rgba(240,240,240, .72);
         }
 
         .hero {
             overflow: hidden;
             position: relative;
             margin-top: 22px;
-            border: 1px solid rgba(243,229,171, .76);
+            border: 1px solid rgba(240,240,240, .76);
             border-radius: 46px;
             background:
-                radial-gradient(circle at 18% 20%, rgba(201,138,46, .2), transparent 24rem),
-                linear-gradient(145deg, rgba(243,229,171, .9), rgba(243,229,171, .52));
+                radial-gradient(circle at 18% 20%, rgba(0,0,0, .2), transparent 24rem),
+                linear-gradient(145deg, rgba(240,240,240, .9), rgba(240,240,240, .52));
             box-shadow: var(--shadow);
         }
 
@@ -234,9 +234,9 @@
         .chip {
             min-height: 30px;
             padding: 6px 11px;
-            border: 1px solid rgba(23,19,13, .18);
+            border: 1px solid rgba(0,0,0, .18);
             color: var(--forest);
-            background: rgba(243,229,171, .76);
+            background: rgba(240,240,240, .76);
             font-size: 12px;
         }
 
@@ -251,7 +251,7 @@
         .hero p {
             max-width: 760px;
             margin: 0;
-            color: rgba(23,19,13, .72);
+            color: rgba(0,0,0, .72);
             font-size: clamp(14px, 1.3vw, 17px);
         }
 
@@ -264,8 +264,8 @@
         .card,
         .section {
             border: 1px solid var(--line);
-            background: rgba(243,229,171, .72);
-            box-shadow: 0 14px 40px rgba(23,19,13, .08);
+            background: rgba(240,240,240, .72);
+            box-shadow: 0 14px 40px rgba(0,0,0, .08);
         }
 
         .signal,
@@ -279,8 +279,8 @@
             color: var(--paper);
             border-color: var(--white-line);
             background:
-                radial-gradient(circle at top left, rgba(201,138,46, .18), transparent 24rem),
-                linear-gradient(135deg, #17130d, #17130d);
+                radial-gradient(circle at top left, rgba(0,0,0, .18), transparent 24rem),
+                linear-gradient(135deg, #000000, #000000);
         }
 
         .signal span {
@@ -318,7 +318,7 @@
         .dark .section-title p,
         .dark .card p,
         .dark .timeline p {
-            color: rgba(243,229,171, .72);
+            color: rgba(240,240,240, .72);
         }
 
         .grid-2,
@@ -365,12 +365,12 @@
             padding: 14px;
             border: 1px solid var(--line);
             border-radius: 22px;
-            background: rgba(243,229,171, .62);
+            background: rgba(240,240,240, .62);
         }
 
         .dark .timeline-row {
             border-color: var(--white-line);
-            background: rgba(243,229,171, .08);
+            background: rgba(240,240,240, .08);
         }
 
         .badge {
@@ -390,7 +390,7 @@
             gap: 12px;
             margin-top: 26px;
             padding: 24px 4px 0;
-            color: rgba(23,19,13, .62);
+            color: rgba(0,0,0, .62);
             font-size: 13px;
         }
 

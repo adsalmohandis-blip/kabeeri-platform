@@ -43,7 +43,7 @@ class MobileAppService
             ['mobile_app_config_id' => $config->id, 'name' => 'kabeeri Mobile Default'],
             [
                 'status' => 'active',
-                'colors' => ['primary' => '#b7791f', 'surface' => '#f3e5ab'],
+                'colors' => ['primary' => '#000000', 'surface' => '#f0f0f0'],
                 'typography' => ['heading' => 'serif', 'body' => 'sans'],
                 'layout' => ['navigation' => 'tabs'],
             ],

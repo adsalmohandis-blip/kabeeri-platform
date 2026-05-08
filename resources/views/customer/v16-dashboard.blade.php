@@ -39,32 +39,32 @@
     <link href="https://fonts.bunny.net/css?family=almarai:400,700,800|ibm-plex-sans-arabic:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-[#f3e5ab] text-[#111111] antialiased">
+<body class="min-h-screen bg-[#f0f0f0] text-[#000000] antialiased">
     <div class="kbr-customer-shell grid min-h-screen w-full lg:grid-cols-[16rem_minmax(0,1fr)]">
         @include('customer.partials.dashboard-sidebar', ['dashboard' => $dashboard, 'activeNav' => 'overview'])
 
         <main class="min-w-0 px-4 py-4 sm:px-7 lg:px-10 lg:py-7">
-            <header id="overview" class="relative z-[60] mb-6 rounded-[1.6rem] border border-[#111111]/10 bg-[#f3e5ab]/90 px-4 py-3 backdrop-blur-xl">
+            <header id="overview" class="relative z-[60] mb-6 rounded-[1.6rem] border border-[#000000]/10 bg-[#f0f0f0]/90 px-4 py-3 backdrop-blur-xl">
                 <div class="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
                     <div class="flex min-w-0 items-center gap-3">
-                        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#111111] text-sm font-black text-[#f3e5ab] lg:hidden">{{ __('kabeeri.brand.mark') }}</span>
+                        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#000000] text-sm font-black text-[#f0f0f0] lg:hidden">{{ __('kabeeri.brand.mark') }}</span>
                         <div class="min-w-0">
-                            <p class="text-[10px] font-black uppercase tracking-[.18em] text-[#111111]/55">{{ __('kabeeri.brand.name') }}</p>
+                            <p class="text-[10px] font-black uppercase tracking-[.18em] text-[#000000]/55">{{ __('kabeeri.brand.name') }}</p>
                             <h1 class="mt-1 truncate text-lg font-black tracking-[-.02em] sm:text-xl">{{ __('kabeeri.ui.apps_dashboard') }}</h1>
                         </div>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2">
                         <details class="w-full sm:w-auto lg:hidden">
-                            <summary class="cursor-pointer rounded-full bg-[#111111] px-4 py-2 text-center text-xs font-black text-[#f3e5ab]">{{ __('kabeeri.ui.dashboard_nav') }}</summary>
-                            <nav class="mt-2 grid gap-1 rounded-3xl border border-[#111111]/10 bg-[#f3e5ab] p-2 sm:grid-cols-2" aria-label="{{ __('kabeeri.ui.dashboard_nav') }}">
+                            <summary class="cursor-pointer rounded-full bg-[#000000] px-4 py-2 text-center text-xs font-black text-[#f0f0f0]">{{ __('kabeeri.ui.dashboard_nav') }}</summary>
+                            <nav class="mt-2 grid gap-1 rounded-3xl border border-[#000000]/10 bg-[#f0f0f0] p-2 sm:grid-cols-2" aria-label="{{ __('kabeeri.ui.dashboard_nav') }}">
                                 @foreach ($sidebarItems as $item)
-                                    <a href="{{ $item['target'] }}" class="flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-black {{ $item['active'] ? 'bg-[#111111] text-[#f3e5ab]' : 'bg-white/60 text-[#111111]' }}"><x-kabeeri-icon name="{{ $item['icon'] }}" />{{ __('kabeeri.ui.'.$item['label']) }}</a>
+                                    <a href="{{ $item['target'] }}" class="flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-black {{ $item['active'] ? 'bg-[#000000] text-[#f0f0f0]' : 'bg-[#fafafa]/60 text-[#000000]' }}"><x-kabeeri-icon name="{{ $item['icon'] }}" />{{ __('kabeeri.ui.'.$item['label']) }}</a>
                                 @endforeach
                             </nav>
                         </details>
-                        <a href="{{ route('customer.start') }}" class="inline-flex items-center rounded-full border border-[#111111]/10 bg-white/60 px-3 py-2 text-xs font-black text-[#111111]"><x-kabeeri-icon name="home" />{{ __('kabeeri.ui.home') }}</a>
-                        <a href="{{ route('public.landing') }}" class="inline-flex items-center rounded-full border border-[#111111]/10 bg-white/60 px-3 py-2 text-xs font-black text-[#111111]"><x-kabeeri-icon name="info" />{{ __('kabeeri.ui.platform') }}</a>
+                        <a href="{{ route('customer.start') }}" class="inline-flex items-center rounded-full border border-[#000000]/10 bg-[#fafafa]/60 px-3 py-2 text-xs font-black text-[#000000]"><x-kabeeri-icon name="home" />{{ __('kabeeri.ui.home') }}</a>
+                        <a href="{{ route('public.landing') }}" class="inline-flex items-center rounded-full border border-[#000000]/10 bg-[#fafafa]/60 px-3 py-2 text-xs font-black text-[#000000]"><x-kabeeri-icon name="info" />{{ __('kabeeri.ui.platform') }}</a>
                         @include('components.language-switcher', ['context' => 'customer'])
                         @include('components.theme-switcher', ['context' => 'customer'])
                         @include('components.font-switcher', ['context' => 'customer'])
@@ -73,35 +73,35 @@
             </header>
 
             @if (session('status'))
-                <div class="mb-5 rounded-2xl border border-[#111111]/10 bg-white/60 px-4 py-3 text-xs font-black text-[#111111]">{{ session('status') }}</div>
+                <div class="mb-5 rounded-2xl border border-[#000000]/10 bg-[#fafafa]/60 px-4 py-3 text-xs font-black text-[#000000]">{{ session('status') }}</div>
             @endif
 
             <section class="mb-7 grid gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]">
                 <div>
-                    <p class="text-xs font-black uppercase tracking-[.18em] text-[#111111]/52">{{ __('kabeeri.ui.workspace_status') }}</p>
+                    <p class="text-xs font-black uppercase tracking-[.18em] text-[#000000]/52">{{ __('kabeeri.ui.workspace_status') }}</p>
                     <h2 class="mt-3 max-w-3xl text-3xl font-black leading-[1.05] tracking-[-.055em] sm:text-5xl">{{ __('kabeeri.ui.'.($workspaceReady ? 'ready' : 'needs_setup')) }}</h2>
-                    <p class="mt-4 max-w-2xl text-sm font-bold leading-7 text-[#111111]/62">{{ $activeOrganization?->name ?? __('kabeeri.ui.needs_setup_sentence') }}</p>
+                    <p class="mt-4 max-w-2xl text-sm font-bold leading-7 text-[#000000]/62">{{ $activeOrganization?->name ?? __('kabeeri.ui.needs_setup_sentence') }}</p>
                     <div class="mt-5 flex flex-wrap gap-2">
-                        <a href="{{ route('customer.apps.create') }}" class="inline-flex items-center justify-center rounded-full bg-[#111111] px-5 py-3 text-xs font-black text-[#f3e5ab]"><x-kabeeri-icon name="plus" />{{ __('kabeeri.ui.new_app') }}</a>
-                        <a href="{{ route('customer.apps.index') }}" class="inline-flex items-center justify-center rounded-full border border-[#111111]/10 bg-white/60 px-5 py-3 text-xs font-black text-[#111111]"><x-kabeeri-icon name="apps" />{{ __('kabeeri.ui.apps_manage') }}</a>
+                        <a href="{{ route('customer.apps.create') }}" class="inline-flex items-center justify-center rounded-full bg-[#000000] px-5 py-3 text-xs font-black text-[#f0f0f0]"><x-kabeeri-icon name="plus" />{{ __('kabeeri.ui.new_app') }}</a>
+                        <a href="{{ route('customer.apps.index') }}" class="inline-flex items-center justify-center rounded-full border border-[#000000]/10 bg-[#fafafa]/60 px-5 py-3 text-xs font-black text-[#000000]"><x-kabeeri-icon name="apps" />{{ __('kabeeri.ui.apps_manage') }}</a>
                     </div>
                 </div>
-                <aside class="rounded-[1.5rem] border border-[#111111]/10 bg-white/50 p-4">
-                    <div class="grid gap-0 divide-y divide-[#111111]/10">
-                        <div class="flex items-center justify-between py-3"><span class="text-xs font-black text-[#111111]/55">{{ __('kabeeri.ui.apps') }}</span><strong>{{ $sites->count() }}</strong></div>
-                        <div class="flex items-center justify-between py-3"><span class="text-xs font-black text-[#111111]/55">{{ __('kabeeri.ui.theme') }}</span><strong>{{ $activeThemeCount }}</strong></div>
-                        <div class="flex items-center justify-between py-3"><span class="text-xs font-black text-[#111111]/55">{{ __('kabeeri.ui.capabilities') }}</span><strong>{{ count($capabilityValues) }}</strong></div>
+                <aside class="rounded-[1.5rem] border border-[#000000]/10 bg-[#fafafa]/50 p-4">
+                    <div class="grid gap-0 divide-y divide-[#000000]/10">
+                        <div class="flex items-center justify-between py-3"><span class="text-xs font-black text-[#000000]/55">{{ __('kabeeri.ui.apps') }}</span><strong>{{ $sites->count() }}</strong></div>
+                        <div class="flex items-center justify-between py-3"><span class="text-xs font-black text-[#000000]/55">{{ __('kabeeri.ui.theme') }}</span><strong>{{ $activeThemeCount }}</strong></div>
+                        <div class="flex items-center justify-between py-3"><span class="text-xs font-black text-[#000000]/55">{{ __('kabeeri.ui.capabilities') }}</span><strong>{{ count($capabilityValues) }}</strong></div>
                     </div>
                 </aside>
             </section>
 
             <section class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_23rem]">
-                <div id="apps" class="rounded-[1.5rem] border border-[#111111]/10 bg-white/42 p-4">
+                <div id="apps" class="rounded-[1.5rem] border border-[#000000]/10 bg-[#fafafa]/42 p-4">
                     <div class="mb-2 flex items-center justify-between gap-3">
                         <h2 class="text-base font-black tracking-[-.02em]">{{ __('kabeeri.ui.my_apps') }}</h2>
-                        <a href="{{ route('customer.apps.create') }}" class="rounded-full bg-[#111111] px-4 py-2 text-xs font-black text-[#f3e5ab]">{{ __('kabeeri.ui.new_app') }}</a>
+                        <a href="{{ route('customer.apps.create') }}" class="rounded-full bg-[#000000] px-4 py-2 text-xs font-black text-[#f0f0f0]">{{ __('kabeeri.ui.new_app') }}</a>
                     </div>
-                    <div class="divide-y divide-[#111111]/10">
+                    <div class="divide-y divide-[#000000]/10">
                         @forelse ($sites as $site)
                             @php
                                 $appType = $site->metadata['v16_app_type'] ?? $site->site_type;
@@ -110,51 +110,51 @@
                             <a href="{{ route('customer.apps.show', ['username' => $site->username]) }}" class="grid gap-2 py-4 md:grid-cols-[minmax(0,1fr)_11rem_6rem] md:items-center">
                                 <span class="min-w-0">
                                     <strong class="block truncate text-sm font-black">{{ $site->name }}</strong>
-                                    <small class="mt-1 block truncate text-xs font-bold text-[#111111]/55">{{ __('kabeeri.customer.app_types.'.$appType.'.label') }} / {{ __('kabeeri.ui.username') }}: {{ $site->username }}</small>
+                                    <small class="mt-1 block truncate text-xs font-bold text-[#000000]/55">{{ __('kabeeri.customer.app_types.'.$appType.'.label') }} / {{ __('kabeeri.ui.username') }}: {{ $site->username }}</small>
                                 </span>
-                                <span class="text-xs font-black text-[#111111]/62">{{ $themeSlug ? __('kabeeri.customer.themes.'.$themeSlug.'.name') : __('kabeeri.ui.no_theme') }}</span>
-                                <span class="text-xs font-black text-[#111111] md:text-end">{{ __('kabeeri.ui.active') }}</span>
+                                <span class="text-xs font-black text-[#000000]/62">{{ $themeSlug ? __('kabeeri.customer.themes.'.$themeSlug.'.name') : __('kabeeri.ui.no_theme') }}</span>
+                                <span class="text-xs font-black text-[#000000] md:text-end">{{ __('kabeeri.ui.active') }}</span>
                             </a>
                         @empty
                             <div class="py-8 text-center">
                                 <p class="text-sm font-black">{{ __('kabeeri.ui.no_app') }}</p>
-                                <p class="mx-auto mt-1 max-w-sm text-xs leading-6 text-[#111111]/62">{{ __('kabeeri.ui.first_app') }}</p>
-                                <a href="{{ route('customer.onboarding') }}" class="mt-4 inline-flex items-center rounded-full bg-[#111111] px-4 py-2 text-xs font-black text-[#f3e5ab]"><x-kabeeri-icon name="rocket" />{{ __('kabeeri.ui.start_now') }}</a>
+                                <p class="mx-auto mt-1 max-w-sm text-xs leading-6 text-[#000000]/62">{{ __('kabeeri.ui.first_app') }}</p>
+                                <a href="{{ route('customer.onboarding') }}" class="mt-4 inline-flex items-center rounded-full bg-[#000000] px-4 py-2 text-xs font-black text-[#f0f0f0]"><x-kabeeri-icon name="rocket" />{{ __('kabeeri.ui.start_now') }}</a>
                             </div>
                         @endforelse
                     </div>
                 </div>
 
-                <aside id="actions" class="rounded-[1.5rem] bg-[#111111] p-4 text-[#f3e5ab]">
+                <aside id="actions" class="rounded-[1.5rem] bg-[#000000] p-4 text-[#f0f0f0]">
                     <h2 class="text-base font-black">{{ __('kabeeri.ui.next_steps') }}</h2>
-                    <div class="mt-3 divide-y divide-white/10">
+                    <div class="mt-3 divide-y divide-[#fafafa]/10">
                         @foreach ($nextActions as $action)
                             <article class="py-3 first:pt-0 last:pb-0">
                                 <div class="flex items-center justify-between gap-3">
                                     <strong class="text-sm font-black">{{ __('kabeeri.ui.'.$action['title']) }}</strong>
-                                    <span class="rounded-full bg-[#f3e5ab] px-2 py-0.5 text-[10px] font-black text-[#111111]">{{ __('kabeeri.ui.'.$action['state']) }}</span>
+                                    <span class="rounded-full bg-[#f0f0f0] px-2 py-0.5 text-[10px] font-black text-[#000000]">{{ __('kabeeri.ui.'.$action['state']) }}</span>
                                 </div>
-                                <p class="mt-1 text-xs leading-5 text-[#f3e5ab]/64">{{ __('kabeeri.ui.'.$action['text']) }}</p>
+                                <p class="mt-1 text-xs leading-5 text-[#f0f0f0]/64">{{ __('kabeeri.ui.'.$action['text']) }}</p>
                             </article>
                         @endforeach
                     </div>
                 </aside>
             </section>
 
-            <section id="capabilities" class="mt-6 rounded-[1.5rem] border border-[#111111]/10 bg-white/42 p-4">
+            <section id="capabilities" class="mt-6 rounded-[1.5rem] border border-[#000000]/10 bg-[#fafafa]/42 p-4">
                 <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <h2 class="text-base font-black tracking-[-.02em]">{{ __('kabeeri.ui.roles_capabilities') }}</h2>
-                    <span class="w-fit rounded-full bg-[#111111] px-3 py-1 text-xs font-black text-[#f3e5ab]">{{ count($capabilityValues) }} {{ __('kabeeri.ui.enabled') }}</span>
+                    <span class="w-fit rounded-full bg-[#000000] px-3 py-1 text-xs font-black text-[#f0f0f0]">{{ count($capabilityValues) }} {{ __('kabeeri.ui.enabled') }}</span>
                 </div>
                 <form method="POST" action="{{ route('customer.capabilities.update') }}">
                     @csrf
                     <div class="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
                         @foreach ($capabilities as $key => $capability)
-                            <label class="flex gap-3 rounded-2xl border border-[#111111]/10 bg-[#f3e5ab]/60 px-3 py-3 transition hover:border-[#111111]/35">
-                                <input class="mt-1 h-4 w-4 rounded border-[#111111]/20 text-[#111111]" type="checkbox" name="capabilities[]" value="{{ $key }}" @checked(in_array($key, $capabilityValues, true)) @disabled($key === 'customer_owner')>
+                            <label class="flex gap-3 rounded-2xl border border-[#000000]/10 bg-[#f0f0f0]/60 px-3 py-3 transition hover:border-[#000000]/35">
+                                <input class="mt-1 h-4 w-4 rounded border-[#000000]/20 text-[#000000]" type="checkbox" name="capabilities[]" value="{{ $key }}" @checked(in_array($key, $capabilityValues, true)) @disabled($key === 'customer_owner')>
                                 <span class="min-w-0">
                                     <strong class="block text-sm font-black">{{ __('kabeeri.customer.capabilities.'.$key.'.label') }}</strong>
-                                    <span class="mt-1 block line-clamp-1 text-[11px] leading-5 text-[#111111]/62">{{ __('kabeeri.customer.capabilities.'.$key.'.description') }}</span>
+                                    <span class="mt-1 block line-clamp-1 text-[11px] leading-5 text-[#000000]/62">{{ __('kabeeri.customer.capabilities.'.$key.'.description') }}</span>
                                 </span>
                             </label>
                             @if ($key === 'customer_owner')
@@ -165,35 +165,35 @@
                     <div class="mt-4 grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
                         <label class="grid gap-1 text-xs font-black" for="capability_note">
                             {{ __('kabeeri.ui.short_note') }}
-                            <textarea id="capability_note" name="capability_note" class="min-h-14 w-full rounded-2xl border border-[#111111]/10 bg-white/70 p-3 text-sm leading-6 outline-none transition focus:border-[#111111]">{{ $profile->metadata['capability_note'] ?? '' }}</textarea>
+                            <textarea id="capability_note" name="capability_note" class="min-h-14 w-full rounded-2xl border border-[#000000]/10 bg-[#fafafa]/70 p-3 text-sm leading-6 outline-none transition focus:border-[#000000]">{{ $profile->metadata['capability_note'] ?? '' }}</textarea>
                         </label>
-                        <button class="inline-flex items-center justify-center rounded-full bg-[#111111] px-5 py-3 text-xs font-black text-[#f3e5ab]" type="submit"><x-kabeeri-icon name="check" />{{ __('kabeeri.ui.update_capabilities') }}</button>
+                        <button class="inline-flex items-center justify-center rounded-full bg-[#000000] px-5 py-3 text-xs font-black text-[#f0f0f0]" type="submit"><x-kabeeri-icon name="check" />{{ __('kabeeri.ui.update_capabilities') }}</button>
                     </div>
                 </form>
             </section>
 
-            <section class="mt-6 rounded-[1.5rem] border border-[#111111]/10 bg-white/42 p-4">
+            <section class="mt-6 rounded-[1.5rem] border border-[#000000]/10 bg-[#fafafa]/42 p-4">
                 <div class="grid gap-4 md:grid-cols-2">
                     <div>
                         <h2 class="text-base font-black">{{ __('kabeeri.ui.extensions_themes') }}</h2>
-                        <div class="mt-2 divide-y divide-[#111111]/10">
+                        <div class="mt-2 divide-y divide-[#000000]/10">
                             @foreach ($dashboard['cards'] as $card)
                                 <article class="py-3">
                                     <strong class="block text-sm font-black">{{ __('kabeeri.customer.dashboard_cards.'.$card['key'].'.label') }}</strong>
-                                    <p class="mt-1 line-clamp-1 text-xs leading-5 text-[#111111]/62">{{ __('kabeeri.customer.dashboard_cards.'.$card['key'].'.text') }}</p>
+                                    <p class="mt-1 line-clamp-1 text-xs leading-5 text-[#000000]/62">{{ __('kabeeri.customer.dashboard_cards.'.$card['key'].'.text') }}</p>
                                 </article>
                             @endforeach
                         </div>
                     </div>
                     <div>
                         <h2 class="text-base font-black">{{ __('kabeeri.ui.account_data') }}</h2>
-                        <div class="mt-3 text-sm leading-6 text-[#111111]">
+                        <div class="mt-3 text-sm leading-6 text-[#000000]">
                             <strong class="block truncate font-black">{{ $user->name }}</strong>
-                            <span class="block break-all text-xs font-bold text-[#111111]/60">{{ $user->email }}</span>
+                            <span class="block break-all text-xs font-bold text-[#000000]/60">{{ $user->email }}</span>
                         </div>
                         <form class="mt-4" method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="inline-flex items-center justify-center rounded-full border border-[#111111]/10 bg-white/70 px-4 py-2.5 text-xs font-black"><x-kabeeri-icon name="logout" />{{ __('kabeeri.ui.logout') }}</button>
+                            <button type="submit" class="inline-flex items-center justify-center rounded-full border border-[#000000]/10 bg-[#fafafa]/70 px-4 py-2.5 text-xs font-black"><x-kabeeri-icon name="logout" />{{ __('kabeeri.ui.logout') }}</button>
                         </form>
                     </div>
                 </div>

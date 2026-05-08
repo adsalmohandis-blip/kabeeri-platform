@@ -11,12 +11,12 @@
     <title>{{ $pageTitle ?? $site->name }}</title>
     <style>
         :root {
-            --ks-primary: {{ $primaryColor ?? '#17130d' }};
-            --ks-text: #17130d;
-            --ks-muted: #17130d;
-            --ks-bg: #ffffff;
-            --ks-surface: #ffffff;
-            --ks-border: #f3e5ab;
+            --ks-primary: {{ $primaryColor ?? '#000000' }};
+            --ks-text: #000000;
+            --ks-muted: #000000;
+            --ks-bg: #fafafa;
+            --ks-surface: #fafafa;
+            --ks-border: #f0f0f0;
         }
         * { box-sizing: border-box; }
         body {
