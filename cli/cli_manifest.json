@@ -1,0 +1,23 @@
+{
+  "framework": "Kabeeri Vibe Developer Framework",
+  "folder": "cli",
+  "version": "v0.1.1",
+  "issue": "#9",
+  "issue_title": "[CLI] Design kvdf command structure",
+  "files": [
+    "README.md",
+    "README_AR.md",
+    "CLI_COMMANDS.md",
+    "CLI_COMMANDS_AR.md",
+    "CLI_ROADMAP.md",
+    "CLI_SAFETY_RULES.md",
+    "CLI_USER_FLOWS.md",
+    "CLI_COMMAND_REFERENCE.md",
+    "cli.commands.schema.json",
+    "cli.commands.example.json",
+    "cli_manifest.json"
+  ],
+  "purpose": "Track the implemented kvdf CLI command structure and its local runtime behavior.",
+  "status": "implemented-mvp",
+  "important_note": "The working CLI entrypoint is bin/kvdf.js. Command behavior is covered by tests/cli.integration.test.js."
+}
